@@ -34,8 +34,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"Hello World!
-");
+        AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
 
     [TestMethod]
@@ -64,8 +63,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"1
-");
+        AssertObjectCodeExecutes(compileData, @"1\r\n");
     }
 
     [TestMethod]
@@ -94,8 +92,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"2.1
-");
+        AssertObjectCodeExecutes(compileData, "2.1\r\n");
     }
 
     [TestMethod]
@@ -124,8 +121,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"%
-");
+        AssertObjectCodeExecutes(compileData, "%\r\n");
     }
 
     [TestMethod]
@@ -154,8 +150,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"True
-");
+        AssertObjectCodeExecutes(compileData, "True\r\n");
     }
 
     [TestMethod]
@@ -184,8 +179,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"
-");
+        AssertObjectCodeExecutes(compileData, "\r\n");
     }
 
     [TestMethod]
