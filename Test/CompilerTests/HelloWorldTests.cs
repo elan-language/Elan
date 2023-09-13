@@ -188,7 +188,7 @@ public static class Program {
 ");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail1() {
         var code = @"
   printLine(""Hello World`)
@@ -197,7 +197,7 @@ public static class Program {
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail2() {
         var code = @"
 main
@@ -208,7 +208,7 @@ main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail3() {
         var code = @"
 main
@@ -219,11 +219,12 @@ main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail4() {
         var code = @"";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+        AssertParses(compileData);
+        AssertDoesNotCompile(compileData);
     }
 }
