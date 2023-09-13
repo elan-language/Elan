@@ -5,16 +5,82 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass, Ignore]
-public class T_4_Constants
+public class T_6_arithmeticExpressions
 {
     #region Passes
     [TestMethod]
-    public void Pass_Int()
+    public void Pass_IntAddition()
     {
         var code = @"
 main
-  const a = 3
-  printLine(a)
+  printLine( 3 + 4)
+end main
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "7\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_IncludeVariable()
+    {
+        var code = @"
+main
+  var a = 3
+  printLine( a + 4)
+end main
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "7\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_DivideIntegersToFloat()
+    {
+        var code = @"
+main
+  printLine(3/2)
+end main
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "1.5\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_IntegerDivision()
+    {
+        var code = @"
+main
+  printLine(7 div 2)
 end main
 ";
 
@@ -32,11 +98,56 @@ end main
     }
 
     [TestMethod]
-    public void Pass_Float()
+    public void Pass_Mod()
     {
         var code = @"
 main
-  const a = 3.1
+  printLine(11 mod 3)
+end main
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_Power()
+    {
+        var code = @"
+main
+  printLine(3 ^ 3)
+end main
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "81\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_UseVariableBothSides()
+    {
+        var code = @"
+main
+  var a = 3
+  a = a + 1
   printLine(a)
 end main
 ";
@@ -51,179 +162,55 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3.1\r\n");
+        AssertObjectCodeExecutes(compileData, "4\r\n");
     }
 
     [TestMethod]
-    public void Pass_String()
+    public void Pass_TODO()
     {
-        var code = @"
-main
-  const a = ""hell0""
-  printLine(a)
-end main
-";
-
-        var objectCode = @"";
-
-        var parseTree = @"";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Hello\r\n");
+        Assert.Fail("RP to write tests using standard library function calls within expressions");
     }
-
-    [TestMethod]
-    public void Pass_Char()
+        #endregion
+        #region Fails
+        [TestMethod]
+    public void Fail_InvalidExpressio()
     {
         var code = @"
 main
-  const a = 'a'
-  printLine(a)
+  var a = 3 4
 end main
 ";
-
-        var objectCode = @"";
-
-        var parseTree = @"";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "a\r\n");
-    }
-
-    [TestMethod]
-    public void Pass_Bool()
-    {
-        var code = @"
-main
-  const a = true
-  printLine(a)
-end main
-";
-
-        var objectCode = @"";
-
-        var parseTree = @"";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "true\r\n");
-    }
-
-    [TestMethod]
-    public void Pass_TopLevelConst()
-    {
-        var code = @"
-const a = 3
-main
-  printLine(a)
-end main
-";
-
-        var objectCode = @"";
-
-        var parseTree = @"";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3\r\n");
-    }
-
-
-    [TestMethod]
-    public void Fail_incorrectKeyword()
-    {
-        var code = @"
-main
-  constant a = 3
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-    #endregion
-
-    #region Fails
-
-    [TestMethod]
-    public void Fail_invalidLiteralString()
-    {
-        var code = @"
-main
-  constant a = 'hello'
-end main
-";
+    
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_invalidLiteralString2()
+    public void Fail_PlusEquals()
     {
         var code = @"
 main
-  constant a = hello
+  var a = 3
+  a += 1
 end main
 ";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_redeclaredConst()
+    public void Fail_PlusPlus()
     {
         var code = @"
-const a = 3
 main
-  constant a = 3
+  var a = 3
+  a ++
 end main
 ";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod]
-    public void Fail_useBeforeDeclared()
-    {
-        var code = @"
-main
-  print(a)
-  constant a = 3
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod]
-    public void Fail_reassignment()
-    {
-        var code = @"
-main
-  constant a = 3
-  a = 4
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        Assert.Fail("Should fail compilation");
     }
     #endregion
 }

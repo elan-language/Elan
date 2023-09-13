@@ -8,6 +8,7 @@ using static Helpers;
 public class T_5_Variables
     {
 
+    #region Passes
     [TestMethod]
     public void Pass_Int()
     {
@@ -78,7 +79,9 @@ end main
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "4\r\n");
     }
+    #endregion
 
+    #region Fails
     [TestMethod]
     public void fail_wrongKeyword()
     {
@@ -157,6 +160,6 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
+    #endregion
 }
 

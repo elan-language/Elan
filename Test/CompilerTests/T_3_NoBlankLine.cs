@@ -7,6 +7,7 @@ using static Helpers;
 [TestClass, Ignore]
 public class T_3_NoBlankLine
     {
+
     [TestMethod]
     public void Pass1()
     {
