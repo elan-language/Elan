@@ -1,14 +1,19 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 using Compiler;
 
 namespace Test.CompilerTests;
 
-public static class Helpers {
+public static partial class Helpers {
 
     // because now windows newlines on appveyor
     public static readonly string NL = Environment.GetEnvironmentVariable("APPVEYOR") is "True" ? @"\n" : @"\r\n";
 
+    [GeneratedRegex("\\s+")]
+    private static partial Regex WsRegex();
+
+    public static string CollapseWs(string inp) => WsRegex().Replace(inp, " ");
 
     private static Process CreateProcess(string exe, string workingDir) {
         var start = new ProcessStartInfo {
