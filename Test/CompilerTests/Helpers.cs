@@ -5,6 +5,11 @@ using Compiler;
 namespace Test.CompilerTests;
 
 public static class Helpers {
+
+    // because now windows newlines on appveyor
+    public static readonly string NL = Environment.GetEnvironmentVariable("APPVEYOR") is "True" ? @"\n" : @"\r\n";
+
+
     private static Process CreateProcess(string exe, string workingDir) {
         var start = new ProcessStartInfo {
             FileName = exe,

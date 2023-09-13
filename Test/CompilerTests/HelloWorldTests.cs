@@ -25,7 +25,7 @@ public static class Program {
     }
 }";
 
-        var parseTree = @"(file (main \r\n main (statementBlock (callStatement \r\n (expression (methodCall printLine ( (argumentList (expression (value (literalValue ""Hello World!"")))) ))))) \r\n end main) \r\n <EOF>)";
+        var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue ""Hello World!"")))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
