@@ -72,6 +72,18 @@ public static class AstFactory {
             return visitor.Visit(i);
         }
 
+        if (context.LITERAL_FLOAT() is { } f) {
+            return visitor.Visit(f);
+        }
+
+        if (context.LITERAL_CHAR() is { } c) {
+            return visitor.Visit(c);
+        }
+
+        if (context.BOOL_VALUE() is { } b) {
+            return visitor.Visit(b);
+        }
+
         throw new NotImplementedException();
     }
 }
