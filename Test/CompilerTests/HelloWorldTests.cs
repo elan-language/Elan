@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using System.Linq.Expressions;
 
 namespace Test.CompilerTests;
 
@@ -25,7 +26,7 @@ public static class Program {
     }
 }";
 
-        var parseTree = @"(file (main \r\n main (statementBlock (callStatement \r\n (expression (methodCall printLine ( (argumentList (expression (value (literalValue ""Hello World!"")))) ))))) \r\n end main) \r\n <EOF>)";
+        var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue ""Hello World!"")))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -33,67 +34,158 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
+        AssertObjectCodeExecutes(compileData, @"Hello World!
+");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass2() {
         var code = @"
 main
   printLine(1)
 end main
 ";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static StandardLibrary.SystemCalls;
+
+public static class Program {
+    private static void Main(string[] args) {
+      printLine(1);
+    }
+}";
+
+        var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue 1)))) ))))) {NL} end main) {NL} <EOF>)";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, @"1
+");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass3() {
         var code = @"
 main
   printLine(2.1)
 end main
 ";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static StandardLibrary.SystemCalls;
+
+public static class Program {
+    private static void Main(string[] args) {
+      printLine(2.1);
+    }
+}";
+
+        var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue 2.1)))) ))))) {NL} end main) {NL} <EOF>)";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, @"2.1
+");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass4() {
         var code = @"
 main
   printLine('%')
 end main
 ";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static StandardLibrary.SystemCalls;
+
+public static class Program {
+    private static void Main(string[] args) {
+      printLine('%');
+    }
+}";
+
+        var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue '%')))) ))))) {NL} end main) {NL} <EOF>)";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, @"%
+");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass5() {
         var code = @"
 main
   printLine(true)
 end main
 ";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static StandardLibrary.SystemCalls;
+
+public static class Program {
+    private static void Main(string[] args) {
+      printLine(true);
+    }
+}";
+
+        var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue true)))) ))))) {NL} end main) {NL} <EOF>)";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, @"True
+");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass6() {
         var code = @"
 main
   printLine()
 end main
 ";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static StandardLibrary.SystemCalls;
+
+public static class Program {
+    private static void Main(string[] args) {
+      printLine();
+    }
+}";
+
+        var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( ))))) {NL} end main) {NL} <EOF>)";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, @"
+");
     }
 
     [TestMethod] [Ignore]
