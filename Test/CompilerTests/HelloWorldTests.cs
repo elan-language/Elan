@@ -7,7 +7,7 @@ using static Helpers;
 
 // Ticket #2
 [TestClass]
-public class HelloWorldTests {
+public class T_2_HelloWorld {
     [TestMethod]
     public void Pass1() {
         var code = @"
@@ -34,8 +34,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"Hello World!
-");
+        AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
 
     [TestMethod]
@@ -64,8 +63,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"1
-");
+        AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
     [TestMethod]
@@ -94,8 +92,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"2.1
-");
+        AssertObjectCodeExecutes(compileData, "2.1\r\n");
     }
 
     [TestMethod]
@@ -124,8 +121,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"%
-");
+        AssertObjectCodeExecutes(compileData, "%\r\n");
     }
 
     [TestMethod]
@@ -154,8 +150,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"True
-");
+        AssertObjectCodeExecutes(compileData, "True\r\n");
     }
 
     [TestMethod]
@@ -184,11 +179,10 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"
-");
+        AssertObjectCodeExecutes(compileData, "\r\n");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail1() {
         var code = @"
   printLine(""Hello World`)
@@ -197,7 +191,7 @@ public static class Program {
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail2() {
         var code = @"
 main
@@ -208,7 +202,7 @@ main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail3() {
         var code = @"
 main
@@ -219,11 +213,12 @@ main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail4() {
         var code = @"";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+        AssertParses(compileData);
+        AssertDoesNotCompile(compileData);
     }
 }

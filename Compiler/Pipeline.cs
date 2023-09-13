@@ -40,7 +40,7 @@ public static class Pipeline {
     }
 
     private static CompileData CompileCode(CompileData compileData) {
-        if (compileData.ParseTree is null) {
+        if (compileData.ParseTree is null || compileData.ParserErrors.Length > 0) {
             return compileData;
         }
 

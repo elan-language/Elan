@@ -68,7 +68,21 @@ public static class Helpers {
         Assert.AreEqual(expectedOutput, stdOut);
     }
 
-    public static void AssertDoesNotParse(CompileData compileData) {
+    public static void AssertDoesNotParse(CompileData compileData, string[]? expected = null) {
         Assert.IsTrue(compileData.ParserErrors.Length > 0, "Expected parse error");
+
+        var errors = compileData.ParserErrors.Select(e => e.Message).ToArray();
+
+        var zip = expected?.Zip(errors);
+
+        foreach (var (e, a) in zip ?? Array.Empty<(string, string)>()) {
+            if (e is not "*") {
+                Assert.AreEqual(e, a);
+            }
+        }
+    }
+
+    public static void AssertDoesNotCompile(CompileData compileData) {
+        Assert.IsNull(compileData.AbstractSyntaxTree, "Unexpectedly Compiled");
     }
 }
