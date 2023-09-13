@@ -32,8 +32,11 @@ public static class Pipeline {
 
         var parser = GetParser(compileData.ElanCode);
         var parseTree = parser.file();
+        var parseStringTree = parseTree.ToStringTree(parser);
 
-        return compileData with { Parser = parser, ParseTree = parseTree };
+        var syntaxErrors = parser.ErrorListeners.OfType<ErrorListener>().First().SyntaxErrors.ToArray();
+
+        return compileData with { ParserErrors = syntaxErrors, ParseTree = parseTree, ParseStringTree = parseStringTree };
     }
 
     private static CompileData CompileCode(CompileData compileData) {

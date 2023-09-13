@@ -2,6 +2,8 @@
 
 using Compiler;
 using System.Diagnostics;
+using static Antlr4.Runtime.Atn.SemanticContext;
+using Test.ParserTests;
 using static Helpers;
 
 // Ticket #2
@@ -25,15 +27,16 @@ public static class Program {
     }
 }";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var parseTree = @"(file (main \r\n main (statementBlock (callStatement \r\n (expression (methodCall printLine ( (argumentList (expression (value (literalValue ""Hello World!"")))) ))))) \r\n end main) \r\n <EOF>)";
 
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
-
     [TestMethod, Ignore]
     public void Pass2() {
         var code = @"

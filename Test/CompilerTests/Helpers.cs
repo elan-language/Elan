@@ -36,7 +36,11 @@ public static class Helpers {
     }
 
     public static void AssertParses(CompileData compileData) {
-        Assert.IsTrue(compileData.Parser?.NumberOfSyntaxErrors == 0, "Unexpected parse error");
+        Assert.IsTrue(compileData.ParserErrors.Length == 0, "Unexpected parse error");
+    }
+
+    public static void AssertParseTreeIs(CompileData compileData, string expectedParseTree) {
+        Assert.AreEqual(expectedParseTree, compileData.ParseStringTree);
     }
 
     public static void AssertCompiles(CompileData compileData) {
@@ -62,6 +66,6 @@ public static class Helpers {
     }
 
     public static void AssertDoesNotParse(CompileData compileData) {
-        Assert.IsTrue(compileData.Parser?.NumberOfSyntaxErrors > 0, "Expected parse error");
+        Assert.IsTrue(compileData.ParserErrors.Length > 0, "Expected parse error");
     }
 }
