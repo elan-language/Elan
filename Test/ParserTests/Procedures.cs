@@ -1,14 +1,12 @@
-﻿namespace Test.ParserTests
-{
-    [TestClass]
-    public class Procedures
-    {
-        const string file = "file";
+﻿namespace Test.ParserTests; 
 
-        [TestMethod]
-        public void HappyCase()
-        {
-            var code = @"
+[TestClass]
+public class Procedures {
+    private const string file = "file";
+
+    [TestMethod]
+    public void HappyCase() {
+        var code = @"
 procedure getNewTileChoice(newTileChoice String)
     repeat
         print(tileChoiceMenu)
@@ -17,23 +15,21 @@ procedure getNewTileChoice(newTileChoice String)
     until tileMenuChoices.contains(newTileChoice)
 end procedure
 ";
-            AssertParsesForRule(code, file);
-        }
+        AssertParsesForRule(code, file);
+    }
 
-        [TestMethod]
-        public void HappyCaseNoParams()
-        {
-            var code = @"
+    [TestMethod]
+    public void HappyCaseNoParams() {
+        var code = @"
 procedure getNewTileChoice()
 end procedure
 ";
-            AssertParsesForRule(code, file);
-        }
+        AssertParsesForRule(code, file);
+    }
 
-        [TestMethod]
-        public void MisspelledProcedure()
-        {
-            var code = @"
+    [TestMethod]
+    public void MisspelledProcedure() {
+        var code = @"
 proceedure getNewTileChoice(newTileChoice String)
     repeat
         print(tileChoiceMenu)
@@ -42,13 +38,12 @@ proceedure getNewTileChoice(newTileChoice String)
     until tileMenuChoices.contains(newTileChoice)
 end procedure
 ";
-            AssertDoesNotParseForRule(code, file, @"line 2:0 no viable alternative"); //How does it know that ?!!
-        }
+        AssertDoesNotParseForRule(code, file, @"line 2:0 no viable alternative"); //How does it know that ?!!
+    }
 
-        [TestMethod]
-        public void InvalidName()
-        {
-            var code = @"
+    [TestMethod]
+    public void InvalidName() {
+        var code = @"
 procedure getNew-TileChoice(newTileChoice String)
     repeat
         print(tileChoiceMenu)
@@ -57,13 +52,12 @@ procedure getNew-TileChoice(newTileChoice String)
     until tileMenuChoices.contains(newTileChoice)
 end procedure
 ";
-            AssertDoesNotParseForRule(code, file, @"line 2:16 mismatched input '-' expecting '('");
-        }
+        AssertDoesNotParseForRule(code, file, @"line 2:16 mismatched input '-' expecting '('");
+    }
 
-        [TestMethod]
-        public void InvalidCaseName()
-        {
-            var code = @"
+    [TestMethod]
+    public void InvalidCaseName() {
+        var code = @"
 procedure getNewTileChoice(newTileChoice String)
     repeat
         print(tileChoiceMenu)
@@ -72,13 +66,12 @@ procedure getNewTileChoice(newTileChoice String)
     until tileMenuChoices.contains(newTileChoice)
 end procedure
 ";
-            AssertDoesNotParseForRule(code, file, @""); //TODO: case not enforced in parser 
-        }
+        AssertDoesNotParseForRule(code, file, @""); //TODO: case not enforced in parser 
+    }
 
-        [TestMethod]
-        public void AsClauseAdded()
-        {
-            var code = @"
+    [TestMethod]
+    public void AsClauseAdded() {
+        var code = @"
 procedure getNewTileChoice(newTileChoice String) as String
     repeat
         print(tileChoiceMenu)
@@ -87,31 +80,27 @@ procedure getNewTileChoice(newTileChoice String) as String
     until tileMenuChoices.contains(newTileChoice)
 end procedure
 ";
-            AssertDoesNotParseForRule(code, file, @"line 2:49 mismatched input 'as'");
-        }
+        AssertDoesNotParseForRule(code, file, @"line 2:49 mismatched input 'as'");
+    }
 
-        [TestMethod]
-        public void ReturnAdded()
-        {
-            var code = @"
+    [TestMethod]
+    public void ReturnAdded() {
+        var code = @"
 procedure getNewTileChoice(newTileChoice String)
     return  newTileChoice
 end procedure
 ";
-            AssertDoesNotParseForRule(code, file, @"line 3:4 mismatched input 'return'");
-        }
+        AssertDoesNotParseForRule(code, file, @"line 3:4 mismatched input 'return'");
+    }
 
-        [TestMethod]
-        public void InnerProcedure()
-        {
-            var code = @"
+    [TestMethod]
+    public void InnerProcedure() {
+        var code = @"
 procedure getNewTileChoice(newTileChoice String)
     procedure getOldTileChoice(newTileChoice String)
     end procedure
 end procedure
 ";
-            AssertDoesNotParseForRule(code, file, @"line 3:4 missing 'end' at 'procedure'");
-        }
-
+        AssertDoesNotParseForRule(code, file, @"line 3:4 missing 'end' at 'procedure'");
     }
 }

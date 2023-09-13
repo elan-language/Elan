@@ -1,14 +1,12 @@
-﻿namespace Test.ParserTests
-{
-    [TestClass]
-    public class OOP
-    {
-        const string file = "file";
+﻿namespace Test.ParserTests; 
 
-        [TestMethod]
-        public void HappyCase1()
-        {
-            var code = @"
+[TestClass]
+public class OOP {
+    private const string file = "file";
+
+    [TestMethod]
+    public void HappyCase1() {
+        var code = @"
 class Foo
 
     constant k = 2.789
@@ -32,13 +30,12 @@ class Foo
 
 end class
 ";
-            AssertParsesForRule(code, file);
-        }
+        AssertParsesForRule(code, file);
+    }
 
-        [TestMethod]
-        public void HappyCaseImmutable()
-        {
-            var code = @"
+    [TestMethod]
+    public void HappyCaseImmutable() {
+        var code = @"
 immutable class Foo
 
     property name = """"
@@ -55,13 +52,12 @@ immutable class Foo
 
 end class
 ";
-            AssertParsesForRule(code, file);
-        }
+        AssertParsesForRule(code, file);
+    }
 
-        [TestMethod]
-        public void HappyCaseAbstract()
-        {
-            var code = @"
+    [TestMethod]
+    public void HappyCaseAbstract() {
+        var code = @"
 abstract class Foo
 
     property name String
@@ -72,13 +68,12 @@ abstract class Foo
 
 end class
 ";
-            AssertParsesForRule(code, file);
-        }
+        AssertParsesForRule(code, file);
+    }
 
-        [TestMethod]
-        public void HappyCaseInheritance()
-        {
-            var code = @"
+    [TestMethod]
+    public void HappyCaseInheritance() {
+        var code = @"
 abstract class Bar
 
     property name String
@@ -105,14 +100,14 @@ class Foo inherits Bar
 
 end class
 ";
-            AssertParsesForRule(code, file);
-        }
+        AssertParsesForRule(code, file);
+    }
 
-        #region Syntactic errors
-        [TestMethod]
-        public void ImmutableWithProcedure()
-        {
-            var code = @"
+    #region Syntactic errors
+
+    [TestMethod]
+    public void ImmutableWithProcedure() {
+        var code = @"
 immutable class Foo
 
     property name = """"
@@ -123,13 +118,12 @@ immutable class Foo
 
 end class
 ";
-            AssertDoesNotParseForRule(code, file, "line 6:4 no viable alternative");
-        }
+        AssertDoesNotParseForRule(code, file, "line 6:4 no viable alternative");
+    }
 
-        [TestMethod]
-        public void AbstractWithConstructor()
-        {
-            var code = @"
+    [TestMethod]
+    public void AbstractWithConstructor() {
+        var code = @"
 abstract class Foo
     constructor
         name = ""anon""
@@ -137,13 +131,12 @@ abstract class Foo
 
 end class
 ";
-            AssertDoesNotParseForRule(code, file, "line 3:4 no viable alternative at input");
-        }
+        AssertDoesNotParseForRule(code, file, "line 3:4 no viable alternative at input");
+    }
 
-        [TestMethod]
-        public void ConcreteWith2Constructors()
-        {
-            var code = @"
+    [TestMethod]
+    public void ConcreteWith2Constructors() {
+        var code = @"
  class Foo
 
     property name = ""
@@ -158,13 +151,12 @@ end class
 
 end class
 ";
-            AssertDoesNotParseForRule(code, file, "line 7:16 extraneous input 'anon' expecting NL");
-        }
+        AssertDoesNotParseForRule(code, file, "line 7:16 extraneous input 'anon' expecting NL");
+    }
 
-        [TestMethod]
-        public void AbstractWithConcreteMethod()
-        {
-            var code = @"
+    [TestMethod]
+    public void AbstractWithConcreteMethod() {
+        var code = @"
 abstract class Foo
     property name = """"
 
@@ -173,26 +165,24 @@ abstract class Foo
     end procedure
 end class
 ";
-            AssertDoesNotParseForRule(code, file, "line 6:8 no viable alternative");
-        }
+        AssertDoesNotParseForRule(code, file, "line 6:8 no viable alternative");
+    }
 
-        [TestMethod]
-        public void AbstractWithAConstant()
-        {
-            var code = @"
+    [TestMethod]
+    public void AbstractWithAConstant() {
+        var code = @"
 abstract class Foo
 
     constant k = 5.995
     
 end class
 ";
-            AssertDoesNotParseForRule(code, file, "line 4:4 no viable alternative");
-        }
+        AssertDoesNotParseForRule(code, file, "line 4:4 no viable alternative");
+    }
 
-        [TestMethod]
-        public void InheritanceFromConcreteClass()
-        {
-            var code = @"
+    [TestMethod]
+    public void InheritanceFromConcreteClass() {
+        var code = @"
 class Bar
 
     property name String
@@ -215,14 +205,12 @@ class Foo inherits Bar
 
 end class
 ";
-            AssertDoesNotParseForRule(code, file, ""); //TODO
-        }
-
-
-        #endregion
-
-        #region Non-syntactic errors - pending implementation further layers of compile
-        #endregion
-
+        AssertDoesNotParseForRule(code, file, ""); //TODO
     }
+
+    #endregion
+
+    #region Non-syntactic errors - pending implementation further layers of compile
+
+    #endregion
 }

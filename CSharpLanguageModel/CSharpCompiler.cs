@@ -56,7 +56,7 @@ public static class CSharpCompiler {
     private static (string, string) Compile(string csProjFile, string workingDir) {
         try {
             using var process = CreateProcess(csProjFile, workingDir);
-            
+
             if (!process.WaitForExit(10000)) {
                 process.Kill();
             }
@@ -98,7 +98,7 @@ public static class CSharpCompiler {
 
         File.Copy("StandardLibrary.dll", $@"{objectDir}\StandardLibrary.dll", true);
 
-        var (stdOut, stdErr) =  Compile($"{baseName}.csproj", objectDir);
+        var (stdOut, stdErr) = Compile($"{baseName}.csproj", objectDir);
 
         return (fileName, stdOut, stdErr);
     }

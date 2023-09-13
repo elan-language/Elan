@@ -1,3 +1,3 @@
-﻿namespace CSharpLanguageModel.Models; 
+﻿namespace CSharpLanguageModel.Models;
 
 public interface ICodeModel { }

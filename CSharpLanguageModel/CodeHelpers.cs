@@ -10,7 +10,5 @@ public static class CodeHelpers {
 
     public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString())).Trim();
 
-    public static string AsCode(this ICodeModel? cm) {
-        return (cm?.ToString() ?? "").Trim();
-    }
+    public static string AsCode(this ICodeModel? cm) => (cm?.ToString() ?? "").Trim();
 }

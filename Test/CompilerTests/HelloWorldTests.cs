@@ -1,9 +1,7 @@
-﻿namespace Test.CompilerTests;
+﻿using Compiler;
 
-using Compiler;
-using System.Diagnostics;
-using static Antlr4.Runtime.Atn.SemanticContext;
-using Test.ParserTests;
+namespace Test.CompilerTests;
+
 using static Helpers;
 
 // Ticket #2
@@ -37,7 +35,8 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
-    [TestMethod, Ignore]
+
+    [TestMethod] [Ignore]
     public void Pass2() {
         var code = @"
 main
@@ -49,7 +48,7 @@ end main
         AssertCompiles(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Pass3() {
         var code = @"
 main
@@ -61,7 +60,7 @@ end main
         AssertCompiles(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Pass4() {
         var code = @"
 main
@@ -73,7 +72,7 @@ end main
         AssertCompiles(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Pass5() {
         var code = @"
 main
@@ -85,7 +84,7 @@ end main
         AssertCompiles(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Pass6() {
         var code = @"
 main
@@ -97,7 +96,7 @@ end main
         AssertCompiles(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Fail1() {
         var code = @"
   printLine(""Hello World`)
@@ -106,7 +105,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Fail2() {
         var code = @"
 main
@@ -117,7 +116,7 @@ main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Fail3() {
         var code = @"
 main
@@ -128,7 +127,7 @@ main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Fail4() {
         var code = @"";
 

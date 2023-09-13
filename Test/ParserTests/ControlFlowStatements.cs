@@ -1,26 +1,22 @@
-﻿namespace Test.ParserTests
-{
-    [TestClass]
-    public class ControlFlowStatements
-    {
+﻿namespace Test.ParserTests; 
 
-        [TestMethod]
-        public void if1()
-        {
-            var code = @"
+[TestClass]
+public class ControlFlowStatements {
+    [TestMethod]
+    public void if1() {
+        var code = @"
 if randomStart then
         x = 1
     else
        x = 2
     end if
 ";
-            AssertParsesForRule(code, "if");
-        }
+        AssertParsesForRule(code, "if");
+    }
 
-        [TestMethod]
-        public void if2()
-        {
-            var code = @"
+    [TestMethod]
+    public void if2() {
+        var code = @"
         if newTileChoice is ""1"" then
                 noOfEndOfTurnTiles = word.length()
         else if newTileChoice is ""2"" then
@@ -29,13 +25,12 @@ if randomStart then
                 noOfEndOfTurnTiles = word.length() + 3
         end if
 ";
-            AssertParsesForRule(code, "if");
-        }
+        AssertParsesForRule(code, "if");
+    }
 
-        [TestMethod]
-        public void forStatement()
-        {
-            var code = @"
+    [TestMethod]
+    public void forStatement() {
+        var code = @"
         for count = 0 to startHandSize - 1
             var item = """"
             tileQueue.remove(item)
@@ -43,25 +38,23 @@ if randomStart then
             tileQueue.add()
         end for
 ";
-            AssertParsesForRule(code, "for");
-        }
+        AssertParsesForRule(code, "for");
+    }
 
-        [TestMethod]
-        public void repeatUntil()
-        {
-            var code = @"
+    [TestMethod]
+    public void repeatUntil() {
+        var code = @"
     repeat
         print(tileChoiceMenu)
         print(""> "")
         newTileChoice = input()
     until tileMenuChoices.contains(newTileChoice)";
-            AssertParsesForRule(code, "repeat");
-        }
+        AssertParsesForRule(code, "repeat");
+    }
 
-        [TestMethod]
-        public void while1()
-        {
-            var code = @"
+    [TestMethod]
+    public void while1() {
+        var code = @"
 while not validChoice
         getChoice(choice)
          if choice is ""1"" then
@@ -95,13 +88,12 @@ while not validChoice
             print(""You have played {player.tilesPlayed} tiles so far in this game."")
 end while
 ";
-            AssertParsesForRule(code, "while");
-        }
+        AssertParsesForRule(code, "while");
+    }
 
-        [TestMethod]
-        public void if3()
-        {
-            var code = @"
+    [TestMethod]
+    public void if3() {
+        var code = @"
          if choice is ""1"" then
              print(game.tileValuesAsString())
          else if choice is ""4"" then
@@ -115,7 +107,6 @@ end while
              validWord = game.checkWordIsInTiles(choice, player)
          end if
 ";
-            AssertParsesForRule(code, "if");
-        }
+        AssertParsesForRule(code, "if");
     }
 }

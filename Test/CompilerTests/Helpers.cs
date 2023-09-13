@@ -1,11 +1,10 @@
-﻿using Compiler;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
+using Compiler;
 
 namespace Test.CompilerTests;
 
 public static class Helpers {
-
     private static Process CreateProcess(string exe, string workingDir) {
         var start = new ProcessStartInfo {
             FileName = exe,
@@ -54,7 +53,6 @@ public static class Helpers {
     public static void AssertObjectCodeCompiles(CompileData compileData) {
         Assert.IsTrue(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), "Failed to compile object code");
     }
-
 
     public static void AssertObjectCodeExecutes(CompileData compileData, string expectedOutput) {
         var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";

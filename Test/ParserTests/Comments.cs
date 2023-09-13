@@ -1,14 +1,12 @@
-﻿namespace Test.ParserTests
-{
-    [TestClass]
-    public class Comments
-    {
-        const string file = "file";
+﻿namespace Test.ParserTests; 
 
-        [TestMethod]
-        public void HappyCase()
-        {
-            var code = @"
+[TestClass]
+public class Comments {
+    private const string file = "file";
+
+    [TestMethod]
+    public void HappyCase() {
+        var code = @"
 # first comment
 main # comment
 # another
@@ -18,28 +16,22 @@ main # comment
   var a = 1 #three
 end main # one more
 ";
-            AssertParsesForRule(code, file);
-        }
+        AssertParsesForRule(code, file);
+    }
 
-        [TestMethod]
-        public void CommentWithoutMarker()
-        {
-            var code = @"
+    [TestMethod]
+    public void CommentWithoutMarker() {
+        var code = @"
 This is a comment
 ";
-            AssertDoesNotParseForRule(code, file, @"line");  //TODO should throw an error
-        }
+        AssertDoesNotParseForRule(code, file, @"line"); //TODO should throw an error
+    }
 
-        [TestMethod]
-        public void CommentWithInvalidMarker()
-        {
-            var code = @"
+    [TestMethod]
+    public void CommentWithInvalidMarker() {
+        var code = @"
 // This is a comment
 ";
-            AssertDoesNotParseForRule(code, file, @"line");  //TODO should throw an error
-        }
-
-
-
+        AssertDoesNotParseForRule(code, file, @"line"); //TODO should throw an error
     }
 }
