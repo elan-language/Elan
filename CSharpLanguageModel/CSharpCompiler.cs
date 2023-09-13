@@ -68,7 +68,7 @@ public static class CSharpCompiler {
         }
     }
 
-    public static (string, string) CompileObjectCode(string fileName, string objectCode) {
+    public static (string, string, string) CompileObjectCode(string fileName, string objectCode) {
         if (string.IsNullOrWhiteSpace(fileName)) {
             fileName = $"{Guid.NewGuid()}.elan";
         }
@@ -82,6 +82,13 @@ public static class CSharpCompiler {
         var objectDir = $@"{dir}\obj\";
 
         Directory.CreateDirectory(objectDir);
+
+        var files = Directory.GetFiles(objectDir, "*.cs");
+
+        foreach (var file in files) {
+            File.Delete(file);
+        }
+
         File.WriteAllText($"{objectDir}{baseName}.cs", objectCode);
 
         var csproj = GetCsProjForFile(baseName);
@@ -91,6 +98,8 @@ public static class CSharpCompiler {
 
         File.Copy("StandardLibrary.dll", $@"{objectDir}\StandardLibrary.dll", true);
 
-        return Compile($"{baseName}.csproj", objectDir);
+        var (stdOut, stdErr) =  Compile($"{baseName}.csproj", objectDir);
+
+        return (fileName, stdOut, stdErr);
     }
 }

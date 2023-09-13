@@ -75,8 +75,9 @@ public static class Pipeline {
         if (string.IsNullOrWhiteSpace(compileData.ObjectCode)) {
             return compileData;
         }
-        var (stdOut, stdErr) = CSharpCompiler.CompileObjectCode(compileData.FileName, compileData.ObjectCode);
 
-        return compileData with { ObjectCodeCompileStdOut = stdOut, ObjectCodeCompileStdErr = stdErr };
+        var (fileName, stdOut, stdErr) = CSharpCompiler.CompileObjectCode(compileData.FileName, compileData.ObjectCode);
+
+        return compileData with { FileName = fileName, ObjectCodeCompileStdOut = stdOut, ObjectCodeCompileStdErr = stdErr };
     }
 }

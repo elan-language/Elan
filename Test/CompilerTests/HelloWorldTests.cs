@@ -1,6 +1,7 @@
 ﻿namespace Test.CompilerTests;
 
 using Compiler;
+using System.Diagnostics;
 using static Helpers;
 
 // Ticket #2
@@ -29,6 +30,8 @@ public static class Program {
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
 
     [TestMethod, Ignore]
