@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass, Ignore]
-public class T_6_arithmeticExpressions
+public class T_6_ArithmeticExpressions
 {
     #region Passes
     [TestMethod]
@@ -168,7 +168,7 @@ end main
     [TestMethod]
     public void Pass_TODO()
     {
-        Assert.Fail("RP to write tests using standard library function calls within expressions");
+        Assert.Fail("RP to write tests using standard library function calls within expressions, including by dot-syntax");
     }
         #endregion
         #region Fails

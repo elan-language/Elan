@@ -160,6 +160,42 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
+    [TestMethod]
+    public void fail_invalidVariableName1()
+    {
+        var code = @"
+main
+  var A = 4.1
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void fail_invalidVariableName2()
+    {
+        var code = @"
+main
+  var a@b = 4.1
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void fail_useOfKeywordAsName()
+    {
+        var code = @"
+main
+  var result = 4.1
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
     #endregion
 }
 
