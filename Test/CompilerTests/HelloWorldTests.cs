@@ -33,19 +33,38 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
+        AssertObjectCodeExecutes(compileData, @"Hello World!
+");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass2() {
         var code = @"
 main
   printLine(1)
 end main
 ";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static StandardLibrary.SystemCalls;
+
+public static class Program {
+    private static void Main(string[] args) {
+      printLine(1);
+    }
+}";
+
+        var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue 1)))) ))))) {NL} end main) {NL} <EOF>)";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, @"1
+");
     }
 
     [TestMethod] [Ignore]

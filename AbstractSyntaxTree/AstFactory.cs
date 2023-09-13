@@ -63,5 +63,15 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ValueContext context) => visitor.Visit(context.literalValue());
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.LiteralValueContext context) => visitor.Visit(context.LITERAL_STRING());
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.LiteralValueContext context) {
+        if (context.LITERAL_STRING() is { } s) {
+            return visitor.Visit(s);
+        }
+
+        if (context.LITERAL_INTEGER() is { } i) {
+            return visitor.Visit(i);
+        }
+
+        throw new NotImplementedException();
+    }
 }
