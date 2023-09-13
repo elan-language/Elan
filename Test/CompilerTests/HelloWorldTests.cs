@@ -63,7 +63,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"1\r\n");
+        AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
     [TestMethod]
