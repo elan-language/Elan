@@ -7,7 +7,7 @@ using static Helpers;
 
 // Ticket #2
 [TestClass]
-public class HelloWorldTests {
+public class T_2_HelloWorld {
     [TestMethod]
     public void Pass1() {
         var code = @"
