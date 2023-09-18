@@ -61,7 +61,7 @@ public static partial class Helpers {
     }
 
     public static void AssertObjectCodeCompiles(CompileData compileData) {
-        Assert.IsTrue(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), compileData.ObjectCodeCompileStdOut);
+        Assert.IsTrue(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), CollapseWs(compileData.ObjectCodeCompileStdOut));
     }
 
     public static void AssertObjectCodeDoesNotCompile(CompileData compileData) {
