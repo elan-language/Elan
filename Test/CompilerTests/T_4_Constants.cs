@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T_4_Constants
 {
     #region Passes
@@ -13,14 +13,28 @@ public class T_4_Constants
     {
         var code = @"
 main
-  const a = 3
+  constant a = 3
   printLine(a)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    const int a = 3;
+    printLine(a);
+  }
+}";
+
+        var parseTree = @$"(file (main {NL} main (statementBlock (constantDef {NL} constant a = (expression (value (literalValue 3)))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -36,14 +50,29 @@ end main
     {
         var code = @"
 main
-  const a = 3.1
+  constant a = 3.1
   printLine(a)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    const double a = 3.1;
+    printLine(a);
+  }
+}";
+
+        var parseTree = @$"(file (main {NL} main (statementBlock (constantDef {NL} constant a = (expression (value (literalValue 3.1)))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
+
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -59,14 +88,29 @@ end main
     {
         var code = @"
 main
-  const a = ""hell0""
+  constant a = ""hell0""
   printLine(a)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    const string a = ""hell0"";
+    printLine(a);
+  }
+}";
+
+        var parseTree = @$"(file (main {NL} main (statementBlock (constantDef {NL} constant a = (expression (value (literalValue ""hell0"")))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
+
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -74,7 +118,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Hello\r\n");
+        AssertObjectCodeExecutes(compileData, "hell0\r\n");
     }
 
     [TestMethod]
@@ -82,14 +126,29 @@ end main
     {
         var code = @"
 main
-  const a = 'a'
+  constant a = 'a'
   printLine(a)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    const char a = 'a';
+    printLine(a);
+  }
+}";
+
+        var parseTree = @$"(file (main {NL} main (statementBlock (constantDef {NL} constant a = (expression (value (literalValue 'a')))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
+
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -105,14 +164,29 @@ end main
     {
         var code = @"
 main
-  const a = true
+  constant a = true
   printLine(a)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    const bool a = true;
+    printLine(a);
+  }
+}";
+
+        var parseTree = @$"(file (main {NL} main (statementBlock (constantDef {NL} constant a = (expression (value (literalValue true)))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
+
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -120,22 +194,35 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "true\r\n");
+        AssertObjectCodeExecutes(compileData, "True\r\n");
     }
 
     [TestMethod]
     public void Pass_TopLevelConst()
     {
         var code = @"
-const a = 3
+constant a = 3
 main
   printLine(a)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+  public const int a = 3;
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(a);
+  }
+}";
+
+        var parseTree = $@"(file (constantDef {NL} constant a = (expression (value (literalValue 3)))) (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -152,7 +239,7 @@ end main
     {
         var code = @"
 main
-  constant a = 3
+  const a = 3
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -162,7 +249,7 @@ end main
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_invalidLiteralString()
     {
         var code = @"
@@ -174,7 +261,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_invalidLiteralString2()
     {
         var code = @"
@@ -186,20 +273,21 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_redeclaredConst()
     {
         var code = @"
-const a = 3
+constant a = 3
 main
   constant a = 3
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+        AssertParses(compileData);
+        AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_useBeforeDeclared()
     {
         var code = @"
@@ -212,7 +300,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_reassignment()
     {
         var code = @"
@@ -223,7 +311,8 @@ end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        Assert.Fail("Should fail compilation");
+        AssertDoesNotCompile(compileData);
     }
     #endregion
 }
+

@@ -20,7 +20,8 @@ public class CodeModelAstVisitor {
 
     private FileCodeModel BuildFileModel(FileNode fileNode) {
         var main = Visit(fileNode.MainNode);
-        return new FileCodeModel(main);
+        var globals = fileNode.GlobalNodes.Select(Visit);
+        return new FileCodeModel(globals, main);
     }
 
     private MainCodeModel BuildMainModel(MainNode mainNode) => new(mainNode.StatementNodes.Select(Visit));
@@ -30,13 +31,25 @@ public class CodeModelAstVisitor {
             FileNode fn => HandleScope(BuildFileModel, fn),
             MainNode mn => HandleScope(BuildMainModel, mn),
             MethodCallNode mc => HandleScope(BuildMethodCallModel, mc),
-            ScalarValueNode svn => HandleScope(BuildScalarValueModel, svn),
+            IScalarValueNode svn => HandleScope(BuildScalarValueModel, svn),
+            VarDefNode vdn => HandleScope(BuildVarDefModel, vdn),
+            ConstantDefNode cdn => HandleScope(BuildConstantDefModel, cdn),
+            AssignmentNode vdn => HandleScope(BuildAssignmentModel, vdn),
+            IdentifierNode idn => HandleScope(BuildIdentifierModel, idn),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
     }
 
+    private VarDefModel BuildVarDefModel(VarDefNode varDefNode) => new(Visit(varDefNode.Id), Visit(varDefNode.Expression));
+
+    private ConstantDefModel BuildConstantDefModel(ConstantDefNode constantDefNode) => new(Visit(constantDefNode.Id), CodeHelpers.NodeToCSharpType(constantDefNode.Expression), Visit(constantDefNode.Expression));
+
+    private AssignmentModel BuildAssignmentModel(AssignmentNode assignmentNode) => new(Visit(assignmentNode.Id), Visit(assignmentNode.Expression));
+
     private MethodCallModel BuildMethodCallModel(MethodCallNode methodCallNode) => new(Visit(methodCallNode.Id), methodCallNode.Parameters.Select(Visit));
 
-    private ScalarValueModel BuildScalarValueModel(ScalarValueNode scalarValueNode) => new(scalarValueNode.Id);
+    private ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
+
+    private IdentifierModel BuildIdentifierModel(IdentifierNode identifierNode) => new(identifierNode.Id);
 }

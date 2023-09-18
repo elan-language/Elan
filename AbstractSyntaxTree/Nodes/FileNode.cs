@@ -1,5 +1,7 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using System.Collections.Immutable;
 
-public record FileNode(MainNode MainNode) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record FileNode(ImmutableArray<IAstNode> GlobalNodes,  MainNode MainNode) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { MainNode };
 }

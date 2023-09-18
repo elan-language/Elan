@@ -18,12 +18,17 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
+using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
+public static partial class GlobalConstants {
+
+}
+
 public static class Program {
-    private static void Main(string[] args) {
-      printLine(""Hello World!"");
-    }
+  private static void Main(string[] args) {
+    printLine(""Hello World!"");
+  }
 }";
 
         var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue ""Hello World!"")))) ))))) {NL} end main) {NL} <EOF>)";
@@ -47,12 +52,17 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
+using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
+public static partial class GlobalConstants {
+
+}
+
 public static class Program {
-    private static void Main(string[] args) {
-      printLine(1);
-    }
+  private static void Main(string[] args) {
+    printLine(1);
+  }
 }";
 
         var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue 1)))) ))))) {NL} end main) {NL} <EOF>)";
@@ -76,12 +86,17 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
+using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
+public static partial class GlobalConstants {
+
+}
+
 public static class Program {
-    private static void Main(string[] args) {
-      printLine(2.1);
-    }
+  private static void Main(string[] args) {
+    printLine(2.1);
+  }
 }";
 
         var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue 2.1)))) ))))) {NL} end main) {NL} <EOF>)";
@@ -105,12 +120,17 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
+using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
+public static partial class GlobalConstants {
+
+}
+
 public static class Program {
-    private static void Main(string[] args) {
-      printLine('%');
-    }
+  private static void Main(string[] args) {
+    printLine('%');
+  }
 }";
 
         var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue '%')))) ))))) {NL} end main) {NL} <EOF>)";
@@ -134,12 +154,17 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
+using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
+public static partial class GlobalConstants {
+
+}
+
 public static class Program {
-    private static void Main(string[] args) {
-      printLine(true);
-    }
+  private static void Main(string[] args) {
+    printLine(true);
+  }
 }";
 
         var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value (literalValue true)))) ))))) {NL} end main) {NL} <EOF>)";
@@ -163,12 +188,17 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
+using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
+public static partial class GlobalConstants {
+
+}
+
 public static class Program {
-    private static void Main(string[] args) {
-      printLine();
-    }
+  private static void Main(string[] args) {
+    printLine();
+  }
 }";
 
         var parseTree = $@"(file (main {NL} main (statementBlock (callStatement {NL} (expression (methodCall printLine ( ))))) {NL} end main) {NL} <EOF>)";

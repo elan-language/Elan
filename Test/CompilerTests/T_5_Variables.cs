@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T_5_Variables
     {
 
@@ -19,9 +19,23 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 3;
+    printLine(a);
+  }
+}";
+
+        var parseTree = @$"(file (main {NL} main (statementBlock (varDef {NL} var (assignableValue a) = (expression (value (literalValue 3)))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -43,9 +57,24 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 3;
+    a = 4;
+    printLine(a);
+  }
+}";
+
+        var parseTree = @$"(file (main {NL} main (statementBlock (varDef {NL} var (assignableValue a) = (expression (value (literalValue 3)))) (assignment {NL} (assignableValue a) = (expression (value (literalValue 4)))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -67,9 +96,24 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 3.1;
+    a = 4;
+    printLine(a);
+  }
+}";
+
+        var parseTree = @$"(file (main {NL} main (statementBlock (varDef {NL} var (assignableValue a) = (expression (value (literalValue 3.1)))) (assignment {NL} (assignableValue a) = (expression (value (literalValue 4)))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -105,21 +149,23 @@ end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        Assert.Fail("Should fail compilation");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void fail_duplicateVarConst()
     {
         var code = @"
 main
-  const a = 3
+  constant a = 3
   var a = 4
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        Assert.Fail("Should fail compilation");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod]
@@ -145,7 +191,9 @@ end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        Assert.Fail("Should fail compilation");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
+        
     }
 
     [TestMethod]
@@ -185,7 +233,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void fail_useOfKeywordAsName()
     {
         var code = @"

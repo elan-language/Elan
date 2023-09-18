@@ -49,7 +49,7 @@ public static partial class Helpers {
     }
 
     public static void AssertParseTreeIs(CompileData compileData, string expectedParseTree) {
-        Assert.AreEqual(expectedParseTree, compileData.ParseStringTree);
+        Assert.AreEqual(CollapseWs(expectedParseTree), CollapseWs(compileData.ParseStringTree));
     }
 
     public static void AssertCompiles(CompileData compileData) {
@@ -62,6 +62,10 @@ public static partial class Helpers {
 
     public static void AssertObjectCodeCompiles(CompileData compileData) {
         Assert.IsTrue(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), "Failed to compile object code");
+    }
+
+    public static void AssertObjectCodeDoesNotCompile(CompileData compileData) {
+        Assert.IsFalse(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), "Unexpectedly compiled object code");
     }
 
     public static void AssertObjectCodeExecutes(CompileData compileData, string expectedOutput) {

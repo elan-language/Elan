@@ -15,12 +15,17 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
+using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
+public static partial class GlobalConstants {
+
+}
+
 public static class Program {
-    private static void Main(string[] args) {
-      printLine(""Hello World!"");
-    }
+  private static void Main(string[] args) {
+    printLine(""Hello World!"");
+  }
 }";
 
         var parseTree = @"(file (main \r\n main (statementBlock (callStatement \r\n (expression (methodCall printLine ( (argumentList (expression (value (literalValue ""Hello World!"")))) ))))) \r\n end main) \r\n <EOF>)";
@@ -44,12 +49,17 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
+using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
+public static partial class GlobalConstants {
+
+}
+
 public static class Program {
-    private static void Main(string[] args) {
-      printLine(""Hello World!"");
-    }
+  private static void Main(string[] args) {
+    printLine(""Hello World!"");
+  }
 }";
 
         var parseTree = @"(file (main \r\n main (statementBlock (callStatement \r\n (expression (methodCall printLine ( (argumentList (expression (value (literalValue ""Hello World!"")))) ))))) \r\n end main) \r\n <EOF>)";

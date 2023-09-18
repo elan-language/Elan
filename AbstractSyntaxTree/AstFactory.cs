@@ -18,15 +18,22 @@ public static class AstFactory {
             ElanParser.MethodCallContext c => visitor.Build(c),
             ElanParser.ValueContext c => visitor.Build(c),
             ElanParser.LiteralValueContext c => visitor.Build(c),
+            ElanParser.VarDefContext c => visitor.Build(c),
+            ElanParser.ConstantDefContext c => visitor.Build(c),
+            ElanParser.AssignableValueContext c => visitor.Build(c),
+            ElanParser.AssignmentContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
 
-    public static IAstNode BuildTerminal(this ElanBaseVisitor<IAstNode> visitor, ITerminalNode node) => new ScalarValueNode(node.Symbol.Text);
+    public static IAstNode BuildTerminal(this ElanBaseVisitor<IAstNode> visitor, ITerminalNode node) => new IdentifierNode(node.Symbol.Text);
 
     private static FileNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.FileContext context) {
         var mainNode = context.main().Select(visitor.Visit<MainNode>).Single();
-        return new FileNode(mainNode);
+
+        var globalNodes = context.constantDef().Select(visitor.Visit).ToImmutableArray();
+
+        return new FileNode(globalNodes, mainNode);
     }
 
     private static AggregateNode<IAstNode> Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.StatementBlockContext context) {
@@ -61,27 +68,67 @@ public static class AstFactory {
         return new MethodCallNode(id, pps);
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ValueContext context) => visitor.Visit(context.literalValue());
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ValueContext context) {
+        if (context.literalValue() is { } lv) {
+            return visitor.Visit(context.literalValue());
+        }
+
+        if (context.IDENTIFIER() is { } id) {
+            return visitor.Visit(id);
+        }
+
+
+        throw new NotImplementedException();
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.VarDefContext context) {
+        var id = visitor.Visit(context.assignableValue());
+        var expr = visitor.Visit(context.expression());
+
+        return new VarDefNode(id, expr);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ConstantDefContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var expr = visitor.Visit(context.expression());
+
+        return new ConstantDefNode(id, expr);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.AssignmentContext context) {
+        var id = visitor.Visit(context.assignableValue());
+        var expr = visitor.Visit(context.expression());
+
+        return new AssignmentNode(id, expr);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.AssignableValueContext context) {
+        if (context.IDENTIFIER() is { } id) {
+            return visitor.Visit(id);
+        }
+
+        throw new NotImplementedException();
+    }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.LiteralValueContext context) {
         if (context.LITERAL_STRING() is { } s) {
-            return visitor.Visit(s);
+            return new StringValueNode(s.Symbol.Text);
         }
 
         if (context.LITERAL_INTEGER() is { } i) {
-            return visitor.Visit(i);
+            return new IntegerValueNode(i.Symbol.Text);
         }
 
         if (context.LITERAL_FLOAT() is { } f) {
-            return visitor.Visit(f);
+            return new FloatValueNode(f.Symbol.Text);
         }
 
         if (context.LITERAL_CHAR() is { } c) {
-            return visitor.Visit(c);
+            return new CharValueNode(c.Symbol.Text);
         }
 
         if (context.BOOL_VALUE() is { } b) {
-            return visitor.Visit(b);
+            return new BoolValueNode(b.Symbol.Text);
         }
 
         throw new NotImplementedException();
