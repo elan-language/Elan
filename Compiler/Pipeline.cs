@@ -30,6 +30,8 @@ public static class Pipeline {
             return compileData;
         }
 
+        compileData = NormalizeCode(compileData);
+
         var parser = GetParser(compileData.ElanCode);
         var parseTree = parser.file();
         var parseStringTree = parseTree.ToStringTree(parser);
@@ -37,6 +39,18 @@ public static class Pipeline {
         var syntaxErrors = parser.ErrorListeners.OfType<ErrorListener>().First().SyntaxErrors.ToArray();
 
         return compileData with { ParserErrors = syntaxErrors, ParseTree = parseTree, ParseStringTree = parseStringTree };
+    }
+
+    private static CompileData NormalizeCode(CompileData compileData) {
+        var code = compileData.ElanCode;
+
+        if (code.StartsWith(Constants.Comment) || code.StartsWith(Constants.NewLine)) {
+            return compileData;
+        }
+
+        code = $"{Constants.NewLine}{code}";
+
+        return compileData with { ElanCode = code };
     }
 
     private static CompileData CompileCode(CompileData compileData) {
