@@ -9,7 +9,7 @@ main:
     NL END MAIN 
     ;
 
-constantDef: NL CONSTANT IDENTIFIER ASSIGN expression;
+constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
 
 enumDef: 
 	NL ENUMERATION TYPENAME
@@ -184,21 +184,35 @@ index: OPEN_SQ_BRACKET (expression | expression COMMA expression | range) CLOSE_
 
 range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT expression; 
 
-value: literalValue | ((SELF DOT)? IDENTIFIER) | literalDataStructure | SELF | RESULT;
+value: literal | ((SELF DOT)? IDENTIFIER) | dataStructureDefinition | SELF | RESULT;
 
-literalDataStructure: tuple | literalList | literalDictionary;
+literal: literalValue | literalDataStructure ; 
 
-tuple:  OPEN_BRACKET expression COMMA expression (COMMA expression)* CLOSE_BRACKET; 
+literalValue:  BOOL_VALUE | LITERAL_INTEGER | LITERAL_FLOAT | LITERAL_DECIMAL| LITERAL_CHAR;
+
+dataStructureDefinition:  tupleDefinition | listDefinition | dictionaryDefinition;
+
+literalDataStructure: LITERAL_STRING | literalTuple | literalList | literalDictionary;
+
+tupleDefinition:  OPEN_BRACKET expression COMMA expression (COMMA expression)* CLOSE_BRACKET; 
+
+literalTuple:  OPEN_BRACKET literal COMMA literal (COMMA literal)* CLOSE_BRACKET; 
 
 tupleDecomp: OPEN_BRACKET IDENTIFIER (COMMA IDENTIFIER)+  CLOSE_BRACKET;
  
-literalList: OPEN_BRACE (NL? expression (COMMA expression)* NL?)? CLOSE_BRACE;
+listDefinition: OPEN_BRACE (NL? expression (COMMA expression)* NL?)? CLOSE_BRACE;
+
+literalList: OPEN_BRACE (NL? literal (COMMA literal)* NL?)? CLOSE_BRACE;
 
 listDecomp: OPEN_BRACE IDENTIFIER COLON IDENTIFIER CLOSE_BRACE;
 
-literalDictionary: OPEN_BRACE (NL? kvp (COMMA kvp)* NL?)? CLOSE_BRACE;
+dictionaryDefinition: OPEN_BRACE (NL? kvp (COMMA kvp)* NL?)? CLOSE_BRACE;
+
+literalDictionary: OPEN_BRACE (NL? literalKvp (COMMA literalKvp)* NL?)? CLOSE_BRACE;
 
 kvp: expression COLON expression;
+
+literalKvp: literal COLON literal;
 
 assignmentOp: ASSIGN_ADD | ASSIGN_SUBTRACT | ASSIGN_MULT | ASSIGN_DIV; 
 
@@ -211,8 +225,6 @@ arithmeticOp:  POWER | MULT | DIVIDE | MOD | INT_DIV | PLUS | MINUS;
 logicalOp: OP_AND | OP_OR | OP_XOR;
 
 conditionalOp: GT | LT | OP_GE | OP_LE | OP_EQ | OP_NE;
-
-literalValue:  BOOL_VALUE | LITERAL_INTEGER | LITERAL_FLOAT | LITERAL_DECIMAL| LITERAL_CHAR | LITERAL_STRING;
 
 newInstance:
 	NEW type OPEN_BRACKET (argumentList)? CLOSE_BRACKET (withClause)?

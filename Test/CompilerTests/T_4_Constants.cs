@@ -313,6 +313,19 @@ end main
         AssertParses(compileData);
         AssertDoesNotCompile(compileData);
     }
+
+    [TestMethod]
+    public void Fail_expression()
+    {
+        var code = @"
+main
+  constant a = 3 + 4
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        Assert.Fail("Should fail parsing");
+    }
     #endregion
 }
 
