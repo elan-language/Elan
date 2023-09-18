@@ -233,18 +233,16 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void fail_useOfKeywordAsName()
     {
         var code = @"
 main
-  var result = 4.1
+  var new = 4.1
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
+        AssertDoesNotParse(compileData);
     }
     #endregion
 }
