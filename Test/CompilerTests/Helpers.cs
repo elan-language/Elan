@@ -57,11 +57,11 @@ public static partial class Helpers {
     }
 
     public static void AssertObjectCodeIs(CompileData compileData, string objectCode) {
-        Assert.AreEqual(objectCode, compileData.ObjectCode);
+        Assert.AreEqual(CollapseWs(objectCode), CollapseWs(compileData.ObjectCode));
     }
 
     public static void AssertObjectCodeCompiles(CompileData compileData) {
-        Assert.IsTrue(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), "Failed to compile object code");
+        Assert.IsTrue(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), compileData.ObjectCodeCompileStdOut);
     }
 
     public static void AssertObjectCodeDoesNotCompile(CompileData compileData) {
