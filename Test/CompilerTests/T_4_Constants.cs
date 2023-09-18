@@ -13,7 +13,7 @@ public class T_4_Constants
     {
         var code = @"
 main
-  const a = 3
+  constant a = 3
   printLine(a)
 end main
 ";
@@ -36,7 +36,7 @@ end main
     {
         var code = @"
 main
-  const a = 3.1
+  constant a = 3.1
   printLine(a)
 end main
 ";
@@ -59,7 +59,7 @@ end main
     {
         var code = @"
 main
-  const a = ""hell0""
+  constant a = ""hell0""
   printLine(a)
 end main
 ";
@@ -82,7 +82,7 @@ end main
     {
         var code = @"
 main
-  const a = 'a'
+  constant a = 'a'
   printLine(a)
 end main
 ";
@@ -105,7 +105,7 @@ end main
     {
         var code = @"
 main
-  const a = true
+  constant a = true
   printLine(a)
 end main
 ";
@@ -127,7 +127,7 @@ end main
     public void Pass_TopLevelConst()
     {
         var code = @"
-const a = 3
+constant a = 3
 main
   printLine(a)
 end main
@@ -152,7 +152,7 @@ end main
     {
         var code = @"
 main
-  constant a = 3
+  const a = 3
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -190,7 +190,7 @@ end main
     public void Fail_redeclaredConst()
     {
         var code = @"
-const a = 3
+constant a = 3
 main
   constant a = 3
 end main

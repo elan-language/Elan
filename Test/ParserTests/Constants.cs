@@ -12,6 +12,17 @@ constant allPossibleAnswers = {""ABACK"" }";
     }
 
     [TestMethod]
+    public void ConstantDefinedInsideMain()
+    {
+        var code = @"
+main
+constant foo = 3
+end main";
+
+        AssertParsesForRule(code, file);
+    }
+
+    [TestMethod]
     public void HappyCase() {
         var code = @"
 constant x = 3.4 + 4.7
