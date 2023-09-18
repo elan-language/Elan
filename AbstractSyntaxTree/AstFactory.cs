@@ -18,10 +18,12 @@ public static class AstFactory {
             ElanParser.MethodCallContext c => visitor.Build(c),
             ElanParser.ValueContext c => visitor.Build(c),
             ElanParser.LiteralValueContext c => visitor.Build(c),
+            ElanParser.LiteralDataStructureContext c => visitor.Build(c),
             ElanParser.VarDefContext c => visitor.Build(c),
             ElanParser.ConstantDefContext c => visitor.Build(c),
             ElanParser.AssignableValueContext c => visitor.Build(c),
             ElanParser.AssignmentContext c => visitor.Build(c),
+            ElanParser.LiteralContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -69,14 +71,13 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ValueContext context) {
-        if (context.literalValue() is { } lv) {
-            return visitor.Visit(context.literalValue());
+        if (context.literal() is { } lv) {
+            return visitor.Visit(context.literal());
         }
 
         if (context.IDENTIFIER() is { } id) {
             return visitor.Visit(id);
         }
-
 
         throw new NotImplementedException();
     }
@@ -90,7 +91,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ConstantDefContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
-        var expr = visitor.Visit(context.expression());
+        var expr = visitor.Visit(context.literal());
 
         return new ConstantDefNode(id, expr);
     }
@@ -111,10 +112,7 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.LiteralValueContext context) {
-        if (context.LITERAL_STRING() is { } s) {
-            return new StringValueNode(s.Symbol.Text);
-        }
-
+    
         if (context.LITERAL_INTEGER() is { } i) {
             return new IntegerValueNode(i.Symbol.Text);
         }
@@ -129,6 +127,26 @@ public static class AstFactory {
 
         if (context.BOOL_VALUE() is { } b) {
             return new BoolValueNode(b.Symbol.Text);
+        }
+
+        throw new NotImplementedException();
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.LiteralDataStructureContext context) {
+        if (context.LITERAL_STRING() is { } ls) {
+            return new StringValueNode(ls.Symbol.Text);
+        }
+
+        throw new NotImplementedException();
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.LiteralContext context) {
+        if (context.literalValue() is { } lv) {
+            return visitor.Visit(lv);
+        }
+
+        if (context.literalDataStructure() is { } lds) {
+            return visitor.Visit(lds);
         }
 
         throw new NotImplementedException();

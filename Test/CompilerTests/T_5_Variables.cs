@@ -35,7 +35,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main {NL} main (statementBlock (varDef {NL} var (assignableValue a) = (expression (value (literalValue 3)))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
+        var parseTree = @$"(file (main {NL} main (statementBlock (varDef {NL} var (assignableValue a) = (expression (value (literal (literalValue 3))))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -74,7 +74,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main {NL} main (statementBlock (varDef {NL} var (assignableValue a) = (expression (value (literalValue 3)))) (assignment {NL} (assignableValue a) = (expression (value (literalValue 4)))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
+        var parseTree = @$"(file (main {NL} main (statementBlock (varDef {NL} var (assignableValue a) = (expression (value (literal (literalValue 3))))) (assignment {NL} (assignableValue a) = (expression (value (literal (literalValue 4))))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -113,7 +113,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main {NL} main (statementBlock (varDef {NL} var (assignableValue a) = (expression (value (literalValue 3.1)))) (assignment {NL} (assignableValue a) = (expression (value (literalValue 4)))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
+        var parseTree = @$"(file (main {NL} main (statementBlock (varDef {NL} var (assignableValue a) = (expression (value (literal (literalValue 3.1))))) (assignment {NL} (assignableValue a) = (expression (value (literal (literalValue 4))))) (callStatement {NL} (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) {NL} end main) {NL} <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

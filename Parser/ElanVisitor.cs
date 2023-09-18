@@ -314,23 +314,53 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitValue([NotNull] ElanParser.ValueContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.literal"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLiteral([NotNull] ElanParser.LiteralContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.literalValue"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLiteralValue([NotNull] ElanParser.LiteralValueContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.dataStructureDefinition"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitDataStructureDefinition([NotNull] ElanParser.DataStructureDefinitionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.literalDataStructure"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitLiteralDataStructure([NotNull] ElanParser.LiteralDataStructureContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.tuple"/>.
+	/// Visit a parse tree produced by <see cref="ElanParser.tupleDefinition"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitTuple([NotNull] ElanParser.TupleContext context);
+	Result VisitTupleDefinition([NotNull] ElanParser.TupleDefinitionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.literalTuple"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLiteralTuple([NotNull] ElanParser.LiteralTupleContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.tupleDecomp"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitTupleDecomp([NotNull] ElanParser.TupleDecompContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.listDefinition"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitListDefinition([NotNull] ElanParser.ListDefinitionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.literalList"/>.
 	/// </summary>
@@ -344,6 +374,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitListDecomp([NotNull] ElanParser.ListDecompContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.dictionaryDefinition"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitDictionaryDefinition([NotNull] ElanParser.DictionaryDefinitionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.literalDictionary"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -355,6 +391,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitKvp([NotNull] ElanParser.KvpContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.literalKvp"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLiteralKvp([NotNull] ElanParser.LiteralKvpContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.assignmentOp"/>.
 	/// </summary>
@@ -391,12 +433,6 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitConditionalOp([NotNull] ElanParser.ConditionalOpContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.literalValue"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitLiteralValue([NotNull] ElanParser.LiteralValueContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.newInstance"/>.
 	/// </summary>

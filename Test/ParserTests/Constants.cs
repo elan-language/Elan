@@ -39,6 +39,6 @@ constant x = 3.4 + a
 constant y = ""hello""
 constant z = {2,3,5,7,11,13,17}
 ";
-        AssertDoesNotParseForRule(code, file, @""); //TODO should throw an error
+        AssertDoesNotParseForRule(code, file, @"line 2:17 extraneous input '+' expecting {<EOF>, NL}"); //TODO should throw an error
     }
 }
