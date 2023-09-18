@@ -13,7 +13,7 @@ public static partial class Helpers {
     [GeneratedRegex("\\s+")]
     private static partial Regex WsRegex();
 
-    public static string CollapseWs(string inp) => WsRegex().Replace(inp, " ");
+    public static string CollapseWs(string inp) => WsRegex().Replace(inp.Replace("\\r", "").Replace("\\n", ""), " ");
 
     private static Process CreateProcess(string exe, string workingDir) {
         var start = new ProcessStartInfo {
