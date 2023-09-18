@@ -36,7 +36,7 @@ public static partial class Helpers {
     private static string Execute(string exe, string workingDir) {
         using var process = CreateProcess(exe, workingDir);
 
-        if (!process.WaitForExit(10000)) {
+        if (!process.WaitForExit(20000)) {
             process.Kill();
         }
 
