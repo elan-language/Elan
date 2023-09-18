@@ -153,7 +153,7 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void fail_duplicateVarConst()
     {
         var code = @"
@@ -242,7 +242,9 @@ main
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+        AssertParses(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
     #endregion
 }

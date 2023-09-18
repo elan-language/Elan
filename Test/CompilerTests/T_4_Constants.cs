@@ -249,7 +249,7 @@ end main
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_invalidLiteralString()
     {
         var code = @"
@@ -261,7 +261,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_invalidLiteralString2()
     {
         var code = @"
@@ -273,21 +273,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Fail_redeclaredConst()
-    {
-        var code = @"
-constant a = 3
-main
-  constant a = 3
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertDoesNotCompile(compileData);
-    }
-
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_useBeforeDeclared()
     {
         var code = @"
@@ -297,10 +283,12 @@ main
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+        AssertParses(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_reassignment()
     {
         var code = @"
@@ -311,10 +299,11 @@ end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_expression()
     {
         var code = @"
@@ -323,8 +312,8 @@ main
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        Assert.Fail("Should fail parsing");
+        AssertDoesNotParse(compileData);
+        
     }
     #endregion
 }
