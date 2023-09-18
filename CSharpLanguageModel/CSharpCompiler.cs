@@ -57,7 +57,7 @@ public static class CSharpCompiler {
         try {
             using var process = CreateProcess(csProjFile, workingDir);
 
-            if (!process.WaitForExit(20000)) {
+            if (!process.WaitForExit(60000)) {
                 process.Kill();
             }
 
