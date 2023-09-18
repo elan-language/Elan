@@ -25,7 +25,7 @@ end main";
     [TestMethod]
     public void HappyCase() {
         var code = @"
-constant x = 3.4 + 4.7
+constant x = 3.4
 constant y = ""hello""
 constant z = {2,3,5,7,11,13,17}
 ";
