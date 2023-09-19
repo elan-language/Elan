@@ -44,7 +44,7 @@ end function
 function setChar(word String, n Int, newChar Char) as String 
     var a = 0
     repeat
-      a += 1
+      a = a + 1
     until a >= 5
     return word[..n] + newChar + word[n+1..]
 end function
@@ -248,7 +248,7 @@ function setChar(word String, n Int, newChar Char) as String ->
     public void AttemptingToAssignParamater() {
         var code = @"
 function setChar(word String, n Int, newChar Char) as String 
-   n += 1
+   n = n + 1
    return word
 end function
 ";

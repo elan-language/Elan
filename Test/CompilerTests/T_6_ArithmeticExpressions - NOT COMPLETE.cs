@@ -273,7 +273,7 @@ public static class Program {
             AssertDoesNotParse(compileData);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void Fail_PlusEquals() {
             var code = @"
     main

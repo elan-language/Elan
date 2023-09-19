@@ -15,11 +15,11 @@ class Player
     end procedure
 
     procedure addToLetters(letter Char)
-        tilesInHand += letter
+        tilesInHand = tilesInHand + letter
     end procedure
 
     procedure addToScore(points Int)
-        score += points
+        score = score + points
     end procedure
 
     procedure removeLetter(letter Char)
@@ -31,7 +31,7 @@ class Player
         tilesPlayed = tilesPlayed + word.length()
         for letter in word
             var c = if tilesInHand.contains(letter) then letter else '*'
-            wordAsPlayed += c
+            wordAsPlayed = wordsAsPlayed + c
         end for
         return wordAsPlayed
     end function
@@ -43,7 +43,7 @@ class Player
     end procedure
 
     procedure deductAnyPenalty()
-        tilesInHand -= playerTiles.reduce(0, lambda penalty,tile -> penalty - tileDictionary[tile])
+        tilesInHand = tilesInHand - playerTiles.reduce(0, lambda penalty,tile -> penalty - tileDictionary[tile])
     end procedure
 
 end class

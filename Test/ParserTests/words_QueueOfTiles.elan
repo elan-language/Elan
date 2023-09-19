@@ -27,13 +27,13 @@ class QueueOfTiles
                 contents[count - 1] = contents[count]
                 contents[rear] = ""
             end for
-            rear -= 1
+            rear = read - 1
         end if
     end procedure
 
     procedure add(rnd Random)
         if rear < maxSize - 1 then
-            rear += 1
+            rear = rear + 1
             var n = rnd.next(0, 30)
             contents[rear] = letters[n].asString()
         end if

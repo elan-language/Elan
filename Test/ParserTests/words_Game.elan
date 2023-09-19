@@ -33,7 +33,7 @@ class Game
         for count = 0 to startHandSize - 1
             var item = ""
             tileQueue.remove(item)
-            hand += item
+            hand = hand + item
             tileQueue.add()
         end for
         player.setTilesInHand(hand)
@@ -75,12 +75,12 @@ class Game
     function getScoreForWord(word String) as Int
         var score = 0
         for count = 0 to word.length() - 1
-            score += tileDictionary[word[count]]
+            score = score + tileDictionary[word[count]]
         end for
         if word.length() > 7 then
-            score += 20
+            score = score + 20
         else if word.length() > 5 then
-            score += 5
+            score = score + 5
         end if
         return score
     end function
@@ -88,7 +88,7 @@ class Game
     function listTileValues(player Player) as String
         var values = "                  "
         for c in player.tilesInHand
-            values += tileDictionary[c]
+            values = values + tileDictionary[c]
         end for
         return values
     end function
@@ -118,9 +118,9 @@ class Game
     function tileValuesAsString() as String
         var s = "\nTILE VALUES\n"
         for tile in tileDictionary
-            s += "Point for {tile.Key}: {tile.Value}"
+            s = s + "Point for {tile.Key}: {tile.Value}"
         end for
-        s += newline()
+        s = s + newline()
         return s
     end function
 

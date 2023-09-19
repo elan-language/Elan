@@ -34,7 +34,7 @@ if randomStart then
         for count = 0 to startHandSize - 1
             var item = """"
             tileQueue.remove(item)
-            hand += item
+            hand = hand + item
             tileQueue.add()
         end for
 ";
