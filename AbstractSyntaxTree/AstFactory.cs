@@ -107,11 +107,6 @@ public static class AstFactory {
         if (context.IDENTIFIER() is { } id) {
             return visitor.Visit(id);
         }
-
-        if (context.RESULT() is { } r) {
-            return visitor.Visit(r);
-        }
-
         throw new NotImplementedException();
     }
 

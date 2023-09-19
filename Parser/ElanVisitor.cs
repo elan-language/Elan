@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c:\GitHub\Elan\Parser\Elan.g4 by ANTLR 4.9.2
+// Generated from c:\\Elan\\Repository\\Parser\\Elan.g4 by ANTLR 4.9.2
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -43,108 +43,6 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitMain([NotNull] ElanParser.MainContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.constantDef"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitConstantDef([NotNull] ElanParser.ConstantDefContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.enumDef"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitEnumDef([NotNull] ElanParser.EnumDefContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.enumValue"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitEnumValue([NotNull] ElanParser.EnumValueContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.classDef"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitClassDef([NotNull] ElanParser.ClassDefContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.mutableClass"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitMutableClass([NotNull] ElanParser.MutableClassContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.immutableClass"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitImmutableClass([NotNull] ElanParser.ImmutableClassContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.abstractClass"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitAbstractClass([NotNull] ElanParser.AbstractClassContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.inherits"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitInherits([NotNull] ElanParser.InheritsContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.constructor"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitConstructor([NotNull] ElanParser.ConstructorContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.property"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitProperty([NotNull] ElanParser.PropertyContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.functionDef"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitFunctionDef([NotNull] ElanParser.FunctionDefContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.functionWithBody"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitFunctionWithBody([NotNull] ElanParser.FunctionWithBodyContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.expressionFunction"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitExpressionFunction([NotNull] ElanParser.ExpressionFunctionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.letIn"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitLetIn([NotNull] ElanParser.LetInContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.functionSignature"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitFunctionSignature([NotNull] ElanParser.FunctionSignatureContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.procedureDef"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitProcedureDef([NotNull] ElanParser.ProcedureDefContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.procedureSignature"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitProcedureSignature([NotNull] ElanParser.ProcedureSignatureContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.statementBlock"/>.
 	/// </summary>
@@ -194,6 +92,18 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitArgumentList([NotNull] ElanParser.ArgumentListContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.procedureDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitProcedureDef([NotNull] ElanParser.ProcedureDefContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.procedureSignature"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitProcedureSignature([NotNull] ElanParser.ProcedureSignatureContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.parameterList"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -205,6 +115,108 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitParameter([NotNull] ElanParser.ParameterContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.functionDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFunctionDef([NotNull] ElanParser.FunctionDefContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.functionWithBody"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFunctionWithBody([NotNull] ElanParser.FunctionWithBodyContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.expressionFunction"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitExpressionFunction([NotNull] ElanParser.ExpressionFunctionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.letIn"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLetIn([NotNull] ElanParser.LetInContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.functionSignature"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFunctionSignature([NotNull] ElanParser.FunctionSignatureContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.constantDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitConstantDef([NotNull] ElanParser.ConstantDefContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.enumDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEnumDef([NotNull] ElanParser.EnumDefContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.enumValue"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEnumValue([NotNull] ElanParser.EnumValueContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.classDef"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitClassDef([NotNull] ElanParser.ClassDefContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.mutableClass"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMutableClass([NotNull] ElanParser.MutableClassContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.immutableClass"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitImmutableClass([NotNull] ElanParser.ImmutableClassContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.abstractClass"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAbstractClass([NotNull] ElanParser.AbstractClassContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.inherits"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInherits([NotNull] ElanParser.InheritsContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.property"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitProperty([NotNull] ElanParser.PropertyContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.constructor"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitConstructor([NotNull] ElanParser.ConstructorContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.newInstance"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNewInstance([NotNull] ElanParser.NewInstanceContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.withClause"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitWithClause([NotNull] ElanParser.WithClauseContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.proceduralControlFlow"/>.
 	/// </summary>
@@ -433,18 +445,6 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitConditionalOp([NotNull] ElanParser.ConditionalOpContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.newInstance"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitNewInstance([NotNull] ElanParser.NewInstanceContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.withClause"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitWithClause([NotNull] ElanParser.WithClauseContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.type"/>.
 	/// </summary>

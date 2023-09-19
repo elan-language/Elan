@@ -21,6 +21,10 @@ main
     play(game)
 end main
 
+constant startHandSize = 15
+constant maxHandSize = 20
+constant maxTilesPlayed = 50
+constant letters = " * ***ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 constant mainMenu = "
 ========= 
 MAIN MENU

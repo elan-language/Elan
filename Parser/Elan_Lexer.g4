@@ -34,7 +34,6 @@ PRIVATE:       'private';
 PROCEDURE:	   'procedure';
 PROPERTY:      'property';
 REPEAT:		   'repeat';
-RESULT:		   'result'; // pre-defined variable of the correct type for the function
 RETURN:        'return';
 SELF:		   'self' ;
 SWITCH:        'switch';

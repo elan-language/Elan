@@ -3,7 +3,6 @@ class QueueOfTiles
     private property contents Array<String>
     private property rear Int
     private property maxSize Int
-    constant letters = " * ***ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     constructor(maxSize Int)
         self.maxSize = maxSize

@@ -9,8 +9,6 @@ public class OOP {
         var code = @"
 class Foo
 
-    constant k = 2.789
-
     property name = """"
     property p2 Int
     property p3 Foo

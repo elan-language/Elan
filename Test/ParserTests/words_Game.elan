@@ -1,9 +1,5 @@
 ﻿
 class Game
-    constant startHandSize = 15
-    constant maxHandSize = 20
-    constant maxTilesPlayed = 50
-
     property allowedWords List<String> 
     property player1 Player
     property player2 Player

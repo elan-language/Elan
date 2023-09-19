@@ -120,6 +120,44 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "4\r\n");
     }
 
+    [TestMethod]
+    public void Pass_LocalVarHidesGlobalConstant()
+    {
+        var code = @"
+constant a = 3
+main
+  var a = 4
+  printLine(a)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+    public const int a = 3;
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 4;
+    printLine(a);
+  }
+}";
+
+        var parseTree = @"(file (constantDef constant a = (literal (literalValue 3))) (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 4))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "4\r\n");
+    }
+
     #endregion
 
     #region Fails
@@ -149,19 +187,7 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod]
-    public void fail_duplicateVarConst() {
-        var code = @"
-main
-  constant a = 3
-  var a = 4
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
-    }
+
 
     [TestMethod]
     public void fail_GlobalVariable() {

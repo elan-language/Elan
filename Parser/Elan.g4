@@ -1,7 +1,7 @@
 grammar Elan;
 import Elan_Lexer;
 
-file: (main | constantDef | enumDef | classDef | functionDef | procedureDef)* NL* EOF;
+file: (main | procedureDef | functionDef | constantDef | enumDef | classDef  )* NL* EOF;
 
 main: 
 	NL MAIN 
@@ -9,46 +9,39 @@ main:
     NL END MAIN 
     ;
 
-constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
+// STATEMENTS
+statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement | freestandingException)*;
 
-enumDef: 
-	NL ENUMERATION TYPENAME
-	(enumValue (COMMA enumValue)*)  
-	NL END ENUMERATION
+callStatement: NL expression; //Intended for a freestanding procedure/system call as a statement, 
+// or expression terminated by a procedure or system call that consumes result'.
+// Not possible to specify this as a syntax distinct from an expression. Compile rules will enforce that you can't use a non-consumed expression
+
+freestandingException: NL throwException;
+
+varDef: NL VAR assignableValue ASSIGN expression;
+
+assignment: NL assignableValue (ASSIGN | assignmentOp)  expression;
+
+assignableValue: ((SELF DOT)?  IDENTIFIER index?) | tupleDecomp | listDecomp;
+
+methodCall: (CURRY|PARTIAL)? IDENTIFIER genericSpecifier? OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
+
+argumentList: expression (COMMA expression)*;
+
+// PROCEDURES
+procedureDef:
+	NL PROCEDURE procedureSignature
+	statementBlock 
+    NL END PROCEDURE
 	;
 
-enumValue: IDENTIFIER (ASSIGN LITERAL_INTEGER);
+procedureSignature: IDENTIFIER OPEN_BRACKET NL? parameterList? CLOSE_BRACKET;
 
-classDef: abstractClass | mutableClass | immutableClass;
+parameterList: parameter  (COMMA parameter)*;
 
-mutableClass: 
-	NL CLASS TYPENAME inherits?
-    (constructor |property | functionDef | procedureDef | constantDef)*	
-    NL END CLASS
-	;
+parameter: NL? IDENTIFIER type; 
 
-immutableClass: 
-	NL IMMUTABLE CLASS TYPENAME inherits?
-    (constructor |property | functionDef | constantDef)*
-    NL END CLASS 
-	;
-
-abstractClass:
-	NL ABSTRACT CLASS TYPENAME inherits?
-    (property | NL FUNCTION functionSignature | NL PROCEDURE procedureSignature)*
-    NL END CLASS
-	;
- 
-inherits: INHERITS type (COMMA type)*;
-
-constructor: 
-	NL CONSTRUCTOR (OPEN_BRACKET NL? parameterList? NL? CLOSE_BRACKET)? 
-    statementBlock
-	NL END CONSTRUCTOR
-	;
-
-property: NL PRIVATE? PROPERTY IDENTIFIER (type | (ASSIGN expression)); 
-
+// FUNCTIONS
 functionDef: functionWithBody | expressionFunction;
 
 functionWithBody: 
@@ -65,39 +58,61 @@ letIn: LET NL? assignableValue ASSIGN expression (COMMA assignableValue ASSIGN e
    
 functionSignature: IDENTIFIER OPEN_BRACKET NL? parameterList? NL? CLOSE_BRACKET NL? AS NL? type;
 
-procedureDef:
-	NL PROCEDURE procedureSignature
-	statementBlock 
-    NL END PROCEDURE
+// CONSTANTS
+constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
+
+// ENUMS
+enumDef: 
+	NL ENUMERATION TYPENAME
+	(enumValue (COMMA enumValue)*)  
+	NL END ENUMERATION
 	;
 
-procedureSignature: IDENTIFIER OPEN_BRACKET NL? parameterList? CLOSE_BRACKET;
+enumValue: IDENTIFIER (ASSIGN LITERAL_INTEGER);
 
-statementBlock:  (constantDef | varDef | assignment | proceduralControlFlow | callStatement | freestandingException)*;
+// CLASSES
+classDef: abstractClass | mutableClass | immutableClass;
 
-callStatement: NL expression; //Intended for a freestanding procedure/system call as a statement, 
-// or expression terminated by a procedure or system call that consumes result'.
-// Not possible to specify this as a syntax distinct from an expression. Compile rules will enforce that you can't use a non-consumed expression
+mutableClass: 
+	NL CLASS TYPENAME inherits?
+    (constructor |property | functionDef | procedureDef )*	
+    NL END CLASS
+	;
 
-freestandingException: NL throwException;
+immutableClass: 
+	NL IMMUTABLE CLASS TYPENAME inherits?
+    (constructor |property | functionDef )*
+    NL END CLASS 
+	;
 
-varDef: NL VAR assignableValue ASSIGN expression;
+abstractClass:
+	NL ABSTRACT CLASS TYPENAME inherits?
+    (property | NL FUNCTION functionSignature | NL PROCEDURE procedureSignature)*
+    NL END CLASS
+	;
+ 
+inherits: INHERITS type (COMMA type)*;
 
-assignment: NL assignableValue (ASSIGN | assignmentOp)  expression;
+property: NL PRIVATE? PROPERTY IDENTIFIER (type | (ASSIGN expression)); 
 
-assignableValue: ((SELF DOT)?  IDENTIFIER index?) | RESULT | tupleDecomp | listDecomp;
+constructor: 
+	NL CONSTRUCTOR (OPEN_BRACKET NL? parameterList? NL? CLOSE_BRACKET)? 
+    statementBlock
+	NL END CONSTRUCTOR
+	;
 
-methodCall: (CURRY|PARTIAL)? IDENTIFIER genericSpecifier? OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
+// INSTANTIATION
+newInstance:
+	NEW type OPEN_BRACKET (argumentList)? CLOSE_BRACKET (withClause)?
+	| IDENTIFIER withClause
+	;
 
-argumentList: expression (COMMA expression)*;
+withClause: WITH OPEN_BRACE assignment (COMMA assignment)* CLOSE_BRACE;
 
-parameterList: parameter  (COMMA parameter)*;
-
-parameter: NL? IDENTIFIER type; 
-
+// CONTROL FLOW STATMENTS
 proceduralControlFlow: if | for | forIn | while | repeat | try | switch;
 
-if:	
+if:
 	NL IF expression THEN
     statementBlock
     (NL ELSE IF expression THEN
@@ -156,6 +171,7 @@ caseDefault :
     statementBlock
 	;
 
+// EXPRESSIONS
 expression: 
 	  bracketedExpression
 	| methodCall
@@ -184,8 +200,10 @@ index: OPEN_SQ_BRACKET (expression | expression COMMA expression | range) CLOSE_
 
 range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT expression; 
 
-value: literal | ((SELF DOT)? IDENTIFIER) | dataStructureDefinition | SELF | RESULT;
+// VALUES
+value: literal | ((SELF DOT)? IDENTIFIER) | dataStructureDefinition | SELF ;
 
+// LITERALS
 literal: literalValue | literalDataStructure ; 
 
 literalValue:  BOOL_VALUE | LITERAL_INTEGER | LITERAL_FLOAT | LITERAL_DECIMAL| LITERAL_CHAR;
@@ -214,6 +232,7 @@ kvp: expression COLON expression;
 
 literalKvp: literal COLON literal;
 
+// OPERATIONS
 assignmentOp: ASSIGN_ADD | ASSIGN_SUBTRACT | ASSIGN_MULT | ASSIGN_DIV; 
 
 unaryOp: MINUS | OP_NOT;
@@ -226,13 +245,7 @@ logicalOp: OP_AND | OP_OR | OP_XOR;
 
 conditionalOp: GT | LT | OP_GE | OP_LE | OP_EQ | OP_NE;
 
-newInstance:
-	NEW type OPEN_BRACKET (argumentList)? CLOSE_BRACKET (withClause)?
-	| IDENTIFIER withClause
-	;
-
-withClause: WITH OPEN_BRACE assignment (COMMA assignment)* CLOSE_BRACE;
-
+// TYPES
 type:  VALUE_TYPE | dataStructureType | TYPENAME | TYPENAME genericSpecifier | tupleType |  funcType;
 
 dataStructureType: (ARRAY | LIST | DICTIONARY | ITERABLE ) genericSpecifier;
@@ -242,3 +255,4 @@ genericSpecifier: LT type (COMMA type)* GT;
 tupleType: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET; 
     
 funcType: OPEN_BRACKET type (COMMA type)*  ARROW type CLOSE_BRACKET; 
+
