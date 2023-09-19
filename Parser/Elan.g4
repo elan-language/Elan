@@ -123,7 +123,7 @@ if:
 	;
 
 for: 
-	NL FOR IDENTIFIER ASSIGN expression TO expression 
+	NL FOR IDENTIFIER ASSIGN expression TO expression (STEP expression)?
 	statementBlock
 	NL END FOR
 	;
