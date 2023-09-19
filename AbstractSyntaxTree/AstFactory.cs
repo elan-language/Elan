@@ -113,6 +113,7 @@ public static class AstFactory {
         if (context.IDENTIFIER() is { } id) {
             return visitor.Visit(id);
         }
+
         throw new NotImplementedException();
     }
 
@@ -165,8 +166,10 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ArithmeticOpContext context) {
-        var op = context.children.First().GetText();
+        if (context.children.First() is ITerminalNode tn) {
+            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type));
+        }
 
-        return new OperatorNode(Helpers.MapOperator(op));
+        throw new NotImplementedException(context.children.First().GetText());
     }
 }
