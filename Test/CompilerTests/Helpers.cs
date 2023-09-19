@@ -14,6 +14,8 @@ public static partial class Helpers {
 
     public static string CollapseWs(string inp) => WsRegex().Replace(inp.Replace("\\r", "").Replace("\\n", ""), " ");
 
+    public static string NormalizeNewLines(string inp) => inp.Replace("\r", "");
+
     private static Process CreateProcess(string exe, string workingDir) {
         var start = new ProcessStartInfo {
             FileName = exe,
@@ -56,7 +58,7 @@ public static partial class Helpers {
     }
 
     public static void AssertObjectCodeIs(CompileData compileData, string objectCode) {
-        Assert.AreEqual(CollapseWs(objectCode), CollapseWs(compileData.ObjectCode));
+        Assert.AreEqual(NormalizeNewLines(objectCode), NormalizeNewLines(compileData.ObjectCode));
     }
 
     public static void AssertObjectCodeCompiles(CompileData compileData) {

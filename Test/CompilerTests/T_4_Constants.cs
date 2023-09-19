@@ -23,7 +23,7 @@ using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
 public static partial class GlobalConstants {
-    public const int a = 3;
+  public const int a = 3;
 }
 
 public static class Program {
@@ -58,7 +58,7 @@ using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
 public static partial class GlobalConstants {
-    public const double a = 3.1;
+  public const double a = 3.1;
 }
 
 public static class Program {
@@ -93,7 +93,7 @@ using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
 public static partial class GlobalConstants {
-    public const string a = ""hell0"";
+  public const string a = ""hell0"";
 }
 
 public static class Program {
@@ -123,17 +123,18 @@ end main
 ";
 
         var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable; using static GlobalConstants; 
-using static StandardLibrary.SystemCalls; 
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-public static partial class GlobalConstants { 
-    public const char a = 'a'; 
-} 
+public static partial class GlobalConstants {
+  public const char a = 'a';
+}
 
-public static class Program { 
-    private static void Main(string[] args) { 
-        printLine(a); 
-    } 
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(a);
+  }
 }";
 
         var parseTree = @"(file (constantDef constant a = (literal (literalValue 'a'))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
@@ -156,7 +157,20 @@ main
 end main
 ";
 
-        var objectCode = @"using System.Collections.Generic; using System.Collections.Immutable; using static GlobalConstants; using static StandardLibrary.SystemCalls; public static partial class GlobalConstants { public const bool a = true; } public static class Program { private static void Main(string[] args) { printLine(a); } }";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+  public const bool a = true;
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(a);
+  }
+}";
 
         var parseTree = @"(file (constantDef constant a = (literal (literalValue true))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

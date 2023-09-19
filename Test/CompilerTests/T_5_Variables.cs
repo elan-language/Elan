@@ -137,7 +137,7 @@ using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 
 public static partial class GlobalConstants {
-    public const int a = 3;
+  public const int a = 3;
 }
 
 public static class Program {
