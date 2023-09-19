@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree;
+using AbstractSyntaxTree.Nodes;
 using CSharpLanguageModel.Models;
 
 namespace CSharpLanguageModel;
@@ -37,6 +38,7 @@ public class CodeModelAstVisitor {
             AssignmentNode n => HandleScope(BuildAssignmentModel, n),
             IdentifierNode n => HandleScope(BuildIdentifierModel, n),
             BinaryNode n => HandleScope(BuildBinaryModel, n),
+            OperatorNode n => HandleScope(BuildOperatorModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -53,6 +55,17 @@ public class CodeModelAstVisitor {
     private ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
 
     private IdentifierModel BuildIdentifierModel(IdentifierNode identifierNode) => new(identifierNode.Id);
+
+    private ICodeModel BuildOperatorModel(OperatorNode operatorNode) {
+        var op = operatorNode.Value;
+
+        if (op is Operator.Power) {
+            // special case 
+            return new IdentifierModel(CodeHelpers.OperatorToCSharpOperator(op));
+        }
+
+        return new ScalarValueModel(CodeHelpers.OperatorToCSharpOperator(op));
+    }
 
     private BinaryModel BuildBinaryModel(BinaryNode binaryNode) => new(Visit(binaryNode.Operator), Visit(binaryNode.Operand1), Visit(binaryNode.Operand2));
 }

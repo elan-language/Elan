@@ -99,7 +99,7 @@ end main
         AssertObjectCodeExecutes(compileData, "1.5\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_IntegerDivision() {
         var code = @"
 main
@@ -107,9 +107,22 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(7 / 2);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 7)))) (binaryOp (arithmeticOp div)) (expression (value (literal (literalValue 2)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -120,7 +133,7 @@ end main
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Mod() {
         var code = @"
 main
@@ -128,9 +141,22 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(11 % 3);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 11)))) (binaryOp (arithmeticOp mod)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -141,7 +167,7 @@ end main
         AssertObjectCodeExecutes(compileData, "2\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Power() {
         var code = @"
 main
@@ -149,9 +175,22 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(System.Math.Pow(3, 3));
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (arithmeticOp ^)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -159,10 +198,10 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "81\r\n");
+        AssertObjectCodeExecutes(compileData, "27\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_UseVariableBothSides() {
         var code = @"
 main
@@ -172,9 +211,24 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 3;
+    a = a + 1;
+    printLine(a);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue a) = (expression (expression (value a)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -194,8 +248,8 @@ end main
 
         #region Fails
 
-        [TestMethod, Ignore]        
-        public void Fail_InvalidExpressio() {
+        [TestMethod]        
+        public void Fail_InvalidExpression() {
             var code = @"
     main
       var a = 3 4

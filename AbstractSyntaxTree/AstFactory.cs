@@ -167,6 +167,6 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ArithmeticOpContext context) {
         var op = context.children.First().GetText();
 
-        return new OperatorNode(op);
+        return new OperatorNode(Helpers.MapOperator(op));
     }
 }
