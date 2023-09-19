@@ -28,14 +28,15 @@ public class CodeModelAstVisitor {
 
     public ICodeModel Visit(IAstNode astNode) {
         return astNode switch {
-            FileNode fn => HandleScope(BuildFileModel, fn),
-            MainNode mn => HandleScope(BuildMainModel, mn),
-            MethodCallNode mc => HandleScope(BuildMethodCallModel, mc),
-            IScalarValueNode svn => HandleScope(BuildScalarValueModel, svn),
-            VarDefNode vdn => HandleScope(BuildVarDefModel, vdn),
-            ConstantDefNode cdn => HandleScope(BuildConstantDefModel, cdn),
-            AssignmentNode vdn => HandleScope(BuildAssignmentModel, vdn),
-            IdentifierNode idn => HandleScope(BuildIdentifierModel, idn),
+            FileNode n => HandleScope(BuildFileModel, n),
+            MainNode n => HandleScope(BuildMainModel, n),
+            MethodCallNode n => HandleScope(BuildMethodCallModel, n),
+            IScalarValueNode n => HandleScope(BuildScalarValueModel, n),
+            VarDefNode n => HandleScope(BuildVarDefModel, n),
+            ConstantDefNode n => HandleScope(BuildConstantDefModel, n),
+            AssignmentNode n => HandleScope(BuildAssignmentModel, n),
+            IdentifierNode n => HandleScope(BuildIdentifierModel, n),
+            BinaryNode n => HandleScope(BuildBinaryModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -52,4 +53,6 @@ public class CodeModelAstVisitor {
     private ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
 
     private IdentifierModel BuildIdentifierModel(IdentifierNode identifierNode) => new(identifierNode.Id);
+
+    private BinaryModel BuildBinaryModel(BinaryNode binaryNode) => new(Visit(binaryNode.Operator), Visit(binaryNode.Operand1), Visit(binaryNode.Operand2));
 }

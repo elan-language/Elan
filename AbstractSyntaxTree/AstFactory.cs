@@ -24,6 +24,8 @@ public static class AstFactory {
             ElanParser.AssignableValueContext c => visitor.Build(c),
             ElanParser.AssignmentContext c => visitor.Build(c),
             ElanParser.LiteralContext c => visitor.Build(c),
+            ElanParser.BinaryOpContext c => visitor.Build(c),
+            ElanParser.ArithmeticOpContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -54,6 +56,10 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ExpressionContext context) {
         if (context.methodCall() is { } mc) {
             return visitor.Visit(mc);
+        }
+
+        if (context.binaryOp() is { } bop) {
+            return new BinaryNode(visitor.Visit(bop), visitor.Visit(context.expression().First()), visitor.Visit(context.expression().Last()));
         }
 
         if (context.value() is { } v) {
@@ -153,5 +159,19 @@ public static class AstFactory {
         }
 
         throw new NotImplementedException();
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.BinaryOpContext context) {
+        if (context.arithmeticOp() is { } ao) {
+            return visitor.Visit(ao);
+        }
+
+        throw new NotImplementedException();
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ArithmeticOpContext context) {
+        var op = context.children.First().GetText();
+
+        return new OperatorNode(op);
     }
 }
