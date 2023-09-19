@@ -45,7 +45,10 @@ public static class Functions {
 
     #endregion
 
-    #region Type conversion
+    #region Type handling
+
+    public static Type GetType(object o) => throw new NotImplementedException();
+    public static bool ImplementsType<T>(object o) => throw new NotImplementedException();
 
     public static double asFloat(int x) => x;
     public static double asFloat(decimal x) => (double)x;
@@ -62,5 +65,14 @@ public static class Functions {
 
     //TODO  asString(object a) => a.ToString();
 
+    #endregion
+
+    #region Bitwise operations
+    public static int bitwiseNot(int x) => throw new NotImplementedException();
+    public static int bitwiseAnd(int x, int y) => throw new NotImplementedException();
+    public static int bitwiseOr(int x, int y) => throw new NotImplementedException();
+    public static int bitwiseXor(int x, int y) => throw new NotImplementedException();
+    public static int bitwiseShiftLeft(int x, int places) => throw new NotImplementedException();
+    public static int bitwiseShiftRight(int x, int places) => throw new NotImplementedException();
     #endregion
 }
