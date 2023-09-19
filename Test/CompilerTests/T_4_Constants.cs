@@ -10,7 +10,7 @@ public class T_4_Constants {
 
     [TestMethod]
     public void Pass_Int() {
-        var code = @"
+        var code = @"#
 constant a = 3
 main
   printLine(a)
@@ -45,7 +45,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Float() {
-        var code = @"
+        var code = @"#
 constant a = 3.1
 main
   printLine(a)
@@ -80,7 +80,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_String() {
-        var code = @"
+        var code = @"#
 constant a = ""hell0""
 main
   printLine(a)
@@ -115,7 +115,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Char() {
-        var code = @"
+        var code = @"#
 constant a = 'a'
 main
   printLine(a)
@@ -150,7 +150,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Bool() {
-        var code = @"
+        var code = @"#
 constant a = true
 main
   printLine(a)
@@ -185,7 +185,7 @@ public static class Program {
     [TestMethod]
     public void Fail_useInsideMain()
     {
-        var code = @"
+        var code = @"#
 main
   constant a = 3
   print(a)
@@ -197,7 +197,7 @@ end main
 
     [TestMethod]
     public void Fail_incorrectKeyword() {
-        var code = @"
+        var code = @"#
 main
   const a = 3
 end main
@@ -212,7 +212,7 @@ end main
 
     [TestMethod]
     public void Fail_invalidLiteralString() {
-        var code = @"
+        var code = @"#
 main
   constant a = 'hello'
 end main
@@ -223,7 +223,7 @@ end main
 
     [TestMethod]
     public void Fail_invalidLiteralString2() {
-        var code = @"
+        var code = @"#
 main
   constant a = hello
 end main
@@ -235,7 +235,7 @@ end main
 
     [TestMethod]
     public void Fail_reassignment() {
-        var code = @"
+        var code = @"#
 constant a = 3
 main
   a = 4
@@ -249,7 +249,7 @@ end main
 
     [TestMethod]
     public void Fail_expression() {
-        var code = @"
+        var code = @"#
 main
   constant a = 3 + 4
 end main

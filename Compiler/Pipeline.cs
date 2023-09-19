@@ -44,11 +44,11 @@ public static class Pipeline {
     private static CompileData NormalizeCode(CompileData compileData) {
         var code = compileData.ElanCode;
 
-        if (code.StartsWith(Constants.Comment) || code.StartsWith(Constants.NewLine)) {
+        if (code.StartsWith(Constants.Comment)) {
             return compileData;
         }
 
-        code = $"{Constants.NewLine}{code}";
+        code = $"{Constants.Comment}{Constants.NewLine}{code}";
 
         return compileData with { ElanCode = code };
     }

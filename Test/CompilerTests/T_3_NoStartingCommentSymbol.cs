@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T_3_NoBlankLine {
+public class T_3_NoStartingCommentSymbol {
     [TestMethod]
     public void Pass1() {
         var code = @"main
@@ -41,7 +41,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass2() {
-        var code = @"# a comment
+        var code = @"## a comment
 main
   printLine(""Hello World!"")
 end main

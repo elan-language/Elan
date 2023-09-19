@@ -10,7 +10,7 @@ public class T_5_Variables {
 
     [TestMethod]
     public void Pass_Int() {
-        var code = @"
+        var code = @"#
 main
   var a = 3
   printLine(a)
@@ -46,7 +46,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Reassign() {
-        var code = @"
+        var code = @"#
 main
   var a = 3
   a = 4
@@ -84,7 +84,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CoerceFloatToIntVar() {
-        var code = @"
+        var code = @"#
 main
   var a = 3.1
   a = 4
@@ -123,7 +123,7 @@ public static class Program {
     [TestMethod]
     public void Pass_LocalVarHidesGlobalConstant()
     {
-        var code = @"
+        var code = @"#
 constant a = 3
 main
   var a = 4
@@ -164,7 +164,7 @@ public static class Program {
 
     [TestMethod]
     public void fail_wrongKeyword() {
-        var code = @"
+        var code = @"#
 main
   variable a = 3
 end main
@@ -175,7 +175,7 @@ end main
 
     [TestMethod]
     public void fail_duplicateVar() {
-        var code = @"
+        var code = @"#
 main
   var a = 3
   var a = 4
@@ -191,7 +191,7 @@ end main
 
     [TestMethod]
     public void fail_GlobalVariable() {
-        var code = @"
+        var code = @"#
 var a = 4
 main
 end main
@@ -202,7 +202,7 @@ end main
 
     [TestMethod]
     public void fail_assignIncompatibleType() {
-        var code = @"
+        var code = @"#
 main
   var a = 4
   a = 4.1
@@ -216,7 +216,7 @@ end main
 
     [TestMethod]
     public void fail_notInitialised() {
-        var code = @"
+        var code = @"#
 main
   var a
   a = 4.1
@@ -228,7 +228,7 @@ end main
 
     [TestMethod]
     public void fail_invalidVariableName1() {
-        var code = @"
+        var code = @"#
 main
   var A = 4.1
 end main
@@ -239,7 +239,7 @@ end main
 
     [TestMethod]
     public void fail_invalidVariableName2() {
-        var code = @"
+        var code = @"#
 main
   var a@b = 4.1
 end main
@@ -250,7 +250,7 @@ end main
 
     [TestMethod]
     public void fail_useOfKeywordAsName() {
-        var code = @"
+        var code = @"#
 main
   var new = 4.1
 end main

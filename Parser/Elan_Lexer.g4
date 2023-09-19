@@ -4,7 +4,9 @@ BYTE_ORDER_MARK: '\u00EF\u00BB\u00BF';
 
 NL: [\r\n\f]+ ;
 
-SINGLE_LINE_COMMENT: NL? ('#')  InputCharacter*    -> skip; 
+SINGLE_LINE_COMMENT: NL? COMMENT_MARKER  InputCharacter*    -> skip; 
+
+COMMENT_MARKER: '#';
 
 // Keywords
 AS:			   'as';

@@ -9,7 +9,7 @@ using static Helpers;
 public class T_2_HelloWorld {
     [TestMethod]
     public void Pass1() {
-        var code = @"
+        var code = @"#
 main
   printLine(""Hello World!"")
 end main
@@ -43,7 +43,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass2() {
-        var code = @"
+        var code = @"#
 main
   printLine(1)
 end main
@@ -77,7 +77,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass3() {
-        var code = @"
+        var code = @"#
 main
   printLine(2.1)
 end main
@@ -111,7 +111,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass4() {
-        var code = @"
+        var code = @"#
 main
   printLine('%')
 end main
@@ -145,7 +145,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass5() {
-        var code = @"
+        var code = @"#
 main
   printLine(true)
 end main
@@ -179,7 +179,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass6() {
-        var code = @"
+        var code = @"#
 main
   printLine()
 end main
@@ -213,7 +213,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail1() {
-        var code = @"
+        var code = @"#
   printLine(""Hello World`)
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -222,7 +222,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail2() {
-        var code = @"
+        var code = @"#
 main
   printLine(""Hello World!"")
 
@@ -233,21 +233,12 @@ main
 
     [TestMethod]
     public void Fail3() {
-        var code = @"
+        var code = @"#
 main
   printline(""Hello World!"")
 
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod]
-    public void Fail4() {
-        var code = @"";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertDoesNotCompile(compileData);
     }
 }
