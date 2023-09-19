@@ -20,6 +20,13 @@ public static class SystemCalls {
 
     public static void printLine() => Console.WriteLine();
 
+    public static string input(string prompt)
+    {
+        Console.Write(prompt);
+        return Console.ReadLine();
+    }
+
+
     #endregion
 
     #region random numbers

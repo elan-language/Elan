@@ -5,13 +5,13 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T29_Expressions3
+public class T30_Expressions4_SystemCalls
 {
     [TestMethod]
     public void Pass_LibraryConst() {
         var code = @"#
 main
-  printLine(pi)
+  var a = input(""Your name"")
 end main
 ";
 

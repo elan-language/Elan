@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T28_Expressions2
+public class T28_Expressions2_Brackets
 {
     [TestMethod]
     public void Pass_BracketsChangeOperatorEvaluation() {
