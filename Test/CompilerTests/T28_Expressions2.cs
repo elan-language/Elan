@@ -77,9 +77,9 @@ public static class Program {
     var x = 2 + 3 * 5 + 1
     var y = (2 + 3) * 5 + 1
     var z = (2 + 3) * (5 + 1)
-    printLine(x);
-    printLine(y);
-    printLine(z);
+    Console.WriteLine(x);
+    Console.WriteLine(y);
+    Console.WriteLine(z);
   }
 }";
 
@@ -95,7 +95,47 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_PlusOrMinusAsAUnaryOperator()
+    public void Pass_PowerHasPrecedenceOverMultiply()
+    {
+        var code = @"#
+main
+  var x = 2 + 3 ^ 2
+  var y = (2 + 3) ^ 2
+  printLine(x)
+  printLine(y)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+    var x = 2 + 3 ^ 2
+    var y = (2 + 3) ^ 2
+    Console.WriteLine(x);
+    Console.WriteLine(y);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "11\r\n25\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_MinusAsAUnaryOperator()
     {
         var code = @"#
 main
@@ -117,8 +157,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = - 4.7
     var y = 5 * -3;
-    printLine(x);
-    printLine(y);
+    Console.WriteLine(x);
+    Console.WriteLine(y);
   }
 }";
 
