@@ -665,16 +665,6 @@ public partial class ElanBaseVisitor<Result> : AbstractParseTreeVisitor<Result>,
 	/// <return>The visitor result.</return>
 	public virtual Result VisitLiteralKvp([NotNull] ElanParser.LiteralKvpContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.assignmentOp"/>.
-	/// <para>
-	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
-	/// on <paramref name="context"/>.
-	/// </para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	public virtual Result VisitAssignmentOp([NotNull] ElanParser.AssignmentOpContext context) { return VisitChildren(context); }
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.unaryOp"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>

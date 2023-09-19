@@ -59,10 +59,6 @@ DICTIONARY: 'Dictionary';
 ITERABLE: 'Iter';
 
 //Operators And Punctuators
-ASSIGN_ADD:        		  '+=';
-ASSIGN_SUBTRACT:          '-=';
-ASSIGN_MULT:       		  '*=';
-ASSIGN_DIV:        		  '/=';
 ASSIGN:               	  '=';
 ARROW:					  '->'; 
 OPEN_BRACE:               '{';
