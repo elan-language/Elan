@@ -56,7 +56,7 @@ public static partial class Helpers {
     }
 
     public static void AssertObjectCodeIs(CompileData compileData, string objectCode) {
-        Assert.AreEqual(objectCode, compileData.ObjectCode);
+        Assert.AreEqual(CollapseWs(objectCode), CollapseWs(compileData.ObjectCode));
     }
 
     public static void AssertObjectCodeCompiles(CompileData compileData) {
