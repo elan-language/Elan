@@ -3,11 +3,9 @@
 public enum Operator {
     Plus,
     Minus,
-    Mult,
+    Multiply,
     Divide,
     Power,
-    Mod,
-    IntDiv,
-    Lt,
-    Gt
+    Modulus,
+    IntDivide
 }

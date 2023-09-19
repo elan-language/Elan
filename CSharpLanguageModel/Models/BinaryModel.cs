@@ -1,6 +1,8 @@
 ﻿namespace CSharpLanguageModel.Models;
 
 public record BinaryModel(ICodeModel Operator, ICodeModel Operand1, ICodeModel Operand2) : ICodeModel {
+
+    public string ToString(int indent) => ToString();
     private bool IsOperator => Operator is ScalarValueModel;
 
     private string ToOperatorString() =>

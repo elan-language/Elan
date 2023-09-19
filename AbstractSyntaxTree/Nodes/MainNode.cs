@@ -1,7 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿namespace AbstractSyntaxTree.Nodes;
 
-namespace AbstractSyntaxTree.Nodes;
-
-public record MainNode(ImmutableArray<IAstNode> StatementNodes) : IAstNode {
-    public IEnumerable<IAstNode> Children => StatementNodes;
+public record MainNode(IAstNode StatementBlock) : IAstNode {
+    public IEnumerable<IAstNode> Children => new[] { StatementBlock };
 }
