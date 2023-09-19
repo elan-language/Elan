@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree;
+using AbstractSyntaxTree.Nodes;
 using CSharpLanguageModel.Models;
 
 namespace CSharpLanguageModel;
@@ -28,6 +29,16 @@ public static class CodeHelpers {
             CharValueNode => "char",
             BoolValueNode => "bool",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
+        };
+    }
+
+    public static string OperatorToCSharpOperator(Operator op) {
+        return op switch {
+            Operator.Plus => "+",
+            Operator.Divide => "/",
+            Operator.Mod => "%",
+            Operator.Power => "System.Math.Pow",
+            _ => throw new NotImplementedException(op.ToString())
         };
     }
 }
