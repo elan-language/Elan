@@ -78,7 +78,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "7\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DivideIntegersToFloat() {
         var code = @"
 main
@@ -86,9 +86,22 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(Compiler.WrapperFunctions.FloatDiv(3, 2));
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (arithmeticOp /)) (expression (value (literal (literalValue 2)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -273,7 +286,7 @@ public static class Program {
             AssertDoesNotParse(compileData);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void Fail_PlusPlus() {
             var code = @"
     main

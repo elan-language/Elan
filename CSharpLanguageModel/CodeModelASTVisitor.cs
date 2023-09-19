@@ -64,6 +64,11 @@ public class CodeModelAstVisitor {
             return new IdentifierModel(CodeHelpers.OperatorToCSharpOperator(op));
         }
 
+        if (op is Operator.Divide) {
+            // special case 
+            return new IdentifierModel(CodeHelpers.OperatorToCSharpOperator(op));
+        }
+
         return new ScalarValueModel(CodeHelpers.OperatorToCSharpOperator(op));
     }
 
