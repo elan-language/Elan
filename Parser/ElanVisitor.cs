@@ -410,12 +410,6 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitLiteralKvp([NotNull] ElanParser.LiteralKvpContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.assignmentOp"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitAssignmentOp([NotNull] ElanParser.AssignmentOpContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.unaryOp"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

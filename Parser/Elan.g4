@@ -20,7 +20,7 @@ freestandingException: NL throwException;
 
 varDef: NL VAR assignableValue ASSIGN expression;
 
-assignment: NL assignableValue (ASSIGN | assignmentOp)  expression;
+assignment: NL assignableValue ASSIGN expression;
 
 assignableValue: ((SELF DOT)?  IDENTIFIER index?) | tupleDecomp | listDecomp;
 
@@ -233,8 +233,6 @@ kvp: expression COLON expression;
 literalKvp: literal COLON literal;
 
 // OPERATIONS
-assignmentOp: ASSIGN_ADD | ASSIGN_SUBTRACT | ASSIGN_MULT | ASSIGN_DIV; 
-
 unaryOp: MINUS | OP_NOT;
 
 binaryOp: arithmeticOp | logicalOp | conditionalOp ;
