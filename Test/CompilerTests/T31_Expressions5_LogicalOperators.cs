@@ -5,18 +5,20 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T28_Expressions2_Brackets
+public class T31_LogicalOperators
 {
     [TestMethod]
-    public void Pass_BracketsChangeOperatorEvaluation() {
+    public void Pass_and() {
         var code = @"#
 main
-  var x = 2 + 3 * 5 + 1
-  var y = (2 + 3) * 5 + 1
-  var z = (2 + 3) * (5 + 1)
-  printLine(x)
-  printLine(y)
-  printLine(z)
+    var a = false and false
+    var b = false and true
+    var c = true and false
+    var d = true and true
+    printLine(a)
+    printLine(b)
+    printLine(c)
+    printLine(d)
 end main
 ";
 
@@ -30,12 +32,14 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-    var x = 2 + 3 * 5 + 1
-    var y = (2 + 3) * 5 + 1
-    var z = (2 + 3) * (5 + 1)
-    printLine(x);
-    printLine(y);
-    printLine(z);
+    var a = false && false;
+    var b = false && true;
+    var c = true && false;
+    var d = true && true;
+    printLine(a);
+    printLine(b);
+    printLine(c);
+    printLine(d);
   }
 }";
 
@@ -47,20 +51,22 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "18\r\n26\r\n30\r\n");
+        AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\nfalse\r\ntrue\r\n");
     }
 
     [TestMethod]
-    public void Pass_RedundantBracketsIgnored()
+    public void Pass_or()
     {
         var code = @"#
 main
-  var x = 2 + (3 * 5) + 1
-  var y = ((2 + 3)) * 5 + (1)
-  var z = ((2 + 3) * (5 + 1))
-  printLine(x)
-  printLine(y)
-  printLine(z)
+    var a = false or false
+    var b = false or true
+    var c = true or false
+    var d = true or true
+    printLine(a)
+    printLine(b)
+    printLine(c)
+    printLine(d)
 end main
 ";
 
@@ -74,12 +80,14 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-    var x = 2 + 3 * 5 + 1
-    var y = (2 + 3) * 5 + 1
-    var z = (2 + 3) * (5 + 1)
-    printLine(x);
-    printLine(y);
-    printLine(z);
+    var a = false || false;
+    var b = false || true;
+    var c = true || false;
+    var d = true || true;
+    printLine(a);
+    printLine(b);
+    printLine(c);
+    printLine(d);
   }
 }";
 
@@ -91,18 +99,22 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "18\r\n26\r\n30\r\n");
+        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\ntrue\r\n");
     }
 
     [TestMethod]
-    public void Pass_PowerHasPrecedenceOverMultiply()
+    public void Pass_xor()
     {
         var code = @"#
 main
-  var x = 2 + 3 ^ 2
-  var y = (2 + 3) ^ 2
-  printLine(x)
-  printLine(y)
+    var a = false xor false
+    var b = false xor true
+    var c = true xor false
+    var d = true xor true
+    printLine(a)
+    printLine(b)
+    printLine(c)
+    printLine(d)
 end main
 ";
 
@@ -116,10 +128,14 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-    var x = 2 + 3 ^ 2
-    var y = (2 + 3) ^ 2
-    printLine(x);
-    printLine(y);
+    var a = xor(false, false);
+    var b = xor(false, true);
+    var c = xor(true, false);
+    var d = xor(true, true);
+    printLine(a);
+    printLine(b);
+    printLine(c);
+    printLine(d);
   }
 }";
 
@@ -131,16 +147,22 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "11\r\n25\r\n");
+        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\nfalse\r\n");
     }
 
     [TestMethod]
-    public void Pass_MinusAsAUnaryOperator()
+    public void Pass_not()
     {
         var code = @"#
 main
-  var x = 5 * -3
-  printLine(x)
+    var a = not false
+    var b = not true
+    var c = not not true
+    var d = not not false
+    printLine(a)
+    printLine(b)
+    printLine(c)
+    printLine(d)
 end main
 ";
 
@@ -154,11 +176,14 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-  private static void Main(string[] args) {
-    var x = - 4.7
-    var y = 5 * -3;
-    printLine(x);
-    printLine(y);
+    var a = !false;
+    var b = !true;
+    var c = !!false;
+    var d = !!true;
+    printLine(a);
+    printLine(b);
+    printLine(c);
+    printLine(d);
   }
 }";
 
@@ -170,33 +195,61 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "-4.7\r\n-15\r\n");
+        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\nfalse\r\ntrue\r\n");
+    }
+
+    public void Pass_Precedence()
+    {
+        var code = @"#
+main
+    var a = not false and true
+    var b = not (false and true)
+    printLine(a)
+    printLine(b)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+    var a = !false && true;
+    var b = !(false && true);
+    printLine(a);
+    printLine(b);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\n");
     }
 
     [TestMethod]
-    public void Fail_PlusIsNotUnary()
+    public void Fail_UseNotWithTwoArgs()
     {
         var code = @"#
     main
-      var a = 3 * + 4
+      var a = true not false
     end main
     ";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
+        
     }
 
-    [TestMethod]
-    public void Fail_MultiplyAfterMinus()
-    {
-        var code = @"#
-    main
-      var a = 3 - * 4
-    end main
-    ";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
 
 }
