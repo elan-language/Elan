@@ -1,7 +1,6 @@
 ﻿namespace CSharpLanguageModel.Models;
 
 public record FileCodeModel(IEnumerable<ICodeModel> Globals, ICodeModel? Main) : ICodeModel {
-
     public override string ToString() =>
         $@"
 using System.Collections.Generic;

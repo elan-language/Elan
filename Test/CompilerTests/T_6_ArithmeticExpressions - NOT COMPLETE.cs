@@ -4,13 +4,12 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
-public class T_6_ArithmeticExpressions
-{
+[TestClass] [Ignore]
+public class T_6_ArithmeticExpressions {
     #region Passes
+
     [TestMethod]
-    public void Pass_IntAddition()
-    {
+    public void Pass_IntAddition() {
         var code = @"
 main
   printLine( 3 + 4)
@@ -31,8 +30,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_IncludeVariable()
-    {
+    public void Pass_IncludeVariable() {
         var code = @"
 main
   var a = 3
@@ -54,8 +52,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_DivideIntegersToFloat()
-    {
+    public void Pass_DivideIntegersToFloat() {
         var code = @"
 main
   printLine(3/2)
@@ -76,8 +73,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_IntegerDivision()
-    {
+    public void Pass_IntegerDivision() {
         var code = @"
 main
   printLine(7 div 2)
@@ -98,8 +94,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_Mod()
-    {
+    public void Pass_Mod() {
         var code = @"
 main
   printLine(11 mod 3)
@@ -120,8 +115,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_Power()
-    {
+    public void Pass_Power() {
         var code = @"
 main
   printLine(3 ^ 3)
@@ -142,8 +136,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_UseVariableBothSides()
-    {
+    public void Pass_UseVariableBothSides() {
         var code = @"
 main
   var a = 3
@@ -166,28 +159,28 @@ end main
     }
 
     [TestMethod]
-    public void Pass_TODO()
-    {
+    public void Pass_TODO() {
         Assert.Fail("RP to write tests using standard library function calls within expressions, including by dot-syntax");
     }
-        #endregion
-        #region Fails
-        [TestMethod]
-    public void Fail_InvalidExpressio()
-    {
+
+    #endregion
+
+    #region Fails
+
+    [TestMethod]
+    public void Fail_InvalidExpressio() {
         var code = @"
 main
   var a = 3 4
 end main
 ";
-    
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_PlusEquals()
-    {
+    public void Fail_PlusEquals() {
         var code = @"
 main
   var a = 3
@@ -200,8 +193,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_PlusPlus()
-    {
+    public void Fail_PlusPlus() {
         var code = @"
 main
   var a = 3
@@ -212,5 +204,6 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 }

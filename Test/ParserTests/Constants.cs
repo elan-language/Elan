@@ -1,4 +1,4 @@
-﻿namespace Test.ParserTests; 
+﻿namespace Test.ParserTests;
 
 [TestClass]
 public class Constants {
@@ -12,8 +12,7 @@ constant allPossibleAnswers = {""ABACK"" }";
     }
 
     [TestMethod]
-    public void ConstantDefinedInsideMain()
-    {
+    public void ConstantDefinedInsideMain() {
         var code = @"
 main
 constant foo = 3

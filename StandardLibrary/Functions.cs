@@ -1,14 +1,11 @@
 ﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable InconsistentNaming
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Runtime.InteropServices;
 
 namespace StandardLibrary;
 
-public static class Functions
-{
-
+public static class Functions {
     #region Math
+
     public static double pi => Math.PI;
     public static double aCos(double d) => Math.Cos(d);
     public static double aCosh(double d) => Math.Acosh(d);
@@ -30,20 +27,26 @@ public static class Functions
     public static double sqrt(double d) => Math.Sqrt(d);
     public static double tan(double d) => Math.Tan(d);
     public static double tanh(double d) => Math.Tanh(d);
+
     #endregion
 
     #region String handling
+
     public static int length(string s) => s.Length;
     public static int indexOf(string s, char c) => s.IndexOf(c);
     public static int startIndexOf(string s, string subString) => s.IndexOf(subString);
+
     public static string newline => @"
 ";
+
     public static string newlines(int n) => Enumerable.Range(1, n).Aggregate("", (s, x) => s + newline);
     public static string asUpperCase(string s) => s.ToUpper();
     public static string asLowerCase(string s) => s.ToLower();
+
     #endregion
 
     #region Type conversion
+
     public static double asFloat(int x) => x;
     public static double asFloat(decimal x) => (double)x;
     public static decimal asDecimal(int x) => x;
@@ -58,5 +61,6 @@ public static class Functions
     public static decimal asDecimal(string s) => decimal.Parse(s);
 
     //TODO  asString(object a) => a.ToString();
+
     #endregion
 }

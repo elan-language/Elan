@@ -2,7 +2,6 @@
 
 namespace CSharpLanguageModel.Models;
 
-
 public record MainCodeModel(IEnumerable<ICodeModel> Statements) : ICodeModel {
     public override string ToString() =>
         $@"

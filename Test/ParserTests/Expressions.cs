@@ -1,4 +1,4 @@
-﻿namespace Test.ParserTests; 
+﻿namespace Test.ParserTests;
 
 [TestClass]
 public class Expressions {

@@ -112,12 +112,10 @@ public static class AstFactory {
             return visitor.Visit(r);
         }
 
-
         throw new NotImplementedException();
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.LiteralValueContext context) {
-    
         if (context.LITERAL_INTEGER() is { } i) {
             return new IntegerValueNode(i.Symbol.Text);
         }

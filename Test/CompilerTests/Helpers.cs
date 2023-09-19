@@ -6,7 +6,6 @@ using Compiler;
 namespace Test.CompilerTests;
 
 public static partial class Helpers {
-
     // because now windows newlines on appveyor
     public static readonly string NL = Environment.GetEnvironmentVariable("APPVEYOR") is "True" ? @"\n" : @"\r\n";
 

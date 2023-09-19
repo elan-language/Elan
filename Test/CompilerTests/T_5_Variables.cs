@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T_5_Variables
-    {
-
+public class T_5_Variables {
     #region Passes
+
     [TestMethod]
-    public void Pass_Int()
-    {
+    public void Pass_Int() {
         var code = @"
 main
   var a = 3
@@ -35,7 +33,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main  main (statementBlock (varDef  var (assignableValue a) = (expression (value (literal (literalValue 3))))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
+        var parseTree = @"(file (main  main (statementBlock (varDef  var (assignableValue a) = (expression (value (literal (literalValue 3))))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -47,8 +45,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Reassign()
-    {
+    public void Pass_Reassign() {
         var code = @"
 main
   var a = 3
@@ -74,7 +71,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main  main (statementBlock (varDef  var (assignableValue a) = (expression (value (literal (literalValue 3))))) (assignment  (assignableValue a) = (expression (value (literal (literalValue 4))))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
+        var parseTree = @"(file (main  main (statementBlock (varDef  var (assignableValue a) = (expression (value (literal (literalValue 3))))) (assignment  (assignableValue a) = (expression (value (literal (literalValue 4))))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -86,8 +83,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CoerceFloatToIntVar()
-    {
+    public void Pass_CoerceFloatToIntVar() {
         var code = @"
 main
   var a = 3.1
@@ -113,7 +109,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main  main (statementBlock (varDef  var (assignableValue a) = (expression (value (literal (literalValue 3.1))))) (assignment  (assignableValue a) = (expression (value (literal (literalValue 4))))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
+        var parseTree = @"(file (main  main (statementBlock (varDef  var (assignableValue a) = (expression (value (literal (literalValue 3.1))))) (assignment  (assignableValue a) = (expression (value (literal (literalValue 4))))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -123,12 +119,13 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "4\r\n");
     }
+
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void fail_wrongKeyword()
-    {
+    public void fail_wrongKeyword() {
         var code = @"
 main
   variable a = 3
@@ -139,8 +136,7 @@ end main
     }
 
     [TestMethod]
-    public void fail_duplicateVar()
-    {
+    public void fail_duplicateVar() {
         var code = @"
 main
   var a = 3
@@ -154,8 +150,7 @@ end main
     }
 
     [TestMethod]
-    public void fail_duplicateVarConst()
-    {
+    public void fail_duplicateVarConst() {
         var code = @"
 main
   constant a = 3
@@ -169,8 +164,7 @@ end main
     }
 
     [TestMethod]
-    public void fail_GlobalVariable()
-    {
+    public void fail_GlobalVariable() {
         var code = @"
 var a = 4
 main
@@ -181,8 +175,7 @@ end main
     }
 
     [TestMethod]
-    public void fail_assignIncompatibleType()
-    {
+    public void fail_assignIncompatibleType() {
         var code = @"
 main
   var a = 4
@@ -193,12 +186,10 @@ end main
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
-        
     }
 
     [TestMethod]
-    public void fail_notInitialised()
-    {
+    public void fail_notInitialised() {
         var code = @"
 main
   var a
@@ -210,8 +201,7 @@ end main
     }
 
     [TestMethod]
-    public void fail_invalidVariableName1()
-    {
+    public void fail_invalidVariableName1() {
         var code = @"
 main
   var A = 4.1
@@ -222,8 +212,7 @@ end main
     }
 
     [TestMethod]
-    public void fail_invalidVariableName2()
-    {
+    public void fail_invalidVariableName2() {
         var code = @"
 main
   var a@b = 4.1
@@ -234,8 +223,7 @@ end main
     }
 
     [TestMethod]
-    public void fail_useOfKeywordAsName()
-    {
+    public void fail_useOfKeywordAsName() {
         var code = @"
 main
   var new = 4.1
@@ -244,6 +232,6 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 }
-

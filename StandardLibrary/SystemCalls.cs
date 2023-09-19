@@ -5,8 +5,8 @@ namespace StandardLibrary;
 
 [ElanSystemCall]
 public static class SystemCalls {
-
     #region print and input
+
     //TODO once we can support Any type - replace all overloads with argument of type 'object'
     public static void printLine(string s) => Console.WriteLine(s);
 
@@ -23,16 +23,16 @@ public static class SystemCalls {
     #endregion
 
     #region random numbers
+
     public static double random() => new Random().NextDouble();
 
     public static double random(double max) => random() * max;
 
-    public static double random(double min, double max) => random() * (max-min) + min;
+    public static double random(double min, double max) => random() * (max - min) + min;
 
-    public static int random(int max) => (int) random((double) max +1);
+    public static int random(int max) => (int)random((double)max + 1);
 
     public static int random(int min, int max) => min + random(max - min);
+
     #endregion
-
-
 }

@@ -4,6 +4,8 @@ using System.Text;
 namespace CSharpLanguageModel;
 
 public static class CSharpCompiler {
+    private const int CompileTimeout = 60000;
+
     public static string GetCsProjForFile(string baseName) =>
         @$"
 <Project Sdk=""Microsoft.NET.Sdk"">
@@ -57,7 +59,7 @@ public static class CSharpCompiler {
         try {
             using var process = CreateProcess(csProjFile, workingDir);
 
-            if (!process.WaitForExit(60000)) {
+            if (!process.WaitForExit(CompileTimeout)) {
                 process.Kill();
             }
 

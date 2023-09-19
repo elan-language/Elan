@@ -5,12 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T_4_Constants
-{
+public class T_4_Constants {
     #region Passes
+
     [TestMethod]
-    public void Pass_Int()
-    {
+    public void Pass_Int() {
         var code = @"
 main
   constant a = 3
@@ -34,7 +33,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main  main (statementBlock (constantDef  constant a = (literal (literalValue 3))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
+        var parseTree = @"(file (main  main (statementBlock (constantDef  constant a = (literal (literalValue 3))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -46,8 +45,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Float()
-    {
+    public void Pass_Float() {
         var code = @"
 main
   constant a = 3.1
@@ -71,8 +69,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main  main (statementBlock (constantDef  constant a = (literal (literalValue 3.1))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
-
+        var parseTree = @"(file (main  main (statementBlock (constantDef  constant a = (literal (literalValue 3.1))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -84,8 +81,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_String()
-    {
+    public void Pass_String() {
         var code = @"
 main
   constant a = ""hell0""
@@ -109,8 +105,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main  main (statementBlock (constantDef  constant a = (literal (literalDataStructure ""hell0""))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
-
+        var parseTree = @"(file (main  main (statementBlock (constantDef  constant a = (literal (literalDataStructure ""hell0""))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -122,8 +117,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Char()
-    {
+    public void Pass_Char() {
         var code = @"
 main
   constant a = 'a'
@@ -147,8 +141,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main  main (statementBlock (constantDef  constant a = (literal (literalValue 'a'))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
-
+        var parseTree = @"(file (main  main (statementBlock (constantDef  constant a = (literal (literalValue 'a'))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -160,8 +153,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Bool()
-    {
+    public void Pass_Bool() {
         var code = @"
 main
   constant a = true
@@ -185,8 +177,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @$"(file (main  main (statementBlock (constantDef  constant a = (literal (literalValue true))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
-
+        var parseTree = @"(file (main  main (statementBlock (constantDef  constant a = (literal (literalValue true))) (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -198,8 +189,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_TopLevelConst()
-    {
+    public void Pass_TopLevelConst() {
         var code = @"
 constant a = 3
 main
@@ -222,7 +212,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = $@"(file (constantDef  constant a = (literal (literalValue 3))) (main  main (statementBlock (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
+        var parseTree = @"(file (constantDef  constant a = (literal (literalValue 3))) (main  main (statementBlock (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -233,10 +223,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-
     [TestMethod]
-    public void Fail_incorrectKeyword()
-    {
+    public void Fail_incorrectKeyword() {
         var code = @"
 main
   const a = 3
@@ -245,13 +233,13 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 
     #region Fails
 
     [TestMethod]
-    public void Fail_invalidLiteralString()
-    {
+    public void Fail_invalidLiteralString() {
         var code = @"
 main
   constant a = 'hello'
@@ -262,8 +250,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_invalidLiteralString2()
-    {
+    public void Fail_invalidLiteralString2() {
         var code = @"
 main
   constant a = hello
@@ -274,8 +261,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_useBeforeDeclared()
-    {
+    public void Fail_useBeforeDeclared() {
         var code = @"
 main
   print(a)
@@ -289,8 +275,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_reassignment()
-    {
+    public void Fail_reassignment() {
         var code = @"
 main
   constant a = 3
@@ -304,8 +289,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_expression()
-    {
+    public void Fail_expression() {
         var code = @"
 main
   constant a = 3 + 4
@@ -313,8 +297,7 @@ end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
-        
     }
+
     #endregion
 }
-
