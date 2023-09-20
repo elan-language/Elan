@@ -16,26 +16,23 @@ public record IfStatementModel(IEnumerable<ICodeModel> Expressions, IEnumerable<
     private string If(int indent) =>
         $@"{Indent(indent)}if ({Expressions.First()}) {{
 {StatementBlocks.First().ToString(indent + 1)}
-{Indent(indent)}}}".TrimEnd();
+{Indent(indent)}}}";
 
     private string Else(int indent) {
         if (Expressions.Count() < StatementBlocks.Count()) {
             return $@"
 {Indent(indent)}else {{
 {StatementBlocks.Last().ToString(indent + 1)}
-{Indent(indent)}}}
-".TrimEnd();
+{Indent(indent)}}}";
         }
 
         return "";
     }
 
     private string ElseIf(ICodeModel expression, ICodeModel statementBlock, int indent) =>
-        $@"
-else if ({expression}) then {{
-{Indent(indent)}{statementBlock}
-}}
-".Trim();
+        $@"{Indent(indent)}else if ({expression}) {{
+{statementBlock.ToString(indent + 1)}
+{Indent(indent)}}}";
 
     private string ElseIfs(int indent) {
         if (Expressions.Count() > 1) {
@@ -43,7 +40,10 @@ else if ({expression}) then {{
             var elseIfStatements = Expressions.Count() == StatementBlocks.Count() ? StatementBlocks.Skip(1) : StatementBlocks.Skip(1).SkipLast(1);
             var elseIfs = elseIfExpressions.Zip(elseIfStatements);
 
-            return string.Join("\r\n", elseIfs.Select(ei => $"{ElseIf(ei.First, ei.Second, indent)}")).TrimEnd();
+            var elseIfString = string.Join("\r\n", elseIfs.Select(ei => $"{ElseIf(ei.First, ei.Second, indent)}"));
+
+            return $@"
+{elseIfString}";
         }
 
         return "";

@@ -39,6 +39,7 @@ public static class CodeHelpers {
             Operator.Multiply => "*",
             Operator.IntDivide => "/",
             Operator.Modulus => "%",
+            Operator.Equal => "==",
             Operator.Power => $"{typeof(Math).FullName}.{nameof(Math.Pow)}",
             Operator.Divide => $"{typeof(WrapperFunctions).FullName}.{nameof(WrapperFunctions.FloatDiv)}",
             _ => throw new NotImplementedException(op.ToString())
