@@ -51,7 +51,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "18\r\n26\r\n30\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_RedundantBracketsIgnored()
     {
         var code = @"#
@@ -75,9 +75,10 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-    var x = 2 + 3 * 5 + 1
-    var y = (2 + 3) * 5 + 1
-    var z = (2 + 3) * (5 + 1)
+  private static void Main(string[] args) {
+    var x = 2 + (3 * 5) + 1;
+    var y = ((2 + 3)) * 5 + (1);
+    var z = ((2 + 3) * (5 + 1));
     printLine(x);
     printLine(y);
     printLine(z);
