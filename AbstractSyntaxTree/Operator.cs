@@ -9,5 +9,7 @@ public enum Operator {
     Modulus,
     IntDivide,
     Equal,
-    And
+    And,
+    Or,
+    Not
 }

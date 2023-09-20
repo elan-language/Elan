@@ -43,6 +43,8 @@ public static class CodeHelpers {
             Operator.Power => $"{typeof(Math).FullName}.{nameof(Math.Pow)}",
             Operator.Divide => $"{typeof(WrapperFunctions).FullName}.{nameof(WrapperFunctions.FloatDiv)}",
             Operator.And => "&&",
+            Operator.Or => "||",
+            Operator.Not => "!",
             _ => throw new NotImplementedException(op.ToString())
         };
     }

@@ -55,7 +55,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "False\r\nFalse\r\nFalse\r\nTrue\r\n");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass_or() {
         var code = @"#
 main
@@ -73,13 +73,15 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
+  private static void Main(string[] args) {
     var a = false || false;
     var b = false || true;
     var c = true || false;
@@ -99,7 +101,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\ntrue\r\n");
+        AssertObjectCodeExecutes(compileData, "False\r\nTrue\r\nTrue\r\nTrue\r\n");
     }
 
     [TestMethod] [Ignore]
@@ -149,7 +151,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\nfalse\r\n");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass_not() {
         var code = @"#
 main
@@ -167,17 +169,19 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
+  private static void Main(string[] args) {
     var a = !false;
     var b = !true;
-    var c = !!false;
-    var d = !!true;
+    var c = !!true;
+    var d = !!false;
     printLine(a);
     printLine(b);
     printLine(c);
@@ -193,10 +197,10 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\nfalse\r\ntrue\r\n");
+        AssertObjectCodeExecutes(compileData, "True\r\nFalse\r\nTrue\r\nFalse\r\n");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass_Precedence() {
         var code = @"#
 main
@@ -210,13 +214,15 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
+  private static void Main(string[] args) {
     var a = !false && true;
     var b = !(false && true);
     printLine(a);
@@ -232,10 +238,10 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\n");
+        AssertObjectCodeExecutes(compileData, "True\r\nTrue\r\n");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail_UseNotWithTwoArgs() {
         var code = @"#
     main
