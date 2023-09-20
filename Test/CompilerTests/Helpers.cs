@@ -50,6 +50,10 @@ public static partial class Helpers {
     }
 
     public static void AssertParseTreeIs(CompileData compileData, string expectedParseTree) {
+        if (expectedParseTree is "*" && !string.IsNullOrWhiteSpace(compileData.ParseStringTree)) {
+            return;
+        }
+
         Assert.AreEqual(CollapseWs(expectedParseTree), CollapseWs(compileData.ParseStringTree));
     }
 

@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T29_Expressions3_FunctionCalls
 {
     [TestMethod]
@@ -19,12 +19,14 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
+  private static void Main(string[] args) {
     printLine(pi);
   }
 }";
@@ -37,10 +39,10 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3.141\r\n"); //Add full digits
+        AssertObjectCodeExecutes(compileData, "3.141592653589793\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]        
     public void Pass_SingleFunctionCall()
     {
         var code = @"#
@@ -54,6 +56,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -76,7 +79,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "0.5\r\n"); //Add full digits
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_DotSyntax()
     {
         var code = @"#
@@ -91,6 +94,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -115,7 +119,7 @@ public static class Program {
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_DotSyntaxFunctionEvaluationHasPrecedenceOverOperators()
     {
         var code = @"#
@@ -130,6 +134,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -153,7 +158,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2.5\r\n"); //Add full digits
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_MoreComplexExpression()
     {
         var code = @"#
@@ -168,6 +173,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -192,7 +198,7 @@ public static class Program {
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_StandaloneFunctionCallNotValid()
     {
         var code = @"#
