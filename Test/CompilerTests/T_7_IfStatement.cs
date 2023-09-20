@@ -7,7 +7,7 @@ using static Helpers;
 // Ticket #2
 [TestClass]
 public class T_7_IfStatement {
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass1() {
         var code = @"#
 main
@@ -32,7 +32,7 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var a = true;
-    if (a) then {
+    if (a) {
       printLine(""yes"");
     }
     else {
@@ -50,6 +50,7 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "yes\r\n");
+
     }
 
     

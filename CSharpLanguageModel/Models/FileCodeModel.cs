@@ -2,8 +2,8 @@
 
 public record FileCodeModel(IEnumerable<ICodeModel> Globals, ICodeModel? Main) : ICodeModel {
 
-    public string ToString(int indent) => ToString();
-    public override string ToString() =>
+    public override string ToString() => ToString(0);
+    public string ToString(int indent) =>
         $@"
 using System.Collections.Generic;
 using System.Collections.Immutable;

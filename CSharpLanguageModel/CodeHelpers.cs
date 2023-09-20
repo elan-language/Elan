@@ -21,9 +21,9 @@ public static class CodeHelpers {
         return string.Join("\r\n", mm.Select(cm => $"{indentation}{prefix}{cm.AsCode()}")).TrimEnd();
     }
 
-    public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString())).Trim();
+    public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0))).Trim();
 
-    public static string AsCode(this ICodeModel? cm) => (cm?.ToString() ?? "").Trim();
+    public static string AsCode(this ICodeModel? cm) => (cm?.ToString(0) ?? "").Trim();
 
     public static string NodeToCSharpType(IAstNode node) {
         return node switch {

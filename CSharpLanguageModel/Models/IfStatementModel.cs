@@ -27,10 +27,10 @@ else if ({expression}) then {{
     private string Else() {
         if (Expressions.Count() < StatementBlocks.Count()) {
             return $@"
-else {{
-{Indent1}{StatementBlocks.Last()}
-}}
-".Trim();
+{Indent(2)}else {{
+{StatementBlocks.Last().ToString(3)}
+{Indent(2)}}}
+".TrimEnd();
         }
 
         return "";
@@ -39,16 +39,14 @@ else {{
     public string ToString(int indent) {
 
         string If() => $@"
-if ({Expressions.First()}) then {{
-{Indent1}{StatementBlocks.First()}
-}}".Trim();
+if ({Expressions.First()}) {{
+{StatementBlocks.First().ToString(3)}
+{Indent(2)}}}".Trim();
 
         // check data 
         if (Expressions.Count() == StatementBlocks.Count() || StatementBlocks.Count() == Expressions.Count() + 1) {
             return $@"
-{If()}
-{ElseIfs()}
-{Else()}
+{If()}{ElseIfs()}{Else()}
 ";
         }
 

@@ -2,8 +2,8 @@
 
 public record MethodCallModel(ICodeModel Id, IEnumerable<ICodeModel> Parameters) : ICodeModel {
 
-    public string ToString(int indent) => ToString();
-    public override string ToString() =>
+    public override string ToString() => ToString(0);
+    public string ToString(int indent) =>
         $@"
 {Id}({Parameters.AsCommaSeparatedString()});
 ".Trim();
