@@ -72,7 +72,7 @@ public static class Functions {
     public static int bitwiseAnd(int x, int y) => x & y;
     public static int bitwiseOr(int x, int y) => x | y;
     public static int bitwiseXor(int x, int y) => x ^ y;
-    public static int bitwiseShiftLeft(int x, int places) => x << places;
-    public static int bitwiseShiftRight(int x, int places) => x >> places;
+    public static int shiftLeft(int x, int places) => x << places;
+    public static int shiftRight(int x, int places) => x >> places;
     #endregion
 }
