@@ -26,6 +26,8 @@ public static class AstFactory {
             ElanParser.LiteralContext c => visitor.Build(c),
             ElanParser.BinaryOpContext c => visitor.Build(c),
             ElanParser.ArithmeticOpContext c => visitor.Build(c),
+            ElanParser.ProceduralControlFlowContext c => visitor.Build(c),
+            ElanParser.IfContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -40,15 +42,15 @@ public static class AstFactory {
         return new FileNode(globalNodes, mainNode);
     }
 
-    private static AggregateNode<IAstNode> Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.StatementBlockContext context) {
+    private static StatementBlockNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.StatementBlockContext context) {
         var statements = context.children.Select(visitor.Visit).ToImmutableArray();
-        return new AggregateNode<IAstNode>(statements);
+        return new StatementBlockNode(statements);
     }
 
     private static MainNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.MainContext context) {
-        var statements = visitor.Visit<AggregateNode<IAstNode>>(context.statementBlock());
+        var block = visitor.Visit<StatementBlockNode>(context.statementBlock());
 
-        return new MainNode(statements.AggregatedNodes);
+        return new MainNode(block);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.CallStatementContext context) => visitor.Visit(context.expression());
@@ -171,5 +173,20 @@ public static class AstFactory {
         }
 
         throw new NotImplementedException(context.children.First().GetText());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ProceduralControlFlowContext context) {
+        if (context.@if() is { } ic) {
+            return visitor.Visit(ic);
+        }
+
+        throw new NotImplementedException(context.children.First().GetText());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.IfContext context) {
+        var expressions = context.expression().Select(visitor.Visit);
+        var statementBlocks = context.statementBlock().Select(visitor.Visit);
+
+        return new IfStatementNode(expressions.ToImmutableArray(), statementBlocks.ToImmutableArray());
     }
 }

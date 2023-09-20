@@ -11,6 +11,8 @@ public static class CodeHelpers {
 
     public static string Indent1 => Indent(1);
 
+    public static string Indent(ICodeModel model, int indent) => model.ToString(indent);
+
     public static string Indent(int level) => new(' ', level * IndentSpaces);
 
     public static string AsLineSeparatedString(this IEnumerable<ICodeModel> mm, int level = 0, string prefix = "") {
@@ -37,8 +39,10 @@ public static class CodeHelpers {
     public static string OperatorToCSharpOperator(Operator op) {
         return op switch {
             Operator.Plus => "+",
-            Operator.IntDiv => "/",
-            Operator.Mod => "%",
+            Operator.Minus => "-",
+            Operator.Multiply => "*",
+            Operator.IntDivide => "/",
+            Operator.Modulus => "%",
             Operator.Power => $"{typeof(Math).FullName}.{nameof(Math.Pow)}",
             Operator.Divide => $"{typeof(WrapperFunctions).FullName}.{nameof(WrapperFunctions.FloatDiv)}",
             _ => throw new NotImplementedException(op.ToString())

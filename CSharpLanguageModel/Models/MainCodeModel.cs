@@ -2,12 +2,15 @@
 
 namespace CSharpLanguageModel.Models;
 
-public record MainCodeModel(IEnumerable<ICodeModel> Statements) : ICodeModel {
+// TODO change to statement block
+public record MainCodeModel(ICodeModel Statements) : ICodeModel {
+
+    public string ToString(int indent) => ToString();
     public override string ToString() =>
         $@"
 public static class Program {{
 {Indent1}private static void Main(string[] args) {{
-{Statements.AsLineSeparatedString(2)}
+{Indent(Statements, 2)}
 {Indent1}}}
 }}".Trim();
 }

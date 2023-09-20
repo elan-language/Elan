@@ -25,7 +25,9 @@ public class CodeModelAstVisitor {
         return new FileCodeModel(globals, main);
     }
 
-    private MainCodeModel BuildMainModel(MainNode mainNode) => new(mainNode.StatementNodes.Select(Visit));
+    private MainCodeModel BuildMainModel(MainNode mainNode) => new(Visit(mainNode.StatementBlock));
+
+    private StatementBlockModel BuildStatementBlockModel(StatementBlockNode statementBlock) => new(statementBlock.Statements.Select(Visit));
 
     public ICodeModel Visit(IAstNode astNode) {
         return astNode switch {
@@ -39,6 +41,8 @@ public class CodeModelAstVisitor {
             IdentifierNode n => HandleScope(BuildIdentifierModel, n),
             BinaryNode n => HandleScope(BuildBinaryModel, n),
             OperatorNode n => HandleScope(BuildOperatorModel, n),
+            IfStatementNode n => HandleScope(BuildIfStatementModel, n),
+            StatementBlockNode n => HandleScope(BuildStatementBlockModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -56,15 +60,17 @@ public class CodeModelAstVisitor {
 
     private IdentifierModel BuildIdentifierModel(IdentifierNode identifierNode) => new(identifierNode.Id);
 
+    private IfStatementModel BuildIfStatementModel(IfStatementNode ifStatementNode) {
+        var expressions = ifStatementNode.Expressions.Select(Visit);
+        var statementBlocks = ifStatementNode.StatementBlocks.Select(Visit);
+
+        return new IfStatementModel(expressions, statementBlocks);
+    }
+
     private ICodeModel BuildOperatorModel(OperatorNode operatorNode) {
         var op = operatorNode.Value;
 
-        if (op is Operator.Power) {
-            // special case 
-            return new IdentifierModel(CodeHelpers.OperatorToCSharpOperator(op));
-        }
-
-        if (op is Operator.Divide) {
+        if (op is Operator.Power or Operator.Divide) {
             // special case 
             return new IdentifierModel(CodeHelpers.OperatorToCSharpOperator(op));
         }
