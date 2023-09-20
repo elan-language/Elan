@@ -6,7 +6,7 @@ using static Helpers;
 
 
 [TestClass, Ignore]
-public class T10_WhileLoop
+public class T11_RepeatUntil
 {
     [TestMethod]
     public void Pass_minimal()
@@ -14,9 +14,9 @@ public class T10_WhileLoop
         var code = @"
 main
    var x = 0
-   while x < 10
+   repeat
      x = x + 1
-   end while
+   until  x >= 10
    printLine(x)
 end main
 ";
@@ -33,9 +33,9 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
    var x = 0;
-   while (x < 10) {
+   do {
         x = x + 1;
-   }
+   } while (!(x >= 10));
    printLine(x);
   }
 }";
@@ -56,16 +56,16 @@ public static class Program {
     {
         var code = @"
 main
-    var t = 0
-    var x = 0
-    while x < 3
-        var y = 0
-        while y < 4
-            y = y + 1
-            t = t + 1
-        end while
-        x = x + 1
-    end while
+   var t = 0
+   var x = 0
+   repeat
+    var y = 0
+       repeat
+         y = y + 1
+         t = t + 1
+       until  y > 4
+     x = x + 1
+   until  x > 3
    printLine(t)
 end main
 ";
@@ -80,19 +80,18 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-  private static void Main(string[] args) {
-    var t = 0;
-    var x = 0;
-    while (x < 3) {
-        var y = 0;
-        while (y < 4) {
+    private static void Main(string[] args) {
+        var x = 0;
+        do {
+            var y = 0;
+            do {
+                t = t + 1
+                y = y + 1;
+            } while (!(y > 4));
             x = x + 1;
-            y = y + 1;
-            t = t + 1;
-        }
+        } while (!(x > 2));
+        printLine(t);
     }
-   printLine(t);
-  }
 }";
 
         var parseTree = @"*";
@@ -103,16 +102,16 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "12\r\n");
+        AssertObjectCodeExecutes(compileData, "8\r\n");
     }
 
     [TestMethod]
-    public void Fail_noEnd()
+    public void Fail_noUntil()
     {
         var code = @"
 main
    var x = 0
-   while x < 10
+   repeat
      x = x + 1
 end main
 ";
@@ -121,31 +120,30 @@ end main
     }
 
     [TestMethod]
-    public void Fail_variableNotPredefined()
+    public void Fail_variableRedeclaredInTest()
     {
         var code = @"
 main
-   while x < 10
-     x = x + 1
-   end while
+    var x = 0
+    repeat
+      x = x + 1
+   until var x >= 10
 end main
 ";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_variableDefinedInWhile()
+    public void Fail_variableDefinedInLoop()
     {
         var code = @"
 main
-   while var x < 10
-     x = x + 1
-   end while
+   repeat
+     var x = x + 1
+   until  x >= 10
 end main
 ";
 
@@ -156,15 +154,49 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
+
+    [TestMethod]
+    public void Fail_testPutOnRepeat()
+    {
+        var code = @"
+main
+    var x = 0
+    repeat x >= 10
+      x = x + 1
+    until 
+end main
+";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+ 
     [TestMethod]
     public void Fail_noCondition()
     {
         var code = @"
 main
-   var x = 0
-   while
-     x = x + 1
-   end while
+    var x = 0
+    repeat
+      x = x + 1
+    until 
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_invalidCondition()
+    {
+        var code = @"
+main
+    var x = 0
+    repeat
+      x = x + 1
+    until >= 10
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
