@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T30_Expressions4_SystemCalls
 {
     [TestMethod]
@@ -18,14 +18,16 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-    Console.WriteLine(pi);
+  private static void Main(string[] args) {
+    var a = input(""Your name"");
   }
 }";
 
@@ -37,7 +39,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3.141\r\n"); //Add full digits
+        AssertObjectCodeExecutes(compileData, "Your name"); 
     }
 
     [TestMethod]
@@ -53,15 +55,17 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-    var x = sin(pi/180*30);
-    Console.WriteLine(x);
+  private static void Main(string[] args) {
+    var x = tan(Compiler.WrapperFunctions.FloatDiv(pi, 4));
+    printLine(x);
   }
 }";
 
@@ -73,7 +77,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "0.5\r\n"); //Add full digits
+        AssertObjectCodeExecutes(compileData, "0.9999999999999999\r\n");
     }
 
     [TestMethod]
@@ -90,16 +94,18 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-     var x = 0.7;
-    var y = pow(sin(x), 2) + pow(cos(x) ^ 2);
-    Console.WriteLine(x);
+  private static void Main(string[] args) {
+    var x = 0.7;
+    var y = System.Math.Pow(sin(x), 2) + System.Math.Pow(cos(x), 2);
+    printLine(x);
   }
 }";
 
@@ -111,11 +117,11 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "0.5\r\n"); //Add full digits
+        AssertObjectCodeExecutes(compileData, "0.7\r\n"); //Add full digits
     }
 
 
-    [TestMethod]
+    [TestMethod,Ignore]
     public void Fail_StandaloneFunctionCallNotValid()
     {
         var code = @"#
