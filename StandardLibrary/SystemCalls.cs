@@ -18,14 +18,29 @@ public static class SystemCalls {
 
     public static void printLine(bool b) => Console.WriteLine(b);
 
+    public static void print(string s) => Console.Write(s);
+
+    public static void print(int i) => Console.Write(i);
+
+
+    public static void print(double d) => Console.Write(d);
+
+    public static void print(char c) => Console.Write(c);
+
+    public static void print(bool b) => Console.Write(b);
+
     public static void printLine() => Console.WriteLine();
 
     public static string input(string prompt)
     {
         Console.Write(prompt);
-        return Console.ReadLine();
+        return input();
     }
 
+    public static string input()
+    {
+        return Console.ReadLine();
+    }
 
     #endregion
 
