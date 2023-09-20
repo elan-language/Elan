@@ -21,6 +21,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
   public const int a = 3;
@@ -56,6 +57,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
   public const double a = 3.1;
@@ -91,6 +93,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
   public const string a = ""hell0"";
@@ -126,6 +129,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
   public const char a = 'a';
@@ -161,6 +165,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
   public const bool a = true;
