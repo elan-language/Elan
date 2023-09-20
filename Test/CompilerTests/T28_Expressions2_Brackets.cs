@@ -7,6 +7,7 @@ using static Helpers;
 [TestClass]
 public class T28_Expressions2_Brackets
 {
+    #region Passes
     [TestMethod]
     public void Pass_BracketsChangeOperatorEvaluation() {
         var code = @"#
@@ -99,7 +100,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_PowerHasHigherPrecedence()
+    public void Pass_PowerHasHigherPrecedenceThatMultiply()
     {
         var code = @"#
 main
@@ -138,6 +139,91 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "11\r\n25\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_PowerHasHigherPrecedenceThanFloatDivision()
+    {
+        var code = @"#
+main
+  var x = 16.0 / 2 ^ 3
+  var y = (16.0/2) ^ 3
+  printLine(x)
+  printLine(y)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = Compiler.WrapperFunctions.FloatDiv(16.0, System.Math.Pow(2, 3));
+    var y = System.Math.Pow((Compiler.WrapperFunctions.FloatDiv(16.0, 2)), 3);
+    printLine(x);
+    printLine(y);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalValue 16.0)))) (binaryOp (arithmeticOp /)) (expression (expression (value (literal (literalValue 2)))) ^ (expression (value (literal (literalValue 3))))))) (varDef var (assignableValue y) = (expression (expression (bracketedExpression ( (expression (expression (value (literal (literalValue 16.0)))) (binaryOp (arithmeticOp /)) (expression (value (literal (literalValue 2))))) ))) ^ (expression (value (literal (literalValue 3)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) ))))) end main) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2\r\n512\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_PowerHasHigherPrecedenceThanIntDivision()
+    {
+        //Point of this test is that dividing an integer by an integer is implemented as a funciton, not an operator, in C#
+        var code = @"#
+main
+  var x = 16 / 2 ^ 3
+  var y = (16/2) ^ 3
+  printLine(x)
+  printLine(y)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = Compiler.WrapperFunctions.FloatDiv(16, System.Math.Pow(2, 3));
+    var y = System.Math.Pow((Compiler.WrapperFunctions.FloatDiv(16, 2)), 3);
+    printLine(x);
+    printLine(y);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalValue 16)))) (binaryOp (arithmeticOp /)) (expression (expression (value (literal (literalValue 2)))) ^ (expression (value (literal (literalValue 3))))))) (varDef var (assignableValue y) = (expression (expression (bracketedExpression ( (expression (expression (value (literal (literalValue 16)))) (binaryOp (arithmeticOp /)) (expression (value (literal (literalValue 2))))) ))) ^ (expression (value (literal (literalValue 3)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) ))))) end main) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2\r\n512\r\n");
     }
 
     [TestMethod]
@@ -183,6 +269,90 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_OperatorPrecedenceForMod()
+    {
+        var code = @"#
+main
+    var x = 11 mod 3
+    var y = 5 + 6 mod 3
+    printLine(x)
+    printLine(y)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = 11 % 3;
+    var y = 5 + 6 % 3;
+    printLine(x);
+    printLine(y);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalValue 11)))) (binaryOp (arithmeticOp mod)) (expression (value (literal (literalValue 3)))))) (varDef var (assignableValue y) = (expression (expression (expression (value (literal (literalValue 5)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 6))))) (binaryOp (arithmeticOp mod)) (expression (value (literal (literalValue 3)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2\r\n5\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_OperatorPrecedenceForDiv()
+    {
+        var code = @"#
+main
+    var x = 11 div 3
+    var y = 5 + 6 div 3
+    printLine(x)
+    printLine(y)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = 11 / 3;
+    var y = 5 + 6 / 3;
+    printLine(x);
+    printLine(y);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalValue 11)))) (binaryOp (arithmeticOp div)) (expression (value (literal (literalValue 3)))))) (varDef var (assignableValue y) = (expression (expression (expression (value (literal (literalValue 5)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 6))))) (binaryOp (arithmeticOp div)) (expression (value (literal (literalValue 3)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3\r\n7\r\n");
+    }
+    #endregion
+
+    #region Fails
+    [TestMethod]
     public void Fail_PlusIsNotUnary()
     {
         var code = @"#
@@ -207,5 +377,5 @@ public static class Program {
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
+    #endregion
 }
