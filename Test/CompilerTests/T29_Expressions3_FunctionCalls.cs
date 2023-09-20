@@ -42,7 +42,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3.141592653589793\r\n");
     }
 
-    [TestMethod, Ignore]        
+    [TestMethod]        
     public void Pass_SingleFunctionCall()
     {
         var code = @"#
@@ -63,7 +63,8 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-    var x = sin(pi/180*30);
+  private static void Main(string[] args) {
+    var x = sin(Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30);
     printLine(x);
   }
 }";
@@ -76,10 +77,10 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "0.5\r\n"); //Add full digits
+        AssertObjectCodeExecutes(compileData, "0.49999999999999994\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DotSyntax()
     {
         var code = @"#
@@ -101,8 +102,9 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-    var x =  pi/180*30;
-    var y = x.sin();
+  private static void Main(string[] args) {
+    var x = Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30;
+    var y = sin(x);
     printLine(y);
   }
 }";
@@ -115,7 +117,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "0.5\r\n"); //Add full digits
+        AssertObjectCodeExecutes(compileData, "0.49999999999999994\r\n");
     }
 
 

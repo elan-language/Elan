@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Linq.Expressions;
 using AbstractSyntaxTree.Nodes;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
@@ -55,9 +56,18 @@ public static class AstFactory {
         return new MainNode(block);
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.CallStatementContext context) => visitor.Visit(context.expression());
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.CallStatementContext context) =>  
+        new CallStatementNode(visitor.Visit(context.expression()));
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ExpressionContext context) {
+        if (context.DOT() is not null) {
+            if (context.methodCall() is { } dmc) {
+                var ms = visitor.Visit<MethodCallNode>(dmc);
+                var exp = visitor.Visit(context.expression().First());
+                return new MethodCallNode(ms, exp);
+            }
+        }
+        
         if (context.methodCall() is { } mc) {
             return visitor.Visit(mc);
         }

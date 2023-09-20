@@ -180,7 +180,7 @@ expression:
 	| expression DOT methodCall
 	| expression DOT IDENTIFIER 
 	| unaryOp expression
-	| expression POWER expression
+	| expression POWER expression // so that ^ has higher priority (because implemented with function in CSharp)
 	| expression binaryOp expression
 	| newInstance
 	| ifExpression

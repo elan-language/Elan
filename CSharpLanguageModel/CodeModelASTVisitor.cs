@@ -45,6 +45,7 @@ public class CodeModelAstVisitor {
             IfStatementNode n => HandleScope(BuildIfStatementModel, n),
             StatementBlockNode n => HandleScope(BuildStatementBlockModel, n),
             BracketNode n => HandleScope(BuildBracketModel, n),
+            CallStatementNode n => HandleScope(BuildCallStatementModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -80,10 +81,9 @@ public class CodeModelAstVisitor {
         return new ScalarValueModel(CodeHelpers.OperatorToCSharpOperator(op));
     }
 
-    private BracketModel BuildBracketModel(BracketNode bracketNode) {
-      
-        return new BracketModel(Visit(bracketNode.BracketedNode));
-    }
+    private BracketModel BuildBracketModel(BracketNode bracketNode) => new(Visit(bracketNode.BracketedNode));
+
+    private CallStatementModel BuildCallStatementModel(CallStatementNode callStatementNode) => new(Visit(callStatementNode.CallNode));
 
     private BinaryModel BuildBinaryModel(BinaryNode binaryNode) => new(Visit(binaryNode.Operator), Visit(binaryNode.Operand1), Visit(binaryNode.Operand2));
 
