@@ -29,6 +29,7 @@ public static class AstFactory {
             ElanParser.ProceduralControlFlowContext c => visitor.Build(c),
             ElanParser.IfContext c => visitor.Build(c),
             ElanParser.ConditionalOpContext c => visitor.Build(c),
+            ElanParser.UnaryOpContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -65,8 +66,21 @@ public static class AstFactory {
             return new BinaryNode(visitor.Visit(bop), visitor.Visit(context.expression().First()), visitor.Visit(context.expression().Last()));
         }
 
+        if (context.POWER() is { } p) {
+            var op = new OperatorNode(Helpers.MapOperator(p.Symbol.Type));
+            return new BinaryNode(op, visitor.Visit(context.expression().First()), visitor.Visit(context.expression().Last()));
+        }
+
         if (context.value() is { } v) {
             return visitor.Visit(v);
+        }
+
+        if (context.bracketedExpression() is { } b) {
+            return new BracketNode(visitor.Visit(b.expression()));
+        }
+
+        if (context.unaryOp() is { } uop) {
+            return new UnaryNode(visitor.Visit(uop), visitor.Visit(context.expression().First()));
         }
 
         throw new NotImplementedException();
@@ -167,6 +181,14 @@ public static class AstFactory {
 
         if (context.conditionalOp() is { } co) {
             return visitor.Visit(co);
+        }
+
+        throw new NotImplementedException();
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.UnaryOpContext context) {
+        if (context.children.First() is ITerminalNode tn) {
+            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type));
         }
 
         throw new NotImplementedException();

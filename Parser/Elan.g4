@@ -180,6 +180,7 @@ expression:
 	| expression DOT methodCall
 	| expression DOT IDENTIFIER 
 	| unaryOp expression
+	| expression POWER expression
 	| expression binaryOp expression
 	| newInstance
 	| ifExpression
