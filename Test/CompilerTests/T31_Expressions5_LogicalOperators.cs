@@ -4,9 +4,8 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
-public class T31_LogicalOperators
-{
+[TestClass]
+public class T31_LogicalOperators {
     [TestMethod]
     public void Pass_and() {
         var code = @"#
@@ -25,13 +24,15 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
+  private static void Main(string[] args) {
     var a = false && false;
     var b = false && true;
     var c = true && false;
@@ -51,12 +52,11 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\nfalse\r\ntrue\r\n");
+        AssertObjectCodeExecutes(compileData, "False\r\nFalse\r\nFalse\r\nTrue\r\n");
     }
 
-    [TestMethod]
-    public void Pass_or()
-    {
+    [TestMethod] [Ignore]
+    public void Pass_or() {
         var code = @"#
 main
     var a = false or false
@@ -102,9 +102,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\ntrue\r\n");
     }
 
-    [TestMethod]
-    public void Pass_xor()
-    {
+    [TestMethod] [Ignore]
+    public void Pass_xor() {
         var code = @"#
 main
     var a = false xor false
@@ -150,9 +149,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\nfalse\r\n");
     }
 
-    [TestMethod]
-    public void Pass_not()
-    {
+    [TestMethod] [Ignore]
+    public void Pass_not() {
         var code = @"#
 main
     var a = not false
@@ -198,8 +196,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\nfalse\r\ntrue\r\n");
     }
 
-    public void Pass_Precedence()
-    {
+    [TestMethod] [Ignore]
+    public void Pass_Precedence() {
         var code = @"#
 main
     var a = not false and true
@@ -237,9 +235,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\n");
     }
 
-    [TestMethod]
-    public void Fail_UseNotWithTwoArgs()
-    {
+    [TestMethod] [Ignore]
+    public void Fail_UseNotWithTwoArgs() {
         var code = @"#
     main
       var a = true not false
@@ -248,8 +245,5 @@ public static class Program {
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
-        
     }
-
-
 }

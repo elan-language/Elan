@@ -11,6 +11,7 @@ public static class Helpers {
             ElanParser.POWER => Operator.Power,
             ElanParser.DIVIDE => Operator.Divide,
             ElanParser.OP_EQ => Operator.Equal,
+            ElanParser.OP_AND => Operator.And,
             _ => throw new NotSupportedException(nodeType.ToString())
         };
     }

@@ -8,5 +8,6 @@ public enum Operator {
     Power,
     Modulus,
     IntDivide,
-    Equal
+    Equal,
+    And
 }

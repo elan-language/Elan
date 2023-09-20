@@ -42,6 +42,7 @@ public static class CodeHelpers {
             Operator.Equal => "==",
             Operator.Power => $"{typeof(Math).FullName}.{nameof(Math.Pow)}",
             Operator.Divide => $"{typeof(WrapperFunctions).FullName}.{nameof(WrapperFunctions.FloatDiv)}",
+            Operator.And => "&&",
             _ => throw new NotImplementedException(op.ToString())
         };
     }

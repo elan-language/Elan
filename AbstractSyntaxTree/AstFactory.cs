@@ -27,6 +27,7 @@ public static class AstFactory {
             ElanParser.LiteralContext c => visitor.Build(c),
             ElanParser.BinaryOpContext c => visitor.Build(c),
             ElanParser.ArithmeticOpContext c => visitor.Build(c),
+            ElanParser.LogicalOpContext c => visitor.Build(c),
             ElanParser.ProceduralControlFlowContext c => visitor.Build(c),
             ElanParser.IfContext c => visitor.Build(c),
             ElanParser.ConditionalOpContext c => visitor.Build(c),
@@ -193,6 +194,10 @@ public static class AstFactory {
             return visitor.Visit(co);
         }
 
+        if (context.logicalOp() is { } lo) {
+            return visitor.Visit(lo);
+        }
+
         throw new NotImplementedException();
     }
 
@@ -213,6 +218,14 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.ConditionalOpContext context) {
+        if (context.children.First() is ITerminalNode tn) {
+            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type));
+        }
+
+        throw new NotImplementedException(context.children.First().GetText());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.LogicalOpContext context) {
         if (context.children.First() is ITerminalNode tn) {
             return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type));
         }
