@@ -250,8 +250,6 @@ main
 end main
 ";
 
-        var objectCode = @""; 
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -271,8 +269,6 @@ main
   end for
 end main
 ";
-
-        var objectCode = @""; 
 
         var parseTree = @"*";
 
@@ -329,9 +325,6 @@ main
   next
 end main
 ";
-
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
@@ -347,9 +340,6 @@ main
   next i
 end main
 ";
-
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
@@ -366,9 +356,6 @@ main
   next i
 end main
 ";
-
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
@@ -385,9 +372,6 @@ main
   next i
 end main
 ";
-
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
