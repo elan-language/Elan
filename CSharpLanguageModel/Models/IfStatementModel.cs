@@ -3,53 +3,49 @@
 using static CodeHelpers;
 
 public record IfStatementModel(IEnumerable<ICodeModel> Expressions, IEnumerable<ICodeModel> StatementBlocks) : ICodeModel {
-    // expressions should always be equal to or one less than statemenblocks 
-
-    private string ElseIf(ICodeModel expression, ICodeModel statementBlock) =>
-        $@"
-else if ({expression}) then {{
-{Indent1}{statementBlock}
-}}
-".Trim();
-
-    private string ElseIfs() {
-        if (Expressions.Count() > 1) {
-            var elseIfExpressions = Expressions.Skip(1);
-            var elseIfStatements = Expressions.Count() == StatementBlocks.Count() ? StatementBlocks.Skip(1) : StatementBlocks.Skip(1).SkipLast(1);
-            var elseIfs = elseIfExpressions.Zip(elseIfStatements);
-
-            return string.Join("\r\n", elseIfs.Select(ei => $"{ElseIf(ei.First, ei.Second)}")).TrimEnd();
+    public string ToString(int indent) {
+        // check data 
+        if (Expressions.Count() == StatementBlocks.Count() || StatementBlocks.Count() == Expressions.Count() + 1) {
+            return $@"{If(indent)}{ElseIfs(indent)}{Else(indent)}";
         }
 
-        return "";
+        throw new CodeGenerationException("Mismatched count if expressions/blocks in If");
     }
+    // expressions should always be equal to or one less than statemenblocks 
 
-    private string Else() {
+    private string If(int indent) =>
+        $@"{Indent(indent)}if ({Expressions.First()}) {{
+{StatementBlocks.First().ToString(indent + 1)}
+{Indent(indent)}}}".TrimEnd();
+
+    private string Else(int indent) {
         if (Expressions.Count() < StatementBlocks.Count()) {
             return $@"
-{Indent(2)}else {{
-{StatementBlocks.Last().ToString(3)}
-{Indent(2)}}}
+{Indent(indent)}else {{
+{StatementBlocks.Last().ToString(indent + 1)}
+{Indent(indent)}}}
 ".TrimEnd();
         }
 
         return "";
     }
 
-    public string ToString(int indent) {
+    private string ElseIf(ICodeModel expression, ICodeModel statementBlock, int indent) =>
+        $@"
+else if ({expression}) then {{
+{Indent(indent)}{statementBlock}
+}}
+".Trim();
 
-        string If() => $@"
-if ({Expressions.First()}) {{
-{StatementBlocks.First().ToString(3)}
-{Indent(2)}}}".Trim();
+    private string ElseIfs(int indent) {
+        if (Expressions.Count() > 1) {
+            var elseIfExpressions = Expressions.Skip(1);
+            var elseIfStatements = Expressions.Count() == StatementBlocks.Count() ? StatementBlocks.Skip(1) : StatementBlocks.Skip(1).SkipLast(1);
+            var elseIfs = elseIfExpressions.Zip(elseIfStatements);
 
-        // check data 
-        if (Expressions.Count() == StatementBlocks.Count() || StatementBlocks.Count() == Expressions.Count() + 1) {
-            return $@"
-{If()}{ElseIfs()}{Else()}
-";
+            return string.Join("\r\n", elseIfs.Select(ei => $"{ElseIf(ei.First, ei.Second, indent)}")).TrimEnd();
         }
 
-        throw new CodeGenerationException("Mismatched count if expressions/blocks in If");
+        return "";
     }
 }

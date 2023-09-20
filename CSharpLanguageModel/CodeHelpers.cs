@@ -15,15 +15,11 @@ public static class CodeHelpers {
 
     public static string Indent(int level) => new(' ', level * IndentSpaces);
 
-    public static string AsLineSeparatedString(this IEnumerable<ICodeModel> mm, int level = 0, string prefix = "") {
-        var indentation = Indent(level);
-        prefix = string.IsNullOrWhiteSpace(prefix) ? "" : $"{prefix} ";
-        return string.Join("\r\n", mm.Select(cm => $"{indentation}{prefix}{cm.AsCode()}")).TrimEnd();
+    public static string AsLineSeparatedString(this IEnumerable<ICodeModel> mm, int indent = 0) {
+        return string.Join("\r\n", mm.Select(cm => $"{cm.ToString(indent)}"));
     }
 
-    public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0))).Trim();
-
-    public static string AsCode(this ICodeModel? cm) => (cm?.ToString(0) ?? "").Trim();
+    public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0)));
 
     public static string NodeToCSharpType(IAstNode node) {
         return node switch {
