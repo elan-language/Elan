@@ -130,8 +130,6 @@ main
    until var x >= 10
 end main
 ";
-
-        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
@@ -167,7 +165,6 @@ main
 end main
 ";
 
-        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
