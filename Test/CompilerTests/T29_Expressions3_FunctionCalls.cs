@@ -121,7 +121,7 @@ public static class Program {
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DotSyntaxFunctionEvaluationHasPrecedenceOverOperators()
     {
         var code = @"#
@@ -143,8 +143,9 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-    var x =  pi/180*30;
-    var y = 2 + x.sin();
+  private static void Main(string[] args) {
+    var x = Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30;
+    var y = 2 + sin(x);
     printLine(y);
   }
 }";
@@ -160,7 +161,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2.5\r\n"); //Add full digits
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_MoreComplexExpression()
     {
         var code = @"#
@@ -182,8 +183,9 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-     var x = 0.7;
-    var y = pow(sin(x), 2) + pow(cos(x) ^ 2);
+  private static void Main(string[] args) {
+    var x = 0.7;
+    var y = System.Math.Pow(sin(x), 2) + System.Math.Pow(cos(x), 2);
     printLine(x);
   }
 }";
@@ -196,7 +198,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "0.5\r\n"); //Add full digits
+        AssertObjectCodeExecutes(compileData, "0.7\r\n"); //Add full digits
     }
 
 
