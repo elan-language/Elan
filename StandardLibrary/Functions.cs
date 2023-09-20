@@ -47,8 +47,8 @@ public static class Functions {
 
     #region Type handling
 
-    public static Type GetType(object o) => throw new NotImplementedException();
-    public static bool ImplementsType<T>(object o) => throw new NotImplementedException();
+    public static Type GetType(object o) => o.GetType();
+    public static bool ImplementsType<T>(object o) => o.GetType() == typeof(T) ||  o.GetType().IsSubclassOf(typeof(T));
 
     public static double asFloat(int x) => x;
     public static double asFloat(decimal x) => (double)x;
@@ -68,11 +68,11 @@ public static class Functions {
     #endregion
 
     #region Bitwise operations
-    public static int bitwiseNot(int x) => throw new NotImplementedException();
-    public static int bitwiseAnd(int x, int y) => throw new NotImplementedException();
-    public static int bitwiseOr(int x, int y) => throw new NotImplementedException();
-    public static int bitwiseXor(int x, int y) => throw new NotImplementedException();
-    public static int bitwiseShiftLeft(int x, int places) => throw new NotImplementedException();
-    public static int bitwiseShiftRight(int x, int places) => throw new NotImplementedException();
+    public static int bitwiseNot(int x) => ~x;
+    public static int bitwiseAnd(int x, int y) => x & y;
+    public static int bitwiseOr(int x, int y) => x | y;
+    public static int bitwiseXor(int x, int y) => x ^ y;
+    public static int bitwiseShiftLeft(int x, int places) => x << places;
+    public static int bitwiseShiftRight(int x, int places) => x >> places;
     #endregion
 }
