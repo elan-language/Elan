@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T_6_ArithmeticExpressions {
+public class T_6_ArithmeticOperators {
     #region Passes
 
     [TestMethod]
@@ -318,11 +318,6 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "4\r\n");
-    }
-
-    [TestMethod, Ignore]
-    public void Pass_TODO() {
-        Assert.Fail("RP to write tests using standard library function calls within expressions, including by dot-syntax");
     }
 
     #endregion
