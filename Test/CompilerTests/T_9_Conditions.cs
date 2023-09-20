@@ -6,18 +6,16 @@ using static Helpers;
 
 
 [TestClass, Ignore]
-public class T_8_ForLoop
+public class T_9_Conditions
 {
     [TestMethod]
-    public void Pass_minimal()
+    public void Pass_lessThan()
     {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
-    tot = tot + i
-  end for
-  printLine(tot)
+  printLine(3 < 4)
+  printLine(3 < 2)
+  printLine(3 < 3)
 end main
 ";
 
@@ -32,54 +30,9 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var tot = 0;
-    for (var i = 1; i <= 10; i = i + 1) {
-        tot = tot + i;
-    }
-    printLine(tot)
-  }
-}"; // could be n++ when there is no step specified, whichever is easier
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "55\r\n");
-    }
-
-    [TestMethod]
-    public void Pass_withStep()
-    {
-        var code = @"
-main
-  var tot = 0
-  for i = 1 to 10 step 2
-    tot = tot + i
-  end for
-  printLine(tot)
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static GlobalConstants;
-using static StandardLibrary.SystemCalls;
-
-public static partial class GlobalConstants {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var tot = 0;
-    for (var i = 1; i <= 10; i = i + 2) {
-        tot = tot + i;
-    }
-    printLine(tot)
+      printLine(3 < 4)
+      printLine(3 < 2)
+      printLine(3 < 3)
   }
 }";
 
@@ -91,18 +44,17 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "25\r\n");
+        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\nfalse\r\n");
     }
 
-    public void Pass_negativeStep()
+    [TestMethod]
+    public void Pass_greaterThan()
     {
         var code = @"
 main
-  var tot = 0
-  for i = 10 to 3 step -1
-    tot = tot + i
-  end for
-  printLine(tot)
+  printLine(3 > 4)
+  printLine(3 > 2)
+  printLine(3 > 3)
 end main
 ";
 
@@ -117,11 +69,9 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var tot = 0;
-    for (var i = 10; i >= 3; i = i - 1) {
-        tot = tot + i;
-    }
-    printLine(tot)
+      printLine(3 > 4)
+      printLine(3 > 2)
+      printLine(3 > 3)
   }
 }";
 
@@ -133,20 +83,17 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "52\r\n");
+        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\nfalse\r\n");
     }
 
-    public void Pass_innerLoop()
+    [TestMethod]
+    public void Pass_lessThanOrEqual()
     {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 3
-    for j = 1 to 4
-      tot = tot + 1
-    end for
-  end for
-  printLine(tot)
+  printLine(3 <= 4)
+  printLine(3 <= 2)
+  printLine(3 <= 3)
 end main
 ";
 
@@ -161,13 +108,9 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var tot = 0;
-    for (var i = 1; i <= 3; i = i + 1) {
-        for (var j = 1; j <= 4; j = j + 1) {
-            tot = tot + i;
-        }
-    }
-    printLine(tot)
+      printLine(3 <= 4)
+      printLine(3 <= 2)
+      printLine(3 <= 3)
   }
 }";
 
@@ -179,23 +122,17 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "12\r\n");
+        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\ntrue\r\n");
     }
 
     [TestMethod]
-    public void Pass_canUseExistingVariablesOfRightType()
+    public void Pass_greaterThanOrEqual()
     {
         var code = @"
 main
-  var i = 4
-  var lower = 1
-  var upper = 10
-  var inc = 2
-  var tot = 0
-  for i = lower to upper step inc 
-    tot = tot + i
-  end for
-  printLine(tot)
+  printLine(3 >= 4)
+  printLine(3 >= 2)
+  printLine(3 >= 3)
 end main
 ";
 
@@ -210,17 +147,11 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var i = 4;
-    var lower = 1;
-    var upper = 10;
-    var inc = 2;
-    var tot = 0;
-    for (var i = lower; i <= upper; i = i + inc) {
-        tot = tot + i;
-    }
-    printLine(tot)
+      printLine(3 >= 4)
+      printLine(3 >= 2)
+      printLine(3 >= 3)
   }
-}"; 
+}";
 
         var parseTree = @"*";
 
@@ -230,159 +161,234 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "25\r\n");
+        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\n");
     }
 
     [TestMethod]
-    public void Fail_useOfFloat()
+    public void Pass_greaterOrLessThan()
     {
         var code = @"
 main
-  var tot = 0
-  for i = 1.5 to 10
-    tot = tot + i
-  end for
+  printLine(3 <> 4)
+  printLine(3 <> 2)
+  printLine(3 <> 3)
 end main
 ";
 
-        var objectCode = @""; 
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+      printLine(3 <> 4)
+      printLine(3 <> 2)
+      printLine(3 <> 3)
+  }
+}";
 
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
     }
 
     [TestMethod]
-    public void Fail_modifyingCounter()
+    public void Pass_isNot()
     {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
-    i = 10
-  end for
+  printLine(3 is not 4)
+  printLine(3 is not 2)
+  printLine(3 is not 3)
 end main
 ";
 
-        var objectCode = @""; 
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+      printLine(3 <> 4)
+      printLine(3 <> 2)
+      printLine(3 <> 3)
+  }
+}";
 
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
-
-    public void Fail_missingEnd()
-    {
-        var code = @"
-main
-  var tot = 0
-  for i = 1 to 3
-    for j = 1 to 4
-      tot = tot + 1
-    end for
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
     }
 
     [TestMethod]
-    public void Fail_useExistingVariableOfWrongType()
+    public void Pass_equalTo()
     {
         var code = @"
 main
-  var i = 4.1
-  var tot = 0
-  for i = 1 to 10
-    tot = tot + i
-  end for
+  printLine(3 == 4)
+  printLine(3 == 2)
+  printLine(3 == 3)
 end main
 ";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+      printLine(3 == 4)
+      printLine(3 == 2)
+      printLine(3 == 3)
+  }
+}";
 
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\ntrue\r\n");
     }
 
+
     [TestMethod]
-    public void Fail_next()
+    public void Pass_is()
     {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
-    tot = tot + i
-  next
+  printLine(3 is 4)
+  printLine(3 is 2)
+  printLine(3 is 3)
 end main
 ";
 
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+      printLine(3 == 4)
+      printLine(3 == 2)
+      printLine(3 == 3)
+  }
+}";
+
         var parseTree = @"*";
 
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\ntrue\r\n");
+    }
+
+    [TestMethod]
+    public void Fail_not_is()
+    {
+        var code = @"
+main
+  printLine(3 not is 3)
+end main
+";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_nextVariable()
+    public void Fail_not()
     {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
-    tot = tot + i
-  next i
+  printLine(3 not 3)
 end main
 ";
-
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_break()
+    public void Fail_notEqual()
     {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
-    tot = tot + i
-    break
-  next i
+  printLine(3 != 3)
 end main
 ";
-
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_continue()
+    public void Fail_EqualToOrLessThan()
     {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
-    tot = tot + i
-    continue
-  next i
+  printLine(3 =< 3)
 end main
 ";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
 
-        var parseTree = @"*";
+    [TestMethod]
+    public void Fail_Greater_Or_Equal()
+    {
+        var code = @"
+main
+  printLine(3 > or = 3)
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
 
+    [TestMethod]
+    public void Fail_SingleEquals()
+    {
+        var code = @"
+main
+  printLine(3 = 4)
+end main
+";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
