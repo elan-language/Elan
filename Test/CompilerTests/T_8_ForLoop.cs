@@ -286,7 +286,6 @@ main
     for j = 1 to 4
       tot = tot + 1
     end for
-  printLine(tot)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -294,7 +293,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_useExistingVariableOfWrongType()
+    public void Fail_useExistingVariableOfWrongType()
     {
         var code = @"
 main
@@ -303,7 +302,6 @@ main
   for i = 1 to 10
     tot = tot + i
   end for
-  printLine(tot)
 end main
 ";
 
@@ -314,4 +312,80 @@ end main
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
     }
+
+    [TestMethod]
+    public void Fail_next()
+    {
+        var code = @"
+main
+  var tot = 0
+  for i = 1 to 10
+    tot = tot + i
+  next
+end main
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_nextVariable()
+    {
+        var code = @"
+main
+  var tot = 0
+  for i = 1 to 10
+    tot = tot + i
+  next i
+end main
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_break()
+    {
+        var code = @"
+main
+  var tot = 0
+  for i = 1 to 10
+    tot = tot + i
+    break
+  next i
+end main
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_continue()
+    {
+        var code = @"
+main
+  var tot = 0
+  for i = 1 to 10
+    tot = tot + i
+    continue
+  next i
+end main
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+
 }
