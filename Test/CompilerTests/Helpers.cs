@@ -34,8 +34,13 @@ public static partial class Helpers {
         return Process.Start(start) ?? throw new NullReferenceException("Process failed to start");
     }
 
-    private static string Execute(string exe, string workingDir) {
+    private static string Execute(string exe, string workingDir, string? input = null) {
         using var process = CreateProcess(exe, workingDir);
+
+        if (input is not null) {
+            using var stdIn = process.StandardInput;
+            stdIn.WriteLine(input);
+        }
 
         if (!process.WaitForExit(20000)) {
             process.Kill();
@@ -73,11 +78,11 @@ public static partial class Helpers {
         Assert.IsFalse(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), "Unexpectedly compiled object code");
     }
 
-    public static void AssertObjectCodeExecutes(CompileData compileData, string expectedOutput) {
+    public static void AssertObjectCodeExecutes(CompileData compileData, string expectedOutput, string? optionalInput = null) {
         var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
         var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
 
-        var stdOut = Execute(exe, wd);
+        var stdOut = Execute(exe, wd, optionalInput);
 
         Assert.AreEqual(expectedOutput, stdOut);
     }

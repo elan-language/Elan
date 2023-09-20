@@ -12,6 +12,7 @@ public class T30_Expressions4_SystemCalls
         var code = @"#
 main
   var a = input(""Your name"")
+  printLine(a)
 end main
 ";
 
@@ -28,6 +29,7 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var a = input(""Your name"");
+    printLine(a);
   }
 }";
 
@@ -39,7 +41,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Your name"); 
+        AssertObjectCodeExecutes(compileData, "Your nameFred\r\n", "Fred"); 
     }
 
     [TestMethod]
