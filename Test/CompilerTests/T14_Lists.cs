@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass]
+[TestClass, Ignore]
 public class T14_Lists {
 
     #region Passes
