@@ -13,5 +13,6 @@ public enum Operator {
     Or,
     Not,
     Xor,
-    LessThan
+    LessThan,
+    GreaterThanEqual
 }

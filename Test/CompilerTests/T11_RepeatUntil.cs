@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 
-[TestClass, Ignore]
+[TestClass]
 public class T11_RepeatUntil
 {
     [TestMethod]
@@ -33,15 +33,15 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-   var x = 0;
-   do {
-        x = x + 1;
-   } while (!(x >= 10));
-   printLine(x);
+    var x = 0;
+    do {
+      x = x + 1;
+    } while (!(x >= 10));
+    printLine(x);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (repeat repeat (statementBlock (assignment (assignableValue x) = (expression (expression (value x)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))))) until (expression (expression (value x)) (binaryOp (conditionalOp >=)) (expression (value (literal (literalValue 10))))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -52,7 +52,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_innerLoop()
     {
         var code = @"
@@ -107,7 +107,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "8\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_noUntil()
     {
         var code = @"
@@ -121,7 +121,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_variableRedeclaredInTest()
     {
         var code = @"
@@ -136,7 +136,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_variableDefinedInLoop()
     {
         var code = @"
@@ -155,7 +155,7 @@ end main
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_testPutOnRepeat()
     {
         var code = @"
@@ -172,7 +172,7 @@ end main
     }
 
  
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_noCondition()
     {
         var code = @"
@@ -187,7 +187,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_invalidCondition()
     {
         var code = @"
