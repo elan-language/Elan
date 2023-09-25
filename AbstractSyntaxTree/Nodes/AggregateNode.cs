@@ -2,9 +2,6 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record AggregateNode<T> : IAstNode where T : IAstNode {
-    public AggregateNode(ImmutableArray<T> AggregatedNodes) => this.AggregatedNodes = AggregatedNodes;
-
-    public ImmutableArray<T> AggregatedNodes { get; init; }
+public record AggregateNode<T>(ImmutableArray<T> AggregatedNodes) : IAstNode where T : IAstNode {
     public IEnumerable<IAstNode> Children => AggregatedNodes.Cast<IAstNode>();
 }

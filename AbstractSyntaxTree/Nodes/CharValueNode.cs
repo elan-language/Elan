@@ -1,12 +1,5 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record CharValueNode : IScalarValueNode {
-    public CharValueNode(string Value) => this.Value = Value;
-
+public record CharValueNode(string Value) : IScalarValueNode {
     public IEnumerable<IAstNode> Children => Array.Empty<IAstNode>();
-    public string Value { get; init; }
-
-    public void Deconstruct(out string Value) {
-        Value = this.Value;
-    }
 }
