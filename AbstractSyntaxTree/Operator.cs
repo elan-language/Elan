@@ -11,5 +11,6 @@ public enum Operator {
     Equal,
     And,
     Or,
-    Not
+    Not,
+    Xor
 }

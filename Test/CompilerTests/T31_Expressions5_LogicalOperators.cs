@@ -104,7 +104,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "False\r\nTrue\r\nTrue\r\nTrue\r\n");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Pass_xor() {
         var code = @"#
 main
@@ -122,17 +122,19 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-    var a = xor(false, false);
-    var b = xor(false, true);
-    var c = xor(true, false);
-    var d = xor(true, true);
+  private static void Main(string[] args) {
+    var a = false ^ false;
+    var b = false ^ true;
+    var c = true ^ false;
+    var d = true ^ true;
     printLine(a);
     printLine(b);
     printLine(c);
@@ -148,7 +150,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\nfalse\r\n");
+        AssertObjectCodeExecutes(compileData, "False\r\nTrue\r\nTrue\r\nFalse\r\n");
     }
 
     [TestMethod]
