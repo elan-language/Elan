@@ -15,19 +15,21 @@ public static class Functions {
     public static double aTan(double d) => Math.Atan(d);
     public static double aTanh(double d) => Math.Atanh(d);
     public static int roundUp(double d) => (int)Math.Ceiling(d);
-    public static double cos(double d) => Math.Cosh(d);
+    public static double cos(double d) => Math.Cos(d);
     public static double cosh(double d) => Math.Cosh(d);
     public static double exp(double d) => Math.Exp(d);
     public static int roundDown(double d) => (int)Math.Floor(d);
     public static double log(double d) => Math.Log(d);
     public static double log2(double x) => Math.Log2(x);
     public static double log10(double d) => Math.Log10(d);
-    public static double pow(double x, double y) => Math.Pow(x, y);
     public static double sin(double d) => Math.Sin(d);
     public static double sinh(double d) => Math.Sinh(d);
     public static double sqrt(double d) => Math.Sqrt(d);
     public static double tan(double d) => Math.Tan(d);
     public static double tanh(double d) => Math.Tanh(d);
+
+    public static double min(double a, double b) => Math.Min(a, b);
+    public static double max(double a, double b) => Math.Max(a, b);
 
     #endregion
 
