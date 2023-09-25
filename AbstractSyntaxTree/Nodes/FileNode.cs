@@ -7,9 +7,11 @@ public record FileNode : IAstNode {
         this.GlobalNodes = GlobalNodes;
         this.MainNode = MainNode;
     }
-    public IEnumerable<IAstNode> Children => new[] { MainNode };
+
     public ImmutableArray<IAstNode> GlobalNodes { get; init; }
     public MainNode MainNode { get; init; }
+    public IEnumerable<IAstNode> Children => new[] { MainNode };
+
     public void Deconstruct(out ImmutableArray<IAstNode> GlobalNodes, out MainNode MainNode) {
         GlobalNodes = this.GlobalNodes;
         MainNode = this.MainNode;

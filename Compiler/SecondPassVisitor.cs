@@ -8,8 +8,8 @@ public class SecondPassVisitor {
     private IScope currentScope;
 
     static SecondPassVisitor() {
-        Rules.Add(CompilerRules.NoProcedureInFunctionRule);
         Rules.Add(CompilerRules.ExpressionMustBeAssignedRule);
+        Rules.Add(CompilerRules.SystemCallMustBeAssignedRule);
     }
 
     public SecondPassVisitor(SymbolTableImpl symbolTable) {

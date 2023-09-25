@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SymbolTable.SymbolTypes;
 
-namespace SymbolTable.Symbols
-{
-    public class SystemCallSymbol : MethodSymbol
-    {
-        public SystemCallSymbol(string name, IScope enclosingScope) : base(name, enclosingScope) { }
+namespace SymbolTable.Symbols; 
 
-        public SystemCallSymbol(string name) : base(name) { }
+public class SystemCallSymbol : MethodSymbol {
+    public SystemCallSymbol(string name, ISymbolType returnType, IScope enclosingScope) : base(name, returnType, enclosingScope) { }
 
-        public override string ScopeName => "SystemCall";
-    }
+    public SystemCallSymbol(string name, ISymbolType returnType) : base(name, returnType) { }
+
+    public override string ScopeName => "SystemCall";
 }

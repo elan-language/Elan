@@ -50,8 +50,9 @@ public static class Functions {
 
     #region Type handling
 
-    public static Type GetType(object o) => o.GetType();
-    public static bool ImplementsType<T>(object o) => o.GetType() == typeof(T) ||  o.GetType().IsSubclassOf(typeof(T));
+    // TYpe is not a yet an Elan thing 
+    //public static Type GetType(object o) => o.GetType();
+    //public static bool ImplementsType<T>(object o) => o.GetType() == typeof(T) ||  o.GetType().IsSubclassOf(typeof(T));
 
     public static double asFloat(int x) => x;
     public static double asFloat(decimal x) => (double)x;

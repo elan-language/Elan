@@ -276,7 +276,7 @@ public static class Program {
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_IncorrectType()
     {
         var code = @"#
@@ -289,11 +289,12 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UnconsumedExpressionResult1()
     {
         var code = @"#
@@ -307,7 +308,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UnconsumedExpressionResult2()
     {
         var code = @"#
@@ -318,16 +319,17 @@ end main
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UnconsumedExpressionResult3()
     {
         var code = @"#
     main
       var a = 1
-      a.Sin()
+      a.sin()
     end main
     ";
 

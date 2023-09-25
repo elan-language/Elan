@@ -83,7 +83,7 @@ public static class Program {
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UnconsumedResultFromSystemCall()
     {
         var code = @"#

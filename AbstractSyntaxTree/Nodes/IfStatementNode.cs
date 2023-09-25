@@ -7,9 +7,11 @@ public record IfStatementNode : IAstNode {
         this.Expressions = Expressions;
         this.StatementBlocks = StatementBlocks;
     }
-    public IEnumerable<IAstNode> Children => Expressions.Union(StatementBlocks);
+
     public ImmutableArray<IAstNode> Expressions { get; init; }
     public ImmutableArray<IAstNode> StatementBlocks { get; init; }
+    public IEnumerable<IAstNode> Children => Expressions.Union(StatementBlocks);
+
     public void Deconstruct(out ImmutableArray<IAstNode> Expressions, out ImmutableArray<IAstNode> StatementBlocks) {
         Expressions = this.Expressions;
         StatementBlocks = this.StatementBlocks;
