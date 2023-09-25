@@ -14,7 +14,7 @@ public static class Functions {
     public static double aTan(double d) => Math.Atan(d);
     public static double aTanh(double d) => Math.Atanh(d);
     public static int roundUp(double d) => (int)Math.Ceiling(d);
-    public static double cos(double d) => Math.Cosh(d);
+    public static double cos(double d) => Math.Cos(d);
     public static double cosh(double d) => Math.Cosh(d);
     public static double exp(double d) => Math.Exp(d);
     public static int roundDown(double d) => (int)Math.Floor(d);
