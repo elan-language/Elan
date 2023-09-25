@@ -1,6 +1,8 @@
 ﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable InconsistentNaming
 
+using System.Runtime.CompilerServices;
+
 namespace StandardLibrary;
 
 [ElanStandardLibrary]
@@ -67,7 +69,6 @@ public static class Functions {
     public static double asFloat(string s) => double.Parse(s);
     public static decimal asDecimal(string s) => decimal.Parse(s);
 
-    //TODO  asString(object a) => a.ToString();
 
     #endregion
 
@@ -78,5 +79,29 @@ public static class Functions {
     public static int bitwiseXor(int x, int y) => x ^ y;
     public static int shiftLeft(int x, int places) => x << places;
     public static int shiftRight(int x, int places) => x >> places;
+    #endregion
+
+    #region AsString
+
+
+    public static string asString(object obj)
+    {
+        var t = obj.GetType();
+        if (t == typeof(bool)) return (bool)(object)obj ? "true" : "false";
+        if (t.IsAssignableTo(typeof(ITuple))) return asString<ITuple>((ITuple)(object)obj);
+        return obj.ToString();
+    }
+
+    public static string asString<T>(List<T> l) =>
+        l.Count == 0 ? "empty list" :
+        Enumerable.Range(1, l.Count - 1).Aggregate($"List {{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
+
+    public static string asString<T>(ITuple t) =>
+        Enumerable.Range(1, t.Length - 1).Aggregate($"Tuple ({asString(t[0])}", (s, x) => s + $", {asString(t[x])}") + $")";
+
+    public static string asString<T>(T[] a) =>
+         a.Length == 0 ? "empty array" :
+        Enumerable.Range(1, a.Length - 1).Aggregate($"Array {{{asString(a[0])}", (s, n) => s + $",{asString(a[n])}") + $"}}";
+
     #endregion
 }

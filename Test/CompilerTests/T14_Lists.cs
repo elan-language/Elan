@@ -118,7 +118,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5\r\n");
     }
 
-
     [TestMethod]
     public void Pass_emptyList()
     {
@@ -194,14 +193,14 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_addMethod()
+    public void Pass_range()
     {
         var code = @"
 main
     var a = {4,5,6,7,8}
-    var b = a.add(9)
-    printLine(a)
-    printLine(b)
+    printLine(a[2..])
+    printLine(a[1..3])
+    printLine(a[..2])
 end main
 ";
 
@@ -217,25 +216,24 @@ public static partial class GlobalConstants {
 public static class Program {
    private static void Main(string[] args) {
     var a = new ImmutableList<int> {4,5,6,7,8};
-    var b = a.Add(9);
-    printLine(a);
-    printLine(b);
+    printLine(a[2..]);
+    printLine(a[1..3]);
+    printLine(a[..2]);
   }
-}";  
+}";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
-
+        var parseTree = @"";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{4,5,6,7,8,9}\r\n");
+        AssertObjectCodeExecutes(compileData, "{6,7,8}\r\n{5,6,7}\r\n{4,5,6}\r\n");
     }
 
     [TestMethod]
-    public void Pass_addValueUsingPlus()
+    public void Pass_addElementToList()
     {
         var code = @"
 main
