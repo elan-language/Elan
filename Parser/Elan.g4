@@ -93,7 +93,7 @@ abstractClass:
  
 inherits: INHERITS type (COMMA type)*;
 
-property: NL PRIVATE? PROPERTY IDENTIFIER (type | (ASSIGN expression)); 
+property: NL PRIVATE? PROPERTY IDENTIFIER AS type; 
 
 constructor: 
 	NL CONSTRUCTOR (OPEN_BRACKET NL? parameterList? NL? CLOSE_BRACKET)? 

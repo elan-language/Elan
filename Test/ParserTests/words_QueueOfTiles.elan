@@ -1,8 +1,8 @@
 ﻿
 class QueueOfTiles
-    private property contents Array<String>
-    private property rear Int
-    private property maxSize Int
+    private property contents as Array<String>
+    private property rear as Int
+    private property maxSize as Int
 
     constructor(maxSize Int)
         self.maxSize = maxSize
