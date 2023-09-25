@@ -21,12 +21,14 @@ public static class Functions {
     public static double log(double d) => Math.Log(d);
     public static double log2(double x) => Math.Log2(x);
     public static double log10(double d) => Math.Log10(d);
-    public static double pow(double x, double y) => Math.Pow(x, y);
     public static double sin(double d) => Math.Sin(d);
     public static double sinh(double d) => Math.Sinh(d);
     public static double sqrt(double d) => Math.Sqrt(d);
     public static double tan(double d) => Math.Tan(d);
     public static double tanh(double d) => Math.Tanh(d);
+
+    public static double min(double a, double b) => Math.Min(a, b);
+    public static double max(double a, double b) => Math.Max(a, b);
 
     #endregion
 

@@ -201,6 +201,97 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
+    [TestMethod]
+    public void Pass_MultiParamCall()
+    {
+        var code = @"#
+main
+  var x = min(3.1, 3)
+  printLine(x)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = min(3.1, 3);
+    printLine(x);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (methodCall min ( (argumentList (expression (value (literal (literalValue 3.1)))) , (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_MultiParamCallUsingDotSyntax()
+    {
+        var code = @"#
+main
+  var x = 3.max(3.1)
+  printLine(x)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = max(3, 3.1);
+    printLine(x);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalValue 3)))) . (methodCall max ( (argumentList (expression (value (literal (literalValue 3.1))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3.1\r\n");
+    }
+
+
+    [TestMethod, Ignore]
+    public void Fail_IncorrectType()
+    {
+        var code = @"#
+main
+  var x = ""hello"".max(""world"")
+end main
+";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalDataStructure ""hello"")))) . (methodCall max ( (argumentList (expression (value (literal (literalDataStructure ""world""))))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
 
     [TestMethod, Ignore]
     public void Fail_UnconsumedExpressionResult1()
