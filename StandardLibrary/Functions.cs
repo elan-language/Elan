@@ -3,6 +3,7 @@
 
 namespace StandardLibrary;
 
+[ElanStandardLibrary]
 public static class Functions {
     #region Math
 

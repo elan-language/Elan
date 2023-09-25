@@ -63,7 +63,7 @@ public static partial class Helpers {
     }
 
     public static void AssertCompiles(CompileData compileData) {
-        Assert.IsNotNull(compileData.AbstractSyntaxTree, "Failed to compile");
+        Assert.IsTrue(compileData.CompileErrors.Length == 0, "Failed to compile");
     }
 
     public static void AssertObjectCodeIs(CompileData compileData, string objectCode) {
@@ -102,6 +102,6 @@ public static partial class Helpers {
     }
 
     public static void AssertDoesNotCompile(CompileData compileData) {
-        Assert.IsNull(compileData.AbstractSyntaxTree, "Unexpectedly Compiled");
+        Assert.IsTrue(compileData.CompileErrors.Length > 0, "Unexpectedly Compiled");
     }
 }

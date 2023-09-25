@@ -4,20 +4,10 @@ using CSharpLanguageModel.Models;
 
 namespace CSharpLanguageModel;
 
-public class CodeModelAstVisitor {
-    private void Enter(IAstNode node) { }
+public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
+    protected override void Enter(IAstNode node) { }
 
-    private void Exit(IAstNode node) { }
-
-    private ICodeModel HandleScope<T>(Func<T, ICodeModel> func, T node) where T : IAstNode {
-        Enter(node);
-        try {
-            return func(node);
-        }
-        finally {
-            Exit(node);
-        }
-    }
+    protected override void Exit(IAstNode node) { }
 
     private FileCodeModel BuildFileModel(FileNode fileNode) {
         var main = Visit(fileNode.MainNode);
@@ -29,7 +19,7 @@ public class CodeModelAstVisitor {
 
     private StatementBlockModel BuildStatementBlockModel(StatementBlockNode statementBlock) => new(statementBlock.Statements.Select(Visit));
 
-    public ICodeModel Visit(IAstNode astNode) {
+    public override ICodeModel Visit(IAstNode astNode) {
         return astNode switch {
             FileNode n => HandleScope(BuildFileModel, n),
             MainNode n => HandleScope(BuildMainModel, n),

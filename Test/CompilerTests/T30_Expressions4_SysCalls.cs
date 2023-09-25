@@ -123,7 +123,7 @@ public static class Program {
     }
 
 
-    [TestMethod,Ignore]
+    [TestMethod]
     public void Fail_StandaloneFunctionCallNotValid()
     {
         var code = @"#

@@ -1,6 +1,7 @@
 ﻿using AbstractSyntaxTree;
 using Antlr4.Runtime;
 using CSharpLanguageModel;
+using SymbolTable;
 
 namespace Compiler;
 
@@ -14,6 +15,8 @@ public static class Pipeline {
     public static CompileData Compile(CompileData compileData) {
         compileData = ParseCode(compileData);
         compileData = CompileCode(compileData);
+        compileData = GenerateSymbolTable(compileData);
+        compileData = SecondPass(compileData);
         compileData = GenerateObjectCode(compileData);
         compileData = CompileObjectCode(compileData);
 
@@ -96,5 +99,26 @@ public static class Pipeline {
         var (fileName, stdOut, stdErr) = CSharpCompiler.CompileObjectCode(compileData.FileName, compileData.ObjectCode);
 
         return compileData with { FileName = fileName, ObjectCodeCompileStdOut = stdOut, ObjectCodeCompileStdErr = stdErr };
+    }
+
+    private static CompileData GenerateSymbolTable(CompileData compileData) {
+        if (compileData.AbstractSyntaxTree is null) {
+            return compileData;
+        }
+
+        var symbolTableVisitor = new SymbolTableVisitor();
+        symbolTableVisitor.Visit(compileData.AbstractSyntaxTree);
+        return compileData with { SymbolTable = symbolTableVisitor.SymbolTable };
+    }
+
+    private static CompileData SecondPass(CompileData compileData) {
+        if (compileData.AbstractSyntaxTree is null || compileData.SymbolTable is null) {
+            return compileData;
+        }
+
+        var secondPassVisitor = new SecondPassVisitor(compileData.SymbolTable);
+        var ast = secondPassVisitor.Visit(compileData.AbstractSyntaxTree);
+
+        return compileData with { AbstractSyntaxTree = ast, CompileErrors = secondPassVisitor.CompileErrors.ToArray() };
     }
 }
