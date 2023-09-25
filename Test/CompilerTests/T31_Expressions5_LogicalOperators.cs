@@ -52,7 +52,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "False\r\nFalse\r\nFalse\r\nTrue\r\n");
+        AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\nfalse\r\ntrue\r\n");
     }
 
     [TestMethod]
@@ -101,7 +101,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "False\r\nTrue\r\nTrue\r\nTrue\r\n");
+        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\ntrue\r\n");
     }
 
     [TestMethod]
@@ -150,7 +150,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "False\r\nTrue\r\nTrue\r\nFalse\r\n");
+        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\nfalse\r\n");
     }
 
     [TestMethod]
@@ -199,7 +199,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "True\r\nFalse\r\nTrue\r\nFalse\r\n");
+        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\ntrue\r\nfalse\r\n");
     }
 
     [TestMethod]
@@ -240,7 +240,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "True\r\nTrue\r\n");
+        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\n");
     }
 
     [TestMethod]

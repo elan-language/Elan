@@ -1,5 +1,6 @@
 ﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable InconsistentNaming
+using static StandardLibrary.Functions;
 
 namespace StandardLibrary;
 
@@ -8,28 +9,14 @@ public static class SystemCalls {
     #region print and input
 
     //TODO once we can support Any type - replace all overloads with argument of type 'object'
-    public static void printLine(string s) => Console.WriteLine(s);
-
-    public static void printLine(int i) => Console.WriteLine(i);
-
-    public static void printLine(double d) => Console.WriteLine(d);
-
-    public static void printLine(char c) => Console.WriteLine(c);
-
-    public static void printLine(bool b) => Console.WriteLine(b);
-
-    public static void print(string s) => Console.Write(s);
-
-    public static void print(int i) => Console.Write(i);
-
-
-    public static void print(double d) => Console.Write(d);
-
-    public static void print(char c) => Console.Write(c);
-
-    public static void print(bool b) => Console.Write(b);
+    public static void printLine(object obj) => Console.WriteLine(asString(obj));
 
     public static void printLine() => Console.WriteLine();
+
+    public static void print(object obj) => Console.Write(asString(obj));
+
+
+    
 
     public static string input(string prompt)
     {

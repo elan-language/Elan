@@ -184,7 +184,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "True\r\n");
+        AssertObjectCodeExecutes(compileData, "true\r\n");
     }
 
     [TestMethod]
