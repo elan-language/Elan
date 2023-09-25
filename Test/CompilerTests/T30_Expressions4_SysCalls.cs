@@ -122,7 +122,7 @@ end main
     {
         var code = @"#
 main
-  var a = input(""Your name"").ToUpper();
+  var a = input(""Your name"").toUpper();
 end main
 ";
 
