@@ -203,11 +203,40 @@ public static class Program {
 
 
     [TestMethod, Ignore]
-    public void Fail_StandaloneFunctionCallNotValid()
+    public void Fail_UnconsumedExpressionResult1()
     {
         var code = @"#
     main
       sin(1)
+    end main
+    ";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertDoesNotCompile(compileData);
+    }
+
+    [TestMethod, Ignore]
+    public void Fail_UnconsumedExpressionResult2()
+    {
+        var code = @"#
+    main
+      1 + 2
+    end main
+    ";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertDoesNotCompile(compileData);
+    }
+
+    [TestMethod, Ignore]
+    public void Fail_UnconsumedExpressionResult3()
+    {
+        var code = @"#
+    main
+      var a = 1
+      a.Sin()
     end main
     ";
 
