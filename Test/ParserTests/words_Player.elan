@@ -1,13 +1,14 @@
 ﻿
 class Player
 
-    property name = ""
-    property score = 50  
-    property tilesPlayed = 0
-    property tilesInHand = ""
+    property name as String
+    property score as Int
+    property tilesPlayed as Int
+    property tilesInHand as String
 
     constructor(name String)
         self.name = name
+        score = 50
     end constructor
 
     procedure setTilesInHand(tiles String)

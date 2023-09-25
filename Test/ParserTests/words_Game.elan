@@ -1,9 +1,9 @@
 ﻿
 class Game
-    property allowedWords List<String> 
-    property player1 Player
-    property player2 Player
-    property tileQueue TileQueue
+    property allowedWords as List<String> 
+    property player1 as Player
+    property player2 as Player
+    property tileQueue as TileQueue
 
     constructor(player1 Player, player2 Player,allowedWords List<String>)
         self.player1 = player1
