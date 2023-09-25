@@ -30,6 +30,7 @@ public static class AstFactory {
             ElanParser.LogicalOpContext c => visitor.Build(c),
             ElanParser.ProceduralControlFlowContext c => visitor.Build(c),
             ElanParser.IfContext c => visitor.Build(c),
+            ElanParser.WhileContext c => visitor.Build(c),
             ElanParser.ConditionalOpContext c => visitor.Build(c),
             ElanParser.UnaryOpContext c => visitor.Build(c),
 
@@ -238,6 +239,10 @@ public static class AstFactory {
             return visitor.Visit(ic);
         }
 
+        if (context.@while() is { } w) {
+            return visitor.Visit(w);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -246,5 +251,14 @@ public static class AstFactory {
         var statementBlocks = context.statementBlock().Select(visitor.Visit);
 
         return new IfStatementNode(expressions.ToImmutableArray(), statementBlocks.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.WhileContext context) {
+        var expression = visitor.Visit(context.expression());
+        var statementBlock =visitor.Visit(context.statementBlock());
+
+        return new WhileStatementNode(expression, statementBlock);
+        
+        throw new NotImplementedException(context.children.First().GetText());
     }
 }

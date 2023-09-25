@@ -12,5 +12,6 @@ public enum Operator {
     And,
     Or,
     Not,
-    Xor
+    Xor,
+    LessThan
 }

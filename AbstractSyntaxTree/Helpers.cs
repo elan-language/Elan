@@ -15,6 +15,7 @@ public static class Helpers {
             ElanParser.OP_OR => Operator.Or,
             ElanParser.OP_NOT => Operator.Not,
             ElanParser.OP_XOR => Operator.Xor,
+            ElanParser.LT => Operator.LessThan,
             _ => throw new NotSupportedException(nodeType.ToString())
         };
     }

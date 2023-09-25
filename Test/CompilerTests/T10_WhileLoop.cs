@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 
-[TestClass, Ignore]
+[TestClass]
 public class T10_WhileLoop
 {
     [TestMethod]
@@ -33,15 +33,15 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-   var x = 0;
-   while (x < 10) {
-        x = x + 1;
-   }
-   printLine(x);
+    var x = 0;
+    while (x < 10) {
+      x = x + 1;
+    }
+    printLine(x);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (while while (expression (expression (value x)) (binaryOp (conditionalOp <)) (expression (value (literal (literalValue 10))))) (statementBlock (assignment (assignableValue x) = (expression (expression (value x)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))))) end while)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -52,7 +52,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod]
+    [TestMethod,Ignore]
     public void Pass_innerLoop()
     {
         var code = @"
@@ -108,7 +108,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_noEnd()
     {
         var code = @"
@@ -122,7 +122,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_variableNotPredefined()
     {
         var code = @"
@@ -140,7 +140,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_variableDefinedInWhile()
     {
         var code = @"
@@ -158,7 +158,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_noCondition()
     {
         var code = @"

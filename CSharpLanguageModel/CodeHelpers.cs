@@ -46,6 +46,7 @@ public static class CodeHelpers {
             Operator.Or => "||",
             Operator.Not => "!",
             Operator.Xor => "^",
+            Operator.LessThan => "<",
             _ => throw new NotImplementedException(op.ToString())
         };
     }
