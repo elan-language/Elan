@@ -162,4 +162,19 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
+    [TestMethod]
+    public void Fail_while_do()
+    {
+        var code = @"
+main
+   var x = 0
+   while x < 10
+     x = x + 1
+   do
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
 }
