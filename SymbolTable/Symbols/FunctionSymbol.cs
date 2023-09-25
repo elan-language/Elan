@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SymbolTable.SymbolTypes;
+﻿using SymbolTable.SymbolTypes;
 
-namespace SymbolTable.Symbols
-{
-    public class FunctionSymbol : MethodSymbol
-    {
-        public FunctionSymbol(string name, ISymbolType returnType,  IScope enclosingScope) : base(name, returnType, enclosingScope) { }
+namespace SymbolTable.Symbols; 
 
-        public FunctionSymbol(string name, ISymbolType returnType) : base(name, returnType) { }
+public class FunctionSymbol : MethodSymbol {
+    public FunctionSymbol(string name, ISymbolType returnType, IScope enclosingScope) : base(name, returnType, enclosingScope) { }
 
-        public override string ScopeName => "Function";
-    }
+    public FunctionSymbol(string name, ISymbolType returnType) : base(name, returnType) { }
+
+    public override string ScopeName => "Function";
 }

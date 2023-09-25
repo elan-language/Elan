@@ -4,7 +4,7 @@ using SymbolTable;
 namespace Compiler; 
 
 public class SecondPassVisitor {
-    public IList<string> CompileErrors = new List<string>();
+    public readonly IList<string> CompileErrors = new List<string>();
     private IScope currentScope;
 
     static SecondPassVisitor() {

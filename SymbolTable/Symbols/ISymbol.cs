@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace SymbolTable.Symbols; 
 
-namespace SymbolTable.Symbols
-{
-    public interface ISymbol
-    {
-        public string Name { get; }
+public interface ISymbol {
+    public string Name { get; }
 
-        public IScope? Scope { get; set; }
-    }
+    public IScope? Scope { get; set; }
 }
