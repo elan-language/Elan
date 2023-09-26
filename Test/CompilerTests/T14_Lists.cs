@@ -361,7 +361,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "{4,5,6,7,8,1,2,3}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_constantLists()
     {
         var code = @"
@@ -375,19 +375,19 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
-
+  public static readonly ImmutableList<int> a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new ImmutableList<int> {4,5,6,7,8};
     printLine(a);
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalList { (literal (literalValue 4)) , (literal (literalValue 5)) , (literal (literalValue 6)) , (literal (literalValue 7)) , (literal (literalValue 8)) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -395,7 +395,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{4,5,6,7,8}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
     }
 
     [TestMethod, Ignore]

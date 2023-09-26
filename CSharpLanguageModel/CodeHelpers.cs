@@ -28,6 +28,19 @@ public static class CodeHelpers {
             FloatValueNode => "double",
             CharValueNode => "char",
             BoolValueNode => "bool",
+            LiteralListNode lln => $"ImmutableList<{NodeToCSharpType(lln.ItemNodes.First())}>",
+            _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
+        };
+    }
+
+    public static string NodeToPrefixedCSharpType(IAstNode node) {
+        return node switch {
+            IntegerValueNode or
+                StringValueNode or
+                FloatValueNode or
+                CharValueNode or
+                BoolValueNode => $"const {NodeToCSharpType(node)}",
+            LiteralListNode => $"static readonly {NodeToCSharpType(node)}",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }
