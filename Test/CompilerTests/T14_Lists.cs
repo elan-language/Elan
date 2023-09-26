@@ -47,6 +47,47 @@ public static class Program {
     }
 
     [TestMethod, Ignore]
+    public void Pass_listTypeDefinedByVariable()
+    {
+        var code = @"
+main
+    var x = 1
+    var a = {x,5,6,7,8}
+    printLine(a)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = 1;
+    var a = ImmutableList.Create<int>(x, 5, 6, 7, 8);
+    printLine(a);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "List {1,5,6,7,8}\r\n");
+    }
+
+
+    [TestMethod, Ignore]
     public void Pass_literalListWithCoercion()
     {
         var code = @"
