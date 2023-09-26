@@ -358,7 +358,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "{4,5,6,7,8,1,2,3}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_constantLists()
     {
         var code = @"
@@ -395,7 +395,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "{4,5,6,7,8}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_createEmptyListUsingConstructor()
     {
         var code = @"

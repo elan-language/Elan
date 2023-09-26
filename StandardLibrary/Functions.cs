@@ -121,6 +121,8 @@ public static class Functions {
 
     public static int length(ICollection l) => l.Count;
 
+    #endregion
+
     #region String handling
     public const string newLine = @"
 " ;
