@@ -41,6 +41,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             LiteralListNode n => HandleScope(BuildLiteralListModel, n),
             IndexedExpressionNode n => HandleScope(BuildIndexedExpressionModel, n),
             RangeExpressionNode n => HandleScope(BuildRangeExpressionModel, n),
+            NewInstanceNode n => HandleScope(BuildNewInstanceModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -117,5 +118,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var expression2 = rangeExpressionNode.Expression2 is { } e ? Visit(e) : null;
 
         return new RangeExpressionModel(rangeExpressionNode.Prefix, expression1, expression2);
+    }
+
+    private NewInstanceModel BuildNewInstanceModel(NewInstanceNode  newInstanceNode) {
+
+
+        return new NewInstanceModel();
     }
 }
