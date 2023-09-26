@@ -22,15 +22,23 @@ public static class CodeHelpers {
 
     public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0)));
 
-    public static string ValueNodeToCSharpType(ValueNode node) =>
-        node.TypeNode.Type switch {
+    public static string ValueTypeToCSharpType(ValueType type) =>
+        type switch {
             ValueType.Int => "int",
             ValueType.String => "string",
             ValueType.Float => "double",
             ValueType.Char => "char",
             ValueType.Bool => "bool",
-            _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
+            _ => throw new NotImplementedException(type.ToString() ?? "null")
         };
+
+    public static string DataStructureTypeToCSharpType(DataStructure type) =>
+        type switch {
+            DataStructure.List => "ImmutableList",
+            _ => throw new NotImplementedException(type.ToString() ?? "null")
+        };
+
+    public static string ValueNodeToCSharpType(ValueNode node) => ValueTypeToCSharpType(node.TypeNode.Type);
 
     public static string NodeToCSharpType(IAstNode node) {
         return node switch {

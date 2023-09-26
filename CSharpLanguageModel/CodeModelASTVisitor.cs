@@ -42,6 +42,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             IndexedExpressionNode n => HandleScope(BuildIndexedExpressionModel, n),
             RangeExpressionNode n => HandleScope(BuildRangeExpressionModel, n),
             NewInstanceNode n => HandleScope(BuildNewInstanceModel, n),
+            DataStructureTypeNode n => HandleScope(BuildDataStructureTypeModel, n),
+            ValueTypeNode n => HandleScope(BuildValueTypeModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -121,8 +123,18 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private NewInstanceModel BuildNewInstanceModel(NewInstanceNode  newInstanceNode) {
+        var type = Visit(newInstanceNode.Type);
 
+        return new NewInstanceModel(type);
+    }
 
-        return new NewInstanceModel();
+    private DataStructureTypeModel BuildDataStructureTypeModel(DataStructureTypeNode  dataStructureTypeNode) {
+        var types = dataStructureTypeNode.GenericTypes.Select(Visit);
+
+        return new DataStructureTypeModel(types, CodeHelpers.DataStructureTypeToCSharpType(dataStructureTypeNode.Type));
+    }
+
+    private ScalarValueModel BuildValueTypeModel(ValueTypeNode  valueTypeNode) {
+        return new ScalarValueModel(CodeHelpers.ValueTypeToCSharpType(valueTypeNode.Type));
     }
 }

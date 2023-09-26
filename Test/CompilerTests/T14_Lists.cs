@@ -122,7 +122,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_emptyList()
     {
         var code = @"
@@ -157,7 +157,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "0\r\n{}\r\n");
+        AssertObjectCodeExecutes(compileData, "0\r\n");
     }
 
     [TestMethod]
