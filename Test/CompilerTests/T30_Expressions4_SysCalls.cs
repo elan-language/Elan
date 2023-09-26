@@ -101,7 +101,7 @@ end main
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_SystemCallWithinExpression()
     {
         var code = @"#
