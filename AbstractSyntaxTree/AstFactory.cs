@@ -34,6 +34,7 @@ public static class AstFactory {
             ElanParser.RepeatContext c => visitor.Build(c),
             ElanParser.ConditionalOpContext c => visitor.Build(c),
             ElanParser.UnaryOpContext c => visitor.Build(c),
+            ElanParser.LiteralListContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -172,6 +173,10 @@ public static class AstFactory {
             return new StringValueNode(ls.Symbol.Text);
         }
 
+        if (context.literalList() is { } ll) {
+            return visitor.Visit(ll);
+        }
+
         throw new NotImplementedException();
     }
 
@@ -270,5 +275,11 @@ public static class AstFactory {
         var statementBlock =visitor.Visit(context.statementBlock());
 
         return new RepeatStatementNode(expression, statementBlock);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElanParser.LiteralListContext context) {
+        var items = context.literal().Select(visitor.Visit);
+
+        return new LiteralListNode(items.ToImmutableArray());
     }
 }

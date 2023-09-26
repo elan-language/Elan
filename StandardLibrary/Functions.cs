@@ -1,6 +1,9 @@
 ﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable InconsistentNaming
 
+using System.Collections;
+using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace StandardLibrary;
@@ -83,18 +86,27 @@ public static class Functions {
 
     #region AsString
 
-
-    public static string asString(object obj)
-    {
-        var t = obj.GetType();
-        if (t == typeof(bool)) return (bool)(object)obj ? "true" : "false";
-        if (t.IsAssignableTo(typeof(ITuple))) return asString<ITuple>((ITuple)(object)obj);
-        return obj.ToString();
+    public static string? asString(object obj) {
+      
+        return obj switch {
+            bool b => b ? "true" : "false",
+            IList l => asString(l),
+            _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
+            _ => obj.ToString()
+        };
     }
+
+    public static string asString(IList l) =>
+        l.Count == 0 ? "empty list" :
+            Enumerable.Range(1, l.Count - 1).Aggregate($"List {{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
 
     public static string asString<T>(List<T> l) =>
         l.Count == 0 ? "empty List" :
         Enumerable.Range(1, l.Count - 1).Aggregate($"{{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
+
+    public static string asString<T>(ImmutableList<T> l) =>
+        l.Count == 0 ? "empty list" :
+            Enumerable.Range(1, l.Count - 1).Aggregate($"List {{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
 
     public static string asString<T>(ITuple t) =>
         Enumerable.Range(1, t.Length - 1).Aggregate($"({asString(t[0])}", (s, x) => s + $", {asString(t[x])}") + $")";
@@ -102,6 +114,12 @@ public static class Functions {
     public static string asString<T>(T[] a) =>
          a.Length == 0 ? "empty Array" :
         Enumerable.Range(1, a.Length - 1).Aggregate($"Array {{{asString(a[0])}", (s, n) => s + $",{asString(a[n])}") + $"}}";
+
+    #endregion
+
+    #region lists
+
+    public static int length(ICollection l) => l.Count;
 
     #endregion
 

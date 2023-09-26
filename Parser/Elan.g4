@@ -219,15 +219,15 @@ literalTuple:  OPEN_BRACKET literal COMMA literal (COMMA literal)* CLOSE_BRACKET
 
 tupleDecomp: OPEN_BRACKET IDENTIFIER (COMMA IDENTIFIER)+  CLOSE_BRACKET;
  
-listDefinition: OPEN_BRACE (NL? expression (COMMA expression)* NL?)? CLOSE_BRACE;
+listDefinition: OPEN_BRACE (NL? expression (COMMA expression)* NL?) CLOSE_BRACE;
 
-literalList: OPEN_BRACE (NL? literal (COMMA literal)* NL?)? CLOSE_BRACE;
+literalList: OPEN_BRACE (NL? literal (COMMA literal)* NL?) CLOSE_BRACE;
 
 listDecomp: OPEN_BRACE IDENTIFIER COLON IDENTIFIER CLOSE_BRACE;
 
-dictionaryDefinition: OPEN_BRACE (NL? kvp (COMMA kvp)* NL?)? CLOSE_BRACE;
+dictionaryDefinition: OPEN_BRACE (NL? kvp (COMMA kvp)* NL?) CLOSE_BRACE;
 
-literalDictionary: OPEN_BRACE (NL? literalKvp (COMMA literalKvp)* NL?)? CLOSE_BRACE;
+literalDictionary: OPEN_BRACE (NL? literalKvp (COMMA literalKvp)* NL?) CLOSE_BRACE;
 
 kvp: expression COLON expression;
 
