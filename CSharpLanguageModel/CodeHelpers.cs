@@ -3,6 +3,7 @@ using AbstractSyntaxTree.Nodes;
 using Compiler;
 using CSharpLanguageModel.Models;
 using StandardLibrary;
+using ValueType = AbstractSyntaxTree.ValueType;
 
 namespace CSharpLanguageModel;
 
@@ -21,13 +22,19 @@ public static class CodeHelpers {
 
     public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0)));
 
+    public static string ValueNodeToCSharpType(ValueNode node) =>
+        node.TypeNode.Type switch {
+            ValueType.Int => "int",
+            ValueType.String => "string",
+            ValueType.Float => "double",
+            ValueType.Char => "char",
+            ValueType.Bool => "bool",
+            _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
+        };
+
     public static string NodeToCSharpType(IAstNode node) {
         return node switch {
-            IntegerValueNode => "int",
-            StringValueNode => "string",
-            FloatValueNode => "double",
-            CharValueNode => "char",
-            BoolValueNode => "bool",
+            ValueNode vn => ValueNodeToCSharpType(vn),
             LiteralListNode lln => $"ImmutableList<{NodeToCSharpType(lln.ItemNodes.First())}>",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
@@ -35,11 +42,7 @@ public static class CodeHelpers {
 
     public static string NodeToPrefixedCSharpType(IAstNode node) {
         return node switch {
-            IntegerValueNode or
-                StringValueNode or
-                FloatValueNode or
-                CharValueNode or
-                BoolValueNode => $"const {NodeToCSharpType(node)}",
+            ValueNode => $"const {NodeToCSharpType(node)}",
             LiteralListNode => $"static readonly {NodeToCSharpType(node)}",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };

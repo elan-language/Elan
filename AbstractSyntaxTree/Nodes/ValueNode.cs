@@ -1,5 +1,5 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record BoolValueNode(string Value) : IScalarValueNode {
+public record ValueNode(string Value, ValueTypeNode TypeNode) : IScalarValueNode {
     public IEnumerable<IAstNode> Children => Array.Empty<IAstNode>();
 }
