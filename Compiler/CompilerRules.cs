@@ -10,7 +10,7 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
         if (leafNode is MethodCallNode mcn && currentScope.Resolve(mcn.Name) is FunctionSymbol) {
             var otherNodes = nodes.SkipLast(1).ToArray();
-            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode)) {
+            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or MethodCallNode)) {
                 return "Cannot have unassigned expression";
             }
         }

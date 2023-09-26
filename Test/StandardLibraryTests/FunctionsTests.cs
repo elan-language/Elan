@@ -1,4 +1,5 @@
-﻿using StandardLibrary;
+﻿using System.Collections.Immutable;
+using StandardLibrary;
 using System.Linq.Expressions;
 using static StandardLibrary.Functions;
 
@@ -33,6 +34,13 @@ public class FunctionsTests
     public void AsStringList1()
     {
         var t = new List<int> { 1, 2, 3, 4, 5 };
+        Assert.AreEqual("List {1,2,3,4,5}", asString(t));
+    }
+
+    [TestMethod]
+    public void AsStringImmutableList()
+    {
+        var t = ImmutableList.Create<int>(1, 2, 3, 4, 5 );
         Assert.AreEqual("List {1,2,3,4,5}", asString(t));
     }
 

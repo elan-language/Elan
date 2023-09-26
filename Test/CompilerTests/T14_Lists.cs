@@ -1,10 +1,11 @@
 ﻿using Compiler;
+using System.Collections.Immutable;
 
 namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T14_Lists {
 
     #region Passes
@@ -21,6 +22,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -28,12 +30,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new ImmutableList<int> {4,5,6,7,8};
+    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
     printLine(a);
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -41,10 +43,10 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{4,5,6,7,8}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_literalListWithCoercion()
     {
         var code = @"
@@ -95,6 +97,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -102,12 +105,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new ImmutableList<int> {4,5,6,7,8};
-    printLine(a.length());
+    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+    printLine(length(a));
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -118,7 +121,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_emptyList()
     {
         var code = @"
@@ -156,7 +159,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "0\r\n{}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_index()
     {
         var code = @"
@@ -192,7 +195,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "6\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_range()
     {
         var code = @"
@@ -232,7 +235,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "{6,7,8}\r\n{5,6,7}\r\n{4,5,6}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_addElementToList()
     {
         var code = @"
@@ -273,7 +276,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "{4,5,6,7,8,9}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_addListToElement()
     {
         var code = @"
@@ -314,7 +317,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "{9,4,5,6,7,8}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_addListToListUsingPlus()
     {
         var code = @"
@@ -357,7 +360,7 @@ public static class Program {
 #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_emptyLiteralList()
     {
         var code = @"
@@ -370,7 +373,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_literalListInconsistentTypes1()
     {
         var code = @"
@@ -383,7 +386,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_literalListInconsistentTypes2()
     {
         var code = @"
@@ -396,7 +399,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_OutOfRange()
     {
         var code = @"

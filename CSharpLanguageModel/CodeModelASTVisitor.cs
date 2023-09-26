@@ -38,6 +38,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             StatementBlockNode n => HandleScope(BuildStatementBlockModel, n),
             BracketNode n => HandleScope(BuildBracketModel, n),
             CallStatementNode n => HandleScope(BuildCallStatementModel, n),
+            LiteralListNode n => HandleScope(BuildLiteralListModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -64,16 +65,23 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private WhileStatementModel BuildWhileStatementModel(WhileStatementNode whileStatementNode) {
         var expression = Visit(whileStatementNode.Expression);
-        var statementBlock =Visit(whileStatementNode.StatementBlock);
+        var statementBlock = Visit(whileStatementNode.StatementBlock);
 
         return new WhileStatementModel(expression, statementBlock);
     }
 
     private RepeatStatementModel BuildRepeatStatementModel(RepeatStatementNode repeatStatementNode) {
         var expression = Visit(repeatStatementNode.Expression);
-        var statementBlock =Visit(repeatStatementNode.StatementBlock);
+        var statementBlock = Visit(repeatStatementNode.StatementBlock);
 
         return new RepeatStatementModel(expression, statementBlock);
+    }
+
+    private LiteralListModel BuildLiteralListModel(LiteralListNode literalListNode) {
+        var type = CodeHelpers.NodeToCSharpType(literalListNode.ItemNodes.First());
+        var items = literalListNode.ItemNodes.Select(Visit);
+
+        return new LiteralListModel(items, type);
     }
 
     private ICodeModel BuildOperatorModel(OperatorNode operatorNode) {
