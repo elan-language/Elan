@@ -12,7 +12,7 @@ namespace StandardLibrary;
 public static class Functions {
     #region Math
 
-    public static double pi => Math.PI;
+    public const double pi = 3.141592653589793;
     public static double aCos(double d) => Math.Cos(d);
     public static double aCosh(double d) => Math.Acosh(d);
     public static double aSin(double d) => Math.Asin(d);
@@ -101,18 +101,18 @@ public static class Functions {
             Enumerable.Range(1, l.Count - 1).Aggregate($"List {{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
 
     public static string asString<T>(List<T> l) =>
-        l.Count == 0 ? "empty list" :
-        Enumerable.Range(1, l.Count - 1).Aggregate($"List {{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
+        l.Count == 0 ? "empty List" :
+        Enumerable.Range(1, l.Count - 1).Aggregate($"{{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
 
     public static string asString<T>(ImmutableList<T> l) =>
         l.Count == 0 ? "empty list" :
             Enumerable.Range(1, l.Count - 1).Aggregate($"List {{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
 
     public static string asString<T>(ITuple t) =>
-        Enumerable.Range(1, t.Length - 1).Aggregate($"Tuple ({asString(t[0])}", (s, x) => s + $", {asString(t[x])}") + $")";
+        Enumerable.Range(1, t.Length - 1).Aggregate($"({asString(t[0])}", (s, x) => s + $", {asString(t[x])}") + $")";
 
     public static string asString<T>(T[] a) =>
-         a.Length == 0 ? "empty array" :
+         a.Length == 0 ? "empty Array" :
         Enumerable.Range(1, a.Length - 1).Aggregate($"Array {{{asString(a[0])}", (s, n) => s + $",{asString(a[n])}") + $"}}";
 
     #endregion
@@ -121,5 +121,8 @@ public static class Functions {
 
     public static int length(ICollection l) => l.Count;
 
+    #region String handling
+    public const string newLine = @"
+" ;
     #endregion
 }
