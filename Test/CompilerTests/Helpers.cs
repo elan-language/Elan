@@ -34,7 +34,7 @@ public static partial class Helpers {
         return Process.Start(start) ?? throw new NullReferenceException("Process failed to start");
     }
 
-    private static string Execute(string exe, string workingDir, string? input = null) {
+    private static (string, string) Execute(string exe, string workingDir, string? input = null) {
         using var process = CreateProcess(exe, workingDir);
 
         if (input is not null) {
@@ -47,7 +47,8 @@ public static partial class Helpers {
         }
 
         using var stdOut = process.StandardOutput;
-        return stdOut.ReadToEnd();
+        using var stdErr = process.StandardError;
+        return (stdOut.ReadToEnd(), stdErr.ReadToEnd());
     }
 
     public static void AssertParses(CompileData compileData) {
@@ -82,10 +83,20 @@ public static partial class Helpers {
         var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
         var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
 
-        var stdOut = Execute(exe, wd, optionalInput);
+        var (stdOut, stdErr) = Execute(exe, wd, optionalInput);
 
         Assert.AreEqual(expectedOutput, stdOut);
     }
+
+    public static void AssertObjectCodeFails(CompileData compileData, string expectedError,   string? optionalInput = null) {
+        var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
+        var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
+
+        var (stdOut, stdErr) = Execute(exe, wd, optionalInput);
+
+        Assert.IsTrue(stdErr.Contains(expectedError));
+    }
+
 
     public static void AssertDoesNotParse(CompileData compileData, string[]? expected = null) {
         Assert.IsTrue(compileData.ParserErrors.Length > 0, "Expected parse error");

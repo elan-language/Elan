@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using AbstractSyntaxTree.Nodes;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using static ElanParser;
 
 namespace AbstractSyntaxTree;
 
@@ -35,6 +36,8 @@ public static class AstFactory {
             ElanParser.ConditionalOpContext c => visitor.Build(c),
             ElanParser.UnaryOpContext c => visitor.Build(c),
             ElanParser.LiteralListContext c => visitor.Build(c),
+            ElanParser.IndexContext c => visitor.Build(c),
+            ElanParser.RangeContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -94,7 +97,14 @@ public static class AstFactory {
         }
 
         if (context.unaryOp() is { } uop) {
-            return new UnaryNode(visitor.Visit(uop), visitor.Visit(context.expression().First()));
+            return new UnaryNode(visitor.Visit(uop), visitor.Visit(context.expression().Single()));
+        }
+
+        if (context.index() is { } idx) {
+            var expr = visitor.Visit(context.expression().Single());
+            var range = visitor.Visit(idx);
+
+            return new IndexedExpressionNode(expr, range);
         }
 
         throw new NotImplementedException();
@@ -281,5 +291,21 @@ public static class AstFactory {
         var items = context.literal().Select(visitor.Visit);
 
         return new LiteralListNode(items.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, IndexContext context) {
+        if (context.range() is { } rangeContext) {
+            return visitor.Visit(rangeContext);
+        }
+
+        return visitor.Visit(context.expression().Single());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, RangeContext context) {
+        var prefix = context.children.First() is ITerminalNode;
+        var expr1 = visitor.Visit(context.children[prefix ? 1 : 0]);
+        var expr2 = context.ChildCount == 3 ? visitor.Visit(context.children[2]) : null;
+
+        return new RangeExpressionNode(prefix, expr1, expr2);
     }
 }

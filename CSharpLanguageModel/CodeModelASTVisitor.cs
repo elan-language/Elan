@@ -39,6 +39,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             BracketNode n => HandleScope(BuildBracketModel, n),
             CallStatementNode n => HandleScope(BuildCallStatementModel, n),
             LiteralListNode n => HandleScope(BuildLiteralListModel, n),
+            IndexedExpressionNode n => HandleScope(BuildIndexedExpressionModel, n),
+            RangeExpressionNode n => HandleScope(BuildRangeExpressionModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -102,4 +104,18 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private BinaryModel BuildBinaryModel(BinaryNode binaryNode) => new(Visit(binaryNode.Operator), Visit(binaryNode.Operand1), Visit(binaryNode.Operand2));
 
     private UnaryModel BuildUnaryModel(UnaryNode binaryNode) => new(Visit(binaryNode.Operator), Visit(binaryNode.Operand));
+
+    private IndexedExpressionModel BuildIndexedExpressionModel(IndexedExpressionNode indexedExpressionNode) {
+        var expression = Visit(indexedExpressionNode.Expression);
+        var range = Visit(indexedExpressionNode.Range);
+
+        return new IndexedExpressionModel(expression, range);
+    }
+
+    private RangeExpressionModel BuildRangeExpressionModel(RangeExpressionNode rangeExpressionNode) {
+        var expression1 = Visit(rangeExpressionNode.Expression1);
+        var expression2 = rangeExpressionNode.Expression2 is { } e ? Visit(e) : null;
+
+        return new RangeExpressionModel(rangeExpressionNode.Prefix, expression1, expression2);
+    }
 }

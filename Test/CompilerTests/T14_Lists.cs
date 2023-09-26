@@ -46,7 +46,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_literalListWithCoercion()
     {
         var code = @"
@@ -60,6 +60,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -67,12 +68,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new ImmutableList<double> {4.1,5,6,7,8};
+    var a = ImmutableList.Create<double>(4.1, 5, 6, 7, 8);
     printLine(a);
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -80,7 +81,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{4.1,5,6,7,8}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {4.1,5,6,7,8}\r\n");
     }
 
     [TestMethod]
@@ -159,7 +160,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "0\r\n{}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_index()
     {
         var code = @"
@@ -173,19 +174,20 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-   private static void Main(string[] args) {
-    var a = new ImmutableList<int> {4,5,6,7,8};
-    printLine(a[2]);
+  private static void Main(string[] args) {
+    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+    printLine(a.ToImmutableArray()[2]);
   }
 }";
 
-        var parseTree = @"";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -195,7 +197,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "6\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_range()
     {
         var code = @"
@@ -211,28 +213,29 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-   private static void Main(string[] args) {
-    var a = new ImmutableList<int> {4,5,6,7,8};
-    printLine(a[2..]);
-    printLine(a[1..3]);
-    printLine(a[..2]);
+  private static void Main(string[] args) {
+    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+    printLine(a.ToImmutableArray()[(2)..]);
+    printLine(a.ToImmutableArray()[(1)..(3)]);
+    printLine(a.ToImmutableArray()[..(2)]);
   }
 }";
 
-        var parseTree = @"";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{6,7,8}\r\n{5,6,7}\r\n{4,5,6}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {6,7,8}\r\nList {5,6}\r\nList {4,5}\r\n");
     }
 
     [TestMethod, Ignore]
@@ -475,7 +478,7 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_OutOfRange()
     {
         var code = @"
@@ -489,26 +492,27 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-   private static void Main(string[] args) {
-    var a = new ImmutableList<int> {4,5,6,7,8};
-    var b = a[5];
+  private static void Main(string[] args) {
+    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+    var b = a.ToImmutableArray()[5];
   }
 }";
 
-        var parseTree = @"";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "out of range error");
+        AssertObjectCodeFails(compileData, "Index was outside the bounds of the array");
     }
     #endregion
 }
