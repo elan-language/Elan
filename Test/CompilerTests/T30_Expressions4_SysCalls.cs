@@ -100,29 +100,13 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
+
     [TestMethod, Ignore]
     public void Fail_SystemCallWithinExpression()
     {
         var code = @"#
 main
-  var a = ""Hello"" + input(""Your name"");
-end main
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
-
-    [TestMethod, Ignore]
-    public void Fail_SystemCallWithinExpression2()
-    {
-        var code = @"#
-main
-  var a = input(""Your name"").ToUpper();
+  var a = input(""Your name"").length();
 end main
 ";
 
