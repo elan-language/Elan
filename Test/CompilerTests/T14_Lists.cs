@@ -360,7 +360,7 @@ public static class Program {
 #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_emptyLiteralList()
     {
         var code = @"
@@ -373,7 +373,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_literalListInconsistentTypes1()
     {
         var code = @"
@@ -383,10 +383,11 @@ end main
 ";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+        AssertParses(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_literalListInconsistentTypes2()
     {
         var code = @"
@@ -396,7 +397,8 @@ end main
 ";  //Because list type is decided by FIRST element
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+        AssertParses(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod, Ignore]
