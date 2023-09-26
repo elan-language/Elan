@@ -52,7 +52,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_innerLoop()
     {
         var code = @"
@@ -82,21 +82,22 @@ public static partial class GlobalConstants {
 }
 
 public static class Program {
-    private static void Main(string[] args) {
-        var x = 0;
-        do {
-            var y = 0;
-            do {
-                t = t + 1
-                y = y + 1;
-            } while (!(y > 4));
-            x = x + 1;
-        } while (!(x > 2));
-        printLine(t);
-    }
+  private static void Main(string[] args) {
+    var t = 0;
+    var x = 0;
+    do {
+      var y = 0;
+      do {
+        y = y + 1;
+        t = t + 1;
+      } while (!(y > 4));
+      x = x + 1;
+    } while (!(x > 3));
+    printLine(t);
+  }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue t) = (expression (value (literal (literalValue 0))))) (varDef var (assignableValue x) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (repeat repeat (statementBlock (varDef var (assignableValue y) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (repeat repeat (statementBlock (assignment (assignableValue y) = (expression (expression (value y)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1)))))) (assignment (assignableValue t) = (expression (expression (value t)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))))) until (expression (expression (value y)) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 4))))))) (assignment (assignableValue x) = (expression (expression (value x)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))))) until (expression (expression (value x)) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 3))))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value t))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -104,10 +105,10 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "8\r\n");
+        AssertObjectCodeExecutes(compileData, "20\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_noUntil()
     {
         var code = @"
@@ -121,7 +122,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_variableRedeclaredInTest()
     {
         var code = @"
@@ -136,7 +137,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_variableDefinedInLoop()
     {
         var code = @"
@@ -147,15 +148,15 @@ main
 end main
 ";
 
-        var parseTree = @"*";
+      
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_testPutOnRepeat()
     {
         var code = @"
@@ -172,7 +173,7 @@ end main
     }
 
  
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_noCondition()
     {
         var code = @"
@@ -187,7 +188,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_invalidCondition()
     {
         var code = @"

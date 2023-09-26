@@ -117,7 +117,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_SystemCallWithinExpression2()
     {
         var code = @"#

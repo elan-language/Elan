@@ -14,5 +14,6 @@ public enum Operator {
     Not,
     Xor,
     LessThan,
-    GreaterThanEqual
+    GreaterThanEqual,
+    GreaterThan
 }
