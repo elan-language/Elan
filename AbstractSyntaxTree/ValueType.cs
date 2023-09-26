@@ -1,5 +1,9 @@
 ﻿namespace AbstractSyntaxTree;
 
 public enum ValueType {
-    Int
+    Int,
+    String,
+    Char,
+    Bool,
+    Float
 }

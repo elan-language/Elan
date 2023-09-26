@@ -166,19 +166,19 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralValueContext context) {
         if (context.LITERAL_INTEGER() is { } i) {
-            return new IntegerValueNode(i.Symbol.Text);
+            return new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int));
         }
 
         if (context.LITERAL_FLOAT() is { } f) {
-            return new FloatValueNode(f.Symbol.Text);
+            return new ValueNode(f.Symbol.Text, new ValueTypeNode(ValueType.Float));
         }
 
         if (context.LITERAL_CHAR() is { } c) {
-            return new CharValueNode(c.Symbol.Text);
+            return new ValueNode(c.Symbol.Text, new ValueTypeNode(ValueType.Char));
         }
 
         if (context.BOOL_VALUE() is { } b) {
-            return new BoolValueNode(b.Symbol.Text);
+            return new ValueNode(b.Symbol.Text, new ValueTypeNode(ValueType.Bool));
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -186,7 +186,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralDataStructureContext context) {
         if (context.LITERAL_STRING() is { } ls) {
-            return new StringValueNode(ls.Symbol.Text);
+            return new ValueNode(ls.Symbol.Text, new ValueTypeNode(ValueType.String));
         }
 
         if (context.literalList() is { } ll) {
