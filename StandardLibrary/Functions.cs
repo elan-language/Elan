@@ -9,7 +9,7 @@ namespace StandardLibrary;
 public static class Functions {
     #region Math
 
-    public static double pi => Math.PI;
+    public const double pi = 3.141592653589793;
     public static double aCos(double d) => Math.Cos(d);
     public static double aCosh(double d) => Math.Acosh(d);
     public static double aSin(double d) => Math.Asin(d);
@@ -103,5 +103,10 @@ public static class Functions {
          a.Length == 0 ? "empty Array" :
         Enumerable.Range(1, a.Length - 1).Aggregate($"Array {{{asString(a[0])}", (s, n) => s + $",{asString(a[n])}") + $"}}";
 
+    #endregion
+
+    #region String handling
+    public const string newLine = @"
+" ;
     #endregion
 }
