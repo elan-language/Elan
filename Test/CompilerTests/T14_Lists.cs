@@ -398,7 +398,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_createEmptyListUsingConstructor()
     {
         var code = @"
@@ -412,6 +412,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -419,12 +420,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new ImmutableList<int>()};
+    var a = ImmutableList.Create<int>();
     printLine(a);
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (newInstance new (type (dataStructureType List (genericSpecifier < (type Int) >))) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -432,7 +433,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "empty List\r\n");
+        AssertObjectCodeExecutes(compileData, "empty list\r\n");
     }
     #endregion
 
