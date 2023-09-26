@@ -8,7 +8,7 @@ using static Helpers;
 public class T12_Arrays
 {
     [TestMethod]
-    public void Pass_DeclareAnEmptyArrayBySizeAdCheckLength()
+    public void Pass_DeclareAnEmptyArrayBySizeAndCheckLength()
     {
         var code = @"
 main
@@ -52,6 +52,7 @@ public static class Program {
 main
     var a = new Array<String>(3)
     printLine(a[0].length())
+    printLine(a)
 end main
 ";
 
@@ -79,7 +80,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "0\r\n");
+        AssertObjectCodeExecutes(compileData, "0\r\n{,,}\r\n");
     }
 
     [TestMethod]

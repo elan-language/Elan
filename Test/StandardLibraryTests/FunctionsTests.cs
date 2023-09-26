@@ -33,27 +33,27 @@ public class FunctionsTests
     public void AsStringList1()
     {
         var t = new List<int> { 1, 2, 3, 4, 5 };
-        Assert.AreEqual("List {1,2,3,4,5}", asString(t));
+        Assert.AreEqual("{1,2,3,4,5}", asString(t));
     }
 
     [TestMethod]
     public void AsStringList2()
     {
         var t = new List<string> { "2", "3", "4", "5" };
-        Assert.AreEqual("List {2,3,4,5}", asString(t));
+        Assert.AreEqual("{2,3,4,5}", asString(t));
     }
 
     [TestMethod]
     public void AsStringList3()
     {
         var t = new List<char> { '2', '3' };
-        Assert.AreEqual("List {2,3}", asString(t));
+        Assert.AreEqual("{2,3}", asString(t));
     }
     [TestMethod]
     public void AsStringList4()
     {
         var t = new List<int> { };
-        Assert.AreEqual("empty list", asString(t));
+        Assert.AreEqual("empty List", asString(t));
     }
     [TestMethod]
     public void AsStringArray()
@@ -62,19 +62,31 @@ public class FunctionsTests
         Assert.AreEqual("Array {true,false,false}", asString(a));
     }
 
+    [TestMethod]
+    public void AsStringArray2()
+    {
+        var a = new bool[4];
+        Assert.AreEqual("Array {false,false,false,false}", asString(a));
+    }
+    [TestMethod]
+    public void AsStringArray3()
+    {
+        var t = new string[] {"","",""};
+        Assert.AreEqual("Array {,,}", asString(t));
+    }
 
     [TestMethod]
     public void AsStringTuple()
     {
         var t = (123, "Richard", 4.3, false, 'x');
-        Assert.AreEqual("Tuple (123, Richard, 4.3, false, x)", asString(t));
+        Assert.AreEqual("(123, Richard, 4.3, false, x)", asString(t));
     }
 
     [TestMethod]
     public void AsStringTuple2()
     {
         var t = (true, false);
-        Assert.AreEqual("Tuple (true, false)", asString(t));
+        Assert.AreEqual("(true, false)", asString(t));
     }
 
     #endregion

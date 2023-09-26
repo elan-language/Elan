@@ -187,6 +187,10 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\n");
     }
 
+    #endregion
+
+    #region Fails
+
     [TestMethod]
     public void Fail_useInsideMain()
     {
@@ -211,9 +215,6 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    #endregion
-
-    #region Fails
 
     [TestMethod]
     public void Fail_invalidLiteralString() {
@@ -255,8 +256,51 @@ end main
     [TestMethod]
     public void Fail_expression() {
         var code = @"#
+
+constant a = 3 + 4
+
 main
-  constant a = 3 + 4
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_referenceToOtherConstant()
+    {
+        var code = @"#
+
+constant a = 3
+constant b = a
+
+main
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_declareMultiple1()
+    {
+        var code = @"#
+constant a, b = 3
+
+main
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_declareMultiple2()
+    {
+        var code = @"#
+constant a = b = 3
+
+main
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
