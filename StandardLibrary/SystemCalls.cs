@@ -85,28 +85,28 @@ public static class SystemCalls
     #endregion
 
     #region Files
-    //StreamReader type should map to a Elan type FileReader
-    public static StreamReader openRead(string filePath) => new StreamReader(filePath);
-    public static string readLine(StreamReader file) => file.ReadLine();
-    public static string readToEnd(StreamReader file) => file.ReadToEnd();
-    public static void close(StreamReader file) => file.Close();
-    public static bool endOfFile(StreamReader file) => file.EndOfStream;
+    ////StreamReader type should map to a Elan type FileReader
+    //public static StreamReader openRead(string filePath) => new StreamReader(filePath);
+    //public static string readLine(StreamReader file) => file.ReadLine();
+    //public static string readToEnd(StreamReader file) => file.ReadToEnd();
+    //public static void close(StreamReader file) => file.Close();
+    //public static bool endOfFile(StreamReader file) => file.EndOfStream;
 
-    //StreamWriter type should map to a Elan type FilerWriter
-    public static StreamWriter openWrite(string filePath) => new StreamWriter(filePath);
-    public static void writeLine(StreamWriter file, string data) => file.WriteLine(data);
-    public static void close(StreamWriter file) {
-        file.Flush();
-        file.Close();
-    }
+    ////StreamWriter type should map to a Elan type FilerWriter
+    //public static StreamWriter openWrite(string filePath) => new StreamWriter(filePath);
+    //public static void writeLine(StreamWriter file, string data) => file.WriteLine(data);
+    //public static void close(StreamWriter file) {
+    //    file.Flush();
+    //    file.Close();
+    //}
 
     //Separate method for binary file handling?
     #endregion
 
     #region Clock
-    public static DateTime now() => DateTime.Now;
+    //public static DateTime now() => DateTime.Now;
 
-    public static DateOnly today() => DateOnly.FromDateTime(DateTime.Today);
+    //public static DateOnly today() => DateOnly.FromDateTime(DateTime.Today);
 
     public static void pause(int milliseconds)
     {
