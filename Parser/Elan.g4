@@ -163,7 +163,7 @@ switch:
 	;
 	
 case: 
-	NL CASE literalValue
+	NL CASE MINUS? literalValue
     statementBlock
 	;
 
@@ -208,7 +208,7 @@ value: literal | ((SELF DOT)? IDENTIFIER) | dataStructureDefinition | SELF ;
 // LITERALS
 literal: literalValue | literalDataStructure ; 
 
-literalValue:  BOOL_VALUE | (MINUS? LITERAL_INTEGER) | (MINUS? LITERAL_FLOAT) | (MINUS? LITERAL_DECIMAL)| LITERAL_CHAR | enumValue ;
+literalValue:  BOOL_VALUE | LITERAL_INTEGER | LITERAL_FLOAT | LITERAL_DECIMAL| LITERAL_CHAR | enumValue ;
 
 dataStructureDefinition:  tupleDefinition | listDefinition | dictionaryDefinition;
 
