@@ -228,6 +228,42 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "b\r\nc\r\nc\r\n");
     }
+
+    [TestMethod]
+    public void Pass_enumeration()
+    {
+        var code = @"
+main
+     var f = Fruit.orange
+      switch f
+        case Fruit.apple
+            printLine('a')
+        case Fruit.orange
+            printLine('o')
+        case Fruit.pear
+            printLine('p')        
+      end switch
+  end for
+end main
+
+enumeration Fruit
+    apple, orange, pear
+end enumeration
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "o\r\n");
+    }
+
     #endregion
 
     #region Fails
