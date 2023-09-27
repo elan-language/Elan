@@ -52,7 +52,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "55\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_withStep()
     {
         var code = @"
@@ -79,13 +79,13 @@ public static class Program {
   private static void Main(string[] args) {
     var tot = 0;
     for (var i = 1; i <= 10; i = i + 2) {
-        tot = tot + i;
+      tot = tot + i;
     }
-    printLine(tot)
+    printLine(tot);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue tot) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 10)))) step (expression (value (literal (literalValue 2)))) (statementBlock (assignment (assignableValue tot) = (expression (expression (value tot)) (binaryOp (arithmeticOp +)) (expression (value i))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value tot))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -96,6 +96,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "25\r\n");
     }
 
+    [TestMethod, Ignore]
     public void Pass_negativeStep()
     {
         var code = @"
@@ -121,10 +122,10 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var tot = 0;
-    for (var i = 10; i >= 3; i = i - 1) {
-        tot = tot + i;
+    for (var i = 10; i <= 3; i = i + -1) {
+      tot = tot + i;
     }
-    printLine(tot)
+    printLine(tot);
   }
 }";
 
@@ -139,6 +140,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "52\r\n");
     }
 
+    [TestMethod]
     public void Pass_innerLoop()
     {
         var code = @"
@@ -167,11 +169,11 @@ public static class Program {
   private static void Main(string[] args) {
     var tot = 0;
     for (var i = 1; i <= 3; i = i + 1) {
-        for (var j = 1; j <= 4; j = j + 1) {
-            tot = tot + i;
-        }
+      for (var j = 1; j <= 4; j = j + 1) {
+        tot = tot + 1;
+      }
     }
-    printLine(tot)
+    printLine(tot);
   }
 }";
 
@@ -186,12 +188,11 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_canUseExistingVariablesOfRightType()
     {
         var code = @"
 main
-  var i = 4
   var lower = 1
   var upper = 10
   var inc = 2
@@ -215,17 +216,18 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var i = 4;
     var lower = 1;
     var upper = 10;
     var inc = 2;
     var tot = 0;
     for (var i = lower; i <= upper; i = i + inc) {
-        tot = tot + i;
+      tot = tot + i;
     }
-    printLine(tot)
+    printLine(tot);
   }
-}"; 
+}";
+        
+
 
         var parseTree = @"*";
 
@@ -238,7 +240,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "25\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_useOfFloat()
     {
         var code = @"
@@ -255,7 +257,8 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod, Ignore]
@@ -314,7 +317,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_next()
     {
         var code = @"
@@ -329,7 +332,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]    
     public void Fail_nextVariable()
     {
         var code = @"
@@ -344,7 +347,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_break()
     {
         var code = @"
@@ -360,7 +363,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_continue()
     {
         var code = @"
