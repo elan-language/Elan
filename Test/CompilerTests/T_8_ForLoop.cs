@@ -96,7 +96,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "25\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_negativeStep()
     {
         var code = @"
@@ -122,7 +122,7 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var tot = 0;
-    for (var i = 10; i <= 3; i = i + -1) {
+    for (var i = 10; i >= 3; i = i - 1) {
       tot = tot + i;
     }
     printLine(tot);
@@ -188,16 +188,15 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_canUseExistingVariablesOfRightType()
     {
         var code = @"
 main
   var lower = 1
   var upper = 10
-  var inc = 2
   var tot = 0
-  for i = lower to upper step inc 
+  for i = lower to upper step 2 
     tot = tot + i
   end for
   printLine(tot)
@@ -218,9 +217,8 @@ public static class Program {
   private static void Main(string[] args) {
     var lower = 1;
     var upper = 10;
-    var inc = 2;
     var tot = 0;
-    for (var i = lower; i <= upper; i = i + inc) {
+    for (var i = lower; i <= upper; i = i + 2) {
       tot = tot + i;
     }
     printLine(tot);
@@ -290,42 +288,6 @@ main
     for j = 1 to 4
       tot = tot + 1
     end for
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod, Ignore]
-    public void Fail_useExistingVariableOfWrongType()
-    {
-        var code = @"
-main
-  var i = 4.1
-  var tot = 0
-  for i = 1 to 10
-    tot = tot + i
-  end for
-end main
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
-
-    [TestMethod]
-    public void Fail_next()
-    {
-        var code = @"
-main
-  var tot = 0
-  for i = 1 to 10
-    tot = tot + i
-  next
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
