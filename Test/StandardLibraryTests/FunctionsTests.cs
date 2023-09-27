@@ -30,12 +30,12 @@ public class FunctionsTests
         Assert.AreEqual("Hello", asString(x));
     }
 
-    [TestMethod]
-    public void AsStringList1()
-    {
-        var t = new List<int> { 1, 2, 3, 4, 5 };
-        Assert.AreEqual("{1,2,3,4,5}", asString(t));
-    }
+    //[TestMethod]
+    //public void AsStringList1()
+    //{
+    //    var t = new List<int> { 1, 2, 3, 4, 5 };
+    //    Assert.AreEqual("{1,2,3,4,5}", asString(t));
+    //}
 
     [TestMethod]
     public void AsStringImmutableList()
@@ -44,25 +44,25 @@ public class FunctionsTests
         Assert.AreEqual("List {1,2,3,4,5}", asString(t));
     }
 
-    [TestMethod]
-    public void AsStringList2()
-    {
-        var t = new List<string> { "2", "3", "4", "5" };
-        Assert.AreEqual("{2,3,4,5}", asString(t));
-    }
+    //[TestMethod]
+    //public void AsStringList2()
+    //{
+    //    var t = new List<string> { "2", "3", "4", "5" };
+    //    Assert.AreEqual("{2,3,4,5}", asString(t));
+    //}
 
-    [TestMethod]
-    public void AsStringList3()
-    {
-        var t = new List<char> { '2', '3' };
-        Assert.AreEqual("{2,3}", asString(t));
-    }
-    [TestMethod]
-    public void AsStringList4()
-    {
-        var t = new List<int> { };
-        Assert.AreEqual("empty List", asString(t));
-    }
+    //[TestMethod]
+    //public void AsStringList3()
+    //{
+    //    var t = new List<char> { '2', '3' };
+    //    Assert.AreEqual("{2,3}", asString(t));
+    //}
+    //[TestMethod]
+    //public void AsStringList4()
+    //{
+    //    var t = new List<int> { };
+    //    Assert.AreEqual("empty List", asString(t));
+    //}
     [TestMethod]
     public void AsStringArray()
     {

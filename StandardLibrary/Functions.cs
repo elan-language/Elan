@@ -90,17 +90,26 @@ public static class Functions {
       
         return obj switch {
             bool b => b ? "true" : "false",
-            IList l => asString(l),
+            string s => s,
+            IEnumerable l => asString(l),
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
             _ => obj.ToString()
         };
     }
 
+    public static string asString(string s) => s;
+
+    public static string asString(IEnumerable l) {
+        var a = l.Cast<object>().ToArray();
+
+        return a.Length == 0 ? "empty list" : $"List {{{string.Join(',', a)}}}";
+    }
+    
     public static string asString(IList l) =>
         l.Count == 0 ? "empty list" :
             Enumerable.Range(1, l.Count - 1).Aggregate($"List {{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
 
-    public static string asString<T>(List<T> l) =>
+    public static string asString<T>(StandardLibrary.List<T> l) =>
         l.Count == 0 ? "empty List" :
         Enumerable.Range(1, l.Count - 1).Aggregate($"{{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
 
@@ -119,7 +128,7 @@ public static class Functions {
 
     #region lists
 
-    public static int length(ICollection l) => l.Count;
+    public static int length(IEnumerable l) => l.Cast<object>().ToArray().Length;
 
     #endregion
 

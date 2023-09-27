@@ -30,7 +30,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+    var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
     printLine(a);
   }
 }";
@@ -68,7 +68,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ImmutableList.Create<double>(4.1, 5, 6, 7, 8);
+    var a = new StandardLibrary.List<double>(4.1, 5, 6, 7, 8);
     printLine(a);
   }
 }";
@@ -106,7 +106,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+    var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
     printLine(length(a));
   }
 }";
@@ -144,7 +144,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ImmutableList.Create<int>();
+    var a = new StandardLibrary.List<int>();
     printLine(length(a));
   }
 }";
@@ -182,7 +182,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+    var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
     printLine(a.ToImmutableArray()[2]);
   }
 }";
@@ -221,7 +221,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+    var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
     printLine(a.ToImmutableArray()[(2)..]);
     printLine(a.ToImmutableArray()[(1)..(3)]);
     printLine(a.ToImmutableArray()[..(2)]);
@@ -261,7 +261,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
    private static void Main(string[] args) {
-    var a = new ImmutableList<int> {4,5,6,7,8};
+    var a = new StandardLibrary.List<int> {4,5,6,7,8};
     var b = a.Add(9);
     printLine(a);
     printLine(b);
@@ -302,7 +302,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
    private static void Main(string[] args) {
-    var a = new ImmutableList<int> {4,5,6,7,8};
+    var a = new StandardLibrary.List<int> {4,5,6,7,8};
     var b = a.Add(9);
     printLine(a);
     printLine(b);
@@ -343,8 +343,8 @@ public static partial class GlobalConstants {
 
 public static class Program {
    private static void Main(string[] args) {
-    var a = new ImmutableList<int> {4,5,6,7,8};
-    var b = new ImmutableList<int> {1,2,3};
+    var a = new StandardLibrary.List<int> {4,5,6,7,8};
+    var b = new StandardLibrary.List<int> {1,2,3};
     var c = a.AddRange(b);
     printLine(c);
   }
@@ -378,7 +378,7 @@ using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
-  public static readonly ImmutableList<int> a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+  public static readonly StandardLibrary.List<int> a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
 }
 
 public static class Program {
@@ -420,7 +420,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ImmutableList.Create<int>();
+    var a = new StandardLibrary.List<int>();
     printLine(a);
   }
 }";
@@ -501,7 +501,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ImmutableList.Create<int>(4, 5, 6, 7, 8);
+    var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
     var b = a.ToImmutableArray()[5];
   }
 }";
