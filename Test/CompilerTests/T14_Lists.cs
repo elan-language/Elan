@@ -238,7 +238,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {6,7,8}\r\nList {5,6}\r\nList {4,5}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_addElementToList()
     {
         var code = @"
@@ -254,32 +254,32 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-   private static void Main(string[] args) {
-    var a = new StandardLibrary.List<int> {4,5,6,7,8};
-    var b = a.Add(9);
+  private static void Main(string[] args) {
+    var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
+    var b = a + 9;
     printLine(a);
     printLine(b);
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
-
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 4)) , (literal (literalValue 5)) , (literal (literalValue 6)) , (literal (literalValue 7)) , (literal (literalValue 8)) })))))) (varDef var (assignableValue b) = (expression (expression (value a)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 9)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end main) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{4,5,6,7,8,9}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\nList {4,5,6,7,8,9}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_addListToElement()
     {
         var code = @"
@@ -295,32 +295,32 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-   private static void Main(string[] args) {
-    var a = new StandardLibrary.List<int> {4,5,6,7,8};
-    var b = a.Add(9);
+  private static void Main(string[] args) {
+    var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
+    var b = 9 + a;
     printLine(a);
     printLine(b);
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
-
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 4)) , (literal (literalValue 5)) , (literal (literalValue 6)) , (literal (literalValue 7)) , (literal (literalValue 8)) })))))) (varDef var (assignableValue b) = (expression (expression (value (literal (literalValue 9)))) (binaryOp (arithmeticOp +)) (expression (value a)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end main) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{9,4,5,6,7,8}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\nList {9,4,5,6,7,8}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_addListToListUsingPlus()
     {
         var code = @"
@@ -336,21 +336,22 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
 }
 
 public static class Program {
-   private static void Main(string[] args) {
-    var a = new StandardLibrary.List<int> {4,5,6,7,8};
-    var b = new StandardLibrary.List<int> {1,2,3};
-    var c = a.AddRange(b);
+  private static void Main(string[] args) {
+    var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
+    var b = new StandardLibrary.List<int>(1, 2, 3);
+    var c = a + b;
     printLine(c);
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 4)) , (literal (literalValue 5)) , (literal (literalValue 6)) , (literal (literalValue 7)) , (literal (literalValue 8)) })))))) (varDef var (assignableValue b) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 1)) , (literal (literalValue 2)) , (literal (literalValue 3)) })))))) (varDef var (assignableValue c) = (expression (expression (value a)) (binaryOp (arithmeticOp +)) (expression (value b)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -358,7 +359,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{4,5,6,7,8,1,2,3}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8,1,2,3}\r\n");
     }
 
     [TestMethod]
