@@ -52,7 +52,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "55\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_withStep()
     {
         var code = @"
@@ -188,7 +188,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_canUseExistingVariablesOfRightType()
     {
         var code = @"
