@@ -200,6 +200,67 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "bcd\r\ncde\r\nabc\r\n");
     }
 
+
+    [TestMethod]
+    public void Pass_Comparison()
+    {
+        var code = @"
+main
+    printLine(""abc"" == ""abc"")
+    printLine(""abc"" == ""abcd"")
+    printLine(""abc"" == ""Abc"")
+    printLine(""abc"" is ""abc"")
+    printLine(""abc"" <> ""abcd"")
+    printLine(""abc"" is not ""abcd"")
+    printLine(""abc"" is not ""abcd"")
+    printLine(""abc"" < ""abC"")
+    printLine(""abcd"" > ""abc"")
+    printLine(""abc"" >= ""abc"")
+    printLine(""abc"" <= ""abc"")
+    printLine(""abcd"" >= ""abc"")
+    printLine(""abcd"" <= ""abc"")
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(""abc"" == ""abc"");
+    printLine(""abc"" == ""abcd"");
+    printLine(""abc"" == ""Abc"");
+    printLine(""abc"" is ""abc"");
+    printLine(""abc"" <> ""abcd"");
+    printLine(""abc"" is not ""abc"");
+    printLine(""abc"" is not ""abcd"");
+    printLine(""abc"" < ""abC"");
+    printLine(""abcd"" > ""abc"");
+    printLine(""abc"" >= ""abc"");
+    printLine(""abc"" <= ""abc"");
+    printLine(""abcd"" >= ""abc"");
+    printLine(""abcd"" <= ""abc"");
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\nfalse\r\ntrue\r\ntrue\r\nfalse\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\nfalse");
+    }
+
     [TestMethod]
     public void Pass_CoerceNumberToString()
     {
