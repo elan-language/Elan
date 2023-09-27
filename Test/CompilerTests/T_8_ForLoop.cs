@@ -249,7 +249,7 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail_modifyingCounter() {
         var code = @"
 main

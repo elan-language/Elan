@@ -33,4 +33,21 @@ public static class CompilerRules {
 
         return null;
     }
+
+    private static bool Match(IAstNode n1, IAstNode n2) => n1 is IdentifierNode idn1 && n2 is IdentifierNode idn2 && idn1.Id == idn2.Id;
+
+    public static string? CannotMutateControlVariableRule(IAstNode[] nodes, IScope currentScope) {
+        var leafNode = nodes.Last();
+        if (leafNode is AssignmentNode mcn) {
+            var otherNodes = nodes.SkipLast(1).ToArray();
+
+            foreach (var forNode in otherNodes.OfType<ForStatementNode>()) {
+                if (Match(forNode.Id, mcn.Id)) {
+                    return "May not mutate control variable";
+                }
+            }
+        }
+
+        return null;
+    }
 }
