@@ -121,7 +121,7 @@ if:
 	;
 
 for: 
-	NL FOR IDENTIFIER ASSIGN expression TO expression (STEP expression)?
+	NL FOR IDENTIFIER ASSIGN expression TO expression (STEP MINUS? LITERAL_INTEGER)?
 	statementBlock
 	NL END FOR
 	;
