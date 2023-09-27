@@ -61,12 +61,15 @@ functionSignature: IDENTIFIER OPEN_BRACKET NL? parameterList? NL? CLOSE_BRACKET 
 // CONSTANTS
 constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
 
-// ENUMS
+// ENUMERATIONS
 enumDef: 
-	NL ENUMERATION TYPENAME
+	NL ENUMERATION enumType
 	  NL IDENTIFIER (COMMA NL? IDENTIFIER)*  
 	NL END ENUMERATION
 	;
+
+enumType: TYPENAME;
+enumValue:	enumType DOT IDENTIFIER;
 
 // CLASSES
 classDef: abstractClass | mutableClass | immutableClass;
@@ -205,7 +208,7 @@ value: literal | ((SELF DOT)? IDENTIFIER) | dataStructureDefinition | SELF ;
 // LITERALS
 literal: literalValue | literalDataStructure ; 
 
-literalValue:  BOOL_VALUE | LITERAL_INTEGER | LITERAL_FLOAT | LITERAL_DECIMAL| LITERAL_CHAR;
+literalValue:  BOOL_VALUE | (MINUS? LITERAL_INTEGER) | (MINUS? LITERAL_FLOAT) | (MINUS? LITERAL_DECIMAL)| LITERAL_CHAR | enumValue ;
 
 dataStructureDefinition:  tupleDefinition | listDefinition | dictionaryDefinition;
 
