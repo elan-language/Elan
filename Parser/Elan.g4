@@ -64,11 +64,9 @@ constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
 // ENUMS
 enumDef: 
 	NL ENUMERATION TYPENAME
-	(enumValue (COMMA enumValue)*)  
+	  NL IDENTIFIER (COMMA NL? IDENTIFIER)*  
 	NL END ENUMERATION
 	;
-
-enumValue: IDENTIFIER (ASSIGN LITERAL_INTEGER);
 
 // CLASSES
 classDef: abstractClass | mutableClass | immutableClass;

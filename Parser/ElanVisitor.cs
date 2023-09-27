@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c:\GitHub\Elan\Parser\Elan.g4 by ANTLR 4.9.2
+// Generated from c:\\Elan\\Repository\\Parser\\Elan.g4 by ANTLR 4.9.2
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -157,12 +157,6 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitEnumDef([NotNull] ElanParser.EnumDefContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.enumValue"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitEnumValue([NotNull] ElanParser.EnumValueContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.classDef"/>.
 	/// </summary>
