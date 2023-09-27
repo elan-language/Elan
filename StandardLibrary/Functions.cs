@@ -99,30 +99,18 @@ public static class Functions {
 
     public static string asString(string s) => s;
 
-    public static string asString(IEnumerable l) {
-        var a = l.Cast<object>().ToArray();
+    private static string EmptyMessage(IEnumerable e) => e is Array ? "empty array" : "empty list";
 
-        return a.Length == 0 ? "empty list" : $"List {{{string.Join(',', a)}}}";
+    private static string Type(IEnumerable e) => e is Array ? "Array" : "List";
+
+    public static string asString(IEnumerable e) {
+        var a = e.Cast<object>().Select(asString).ToArray();
+        return a.Any() ? $"{Type(e)} {{{string.Join(',', a)}}}" : EmptyMessage(e);
     }
     
-    public static string asString(IList l) =>
-        l.Count == 0 ? "empty list" :
-            Enumerable.Range(1, l.Count - 1).Aggregate($"List {{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
-
-    public static string asString<T>(StandardLibrary.List<T> l) =>
-        l.Count == 0 ? "empty List" :
-        Enumerable.Range(1, l.Count - 1).Aggregate($"{{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
-
-    public static string asString<T>(ImmutableList<T> l) =>
-        l.Count == 0 ? "empty list" :
-            Enumerable.Range(1, l.Count - 1).Aggregate($"List {{{asString(l[0])}", (s, n) => s + $",{asString(l[n])}") + $"}}";
-
     public static string asString<T>(ITuple t) =>
         Enumerable.Range(1, t.Length - 1).Aggregate($"({asString(t[0])}", (s, x) => s + $", {asString(t[x])}") + $")";
 
-    public static string asString<T>(T[] a) =>
-         a.Length == 0 ? "empty Array" :
-        Enumerable.Range(1, a.Length - 1).Aggregate($"Array {{{asString(a[0])}", (s, n) => s + $",{asString(a[n])}") + $"}}";
 
     #endregion
 
