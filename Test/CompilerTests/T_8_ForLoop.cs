@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 
-[TestClass, Ignore]
+[TestClass]
 public class T_8_ForLoop
 {
     [TestMethod]
@@ -35,13 +35,13 @@ public static class Program {
   private static void Main(string[] args) {
     var tot = 0;
     for (var i = 1; i <= 10; i = i + 1) {
-        tot = tot + i;
+      tot = tot + i;
     }
-    printLine(tot)
+    printLine(tot);
   }
 }"; // could be n++ when there is no step specified, whichever is easier
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue tot) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 10)))) (statementBlock (assignment (assignableValue tot) = (expression (expression (value tot)) (binaryOp (arithmeticOp +)) (expression (value i))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value tot))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -52,7 +52,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "55\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_withStep()
     {
         var code = @"
@@ -186,7 +186,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_canUseExistingVariablesOfRightType()
     {
         var code = @"
@@ -238,7 +238,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "25\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_useOfFloat()
     {
         var code = @"
@@ -258,7 +258,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_modifyingCounter()
     {
         var code = @"
@@ -293,7 +293,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_useExistingVariableOfWrongType()
     {
         var code = @"
@@ -314,7 +314,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_next()
     {
         var code = @"
@@ -329,7 +329,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_nextVariable()
     {
         var code = @"
@@ -344,7 +344,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_break()
     {
         var code = @"
@@ -360,7 +360,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_continue()
     {
         var code = @"
