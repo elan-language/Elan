@@ -2,13 +2,29 @@
 
 using static CodeHelpers;
 
-public record ForStatementModel(ICodeModel Id, IEnumerable<ICodeModel> Expressions, ICodeModel StatementBlock) : ICodeModel {
-    private string Step => Expressions.Count() == 3 ? $"{Expressions.Last()}" : "1";
+public record ForStatementModel(ICodeModel Id, IEnumerable<ICodeModel> Expressions, ICodeModel? Step, ICodeModel StatementBlock) : ICodeModel {
+    private string GteOrLte { get; set; } = "<=";
 
-    public string ToString(int indent) =>
-        $@"{Indent(indent)}for (var {Id} = {Expressions.First()}; {Id} <= {Expressions.Skip(1).First()}; {Id} = {Id} + {Step}) {{
+    private string StepStr { get; set; } = "1";
+
+    public string ToString(int indent) {
+        Init();
+        return $@"{Indent(indent)}for (var {Id} = {Expressions.First()}; {Id} {GteOrLte} {Expressions.Last()}; {Id} = {Id} + {StepStr}) {{
 {StatementBlock.ToString(indent + 1)}
 {Indent(indent)}}}";
+    }
+
+    private void Init() {
+        if (Step is not null) {
+            if (int.TryParse(Step.ToString(), out var si)) {
+                if (si < 0) {
+                    GteOrLte = ">=";
+                }
+
+                StepStr = si.ToString();
+            }
+        }
+    }
 
     public override string ToString() => ToString(0);
 }

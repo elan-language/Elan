@@ -295,8 +295,9 @@ public static class AstFactory {
         var id = visitor.Visit(context.IDENTIFIER());
         var expressions = context.expression().Select(visitor.Visit);
         var statementBlock = visitor.Visit(context.statementBlock());
+        var step = context.LITERAL_INTEGER() is {} i ?   visitor.Visit(i) : null; 
 
-        return new ForStatementNode(id, expressions.ToImmutableArray(), statementBlock);
+        return new ForStatementNode(id, expressions.ToImmutableArray(), step, statementBlock);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, RepeatContext context) {

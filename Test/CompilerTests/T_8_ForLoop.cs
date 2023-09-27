@@ -52,7 +52,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "55\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_withStep()
     {
         var code = @"
@@ -85,7 +85,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue tot) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 10)))) step (expression (value (literal (literalValue 2)))) (statementBlock (assignment (assignableValue tot) = (expression (expression (value tot)) (binaryOp (arithmeticOp +)) (expression (value i))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value tot))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

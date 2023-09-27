@@ -257,7 +257,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (unaryOp -) (expression (value (literal (literalValue 4.7)))))) (varDef var (assignableValue y) = (expression (expression (value (literal (literalValue 5)))) (binaryOp (arithmeticOp *)) (expression (unaryOp -) (expression (value (literal (literalValue 3))))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

@@ -73,8 +73,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var id = Visit(forStatementNode.Id);
         var expressions = forStatementNode.Expressions.Select(Visit);
         var statementBlock = Visit(forStatementNode.StatementBlock);
+        var step = forStatementNode.Step is {} i ? Visit(i) : null;
 
-        return new ForStatementModel(id, expressions, statementBlock);
+        return new ForStatementModel(id, expressions, step, statementBlock);
     }
 
     private WhileStatementModel BuildWhileStatementModel(WhileStatementNode whileStatementNode) {
