@@ -1,11 +1,13 @@
 ﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable InconsistentNaming
+using System.ComponentModel;
 using static StandardLibrary.Functions;
 
 namespace StandardLibrary;
 
 [ElanSystemCall]
-public static class SystemCalls {
+public static class SystemCalls
+{
     #region print and input
 
     //TODO once we can support Any type - replace all overloads with argument of type 'object'
@@ -16,7 +18,7 @@ public static class SystemCalls {
     public static void print(object obj) => Console.Write(asString(obj));
 
 
-    
+
 
     public static string input(string prompt)
     {
@@ -28,6 +30,8 @@ public static class SystemCalls {
     {
         return Console.ReadLine();
     }
+
+
 
     #endregion
 
@@ -43,5 +47,24 @@ public static class SystemCalls {
 
     public static int random(int min, int max) => min + random(max - min);
 
+    #endregion
+
+    #region Files
+    //var file = openRead("filename") 
+    //var line = file.readLine() 
+    //var file = openWrite("filename") 
+    //file.writeLine
+
+    //Separate method for binary file handling?
+    #endregion
+
+    #region Clock
+    //today() 
+    //now()
+    //pause(100) 
+    #endregion
+
+    #region Guid
+    //public static string GUID()
     #endregion
 }
