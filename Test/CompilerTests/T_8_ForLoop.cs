@@ -4,13 +4,10 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-
 [TestClass]
-public class T_8_ForLoop
-{
+public class T_8_ForLoop {
     [TestMethod]
-    public void Pass_minimal()
-    {
+    public void Pass_minimal() {
         var code = @"
 main
   var tot = 0
@@ -53,8 +50,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_withStep()
-    {
+    public void Pass_withStep() {
         var code = @"
 main
   var tot = 0
@@ -85,7 +81,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue tot) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 10)))) step 2 (statementBlock (assignment (assignableValue tot) = (expression (expression (value tot)) (binaryOp (arithmeticOp +)) (expression (value i))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value tot))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -97,8 +93,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_negativeStep()
-    {
+    public void Pass_negativeStep() {
         var code = @"
 main
   var tot = 0
@@ -129,7 +124,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue tot) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (for for i = (expression (value (literal (literalValue 10)))) to (expression (value (literal (literalValue 3)))) step - 1 (statementBlock (assignment (assignableValue tot) = (expression (expression (value tot)) (binaryOp (arithmeticOp +)) (expression (value i))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value tot))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -141,8 +136,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_innerLoop()
-    {
+    public void Pass_innerLoop() {
         var code = @"
 main
   var tot = 0
@@ -177,7 +171,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue tot) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (for for j = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 4)))) (statementBlock (assignment (assignableValue tot) = (expression (expression (value tot)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))))) end for))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value tot))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -189,8 +183,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_canUseExistingVariablesOfRightType()
-    {
+    public void Pass_canUseExistingVariablesOfRightType() {
         var code = @"
 main
   var lower = 1
@@ -224,10 +217,8 @@ public static class Program {
     printLine(tot);
   }
 }";
-        
 
-
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue lower) = (expression (value (literal (literalValue 1))))) (varDef var (assignableValue upper) = (expression (value (literal (literalValue 10))))) (varDef var (assignableValue tot) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (for for i = (expression (value lower)) to (expression (value upper)) step 2 (statementBlock (assignment (assignableValue tot) = (expression (expression (value tot)) (binaryOp (arithmeticOp +)) (expression (value i))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value tot))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -239,8 +230,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_useOfFloat()
-    {
+    public void Fail_useOfFloat() {
         var code = @"
 main
   var tot = 0
@@ -259,9 +249,8 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Fail_modifyingCounter()
-    {
+    [TestMethod] [Ignore]
+    public void Fail_modifyingCounter() {
         var code = @"
 main
   var tot = 0
@@ -279,8 +268,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    public void Fail_missingEnd()
-    {
+    public void Fail_missingEnd() {
         var code = @"
 main
   var tot = 0
@@ -294,9 +282,8 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]    
-    public void Fail_nextVariable()
-    {
+    [TestMethod]
+    public void Fail_nextVariable() {
         var code = @"
 main
   var tot = 0
@@ -310,8 +297,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_break()
-    {
+    public void Fail_break() {
         var code = @"
 main
   var tot = 0
@@ -326,8 +312,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_continue()
-    {
+    public void Fail_continue() {
         var code = @"
 main
   var tot = 0
@@ -340,6 +325,4 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
-
 }
