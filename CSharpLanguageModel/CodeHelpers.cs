@@ -34,7 +34,7 @@ public static class CodeHelpers {
 
     public static string DataStructureTypeToCSharpType(DataStructure type) =>
         type switch {
-            DataStructure.List => "ImmutableList",
+            DataStructure.List => "List",
             _ => throw new NotImplementedException(type.ToString() ?? "null")
         };
 
@@ -43,7 +43,7 @@ public static class CodeHelpers {
     public static string NodeToCSharpType(IAstNode node) {
         return node switch {
             ValueNode vn => ValueNodeToCSharpType(vn),
-            LiteralListNode lln => $"ImmutableList<{NodeToCSharpType(lln.ItemNodes.First())}>",
+            LiteralListNode lln => $"StandardLibrary.List<{NodeToCSharpType(lln.ItemNodes.First())}>",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }
