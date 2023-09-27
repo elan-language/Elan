@@ -10,6 +10,7 @@ public class SecondPassVisitor {
     static SecondPassVisitor() {
         Rules.Add(CompilerRules.ExpressionMustBeAssignedRule);
         Rules.Add(CompilerRules.SystemCallMustBeAssignedRule);
+        Rules.Add(CompilerRules.CannotMutateControlVariableRule);
     }
 
     public SecondPassVisitor(SymbolTableImpl symbolTable) {
