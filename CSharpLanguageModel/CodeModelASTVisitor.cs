@@ -44,6 +44,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             NewInstanceNode n => HandleScope(BuildNewInstanceModel, n),
             DataStructureTypeNode n => HandleScope(BuildDataStructureTypeModel, n),
             ValueTypeNode n => HandleScope(BuildValueTypeModel, n),
+            ForStatementNode n => HandleScope(BuildForStatementModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -66,6 +67,14 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var statementBlocks = ifStatementNode.StatementBlocks.Select(Visit);
 
         return new IfStatementModel(expressions, statementBlocks);
+    }
+
+    private ForStatementModel BuildForStatementModel(ForStatementNode forStatementNode) {
+        var id = Visit(forStatementNode.Id);
+        var expressions = forStatementNode.Expressions.Select(Visit);
+        var statementBlock = Visit(forStatementNode.StatementBlock);
+
+        return new ForStatementModel(id, expressions, statementBlock);
     }
 
     private WhileStatementModel BuildWhileStatementModel(WhileStatementNode whileStatementNode) {
