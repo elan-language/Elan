@@ -158,6 +158,18 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitEnumDef([NotNull] ElanParser.EnumDefContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.enumType"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEnumType([NotNull] ElanParser.EnumTypeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.enumValue"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEnumValue([NotNull] ElanParser.EnumValueContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.classDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
