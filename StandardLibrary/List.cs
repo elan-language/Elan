@@ -20,6 +20,8 @@ public class List<T> : IEnumerable<T>  {
 
     public T this[int index] => wrappedList[index];
 
+    public List<T> this[System.Range range] => Wrap(wrappedList.ToImmutableArray()[range].ToImmutableList());
+
     public List<T> Add(T value) => Wrap(wrappedList.Add(value));
 
     public List<T> AddRange(IEnumerable<T> items) => Wrap(wrappedList.AddRange(items));

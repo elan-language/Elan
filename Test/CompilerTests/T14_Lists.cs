@@ -183,7 +183,7 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
-    printLine(a.ToImmutableArray()[2]);
+    printLine(a[2]);
   }
 }";
 
@@ -222,9 +222,9 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
-    printLine(a.ToImmutableArray()[(2)..]);
-    printLine(a.ToImmutableArray()[(1)..(3)]);
-    printLine(a.ToImmutableArray()[..(2)]);
+    printLine(a[(2)..]);
+    printLine(a[(1)..(3)]);
+    printLine(a[..(2)]);
   }
 }";
 
@@ -503,7 +503,7 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
-    var b = a.ToImmutableArray()[5];
+    var b = a[5];
   }
 }";
 
@@ -514,7 +514,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeFails(compileData, "Index was outside the bounds of the array");
+        AssertObjectCodeFails(compileData, "Specified argument was out of the range of valid values");
     }
     #endregion
 }
