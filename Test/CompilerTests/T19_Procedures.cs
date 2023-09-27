@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass, Ignore]
-public class T16_Procedures
+public class T19_Procedures
 {
     #region Passes
     [TestMethod]
