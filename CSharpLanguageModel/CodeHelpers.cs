@@ -56,23 +56,23 @@ public static class CodeHelpers {
         };
     }
 
-    public static string OperatorToCSharpOperator(Operator op) {
+    public static (string, bool isFunc) OperatorToCSharpOperator(Operator op) {
         return op switch {
-            Operator.Plus => "+",
-            Operator.Minus => "-",
-            Operator.Multiply => "*",
-            Operator.IntDivide => "/",
-            Operator.Modulus => "%",
-            Operator.Equal => "==",
-            Operator.Power => $"{typeof(Math).FullName}.{nameof(Math.Pow)}",
-            Operator.Divide => $"{typeof(WrapperFunctions).FullName}.{nameof(WrapperFunctions.FloatDiv)}",
-            Operator.And => "&&",
-            Operator.Or => "||",
-            Operator.Not => "!",
-            Operator.Xor => "^",
-            Operator.LessThan => "<",
-            Operator.GreaterThan => ">",
-            Operator.GreaterThanEqual => ">=",
+            Operator.Plus => ("+", false),
+            Operator.Minus => ("-", false),
+            Operator.Multiply => ("*", false),
+            Operator.IntDivide => ("/", false),
+            Operator.Modulus => ("%", false),    
+            Operator.Equal => ("==", false),
+            Operator.Power => ($"{typeof(Math).FullName}.{nameof(Math.Pow)}", true),
+            Operator.Divide => ($"{typeof(WrapperFunctions).FullName}.{nameof(WrapperFunctions.FloatDiv)}", true),
+            Operator.And => ("&&", false),
+            Operator.Or => ("||", false),
+            Operator.Not => ("!", false),
+            Operator.Xor => ("^", false),
+            Operator.LessThan => ("<", false),
+            Operator.GreaterThan => (">", false),
+            Operator.GreaterThanEqual => (">=", false),
             _ => throw new NotImplementedException(op.ToString())
         };
     }

@@ -90,14 +90,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private ICodeModel BuildOperatorModel(OperatorNode operatorNode) {
-        var op = operatorNode.Value;
-
-        if (op is Operator.Power or Operator.Divide) {
-            // special case 
-            return new IdentifierModel(CodeHelpers.OperatorToCSharpOperator(op));
-        }
-
-        return new ScalarValueModel(CodeHelpers.OperatorToCSharpOperator(op));
+        var (value, isFunc) = CodeHelpers.OperatorToCSharpOperator(operatorNode.Value);
+        return isFunc ? new IdentifierModel(value) : new ScalarValueModel(value);
     }
 
     private BracketModel BuildBracketModel(BracketNode bracketNode) => new(Visit(bracketNode.BracketedNode));
