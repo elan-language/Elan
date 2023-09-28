@@ -265,5 +265,26 @@ end main
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
     }
+
+    [TestMethod]
+    public void Fail_CannotAlterEnumerableWithinLoop()
+    {
+        var code = @"
+main
+  var a = new Array {1,2,3,4,5}
+  for x in a
+    a[x] = 0
+  end for
+end main
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
     #endregion
 }
