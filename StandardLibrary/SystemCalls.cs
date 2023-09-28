@@ -82,6 +82,14 @@ public static class SystemCalls
             return min + random(max - min);
         }
     }
+
+    //public static T random<T>(IEnumerable<T> source)
+    //{
+    //    lock (randomLock)
+    //    {
+    //        return source.ElementAt(random(source.Count() -1));
+    //    }
+    //}
     #endregion
 
     #region Files

@@ -392,6 +392,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitListDecomp([NotNull] ElanParser.ListDecompContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.arrayDefinition"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArrayDefinition([NotNull] ElanParser.ArrayDefinitionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.dictionaryDefinition"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

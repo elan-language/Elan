@@ -210,8 +210,8 @@ literal: literalValue | literalDataStructure ;
 
 literalValue:  BOOL_VALUE | LITERAL_INTEGER | LITERAL_FLOAT | LITERAL_DECIMAL| LITERAL_CHAR | enumValue ;
 
-dataStructureDefinition:  tupleDefinition | listDefinition | dictionaryDefinition;
-
+dataStructureDefinition:  listDefinition | arrayDefinition | tupleDefinition | dictionaryDefinition  ;
+ 
 literalDataStructure: LITERAL_STRING | literalTuple | literalList | literalDictionary;
 
 tupleDefinition:  OPEN_BRACKET expression COMMA expression (COMMA expression)* CLOSE_BRACKET; 
@@ -225,6 +225,13 @@ listDefinition: OPEN_BRACE (NL? expression (COMMA expression)* NL?) CLOSE_BRACE;
 literalList: OPEN_BRACE (NL? literal (COMMA literal)* NL?) CLOSE_BRACE;
 
 listDecomp: OPEN_BRACE IDENTIFIER COLON IDENTIFIER CLOSE_BRACE;
+
+arrayDefinition: 
+	NEW ARRAY genericSpecifier OPEN_BRACKET LITERAL_INTEGER CLOSE_BRACKET listDefinition?
+	| NEW ARRAY genericSpecifier listDefinition
+	| NEW ARRAY OPEN_BRACKET LITERAL_INTEGER CLOSE_BRACKET listDefinition
+	| NEW ARRAY listDefinition
+	;
 
 dictionaryDefinition: OPEN_BRACE (NL? kvp (COMMA kvp)* NL?) CLOSE_BRACE;
 

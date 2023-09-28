@@ -131,6 +131,42 @@ public static class Program {
     {
         var code = @"
 main
+    var a = new Array<String>(3) {""foo"",""bar"",""yon""}
+    printLine(a.length())
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = new string[3] {""foo"",""bar"",""yon""};
+    printLine(a.length());
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3\r\n");
+    }
+    [TestMethod]
+    public void Pass_InitializeAnArrayFromAListWitjJustType()
+    {
+        var code = @"
+main
     var a = new Array<String> {""foo"",""bar"",""yon""}
     printLine(a.length())
 end main
@@ -162,7 +198,79 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
+    [TestMethod]
+    public void Pass_InitializeAnArrayFromAListWitjJustSize()
+    {
+        var code = @"
+main
+    var a = new Array(3) {""foo"",""bar"",""yon""}
+    printLine(a.length())
+end main
+";
 
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = new string[] {""foo"",""bar"",""yon""};
+    printLine(a.length());
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_InitializeAnArrayFromAListWithoutTypeOrSize()
+    {
+        var code = @"
+main
+    var a = new Array {""foo"",""bar"",""yon""}
+    printLine(a.length())
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = new string[] {""foo"",""bar"",""yon""};
+    printLine(a.length());
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3\r\n");
+    }
 
     [TestMethod]
     public void Pass_2DArray()
@@ -362,14 +470,35 @@ end main
     }
 
     [TestMethod]
-    public void Fail_InitializeAnArrayFromListAndSpecifySizeEvenIfCorrect()
+    public void Fail_MismatchBetweenSpecifiedSizeAndInitializer()
     {
         var code = @"
 main
-    var a = new Array<String>(3) {""foo"",""bar"",""yon""}
+    var a = new Array<String>(4) {""foo"",""bar"",""yon""}
 end main
 ";
+        var parseTree = @"*";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
     }
+
+    [TestMethod]
+    public void Fail_MismatchBetweenSpecifiedTypeAndInitializer()
+    {
+        var code = @"
+main
+    var a = new Array<Int>(3) {""foo"",""bar"",""yon""}
+end main
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
 }
