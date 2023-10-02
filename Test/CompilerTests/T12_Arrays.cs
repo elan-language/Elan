@@ -45,7 +45,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ConfirmStringElementsInitializedToEmptyStringNotNull()
     {
         var code = @"
@@ -59,7 +59,8 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -67,12 +68,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new string[3];
-    printLine(a.length());
+    var a = new StandardLibrary.Array<string>(3);
+    printLine(length(a[0]));
+    printLine(a);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type String) >) ( 3 )))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (expression (value a)) (index [ (expression (value (literal (literalValue 0)))) ])) . (methodCall length ( )))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -80,7 +82,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "0\r\n{,,}\r\n");
+        AssertObjectCodeExecutes(compileData, "0\r\nArray {,,}\r\n");
     }
 
     [TestMethod, Ignore]

@@ -3,7 +3,9 @@ using System.Collections.Immutable;
 
 namespace StandardLibrary;
 
-public class List<T> : IEnumerable<T>  {
+public interface IList { }
+
+public class List<T> : IList, IEnumerable<T>  {
     private readonly ImmutableList<T> wrappedList;
 
     public List() => wrappedList = ImmutableList.Create<T>();

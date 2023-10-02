@@ -99,9 +99,9 @@ public static class Functions {
 
     public static string asString(string s) => s;
 
-    private static string EmptyMessage(IEnumerable e) => e is Array ? "empty array" : "empty list";
+    private static string EmptyMessage(IEnumerable e) => e is IArray ? "empty array" : "empty list";
 
-    private static string Type(IEnumerable e) => e is Array ? "Array" : "List";
+    private static string Type(IEnumerable e) => e is IArray ? "Array" : "List";
 
     public static string asString(IEnumerable e) {
         var a = e.Cast<object>().Select(asString).ToArray();
