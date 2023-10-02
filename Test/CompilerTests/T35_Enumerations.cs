@@ -190,10 +190,6 @@ enumeration Fruit
     apple, orange, pear
 end enumeration
 ";
-
-        var objectCode = @"
-";
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -213,9 +209,6 @@ end main
 enumeration Fruit
     apple, orange, pear
 end enumeration
-";
-
-        var objectCode = @"
 ";
 
         var parseTree = @"*";

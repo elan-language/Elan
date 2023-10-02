@@ -219,26 +219,6 @@ main
 end main
 ";
 
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static GlobalConstants;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
-
-public static partial class GlobalConstants {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var a = new List<int> {7,8,9};
-    for x in a
-       printLine(x)
-    end for
-    printLine(x)
-  }
-}";
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
