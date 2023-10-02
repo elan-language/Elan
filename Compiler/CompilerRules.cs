@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree;
+using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
@@ -45,6 +46,21 @@ public static class CompilerRules {
                 if (Match(forNode.Id, mcn.Id)) {
                     return "May not mutate control variable";
                 }
+            }
+        }
+
+        return null;
+    }
+
+    public static string? ArrayInitialization(IAstNode[] nodes, IScope currentScope) {
+        var leafNode = nodes.Last();
+        if (leafNode is NewInstanceNode { Type : DataStructureTypeNode { Type: DataStructure.Array } } nin) {
+            if (nin.Arguments.Length is 0 && nin.Init.Length is 0) {
+                return "Array must have size or initializer";
+            }
+
+            if (nin.Arguments.Length > 0 && nin.Init.Length > 0) {
+                return "Array cannot have size and initializer";
             }
         }
 

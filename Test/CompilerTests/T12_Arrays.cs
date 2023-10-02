@@ -213,7 +213,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UseRoundBracketsForIndex()
     {
         var code = @"
@@ -227,7 +227,8 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod, Ignore]
@@ -318,7 +319,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Out Of Range"); //or something to that effect
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_TypeIncompatibility()
     {
         var code = @"
@@ -333,7 +334,8 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod, Ignore]
@@ -365,7 +367,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_SpecifySizeAndInitializer()
     {
         var code = @"
@@ -381,7 +383,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_SpecifyWithoutSizeOrInitializer()
     {
         var code = @"
