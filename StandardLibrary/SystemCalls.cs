@@ -29,6 +29,10 @@ public static class SystemCalls
     }
     #endregion
 
+    #region TODO - simple sounds
+
+    #endregion 
+
     #region random numbers
 
     private static object randomLock = new object();
