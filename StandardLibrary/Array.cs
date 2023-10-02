@@ -6,13 +6,11 @@ public interface IArray { }
 
 public class Array<T> : IArray, IEnumerable<T> {
     private readonly T[][] wrappedArray;
-    private bool twoD;
-
+    private readonly bool twoD;
 
     public Array() : this(0) { }
 
     public Array(int size) {
-       
         wrappedArray = new T[1][];
         wrappedArray[0] = new T[size];
 
@@ -31,7 +29,7 @@ public class Array<T> : IArray, IEnumerable<T> {
 
     private static T? Default => typeof(T) == typeof(string) ? (T)(object)"" : default;
 
-    public int Count =>  wrappedArray.Length * wrappedArray[0].Length;
+    public int Count => wrappedArray.Length * wrappedArray[0].Length;
 
     public T this[int index] {
         get => wrappedArray[0][index];
@@ -50,7 +48,13 @@ public class Array<T> : IArray, IEnumerable<T> {
         }
     }
 
-    public IEnumerator<T> GetEnumerator() => wrappedArray[0].ToList().GetEnumerator();
+    public IEnumerator<T> GetEnumerator() {
+        foreach (var arr in wrappedArray) {
+            foreach (var item in arr) {
+                yield return item;
+            }
+        }
+    }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
