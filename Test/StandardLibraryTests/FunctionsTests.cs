@@ -44,32 +44,32 @@ public class FunctionsTests
         Assert.AreEqual("empty list", asString(t));
     }
 
-    //[TestMethod]
-    //public void AsStringArray()
-    //{
-    //    var a = new bool[] { true, false, false };
-    //    Assert.AreEqual("Array {true,false,false}", asString(a));
-    //}
+    [TestMethod]
+    public void AsStringArray()
+    {
+        var a = new Array<bool> { true, false, false };
+        Assert.AreEqual("Array {true,false,false}", asString(a));
+    }
 
-    //[TestMethod]
-    //public void AsStringArray2()
-    //{
-    //    var a = new bool[4];
-    //    Assert.AreEqual("Array {false,false,false,false}", asString(a));
-    //}
-    //[TestMethod]
-    //public void AsStringArray3()
-    //{
-    //    var t = new string[] {"","",""};
-    //    Assert.AreEqual("Array {,,}", asString(t));
-    //}
+    [TestMethod]
+    public void AsStringArray2()
+    {
+        var a = new Array<bool>(4);
+        Assert.AreEqual("Array {false,false,false,false}", asString(a));
+    }
+    [TestMethod]
+    public void AsStringArray3()
+    {
+        var t = new Array<string> { "", "", "" };
+        Assert.AreEqual("Array {,,}", asString(t));
+    }
 
-    //[TestMethod]
-    //public void AsStringEmptyArray()
-    //{
-    //    var t = new string[] {};
-    //    Assert.AreEqual("empty array", asString(t));
-    //}
+    [TestMethod]
+    public void AsStringEmptyArray()
+    {
+        var t = new Array<string> { };
+        Assert.AreEqual("empty array", asString(t));
+    }
 
     [TestMethod]
     public void AsStringTuple()
