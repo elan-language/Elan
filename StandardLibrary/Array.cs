@@ -6,7 +6,7 @@ namespace StandardLibrary;
 public interface IArray { }
 
 public class Array<T> : IArray, IEnumerable<T> {
-    private readonly T[] wrappedArray;
+    private T[] wrappedArray;
 
     public Array() => wrappedArray = wrappedArray = Array.Empty<T>();
     
@@ -22,7 +22,15 @@ public class Array<T> : IArray, IEnumerable<T> {
 
     public IEnumerator<T> GetEnumerator() => wrappedArray.ToList().GetEnumerator();
 
-    public T this[int index] => wrappedArray[index];
+    public T this[int index] {
+        get => wrappedArray[index];
+        set => wrappedArray[index] = value;
+    }
+
+    public void Add(T item) {
+        wrappedArray = wrappedArray.Append(item).ToArray();
+    }
+
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
