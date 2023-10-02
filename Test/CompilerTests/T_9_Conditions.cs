@@ -329,7 +329,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\ntrue\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_not_is()
     {
         var code = @"
@@ -341,7 +341,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_not()
     {
         var code = @"
@@ -353,7 +353,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_notEqual()
     {
         var code = @"
@@ -365,7 +365,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_EqualToOrLessThan()
     {
         var code = @"
@@ -377,7 +377,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_Greater_Or_Equal()
     {
         var code = @"
@@ -389,7 +389,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_SingleEquals()
     {
         var code = @"
