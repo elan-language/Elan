@@ -231,7 +231,7 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_ApplyIndexToANonIndexable()
     {
         var code = @"
@@ -245,7 +245,7 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod, Ignore]
@@ -282,7 +282,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_OutOfRange()
     {
         var code = @"
@@ -295,7 +295,8 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -303,7 +304,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new string[3];
+    var a = new StandardLibrary.Array<string>(3);
     var b = a[3];
   }
 }";
@@ -316,7 +317,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Out Of Range"); //or something to that effect
+        AssertObjectCodeFails(compileData, "Index was outside the bounds of the array."); //or something to that effect
     }
 
     [TestMethod]
@@ -338,7 +339,7 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_SizeNotSpecified()
     {
         var code = @"
@@ -355,7 +356,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_SizeSpecifiedInSquareBrackets()
     {
         var code = @"
