@@ -16,6 +16,7 @@ public class SymbolTableImpl {
             "Int32" => IntSymbolType.Instance,
             "Decimal" => DecimalSymbolType.Instance,
             "Char" => CharSymbolType.Instance,
+            "Boolean" => BooleanSymbolType.Instance,
             _ => throw new NotImplementedException(type.Name)
         };
 
