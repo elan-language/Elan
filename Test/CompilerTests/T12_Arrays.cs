@@ -86,7 +86,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "0\r\nArray {,,}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_SetAndReadElements()
     {
         var code = @"
@@ -102,7 +102,8 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static GlobalConstants;
-using static StandardLibrary.SystemCalls;using static StandardLibrary.Functions;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -110,7 +111,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new string[3];
+    var a = new StandardLibrary.Array<string>(3);
     a[0] = ""foo"";
     a[2] = ""yon"";
     printLine(a[0]);
@@ -118,7 +119,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type String) >) ( 3 )))))) (assignment (assignableValue a (index [ (expression (value (literal (literalValue 0)))) ])) = (expression (value (literal (literalDataStructure ""foo""))))) (assignment (assignableValue a (index [ (expression (value (literal (literalValue 2)))) ])) = (expression (value (literal (literalDataStructure ""yon""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 0)))) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 2)))) ]))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -143,6 +144,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -150,8 +152,8 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new string[3] {""foo"",""bar"",""yon""};
-    printLine(a.length());
+    var a = new StandardLibrary.Array<string>(3) {""foo"", ""bar"", ""yon""};
+    printLine(length(a));
   }
 }";
 
