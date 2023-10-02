@@ -48,12 +48,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_AppendOrPrependChar()
     {
         var code = @"
 main
-    printLine(""Hello""+'!')
+    printLine('_'+""Hello""+'!')
 end main
 ";
 
@@ -69,11 +69,11 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine('_' +@$""Hello""+'!')
+    printLine('_' + ""Hello"" + '!');
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (expression (value (literal (literalValue '_')))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""Hello""))))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue '!')))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
