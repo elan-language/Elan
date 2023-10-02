@@ -237,10 +237,10 @@ public static class Program {
     printLine(""abc"" == ""abc"");
     printLine(""abc"" == ""abcd"");
     printLine(""abc"" == ""Abc"");
-    printLine(""abc"" is ""abc"");
-    printLine(""abc"" <> ""abcd"");
-    printLine(""abc"" is not ""abc"");
-    printLine(""abc"" is not ""abcd"");
+    printLine(""abc"" == ""abc"");
+    printLine(""abc"" != ""abcd"");
+    printLine(""abc"" != ""abcd"");
+    printLine(""abc"" != ""abcd"");
     printLine(""abc"" < ""abC"");
     printLine(""abcd"" > ""abc"");
     printLine(""abc"" >= ""abc"");
