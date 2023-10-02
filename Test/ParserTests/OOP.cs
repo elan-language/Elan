@@ -149,7 +149,7 @@ end class
 
 end class
 ";
-        // TODO: should not parse: AssertDoesNotParseForRule(code, file, "x");
+        AssertDoesNotParseForRule(code, file, "");
     }
 
     [TestMethod]

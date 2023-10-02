@@ -12,14 +12,7 @@ public enum Colour
 }
 
 
-
-public class Date { }
-
-public class Time { }
-
 public class StopWatch { }
-
-public class Guid { }
 
 public class TextFileReader { }
 

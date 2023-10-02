@@ -168,6 +168,6 @@ public static class SystemCalls
     #endregion
 
     #region Guid
-    public static string GUID() => Guid.NewGuid().ToString();   
+    //public static string Guid() => Guid.NewGuid().ToString();   
     #endregion
 }
