@@ -45,6 +45,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             DataStructureTypeNode n => HandleScope(BuildDataStructureTypeModel, n),
             ValueTypeNode n => HandleScope(BuildValueTypeModel, n),
             ForStatementNode n => HandleScope(BuildForStatementModel, n),
+            TwoDIndexExpressionNode n => HandleScope(Build2DIndexModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -73,7 +74,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var id = Visit(forStatementNode.Id);
         var expressions = forStatementNode.Expressions.Select(Visit);
         var statementBlock = Visit(forStatementNode.StatementBlock);
-        var step = forStatementNode.Step is {} i ? Visit(i) : null;
+        var step = forStatementNode.Step is { } i ? Visit(i) : null;
         var neg = forStatementNode.Neg;
 
         return new ForStatementModel(id, expressions, step, neg, statementBlock);
@@ -127,7 +128,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new RangeExpressionModel(rangeExpressionNode.Prefix, expression1, expression2);
     }
 
-    private NewInstanceModel BuildNewInstanceModel(NewInstanceNode  newInstanceNode) {
+    private NewInstanceModel BuildNewInstanceModel(NewInstanceNode newInstanceNode) {
         var type = Visit(newInstanceNode.Type);
         var args = newInstanceNode.Arguments.Select(Visit);
         var init = newInstanceNode.Init.Select(Visit);
@@ -135,13 +136,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new NewInstanceModel(type, args, init);
     }
 
-    private DataStructureTypeModel BuildDataStructureTypeModel(DataStructureTypeNode  dataStructureTypeNode) {
+    private DataStructureTypeModel BuildDataStructureTypeModel(DataStructureTypeNode dataStructureTypeNode) {
         var types = dataStructureTypeNode.GenericTypes.Select(Visit);
 
         return new DataStructureTypeModel(types, CodeHelpers.DataStructureTypeToCSharpType(dataStructureTypeNode.Type));
     }
 
-    private ScalarValueModel BuildValueTypeModel(ValueTypeNode  valueTypeNode) {
-        return new ScalarValueModel(CodeHelpers.ValueTypeToCSharpType(valueTypeNode.Type));
-    }
+    private ScalarValueModel BuildValueTypeModel(ValueTypeNode valueTypeNode) => new(CodeHelpers.ValueTypeToCSharpType(valueTypeNode.Type));
+
+    private TwoDIndexModel Build2DIndexModel(TwoDIndexExpressionNode twoDIndexExpressionNode) => new(Visit(twoDIndexExpressionNode.Expression1), Visit(twoDIndexExpressionNode.Expression2));
 }

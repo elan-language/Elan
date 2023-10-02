@@ -334,7 +334,13 @@ public static class AstFactory {
             return visitor.Visit(rangeContext);
         }
 
-        return visitor.Visit(context.expression().Single());
+        var expressions = context.expression();
+
+        return expressions.Length switch {
+            1 => visitor.Visit(expressions.Single()),
+            2 => new TwoDIndexExpressionNode(visitor.Visit(expressions.First()), visitor.Visit(expressions.Last())),
+            _ => throw new NotImplementedException(context.children.First().GetText())
+        };
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, RangeContext context) {
@@ -369,6 +375,10 @@ public static class AstFactory {
 
         if (context.LIST() is not null) {
             return new DataStructureTypeNode(DataStructure.List, genericTypes.ToImmutableArray());
+        }
+
+        if (context.ARRAY() is not null) {
+            return new DataStructureTypeNode(DataStructure.Array, genericTypes.ToImmutableArray());
         }
 
         throw new NotImplementedException(context.children.First().GetText());

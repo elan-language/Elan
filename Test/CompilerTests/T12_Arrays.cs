@@ -5,12 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T12_Arrays
-{
+public class T12_Arrays {
     #region passes
+
     [TestMethod]
-    public void Pass_DeclareAnEmptyArrayBySizeAndCheckLength()
-    {
+    public void Pass_DeclareAnEmptyArrayBySizeAndCheckLength() {
         var code = @"
 main
     var a = new Array<String>(3)
@@ -47,8 +46,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ConfirmStringElementsInitializedToEmptyStringNotNull()
-    {
+    public void Pass_ConfirmStringElementsInitializedToEmptyStringNotNull() {
         var code = @"
 main
     var a = new Array<String>(3)
@@ -87,8 +85,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_SetAndReadElements()
-    {
+    public void Pass_SetAndReadElements() {
         var code = @"
 main
     var a = new Array<String>(3)
@@ -131,8 +128,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_InitializeAnArrayFromAList()
-    {
+    public void Pass_InitializeAnArrayFromAList() {
         var code = @"
 main
     var a = new Array<String>() {""foo"",""bar"",""yon""}
@@ -168,9 +164,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-    [TestMethod, Ignore]
-    public void Pass_2DArray()
-    {
+    [TestMethod]
+    public void Pass_2DArray() {
         var code = @"
 main
     var a = new Array<String>(3,4)
@@ -185,6 +180,7 @@ end main
 using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
 
 public static partial class GlobalConstants {
 
@@ -192,7 +188,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new string[3,4];
+    var a = new StandardLibrary.Array<string>(3, 4);
     a[0,0] = ""foo"";
     a[2,3] = ""yon"";
     printLine(a[0,0]);
@@ -200,7 +196,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (newInstance new (type (dataStructureType Array (genericSpecifier < (type String) >))) ( (argumentList (expression (value (literal (literalValue 3)))) , (expression (value (literal (literalValue 4))))) )))) (assignment (assignableValue a (index [ (expression (value (literal (literalValue 0)))) , (expression (value (literal (literalValue 0)))) ])) = (expression (value (literal (literalDataStructure ""foo""))))) (assignment (assignableValue a (index [ (expression (value (literal (literalValue 2)))) , (expression (value (literal (literalValue 3)))) ])) = (expression (value (literal (literalDataStructure ""yon""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 0)))) , (expression (value (literal (literalValue 0)))) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 2)))) , (expression (value (literal (literalValue 3)))) ]))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -210,12 +206,13 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "foo\r\nyon\r\n");
     }
+
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_UseRoundBracketsForIndex()
-    {
+    public void Fail_UseRoundBracketsForIndex() {
         var code = @"
 main
     var a = new Array<String>(3)
@@ -232,8 +229,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_ApplyIndexToANonIndexable()
-    {
+    public void Fail_ApplyIndexToANonIndexable() {
         var code = @"
 main
     var a = 3
@@ -248,9 +244,8 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Fail_2DArrayCreatedByDoubleIndex()
-    {
+    [TestMethod]
+    public void Fail_2DArrayCreatedByDoubleIndex() {
         var code = @"
 main
     var a = new Array<String>[3][4]
@@ -260,14 +255,11 @@ end main
 ";
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Fail_1DArrayAccessedAs2D()
-    {
+    [TestMethod]
+    public void Fail_1DArrayAccessedAs2D() {
         var code = @"
 main
     var a = new Array<String>(3)
@@ -279,12 +271,13 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeFails(compileData, "Index was outside the bounds of the array.");
     }
 
     [TestMethod]
-    public void Fail_OutOfRange()
-    {
+    public void Fail_OutOfRange() {
         var code = @"
 main
     var a = new Array<String>(3)
@@ -321,8 +314,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_TypeIncompatibility()
-    {
+    public void Fail_TypeIncompatibility() {
         var code = @"
 main
     var a = new Array<String>(3)
@@ -340,8 +332,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_SizeNotSpecified()
-    {
+    public void Fail_SizeNotSpecified() {
         var code = @"
 main
     var a = new Array<String>()
@@ -357,8 +348,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_SizeSpecifiedInSquareBrackets()
-    {
+    public void Fail_SizeSpecifiedInSquareBrackets() {
         var code = @"
 main
     var a = new Array<String>[3]
@@ -369,8 +359,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_SpecifySizeAndInitializer()
-    {
+    public void Fail_SpecifySizeAndInitializer() {
         var code = @"
 main
     var a = new Array<String>(3) {""foo"",""bar"",""yon""}
@@ -385,8 +374,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_SpecifyWithoutSizeOrInitializer()
-    {
+    public void Fail_SpecifyWithoutSizeOrInitializer() {
         var code = @"
 main
     var a = new Array<String>()
