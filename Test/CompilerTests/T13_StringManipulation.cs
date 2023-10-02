@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T13_StringManipulation
 {
     #region Passes
@@ -31,13 +31,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = @$""Hello;
-    var b = @$""World!"";
-    printLine(a + @$"" ""+ b);
+    var a = ""Hello"";
+    var b = ""World!"";
+    printLine(a + "" "" + b);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""Hello""))))) (varDef var (assignableValue b) = (expression (value (literal (literalDataStructure ""World!""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (expression (value a)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure "" ""))))) (binaryOp (arithmeticOp +)) (expression (value b)))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -48,7 +48,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_AppendOrPrependChar()
     {
         var code = @"
@@ -84,7 +84,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "_Hello!\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_AppendNumber()
     {
         var code = @"
@@ -120,7 +120,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Hello 3.1\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Indexing()
     {
         var code = @"
@@ -158,7 +158,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "c\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Ranges()
     {
         var code = @"
@@ -201,7 +201,7 @@ public static class Program {
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Comparison()
     {
         var code = @"
@@ -261,7 +261,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\nfalse\r\ntrue\r\ntrue\r\nfalse\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\nfalse");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_CoerceNumberToString()
     {
         var code = @"
@@ -301,7 +301,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5.5\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_UseAsStringExplicitly()
     {
         var code = @"
@@ -341,7 +341,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5.5\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Interpolation()
     {
         var code = @"
@@ -383,7 +383,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3 x 4 = 12\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_UseBracesInString()
     {
         var code = @"
@@ -425,7 +425,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "{3 x 4} = 12\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_literalNewline()
     {
         var code = @"
@@ -465,7 +465,7 @@ World"";
         AssertObjectCodeExecutes(compileData, "Hello \r\nWorld!\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_newLineConstant()
     {
         var code = @"
@@ -509,7 +509,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_IndexOutOfRange()
     {
         var code = @"
@@ -545,7 +545,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Out of range error");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_AppendStringToNumber()
     {
         var code = @"
