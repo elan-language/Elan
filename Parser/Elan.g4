@@ -227,9 +227,9 @@ literalList: OPEN_BRACE (NL? literal (COMMA literal)* NL?) CLOSE_BRACE;
 listDecomp: OPEN_BRACE IDENTIFIER COLON IDENTIFIER CLOSE_BRACE;
 
 arrayDefinition: 
-	NEW ARRAY genericSpecifier OPEN_BRACKET LITERAL_INTEGER CLOSE_BRACKET listDefinition?
+	NEW ARRAY genericSpecifier OPEN_BRACKET LITERAL_INTEGER? CLOSE_BRACKET listDefinition?
 	| NEW ARRAY genericSpecifier listDefinition
-	| NEW ARRAY OPEN_BRACKET LITERAL_INTEGER CLOSE_BRACKET listDefinition
+	| NEW ARRAY OPEN_BRACKET LITERAL_INTEGER? CLOSE_BRACKET listDefinition
 	| NEW ARRAY listDefinition
 	;
 

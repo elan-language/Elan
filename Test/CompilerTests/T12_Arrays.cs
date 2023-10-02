@@ -130,7 +130,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "foo\r\nyon\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_InitializeAnArrayFromAList()
     {
         var code = @"
@@ -152,12 +152,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new StandardLibrary.Array<string>(3) {""foo"", ""bar"", ""yon""};
+    var a = new StandardLibrary.Array<string>() {""foo"", ""bar"", ""yon""};
     printLine(length(a));
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type String) >) ( ) (listDefinition { (expression (value (literal (literalDataStructure ""foo"")))) , (expression (value (literal (literalDataStructure ""bar"")))) , (expression (value (literal (literalDataStructure ""yon"")))) })))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) . (methodCall length ( )))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
