@@ -15,5 +15,7 @@ public enum Operator {
     Xor,
     LessThan,
     GreaterThanEqual,
-    GreaterThan
+    GreaterThan,
+    LessThanEqual,
+    NotEqual
 }

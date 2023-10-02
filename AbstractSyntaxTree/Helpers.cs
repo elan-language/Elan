@@ -18,6 +18,8 @@ public static class Helpers {
             ElanParser.LT => Operator.LessThan,
             ElanParser.GT => Operator.GreaterThan,
             ElanParser.OP_GE => Operator.GreaterThanEqual,
+            ElanParser.OP_LE => Operator.LessThanEqual,
+            ElanParser.OP_NE => Operator.NotEqual,
             _ => throw new NotSupportedException(nodeType.ToString())
         };
     }

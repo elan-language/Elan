@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 
-[TestClass, Ignore]
+[TestClass]
 public class T_9_Conditions
 {
     [TestMethod]
@@ -31,13 +31,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-      printLine(3 < 4)
-      printLine(3 < 2)
-      printLine(3 < 3)
+    printLine(3 < 4);
+    printLine(3 < 2);
+    printLine(3 < 3);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <)) (expression (value (literal (literalValue 4)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <)) (expression (value (literal (literalValue 2)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -71,13 +71,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-      printLine(3 > 4)
-      printLine(3 > 2)
-      printLine(3 > 3)
+    printLine(3 > 4);
+    printLine(3 > 2);
+    printLine(3 > 3);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 4)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 2)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -111,13 +111,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-      printLine(3 <= 4)
-      printLine(3 <= 2)
-      printLine(3 <= 3)
+    printLine(3 <= 4);
+    printLine(3 <= 2);
+    printLine(3 <= 3);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <=)) (expression (value (literal (literalValue 4)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <=)) (expression (value (literal (literalValue 2)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <=)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -151,13 +151,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-      printLine(3 >= 4)
-      printLine(3 >= 2)
-      printLine(3 >= 3)
+    printLine(3 >= 4);
+    printLine(3 >= 2);
+    printLine(3 >= 3);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp >=)) (expression (value (literal (literalValue 4)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp >=)) (expression (value (literal (literalValue 2)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp >=)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -191,13 +191,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-      printLine(3 <> 4)
-      printLine(3 <> 2)
-      printLine(3 <> 3)
+    printLine(3 != 4);
+    printLine(3 != 2);
+    printLine(3 != 3);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <>)) (expression (value (literal (literalValue 4)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <>)) (expression (value (literal (literalValue 2)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <>)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -231,13 +231,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-      printLine(3 <> 4)
-      printLine(3 <> 2)
-      printLine(3 <> 3)
+    printLine(3 != 4);
+    printLine(3 != 2);
+    printLine(3 != 3);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp is not)) (expression (value (literal (literalValue 4)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp is not)) (expression (value (literal (literalValue 2)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp is not)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -271,13 +271,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-      printLine(3 == 4)
-      printLine(3 == 2)
-      printLine(3 == 3)
+    printLine(3 == 4);
+    printLine(3 == 2);
+    printLine(3 == 3);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalValue 4)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalValue 2)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -312,13 +312,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-      printLine(3 == 4)
-      printLine(3 == 2)
-      printLine(3 == 3)
+    printLine(3 == 4);
+    printLine(3 == 2);
+    printLine(3 == 3);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp is)) (expression (value (literal (literalValue 4)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp is)) (expression (value (literal (literalValue 2)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp is)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -329,7 +329,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\ntrue\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_not_is()
     {
         var code = @"
@@ -341,7 +341,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_not()
     {
         var code = @"
@@ -353,7 +353,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_notEqual()
     {
         var code = @"
@@ -365,7 +365,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_EqualToOrLessThan()
     {
         var code = @"
@@ -377,7 +377,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_Greater_Or_Equal()
     {
         var code = @"
@@ -389,7 +389,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_SingleEquals()
     {
         var code = @"

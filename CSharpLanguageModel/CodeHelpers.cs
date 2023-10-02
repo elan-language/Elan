@@ -73,6 +73,8 @@ public static class CodeHelpers {
             Operator.LessThan => ("<", false),
             Operator.GreaterThan => (">", false),
             Operator.GreaterThanEqual => (">=", false),
+            Operator.LessThanEqual => ("<=", false),
+            Operator.NotEqual => ("!=", false),
             _ => throw new NotImplementedException(op.ToString())
         };
     }
