@@ -23,4 +23,12 @@ public static class Helpers {
             _ => throw new NotSupportedException(nodeType.ToString())
         };
     }
+
+    public static ValueType MapValueType(string type) {
+        return type switch {
+            "String" => ValueType.String,
+            "Int" => ValueType.Int,
+            _ => throw new NotSupportedException(type)
+        };
+    }
 }

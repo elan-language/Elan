@@ -1,5 +1,7 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using System.Collections.Immutable;
 
-public record NewInstanceNode(IAstNode Type) : IAstNode {
-    public IEnumerable<IAstNode> Children => new[] { Type };
+namespace AbstractSyntaxTree.Nodes;
+
+public record NewInstanceNode(IAstNode Type, ImmutableArray<IAstNode> Arguments) : IAstNode {
+    public IEnumerable<IAstNode> Children => Arguments.Prepend(Type);
 }

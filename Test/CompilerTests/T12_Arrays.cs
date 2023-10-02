@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T12_Arrays
 {
     [TestMethod]
@@ -29,12 +29,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new string[3];
-    printLine(a.length());
+    var a = new StandardLibrary.Array<string>(3);
+    printLine(length(a));
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type String) >) ( 3 )))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) . (methodCall length ( )))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -45,7 +45,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_ConfirmStringElementsInitializedToEmptyStringNotNull()
     {
         var code = @"
@@ -83,7 +83,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "0\r\n{,,}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_SetAndReadElements()
     {
         var code = @"
@@ -126,7 +126,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "foo\r\nyon\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_InitializeAnArrayFromAList()
     {
         var code = @"
@@ -162,7 +162,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_InitializeAnArrayFromAListWitjJustType()
     {
         var code = @"
@@ -198,7 +198,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_InitializeAnArrayFromAListWitjJustSize()
     {
         var code = @"
@@ -235,7 +235,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_InitializeAnArrayFromAListWithoutTypeOrSize()
     {
         var code = @"
@@ -272,7 +272,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_2DArray()
     {
         var code = @"
@@ -315,7 +315,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "foo\r\nyon\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_UseRoundBracketsForIndex()
     { 
         var code = @"
@@ -332,7 +332,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_ApplyIndexToANonIndexable()
     {
         var code = @"
@@ -350,7 +350,7 @@ end main
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_2DArrayCreatedByDoubleIndex()
     {
         var code = @"
@@ -367,7 +367,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_1DArrayAccessedAs2D()
     {
         var code = @"
@@ -384,7 +384,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_OutOfRange()
     {
         var code = @"
@@ -422,7 +422,7 @@ public static class Program {
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_TypeIncompatibility()
     {
         var code = @"
@@ -440,7 +440,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_SizeNotSpecified()
     {
         var code = @"
@@ -457,7 +457,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_SizeSpecifiedInSquareBrackets()
     {
         var code = @"
@@ -469,7 +469,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_MismatchBetweenSpecifiedSizeAndInitializer()
     {
         var code = @"
@@ -485,7 +485,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_MismatchBetweenSpecifiedTypeAndInitializer()
     {
         var code = @"

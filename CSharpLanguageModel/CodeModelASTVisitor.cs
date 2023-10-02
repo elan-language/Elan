@@ -129,8 +129,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private NewInstanceModel BuildNewInstanceModel(NewInstanceNode  newInstanceNode) {
         var type = Visit(newInstanceNode.Type);
+        var args = newInstanceNode.Arguments.Select(Visit);
 
-        return new NewInstanceModel(type);
+        return new NewInstanceModel(type, args);
     }
 
     private DataStructureTypeModel BuildDataStructureTypeModel(DataStructureTypeNode  dataStructureTypeNode) {
