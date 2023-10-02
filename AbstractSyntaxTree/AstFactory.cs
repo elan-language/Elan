@@ -41,6 +41,9 @@ public static class AstFactory {
             NewInstanceContext c => visitor.Build(c),
             TypeContext c => visitor.Build(c),
             DataStructureTypeContext c => visitor.Build(c),
+            DataStructureDefinitionContext c => visitor.Build(c),
+            ArrayDefinitionContext c => visitor.Build(c),
+            GenericSpecifierContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -131,6 +134,10 @@ public static class AstFactory {
 
         if (context.IDENTIFIER() is { } id) {
             return visitor.Visit(id);
+        }
+
+        if (context.dataStructureDefinition() is { } ds) {
+            return visitor.Visit(ds);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -332,8 +339,9 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, NewInstanceContext context) {
         var type = visitor.Visit(context.type());
+        var args = context.argumentList() is { } al ? al.expression().Select(visitor.Visit) : Array.Empty<IAstNode>();
 
-        return new NewInstanceNode(type);
+        return new NewInstanceNode(type, args.ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TypeContext context) {
@@ -342,7 +350,7 @@ public static class AstFactory {
         }
 
         if (context.VALUE_TYPE() is { } vt) {
-            return new ValueTypeNode(ValueType.Int);
+            return new ValueTypeNode(Helpers.MapValueType(vt.GetText()));
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -356,5 +364,35 @@ public static class AstFactory {
         }
 
         throw new NotImplementedException(context.children.First().GetText());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DataStructureDefinitionContext context) {
+
+        if (context.arrayDefinition() is { } ad) {
+            return visitor.Visit(ad);
+        }
+
+
+        throw new NotImplementedException(context.children.First().GetText());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ArrayDefinitionContext context) {
+        if (context.genericSpecifier() is { } gs) {
+            var genericSpecifier = visitor.Visit(gs);
+            var type = new DataStructureTypeNode(DataStructure.Array, ImmutableArray.Create(genericSpecifier));
+            var args = ImmutableArray<IAstNode>.Empty;
+
+            if (context.LITERAL_INTEGER() is { } i) {
+                args = args.Add(new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int)));
+            }
+
+            return new NewInstanceNode(type, args);
+        }
+
+        throw new NotImplementedException(context.children.First().GetText());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) {
+        return visitor.Visit(context.type().Single());
     }
 }
