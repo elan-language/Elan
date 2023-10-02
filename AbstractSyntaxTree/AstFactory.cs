@@ -43,6 +43,7 @@ public static class AstFactory {
             DataStructureTypeContext c => visitor.Build(c),
             DataStructureDefinitionContext c => visitor.Build(c),
             ArrayDefinitionContext c => visitor.Build(c),
+            ListDefinitionContext c => visitor.Build(c),
             GenericSpecifierContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
@@ -165,6 +166,13 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssignableValueContext context) {
+        if (context.index() is { } idx) {
+            var index = visitor.Visit(idx);
+            var expr = visitor.Visit(context.IDENTIFIER());
+
+            return new IndexedExpressionNode(expr, index);
+        }
+
         if (context.IDENTIFIER() is { } id) {
             return visitor.Visit(id);
         }
@@ -302,7 +310,7 @@ public static class AstFactory {
         var id = visitor.Visit(context.IDENTIFIER());
         var expressions = context.expression().Select(visitor.Visit);
         var statementBlock = visitor.Visit(context.statementBlock());
-        var step = context.LITERAL_INTEGER() is {} i ?   visitor.Visit(i) : null;
+        var step = context.LITERAL_INTEGER() is { } i ? visitor.Visit(i) : null;
         var neg = context.MINUS() is not null;
 
         return new ForStatementNode(id, expressions.ToImmutableArray(), step, neg, statementBlock);
@@ -341,7 +349,7 @@ public static class AstFactory {
         var type = visitor.Visit(context.type());
         var args = context.argumentList() is { } al ? al.expression().Select(visitor.Visit) : Array.Empty<IAstNode>();
 
-        return new NewInstanceNode(type, args.ToImmutableArray());
+        return new NewInstanceNode(type, args.ToImmutableArray(), Array.Empty<IAstNode>().ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TypeContext context) {
@@ -367,11 +375,9 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DataStructureDefinitionContext context) {
-
         if (context.arrayDefinition() is { } ad) {
             return visitor.Visit(ad);
         }
-
 
         throw new NotImplementedException(context.children.First().GetText());
     }
@@ -386,13 +392,21 @@ public static class AstFactory {
                 args = args.Add(new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int)));
             }
 
-            return new NewInstanceNode(type, args);
+            var init = context.listDefinition() is { } list ? list.expression().Select(visitor.Visit) : Array.Empty<IAstNode>();
+
+            return new NewInstanceNode(type, args, init.ToImmutableArray());
         }
 
         throw new NotImplementedException(context.children.First().GetText());
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) {
-        return visitor.Visit(context.type().Single());
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ListDefinitionContext context) {
+         
+
+
+
+        throw new NotImplementedException(context.children.First().GetText());
     }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());
 }

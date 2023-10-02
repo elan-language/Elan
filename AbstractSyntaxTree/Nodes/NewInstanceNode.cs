@@ -2,6 +2,6 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record NewInstanceNode(IAstNode Type, ImmutableArray<IAstNode> Arguments) : IAstNode {
-    public IEnumerable<IAstNode> Children => Arguments.Prepend(Type);
+public record NewInstanceNode(IAstNode Type, ImmutableArray<IAstNode> Arguments, ImmutableArray<IAstNode> Init) : IAstNode {
+    public IEnumerable<IAstNode> Children => Arguments.Prepend(Type).Concat(Init);
 }
