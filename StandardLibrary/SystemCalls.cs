@@ -1,6 +1,7 @@
 ﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable InconsistentNaming
 using System.ComponentModel;
+using System.Text;
 using static StandardLibrary.Functions;
 
 namespace StandardLibrary;
@@ -8,7 +9,7 @@ namespace StandardLibrary;
 [ElanSystemCall]
 public static class SystemCalls
 {
-    #region print and input
+    #region Output to screen
 
     //TODO once we can support Any type - replace all overloads with argument of type 'object'
     public static void printLine(object obj) => Console.WriteLine(asString(obj));
@@ -16,7 +17,9 @@ public static class SystemCalls
     public static void printLine() => Console.WriteLine();
 
     public static void print(object obj) => Console.Write(asString(obj));
+    #endregion
 
+    #region Input from keyboard
     public static string input(string prompt)
     {
         Console.Write(prompt);
@@ -26,6 +29,44 @@ public static class SystemCalls
     public static string input()
     {
         return Console.ReadLine();
+    }
+
+    public static char readKey(bool writeKey = false)
+    {
+        char k;
+        if (writeKey)
+        {
+            k = Console.ReadKey().KeyChar;
+        }
+        else
+        {
+            Console.CursorVisible = false;
+            var standardOut = Console.Out;
+            Console.SetOut(new NoEcho());
+            k = Console.ReadKey().KeyChar;
+            Console.SetOut(standardOut);
+            Console.CursorVisible = true;
+        }
+        return k;
+    }
+
+    public static bool keyHasBeenPressed() => Console.KeyAvailable;
+
+    //Ensures that there are no previously hit keys waiting to be read
+    public static void clearKeyBuffer()
+    {
+        while (Console.KeyAvailable)
+            readKey();
+    }
+
+    private class NoEcho : TextWriter
+    {
+        public override void Write(char value) { }
+
+        public override Encoding Encoding
+        {
+            get { return Encoding.Unicode; }
+        }
     }
     #endregion
 
