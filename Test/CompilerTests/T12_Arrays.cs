@@ -7,6 +7,7 @@ using static Helpers;
 [TestClass]
 public class T12_Arrays
 {
+    #region passes
     [TestMethod]
     public void Pass_DeclareAnEmptyArrayBySizeAndCheckLength()
     {
@@ -133,7 +134,7 @@ public static class Program {
     {
         var code = @"
 main
-    var a = new Array<String>(3) {""foo"",""bar"",""yon""}
+    var a = new Array<String>() {""foo"",""bar"",""yon""}
     printLine(a.length())
 end main
 ";
@@ -150,115 +151,6 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var a = new string[3] {""foo"",""bar"",""yon""};
-    printLine(a.length());
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3\r\n");
-    }
-    [TestMethod, Ignore]
-    public void Pass_InitializeAnArrayFromAListWitjJustType()
-    {
-        var code = @"
-main
-    var a = new Array<String> {""foo"",""bar"",""yon""}
-    printLine(a.length())
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static GlobalConstants;
-using static StandardLibrary.SystemCalls;
-
-public static partial class GlobalConstants {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var a = new string[] {""foo"",""bar"",""yon""};
-    printLine(a.length());
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3\r\n");
-    }
-    [TestMethod, Ignore]
-    public void Pass_InitializeAnArrayFromAListWitjJustSize()
-    {
-        var code = @"
-main
-    var a = new Array(3) {""foo"",""bar"",""yon""}
-    printLine(a.length())
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static GlobalConstants;
-using static StandardLibrary.SystemCalls;
-
-public static partial class GlobalConstants {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var a = new string[] {""foo"",""bar"",""yon""};
-    printLine(a.length());
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3\r\n");
-    }
-
-    [TestMethod, Ignore]
-    public void Pass_InitializeAnArrayFromAListWithoutTypeOrSize()
-    {
-        var code = @"
-main
-    var a = new Array {""foo"",""bar"",""yon""}
-    printLine(a.length())
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static GlobalConstants;
-using static StandardLibrary.SystemCalls;
-
-public static partial class GlobalConstants {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var a = new string[] {""foo"",""bar"",""yon""};
     printLine(a.length());
   }
 }";
@@ -316,10 +208,12 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "foo\r\nyon\r\n");
     }
+    #endregion
 
+    #region Fails
     [TestMethod, Ignore]
     public void Fail_UseRoundBracketsForIndex()
-    { 
+    {
         var code = @"
 main
     var a = new Array<String>(3)
@@ -351,7 +245,6 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-
     [TestMethod, Ignore]
     public void Fail_2DArrayCreatedByDoubleIndex()
     {
@@ -374,7 +267,7 @@ end main
     {
         var code = @"
 main
-    var a = new Array<String>[3]
+    var a = new Array<String>(3)
     a[0,0] = ""foo""
 end main
 ";
@@ -422,7 +315,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Out Of Range"); //or something to that effect
     }
-
 
     [TestMethod, Ignore]
     public void Fail_TypeIncompatibility()
@@ -472,11 +364,11 @@ end main
     }
 
     [TestMethod, Ignore]
-    public void Fail_MismatchBetweenSpecifiedSizeAndInitializer()
+    public void Fail_SpecifySizeAndInitializer()
     {
         var code = @"
 main
-    var a = new Array<String>(4) {""foo"",""bar"",""yon""}
+    var a = new Array<String>(3) {""foo"",""bar"",""yon""}
 end main
 ";
         var parseTree = @"*";
@@ -488,11 +380,11 @@ end main
     }
 
     [TestMethod, Ignore]
-    public void Fail_MismatchBetweenSpecifiedTypeAndInitializer()
+    public void Fail_SpecifyWithoutSizeOrInitializer()
     {
         var code = @"
 main
-    var a = new Array<Int>(3) {""foo"",""bar"",""yon""}
+    var a = new Array<String>()
 end main
 ";
         var parseTree = @"*";
@@ -503,4 +395,5 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
+    #endregion
 }
