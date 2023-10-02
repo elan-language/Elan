@@ -8,6 +8,7 @@ using static Helpers;
 [TestClass]
 public class T_9_Conditions
 {
+    #region Passes
     [TestMethod]
     public void Pass_lessThan()
     {
@@ -288,7 +289,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\ntrue\r\n");
     }
 
-
     [TestMethod]
     public void Pass_is()
     {
@@ -329,6 +329,47 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\ntrue\r\n");
     }
 
+    [TestMethod]
+    public void Pass_canCompareCoerdableTypes()
+    {
+        var code = @"
+main
+  printLine(3 < 3.1)
+  printLine(3 == 3.0)
+  printLine(3.1 < 3)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(3 < 3.1);
+    printLine(3 == 3.0);
+    printLine(3.1 < 3);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp <)) (expression (value (literal (literalValue 3.1)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalValue 3.0)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3.1)))) (binaryOp (conditionalOp <)) (expression (value (literal (literalValue 3)))))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
+    }
+    #endregion
+
+    #region Fails
     [TestMethod]
     public void Fail_not_is()
     {
@@ -401,5 +442,41 @@ end main
         AssertDoesNotParse(compileData);
     }
 
+
+    [TestMethod]
+    public void Fail_compareDifferentTypes()
+    {
+        var code = @"
+main
+  printLine(3 is ""3"")
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(3 == ""3"");
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalValue 3)))) (binaryOp (conditionalOp is)) (expression (value (literal (literalDataStructure ""3"")))))) ))))) end main) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeDoesNotCompile(compileData);
+    }
+    #endregion
 
 }
