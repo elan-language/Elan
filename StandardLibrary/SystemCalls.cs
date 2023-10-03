@@ -89,6 +89,14 @@ public static class SystemCalls
         }
     }
 
+    public static void resetRandom()
+    {
+        lock (randomLock)
+        {
+            generator = new Random();
+        }
+    }
+
     public static double random()
     {
         lock (randomLock)
