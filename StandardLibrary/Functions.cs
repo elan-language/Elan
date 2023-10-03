@@ -12,7 +12,6 @@ namespace StandardLibrary;
 public static class Functions {
     #region Math
 
-    public const double pi = 3.141592653589793;
     public static double aCos(double d) => Math.Cos(d);
     public static double aCosh(double d) => Math.Acosh(d);
     public static double aSin(double d) => Math.Asin(d);
@@ -43,9 +42,6 @@ public static class Functions {
     public static int length(string s) => s.Length;
     public static int indexOf(string s, char c) => s.IndexOf(c);
     public static int startIndexOf(string s, string subString) => s.IndexOf(subString);
-
-    public static string newline => @"
-";
 
     public static string newlines(int n) => Enumerable.Range(1, n).Aggregate("", (s, x) => s + newline);
     public static string asUpperCase(string s) => s.ToUpper();
