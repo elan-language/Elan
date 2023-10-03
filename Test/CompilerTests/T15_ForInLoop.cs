@@ -7,7 +7,7 @@ namespace Test.CompilerTests;
 using static Antlr4.Runtime.Atn.SemanticContext;
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T15_ForInLoop
 {
     #region Passes
@@ -38,16 +38,16 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new List<int> {7,8,9};
+    var a = new StandardLibrary.List<int>(7, 8, 9);
     var n = 0;
     foreach (var x in a) {
-        n = n + x;
+      n = n + x;
     }
     printLine(n);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 7)) , (literal (literalValue 8)) , (literal (literalValue 9)) })))))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (forIn for x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -58,7 +58,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "24\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_string()
     {
         var code = @"
@@ -101,7 +101,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "h\r\ne\r\nl\r\nl\r\no\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_doubleLoop()
     {
         var code = @"
@@ -146,7 +146,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "13\r\n14\r\n23\r\n24\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_variableIsScoped()
     {
         var code = @"
@@ -195,7 +195,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_NoEndFor()
     {
         var code = @"
@@ -210,7 +210,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_applyToANonIterable()
     {
         var code = @"
@@ -230,7 +230,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CannotAlterTheIterableWithinLoop()
     {
         var code = @"

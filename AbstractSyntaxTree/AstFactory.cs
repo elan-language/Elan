@@ -31,6 +31,7 @@ public static class AstFactory {
             ProceduralControlFlowContext c => visitor.Build(c),
             IfContext c => visitor.Build(c),
             ForContext c => visitor.Build(c),
+            ForInContext c => visitor.Build(c),
             WhileContext c => visitor.Build(c),
             RepeatContext c => visitor.Build(c),
             ConditionalOpContext c => visitor.Build(c),
@@ -289,6 +290,10 @@ public static class AstFactory {
             return visitor.Visit(f);
         }
 
+        if (context.forIn() is { } fi) {
+            return visitor.Visit(fi);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -314,6 +319,14 @@ public static class AstFactory {
         var neg = context.MINUS() is not null;
 
         return new ForStatementNode(id, expressions.ToImmutableArray(), step, neg, statementBlock);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ForInContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var expression = visitor.Visit(context.expression());
+        var statementBlock = visitor.Visit(context.statementBlock());
+
+        return new ForInStatementNode(id, expression, statementBlock);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, RepeatContext context) {

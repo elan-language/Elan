@@ -45,6 +45,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             DataStructureTypeNode n => HandleScope(BuildDataStructureTypeModel, n),
             ValueTypeNode n => HandleScope(BuildValueTypeModel, n),
             ForStatementNode n => HandleScope(BuildForStatementModel, n),
+            ForInStatementNode n => HandleScope(BuildForInStatementModel, n),
             TwoDIndexExpressionNode n => HandleScope(Build2DIndexModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
@@ -78,6 +79,15 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var neg = forStatementNode.Neg;
 
         return new ForStatementModel(id, expressions, step, neg, statementBlock);
+    }
+
+    private ForInStatementModel BuildForInStatementModel(ForInStatementNode forInStatementNode) {
+        var id = Visit(forInStatementNode.Id);
+        var expression = Visit(forInStatementNode.Expression);
+        var statementBlock = Visit(forInStatementNode.StatementBlock);
+       
+
+        return new ForInStatementModel(id, expression, statementBlock);
     }
 
     private WhileStatementModel BuildWhileStatementModel(WhileStatementNode whileStatementNode) {
