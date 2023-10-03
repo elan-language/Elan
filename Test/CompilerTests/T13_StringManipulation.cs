@@ -651,7 +651,6 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeDoesNotCompile(compileData);
-        
     }
 
     #endregion
