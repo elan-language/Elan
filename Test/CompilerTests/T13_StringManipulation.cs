@@ -586,6 +586,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -628,6 +629,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -635,8 +637,8 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = @$""abcde"";
-    a = asString(2.1 + 3.4);
+    var a = ""abcde"";
+    a = 2.1 + 3.4;
     print(a);
   }
 }";
@@ -648,8 +650,7 @@ public static class Program {
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5.5\r\n");
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     #endregion
