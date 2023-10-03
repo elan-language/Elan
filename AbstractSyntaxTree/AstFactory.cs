@@ -46,6 +46,8 @@ public static class AstFactory {
             ArrayDefinitionContext c => visitor.Build(c),
             ListDefinitionContext c => visitor.Build(c),
             GenericSpecifierContext c => visitor.Build(c),
+            ProcedureDefContext c => visitor.Build(c),
+            ProcedureSignatureContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -55,9 +57,11 @@ public static class AstFactory {
     private static FileNode Build(this ElanBaseVisitor<IAstNode> visitor, FileContext context) {
         var mainNode = context.main().Select(visitor.Visit<MainNode>).Single();
 
-        var globalNodes = context.constantDef().Select(visitor.Visit).ToImmutableArray();
+        var constants = context.constantDef().Select(visitor.Visit);
 
-        return new FileNode(globalNodes, mainNode);
+        var procedures = context.procedureDef().Select(visitor.Visit);
+
+        return new FileNode(constants.Concat(procedures).ToImmutableArray(), mainNode);
     }
 
     private static StatementBlockNode Build(this ElanBaseVisitor<IAstNode> visitor, StatementBlockContext context) {
@@ -423,12 +427,20 @@ public static class AstFactory {
         throw new NotImplementedException(context.children.First().GetText());
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ListDefinitionContext context) {
-         
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ListDefinitionContext context) => throw new NotImplementedException(context.children.First().GetText());
 
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureDefContext context) {
+        var signature = visitor.Visit(context.procedureSignature());
+        var statementBlock = visitor.Visit(context.statementBlock());
 
+        return new ProcedureDefNode(signature, statementBlock);
+    }
 
-        throw new NotImplementedException(context.children.First().GetText());
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureSignatureContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var parameters = context.parameterList() is {} pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
+
+        return new MethodSignatureNode(id, parameters.ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());

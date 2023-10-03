@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T19_Procedures
 {
     #region Passes
@@ -31,7 +31,9 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-
+  public static void foo() {
+    printLine(2);
+  }
 }
 
 public static class Program {
@@ -40,10 +42,6 @@ public static class Program {
     foo();
     printLine(3);
   }
-
-    private static void foo() {
-        printLine(2);
-    }
 }";
 
         var parseTree = @"*";
@@ -57,7 +55,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "1\r\n2\r\n3\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_WithParamsPassingVariables()
     {
         var code = @"
@@ -108,7 +106,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\nhello\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_WithParamsPassingLiteralsOrExpressions()
     {
         var code = @"
@@ -157,7 +155,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\nhello\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_paramsCanBeUpdated()
     {
         var code = @"
@@ -212,7 +210,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\nhello!\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_NestedCalls()
     {
         var code = @"
@@ -269,7 +267,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "1\r\n2\r\n3\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Recursion()
     {
         var code = @"
@@ -323,7 +321,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CallingUndeclaredProc()
     {
         var code = @"
@@ -339,7 +337,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_TypeSpecifiedBeforeParamName()
     {
         var code = @"
@@ -358,7 +356,7 @@ end procedure
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_NoEnd()
     {
         var code = @"
@@ -375,7 +373,7 @@ procedure foo()
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CannotCallMain()
     {
         var code = @"
@@ -393,7 +391,7 @@ end procedure
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_PassingUnnecessaryParameter()
     {
         var code = @"
@@ -415,7 +413,7 @@ end procedure
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_PassingTooFewParams()
     {
         var code = @"
@@ -439,7 +437,7 @@ end procedure
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_PassingWrongType()
     {
         var code = @"
@@ -462,7 +460,7 @@ end procedure
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_InclusionOfRefInCall()
     {
         var code = @"
@@ -479,7 +477,7 @@ end procedure
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_InclusionOfRefInDefinition()
     {
         var code = @"
@@ -496,7 +494,7 @@ end procedure
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_UnterminatedRecursion()
     {
         var code = @"

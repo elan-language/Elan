@@ -47,6 +47,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             ForStatementNode n => HandleScope(BuildForStatementModel, n),
             ForInStatementNode n => HandleScope(BuildForInStatementModel, n),
             TwoDIndexExpressionNode n => HandleScope(Build2DIndexModel, n),
+            ProcedureDefNode n => HandleScope(BuildProcedureDefModel, n),
+            MethodSignatureNode n => HandleScope(BuildMethodSignatureModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -85,7 +87,6 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var id = Visit(forInStatementNode.Id);
         var expression = Visit(forInStatementNode.Expression);
         var statementBlock = Visit(forInStatementNode.StatementBlock);
-       
 
         return new ForInStatementModel(id, expression, statementBlock);
     }
@@ -155,4 +156,18 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private ScalarValueModel BuildValueTypeModel(ValueTypeNode valueTypeNode) => new(CodeHelpers.ValueTypeToCSharpType(valueTypeNode.Type));
 
     private TwoDIndexModel Build2DIndexModel(TwoDIndexExpressionNode twoDIndexExpressionNode) => new(Visit(twoDIndexExpressionNode.Expression1), Visit(twoDIndexExpressionNode.Expression2));
+
+    private ProcedureDefModel BuildProcedureDefModel(ProcedureDefNode procedureDefNode) {
+        var signature = Visit(procedureDefNode.Signature);
+        var statementBlock = Visit(procedureDefNode.StatementBlock);
+
+        return new ProcedureDefModel(signature, statementBlock);
+    }
+
+    private MethodSignatureModel BuildMethodSignatureModel(MethodSignatureNode procedureDefNode) {
+        var id = Visit(procedureDefNode.Id);
+        var parameters = procedureDefNode.Parameters.Select(Visit);
+
+        return new MethodSignatureModel(id, parameters);
+    }
 }
