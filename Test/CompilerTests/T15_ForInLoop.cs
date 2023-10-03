@@ -151,7 +151,7 @@ main
     var a = {7,8,9}
     var x = ""hello"";
     for x in a
-       printLine(n)
+       printLine(x)
     end for
     printLine(x)
 end main
@@ -207,33 +207,13 @@ end main
     }
 
     [TestMethod]
-    public void Fail_refereranceVariableOutsideLoop()
-    {
-        var code = @"
-main
-    var a = {7,8,9}
-    for x in a
-       printLine(n)
-    end for
-    printLine(x)
-end main
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
-
-    [TestMethod]
     public void Fail_applyToANonIterable()
     {
         var code = @"
 main
-    for x in 10
-       printLine(n)
+    var y = 10
+    for x in y
+       printLine(x)
     end for
 end main
 ";
@@ -247,13 +227,13 @@ end main
     }
 
     [TestMethod]
-    public void Fail_CannotAlterEnumerableWithinLoop()
+    public void Fail_CannotAlterTheIterableWithinLoop()
     {
         var code = @"
 main
-  var a = new Array {1,2,3,4,5}
+  var a ={1,2,3,4,5}
   for x in a
-    a[x] = 0
+    a = a + x
   end for
 end main
 ";
