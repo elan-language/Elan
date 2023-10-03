@@ -242,7 +242,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_NoEndFor()
     {
         var code = @"
@@ -257,7 +257,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_applyToANonIterable()
     {
         var code = @"
@@ -274,10 +274,11 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CannotAlterTheIterableWithinLoop()
     {
         var code = @"
@@ -291,7 +292,6 @@ end main
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);

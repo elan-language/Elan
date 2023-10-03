@@ -47,6 +47,14 @@ public static class CompilerRules {
                     return "May not mutate control variable";
                 }
             }
+
+            foreach (var forInNode in otherNodes.OfType<ForInStatementNode>()) {
+                if (forInNode.Expression is IdentifierNode idn) {
+                    if (Match(idn, mcn.Id)) {
+                        return "May not mutate control variable";
+                    }
+                }
+            }
         }
 
         return null;
