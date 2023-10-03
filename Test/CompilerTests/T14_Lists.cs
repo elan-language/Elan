@@ -23,6 +23,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -61,6 +62,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -99,6 +101,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -137,6 +140,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -175,6 +179,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -214,6 +219,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -255,6 +261,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -296,6 +303,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -337,6 +345,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -377,6 +386,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
   public static readonly StandardLibrary.List<int> a = new StandardLibrary.List<int>(4, 5, 6, 7, 8);
@@ -414,6 +424,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -495,6 +506,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 

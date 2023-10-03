@@ -24,6 +24,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -62,6 +63,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -98,6 +100,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -120,7 +123,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Hello 3.1\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Indexing()
     {
         var code = @"
@@ -135,6 +138,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -142,12 +146,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = @$""abcde"";
+    var a = ""abcde"";
     printLine(a[2]);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""abcde""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 2)))) ]))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -158,7 +162,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "c\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Ranges()
     {
         var code = @"
@@ -175,6 +179,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -182,14 +187,14 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = @$""abcde"";
-    printLine(a[1..3]);
-    printLine(a[2..]);
-    printLine(a[..2]);
+    var a = ""abcde"";
+    printLine(a[(1)..(3)]);
+    printLine(a[(2)..]);
+    printLine(a[..(2)]);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""abcde""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (range (expression (value (literal (literalValue 1)))) .. (expression (value (literal (literalValue 3))))) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (range (expression (value (literal (literalValue 2)))) ..) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (range .. (expression (value (literal (literalValue 2))))) ]))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -197,7 +202,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "bcd\r\ncde\r\nabc\r\n");
+        AssertObjectCodeExecutes(compileData, "bc\r\ncde\r\nab\r\n");
     }
 
     [TestMethod]
@@ -220,6 +225,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -237,7 +243,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalDataStructure ""abc"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalDataStructure ""abcd"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalDataStructure ""Abc"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp is)) (expression (value (literal (literalDataStructure ""abc"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp <>)) (expression (value (literal (literalDataStructure ""abcd"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp is not)) (expression (value (literal (literalDataStructure ""abcd"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp is not)) (expression (value (literal (literalDataStructure ""Abc"")))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -267,6 +273,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -294,7 +301,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\nfalse\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_UseAsStringExplicitly()
     {
         var code = @"
@@ -310,6 +317,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -317,13 +325,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = @$""abcde"";
-    a = asString(2.1 + 3.4);
+    var a = ""abcde"";
+    a = asString((2.1 + 3.4));
     print(a);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""abcde""))))) (assignment (assignableValue a) = (expression (expression (bracketedExpression ( (expression (expression (value (literal (literalValue 2.1)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 3.4))))) ))) . (methodCall asString ( )))) (callStatement (expression (methodCall print ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -331,7 +339,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5.5\r\n");
+        AssertObjectCodeExecutes(compileData, "5.5");
     }
 
     [TestMethod, Ignore]
@@ -351,6 +359,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -393,6 +402,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -434,6 +444,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -473,6 +484,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -516,6 +528,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -547,11 +560,10 @@ main
 end main
 ";
 
-        var parseTree = @"*";
+        var a = 3.1 + "Hello";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
     }
 
@@ -600,7 +612,7 @@ public static class Program {
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CoerceNumberToString()
     {
         var code = @"
