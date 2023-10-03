@@ -374,7 +374,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 3))))) (varDef var (assignableValue b) = (expression (value (literal (literalValue 4))))) (varDef var (assignableValue c) = (expression (value (literal (literalDataStructure ""{a} x {b} = {a * b}""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -417,7 +417,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 3))))) (varDef var (assignableValue b) = (expression (value (literal (literalValue 4))))) (varDef var (assignableValue c) = (expression (value (literal (literalDataStructure ""{{{a} x {b}}} = {a * b}""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -458,7 +458,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue c) = (expression (value (literal (literalDataStructure ""Hello World!""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -497,9 +497,7 @@ public static class Program {
   }
 }";
 
-        var x = @$"HelloWorld";
-
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue c) = (expression (expression (expression (value (literal (literalDataStructure ""Hello "")))) (binaryOp (arithmeticOp +)) (expression (value newLine))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""World!"")))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -551,20 +549,43 @@ public static class Program {
         AssertObjectCodeFails(compileData, "Index was outside the bounds of the array.");
     }
 
-    [TestMethod, Ignore]
-    public void Fail_AppendStringToNumber()
+    [TestMethod]
+    public void Pass_AppendStringToNumber()
     {
         var code = @"
 main
     var a = 3.1 + ""Hello""
+    printLine(a)
 end main
 ";
 
-        var a = 3.1 + "Hello";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 3.1 + @$""Hello"";
+    printLine(a);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalValue 3.1)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""Hello"")))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertDoesNotCompile(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3.1Hello\r\n");
     }
 
     [TestMethod]
