@@ -85,7 +85,7 @@ public static partial class Helpers {
 
         var (stdOut, stdErr) = Execute(exe, wd, optionalInput);
 
-        Assert.AreEqual(expectedOutput, stdOut);
+        Assert.AreEqual(NormalizeNewLines(expectedOutput), NormalizeNewLines(stdOut));
     }
 
     public static void AssertObjectCodeFails(CompileData compileData, string expectedError,   string? optionalInput = null) {
