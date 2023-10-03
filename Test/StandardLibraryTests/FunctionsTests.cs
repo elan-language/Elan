@@ -2,6 +2,7 @@
 using StandardLibrary;
 using System.Linq.Expressions;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 namespace Test.CompilerTests;
 
@@ -86,5 +87,68 @@ public class FunctionsTests
     }
 
     #endregion
+
+    [TestMethod]
+    public void newLines()
+    {
+        Assert.AreEqual(@"
+
+
+", newlines(3));
+
+    }
+
+    [TestMethod]
+    public void testAsUpperCase()
+    {
+        Assert.AreEqual("HELLO WORLD!", asUpperCase("hello World!"));
+    }
+
+    [TestMethod]
+    public void testAsLowerCase()
+    {
+        Assert.AreEqual("hello world!", asLowerCase("hello World!"));
+    }
+
+    [TestMethod]
+    public void testIsBefore()
+    {
+        Assert.IsTrue(isBefore("a","b"));
+        Assert.IsTrue(isBefore("a", "aa"));
+        Assert.IsTrue(isBefore("a", "a_"));
+        Assert.IsFalse(isBefore("b", "a_"));
+        Assert.IsFalse(isBefore("a", "a"));
+    }
+
+    [TestMethod]
+    public void testIsBeforeOrSameAs()
+    {
+        Assert.IsTrue(isBeforeOrSameAs("a", "b"));
+        Assert.IsTrue(isBeforeOrSameAs("a", "aa"));
+        Assert.IsTrue(isBeforeOrSameAs("a", "a"));
+        Assert.IsFalse(isBeforeOrSameAs("b", "a_"));
+        Assert.IsTrue(isBeforeOrSameAs("a", "a"));
+    }
+
+    [TestMethod]
+    public void testIsAfter()
+    {
+        Assert.IsTrue(isAfter("b", "a"));
+        Assert.IsTrue(isAfter("bb", "b"));
+        Assert.IsTrue(isAfter("b_", "b"));
+        Assert.IsFalse(isAfter("b", "c"));
+        Assert.IsFalse(isAfter("b", "b"));
+    }
+
+    [TestMethod]
+    public void testIsAfterOrSameAs()
+    {
+        Assert.IsTrue(isAfterOrSameAs("b", "a"));
+        Assert.IsTrue(isAfterOrSameAs("bb", "b"));
+        Assert.IsTrue(isAfterOrSameAs("b_", "b"));
+        Assert.IsFalse(isAfterOrSameAs("b", "c"));
+        Assert.IsTrue(isAfterOrSameAs("b", "b"));
+    }
+
 }
 

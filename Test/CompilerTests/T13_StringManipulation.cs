@@ -200,9 +200,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "bcd\r\ncde\r\nabc\r\n");
     }
 
-
     [TestMethod]
-    public void Pass_Comparison()
+    public void Pass_EqualityTesting()
     {
         var code = @"
 main
@@ -250,16 +249,16 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_Comparison()
+    public void Pass_ComparisonMethods()
     {
         var code = @"
 main
-    printLine(""abc"" < ""abC"")
-    printLine(""abcd"" > ""abc"")
-    printLine(""abc"" >= ""abc"")
-    printLine(""abc"" <= ""abc"")
-    printLine(""abcd"" >= ""abc"")
-    printLine(""abcd"" <= ""abc"")
+    printLine(""abc"".isBefore(""abC""))
+    printLine(""abcd"".isAfter(""abc""))
+    printLine(""abc"".isAfterOrSameAs(""abc""))
+    printLine(""abc"".isBeforeOrSameAs(""abc""))
+    printLine(""abcd"".isAfterOrSameAs(""abc""))
+    printLine(""abcd"".isBeforeOrSameAs(""abc""))
 end main
 ";
 
@@ -275,51 +274,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(""abc"" < ""abC"");
-    printLine(""abcd"" > ""abc"");
-    printLine(""abc"" >= ""abc"");
-    printLine(""abc"" <= ""abc"");
-    printLine(""abcd"" >= ""abc"");
-    printLine(""abcd"" <= ""abc"");
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeDoesNotCompile(compileData);
-    }
-
-    [TestMethod, Ignore]
-    public void Fail_CoerceNumberToString()
-    {
-        var code = @"
-main
-    var a = ""abcde""
-    a = 2.1 + 3.4
-    print(a)
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static GlobalConstants;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
-
-public static partial class GlobalConstants {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var a = @$""abcde"";
-    a = asString(2.1 + 3.4);
-    print(a);
+    printLine(isBefore(""abc"", ""abC""));
+    printLine(isAfter(""abcd"", ""abc""));
+    printLine(isAfterOrSameAs(""abc"", ""abc""));
+    printLine(isBeforeOrSameAs(""abc"", ""abc""));
+    printLine(isAfterOrSameAs(""abcd"", ""abc""));
+    printLine(isBeforeOrSameAs(""abcd"", ""abc""));
   }
 }";
 
@@ -331,7 +291,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5.5\r\n");
+        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\nfalse\r\n");
     }
 
     [TestMethod, Ignore]
@@ -593,6 +553,91 @@ end main
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_ComparisonOperators()
+    {
+        var code = @"
+main
+    printLine(""abc"" < ""abC"")
+    printLine(""abcd"" > ""abc"")
+    printLine(""abc"" >= ""abc"")
+    printLine(""abc"" <= ""abc"")
+    printLine(""abcd"" >= ""abc"")
+    printLine(""abcd"" <= ""abc"")
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(""abc"" < ""abC"");
+    printLine(""abcd"" > ""abc"");
+    printLine(""abc"" >= ""abc"");
+    printLine(""abc"" <= ""abc"");
+    printLine(""abcd"" >= ""abc"");
+    printLine(""abcd"" <= ""abc"");
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeDoesNotCompile(compileData);
+    }
+
+    [TestMethod, Ignore]
+    public void Fail_CoerceNumberToString()
+    {
+        var code = @"
+main
+    var a = ""abcde""
+    a = 2.1 + 3.4
+    print(a)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = @$""abcde"";
+    a = asString(2.1 + 3.4);
+    print(a);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "5.5\r\n");
     }
 
     #endregion
