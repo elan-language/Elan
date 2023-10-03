@@ -508,6 +508,45 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Hello \r\nWorld!\r\n");
     }
 
+    [TestMethod]
+    public void Pass_AppendStringToNumber()
+    {
+        var code = @"
+main
+    var a = 3.1 + ""Hello""
+    printLine(a)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 3.1 + @$""Hello"";
+    printLine(a);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalValue 3.1)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""Hello"")))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3.1Hello\r\n");
+    }
+
     #endregion
 
     #region Fails
@@ -549,44 +588,7 @@ public static class Program {
         AssertObjectCodeFails(compileData, "Index was outside the bounds of the array.");
     }
 
-    [TestMethod]
-    public void Pass_AppendStringToNumber()
-    {
-        var code = @"
-main
-    var a = 3.1 + ""Hello""
-    printLine(a)
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static GlobalConstants;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
-using static StandardLibrary.Constants;
-
-public static partial class GlobalConstants {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var a = 3.1 + @$""Hello"";
-    printLine(a);
-  }
-}";
-
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalValue 3.1)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""Hello"")))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3.1Hello\r\n");
-    }
+  
 
     [TestMethod]
     public void Fail_ComparisonOperators()
