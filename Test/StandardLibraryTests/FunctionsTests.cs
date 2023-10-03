@@ -2,6 +2,7 @@
 using StandardLibrary;
 using System.Linq.Expressions;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 namespace Test.CompilerTests;
 
