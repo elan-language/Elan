@@ -48,6 +48,11 @@ public static class Functions {
     public static string asUpperCase(string s) => s.ToUpper();
     public static string asLowerCase(string s) => s.ToLower();
 
+    public static bool isBefore(string a , string b) => a.CompareTo(b) < 0;
+    public static bool isBeforeOrSameAs(string a, string b) => a.CompareTo(b) <= 0;
+    public static bool isAfter(string a, string b) => a.CompareTo(b) > 0;
+    public static bool isAfterOrSameAs(string a, string b) => a.CompareTo(b) >= 0;
+
     #endregion
 
     #region Type handling

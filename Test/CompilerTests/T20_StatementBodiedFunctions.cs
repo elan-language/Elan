@@ -122,6 +122,7 @@ public static class Program {
     {
         var code = @"
 main
+    foo(3,4)
 end main
 
 function foo(a Int, b Int) as Int
