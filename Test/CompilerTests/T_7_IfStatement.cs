@@ -35,10 +35,10 @@ public static class Program {
   private static void Main(string[] args) {
     var a = true;
     if (a) {
-      printLine(""yes"");
+      printLine(@$""yes"");
     }
     else {
-      printLine(""no"");
+      printLine(@$""no"");
     }
   }
 }";
@@ -82,10 +82,10 @@ public static class Program {
   private static void Main(string[] args) {
     var a = false;
     if (a) {
-      printLine(""yes"");
+      printLine(@$""yes"");
     }
     else {
-      printLine(""no"");
+      printLine(@$""no"");
     }
   }
 }";
@@ -131,13 +131,13 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     if (a == 1) {
-      printLine(""one"");
+      printLine(@$""one"");
     }
     else if (a == 2) {
-      printLine(""two"");
+      printLine(@$""two"");
     }
     else {
-      printLine(""neither"");
+      printLine(@$""neither"");
     }
   }
 }";
@@ -183,13 +183,13 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3;
     if (a == 1) {
-      printLine(""one"");
+      printLine(@$""one"");
     }
     else if (a == 2) {
-      printLine(""two"");
+      printLine(@$""two"");
     }
     else {
-      printLine(""neither"");
+      printLine(@$""neither"");
     }
   }
 }";
@@ -231,7 +231,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = true;
     if (a) {
-      printLine(""yes"");
+      printLine(@$""yes"");
     }
   }
 }";
@@ -279,16 +279,16 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3;
     if (a == 1) {
-      printLine(""one"");
+      printLine(@$""one"");
     }
     else if (a == 2) {
-      printLine(""two"");
+      printLine(@$""two"");
     }
     else if (a == 3) {
-      printLine(""three"");
+      printLine(@$""three"");
     }
     else {
-      printLine(""neither"");
+      printLine(@$""neither"");
     }
   }
 }";
@@ -326,7 +326,7 @@ end main
 main
   var a = true
   if a 
-    printLine(""yes"")
+    printLine(@$""yes"")
   end if
 end
 ";

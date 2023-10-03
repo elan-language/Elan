@@ -32,9 +32,9 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ""Hello"";
-    var b = ""World!"";
-    printLine(a + "" "" + b);
+    var a = @$""Hello"";
+    var b = @$""World!"";
+    printLine(a + @$"" "" + b);
   }
 }";
 
@@ -71,7 +71,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine('_' + ""Hello"" + '!');
+    printLine('_' + @$""Hello"" + '!');
   }
 }";
 
@@ -86,7 +86,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "_Hello!\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_AppendNumber()
     {
         var code = @"
@@ -108,11 +108,11 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(@$""Hello ""+3.1)
+    printLine(@$""Hello"" + 3.1);
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""Hello"")))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 3.1)))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -120,7 +120,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Hello 3.1\r\n");
+        AssertObjectCodeExecutes(compileData, "Hello3.1\r\n");
     }
 
     [TestMethod]
@@ -146,7 +146,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ""abcde"";
+    var a = @$""abcde"";
     printLine(a[2]);
   }
 }";
@@ -187,7 +187,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ""abcde"";
+    var a = @$""abcde"";
     printLine(a[(1)..(3)]);
     printLine(a[(2)..]);
     printLine(a[..(2)]);
@@ -234,13 +234,13 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(""abc"" == ""abc"");
-    printLine(""abc"" == ""abcd"");
-    printLine(""abc"" == ""Abc"");
-    printLine(""abc"" == ""abc"");
-    printLine(""abc"" != ""abcd"");
-    printLine(""abc"" != ""abcd"");
-    printLine(""abc"" != ""Abc"");
+    printLine(@$""abc"" == @$""abc"");
+    printLine(@$""abc"" == @$""abcd"");
+    printLine(@$""abc"" == @$""Abc"");
+    printLine(@$""abc"" == @$""abc"");
+    printLine(@$""abc"" != @$""abcd"");
+    printLine(@$""abc"" != @$""abcd"");
+    printLine(@$""abc"" != @$""Abc"");
   }
 }";
 
@@ -282,12 +282,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(""abc"" < ""abC"");
-    printLine(""abcd"" > ""abc"");
-    printLine(""abc"" >= ""abc"");
-    printLine(""abc"" <= ""abc"");
-    printLine(""abcd"" >= ""abc"");
-    printLine(""abcd"" <= ""abc"");
+    printLine(@$""abc"" < @$""abC"");
+    printLine(@$""abcd"" > @$""abc"");
+    printLine(@$""abc"" >= @$""abc"");
+    printLine(@$""abc"" <= @$""abc"");
+    printLine(@$""abcd"" >= @$""abc"");
+    printLine(@$""abcd"" <= @$""abc"");
   }
 }";
 
@@ -325,7 +325,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ""abcde"";
+    var a = @$""abcde"";
     a = 2.1 + 3.4;
     print(a);
   }
@@ -365,7 +365,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ""abcde"";
+    var a = @$""abcde"";
     a = asString((2.1 + 3.4));
     print(a);
   }
@@ -382,7 +382,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5.5");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Interpolation()
     {
         var code = @"
@@ -390,7 +390,7 @@ main
     var a = 3
     var b = 4
     var c = ""{a} x {b} = {a * b}""
-    printLine(a)
+    printLine(c)
 end main
 ";
 
@@ -410,7 +410,7 @@ public static class Program {
     var a = 3;
     var b = 4;
     var c = @$""{a} x {b} = {a * b}"";
-    printLine(a);
+    printLine(c);
   }
 }";
 
@@ -425,7 +425,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3 x 4 = 12\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_UseBracesInString()
     {
         var code = @"
@@ -433,7 +433,7 @@ main
     var a = 3
     var b = 4
     var c = ""{{{a} x {b}}} = {a * b}""
-    printLine(a)
+    printLine(c)
 end main
 ";
 
@@ -453,7 +453,7 @@ public static class Program {
     var a = 3;
     var b = 4;
     var c = @$""{{{a} x {b}}} = {a * b}"";
-    printLine(a);
+    printLine(c);
   }
 }";
 
@@ -554,7 +554,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_IndexOutOfRange()
     {
         var code = @"
@@ -576,7 +576,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var c = @$""abcde"";
+    var a = @$""abcde"";
     printLine(a[5]);
   }
 }";
@@ -588,7 +588,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Out of range error");
+        AssertObjectCodeFails(compileData, "Index was outside the bounds of the array.");
     }
 
     [TestMethod, Ignore]

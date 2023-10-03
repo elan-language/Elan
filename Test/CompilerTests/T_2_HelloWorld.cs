@@ -28,7 +28,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(""Hello World!"");
+    printLine(@$""Hello World!"");
   }
 }";
 

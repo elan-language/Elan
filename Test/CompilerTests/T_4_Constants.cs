@@ -99,7 +99,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-  public const string a = ""hell0"";
+  public const string a = @$""hell0"";
 }
 
 public static class Program {

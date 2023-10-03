@@ -68,7 +68,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = input(""Your name"");
+    var a = input(@$""Your name"");
     printLine(a);
   }
 }";

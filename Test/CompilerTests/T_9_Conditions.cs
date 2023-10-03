@@ -474,7 +474,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 == ""3"");
+    printLine(3 == @$""3"");
   }
 }";
 

@@ -112,8 +112,8 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.Array<string>(3);
-    a[0] = ""foo"";
-    a[2] = ""yon"";
+    a[0] = @$""foo"";
+    a[2] = @$""yon"";
     printLine(a[0]);
     printLine(a[2]);
   }
@@ -152,7 +152,7 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new StandardLibrary.Array<string>() {""foo"", ""bar"", ""yon""};
+    var a = new StandardLibrary.Array<string>() {@$""foo"", @$""bar"", @$""yon""};
     printLine(length(a));
   }
 }";
@@ -194,8 +194,8 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.Array<string>(3, 4);
-    a[0,0] = ""foo"";
-    a[2,3] = ""yon"";
+    a[0,0] = @$""foo"";
+    a[2,3] = @$""yon"";
     printLine(a[0,0]);
     printLine(a[2,3]);
   }
