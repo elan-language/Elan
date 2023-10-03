@@ -428,14 +428,14 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "{3 x 4} = 12\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_literalNewline()
     {
         var code = @"
 main
     var c = ""Hello
  World!""
-    printLine(a)
+    printLine(c)
 end main
 ";
 
@@ -452,9 +452,9 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var c = $@""Hello 
-World"";
-    printLine(a);
+    var c = @$""Hello
+ World!"";
+    printLine(c);
   }
 }";
 
@@ -466,16 +466,16 @@ World"";
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Hello \r\nWorld!\r\n");
+        AssertObjectCodeExecutes(compileData, "Hello\r\n World!\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_newLineConstant()
     {
         var code = @"
 main
     var c = ""Hello ""+ newLine + ""World!""
-    printLine(a)
+    printLine(c)
 end main
 ";
 
@@ -492,8 +492,8 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var c = @$""Hello ""+ newLine + ""World!"";
-    printLine(a);
+    var c = @$""Hello "" + newLine + @$""World!"";
+    printLine(c);
   }
 }";
 
