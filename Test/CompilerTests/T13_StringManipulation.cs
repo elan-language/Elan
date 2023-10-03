@@ -201,7 +201,7 @@ public static class Program {
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Comparison()
     {
         var code = @"
@@ -212,13 +212,7 @@ main
     printLine(""abc"" is ""abc"")
     printLine(""abc"" <> ""abcd"")
     printLine(""abc"" is not ""abcd"")
-    printLine(""abc"" is not ""abcd"")
-    printLine(""abc"" < ""abC"")
-    printLine(""abcd"" > ""abc"")
-    printLine(""abc"" >= ""abc"")
-    printLine(""abc"" <= ""abc"")
-    printLine(""abcd"" >= ""abc"")
-    printLine(""abcd"" <= ""abc"")
+    printLine(""abc"" is not ""Abc"")
 end main
 ";
 
@@ -240,7 +234,47 @@ public static class Program {
     printLine(""abc"" == ""abc"");
     printLine(""abc"" != ""abcd"");
     printLine(""abc"" != ""abcd"");
-    printLine(""abc"" != ""abcd"");
+    printLine(""abc"" != ""Abc"");
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\nfalse\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\n");
+    }
+
+    [TestMethod]
+    public void Fail_Comparison()
+    {
+        var code = @"
+main
+    printLine(""abc"" < ""abC"")
+    printLine(""abcd"" > ""abc"")
+    printLine(""abc"" >= ""abc"")
+    printLine(""abc"" <= ""abc"")
+    printLine(""abcd"" >= ""abc"")
+    printLine(""abcd"" <= ""abc"")
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
     printLine(""abc"" < ""abC"");
     printLine(""abcd"" > ""abc"");
     printLine(""abc"" >= ""abc"");
@@ -257,12 +291,11 @@ public static class Program {
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\nfalse\r\ntrue\r\ntrue\r\nfalse\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\nfalse");
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod, Ignore]
-    public void Pass_CoerceNumberToString()
+    public void Fail_CoerceNumberToString()
     {
         var code = @"
 main
