@@ -58,7 +58,54 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "24\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
+    public void Pass_Array()
+    {
+        var code = @"
+main
+    var a = new Array<Int>() {7,8,9}
+    var n = 0
+    for x in a
+        n = n + x
+    end for
+    printLine(n)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = new StandardLibrary.Array<int>() {7, 8, 9};
+    var n = 0;
+    foreach (var x in a) {
+      n = n + x;
+    }
+    printLine(n);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type Int) >) ( ) (listDefinition { (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalValue 8)))) , (expression (value (literal (literalValue 9)))) })))))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (forIn for x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "24\r\n");
+    }
+
+    [TestMethod]
     public void Pass_string()
     {
         var code = @"
@@ -83,14 +130,14 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = ""hello"";
+    var a = @$""hello"";
     foreach (var x in a) {
-        printLine(x);
+      printLine(x);
     }
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""hello""))))) (proceduralControlFlow (forIn for x in (expression (value a)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end for))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -101,7 +148,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "h\r\ne\r\nl\r\nl\r\no\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_doubleLoop()
     {
         var code = @"
@@ -127,15 +174,15 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    foreach (var x in ""12"") {
-        foreach (var y in ""34"") {
-            printLine(""{x}{y }"");
-        }
+    foreach (var x in @$""12"") {
+      foreach (var y in @$""34"") {
+        printLine(@$""{x}{y }"");
+      }
     }
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (forIn for x in (expression (value (literal (literalDataStructure ""12"")))) (statementBlock (proceduralControlFlow (forIn for y in (expression (value (literal (literalDataStructure ""34"")))) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""{x}{y }""))))) ))))) end for))) end for))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -146,8 +193,13 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "13\r\n14\r\n23\r\n24\r\n");
     }
 
-    [TestMethod, Ignore]
-    public void Pass_variableIsScoped()
+   
+    #endregion
+
+    #region Fails
+
+    [TestMethod]
+    public void Fail_variableIsScoped()
     {
         var code = @"
 main
@@ -173,12 +225,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new List<int> {7,8,9};
-    var x = ""hello"";
-    for x in a
-       printLine(x)
-    end for
-    printLine(x)
+    var a = new StandardLibrary.List<int>(7, 8, 9);
+    var x = @$""hello"";
+    foreach (var x in a) {
+      printLine(x);
+    }
+    printLine(x);
   }
 }";
 
@@ -188,13 +240,8 @@ public static class Program {
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "7\r\n8\r\n9\r\nhello\r\n");
+        AssertObjectCodeDoesNotCompile(compileData);
     }
-    #endregion
-
-    #region Fails
     [TestMethod, Ignore]
     public void Fail_NoEndFor()
     {
