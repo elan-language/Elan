@@ -9,7 +9,7 @@ public class T19_Procedures
 {
     #region Passes
     [TestMethod]
-    public void Pass_CanContainSystemCalls()
+    public void Pass_BasicOperationIncludingSystemCall()
     {
         var code = @"
 main
@@ -275,7 +275,6 @@ end main
 procedure foo(a Int)
     if a > 0 then
         print(a)
-    else
         foo(a-1)
     end if
 end procedure
@@ -299,8 +298,6 @@ public static class Program {
     private static void foo(ref int a, ref int b) {
         if (a > 0) {
             print(a);
-        }
-        else {
             foo(ref a-1);
         }
     }
@@ -320,6 +317,41 @@ public static class Program {
     #endregion
 
     #region Fails
+    [TestMethod]
+    public void Fail_CallingUndeclaredProc()
+    {
+        var code = @"
+main
+    bar()
+end main
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_TypeSpecifiedBeforeParamName()
+    {
+        var code = @"
+main
+end main
+
+procedure foo(Int a) 
+    printLine(a)
+end procedure
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
     [TestMethod]
     public void Fail_NoEnd()
     {
@@ -425,14 +457,14 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_InclusionOfRef()
+    public void Fail_InclusionOfRefInCall()
     {
         var code = @"
 main
     foo(ref 1,2)
 end main
 
-procedure foo a Int, b String)
+procedure foo(a Int, b String)
     printLine(a)
     printLine(b)
 end procedure
@@ -442,14 +474,14 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_InclusionOfByRef()
+    public void Fail_InclusionOfRefInDefinition()
     {
         var code = @"
 main
     foo(byref 1,2)
 end main
 
-procedure foo a Int, b String)
+procedure foo(ref a Int, b String)
     printLine(a)
     printLine(b)
 end procedure
@@ -467,11 +499,7 @@ main
 end main
 
 procedure foo(a Int)
-    if a <10 then
-        print(a)
-    else
-        foo(a-1)
-    end if
+    foo(a)
 end procedure
 ";
 
@@ -490,8 +518,8 @@ public static class Program {
     foo(ref 3)
   }
 
-    private static void foo(ref int a, ref int b) {
-            foo(ref a-1);
+    private static void foo(ref int a) {
+            foo(ref a);
     }
 }";
 
