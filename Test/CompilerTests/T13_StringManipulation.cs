@@ -281,12 +281,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(isBefore(""abc"", ""abC""));
-    printLine(isAfter(""abcd"", ""abc""));
-    printLine(isAfterOrSameAs(""abc"", ""abc""));
-    printLine(isBeforeOrSameAs(""abc"", ""abc""));
-    printLine(isAfterOrSameAs(""abcd"", ""abc""));
-    printLine(isBeforeOrSameAs(""abcd"", ""abc""));
+    printLine(isBefore(@$""abc"", @$""abC""));
+    printLine(isAfter(@$""abcd"", @$""abc""));
+    printLine(isAfterOrSameAs(@$""abc"", @$""abc""));
+    printLine(isBeforeOrSameAs(@$""abc"", @$""abc""));
+    printLine(isAfterOrSameAs(@$""abcd"", @$""abc""));
+    printLine(isBeforeOrSameAs(@$""abcd"", @$""abc""));
   }
 }";
 
@@ -586,6 +586,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -593,12 +594,12 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(""abc"" < ""abC"");
-    printLine(""abcd"" > ""abc"");
-    printLine(""abc"" >= ""abc"");
-    printLine(""abc"" <= ""abc"");
-    printLine(""abcd"" >= ""abc"");
-    printLine(""abcd"" <= ""abc"");
+    printLine(@$""abc"" < @$""abC"");
+    printLine(@$""abcd"" > @$""abc"");
+    printLine(@$""abc"" >= @$""abc"");
+    printLine(@$""abc"" <= @$""abc"");
+    printLine(@$""abcd"" >= @$""abc"");
+    printLine(@$""abcd"" <= @$""abc"");
   }
 }";
 
@@ -628,6 +629,7 @@ using System.Collections.Immutable;
 using static GlobalConstants;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
 
@@ -636,7 +638,7 @@ public static partial class GlobalConstants {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
-    a = asString(2.1 + 3.4);
+    a = 2.1 + 3.4;
     print(a);
   }
 }";
@@ -648,8 +650,8 @@ public static class Program {
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5.5\r\n");
+        AssertObjectCodeDoesNotCompile(compileData);
+        
     }
 
     #endregion
