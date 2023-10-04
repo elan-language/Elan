@@ -275,7 +275,7 @@ end main
 
 procedure foo(a Int)
     if a > 0 then
-        print(a)
+        printLine(a)
         foo(a-1)
     end if
 end procedure
@@ -289,23 +289,23 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-
+  public static void foo(ref int a) {
+    if (a > 0) {
+      printLine(a);
+      var _foo_0 = a - 1;
+      foo(ref _foo_0);
+    }
+  }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    foo(ref 3)
+    var _foo_0 = 3;
+    foo(ref _foo_0);
   }
-
-    private static void foo(ref int a, ref int b) {
-        if (a > 0) {
-            print(a);
-            foo(ref a-1);
-        }
-    }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall foo ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( (parameterList (parameter a (type Int))) )) (statementBlock (proceduralControlFlow (if if (expression (expression (value a)) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 0))))) then (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall foo ( (argumentList (expression (expression (value a)) (binaryOp (arithmeticOp -)) (expression (value (literal (literalValue 1)))))) ))))) end if))) end procedure) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
