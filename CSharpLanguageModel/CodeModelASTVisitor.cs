@@ -63,11 +63,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private AssignmentModel BuildAssignmentModel(AssignmentNode assignmentNode) => new(Visit(assignmentNode.Id), Visit(assignmentNode.Expression));
 
-    private MethodCallModel BuildProcedureCallModel(ProcedureCallNode methodCallNode) => new(Visit(methodCallNode.Id), methodCallNode.Parameters.Select(Visit));
+    private MethodCallModel BuildProcedureCallModel(ProcedureCallNode procedureCallNode) => new(CodeHelpers.MethodType.Procedure, Visit(procedureCallNode.Id), procedureCallNode.Parameters.Select(Visit));
 
-    private MethodCallModel BuildSystemCallModel(SystemCallNode systemCallNode) => new(Visit(systemCallNode.Id), systemCallNode.Parameters.Select(Visit));
+    private MethodCallModel BuildSystemCallModel(SystemCallNode systemCallNode) => new(CodeHelpers.MethodType.SystemCall, Visit(systemCallNode.Id), systemCallNode.Parameters.Select(Visit));
 
-    private MethodCallModel BuildFunctionCallModel(FunctionCallNode systemCallNode) => new(Visit(systemCallNode.Id), systemCallNode.Parameters.Select(Visit));
+    private MethodCallModel BuildFunctionCallModel(FunctionCallNode functionCallNode) => new(CodeHelpers.MethodType.Function, Visit(functionCallNode.Id), functionCallNode.Parameters.Select(Visit));
 
     private ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
 

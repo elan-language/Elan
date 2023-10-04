@@ -12,10 +12,25 @@ public class SymbolTableVisitor {
 
     public IAstNode Visit(IAstNode astNode) {
         return astNode switch {
-            MainNode bn => VisitMainNode(bn),
+            MainNode n => VisitMainNode(n),
+            ProcedureDefNode n => VisitProcedureDefNode(n),
             null => throw new NotImplementedException("null"),
             _ => VisitChildren(astNode)
         };
+    }
+
+    private IAstNode VisitProcedureDefNode(ProcedureDefNode procedureDefNode) {
+        var name = procedureDefNode.Signature switch {
+            MethodSignatureNode { Id: IdentifierNode idn } => idn.Id,
+            _ => throw new NotImplementedException("null")
+        };
+
+        var ms = new ProcedureSymbol(name, currentScope);
+        currentScope.Define(ms);
+        currentScope = ms;
+        VisitChildren(procedureDefNode);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return procedureDefNode;
     }
 
     private IAstNode VisitMainNode(MainNode mainNode) {

@@ -8,6 +8,14 @@ using ValueType = AbstractSyntaxTree.ValueType;
 namespace CSharpLanguageModel;
 
 public static class CodeHelpers {
+    public enum MethodType {
+        SystemCall, 
+        Procedure, 
+        Function
+    }
+
+
+
     private const int IndentSpaces = 2;
 
     public static string Indent1 => Indent(1);

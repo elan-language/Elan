@@ -3,7 +3,7 @@
 namespace AbstractSyntaxTree.Nodes;
 
 public record FileNode(ImmutableArray<IAstNode> GlobalNodes, IAstNode MainNode) : IAstNode {
-    public IEnumerable<IAstNode> Children => new[] { MainNode };
+    public IEnumerable<IAstNode> Children => GlobalNodes.Append(MainNode);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
         return from switch {

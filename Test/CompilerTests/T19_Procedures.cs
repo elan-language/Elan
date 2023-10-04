@@ -8,7 +8,7 @@ using static Helpers;
 public class T19_Procedures
 {
     #region Passes
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_BasicOperationIncludingSystemCall()
     {
         var code = @"
@@ -55,7 +55,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "1\r\n2\r\n3\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_WithParamsPassingVariables()
     {
         var code = @"
@@ -89,7 +89,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     var b = @$""hello"";
-    foo(a, b);
+    foo(ref a, ref b);
   }
 }";
 
