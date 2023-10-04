@@ -314,7 +314,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CallingUndeclaredProc()
     {
         var code = @"
@@ -330,7 +330,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_TypeSpecifiedBeforeParamName()
     {
         var code = @"
@@ -344,12 +344,10 @@ end procedure
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_NoEnd()
     {
         var code = @"
@@ -366,7 +364,7 @@ procedure foo()
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CannotCallMain()
     {
         var code = @"
@@ -384,7 +382,7 @@ end procedure
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_PassingUnnecessaryParameter()
     {
         var code = @"
@@ -403,10 +401,11 @@ end procedure
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_PassingTooFewParams()
     {
         var code = @"
@@ -415,7 +414,7 @@ main
     foo(a + 1)
 end main
 
-procedure foo a Int, b String)
+procedure foo (a Int, b String)
     printLine(a)
     printLine(b)
 end procedure
@@ -427,10 +426,11 @@ end procedure
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_PassingWrongType()
     {
         var code = @"
@@ -438,7 +438,7 @@ main
     foo(1,2)
 end main
 
-procedure foo a Int, b String)
+procedure foo (a Int, b String)
     printLine(a)
     printLine(b)
 end procedure
@@ -450,10 +450,11 @@ end procedure
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_InclusionOfRefInCall()
     {
         var code = @"
@@ -470,7 +471,7 @@ end procedure
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_InclusionOfRefInDefinition()
     {
         var code = @"
@@ -487,7 +488,7 @@ end procedure
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UnterminatedRecursion()
     {
         var code = @"
@@ -508,17 +509,16 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-
+  public static void foo(ref int a) {
+    foo(ref a);
+  }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    foo(ref 3)
+    var _foo_0 = 3;
+    foo(ref _foo_0);
   }
-
-    private static void foo(ref int a) {
-            foo(ref a);
-    }
 }";
 
         var parseTree = @"*";
@@ -529,7 +529,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Stack Overflow Error");
+        AssertObjectCodeFails(compileData, "Stack overflow.");
     }
     #endregion
 }
