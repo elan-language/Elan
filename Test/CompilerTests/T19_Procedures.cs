@@ -153,7 +153,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\nhello\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_paramsCanBeUpdated()
     {
         var code = @"
@@ -165,7 +165,7 @@ main
     printLine(b)
 end main
 
-procedure foo a Int, b String)
+procedure foo (a Int, b String)
     a = a + 1
     b = b + ""!""
 end procedure
@@ -179,25 +179,23 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-
+  public static void foo(ref int a, ref string b) {
+    a = a + 1;
+    b = b + @$""!"";
+  }
 }
 
 public static class Program {
-    private static void Main(string[] args) {
-        var a = 1;
-        var b = ""hello"";
-        foo(a, b);
-        printLine(a);
-        printLine(b);
-    }
-
-    private static void foo(ref int a, ref int b) {
-        a = a + 1;
-        b = b + ""!"";
-    }
+  private static void Main(string[] args) {
+    var a = 1;
+    var b = @$""hello"";
+    foo(ref a, ref b);
+    printLine(a);
+    printLine(b);
+  }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 1))))) (varDef var (assignableValue b) = (expression (value (literal (literalDataStructure ""hello""))))) (callStatement (expression (methodCall foo ( (argumentList (expression (value a)) , (expression (value b))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end main) (procedureDef procedure (procedureSignature foo ( (parameterList (parameter a (type Int)) , (parameter b (type String))) )) (statementBlock (assignment (assignableValue a) = (expression (expression (value a)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1)))))) (assignment (assignableValue b) = (expression (expression (value b)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""!""))))))) end procedure) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -208,7 +206,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\nhello!\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_NestedCalls()
     {
         var code = @"
@@ -235,7 +233,13 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-
+  public static void foo() {
+    printLine(1);
+    bar();
+  }
+  public static void bar() {
+    printLine(2);
+  }
 }
 
 public static class Program {
@@ -243,18 +247,9 @@ public static class Program {
     foo();
     printLine(3);
   }
-
-    private static void foo() {
-        printLine(1);
-        bar();
-    }
-
-    private static void bar() {
-        printLine(2);
-    }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 1))))) )))) (callStatement (expression (methodCall bar ( ))))) end procedure) (procedureDef procedure (procedureSignature bar ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2))))) ))))) end procedure) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
