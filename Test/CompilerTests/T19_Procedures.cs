@@ -104,7 +104,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\nhello\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_WithParamsPassingLiteralsOrExpressions()
     {
         var code = @"
@@ -127,19 +127,19 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-
+  public static void foo(ref int a, ref string b) {
+    printLine(a);
+    printLine(b);
+  }
 }
 
 public static class Program {
   private static void Main(string[] args) {
     var a = 1;
-    foo(ref a + 1, ref ""hello"");
+    var _foo_0 = a + 1;
+    var _foo_1 = @$""hello"";
+    foo(ref _foo_0, ref _foo_1);
   }
-
-    private static void foo(ref int a, ref int b) {
-        printLine(a);
-        printLine(b);
-    }
 }";
 
         var parseTree = @"*";

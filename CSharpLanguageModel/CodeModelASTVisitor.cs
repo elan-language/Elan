@@ -63,7 +63,15 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private AssignmentModel BuildAssignmentModel(AssignmentNode assignmentNode) => new(Visit(assignmentNode.Id), Visit(assignmentNode.Expression));
 
-    private MethodCallModel BuildProcedureCallModel(ProcedureCallNode procedureCallNode) => new(CodeHelpers.MethodType.Procedure, Visit(procedureCallNode.Id), procedureCallNode.Parameters.Select(Visit));
+    private ProcedureCallModel BuildProcedureCallModel(ProcedureCallNode procedureCallNode) {
+        var parameters = procedureCallNode.Parameters.Select(Visit);
+        var passByRef = procedureCallNode.Parameters.Select(p => p is IdentifierNode);
+
+        var zip = parameters.Zip(passByRef);
+
+
+        return new ProcedureCallModel(Visit(procedureCallNode.Id), zip);
+    }
 
     private MethodCallModel BuildSystemCallModel(SystemCallNode systemCallNode) => new(CodeHelpers.MethodType.SystemCall, Visit(systemCallNode.Id), systemCallNode.Parameters.Select(Visit));
 
