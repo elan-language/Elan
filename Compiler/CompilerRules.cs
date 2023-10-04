@@ -9,9 +9,9 @@ namespace Compiler;
 public static class CompilerRules {
     public static string? ExpressionMustBeAssignedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is MethodCallNode mcn && currentScope.Resolve(mcn.Name) is FunctionSymbol) {
+        if (leafNode is FunctionCallNode mcn) {
             var otherNodes = nodes.SkipLast(1).ToArray();
-            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or MethodCallNode or SystemCallNode)) {
+            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or ProcedureCallNode or FunctionCallNode or SystemCallNode)) {
                 return "Cannot have unassigned expression";
             }
         }
@@ -23,7 +23,7 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
         if (leafNode is SystemCallNode mcn && currentScope.Resolve(mcn.Name) is SystemCallSymbol scs && scs.ReturnType != VoidSymbolType.Instance) {
             var otherNodes = nodes.SkipLast(1).ToArray();
-            if (otherNodes.Any(n => n is MethodCallNode)) {
+            if (otherNodes.Any(n => n is SystemCallNode or FunctionCallNode or ProcedureCallNode)) {
                 return "Cannot have system call in expression";
             }
 
@@ -70,6 +70,15 @@ public static class CompilerRules {
             if (nin.Arguments.Length > 0 && nin.Init.Length > 0) {
                 return "Array cannot have size and initializer";
             }
+        }
+
+        return null;
+    }
+
+    public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
+        var leafNode = nodes.Last();
+        if (leafNode is MethodCallNode mcn) {
+            return "Unresolved method call";
         }
 
         return null;

@@ -23,8 +23,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return astNode switch {
             FileNode n => HandleScope(BuildFileModel, n),
             MainNode n => HandleScope(BuildMainModel, n),
-            MethodCallNode n => HandleScope(BuildMethodCallModel, n),
             SystemCallNode n => HandleScope(BuildSystemCallModel, n),
+            ProcedureCallNode n => HandleScope(BuildProcedureCallModel, n),
+            FunctionCallNode n => HandleScope(BuildFunctionCallModel, n),
             IScalarValueNode n => HandleScope(BuildScalarValueModel, n),
             VarDefNode n => HandleScope(BuildVarDefModel, n),
             ConstantDefNode n => HandleScope(BuildConstantDefModel, n),
@@ -62,9 +63,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private AssignmentModel BuildAssignmentModel(AssignmentNode assignmentNode) => new(Visit(assignmentNode.Id), Visit(assignmentNode.Expression));
 
-    private MethodCallModel BuildMethodCallModel(MethodCallNode methodCallNode) => new(Visit(methodCallNode.Id), methodCallNode.Parameters.Select(Visit));
+    private MethodCallModel BuildProcedureCallModel(ProcedureCallNode methodCallNode) => new(Visit(methodCallNode.Id), methodCallNode.Parameters.Select(Visit));
 
     private MethodCallModel BuildSystemCallModel(SystemCallNode systemCallNode) => new(Visit(systemCallNode.Id), systemCallNode.Parameters.Select(Visit));
+
+    private MethodCallModel BuildFunctionCallModel(FunctionCallNode systemCallNode) => new(Visit(systemCallNode.Id), systemCallNode.Parameters.Select(Visit));
 
     private ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
 

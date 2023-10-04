@@ -81,7 +81,7 @@ public static class Pipeline {
     }
 
     private static CompileData GenerateObjectCode(CompileData compileData) {
-        if (compileData.AbstractSyntaxTree is null) {
+        if (compileData.AbstractSyntaxTree is null || compileData.CompileErrors.Length > 0) {
             return compileData;
         }
 

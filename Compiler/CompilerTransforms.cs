@@ -1,19 +1,18 @@
-﻿using System.Collections.Immutable;
-using AbstractSyntaxTree;
-using AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 using SymbolTable.Symbols;
-using SymbolTable.SymbolTypes;
 
 namespace Compiler;
 
 public static class CompilerTransforms {
-    public static IAstNode? TransformSystemCallNodes(IAstNode[] nodes, IScope currentScope) {
-        var leafNode = nodes.Last();
-        if (leafNode is MethodCallNode mcn && currentScope.Resolve(mcn.Name) is SystemCallSymbol scs) {
-            return new SystemCallNode(mcn.Id, mcn.Parameters);
-        }
-
-        return null;
-    }
+    public static IAstNode? TransformSystemCallNodes(IAstNode[] nodes, IScope currentScope) =>
+        nodes.Last() switch {
+            MethodCallNode mcn => currentScope.Resolve(mcn.Name) switch {
+                SystemCallSymbol => new SystemCallNode(mcn.Id, mcn.Parameters),
+                ProcedureSymbol => new ProcedureCallNode(mcn.Id, mcn.Parameters),
+                FunctionSymbol => new FunctionCallNode(mcn.Id, mcn.Parameters),
+                _ => null
+            },
+            _ => null
+        };
 }

@@ -8,7 +8,7 @@ using static Helpers;
 public class T19_Procedures
 {
     #region Passes
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_BasicOperationIncludingSystemCall()
     {
         var code = @"

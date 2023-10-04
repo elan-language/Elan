@@ -12,6 +12,7 @@ public class ThirdPassVisitor {
         Rules.Add(CompilerRules.SystemCallMustBeAssignedRule);
         Rules.Add(CompilerRules.CannotMutateControlVariableRule);
         Rules.Add(CompilerRules.ArrayInitialization);
+        Rules.Add(CompilerRules.MethodCallsShouldBeResolvedRule);
     }
 
     public ThirdPassVisitor(SymbolTableImpl symbolTable) {
