@@ -258,7 +258,7 @@ main
     printLine(a[2,3])
 end main
 ";
-        var parseTree = @"*";
+       
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }

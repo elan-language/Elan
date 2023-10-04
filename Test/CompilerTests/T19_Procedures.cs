@@ -79,20 +79,18 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-
+  public static void foo(ref int a, ref string b) {
+    printLine(a);
+    printLine(b);
+  }
 }
 
 public static class Program {
   private static void Main(string[] args) {
     var a = 2;
-    var b = ""hello""
-    foo(ref a, ref ""hello"");
+    var b = @$""hello"";
+    foo(a, b);
   }
-
-    private static void foo(ref int a, ref int b) {
-        printLine(a);
-        printLine(b);
-    }
 }";
 
         var parseTree = @"*";

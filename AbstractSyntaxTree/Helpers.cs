@@ -1,4 +1,7 @@
-﻿namespace AbstractSyntaxTree;
+﻿using System.Collections.Immutable;
+using AbstractSyntaxTree.Nodes;
+
+namespace AbstractSyntaxTree;
 
 public static class Helpers {
     public static Operator MapOperator(int nodeType) {
@@ -31,4 +34,7 @@ public static class Helpers {
             _ => throw new NotSupportedException(type)
         };
     }
+
+    public static ImmutableArray<IAstNode> SafeReplace(this ImmutableArray<IAstNode> nodes, IAstNode oldValue, IAstNode newValue) =>
+        nodes.Contains(oldValue) ? nodes.Replace(oldValue, newValue) : nodes;
 }

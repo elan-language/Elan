@@ -24,6 +24,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             FileNode n => HandleScope(BuildFileModel, n),
             MainNode n => HandleScope(BuildMainModel, n),
             MethodCallNode n => HandleScope(BuildMethodCallModel, n),
+            SystemCallNode n => HandleScope(BuildSystemCallModel, n),
             IScalarValueNode n => HandleScope(BuildScalarValueModel, n),
             VarDefNode n => HandleScope(BuildVarDefModel, n),
             ConstantDefNode n => HandleScope(BuildConstantDefModel, n),
@@ -49,6 +50,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             TwoDIndexExpressionNode n => HandleScope(Build2DIndexModel, n),
             ProcedureDefNode n => HandleScope(BuildProcedureDefModel, n),
             MethodSignatureNode n => HandleScope(BuildMethodSignatureModel, n),
+            ParameterNode n => HandleScope(BuildParameterModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -61,6 +63,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private AssignmentModel BuildAssignmentModel(AssignmentNode assignmentNode) => new(Visit(assignmentNode.Id), Visit(assignmentNode.Expression));
 
     private MethodCallModel BuildMethodCallModel(MethodCallNode methodCallNode) => new(Visit(methodCallNode.Id), methodCallNode.Parameters.Select(Visit));
+
+    private MethodCallModel BuildSystemCallModel(SystemCallNode systemCallNode) => new(Visit(systemCallNode.Id), systemCallNode.Parameters.Select(Visit));
 
     private ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
 
@@ -167,7 +171,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private MethodSignatureModel BuildMethodSignatureModel(MethodSignatureNode procedureDefNode) {
         var id = Visit(procedureDefNode.Id);
         var parameters = procedureDefNode.Parameters.Select(Visit);
-
         return new MethodSignatureModel(id, parameters);
+    }
+
+    private ParameterModel BuildParameterModel(ParameterNode parameterNode) {
+        var id = Visit(parameterNode.Id);
+        var type = Visit(parameterNode.TypeNode);
+
+        return new ParameterModel(id, type);
     }
 }

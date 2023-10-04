@@ -1,17 +1,13 @@
 ﻿using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 
-namespace Compiler; 
+namespace Compiler;
 
 public class SecondPassVisitor {
-    public readonly IList<string> CompileErrors = new List<string>();
     private IScope currentScope;
 
     static SecondPassVisitor() {
-        Rules.Add(CompilerRules.ExpressionMustBeAssignedRule);
-        Rules.Add(CompilerRules.SystemCallMustBeAssignedRule);
-        Rules.Add(CompilerRules.CannotMutateControlVariableRule);
-        Rules.Add(CompilerRules.ArrayInitialization);
+        Transforms.Add(CompilerTransforms.TransformSystemCallNodes);
     }
 
     public SecondPassVisitor(SymbolTableImpl symbolTable) {
@@ -20,7 +16,7 @@ public class SecondPassVisitor {
     }
 
     private SymbolTableImpl SymbolTable { get; }
-    private static IList<Func<IAstNode[], IScope, string?>> Rules { get; } = new List<Func<IAstNode[], IScope, string?>>();
+    private static IList<Func<IAstNode[], IScope, IAstNode?>> Transforms { get; } = new List<Func<IAstNode[], IScope, IAstNode?>>();
 
     private void Enter(IAstNode node) {
         switch (node) {
@@ -36,36 +32,53 @@ public class SecondPassVisitor {
         }
     }
 
-    private void ApplyRules(IAstNode[] nodes, IScope scope) {
-        foreach (var rule in Rules) {
-            if (rule(nodes, scope) is { } e) {
-                CompileErrors.Add(e);
-            }
+    private IAstNode InsertIntoTree(IAstNode oldNode, IAstNode newNode, IAstNode[] parentNodes) {
+        if (parentNodes.Any()) {
+            var parent = parentNodes.Last();
+            var newParent = parent.Replace(oldNode, newNode);
+            return InsertIntoTree(parent, newParent, parentNodes.SkipLast(1).ToArray());
         }
+
+        return newNode;
     }
 
-    private void Visit(IAstNode[] nodeHierarchy, Action<IAstNode[], IScope> action) {
+    private IAstNode ApplyTransform(IAstNode[] nodes, IScope scope, Func<IAstNode[], IScope, IAstNode?> transform, IAstNode newRoot) {
+        var transformed = transform(nodes, scope);
+        if (transformed is not null) {
+            newRoot = InsertIntoTree(nodes.Last(), transformed, nodes.SkipLast(1).ToArray());
+            return newRoot;
+        }
+
+        return newRoot;
+    }
+
+    private IAstNode ApplyTransforms(IAstNode[] nodes, IScope scope, IAstNode newRoot) {
+        foreach (var transform in Transforms) {
+            newRoot = ApplyTransform(nodes, scope, transform, newRoot);
+        }
+
+        return newRoot;
+    }
+
+    private IAstNode Visit(IAstNode[] nodeHierarchy, IAstNode newRoot) {
         var currentNode = nodeHierarchy.Last();
 
         Enter(currentNode);
         try {
-            action(nodeHierarchy, currentScope);
+            newRoot = ApplyTransforms(nodeHierarchy, currentScope, newRoot);
             foreach (var child in currentNode.Children) {
                 var tree = nodeHierarchy.Append(child).ToArray();
-                Visit(tree, action);
+                newRoot = Visit(tree, newRoot);
             }
         }
         finally {
             Exit(currentNode);
         }
-    }
 
-    private void Visit(IAstNode[] nodeHierarchy) {
-        Visit(nodeHierarchy, ApplyRules);
+        return newRoot;
     }
 
     public IAstNode Visit(IAstNode ast) {
-        Visit(new[] { ast });
-        return ast;
+        return Visit(new[] { ast }, ast);
     }
 }

@@ -17,6 +17,7 @@ public static class Pipeline {
         compileData = CompileCode(compileData);
         compileData = GenerateSymbolTable(compileData);
         compileData = SecondPass(compileData);
+        compileData = ThirdPass(compileData);
         compileData = GenerateObjectCode(compileData);
         compileData = CompileObjectCode(compileData);
 
@@ -119,6 +120,17 @@ public static class Pipeline {
         var secondPassVisitor = new SecondPassVisitor(compileData.SymbolTable);
         var ast = secondPassVisitor.Visit(compileData.AbstractSyntaxTree);
 
-        return compileData with { AbstractSyntaxTree = ast, CompileErrors = secondPassVisitor.CompileErrors.ToArray() };
+        return compileData with { AbstractSyntaxTree = ast };
+    }
+
+    private static CompileData ThirdPass(CompileData compileData) {
+        if (compileData.AbstractSyntaxTree is null || compileData.SymbolTable is null) {
+            return compileData;
+        }
+
+        var thirdPassVisitor = new ThirdPassVisitor(compileData.SymbolTable);
+        var ast = thirdPassVisitor.Visit(compileData.AbstractSyntaxTree);
+
+        return compileData with { AbstractSyntaxTree = ast, CompileErrors = thirdPassVisitor.CompileErrors.ToArray() };
     }
 }

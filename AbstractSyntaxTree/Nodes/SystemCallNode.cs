@@ -2,7 +2,10 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record MethodSignatureNode(IAstNode Id, ImmutableArray<IAstNode> Parameters) : IAstNode {
+public record SystemCallNode(IAstNode Id, ImmutableArray<IAstNode> Parameters) : IAstNode {
+    
+    public string Name => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
+
     public IEnumerable<IAstNode> Children => Parameters.Prepend(Id);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

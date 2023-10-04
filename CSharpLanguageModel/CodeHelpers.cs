@@ -22,6 +22,8 @@ public static class CodeHelpers {
 
     public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0)));
 
+    public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm, string prefix) => string.Join(", ", mm.Select(v => $"{prefix} {v}"));
+
     public static string ValueTypeToCSharpType(ValueType type) =>
         type switch {
             ValueType.Int => "int",
@@ -39,7 +41,8 @@ public static class CodeHelpers {
             _ => throw new NotImplementedException(type.ToString() ?? "null")
         };
 
-    public static string ValueNodeToCSharpType(ValueNode node) => ValueTypeToCSharpType(node.TypeNode.Type);
+    // todo fix cast
+    public static string ValueNodeToCSharpType(ValueNode node) => ValueTypeToCSharpType(((ValueTypeNode)node.TypeNode).Type);
 
     public static string NodeToCSharpType(IAstNode node) {
         return node switch {

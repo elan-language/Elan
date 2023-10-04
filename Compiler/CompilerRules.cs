@@ -11,7 +11,7 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
         if (leafNode is MethodCallNode mcn && currentScope.Resolve(mcn.Name) is FunctionSymbol) {
             var otherNodes = nodes.SkipLast(1).ToArray();
-            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or MethodCallNode)) {
+            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or MethodCallNode or SystemCallNode)) {
                 return "Cannot have unassigned expression";
             }
         }
@@ -21,7 +21,7 @@ public static class CompilerRules {
 
     public static string? SystemCallMustBeAssignedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is MethodCallNode mcn && currentScope.Resolve(mcn.Name) is SystemCallSymbol scs && scs.ReturnType != VoidSymbolType.Instance) {
+        if (leafNode is SystemCallNode mcn && currentScope.Resolve(mcn.Name) is SystemCallSymbol scs && scs.ReturnType != VoidSymbolType.Instance) {
             var otherNodes = nodes.SkipLast(1).ToArray();
             if (otherNodes.Any(n => n is MethodCallNode)) {
                 return "Cannot have system call in expression";

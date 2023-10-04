@@ -48,6 +48,7 @@ public static class AstFactory {
             GenericSpecifierContext c => visitor.Build(c),
             ProcedureDefContext c => visitor.Build(c),
             ProcedureSignatureContext c => visitor.Build(c),
+            ParameterContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -442,6 +443,14 @@ public static class AstFactory {
 
         return new MethodSignatureNode(id, parameters.ToImmutableArray());
     }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ParameterContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var type = visitor.Visit(context.type());
+        
+        return new ParameterNode(id, type);
+    }
+
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());
 }
