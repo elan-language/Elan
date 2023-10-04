@@ -50,6 +50,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             ForInStatementNode n => HandleScope(BuildForInStatementModel, n),
             TwoDIndexExpressionNode n => HandleScope(Build2DIndexModel, n),
             ProcedureDefNode n => HandleScope(BuildProcedureDefModel, n),
+            FunctionDefNode n => HandleScope(BuildFunctionDefModel, n),
             MethodSignatureNode n => HandleScope(BuildMethodSignatureModel, n),
             ParameterNode n => HandleScope(BuildParameterModel, n),
             null => throw new NotImplementedException("null"),
@@ -175,6 +176,14 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private ProcedureDefModel BuildProcedureDefModel(ProcedureDefNode procedureDefNode) {
         var signature = Visit(procedureDefNode.Signature);
         var statementBlock = Visit(procedureDefNode.StatementBlock);
+
+        return new ProcedureDefModel(signature, statementBlock);
+    }
+
+    private ProcedureDefModel BuildFunctionDefModel(FunctionDefNode functionDefNode) {
+        var signature = Visit(functionDefNode.Signature);
+        var statementBlock = Visit(functionDefNode.StatementBlock);
+        var ret = Visit(functionDefNode.Return);
 
         return new ProcedureDefModel(signature, statementBlock);
     }

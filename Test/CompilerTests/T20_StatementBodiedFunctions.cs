@@ -4,12 +4,12 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T20_StatementBodiedFunctions
 {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_SimpleCase()
     {
         var code = @"
@@ -30,17 +30,15 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-
+  public static int foo(int a, int b) {
+    return a * b;
+  }
 }
 
 public static class Program {
   private static void Main(string[] args) {
     printLine(foo(3,4));
   }
-
-    private static int foo(int a, int b) {
-        return a * b;
-    }
 }";
 
         var parseTree = @"*";
@@ -54,7 +52,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Recursive()
     {
         var code = @"
@@ -117,7 +115,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_noEnd()
     {
         var code = @"
@@ -133,7 +131,7 @@ function foo(a Int, b Int) as Int
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_noReturnType()
     {
         var code = @"
@@ -149,7 +147,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_noAs()
     {
         var code = @"
@@ -165,7 +163,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_noReturn()
     {
         var code = @"
@@ -181,7 +179,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_returnTypeIncompatible()
     {
         var code = @"
@@ -202,7 +200,7 @@ end function
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_noReturn2()
     {
         var code = @"
@@ -218,7 +216,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_embeddedReturns()
     {
         var code = @"
@@ -237,7 +235,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_nonMatchingReturn2()
     {
         var code = @"
@@ -256,7 +254,7 @@ end function
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_statementAfterReturn()
     {
         var code = @"
@@ -276,7 +274,7 @@ end function
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CanNotContainSystemCalls()
     {
         var code = @"
@@ -296,7 +294,7 @@ end function
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CanNotContainProcedureCall()
     {
         var code = @"
@@ -322,7 +320,7 @@ end procedure
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CannotModifyParam()
     {
         var code = @"
@@ -344,7 +342,7 @@ end function
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_TooManyParams()
     {
         var code = @"
@@ -365,7 +363,7 @@ end function
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_NotEnoughParams()
     {
         var code = @"
@@ -386,7 +384,7 @@ end function
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_WrongParamType()
     {
         var code = @"

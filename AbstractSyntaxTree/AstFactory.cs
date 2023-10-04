@@ -47,7 +47,10 @@ public static class AstFactory {
             ListDefinitionContext c => visitor.Build(c),
             GenericSpecifierContext c => visitor.Build(c),
             ProcedureDefContext c => visitor.Build(c),
+            FunctionDefContext c => visitor.Build(c),
+            FunctionWithBodyContext c => visitor.Build(c),
             ProcedureSignatureContext c => visitor.Build(c),
+            FunctionSignatureContext c => visitor.Build(c),
             ParameterContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
@@ -62,12 +65,14 @@ public static class AstFactory {
 
         var procedures = context.procedureDef().Select(visitor.Visit);
 
-        return new FileNode(constants.Concat(procedures).ToImmutableArray(), mainNode);
+        var functions = context.functionDef().Select(visitor.Visit);
+
+        return new FileNode(constants.Concat(procedures).Concat(functions).ToImmutableArray(), mainNode);
     }
 
     private static StatementBlockNode Build(this ElanBaseVisitor<IAstNode> visitor, StatementBlockContext context) {
-        var statements = context.children.Select(visitor.Visit).ToImmutableArray();
-        return new StatementBlockNode(statements);
+        var statements = context.children is { } c ? c.Select(visitor.Visit) : Array.Empty<IAstNode>();
+        return new StatementBlockNode(statements.ToImmutableArray());
     }
 
     private static MainNode Build(this ElanBaseVisitor<IAstNode> visitor, MainContext context) {
@@ -437,11 +442,36 @@ public static class AstFactory {
         return new ProcedureDefNode(signature, statementBlock);
     }
 
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionDefContext context) {
+
+        if (context.functionWithBody() is { } fwb) {
+            return visitor.Visit(fwb);
+        }
+
+        throw new NotImplementedException(context.children.First().GetText());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionWithBodyContext context) {
+        var signature = visitor.Visit(context.functionSignature());
+        var statementBlock = visitor.Visit(context.statementBlock());
+        var ret = visitor.Visit(context.expression());
+
+        return new FunctionDefNode(signature, statementBlock, ret);
+    }
+
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureSignatureContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var parameters = context.parameterList() is {} pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
 
         return new MethodSignatureNode(id, parameters.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionSignatureContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var parameters = context.parameterList() is {} pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var ret = visitor.Visit(context.type());
+
+        return new MethodSignatureNode(id, parameters.ToImmutableArray(), ret);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ParameterContext context) {

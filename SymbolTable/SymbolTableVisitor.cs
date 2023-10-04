@@ -1,5 +1,6 @@
 ﻿using AbstractSyntaxTree.Nodes;
 using SymbolTable.Symbols;
+using SymbolTable.SymbolTypes;
 
 namespace SymbolTable; 
 
@@ -14,6 +15,7 @@ public class SymbolTableVisitor {
         return astNode switch {
             MainNode n => VisitMainNode(n),
             ProcedureDefNode n => VisitProcedureDefNode(n),
+            FunctionDefNode n => VisitFunctionDefNode(n),
             null => throw new NotImplementedException("null"),
             _ => VisitChildren(astNode)
         };
@@ -32,6 +34,23 @@ public class SymbolTableVisitor {
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return procedureDefNode;
     }
+
+    private IAstNode VisitFunctionDefNode(FunctionDefNode functionDefNode) {
+        var name = functionDefNode.Signature switch {
+            MethodSignatureNode { Id: IdentifierNode idn } => idn.Id,
+            _ => throw new NotImplementedException("null")
+        };
+
+        ISymbolType rt = null; // todo
+
+        var ms = new FunctionSymbol(name, rt, currentScope);
+        currentScope.Define(ms);
+        currentScope = ms;
+        VisitChildren(functionDefNode);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return functionDefNode;
+    }
+
 
     private IAstNode VisitMainNode(MainNode mainNode) {
         var ms = new ProcedureSymbol("main", currentScope);
