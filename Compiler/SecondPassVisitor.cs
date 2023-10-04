@@ -4,7 +4,7 @@ using SymbolTable;
 namespace Compiler;
 
 public class SecondPassVisitor {
-    private IScope currentScope;
+   
 
     static SecondPassVisitor() {
         Transforms.Add(CompilerTransforms.TransformSystemCallNodes);
@@ -12,24 +12,23 @@ public class SecondPassVisitor {
 
     public SecondPassVisitor(SymbolTableImpl symbolTable) {
         SymbolTable = symbolTable;
-        currentScope = symbolTable.GlobalScope;
     }
 
     private SymbolTableImpl SymbolTable { get; }
     private static IList<Func<IAstNode[], IScope, IAstNode?>> Transforms { get; } = new List<Func<IAstNode[], IScope, IAstNode?>>();
 
-    private void Enter(IAstNode node) {
-        switch (node) {
-            case MainNode:
-                currentScope = currentScope.Resolve("main") as IScope ?? throw new ArgumentNullException();
-                break;
-        }
+    private IScope Enter(IAstNode node, IScope currentScope) {
+        return node switch {
+            MainNode => currentScope.Resolve("main") as IScope ?? throw new ArgumentNullException(),
+            _ => currentScope
+        };
     }
 
-    private void Exit(IAstNode node) {
-        if (node is MainNode) {
-            currentScope = currentScope.EnclosingScope ?? throw new ArgumentNullException();
-        }
+    private IScope Exit(IAstNode node, IScope currentScope) {
+        return node switch {
+            MainNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            _ => currentScope
+        };
     }
 
     private IAstNode InsertIntoTree(IAstNode oldNode, IAstNode newNode, IAstNode[] parentNodes) {
@@ -42,43 +41,61 @@ public class SecondPassVisitor {
         return newNode;
     }
 
-    private IAstNode ApplyTransform(IAstNode[] nodes, IScope scope, Func<IAstNode[], IScope, IAstNode?> transform, IAstNode newRoot) {
+    private IAstNode? ApplyTransform(IAstNode[] nodes, IScope scope, Func<IAstNode[], IScope, IAstNode?> transform) {
         var transformed = transform(nodes, scope);
         if (transformed is not null) {
-            newRoot = InsertIntoTree(nodes.Last(), transformed, nodes.SkipLast(1).ToArray());
-            return newRoot;
+            return InsertIntoTree(nodes.Last(), transformed, nodes.SkipLast(1).ToArray());
         }
 
-        return newRoot;
+        return null;
     }
 
-    private IAstNode ApplyTransforms(IAstNode[] nodes, IScope scope, IAstNode newRoot) {
+    private IAstNode? ApplyTransforms(IAstNode[] nodes, IScope scope) {
         foreach (var transform in Transforms) {
-            newRoot = ApplyTransform(nodes, scope, transform, newRoot);
+            var newRoot = ApplyTransform(nodes, scope, transform);
+            if (newRoot is not null) {
+                return newRoot;
+            }
         }
 
-        return newRoot;
+        return null;
     }
 
-    private IAstNode Visit(IAstNode[] nodeHierarchy, IAstNode newRoot) {
+
+    private IAstNode? Visit(IAstNode[] nodeHierarchy, IScope currentScope) {
         var currentNode = nodeHierarchy.Last();
 
-        Enter(currentNode);
+        currentScope = Enter(currentNode, currentScope);
         try {
-            newRoot = ApplyTransforms(nodeHierarchy, currentScope, newRoot);
+            var newRoot = ApplyTransforms(nodeHierarchy, currentScope);
+            if (newRoot is not null) {
+                return newRoot;
+            }
+
             foreach (var child in currentNode.Children) {
                 var tree = nodeHierarchy.Append(child).ToArray();
-                newRoot = Visit(tree, newRoot);
+                newRoot = Visit(tree, currentScope);
+                if (newRoot is not null) {
+                    return newRoot;
+                }
             }
         }
         finally {
-            Exit(currentNode);
+            currentScope = Exit(currentNode, currentScope);
         }
 
-        return newRoot;
+        return null;
     }
 
     public IAstNode Visit(IAstNode ast) {
-        return Visit(new[] { ast }, ast);
+        var lastRoot = ast;
+        var currentRoot = ast;
+
+        while (currentRoot is not null) {
+            currentRoot = Visit(new[] { currentRoot }, SymbolTable.GlobalScope);
+            lastRoot = currentRoot ?? lastRoot;
+        }
+
+        return lastRoot;
     }
 }
