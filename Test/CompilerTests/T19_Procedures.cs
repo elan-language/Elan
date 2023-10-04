@@ -44,7 +44,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 1))))) )))) (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2))))) ))))) end procedure) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -93,7 +93,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 2))))) (varDef var (assignableValue b) = (expression (value (literal (literalDataStructure ""hello""))))) (callStatement (expression (methodCall foo ( (argumentList (expression (value a)) , (expression (value b))) ))))) end main) (procedureDef procedure (procedureSignature foo ( (parameterList (parameter a (type Int)) , (parameter b (type String))) )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end procedure) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -142,7 +142,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 1))))) (callStatement (expression (methodCall foo ( (argumentList (expression (expression (value a)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))) , (expression (value (literal (literalDataStructure ""hello""))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( (parameterList (parameter a (type Int)) , (parameter b (type String))) )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end procedure) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -265,7 +265,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "1\r\n2\r\n3\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Recursion()
     {
         var code = @"
