@@ -7,8 +7,10 @@ using static Helpers;
 [TestClass]
 public class T29_Expressions3_FunctionCalls
 {
+    #region Passes
     [TestMethod]
-    public void Pass_LibraryConst() {
+    public void Pass_LibraryConst()
+    {
         var code = @"#
 main
   printLine(pi)
@@ -43,7 +45,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3.141592653589793\r\n");
     }
 
-    [TestMethod]        
+    [TestMethod]
     public void Pass_SingleFunctionCall()
     {
         var code = @"#
@@ -122,7 +124,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "0.49999999999999994\r\n");
     }
-
 
     [TestMethod]
     public void Pass_DotSyntaxFunctionEvaluationHasPrecedenceOverOperators()
@@ -282,7 +283,9 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3.1\r\n");
     }
 
+    #endregion
 
+    #region Fails
     [TestMethod]
     public void Fail_IncorrectType()
     {
@@ -299,7 +302,6 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
-
 
     [TestMethod]
     public void Fail_UnconsumedExpressionResult1()
@@ -344,5 +346,5 @@ end main
         AssertParses(compileData);
         AssertDoesNotCompile(compileData);
     }
-
+    #endregion
 }
