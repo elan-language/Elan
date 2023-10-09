@@ -274,7 +274,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CanNotContainSystemCalls()
     {
         var code = @"
@@ -294,7 +294,7 @@ end function
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CanNotContainProcedureCall()
     {
         var code = @"
@@ -320,7 +320,7 @@ end procedure
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CannotModifyParam()
     {
         var code = @"
