@@ -341,7 +341,7 @@ procedure foo(Int a)
     printLine(a)
 end procedure
 ";
-        var parseTree = @"*";
+       
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);

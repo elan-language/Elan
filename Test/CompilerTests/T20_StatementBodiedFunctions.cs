@@ -53,7 +53,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Recursive()
     {
         var code = @"
@@ -80,24 +80,22 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
-
+  public static int factorial(int a) {
+    var result = 0;
+    if (a > 2) {
+      result = a * factorial(a - 1);
+    }
+    else {
+      result = a;
+    }
+    return result;
+  }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(foo(3,4));
+    printLine(factorial(5));
   }
-
-    private static int foo(int a, int b) {
-        var result = 0;
-        if (a > 2) {
-            result = a * factorial(a-1);
-        }
-        else {
-            result = a;
-        }
-        return result
-    }
 }";
 
         var parseTree = @"*";
@@ -116,7 +114,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_noEnd()
     {
         var code = @"
@@ -132,7 +130,7 @@ function foo(a Int, b Int) as Int
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_noReturnType()
     {
         var code = @"
@@ -148,7 +146,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_noAs()
     {
         var code = @"
@@ -164,7 +162,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_noReturn()
     {
         var code = @"
@@ -180,17 +178,18 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_returnTypeIncompatible()
     {
         var code = @"
 main
-   var a = ""
+   var a = """"
    a = foo(3,4)
 end main
 
 function foo(a Int, b Int) as Int
     var c = a * b
+    return c
 end function
 ";
         var parseTree = @"*";
@@ -198,10 +197,11 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_noReturn2()
     {
         var code = @"
@@ -217,7 +217,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_embeddedReturns()
     {
         var code = @"
@@ -236,7 +236,7 @@ end function
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_nonMatchingReturn2()
     {
         var code = @"
@@ -252,10 +252,11 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_statementAfterReturn()
     {
         var code = @"
@@ -267,12 +268,10 @@ function foo(a Int, b Int) as Int
     var c = a + b
 end function
 ";
-        var parseTree = @"*";
+      
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotParse(compileData);
     }
 
     [TestMethod, Ignore]
@@ -343,7 +342,7 @@ end function
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_TooManyParams()
     {
         var code = @"
@@ -361,10 +360,11 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_NotEnoughParams()
     {
         var code = @"
@@ -382,11 +382,34 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_WrongParamType()
+    {
+        var code = @"
+main
+    var result = foo(3, ""b"")
+    printLine(result)
+end main
+
+function foo(a Int, b Int) as Int
+    return a * b
+end function
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod, Ignore]
-    public void Fail_WrongParamType()
+    public void Fail_WrongParamType2()
     {
         var code = @"
 main
@@ -403,7 +426,8 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     #endregion
