@@ -125,6 +125,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "a\r\nb\r\nc\r\n");
     }
 
+    [TestMethod]
     public void Pass_WithDefault()
     {
         var code = @"
@@ -133,7 +134,7 @@ main
       switch i
         case 1
             printLine('a')
-        default 2
+        default
             printLine('b')      
       end switch
   end for
@@ -153,19 +154,20 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    for (var i = 1; i <= 3, i = i + 1) {
-        switch i {
-            case 1:
-                printLine('a');
-                break;
-            default:
-                printLine('b');
-        }
+    for (var i = 1; i <= 3; i = i + 1) {
+      switch (i) {
+        case 1:
+          printLine('a');
+          break;
+        default:
+          printLine('b');
+          break;
+      }
     }
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (value i)) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (caseDefault default (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) end switch))) end for))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -236,7 +238,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_NoEnd()
     {
         var code = @"
@@ -258,7 +260,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_MismatchedEnd1()
     {
         var code = @"
@@ -281,7 +283,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_MismatchedEnd2()
     {
         var code = @"
@@ -335,18 +337,18 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    for (var i = 1; i <= 3, i = i + 1) {
-        switch i {
-            case 1:
-                printLine('a');
-                break;
-            case 2:
-                printLine('b');
-                break;
-            case 3:
-                printLine('c');  
-                break;
-        }
+    for (var i = 1; i <= 4; i = i + 1) {
+      switch (i) {
+        case 1:
+          printLine('a');
+          break;
+        case 2:
+          printLine('b');
+          break;
+        case 3:
+          printLine('c');
+          break;
+      }
     }
   }
 }";
@@ -362,7 +364,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Error");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_IncompatibleCaseType()
     {
         var code = @"
@@ -373,7 +375,7 @@ main
             printLine('a')
         case 2
             printLine('b')
-        case '3'
+        case 3.1
             printLine('c')        
       end switch
   end for
@@ -385,10 +387,11 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UseOfVariableForCase()
     {
         var code = @"
@@ -410,7 +413,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UseOfExpression()
     {
         var code = @"
@@ -432,7 +435,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CaseAfterDefault()
     {
         var code = @"
@@ -454,7 +457,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_WithColons()
     {
         var code = @"
@@ -476,7 +479,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_actionOnSameLineAsCase()
     {
         var code = @"
@@ -493,7 +496,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_missingExpression()
     {
         var code = @"
@@ -512,7 +515,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_caseValueMissing()
     {
         var code = @"
