@@ -88,6 +88,10 @@ public static class AstFactory {
         new CallStatementNode(visitor.Visit(context.expression()));
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionContext context) {
+        if (context.NL() is not null) {
+            return visitor.Visit(context.expression().Single());
+        }
+        
         if (context.DOT() is not null) {
             if (context.methodCall() is { } dmc) {
                 var ms = visitor.Visit<MethodCallNode>(dmc);
