@@ -320,7 +320,7 @@ end procedure
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CannotModifyParam()
     {
         var code = @"

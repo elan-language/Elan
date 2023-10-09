@@ -77,7 +77,7 @@ public static class CompilerRules {
 
     public static string? FunctionConstraintsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is SystemCallNode or ProcedureCallNode or AssignmentNode) {
+        if (leafNode is SystemCallNode or ProcedureCallNode) {
             var otherNodes = nodes.SkipLast(1).ToArray();
             if (otherNodes.Any(n => n is FunctionDefNode)) {
                 return "Cannot have system call in function";
