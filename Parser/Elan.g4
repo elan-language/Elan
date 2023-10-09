@@ -10,13 +10,11 @@ main:
     ;
 
 // STATEMENTS
-statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement | freestandingException)*;
+statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement )*;
 
 callStatement: NL expression; //Intended for a freestanding procedure/system call as a statement, 
 // or expression terminated by a procedure or system call that consumes result'.
 // Not possible to specify this as a syntax distinct from an expression. Compile rules will enforce that you can't use a non-consumed expression
-
-freestandingException: NL throwException;
 
 varDef: NL VAR assignableValue ASSIGN expression;
 
@@ -150,8 +148,8 @@ repeat:
 try: 
 	NL TRY 
     statementBlock
-    (NL CATCH IDENTIFIER type 
-	statementBlock)?
+    NL CATCH IDENTIFIER 
+	statementBlock
     NL END TRY
 	;
 
@@ -186,7 +184,6 @@ expression:
 	| newInstance
 	| ifExpression
 	| lambda
-	| throwException
 	| NL expression // so that any expression may be broken over multiple lines at its 'natural joints' i.e. before any sub-expression
 	;
 
@@ -195,8 +192,6 @@ bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET ; //made into rule so
 ifExpression: NL? IF expression NL? THEN expression NL? ELSE expression;
 
 lambda: LAMBDA argumentList ARROW expression;
-
-throwException: THROW type (OPEN_BRACKET argumentList CLOSE_BRACKET);
 
 index: OPEN_SQ_BRACKET (expression | expression COMMA expression | range) CLOSE_SQ_BRACKET;
 
