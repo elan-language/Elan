@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record CaseNode(IAstNode StatementBlock, IAstNode? Value) : IAstNode {
+public record CaseNode(IAstNode StatementBlock, IAstNode? Value = null) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { StatementBlock }.SafePrepend(Value);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

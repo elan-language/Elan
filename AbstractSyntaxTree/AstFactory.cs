@@ -54,6 +54,7 @@ public static class AstFactory {
             FunctionSignatureContext c => visitor.Build(c),
             ParameterContext c => visitor.Build(c),
             CaseContext c => visitor.Build(c),
+            CaseDefaultContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -501,6 +502,12 @@ public static class AstFactory {
         var statementBlock = visitor.Visit(context.statementBlock());
         
         return new CaseNode(statementBlock, val);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CaseDefaultContext context) {
+        var statementBlock = visitor.Visit(context.statementBlock());
+        
+        return new CaseNode(statementBlock);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());

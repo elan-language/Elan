@@ -67,7 +67,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "a\r\nb\r\nc\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_BracketsIgnored()
     {
         var code = @"
@@ -98,23 +98,23 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    for (var i = 1; i <= 3, i = i + 1) {
-        switch i {
-            case 1:
-                printLine('a');
-                break;
-            case 2:
-                printLine('b');
-                break;
-            case 3:
-                printLine('c');  
-                break;
-        }
+    for (var i = 1; i <= 3; i = i + 1) {
+      switch ((i)) {
+        case 1:
+          printLine('a');
+          break;
+        case 2:
+          printLine('b');
+          break;
+        case 3:
+          printLine('c');
+          break;
+      }
     }
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (bracketedExpression ( (expression (value i)) ))) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue 2) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) (case case (literalValue 3) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'c'))))) )))))) end switch))) end for))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -176,7 +176,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "a\r\nb\r\nb\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_SwitchOnExpression()
     {
         var code = @"
@@ -207,23 +207,23 @@ public static partial class GlobalConstants {
 
 public static class Program {
   private static void Main(string[] args) {
-    for (var i = 1; i <= 3, i = i + 1) {
-        switch i + 1 {
-            case 1:
-                printLine('a');
-                break;
-            case 2:
-                printLine('b');
-                break;
-            default:
-                printLine('c');  
-                break;
-        }
+    for (var i = 1; i <= 3; i = i + 1) {
+      switch (i + 1) {
+        case 1:
+          printLine('a');
+          break;
+        case 2:
+          printLine('b');
+          break;
+        default:
+          printLine('c');
+          break;
+      }
     }
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (expression (value i)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue 2) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) (caseDefault default (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'c'))))) )))))) end switch))) end for))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
