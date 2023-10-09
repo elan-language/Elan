@@ -4,11 +4,12 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T16_SwitchCase
 {
     #region Passes
-    [TestMethod]
+
+    [TestMethod, Ignore]
     public void Pass_Minimal()
     {
         var code = @"
@@ -66,7 +67,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "a\r\nb\r\nc\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_BracketsIgnored()
     {
         var code = @"
@@ -175,7 +176,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "a\r\nb\r\nb\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_SwitchOnExpression()
     {
         var code = @"
@@ -235,7 +236,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_NoEnd()
     {
         var code = @"
@@ -257,7 +258,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_MismatchedEnd1()
     {
         var code = @"
@@ -280,7 +281,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_MismatchedEnd2()
     {
         var code = @"
@@ -303,7 +304,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_UnhandledCase()
     {
         var code = @"
@@ -361,7 +362,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Error");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_IncompatibleCaseType()
     {
         var code = @"
@@ -387,7 +388,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_UseOfVariableForCase()
     {
         var code = @"
@@ -409,7 +410,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_UseOfExpression()
     {
         var code = @"
@@ -431,7 +432,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CaseAfterDefault()
     {
         var code = @"
@@ -453,7 +454,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_WithColons()
     {
         var code = @"
@@ -475,7 +476,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_actionOnSameLineAsCase()
     {
         var code = @"
@@ -492,7 +493,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_missingExpression()
     {
         var code = @"
@@ -511,7 +512,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_caseValueMissing()
     {
         var code = @"

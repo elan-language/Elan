@@ -159,7 +159,7 @@ switch:
 	NL SWITCH expression
 	  case*
       caseDefault?
-	END SWITCH
+	NL END SWITCH
 	;
 	
 case: 
