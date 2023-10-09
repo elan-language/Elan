@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree;
+﻿using System.Net.Http.Headers;
+using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using CSharpLanguageModel.Models;
 
@@ -180,18 +181,19 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new ProcedureDefModel(signature, statementBlock);
     }
 
-    private ProcedureDefModel BuildFunctionDefModel(FunctionDefNode functionDefNode) {
+    private FunctionDefModel BuildFunctionDefModel(FunctionDefNode functionDefNode) {
         var signature = Visit(functionDefNode.Signature);
         var statementBlock = Visit(functionDefNode.StatementBlock);
         var ret = Visit(functionDefNode.Return);
 
-        return new ProcedureDefModel(signature, statementBlock);
+        return new FunctionDefModel(signature, statementBlock, ret);
     }
 
     private MethodSignatureModel BuildMethodSignatureModel(MethodSignatureNode procedureDefNode) {
         var id = Visit(procedureDefNode.Id);
         var parameters = procedureDefNode.Parameters.Select(Visit);
-        return new MethodSignatureModel(id, parameters);
+        var returnType = procedureDefNode.ReturnType is {} rt ?     Visit(rt) : null;
+        return new MethodSignatureModel(id, parameters, returnType);
     }
 
     private ParameterModel BuildParameterModel(ParameterNode parameterNode) {

@@ -9,7 +9,7 @@ public class T20_StatementBodiedFunctions
 {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_SimpleCase()
     {
         var code = @"
@@ -31,13 +31,14 @@ using static StandardLibrary.Constants;
 
 public static partial class GlobalConstants {
   public static int foo(int a, int b) {
+
     return a * b;
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(foo(3,4));
+    printLine(foo(3, 4));
   }
 }";
 

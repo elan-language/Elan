@@ -30,7 +30,7 @@ public static class CodeHelpers {
 
     public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0)));
 
-    public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm, string prefix) => string.Join(", ", mm.Select(v => $"{prefix} {v}"));
+    public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm, string prefix) => string.Join(", ", mm.Select(v => $"{prefix}{v}"));
 
     public static string ValueTypeToCSharpType(ValueType type) =>
         type switch {
