@@ -306,63 +306,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Fail_UnhandledCase()
-    {
-        var code = @"
-main
-  for i = 1 to 4
-      switch i
-        case 1
-            printLine('a')
-        case 2
-            printLine('b')
-        case 3
-            printLine('c')        
-      end switch
-  end for
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static GlobalConstants;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
-using static StandardLibrary.Constants;
-
-public static partial class GlobalConstants {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    for (var i = 1; i <= 4; i = i + 1) {
-      switch (i) {
-        case 1:
-          printLine('a');
-          break;
-        case 2:
-          printLine('b');
-          break;
-        case 3:
-          printLine('c');
-          break;
-      }
-    }
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Error");
-    }
+  
 
     [TestMethod]
     public void Fail_IncompatibleCaseType()
