@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree;
+﻿using System.Runtime.CompilerServices;
+using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 using SymbolTable.Symbols;
@@ -36,6 +37,11 @@ public static class CompilerRules {
     }
 
     private static bool Match(IAstNode n1, IAstNode n2) => n1 is IdentifierNode idn1 && n2 is IdentifierNode idn2 && idn1.Id == idn2.Id;
+
+    private static IEnumerable<IAstNode> Expand(this IEnumerable<IAstNode> nodes) {
+        return nodes.SelectMany(n => n is StatementBlockNode ? n.Children : new[] { n });
+    }
+
 
     public static string? CannotMutateControlVariableRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
@@ -81,6 +87,18 @@ public static class CompilerRules {
             var otherNodes = nodes.SkipLast(1).ToArray();
             if (otherNodes.Any(n => n is FunctionDefNode)) {
                 return "Cannot have system call in function";
+            }
+        }
+
+        if (leafNode is AssignmentNode an) {
+            var otherNodes = nodes.SkipLast(1).Expand().ToArray();
+            if (otherNodes.Any(n => n is FunctionDefNode)) {
+
+                var varNodes = otherNodes.OfType<VarDefNode>();
+
+                if (!varNodes.Any(vn => Match(vn.Id, an.Id))) {
+                    return "Cannot modify param in function";
+                }
             }
         }
 

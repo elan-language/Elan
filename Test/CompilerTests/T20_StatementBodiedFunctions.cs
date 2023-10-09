@@ -320,7 +320,7 @@ end procedure
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CannotModifyParam()
     {
         var code = @"
@@ -392,28 +392,6 @@ end function
         var code = @"
 main
     var result = foo(3, ""b"")
-    printLine(result)
-end main
-
-function foo(a Int, b Int) as Int
-    return a * b
-end function
-";
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
-    }
-
-    [TestMethod, Ignore]
-    public void Fail_WrongParamType2()
-    {
-        var code = @"
-main
-    var result = foo(3, 'b')
     printLine(result)
 end main
 
