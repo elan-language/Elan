@@ -22,8 +22,13 @@ public static class CompilerRules {
 
     public static string? SystemCallMustBeAssignedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is SystemCallNode mcn && currentScope.Resolve(mcn.Name) is SystemCallSymbol scs && scs.ReturnType != VoidSymbolType.Instance) {
+        if (leafNode is SystemCallNode scn && currentScope.Resolve(scn.Name) is SystemCallSymbol scs && scs.ReturnType != VoidSymbolType.Instance) {
             var otherNodes = nodes.SkipLast(1).ToArray();
+
+            if (scn.DotCalled) {
+                return "Cannot have dot call a system expression";
+            }
+
             if (otherNodes.Any(n => n is SystemCallNode or FunctionCallNode or ProcedureCallNode)) {
                 return "Cannot have system call in expression";
             }
@@ -45,18 +50,18 @@ public static class CompilerRules {
 
     public static string? CannotMutateControlVariableRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is AssignmentNode mcn) {
+        if (leafNode is AssignmentNode an) {
             var otherNodes = nodes.SkipLast(1).ToArray();
 
             foreach (var forNode in otherNodes.OfType<ForStatementNode>()) {
-                if (Match(forNode.Id, mcn.Id)) {
+                if (Match(forNode.Id, an.Id)) {
                     return "May not mutate control variable";
                 }
             }
 
             foreach (var forInNode in otherNodes.OfType<ForInStatementNode>()) {
                 if (forInNode.Expression is IdentifierNode idn) {
-                    if (Match(idn, mcn.Id)) {
+                    if (Match(idn, an.Id)) {
                         return "May not mutate control variable";
                     }
                 }

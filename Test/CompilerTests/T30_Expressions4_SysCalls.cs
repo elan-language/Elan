@@ -118,7 +118,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_SystemCallUsingDotSyntax()
     {
         var code = @"#
@@ -128,7 +128,7 @@ main
 end main
 ";
 
-        var parseTree = @"jjj";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
