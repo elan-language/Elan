@@ -9,7 +9,7 @@ public class T35_Enumerations
 {
     #region Passes
     [TestMethod]
-    public void Pass_Minimal()
+    public void Pass_PrintValues()
     {
         var code = @"
 main
