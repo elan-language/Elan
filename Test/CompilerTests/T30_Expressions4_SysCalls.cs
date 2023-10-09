@@ -84,7 +84,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Your nameFred\r\n", "Fred"); 
     }
 
-
     [TestMethod]
     public void Fail_UnconsumedResultFromSystemCall()
     {
@@ -102,13 +101,12 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-
     [TestMethod]
     public void Fail_SystemCallWithinExpression()
     {
         var code = @"#
 main
-  var a = input(""Your name"").length();
+  var a = input(""Your name"").length()
 end main
 ";
 
@@ -120,5 +118,22 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
+    [TestMethod, Ignore]
+    public void Fail_SystemCallUsingDotSyntax()
+    {
+        var code = @"#
+main
+  var prompt = ""Your name""
+  var a = prompt.input()
+end main
+";
+
+        var parseTree = @"jjj";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
 
 }
