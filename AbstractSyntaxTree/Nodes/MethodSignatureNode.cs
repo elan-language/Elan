@@ -3,7 +3,7 @@
 namespace AbstractSyntaxTree.Nodes;
 
 public record MethodSignatureNode(IAstNode Id, ImmutableArray<IAstNode> Parameters, IAstNode? ReturnType = null) : IAstNode {
-    public IEnumerable<IAstNode> Children => ReturnType is null ? Parameters.Prepend(Id) : Parameters.Prepend(Id).Append(ReturnType);
+    public IEnumerable<IAstNode> Children =>Parameters.Prepend(Id).SafeAppend(ReturnType);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
         return from switch {

@@ -34,6 +34,7 @@ public static class AstFactory {
             ForInContext c => visitor.Build(c),
             WhileContext c => visitor.Build(c),
             RepeatContext c => visitor.Build(c),
+            SwitchContext c => visitor.Build(c),
             ConditionalOpContext c => visitor.Build(c),
             UnaryOpContext c => visitor.Build(c),
             LiteralListContext c => visitor.Build(c),
@@ -52,6 +53,7 @@ public static class AstFactory {
             ProcedureSignatureContext c => visitor.Build(c),
             FunctionSignatureContext c => visitor.Build(c),
             ParameterContext c => visitor.Build(c),
+            CaseContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -304,6 +306,10 @@ public static class AstFactory {
             return visitor.Visit(fi);
         }
 
+        if (context.@switch() is { } sw) {
+            return visitor.Visit(sw);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -312,6 +318,15 @@ public static class AstFactory {
         var statementBlocks = context.statementBlock().Select(visitor.Visit);
 
         return new IfStatementNode(expressions.ToImmutableArray(), statementBlocks.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SwitchContext context) {
+        var expression = visitor.Visit(context.expression());
+        var cases = context.@case().Select(visitor.Visit);
+        var defaultCase = context.caseDefault() is { } cd ? visitor.Visit(cd) : null;
+        
+
+        return new SwitchStatementNode(expression, cases.ToImmutableArray(), defaultCase);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, WhileContext context) {
@@ -481,6 +496,12 @@ public static class AstFactory {
         return new ParameterNode(id, type);
     }
 
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CaseContext context) {
+        var val = visitor.Visit(context.literalValue());
+        var statementBlock = visitor.Visit(context.statementBlock());
+        
+        return new CaseNode(statementBlock, val);
+    }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());
 }

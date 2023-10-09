@@ -54,6 +54,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             FunctionDefNode n => HandleScope(BuildFunctionDefModel, n),
             MethodSignatureNode n => HandleScope(BuildMethodSignatureModel, n),
             ParameterNode n => HandleScope(BuildParameterModel, n),
+            SwitchStatementNode n => HandleScope(BuildSwitchStatementModel, n),
+            CaseNode n =>  HandleScope(BuildCaseModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -88,6 +90,14 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var statementBlocks = ifStatementNode.StatementBlocks.Select(Visit);
 
         return new IfStatementModel(expressions, statementBlocks);
+    }
+
+    private SwitchStatementModel BuildSwitchStatementModel(SwitchStatementNode switchStatementNode) {
+        var expression = Visit(switchStatementNode.Expression);
+        var cases = switchStatementNode.Cases.Select(Visit);
+        var defaultCase = switchStatementNode.DefaultCase is { } dc ? Visit(dc) : null;
+
+        return new SwitchStatementModel(expression, cases, defaultCase);
     }
 
     private ForStatementModel BuildForStatementModel(ForStatementNode forStatementNode) {
@@ -201,5 +211,12 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var type = Visit(parameterNode.TypeNode);
 
         return new ParameterModel(id, type);
+    }
+
+    private CaseModel BuildCaseModel(CaseNode caseNode) {
+        var id =  caseNode.Value  is not null ?  Visit(caseNode.Value) : null;
+        var type = Visit(caseNode.StatementBlock);
+
+        return new CaseModel(id, type);
     }
 }

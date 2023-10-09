@@ -37,4 +37,10 @@ public static class Helpers {
 
     public static ImmutableArray<IAstNode> SafeReplace(this ImmutableArray<IAstNode> nodes, IAstNode oldValue, IAstNode newValue) =>
         nodes.Contains(oldValue) ? nodes.Replace(oldValue, newValue) : nodes;
+
+    public static IEnumerable<IAstNode> SafeAppend(this IEnumerable<IAstNode> nodes, IAstNode? node) =>
+        node is null ? nodes : nodes.Append(node);
+
+    public static IEnumerable<IAstNode> SafePrepend(this IEnumerable<IAstNode> nodes, IAstNode? node) =>
+        node is null ? nodes : nodes.Prepend(node);
 }
