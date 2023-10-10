@@ -95,7 +95,7 @@ main
      foo()
      printLine(""not caught"")
   catch e
-    printLine(""caught"")
+    printLine(e)
   end try
 end main
 
@@ -125,20 +125,19 @@ public static class Program {
     }
     catch (Exception _e) {
       var e = new StandardLibrary.ElanException(_e);
-      printLine(@$""caught"");
+      printLine(e);
     }
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (try try (statementBlock (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""not caught""))))) ))))) catch e (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""caught""))))) ))))) end try))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall throwException ( (argumentList (expression (value (literal (literalDataStructure ""Foo""))))) ))))) end procedure) <EOF>)";
-
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (try try (statementBlock (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""not caught""))))) ))))) catch e (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value e))) ))))) end try))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall throwException ( (argumentList (expression (value (literal (literalDataStructure ""Foo""))))) ))))) end procedure) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "caught\r\n");
+        AssertObjectCodeExecutes(compileData, "Foo\r\n");
     }
 
     [TestMethod]
