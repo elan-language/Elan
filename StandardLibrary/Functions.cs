@@ -94,7 +94,7 @@ public static class Functions {
             bool b => b ? "true" : "false",
             string s => s,
             IEnumerable l => asString(l),
-            Exception e => e.Message,
+            ElanException e => e.message,
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
             _ => obj.ToString()
         };
