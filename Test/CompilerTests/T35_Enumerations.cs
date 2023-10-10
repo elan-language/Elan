@@ -281,7 +281,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_coercionToIntString()
+    public void Pass_coercionToString()
     {
         var code = @"
 main
