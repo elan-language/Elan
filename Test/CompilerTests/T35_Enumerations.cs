@@ -26,12 +26,12 @@ end enumeration
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public enum Fruit {
     apple,
     orange,
@@ -77,12 +77,12 @@ end enumeration
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public enum Fruit {
     apple,
     orange,
@@ -128,12 +128,12 @@ end enumeration
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public enum Fruit {
     apple,
     orange,
@@ -179,12 +179,12 @@ end enumeration
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public enum Fruit {
     apple,
     orange,
@@ -236,12 +236,12 @@ end enumeration
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public enum Fruit {
     apple,
     orange,
@@ -296,12 +296,12 @@ end enumeration
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public enum Fruit {
     apple,
     orange,

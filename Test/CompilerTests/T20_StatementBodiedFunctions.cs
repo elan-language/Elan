@@ -24,12 +24,12 @@ end function
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static int foo(int a, int b) {
 
     return a * b;
@@ -74,12 +74,12 @@ end function
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static int factorial(int a) {
     var result = 0;
     if (a > 2) {

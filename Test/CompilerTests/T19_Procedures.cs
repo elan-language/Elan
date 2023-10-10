@@ -25,12 +25,12 @@ end procedure
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static void foo() {
     printLine(2);
   }
@@ -73,12 +73,12 @@ end procedure
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static void foo(ref int a, ref string b) {
     printLine(a);
     printLine(b);
@@ -121,12 +121,12 @@ end procedure
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static void foo(ref int a, ref string b) {
     printLine(a);
     printLine(b);
@@ -173,12 +173,12 @@ end procedure
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static void foo(ref int a, ref string b) {
     a = a + 1;
     b = b + @$""!"";
@@ -227,12 +227,12 @@ end procedure
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static void foo() {
     printLine(1);
     bar();
@@ -278,12 +278,12 @@ end procedure
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static void foo(ref int a) {
     if (a > 0) {
       printLine(a);
@@ -503,12 +503,12 @@ end procedure
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static void foo(ref int a) {
     foo(ref a);
   }

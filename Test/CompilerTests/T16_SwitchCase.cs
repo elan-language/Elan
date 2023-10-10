@@ -31,12 +31,12 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
 
 }
 
@@ -92,12 +92,12 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
 
 }
 
@@ -151,12 +151,12 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
 
 }
 
@@ -206,12 +206,12 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
 
 }
 

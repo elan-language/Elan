@@ -20,12 +20,12 @@ end main
 
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
-using static GlobalConstants;
+using static Globals;
 using static StandardLibrary.SystemCalls;
 using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
-public static partial class GlobalConstants {
+public static partial class Globals {
   public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
 }
 
