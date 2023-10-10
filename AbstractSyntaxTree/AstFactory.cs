@@ -88,24 +88,13 @@ public static class AstFactory {
         new CallStatementNode(visitor.Visit(context.expression()));
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionContext context) {
-        if (context.NL() is not null) {
-            return visitor.Visit(context.expression().Single());
-        }
-        
+       
+
         if (context.DOT() is not null) {
             if (context.methodCall() is { } dmc) {
                 var ms = visitor.Visit<MethodCallNode>(dmc);
                 var exp = visitor.Visit(context.expression().First());
-                return new MethodCallNode(ms, exp) {DotCalled = true
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    } ;
+                return new MethodCallNode(ms, exp) { DotCalled = true };
             }
         }
 
@@ -143,6 +132,11 @@ public static class AstFactory {
 
         if (context.newInstance() is { } ni) {
             return visitor.Visit(ni);
+        }
+
+        if (context.NL() is not null)
+        {
+            return visitor.Visit(context.expression().Single());
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -338,7 +332,6 @@ public static class AstFactory {
         var expression = visitor.Visit(context.expression());
         var cases = context.@case().Select(visitor.Visit);
         var defaultCase = context.caseDefault() is { } cd ? visitor.Visit(cd) : null;
-        
 
         return new SwitchStatementNode(expression, cases.ToImmutableArray(), defaultCase);
     }
@@ -472,7 +465,6 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionDefContext context) {
-
         if (context.functionWithBody() is { } fwb) {
             return visitor.Visit(fwb);
         }
@@ -490,14 +482,14 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureSignatureContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
-        var parameters = context.parameterList() is {} pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
 
         return new MethodSignatureNode(id, parameters.ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionSignatureContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
-        var parameters = context.parameterList() is {} pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var ret = visitor.Visit(context.type());
 
         return new MethodSignatureNode(id, parameters.ToImmutableArray(), ret);
@@ -506,20 +498,20 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ParameterContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var type = visitor.Visit(context.type());
-        
+
         return new ParameterNode(id, type);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CaseContext context) {
         var val = visitor.Visit(context.literalValue());
         var statementBlock = visitor.Visit(context.statementBlock());
-        
+
         return new CaseNode(statementBlock, val);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CaseDefaultContext context) {
         var statementBlock = visitor.Visit(context.statementBlock());
-        
+
         return new CaseNode(statementBlock);
     }
 

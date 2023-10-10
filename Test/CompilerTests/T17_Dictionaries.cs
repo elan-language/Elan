@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass, Ignore]
-public class T18_Dictionaries
+public class T17_Dictionaries
 {
     #region Passes
 
