@@ -2,8 +2,6 @@
 // ReSharper disable InconsistentNaming
 
 using System.Collections;
-using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using static StandardLibrary.Constants;
 
@@ -11,6 +9,19 @@ namespace StandardLibrary;
 
 [ElanStandardLibrary]
 public static class Functions {
+    #region String handling
+
+    public const string newLine = @"
+";
+
+    #endregion
+
+    #region lists
+
+    public static int length(IEnumerable l) => l.Cast<object>().ToArray().Length;
+
+    #endregion
+
     #region Math
 
     public static double aCos(double d) => Math.Cos(d);
@@ -48,7 +59,7 @@ public static class Functions {
     public static string asUpperCase(string s) => s.ToUpper();
     public static string asLowerCase(string s) => s.ToLower();
 
-    public static bool isBefore(string a , string b) => a.CompareTo(b) < 0;
+    public static bool isBefore(string a, string b) => a.CompareTo(b) < 0;
     public static bool isBeforeOrSameAs(string a, string b) => a.CompareTo(b) <= 0;
     public static bool isAfter(string a, string b) => a.CompareTo(b) > 0;
     public static bool isAfterOrSameAs(string a, string b) => a.CompareTo(b) >= 0;
@@ -74,25 +85,26 @@ public static class Functions {
     public static double asFloat(string s) => double.Parse(s);
     public static decimal asDecimal(string s) => decimal.Parse(s);
 
-
     #endregion
 
     #region Bitwise operations
+
     public static int bitwiseNot(int x) => ~x;
     public static int bitwiseAnd(int x, int y) => x & y;
     public static int bitwiseOr(int x, int y) => x | y;
     public static int bitwiseXor(int x, int y) => x ^ y;
     public static int shiftLeft(int x, int places) => x << places;
     public static int shiftRight(int x, int places) => x >> places;
+
     #endregion
 
     #region AsString
 
     public static string? asString(object obj) {
-      
         return obj switch {
             bool b => b ? "true" : "false",
             string s => s,
+            IDictionary d => asString(d),
             IEnumerable l => asString(l),
             ElanException e => e.message,
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
@@ -102,29 +114,25 @@ public static class Functions {
 
     public static string asString(string s) => s;
 
-    private static string EmptyMessage(IEnumerable e) => e is IArray ? "empty array" : "empty list";
+    private static string EmptyMessage(IEnumerable e) => e is IArray ? "empty array" : e is IDictionary ? "empty dictionary" : "empty list";
 
-    private static string Type(IEnumerable e) => e is IArray ? "Array" : "List";
+    private static string Type(IEnumerable e) => e is IArray ? "Array" : e is IDictionary ? "Dictionary" : "List";
 
     public static string asString(IEnumerable e) {
         var a = e.Cast<object>().Select(asString).ToArray();
         return a.Any() ? $"{Type(e)} {{{string.Join(',', a)}}}" : EmptyMessage(e);
     }
-    
+
+    public static string asString(IDictionary d) {
+        var keys = d.Keys.Select(asString).ToArray();
+        var values = d.Values.Select(asString).ToArray();
+        var ss = keys.Zip(values).Select(i => $"{i.First}:{i.Second}").ToArray();
+
+        return ss.Any() ? $"{Type(d)} {{{string.Join(',', ss)}}}" : EmptyMessage(d);
+    }
+
     public static string asString<T>(ITuple t) =>
-        Enumerable.Range(1, t.Length - 1).Aggregate($"({asString(t[0])}", (s, x) => s + $", {asString(t[x])}") + $")";
+        Enumerable.Range(1, t.Length - 1).Aggregate($"({asString(t[0])}", (s, x) => s + $", {asString(t[x])}") + ")";
 
-
-    #endregion
-
-    #region lists
-
-    public static int length(IEnumerable l) => l.Cast<object>().ToArray().Length;
-
-    #endregion
-
-    #region String handling
-    public const string newLine = @"
-" ;
     #endregion
 }

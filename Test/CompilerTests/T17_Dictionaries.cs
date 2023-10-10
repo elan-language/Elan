@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T17_Dictionaries
 {
     #region Passes
@@ -18,19 +18,36 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class GlobalConstants {
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(a);
+  }
+}";
+
+
+        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{'a':1, 'b':3, 'z':10}\r\n");
+        AssertObjectCodeExecutes(compileData, "Dictionary {a:1,b:3,z:10}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_AccessByKey()
     {
         var code = @"#
@@ -52,7 +69,7 @@ end main
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_keys()
     {
         var code = @"#
@@ -74,7 +91,7 @@ end main
         AssertObjectCodeExecutes(compileData, "{'a', 'b', 'z'}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_hasKey()
     {
         var code = @"#
@@ -97,7 +114,7 @@ end main
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_values()
     {
         var code = @"#
@@ -119,7 +136,7 @@ end main
         AssertObjectCodeExecutes(compileData, "{1,3,10}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Set()
     {
         var code = @"#
@@ -144,7 +161,7 @@ end mainLine
         AssertObjectCodeExecutes(compileData, "{'a':1, 'b':3, 'z':10}\r\n{'a':1,'b':4,'d':2,'z':10}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_RemoveEntry()
     {
         var code = @"#
@@ -172,7 +189,7 @@ end mainLine
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_RepeatedKey()
     {
         var code = @"#
@@ -191,7 +208,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_InconsistentTypes1()
     {
         var code = @"#
@@ -210,7 +227,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_InconsistentTypes2()
     {
         var code = @"#
@@ -229,7 +246,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_AccessByInvalidKey()
     {
         var code = @"#
@@ -252,7 +269,7 @@ end main
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_RemoveInvalidKey()
     {
         var code = @"#
@@ -275,7 +292,7 @@ end mainLine
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_RemoveInvalidKeyType()
     {
         var code = @"#
@@ -294,7 +311,7 @@ end mainLine
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_SetInvalidKeyType()
     {
         var code = @"#

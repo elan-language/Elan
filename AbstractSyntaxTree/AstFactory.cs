@@ -19,6 +19,7 @@ public static class AstFactory {
             MethodCallContext c => visitor.Build(c),
             ValueContext c => visitor.Build(c),
             LiteralValueContext c => visitor.Build(c),
+            LiteralKvpContext c => visitor.Build(c),
             LiteralDataStructureContext c => visitor.Build(c),
             VarDefContext c => visitor.Build(c),
             ConstantDefContext c => visitor.Build(c),
@@ -38,6 +39,7 @@ public static class AstFactory {
             ConditionalOpContext c => visitor.Build(c),
             UnaryOpContext c => visitor.Build(c),
             LiteralListContext c => visitor.Build(c),
+            LiteralDictionaryContext c => visitor.Build(c),
             IndexContext c => visitor.Build(c),
             RangeContext c => visitor.Build(c),
             NewInstanceContext c => visitor.Build(c),
@@ -231,6 +233,13 @@ public static class AstFactory {
         throw new NotImplementedException(context.children.First().GetText());
     }
 
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralKvpContext context) {
+        var key = visitor.Visit(context.literal().First());
+        var value = visitor.Visit(context.literal().Last());
+
+        return new KvpNode(key, value);
+    }
+
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralDataStructureContext context) {
         if (context.LITERAL_STRING() is { } ls) {
             return new ValueNode(ls.Symbol.Text, new ValueTypeNode(ValueType.String));
@@ -238,6 +247,10 @@ public static class AstFactory {
 
         if (context.literalList() is { } ll) {
             return visitor.Visit(ll);
+        }
+
+        if (context.literalDictionary() is { } ld) {
+            return visitor.Visit(ld);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -386,6 +399,12 @@ public static class AstFactory {
         var items = context.literal().Select(visitor.Visit);
 
         return new LiteralListNode(items.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralDictionaryContext context) {
+        var items = context.literalKvp().Select(visitor.Visit);
+
+        return new LiteralDictionaryNode(items.ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, IndexContext context) {

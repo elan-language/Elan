@@ -61,6 +61,8 @@ public static class CodeHelpers {
         return node switch {
             ValueNode vn => ValueNodeToCSharpType(vn),
             LiteralListNode lln => $"StandardLibrary.List<{NodeToCSharpType(lln.ItemNodes.First())}>",
+            LiteralDictionaryNode ldn => $"StandardLibrary.ElanDictionary<{NodeToCSharpType(ldn.ItemNodes.First())}>",
+            KvpNode kn => $"{NodeToCSharpType(kn.Key)},{NodeToCSharpType(kn.Value)}",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }
@@ -69,6 +71,7 @@ public static class CodeHelpers {
         return node switch {
             ValueNode => $"const {NodeToCSharpType(node)}",
             LiteralListNode => $"static readonly {NodeToCSharpType(node)}",
+            LiteralDictionaryNode => $"static readonly {NodeToCSharpType(node)}",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }

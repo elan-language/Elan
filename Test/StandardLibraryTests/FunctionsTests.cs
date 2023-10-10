@@ -73,6 +73,13 @@ public class FunctionsTests
     }
 
     [TestMethod]
+    public void AsStringDictionary()
+    {
+        var t = new StandardLibrary. ElanDictionary<char, int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 2));
+        Assert.AreEqual("Dictionary {a:1,b:2}", asString(t));
+    }
+
+    [TestMethod]
     public void AsStringTuple()
     {
         var t = (123, "Richard", 4.3, false, 'x');

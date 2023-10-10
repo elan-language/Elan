@@ -41,6 +41,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             BracketNode n => HandleScope(BuildBracketModel, n),
             CallStatementNode n => HandleScope(BuildCallStatementModel, n),
             LiteralListNode n => HandleScope(BuildLiteralListModel, n),
+            LiteralDictionaryNode n => HandleScope(BuildLiteralDictionaryModel, n),
             IndexedExpressionNode n => HandleScope(BuildIndexedExpressionModel, n),
             RangeExpressionNode n => HandleScope(BuildRangeExpressionModel, n),
             NewInstanceNode n => HandleScope(BuildNewInstanceModel, n),
@@ -59,6 +60,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             PropertyNode n => HandleScope(BuildPropertyModel, n),
             EnumDefNode n  => HandleScope(BuildEnumDefModel, n),
             EnumValueNode n  => HandleScope(BuildEnumValueModel, n),
+            KvpNode n => HandleScope(BuildKvpModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -139,6 +141,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var items = literalListNode.ItemNodes.Select(Visit);
 
         return new LiteralListModel(items, type);
+    }
+
+    private LiteralDictionaryModel BuildLiteralDictionaryModel(LiteralDictionaryNode literalDictionaryNode) {
+        var type = CodeHelpers.NodeToCSharpType(literalDictionaryNode.ItemNodes.First());
+        var items = literalDictionaryNode.ItemNodes.Select(Visit);
+
+        return new LiteralDictionaryModel(items, type);
     }
 
     private ICodeModel BuildOperatorModel(OperatorNode operatorNode) {
@@ -249,5 +258,12 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var value = enumValueNode.Value;
 
         return new EnumValueModel(value, type);
+    }
+
+    private KvpModel BuildKvpModel(KvpNode kvpNode) {
+        var key = Visit(kvpNode.Key);
+        var value = Visit(kvpNode.Value);
+
+        return new KvpModel(key, value);
     }
 }
