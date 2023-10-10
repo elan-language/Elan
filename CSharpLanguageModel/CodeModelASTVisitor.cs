@@ -57,6 +57,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             CaseNode n => HandleScope(BuildCaseModel, n),
             TryCatchNode n => HandleScope(BuildTryCatchModel, n),
             PropertyNode n => HandleScope(BuildPropertyModel, n),
+            EnumDefNode n  => HandleScope(BuildEnumDefModel, n),
+            EnumValueNode n  => HandleScope(BuildEnumValueModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -233,5 +235,19 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var expression = Visit(propertyNode.Expression);
 
         return new PropertyModel(expression, property);
+    }
+
+    private EnumDefModel BuildEnumDefModel(EnumDefNode enumDefNode) {
+        var type = Visit(enumDefNode.Type);
+        var values = enumDefNode.Values.Select(Visit);
+
+        return new EnumDefModel(type, values);
+    }
+
+    private EnumValueModel BuildEnumValueModel(EnumValueNode enumValueNode) {
+        var type = Visit(enumValueNode.TypeNode);
+        var value = enumValueNode.Value;
+
+        return new EnumValueModel(value, type);
     }
 }

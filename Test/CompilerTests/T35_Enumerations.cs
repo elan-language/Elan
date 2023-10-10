@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T35_Enumerations
 {
     #region Passes
@@ -14,7 +14,7 @@ public class T35_Enumerations
         var code = @"
 main
  printLine(Fruit.apple)
- printLine(Fruit.apple)
+ printLine(Fruit.orange)
  printLine(Fruit.pear)
 end main
 
@@ -23,8 +23,28 @@ enumeration Fruit
 end enumeration
 ";
 
-        var objectCode = @"
-"; 
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class GlobalConstants {
+  public enum Fruit {
+    apple,
+    orange,
+    pear,
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(Fruit.apple);
+    printLine(Fruit.orange);
+    printLine(Fruit.pear);
+  }
+}"; 
 
         var parseTree = @"*";
 
@@ -37,13 +57,13 @@ end enumeration
         AssertObjectCodeExecutes(compileData, "apple\r\norange\r\npear\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_valuesOnNewLines()
     {
         var code = @"
 main
  printLine(Fruit.apple)
- printLine(Fruit.apple)
+ printLine(Fruit.orange)
  printLine(Fruit.pear)
 end main
 
@@ -68,7 +88,7 @@ end enumeration
         AssertObjectCodeExecutes(compileData, "apple\r\norange\r\npear\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_useInVariable()
     {
         var code = @"
@@ -99,7 +119,7 @@ end enumeration
         AssertObjectCodeExecutes(compileData, "pear\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_equality()
     {
         var code = @"
@@ -131,7 +151,7 @@ end enumeration
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_SwitchCaseOnEnumeration()
     {
         var code = @"
@@ -168,7 +188,7 @@ end enumeration
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_InvalidTypeName()
     {
         var code = @"
@@ -183,7 +203,7 @@ end enumeration
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_InvalidValueName ()
     {
         var code = @"
@@ -198,7 +218,7 @@ end enumeration
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_AssigningIntsToValues()
     {
         var code = @"
@@ -213,7 +233,7 @@ end enumeration
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_coercionToInt()
     {
         var code = @"
@@ -234,7 +254,7 @@ end enumeration
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_coercionToIntString()
     {
         var code = @"

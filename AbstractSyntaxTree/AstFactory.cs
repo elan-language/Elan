@@ -56,6 +56,9 @@ public static class AstFactory {
             CaseContext c => visitor.Build(c),
             CaseDefaultContext c => visitor.Build(c),
             TryContext c => visitor.Build(c),
+            EnumDefContext c => visitor.Build(c),
+            EnumTypeContext c => visitor.Build(c),
+            EnumValueContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -63,15 +66,14 @@ public static class AstFactory {
     public static IAstNode BuildTerminal(this ElanBaseVisitor<IAstNode> visitor, ITerminalNode node) => new IdentifierNode(node.Symbol.Text);
 
     private static FileNode Build(this ElanBaseVisitor<IAstNode> visitor, FileContext context) {
+        var constants = context.constantDef().Select(visitor.Visit);
+        var procedures = context.procedureDef().Select(visitor.Visit);
+        var functions = context.functionDef().Select(visitor.Visit);
+        var enumerations = context.enumDef().Select(visitor.Visit);
+        var globals = constants.Concat(procedures).Concat(functions).Concat(enumerations).ToImmutableArray();
         var mainNode = context.main().Select(visitor.Visit<MainNode>).Single();
 
-        var constants = context.constantDef().Select(visitor.Visit);
-
-        var procedures = context.procedureDef().Select(visitor.Visit);
-
-        var functions = context.functionDef().Select(visitor.Visit);
-
-        return new FileNode(constants.Concat(procedures).Concat(functions).ToImmutableArray(), mainNode);
+        return new FileNode(globals, mainNode);
     }
 
     private static StatementBlockNode Build(this ElanBaseVisitor<IAstNode> visitor, StatementBlockContext context) {
@@ -89,8 +91,6 @@ public static class AstFactory {
         new CallStatementNode(visitor.Visit(context.expression()));
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionContext context) {
-       
-
         if (context.DOT() is not null) {
             if (context.methodCall() is { } dmc) {
                 var ms = visitor.Visit<MethodCallNode>(dmc);
@@ -141,8 +141,7 @@ public static class AstFactory {
             return visitor.Visit(ni);
         }
 
-        if (context.NL() is not null)
-        {
+        if (context.NL() is not null) {
             return visitor.Visit(context.expression().Single());
         }
 
@@ -223,6 +222,10 @@ public static class AstFactory {
 
         if (context.BOOL_VALUE() is { } b) {
             return new ValueNode(b.Symbol.Text, new ValueTypeNode(ValueType.Bool));
+        }
+
+        if (context.enumValue() is { } ev) {
+            return visitor.Visit(ev);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -532,6 +535,22 @@ public static class AstFactory {
 
         return new TryCatchNode(statementBlocks.First(), id, statementBlocks.Last());
     }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumDefContext context) {
+        var ids = context.IDENTIFIER().Select(visitor.Visit);
+        var type = visitor.Visit(context.enumType());
+
+        return new EnumDefNode(type, ids.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumValueContext context) {
+        var type = visitor.Visit(context.enumType());
+        var id = context.IDENTIFIER();
+
+        return new EnumValueNode(id.GetText(), type);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumTypeContext context) => visitor.Visit(context.TYPENAME());
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());
 }
