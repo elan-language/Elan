@@ -10,7 +10,7 @@ public class T17_Dictionaries
     #region Passes
 
     [TestMethod]
-    public void Pass_LiteralConstantAndAccessingElement() {
+    public void Pass_LiteralConstantAndPrinting() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -46,6 +46,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Dictionary {a:1,b:3,z:10}\r\n");
     }
+
 
     [TestMethod, Ignore]
     public void Pass_AccessByKey()
@@ -185,7 +186,30 @@ end mainLine
         AssertObjectCodeExecutes(compileData, "{'a':1, 'b':3, 'z':10}\r\n{'a':1,'z':10}\r\n");
     }
 
+    [TestMethod, Ignore]
+    public void Pass_CreateEmptyDictionary()
+    {
+        var code = @"#
+main
+  var a = new Dictionary<String, Int>()
+  var b = a.set(""Foo"",1)
+  b = set(""Bar"", 3)
+  printLine(b)
+end main
+";
 
+        var objectCode = @"";
+
+
+        var parseTree = @"";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, @"Dictionary {Foo:1,Bar:3}\r\n"); 
+    }
     #endregion
 
     #region Fails
