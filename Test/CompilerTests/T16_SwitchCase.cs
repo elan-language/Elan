@@ -1,4 +1,5 @@
-﻿using Compiler;
+﻿using System.Xml.Serialization;
+using Compiler;
 
 namespace Test.CompilerTests;
 
@@ -70,7 +71,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "a\r\nb\r\nc\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, XmlIgnore]
     public void Pass_BracketsIgnored()
     {
         var code = @"
