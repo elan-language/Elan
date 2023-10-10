@@ -47,6 +47,45 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
     }
 
+
+    [TestMethod]
+    public void Pass_literalListOfString()
+    {
+        var code = @"
+main
+    var a = {""Foo"", ""Bar""}
+    printLine(a)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = new StandardLibrary.List<string>(@$""Foo"", @$""Bar"");
+    printLine(a);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure (literalList { (literal (literalDataStructure ""Foo"")) , (literal (literalDataStructure ""Bar"")) })))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "List {Foo,Bar}\r\n");
+    }
+
     [TestMethod]
     public void Pass_literalListWithCoercion()
     {
