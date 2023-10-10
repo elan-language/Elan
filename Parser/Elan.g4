@@ -155,8 +155,8 @@ try:
 
 switch: 
 	NL SWITCH expression
-	  case*
-      caseDefault?
+	  case+
+      caseDefault
 	NL END SWITCH
 	;
 	

@@ -173,7 +173,45 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
+    [TestMethod]
+    public void Pass_5()
+    {
+        var code = @"#
+main
+  var x = 0.7
+  var y = 3 + 4 *
+    1 + 2
+  printLine(y)
+end main
+";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = 0.7;
+    var y = 3 + 4 * 1 + 2;
+    printLine(y);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalValue 0.7))))) (varDef var (assignableValue y) = (expression (expression (expression (value (literal (literalValue 3)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 4))))) (binaryOp (arithmeticOp *)) (expression (expression (expression (value (literal (literalValue 1)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 2)))))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "9\r\n");
+    }
 
     #endregion
 

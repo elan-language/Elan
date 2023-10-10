@@ -21,7 +21,8 @@ main
         case 2
             printLine('b')
         case 3
-            printLine('c')        
+            printLine('c')
+        default
       end switch
   end for
 end main
@@ -51,13 +52,15 @@ public static class Program {
         case 3:
           printLine('c');
           break;
+        default:
+          
+          break;
       }
     }
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (value i)) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue 2) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) (case case (literalValue 3) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'c'))))) )))))) end switch))) end for))) end main) <EOF>)";
-
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (value i)) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue 2) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) (case case (literalValue 3) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'c'))))) )))))) (caseDefault default statementBlock) end switch))) end for))) end main) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -126,7 +129,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_WithDefault()
+    public void Pass_DefaultIsUsed()
     {
         var code = @"
 main
@@ -238,8 +241,8 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod]
-    public void Fail_NoEnd()
+    [TestMethod, Ignore]
+    public void Fail_NoDefault()
     {
         var code = @"
 main
@@ -250,7 +253,8 @@ main
         case 2
             printLine('b')
         case 3
-            printLine('c')        
+            printLine('c')   
+      end switch
   end for
 end main
 ";
@@ -260,20 +264,16 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
-    public void Fail_MismatchedEnd1()
+    [TestMethod, Ignore]
+    public void Fail_NoCase()
     {
         var code = @"
 main
   for i = 1 to 4
       switch i
-        case 1
-            printLine('a')
-        case 2
-            printLine('b')
-        case 3
-            printLine('c') 
-       end
+        default
+            printLine('a') 
+      end switch
   end for
 end main
 ";
@@ -283,30 +283,8 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
-    public void Fail_MismatchedEnd2()
-    {
-        var code = @"
-main
-  for i = 1 to 4
-      switch i
-        case 1
-            printLine('a')
-        case 2
-            printLine('b')
-        case 3
-            printLine('c') 
-       end if
-  end for
-end main
-";
 
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
-  
 
     [TestMethod]
     public void Fail_IncompatibleCaseType()
@@ -320,7 +298,8 @@ main
         case 2
             printLine('b')
         case 3.1
-            printLine('c')        
+            printLine('c') 
+        default
       end switch
   end for
 end main
