@@ -95,7 +95,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private SwitchStatementModel BuildSwitchStatementModel(SwitchStatementNode switchStatementNode) {
         var expression = Visit(switchStatementNode.Expression);
         var cases = switchStatementNode.Cases.Select(Visit);
-        var defaultCase = switchStatementNode.DefaultCase is { } dc ? Visit(dc) : null;
+        var defaultCase = Visit(switchStatementNode.DefaultCase);
 
         return new SwitchStatementModel(expression, cases, defaultCase);
     }

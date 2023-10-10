@@ -71,7 +71,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "a\r\nb\r\nc\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_BracketsIgnored()
     {
         var code = @"
@@ -83,7 +83,8 @@ main
         case 2
             printLine('b')
         case 3
-            printLine('c')        
+            printLine('c')
+        default
       end switch
   end for
 end main
@@ -113,12 +114,15 @@ public static class Program {
         case 3:
           printLine('c');
           break;
+        default:
+          
+          break;
       }
     }
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (bracketedExpression ( (expression (value i)) ))) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue 2) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) (case case (literalValue 3) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'c'))))) )))))) end switch))) end for))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (bracketedExpression ( (expression (value i)) ))) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue 2) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) (case case (literalValue 3) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'c'))))) )))))) (caseDefault default statementBlock) end switch))) end for))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -242,7 +246,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_NoDefault()
     {
         var code = @"
@@ -265,7 +269,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_NoCase()
     {
         var code = @"

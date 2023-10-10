@@ -342,7 +342,7 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SwitchContext context) {
         var expression = visitor.Visit(context.expression());
         var cases = context.@case().Select(visitor.Visit);
-        var defaultCase = context.caseDefault() is { } cd ? visitor.Visit(cd) : null;
+        var defaultCase = visitor.Visit(context.caseDefault());
 
         return new SwitchStatementNode(expression, cases.ToImmutableArray(), defaultCase);
     }

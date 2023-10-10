@@ -2,18 +2,14 @@
 
 using static CodeHelpers;
 
-public record SwitchStatementModel(ICodeModel Expression, IEnumerable<ICodeModel> ValueCases, ICodeModel? DefaultCase) : ICodeModel {
-
-    private string DefCase(int indent) {
-        return DefaultCase is null ? "" : $"\r\n{DefaultCase.ToString(indent)}";
-    }
-
+public record SwitchStatementModel(ICodeModel Expression, IEnumerable<ICodeModel> ValueCases, ICodeModel DefaultCase) : ICodeModel {
     public string ToString(int indent) {
         // check data 
 
+        int indent1 = indent + 1;
         return $@"{Indent(indent)}switch ({Expression}) {{
-{ValueCases.AsLineSeparatedString(indent + 1)}{DefCase(indent + 1)}
+{ValueCases.AsLineSeparatedString(indent + 1)}
+{DefaultCase.ToString(indent1)}
 {Indent(indent)}}}";
     }
-
 }
