@@ -176,7 +176,12 @@ public static class SystemCalls
     }
     #endregion
 
-    #region Guid
-    //public static string Guid() => Guid.NewGuid().ToString();   
+    #region Exception
+
+    public static void throwException(string message) {
+        throw new ElanException(message);
+    }
+
     #endregion
+
 }

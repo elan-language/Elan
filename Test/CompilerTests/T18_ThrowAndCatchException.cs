@@ -2,8 +2,8 @@
 namespace Test.CompilerTests;
 using static Helpers;
 
-[TestClass, Ignore]
-public class T17_ThrowAndCatchException
+[TestClass]
+public class T18_ThrowAndCatchException
 {
     #region Passes
     [TestMethod]
@@ -15,9 +15,24 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 1))))) )))) (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2))))) ))))) end procedure) <EOF>)";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    throwException(@$""Foo"");
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall throwException ( (argumentList (expression (value (literal (literalDataStructure ""Foo""))))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -25,10 +40,10 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "?");//Exception thrown with message Foo
+        AssertObjectCodeFails(compileData, "Unhandled exception. StandardLibrary.ElanException: Foo");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_ThrowExceptionInProcedure()
     {
         var code = @"
@@ -54,7 +69,7 @@ end procedure
         AssertObjectCodeExecutes(compileData, "?");//Exception thrown
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_ThrowExceptionInFunction()
     {
         var code = @"
@@ -80,7 +95,7 @@ end function
         AssertObjectCodeExecutes(compileData, "?");//Exception thrown
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_CatchException()
     {
         var code = @"
@@ -111,7 +126,7 @@ end procedure
         AssertObjectCodeExecutes(compileData, "caught\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_CatchSystemGeneratedException()
     {
         var code = @"
@@ -143,7 +158,7 @@ end main
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_catchMissingVariable()
     {
         var code = @"
