@@ -46,7 +46,7 @@ public static class Program {
   }
 }"; 
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . orange)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . pear)))))) ))))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -57,7 +57,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "apple\r\norange\r\npear\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_valuesOnNewLines()
     {
         var code = @"
@@ -74,10 +74,30 @@ enumeration Fruit
 end enumeration
 ";
 
-        var objectCode = @"
-";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class GlobalConstants {
+  public enum Fruit {
+    apple,
+    orange,
+    pear,
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(Fruit.apple);
+    printLine(Fruit.orange);
+    printLine(Fruit.pear);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . orange)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . pear)))))) ))))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -88,7 +108,7 @@ end enumeration
         AssertObjectCodeExecutes(compileData, "apple\r\norange\r\npear\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_useInVariable()
     {
         var code = @"
@@ -105,10 +125,30 @@ enumeration Fruit
 end enumeration
 ";
 
-        var objectCode = @"
-";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class GlobalConstants {
+  public enum Fruit {
+    apple,
+    orange,
+    pear,
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = Fruit.apple;
+    x = Fruit.pear;
+    printLine(x);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple)))))) (assignment (assignableValue x) = (expression (value (literal (literalValue (enumValue (enumType Fruit) . pear)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -119,7 +159,7 @@ end enumeration
         AssertObjectCodeExecutes(compileData, "pear\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_equality()
     {
         var code = @"
@@ -136,10 +176,30 @@ enumeration Fruit
 end enumeration
 ";
 
-        var objectCode = @"
-";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class GlobalConstants {
+  public enum Fruit {
+    apple,
+    orange,
+    pear,
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = Fruit.apple;
+    printLine(x == Fruit.apple);
+    printLine(x == Fruit.pear);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple))))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value (literal (literalValue (enumValue (enumType Fruit) . pear))))))) ))))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -151,21 +211,21 @@ end enumeration
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_SwitchCaseOnEnumeration()
     {
         var code = @"
 main
-     var f = Fruit.orange
+      var f = Fruit.orange
       switch f
         case Fruit.apple
             printLine('a')
         case Fruit.orange
             printLine('o')
         case Fruit.pear
-            printLine('p')        
+            printLine('p')
+        default
       end switch
-  end for
 end main
 
 enumeration Fruit
@@ -173,9 +233,42 @@ enumeration Fruit
 end enumeration
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class GlobalConstants {
+  public enum Fruit {
+    apple,
+    orange,
+    pear,
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = Fruit.orange;
+    switch (f) {
+      case Fruit.apple:
+        printLine('a');
+        break;
+      case Fruit.orange:
+        printLine('o');
+        break;
+      case Fruit.pear:
+        printLine('p');
+        break;
+      default:
+        
+        break;
+    }
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (value (literal (literalValue (enumValue (enumType Fruit) . orange)))))) (proceduralControlFlow (switch switch (expression (value f)) (case case (literalValue (enumValue (enumType Fruit) . apple)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue (enumValue (enumType Fruit) . orange)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'o'))))) )))))) (case case (literalValue (enumValue (enumType Fruit) . pear)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'p'))))) )))))) (caseDefault default statementBlock) end switch))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
