@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Serialization;
 
 namespace Test.CompilerTests;
 
@@ -278,10 +279,57 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "o\r\n");
     }
+
+    [TestMethod]
+    public void Pass_coercionToIntString()
+    {
+        var code = @"
+main
+  var a = ""Eat more "" + Fruit.apple + ""s!""
+  printLine(a)
+end main
+
+enumeration Fruit
+    apple, orange, pear
+end enumeration
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class GlobalConstants {
+  public enum Fruit {
+    apple,
+    orange,
+    pear,
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = @$""Eat more "" + Fruit.apple + @$""s!"";
+    printLine(a);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Eat more apples!\r\n");
+    }
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_InvalidTypeName()
     {
         var code = @"
@@ -296,7 +344,7 @@ end enumeration
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_InvalidValueName ()
     {
         var code = @"
@@ -311,7 +359,7 @@ end enumeration
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_AssigningIntsToValues()
     {
         var code = @"
@@ -326,7 +374,7 @@ end enumeration
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_coercionToInt()
     {
         var code = @"
@@ -344,28 +392,10 @@ end enumeration
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Fail_coercionToIntString()
-    {
-        var code = @"
-main
- var a = ""Eat more "" + Fruit.apple + ""s!""
-end main
-
-enumeration Fruit
-    apple, orange, pear
-end enumeration
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
+   
     #endregion
 }
