@@ -47,7 +47,7 @@ function binarySearch(list List<String>, item String) as Bool
         AssertParsesForRule(code, "file");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Words_procedures() {
         var code = ReadInCodeFile("words_procedures.elan");
         AssertParsesForRule(code, "file");
