@@ -129,7 +129,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_WithDefault()
+    public void Pass_DefaultIsUsed()
     {
         var code = @"
 main
@@ -242,7 +242,7 @@ public static class Program {
 
     #region Fails
     [TestMethod]
-    public void Fail_NoEnd()
+    public void Fail_NoDefault()
     {
         var code = @"
 main
@@ -253,7 +253,8 @@ main
         case 2
             printLine('b')
         case 3
-            printLine('c')        
+            printLine('c')   
+      end switch
   end for
 end main
 ";
@@ -264,19 +265,15 @@ end main
     }
 
     [TestMethod]
-    public void Fail_MismatchedEnd1()
+    public void Fail_NoCase()
     {
         var code = @"
 main
   for i = 1 to 4
       switch i
-        case 1
-            printLine('a')
-        case 2
-            printLine('b')
-        case 3
-            printLine('c') 
-       end
+        default
+            printLine('a') 
+      end switch
   end for
 end main
 ";
@@ -286,30 +283,8 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
-    public void Fail_MismatchedEnd2()
-    {
-        var code = @"
-main
-  for i = 1 to 4
-      switch i
-        case 1
-            printLine('a')
-        case 2
-            printLine('b')
-        case 3
-            printLine('c') 
-       end if
-  end for
-end main
-";
 
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
-  
 
     [TestMethod]
     public void Fail_IncompatibleCaseType()
@@ -323,7 +298,8 @@ main
         case 2
             printLine('b')
         case 3.1
-            printLine('c')        
+            printLine('c') 
+        default
       end switch
   end for
 end main
