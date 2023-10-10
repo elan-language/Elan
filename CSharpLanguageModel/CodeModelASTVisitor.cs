@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Headers;
-using AbstractSyntaxTree;
+﻿using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using CSharpLanguageModel.Models;
 
@@ -55,7 +54,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             MethodSignatureNode n => HandleScope(BuildMethodSignatureModel, n),
             ParameterNode n => HandleScope(BuildParameterModel, n),
             SwitchStatementNode n => HandleScope(BuildSwitchStatementModel, n),
-            CaseNode n =>  HandleScope(BuildCaseModel, n),
+            CaseNode n => HandleScope(BuildCaseModel, n),
+            TryCatchNode n => HandleScope(BuildTryCatchModel, n),
+            PropertyNode n => HandleScope(BuildPropertyModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -72,7 +73,6 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var passByRef = procedureCallNode.Parameters.Select(p => p is IdentifierNode);
 
         var zip = parameters.Zip(passByRef);
-
 
         return new ProcedureCallModel(Visit(procedureCallNode.Id), zip);
     }
@@ -202,7 +202,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private MethodSignatureModel BuildMethodSignatureModel(MethodSignatureNode procedureDefNode) {
         var id = Visit(procedureDefNode.Id);
         var parameters = procedureDefNode.Parameters.Select(Visit);
-        var returnType = procedureDefNode.ReturnType is {} rt ?     Visit(rt) : null;
+        var returnType = procedureDefNode.ReturnType is { } rt ? Visit(rt) : null;
         return new MethodSignatureModel(id, parameters, returnType);
     }
 
@@ -214,9 +214,24 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private CaseModel BuildCaseModel(CaseNode caseNode) {
-        var id =  caseNode.Value  is not null ?  Visit(caseNode.Value) : null;
+        var id = caseNode.Value is not null ? Visit(caseNode.Value) : null;
         var type = Visit(caseNode.StatementBlock);
 
         return new CaseModel(id, type);
+    }
+
+    private TryCatchModel BuildTryCatchModel(TryCatchNode tryCatchNode) {
+        var id = Visit(tryCatchNode.Id);
+        var triedCode = Visit(tryCatchNode.TriedCode);
+        var caughtCode = Visit(tryCatchNode.CaughtCode);
+
+        return new TryCatchModel(triedCode, id, caughtCode);
+    }
+
+    private PropertyModel BuildPropertyModel(PropertyNode propertyNode) {
+        var property = Visit(propertyNode.Property);
+        var expression = Visit(propertyNode.Expression);
+
+        return new PropertyModel(expression, property);
     }
 }

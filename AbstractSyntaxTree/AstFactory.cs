@@ -55,6 +55,7 @@ public static class AstFactory {
             ParameterContext c => visitor.Build(c),
             CaseContext c => visitor.Build(c),
             CaseDefaultContext c => visitor.Build(c),
+            TryContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -95,6 +96,12 @@ public static class AstFactory {
                 var ms = visitor.Visit<MethodCallNode>(dmc);
                 var exp = visitor.Visit(context.expression().First());
                 return new MethodCallNode(ms, exp) { DotCalled = true };
+            }
+
+            if (context.IDENTIFIER() is { } id) {
+                var exp = visitor.Visit(context.expression().First());
+                var prop = visitor.Visit(id);
+                return new PropertyNode(exp, prop);
             }
         }
 
@@ -318,6 +325,10 @@ public static class AstFactory {
             return visitor.Visit(sw);
         }
 
+        if (context.@try() is { } t) {
+            return visitor.Visit(t);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -513,6 +524,13 @@ public static class AstFactory {
         var statementBlock = visitor.Visit(context.statementBlock());
 
         return new CaseNode(statementBlock);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TryContext context) {
+        var statementBlocks = context.statementBlock().Select(visitor.Visit).ToArray();
+        var id = visitor.Visit(context.IDENTIFIER());
+
+        return new TryCatchNode(statementBlocks.First(), id, statementBlocks.Last());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());

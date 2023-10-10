@@ -43,7 +43,7 @@ public static class Program {
         AssertObjectCodeFails(compileData, "Unhandled exception. StandardLibrary.ElanException: Foo");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ThrowExceptionInProcedure()
     {
         var code = @"
@@ -56,35 +56,26 @@ procedure foo()
 end procedure
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 1))))) )))) (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2))))) ))))) end procedure) <EOF>)";
+public static partial class GlobalConstants {
+  public static void foo() {
+    throwException(@$""Foo"");
+  }
+}
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "?");//Exception thrown
-    }
+public static class Program {
+  private static void Main(string[] args) {
+    foo();
+  }
+}";
 
-    [TestMethod, Ignore]
-    public void Pass_ThrowExceptionInFunction()
-    {
-        var code = @"
-main
-   foo()
-end main
-
-function foo(x Int) as Int
-  throwException(""Foo"")
-end function
-";
-
-        var objectCode = @"";
-
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 1))))) )))) (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2))))) ))))) end procedure) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall foo ( ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall throwException ( (argumentList (expression (value (literal (literalDataStructure ""Foo""))))) ))))) end procedure) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -92,10 +83,10 @@ end function
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "?");//Exception thrown
+        AssertObjectCodeFails(compileData, "Unhandled exception. StandardLibrary.ElanException: Foo");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_CatchException()
     {
         var code = @"
@@ -113,9 +104,33 @@ procedure foo()
 end procedure
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 1))))) )))) (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2))))) ))))) end procedure) <EOF>)";
+public static partial class GlobalConstants {
+  public static void foo() {
+    throwException(@$""Foo"");
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    try {
+      foo();
+      printLine(@$""not caught"");
+    }
+    catch (Exception _e) {
+      var e = new StandardLibrary.ElanException(_e);
+      printLine(@$""caught"");
+    }
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (try try (statementBlock (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""not caught""))))) ))))) catch e (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""caught""))))) ))))) end try))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall throwException ( (argumentList (expression (value (literal (literalDataStructure ""Foo""))))) ))))) end procedure) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -126,7 +141,7 @@ end procedure
         AssertObjectCodeExecutes(compileData, "caught\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_CatchSystemGeneratedException()
     {
         var code = @"
@@ -134,17 +149,41 @@ main
   try
      var x = 1
      var y = 0
-     var z = x / y
-     printLine(""not caught"")
+     var z = x div y
+     printLine(@$""not caught"");
   catch e
     printLine(e)
   end try
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 1))))) )))) (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2))))) ))))) end procedure) <EOF>)";
+public static partial class GlobalConstants {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    try {
+      var x = 1;
+      var y = 0;
+      var z = x / y;
+      printLine(@$""not caught"");
+    }
+    catch (Exception _e) {
+      var e = new StandardLibrary.ElanException(_e);
+      printLine(e);
+    }
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (try try (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalValue 1))))) (varDef var (assignableValue y) = (expression (value (literal (literalValue 0))))) (varDef var (assignableValue z) = (expression (expression (value x)) (binaryOp (arithmeticOp div)) (expression (value y)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""not caught""))))) ))))) catch e (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value e))) ))))) end try))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -152,13 +191,88 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "?\r\n"); //Some indication of division by zero
+        AssertObjectCodeExecutes(compileData, "Attempted to divide by zero.\r\n"); 
+    }
+
+    [TestMethod]
+    public void Pass_UseException()
+    {
+        var code = @"
+main
+  try
+     foo()
+     printLine(""not caught"")
+  catch e
+    printLine(e.message)
+  end try
+end main
+
+procedure foo()
+  throwException(""Foo"")
+end procedure
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static GlobalConstants;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class GlobalConstants {
+  public static void foo() {
+    throwException(@$""Foo"");
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    try {
+      foo();
+      printLine(@$""not caught"");
+    }
+    catch (Exception _e) {
+      var e = new StandardLibrary.ElanException(_e);
+      printLine(e.message);
+    }
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (try try (statementBlock (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""not caught""))))) ))))) catch e (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value e)) . message)) ))))) end try))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall throwException ( (argumentList (expression (value (literal (literalDataStructure ""Foo""))))) ))))) end procedure) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Foo\r\n");
     }
 
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+
+
+    [TestMethod]
+    public void Fail_ThrowExceptionInFunction()
+    {
+        var code = @"
+main
+   var s = foo()
+end main
+
+function foo(x String) as String
+  throwException(x)
+  return x
+end function
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertDoesNotCompile(compileData);
+    }
+    [TestMethod]
     public void Fail_catchMissingVariable()
     {
         var code = @"
