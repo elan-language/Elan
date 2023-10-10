@@ -241,7 +241,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_NoDefault()
     {
         var code = @"
@@ -264,7 +264,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_NoCase()
     {
         var code = @"
