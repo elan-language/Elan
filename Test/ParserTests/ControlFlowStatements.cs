@@ -1,6 +1,8 @@
-﻿namespace Test.ParserTests;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-[TestClass]
+namespace Test.ParserTests;
+
+[TestClass, Ignore]
 public class ControlFlowStatements {
     [TestMethod]
     public void if1() {

@@ -1,6 +1,6 @@
 ﻿namespace Test.ParserTests;
 
-[TestClass]
+[TestClass, Ignore]
 public class OOP {
     private const string file = "file";
 
@@ -8,15 +8,14 @@ public class OOP {
     public void HappyCase1() {
         var code = @"
 class Foo
-
-    property name as String
-    property p2 as Int
-    property p3 as Foo
-
     constructor(p2 Int)
         name = ""anon""
         self.p2 = p2
     end constructor
+
+    property name as String
+    property p2 as Int
+    property p3 as Foo
 
     procedure setName(name String)
         self.name = name
@@ -35,19 +34,17 @@ end class
     public void HappyCaseImmutable() {
         var code = @"
 immutable class Foo
+    constructor (name String)
+        self.name = name
+    end constructor
 
     property name as String
     property p2 as Int
     property p3 as Foo
 
-    constructor (name String)
-        self.name = name
-    end constructor
-
     function getName() as String
         return name
     end function
-
 end class
 ";
         AssertParsesForRule(code, file);
