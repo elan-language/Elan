@@ -71,7 +71,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "a\r\nb\r\nc\r\n");
     }
 
-    [TestMethod, XmlIgnore]
+    [TestMethod, Ignore]
     public void Pass_BracketsIgnored()
     {
         var code = @"
