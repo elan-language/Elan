@@ -33,9 +33,9 @@ procedureDef:
     NL END PROCEDURE
 	;
 
-procedureSignature: IDENTIFIER OPEN_BRACKET NL? parameterList? CLOSE_BRACKET;
+procedureSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET;
 
-parameterList: parameter  (COMMA parameter)*;
+parameterList: parameter (COMMA parameter)*;
 
 parameter: NL? IDENTIFIER type; 
 
@@ -54,7 +54,7 @@ expressionFunction:
 
 letIn: LET NL? assignableValue ASSIGN expression (COMMA assignableValue ASSIGN expression)* NL? IN NL?; 
    
-functionSignature: IDENTIFIER OPEN_BRACKET NL? parameterList? NL? CLOSE_BRACKET NL? AS NL? type;
+functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET NL? AS NL? type;
 
 // CONSTANTS
 constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
@@ -70,23 +70,31 @@ enumType: TYPENAME;
 enumValue:	enumType DOT IDENTIFIER;
 
 // CLASSES
-classDef: abstractClass | mutableClass | immutableClass;
+classDef: mutableClass | abstractClass| immutableClass | abstractImmutableClass;
 
 mutableClass: 
 	NL CLASS TYPENAME inherits?
-    (constructor |property | functionDef | procedureDef )*	
+	constructor
+    (property | functionDef | procedureDef )*	
     NL END CLASS
-	;
-
-immutableClass: 
-	NL IMMUTABLE CLASS TYPENAME inherits?
-    (constructor |property | functionDef )*
-    NL END CLASS 
 	;
 
 abstractClass:
 	NL ABSTRACT CLASS TYPENAME inherits?
     (property | NL FUNCTION functionSignature | NL PROCEDURE procedureSignature)*
+    NL END CLASS
+	;
+
+immutableClass: 
+	NL IMMUTABLE CLASS TYPENAME inherits?
+	constructor
+    (property | functionDef )*
+    NL END CLASS 
+	;
+
+abstractImmutableClass:
+	NL ABSTRACT IMMUTABLE CLASS TYPENAME inherits?
+    (property | NL FUNCTION functionSignature)*
     NL END CLASS
 	;
  
@@ -95,7 +103,7 @@ inherits: INHERITS type (COMMA type)*;
 property: NL PRIVATE? PROPERTY IDENTIFIER AS type; 
 
 constructor: 
-	NL CONSTRUCTOR (OPEN_BRACKET NL? parameterList? NL? CLOSE_BRACKET)? 
+	NL CONSTRUCTOR OPEN_BRACKET parameterList? CLOSE_BRACKET
     statementBlock
 	NL END CONSTRUCTOR
 	;
