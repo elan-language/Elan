@@ -4,9 +4,9 @@ using System.Collections.Immutable;
 namespace StandardLibrary;
 
 public interface IDictionary : IEnumerable {
-    public IEnumerable<object> Keys { get; }
+    public IEnumerable<object> ObjectKeys { get; }
 
-    public IEnumerable<object> Values { get; }
+    public IEnumerable<object> ObjectValues { get; }
 }
 
 public class ElanDictionary<TKey, TValue> : IDictionary where TKey : notnull {
@@ -21,7 +21,14 @@ public class ElanDictionary<TKey, TValue> : IDictionary where TKey : notnull {
     private ElanDictionary(ImmutableDictionary<TKey, TValue> dictionary) => wrappedDictionary = dictionary;
     public IEnumerator GetEnumerator() => wrappedDictionary.GetEnumerator();
 
-    public IEnumerable<object> Keys => wrappedDictionary.Keys.Cast<object>();
 
-    public IEnumerable<object> Values => wrappedDictionary.Values.Cast<object>();
+    public IEnumerable<TKey> Keys => wrappedDictionary.Keys;
+
+    public IEnumerable<TValue> Values => wrappedDictionary.Values;
+
+    public int Count => wrappedDictionary.Count;
+
+    public TValue this[TKey index] => wrappedDictionary[index];
+    public IEnumerable<object> ObjectKeys => Keys.Cast<object>();
+    public IEnumerable<object> ObjectValues => Values.Cast<object>();
 }

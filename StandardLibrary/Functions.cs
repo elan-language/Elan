@@ -22,6 +22,14 @@ public static class Functions {
 
     #endregion
 
+    #region dictionary
+
+   // public static IEnumerable<TKey> keys<TKey, TValue>(ElanDictionary<TKey, TValue> l) where TKey : notnull => l.Keys;
+
+    #endregion
+
+
+
     #region Math
 
     public static double aCos(double d) => Math.Cos(d);
@@ -124,8 +132,8 @@ public static class Functions {
     }
 
     public static string asString(IDictionary d) {
-        var keys = d.Keys.Select(asString).ToArray();
-        var values = d.Values.Select(asString).ToArray();
+        var keys = d.ObjectKeys.Select(asString).ToArray();
+        var values = d.ObjectValues.Select(asString).ToArray();
         var ss = keys.Zip(values).Select(i => $"{i.First}:{i.Second}").ToArray();
 
         return ss.Any() ? $"{Type(d)} {{{string.Join(',', ss)}}}" : EmptyMessage(d);
