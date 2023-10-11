@@ -164,7 +164,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_emptyList()
     {
         var code = @"
@@ -448,7 +448,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_createEmptyListUsingConstructor()
     {
         var code = @"

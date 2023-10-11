@@ -325,12 +325,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Dictionary {a:1,b:3,z:10}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_CreateEmptyDictionary()
     {
         var code = @"#
 main
-  var a = new Dictionary<String, Int>()
+  var a = Dictionary<String, Int>()
   var b = a.set(""Foo"",1)
   b = b.set(""Bar"", 3)
   print(b.length())
