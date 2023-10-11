@@ -366,7 +366,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Dictionary {Bar:3,Foo:1}\r\n"); 
+        AssertObjectCodeExecutes(compileData, "Dictionary {Foo:3,Bar:1}\r\n"); 
     }
     #endregion
 
