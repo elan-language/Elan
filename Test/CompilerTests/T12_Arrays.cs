@@ -8,7 +8,7 @@ using static Helpers;
 public class T12_Arrays {
     #region passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DeclareAnEmptyArrayBySizeAndCheckLength() {
         var code = @"
 main
@@ -35,7 +35,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type String) >) ( 3 )))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) . (methodCall length ( )))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition Array (genericSpecifier < (type String) >) ( 3 )))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) . (methodCall length ( )))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -46,7 +46,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ConfirmStringElementsInitializedToEmptyStringNotNull() {
         var code = @"
 main
@@ -75,7 +75,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type String) >) ( 3 )))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (expression (value a)) (index [ (expression (value (literal (literalValue 0)))) ])) . (methodCall length ( )))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition Array (genericSpecifier < (type String) >) ( 3 )))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (expression (value a)) (index [ (expression (value (literal (literalValue 0)))) ])) . (methodCall length ( )))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -86,7 +86,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "0\r\nArray {,,}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_SetAndReadElements() {
         var code = @"
 main
@@ -119,7 +119,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type String) >) ( 3 )))))) (assignment (assignableValue a (index [ (expression (value (literal (literalValue 0)))) ])) = (expression (value (literal (literalDataStructure ""foo""))))) (assignment (assignableValue a (index [ (expression (value (literal (literalValue 2)))) ])) = (expression (value (literal (literalDataStructure ""yon""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 0)))) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 2)))) ]))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition Array (genericSpecifier < (type String) >) ( 3 )))))) (assignment (assignableValue a (index [ (expression (value (literal (literalValue 0)))) ])) = (expression (value (literal (literalDataStructure ""foo""))))) (assignment (assignableValue a (index [ (expression (value (literal (literalValue 2)))) ])) = (expression (value (literal (literalDataStructure ""yon""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 0)))) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 2)))) ]))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -157,7 +157,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type String) >) ( ) (listDefinition { (expression (value (literal (literalDataStructure ""foo"")))) , (expression (value (literal (literalDataStructure ""bar"")))) , (expression (value (literal (literalDataStructure ""yon"")))) })))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) . (methodCall length ( )))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalDataStructure ""foo"")) , (literal (literalDataStructure ""bar"")) , (literal (literalDataStructure ""yon"")) }))))) . (methodCall asArray ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) . (methodCall length ( )))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
