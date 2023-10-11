@@ -1,3 +1,3 @@
-﻿namespace SymbolTable.SymbolTypes; 
+﻿namespace SymbolTable.SymbolTypes;
 
 public interface ISymbolType { }

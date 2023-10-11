@@ -58,8 +58,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             CaseNode n => HandleScope(BuildCaseModel, n),
             TryCatchNode n => HandleScope(BuildTryCatchModel, n),
             PropertyNode n => HandleScope(BuildPropertyModel, n),
-            EnumDefNode n  => HandleScope(BuildEnumDefModel, n),
-            EnumValueNode n  => HandleScope(BuildEnumValueModel, n),
+            EnumDefNode n => HandleScope(BuildEnumDefModel, n),
+            EnumValueNode n => HandleScope(BuildEnumValueModel, n),
             PairNode n => HandleScope(BuildKvpModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")

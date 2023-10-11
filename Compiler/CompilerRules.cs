@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using AbstractSyntaxTree;
+﻿using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 using SymbolTable.Symbols;
@@ -47,7 +46,6 @@ public static class CompilerRules {
         return nodes.SelectMany(n => n is StatementBlockNode ? n.Children : new[] { n });
     }
 
-
     public static string? CannotMutateControlVariableRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is AssignmentNode an) {
@@ -94,7 +92,6 @@ public static class CompilerRules {
         if (leafNode is AssignmentNode an) {
             var otherNodes = nodes.SkipLast(1).Expand().ToArray();
             if (otherNodes.Any(n => n is FunctionDefNode)) {
-
                 var varNodes = otherNodes.OfType<VarDefNode>();
 
                 if (!varNodes.Any(vn => Match(vn.Id, an.Id))) {
@@ -105,8 +102,6 @@ public static class CompilerRules {
 
         return null;
     }
-
-
 
     public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();

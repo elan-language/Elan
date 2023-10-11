@@ -1,6 +1,6 @@
 ﻿namespace Test.ParserTests;
 
-[TestClass, Ignore]
+[TestClass] [Ignore]
 public class TestCodeFiles {
     [TestMethod]
     public void Wordle() {
@@ -47,7 +47,7 @@ function binarySearch(list List<String>, item String) as Bool
         AssertParsesForRule(code, "file");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Words_procedures() {
         var code = ReadInCodeFile("words_procedures.elan");
         AssertParsesForRule(code, "file");

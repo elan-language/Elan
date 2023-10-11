@@ -21,7 +21,7 @@ public static class Functions {
 
     public static int length(IEnumerable l) => l.Cast<object>().ToArray().Length;
 
-    public static Array<T> asArray<T>(IEnumerable<T> l) => new Array<T>(l);
+    public static Array<T> asArray<T>(IEnumerable<T> l) => new(l);
 
     #endregion
 
@@ -38,8 +38,6 @@ public static class Functions {
     public static IImmutableDictionary<TKey, TValue> set<TKey, TValue>(IImmutableDictionary<TKey, TValue> d, TKey key, TValue value) where TKey : notnull => d.SetItem(key, value);
 
     #endregion
-
-
 
     #region Math
 

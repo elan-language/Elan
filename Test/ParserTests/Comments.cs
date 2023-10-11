@@ -1,6 +1,6 @@
 ﻿namespace Test.ParserTests;
 
-[TestClass, Ignore]
+[TestClass] [Ignore]
 public class Comments {
     private const string file = "file";
 

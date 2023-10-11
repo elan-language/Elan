@@ -1,7 +1,7 @@
 ﻿using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 
-namespace Compiler; 
+namespace Compiler;
 
 public class ThirdPassVisitor {
     public readonly IList<string> CompileErrors = new List<string>();

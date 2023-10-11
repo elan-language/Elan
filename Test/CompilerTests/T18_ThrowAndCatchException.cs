@@ -1,14 +1,15 @@
 ﻿using Compiler;
+
 namespace Test.CompilerTests;
+
 using static Helpers;
 
 [TestClass]
-public class T18_ThrowAndCatchException
-{
+public class T18_ThrowAndCatchException {
     #region Passes
+
     [TestMethod]
-    public void Pass_ThrowExceptionInMain()
-    {
+    public void Pass_ThrowExceptionInMain() {
         var code = @"
 main
     throwException(""Foo"")
@@ -44,8 +45,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ThrowExceptionInProcedure()
-    {
+    public void Pass_ThrowExceptionInProcedure() {
         var code = @"
 main
    foo()
@@ -87,8 +87,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CatchException()
-    {
+    public void Pass_CatchException() {
         var code = @"
 main
   try
@@ -141,8 +140,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CatchSystemGeneratedException()
-    {
+    public void Pass_CatchSystemGeneratedException() {
         var code = @"
 main
   try
@@ -190,12 +188,11 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Attempted to divide by zero.\r\n"); 
+        AssertObjectCodeExecutes(compileData, "Attempted to divide by zero.\r\n");
     }
 
     [TestMethod]
-    public void Pass_UseException()
-    {
+    public void Pass_UseException() {
         var code = @"
 main
   try
@@ -252,10 +249,8 @@ public static class Program {
 
     #region Fails
 
-
     [TestMethod]
-    public void Fail_ThrowExceptionInFunction()
-    {
+    public void Fail_ThrowExceptionInFunction() {
         var code = @"
 main
    var s = foo()
@@ -271,9 +266,9 @@ end function
         AssertParses(compileData);
         AssertDoesNotCompile(compileData);
     }
+
     [TestMethod]
-    public void Fail_catchMissingVariable()
-    {
+    public void Fail_catchMissingVariable() {
         var code = @"
 main
   try
@@ -292,5 +287,6 @@ end procedure
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 }

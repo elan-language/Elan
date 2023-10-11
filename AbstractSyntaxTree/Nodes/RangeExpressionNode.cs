@@ -7,7 +7,7 @@ public record RangeExpressionNode(bool Prefix, IAstNode Expression1, IAstNode? E
         return from switch {
             _ when from == Expression1 => this with { Expression1 = to },
             _ when from == Expression2 => this with { Expression2 = to },
-        
+
             _ => throw new NotImplementedException()
         };
     }

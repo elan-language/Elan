@@ -340,45 +340,45 @@ public static class Program {
 
     #endregion
 
-        #region Fails
+    #region Fails
 
-        [TestMethod]        
-        public void Fail_InvalidExpression() {
-            var code = @"
+    [TestMethod]
+    public void Fail_InvalidExpression() {
+        var code = @"
     main
       var a = 3 4
     end main
     ";
 
-            var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-            AssertDoesNotParse(compileData);
-        }
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
 
-        [TestMethod]
-        public void Fail_PlusEquals() {
-            var code = @"
+    [TestMethod]
+    public void Fail_PlusEquals() {
+        var code = @"
     main
       var a = 3
       a += 1
     end main
     ";
 
-            var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-            AssertDoesNotParse(compileData);
-        }
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
 
-        [TestMethod]
-        public void Fail_PlusPlus() {
-            var code = @"
+    [TestMethod]
+    public void Fail_PlusPlus() {
+        var code = @"
     main
       var a = 3
       a ++
     end main
     ";
 
-            var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-            AssertDoesNotParse(compileData);
-        }
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
 
-        #endregion
+    #endregion
 }

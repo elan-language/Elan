@@ -304,8 +304,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "three\r\n");
     }
 
-
-
     [TestMethod]
     public void Fail_NoEndIf() {
         var code = @"#

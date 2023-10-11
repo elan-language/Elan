@@ -1,4 +1,4 @@
-﻿namespace SymbolTable.Symbols; 
+﻿namespace SymbolTable.Symbols;
 
 public interface ISymbol {
     public string Name { get; }

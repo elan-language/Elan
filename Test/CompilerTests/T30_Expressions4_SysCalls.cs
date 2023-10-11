@@ -5,11 +5,9 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T30_Expressions4_SystemCalls
-{
+public class T30_Expressions4_SystemCalls {
     [TestMethod]
-    public void Pass_Input1()
-    {
+    public void Pass_Input1() {
         var code = @"#
 main
   var a = input()
@@ -81,12 +79,11 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Your nameFred\r\n", "Fred"); 
+        AssertObjectCodeExecutes(compileData, "Your nameFred\r\n", "Fred");
     }
 
     [TestMethod]
-    public void Fail_UnconsumedResultFromSystemCall()
-    {
+    public void Fail_UnconsumedResultFromSystemCall() {
         var code = @"#
 main
   input(""Your name"")
@@ -102,8 +99,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_SystemCallWithinExpression()
-    {
+    public void Fail_SystemCallWithinExpression() {
         var code = @"#
 main
   var a = input(""Your name"").length()
@@ -119,8 +115,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_SystemCallUsingDotSyntax()
-    {
+    public void Fail_SystemCallUsingDotSyntax() {
         var code = @"#
 main
   var prompt = ""Your name""
@@ -135,5 +130,4 @@ end main
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
     }
-
 }

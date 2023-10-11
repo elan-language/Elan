@@ -1,6 +1,6 @@
 ﻿namespace Test.ParserTests;
 
-[TestClass, Ignore]
+[TestClass] [Ignore]
 public class OOP {
     private const string file = "file";
 
@@ -129,7 +129,7 @@ end class
         AssertDoesNotParseForRule(code, file, "line 3:4 no viable alternative at input");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod] [Ignore]
     public void Fail_ConcreteWith2Constructors() {
         var code = @"
  class Foo

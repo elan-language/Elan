@@ -1,14 +1,15 @@
 ﻿using Compiler;
+
 namespace Test.CompilerTests;
+
 using static Helpers;
 
 [TestClass]
-public class T38_ExpressionsSplitOverMoreThanOneLine
-{
+public class T38_ExpressionsSplitOverMoreThanOneLine {
     #region Passes
+
     [TestMethod]
-    public void Pass_1()
-    {
+    public void Pass_1() {
         var code = @"#
 main
   var x = 0.7
@@ -49,8 +50,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_2()
-    {
+    public void Pass_2() {
         var code = @"#
 main
   var x = 0.7
@@ -91,8 +91,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_3()
-    {
+    public void Pass_3() {
         var code = @"#
 main
   var x = 0.7
@@ -133,8 +132,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_4()
-    {
+    public void Pass_4() {
         var code = @"#
 main
   var x = 0.7
@@ -174,8 +172,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_5()
-    {
+    public void Pass_5() {
         var code = @"#
 main
   var x = 0.7
@@ -216,9 +213,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_1()
-    {
+    public void Fail_1() {
         var code = @"#
 main
   var x = 0.7
@@ -231,11 +228,8 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-  
-
     [TestMethod]
-    public void Fail_2()
-    {
+    public void Fail_2() {
         var code = @"#
 main
   var x = 0.7
@@ -247,5 +241,6 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 }

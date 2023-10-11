@@ -1,10 +1,8 @@
 ﻿namespace StandardLibrary;
 
-public static class Symbol
-{
+public static class Symbol {
     //blocks
     public const char block = '\u2588';
-
 
     //Lines
     public const char line_H = '\u2500';
@@ -19,18 +17,15 @@ public static class Symbol
     public const char tee_up = '\u2534';
     public const char cross = '\u253c';
 
-
     //triangles
     public const char triangle_bottom_right = '\u25e2';
     public const char triangle_bottom_left = '\u25e3';
     public const char triangle_top_left = '\u25e4';
     public const char triangle_top_right = '\u25e5';
 
-
     //circles
     public const char circle_outline = '\u25cb';
     public const char circle_solid = '\u25cf';
-
 
     //pointers
     public const char pointer_solid_up = '\u25b2';
@@ -41,7 +36,6 @@ public static class Symbol
     public const char pointer_outline_right = '\u25b7';
     public const char pointer_outline_down = '\u25bd';
     public const char pointer_outline_left = '\u25c1';
-
 
     //chess pieces
     public const char chess_B_king = '\u2654';
@@ -57,7 +51,6 @@ public static class Symbol
     public const char chess_W_bishop = '\u265d';
     public const char chess_W_knight = '\u265e';
     public const char chess_W_pawn = '\u265f';
-
 
     //card suits
     public const char suit_club = '\u2663';

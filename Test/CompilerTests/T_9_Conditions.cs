@@ -4,14 +4,12 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-
 [TestClass]
-public class T_9_Conditions
-{
+public class T_9_Conditions {
     #region Passes
+
     [TestMethod]
-    public void Pass_lessThan()
-    {
+    public void Pass_lessThan() {
         var code = @"
 main
   printLine(3 < 4)
@@ -51,8 +49,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_greaterThan()
-    {
+    public void Pass_greaterThan() {
         var code = @"
 main
   printLine(3 > 4)
@@ -92,8 +89,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_lessThanOrEqual()
-    {
+    public void Pass_lessThanOrEqual() {
         var code = @"
 main
   printLine(3 <= 4)
@@ -133,8 +129,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_greaterThanOrEqual()
-    {
+    public void Pass_greaterThanOrEqual() {
         var code = @"
 main
   printLine(3 >= 4)
@@ -174,8 +169,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_greaterOrLessThan()
-    {
+    public void Pass_greaterOrLessThan() {
         var code = @"
 main
   printLine(3 <> 4)
@@ -215,8 +209,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_isNot()
-    {
+    public void Pass_isNot() {
         var code = @"
 main
   printLine(3 is not 4)
@@ -256,8 +249,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_equalTo()
-    {
+    public void Pass_equalTo() {
         var code = @"
 main
   printLine(3 == 4)
@@ -297,8 +289,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_is()
-    {
+    public void Pass_is() {
         var code = @"
 main
   printLine(3 is 4)
@@ -338,8 +329,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_canCompareCoerdableTypes()
-    {
+    public void Pass_canCompareCoerdableTypes() {
         var code = @"
 main
   printLine(3 < 3.1)
@@ -376,12 +366,13 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
     }
+
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_not_is()
-    {
+    public void Fail_not_is() {
         var code = @"
 main
   printLine(3 not is 3)
@@ -392,8 +383,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_not()
-    {
+    public void Fail_not() {
         var code = @"
 main
   printLine(3 not 3)
@@ -404,8 +394,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_notEqual()
-    {
+    public void Fail_notEqual() {
         var code = @"
 main
   printLine(3 != 3)
@@ -416,8 +405,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_EqualToOrLessThan()
-    {
+    public void Fail_EqualToOrLessThan() {
         var code = @"
 main
   printLine(3 =< 3)
@@ -428,8 +416,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_Greater_Or_Equal()
-    {
+    public void Fail_Greater_Or_Equal() {
         var code = @"
 main
   printLine(3 > or = 3)
@@ -440,8 +427,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_SingleEquals()
-    {
+    public void Fail_SingleEquals() {
         var code = @"
 main
   printLine(3 = 4)
@@ -451,10 +437,8 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-
     [TestMethod]
-    public void Fail_compareDifferentTypes()
-    {
+    public void Fail_compareDifferentTypes() {
         var code = @"
 main
   printLine(3 is ""3"")
@@ -487,6 +471,6 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeDoesNotCompile(compileData);
     }
-    #endregion
 
+    #endregion
 }

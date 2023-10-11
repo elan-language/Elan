@@ -4,13 +4,10 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-
 [TestClass]
-public class T11_RepeatUntil
-{
+public class T11_RepeatUntil {
     [TestMethod]
-    public void Pass_minimal()
-    {
+    public void Pass_minimal() {
         var code = @"
 main
    var x = 0
@@ -54,8 +51,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_innerLoop()
-    {
+    public void Pass_innerLoop() {
         var code = @"
 main
    var t = 0
@@ -111,8 +107,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_noUntil()
-    {
+    public void Fail_noUntil() {
         var code = @"
 main
    var x = 0
@@ -125,8 +120,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_variableRedeclaredInTest()
-    {
+    public void Fail_variableRedeclaredInTest() {
         var code = @"
 main
     var x = 0
@@ -140,8 +134,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_variableDefinedInLoop()
-    {
+    public void Fail_variableDefinedInLoop() {
         var code = @"
 main
    repeat
@@ -150,17 +143,14 @@ main
 end main
 ";
 
-      
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-
     [TestMethod]
-    public void Fail_testPutOnRepeat()
-    {
+    public void Fail_testPutOnRepeat() {
         var code = @"
 main
     var x = 0
@@ -174,10 +164,8 @@ end main
         AssertDoesNotParse(compileData);
     }
 
- 
     [TestMethod]
-    public void Fail_noCondition()
-    {
+    public void Fail_noCondition() {
         var code = @"
 main
     var x = 0
@@ -191,8 +179,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_invalidCondition()
-    {
+    public void Fail_invalidCondition() {
         var code = @"
 main
     var x = 0
@@ -204,5 +191,4 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
 }

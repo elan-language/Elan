@@ -5,8 +5,8 @@ namespace StandardLibrary;
 public interface IArray { }
 
 public class Array<T> : IArray, IEnumerable<T> {
-    private readonly T[][] wrappedArray;
     private readonly bool twoD;
+    private readonly T[][] wrappedArray;
 
     public Array() : this(0) { }
 

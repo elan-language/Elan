@@ -197,8 +197,7 @@ public static class Program {
     #region Fails
 
     [TestMethod]
-    public void Fail_useInsideMain()
-    {
+    public void Fail_useInsideMain() {
         var code = @"#
 main
   constant a = 3
@@ -219,7 +218,6 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
 
     [TestMethod]
     public void Fail_invalidLiteralString() {
@@ -242,7 +240,6 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
 
     [TestMethod]
     public void Fail_reassignment() {
@@ -272,8 +269,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_referenceToOtherConstant()
-    {
+    public void Fail_referenceToOtherConstant() {
         var code = @"#
 
 constant a = 3
@@ -287,8 +283,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_declareMultiple1()
-    {
+    public void Fail_declareMultiple1() {
         var code = @"#
 constant a, b = 3
 
@@ -300,8 +295,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_declareMultiple2()
-    {
+    public void Fail_declareMultiple2() {
         var code = @"#
 constant a = b = 3
 

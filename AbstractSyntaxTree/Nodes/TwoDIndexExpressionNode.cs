@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace AbstractSyntaxTree.Nodes;
+﻿namespace AbstractSyntaxTree.Nodes;
 
 public record TwoDIndexExpressionNode(IAstNode Expression1, IAstNode Expression2) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Expression1, Expression2 };
@@ -9,7 +7,7 @@ public record TwoDIndexExpressionNode(IAstNode Expression1, IAstNode Expression2
         return from switch {
             _ when from == Expression1 => this with { Expression1 = to },
             _ when from == Expression2 => this with { Expression2 = to },
-        
+
             _ => throw new NotImplementedException()
         };
     }

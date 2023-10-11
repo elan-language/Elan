@@ -2,9 +2,7 @@
 
 namespace CSharpLanguageModel.Models;
 
-
 public record FunctionDefModel(ICodeModel Signature, ICodeModel Statements, ICodeModel Return) : ICodeModel {
-
     public string ToString(int indent) => ToString();
 
     public override string ToString() =>

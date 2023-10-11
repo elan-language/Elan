@@ -3,7 +3,7 @@
 namespace SymbolTable;
 
 public interface IScope {
+    IScope? EnclosingScope { get; }
     ISymbol? Resolve(string name);
-    IScope? EnclosingScope { get;  }
     void Define(ISymbol symbol);
 }

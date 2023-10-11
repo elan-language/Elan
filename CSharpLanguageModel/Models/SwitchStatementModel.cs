@@ -6,7 +6,7 @@ public record SwitchStatementModel(ICodeModel Expression, IEnumerable<ICodeModel
     public string ToString(int indent) {
         // check data 
 
-        int indent1 = indent + 1;
+        var indent1 = indent + 1;
         return $@"{Indent(indent)}switch ({Expression}) {{
 {ValueCases.AsLineSeparatedString(indent + 1)}
 {DefaultCase.ToString(indent1)}

@@ -5,4 +5,3 @@ public record PairModel(ICodeModel Key, ICodeModel Value) : ICodeModel {
 
     public override string ToString() => ToString(0);
 }
-

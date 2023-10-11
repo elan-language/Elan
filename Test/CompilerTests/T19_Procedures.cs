@@ -5,12 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T19_Procedures
-{
+public class T19_Procedures {
     #region Passes
+
     [TestMethod]
-    public void Pass_BasicOperationIncludingSystemCall()
-    {
+    public void Pass_BasicOperationIncludingSystemCall() {
         var code = @"
 main
     printLine(1)
@@ -56,8 +55,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_WithParamsPassingVariables()
-    {
+    public void Pass_WithParamsPassingVariables() {
         var code = @"
 main
     var a = 2
@@ -105,8 +103,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_WithParamsPassingLiteralsOrExpressions()
-    {
+    public void Pass_WithParamsPassingLiteralsOrExpressions() {
         var code = @"
 main
     var a = 1
@@ -154,8 +151,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_paramsCanBeUpdated()
-    {
+    public void Pass_paramsCanBeUpdated() {
         var code = @"
 main
     var a = 1
@@ -207,8 +203,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_NestedCalls()
-    {
+    public void Pass_NestedCalls() {
         var code = @"
 main
     foo()
@@ -261,8 +256,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Recursion()
-    {
+    public void Pass_Recursion() {
         var code = @"
 main
     foo(3)
@@ -314,9 +308,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_CallingUndeclaredProc()
-    {
+    public void Fail_CallingUndeclaredProc() {
         var code = @"
 main
     bar()
@@ -331,8 +325,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_TypeSpecifiedBeforeParamName()
-    {
+    public void Fail_TypeSpecifiedBeforeParamName() {
         var code = @"
 main
 end main
@@ -341,15 +334,13 @@ procedure foo(Int a)
     printLine(a)
 end procedure
 ";
-       
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_NoEnd()
-    {
+    public void Fail_NoEnd() {
         var code = @"
 main
     printLine(1)
@@ -365,8 +356,7 @@ procedure foo()
     }
 
     [TestMethod]
-    public void Fail_CannotCallMain()
-    {
+    public void Fail_CannotCallMain() {
         var code = @"
 main
     printLine(1)
@@ -383,8 +373,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_PassingUnnecessaryParameter()
-    {
+    public void Fail_PassingUnnecessaryParameter() {
         var code = @"
 main
     printLine(1)
@@ -406,8 +395,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_PassingTooFewParams()
-    {
+    public void Fail_PassingTooFewParams() {
         var code = @"
 main
     var a = 1
@@ -420,7 +408,6 @@ procedure foo (a Int, b String)
 end procedure
 ";
 
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -431,8 +418,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_PassingWrongType()
-    {
+    public void Fail_PassingWrongType() {
         var code = @"
 main
     foo(1,2)
@@ -444,7 +430,6 @@ procedure foo (a Int, b String)
 end procedure
 ";
 
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -455,8 +440,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_InclusionOfRefInCall()
-    {
+    public void Fail_InclusionOfRefInCall() {
         var code = @"
 main
     foo(ref 1,2)
@@ -472,8 +456,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_InclusionOfRefInDefinition()
-    {
+    public void Fail_InclusionOfRefInDefinition() {
         var code = @"
 main
     foo(byref 1,2)
@@ -489,8 +472,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_UnterminatedRecursion()
-    {
+    public void Fail_UnterminatedRecursion() {
         var code = @"
 main
     foo(3)
@@ -531,5 +513,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeFails(compileData, "Stack overflow.");
     }
+
     #endregion
 }

@@ -166,8 +166,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_while_do()
-    {
+    public void Fail_while_do() {
         var code = @"
 main
    var x = 0

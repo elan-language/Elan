@@ -5,9 +5,29 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T22_RandomNumbers
-{
+public class T22_RandomNumbers {
+    #region Fails
+
+    [TestMethod]
+    public void Fail_CalledWithinExpression() {
+        var code = @"#
+main
+     seedRandom(3)
+     printLine(random())
+end main
+";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall seedRandom ( (argumentList (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall random ( )))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+        //TODO: V Important here is the error message - explaining that you can't make this system call *within* an expression, only as RHS of assignment
+    }
+
+    #endregion
+
     #region Passes
+
     [TestMethod]
     public void Pass_Raw() {
         var code = @"#
@@ -52,8 +72,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_MaxFloat()
-    {
+    public void Pass_MaxFloat() {
         var code = @"#
 main
      seedRandom(3)
@@ -96,8 +115,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_RangeFloat()
-    {
+    public void Pass_RangeFloat() {
         var code = @"#
 main
      seedRandom(3)
@@ -140,8 +158,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_MaxInt()
-    {
+    public void Pass_MaxInt() {
         var code = @"#
 main
      seedRandom(3)
@@ -184,8 +201,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_RangeInt()
-    {
+    public void Pass_RangeInt() {
         var code = @"#
 main
      seedRandom(3)
@@ -226,25 +242,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "7\r\n9\r\n");
     }
-    #endregion
 
-    #region Fails
-    [TestMethod]
-    public void Fail_CalledWithinExpression()
-    {
-        var code = @"#
-main
-     seedRandom(3)
-     printLine(random())
-end main
-";
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall seedRandom ( (argumentList (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall random ( )))) ))))) end main) <EOF>)";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-        //TODO: V Important here is the error message - explaining that you can't make this system call *within* an expression, only as RHS of assignment
-    }
     #endregion
-
 }

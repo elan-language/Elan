@@ -127,8 +127,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_LocalVarHidesGlobalConstant()
-    {
+    public void Pass_LocalVarHidesGlobalConstant() {
         var code = @"#
 constant a = 3
 main
@@ -194,8 +193,6 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
-
-
 
     [TestMethod]
     public void fail_GlobalVariable() {

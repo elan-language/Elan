@@ -2,7 +2,7 @@
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
 
-namespace SymbolTable; 
+namespace SymbolTable;
 
 public class SymbolTableVisitor {
     private IScope currentScope;
@@ -50,7 +50,6 @@ public class SymbolTableVisitor {
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return functionDefNode;
     }
-
 
     private IAstNode VisitMainNode(MainNode mainNode) {
         var ms = new ProcedureSymbol("main", currentScope);

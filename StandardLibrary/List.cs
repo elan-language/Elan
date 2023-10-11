@@ -5,24 +5,26 @@ namespace StandardLibrary;
 
 public interface IList { }
 
-public class List<T> : IList, IEnumerable<T>  {
+public class List<T> : IList, IEnumerable<T> {
     private readonly ImmutableList<T> wrappedList;
 
     public List() => wrappedList = ImmutableList.Create<T>();
 
-    public List(params T[] items) =>  wrappedList = ImmutableList.Create<T>(items);
+    public List(params T[] items) => wrappedList = ImmutableList.Create(items);
 
-    public List(T item) =>  wrappedList = ImmutableList.Create<T>(item);
+    public List(T item) => wrappedList = ImmutableList.Create(item);
 
     private List(ImmutableList<T> list) => wrappedList = list;
-
-    public IEnumerator<T> GetEnumerator() => wrappedList.GetEnumerator();
 
     public int Count => wrappedList.Count;
 
     public T this[int index] => wrappedList[index];
 
-    public List<T> this[System.Range range] => Wrap(wrappedList.ToImmutableArray()[range].ToImmutableList());
+    public List<T> this[Range range] => Wrap(wrappedList.ToImmutableArray()[range].ToImmutableList());
+
+    public IEnumerator<T> GetEnumerator() => wrappedList.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public List<T> Add(T value) => Wrap(wrappedList.Add(value));
 
@@ -52,13 +54,11 @@ public class List<T> : IList, IEnumerable<T>  {
 
     public List<T> SetItem(int index, T value) => Wrap(wrappedList.SetItem(index, value));
 
-    private static List<T> Wrap(ImmutableList<T> list) => new List<T>(list);
+    private static List<T> Wrap(ImmutableList<T> list) => new(list);
 
     public static List<T> operator +(List<T> a, T b) => a.Add(b);
 
     public static List<T> operator +(List<T> a, List<T> b) => a.AddRange(b);
 
     public static List<T> operator +(T a, List<T> b) => b.Insert(0, a);
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

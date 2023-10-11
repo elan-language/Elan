@@ -10,7 +10,7 @@ public record CompileData {
 
     public ParserErrorException[] ParserErrors { get; init; } = Array.Empty<ParserErrorException>();
 
-    public string[] CompileErrors { get; init; } = new [] {"Compile second pass not run"};
+    public string[] CompileErrors { get; init; } = { "Compile second pass not run" };
 
     public ElanParser.FileContext? ParseTree { get; init; }
 

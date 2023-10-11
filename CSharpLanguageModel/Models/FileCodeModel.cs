@@ -1,8 +1,6 @@
 ﻿namespace CSharpLanguageModel.Models;
 
 public record FileCodeModel(IEnumerable<ICodeModel> Globals, ICodeModel? Main) : ICodeModel {
-
-    public override string ToString() => ToString(0);
     public string ToString(int indent) =>
         $@"using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -16,4 +14,6 @@ public static partial class Globals {{
 }}
 
 {Main}";
+
+    public override string ToString() => ToString(0);
 }

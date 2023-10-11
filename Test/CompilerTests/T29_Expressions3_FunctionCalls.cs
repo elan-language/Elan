@@ -5,12 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T29_Expressions3_FunctionCalls
-{
+public class T29_Expressions3_FunctionCalls {
     #region Passes
+
     [TestMethod]
-    public void Pass_LibraryConst()
-    {
+    public void Pass_LibraryConst() {
         var code = @"#
 main
   printLine(pi)
@@ -46,8 +45,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_SingleFunctionCall()
-    {
+    public void Pass_SingleFunctionCall() {
         var code = @"#
 main
   var x = sin(pi/180*30)
@@ -85,8 +83,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_DotSyntax()
-    {
+    public void Pass_DotSyntax() {
         var code = @"#
 main
   var x =  pi/180*30
@@ -126,8 +123,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_DotSyntaxFunctionEvaluationHasPrecedenceOverOperators()
-    {
+    public void Pass_DotSyntaxFunctionEvaluationHasPrecedenceOverOperators() {
         var code = @"#
 main
   var x =  pi/180*30
@@ -167,8 +163,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_MoreComplexExpression()
-    {
+    public void Pass_MoreComplexExpression() {
         var code = @"#
 main
   var x = 0.7
@@ -208,8 +203,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_MultiParamCall()
-    {
+    public void Pass_MultiParamCall() {
         var code = @"#
 main
   var x = min(3.1, 3)
@@ -246,8 +240,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_MultiParamCallUsingDotSyntax()
-    {
+    public void Pass_MultiParamCallUsingDotSyntax() {
         var code = @"#
 main
   var x = 3.max(3.1)
@@ -286,9 +279,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_IncorrectType()
-    {
+    public void Fail_IncorrectType() {
         var code = @"#
 main
   var x = ""hello"".max(""world"")
@@ -304,8 +297,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_UnconsumedExpressionResult1()
-    {
+    public void Fail_UnconsumedExpressionResult1() {
         var code = @"#
     main
       sin(1)
@@ -318,8 +310,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_UnconsumedExpressionResult2()
-    {
+    public void Fail_UnconsumedExpressionResult2() {
         var code = @"#
     main
       1 + 2
@@ -333,8 +324,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_UnconsumedExpressionResult3()
-    {
+    public void Fail_UnconsumedExpressionResult3() {
         var code = @"#
     main
       var a = 1
@@ -346,5 +336,6 @@ end main
         AssertParses(compileData);
         AssertDoesNotCompile(compileData);
     }
+
     #endregion
 }

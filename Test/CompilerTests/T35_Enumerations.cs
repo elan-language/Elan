@@ -1,17 +1,15 @@
 ﻿using Compiler;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Serialization;
 
 namespace Test.CompilerTests;
 
 using static Helpers;
 
 [TestClass]
-public class T35_Enumerations
-{
+public class T35_Enumerations {
     #region Passes
+
     [TestMethod]
-    public void Pass_PrintValues()
-    {
+    public void Pass_PrintValues() {
         var code = @"
 main
  printLine(Fruit.apple)
@@ -45,7 +43,7 @@ public static class Program {
     printLine(Fruit.orange);
     printLine(Fruit.pear);
   }
-}"; 
+}";
 
         var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . orange)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . pear)))))) ))))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
 
@@ -59,8 +57,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_valuesOnNewLines()
-    {
+    public void Pass_valuesOnNewLines() {
         var code = @"
 main
  printLine(Fruit.apple)
@@ -110,8 +107,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_useInVariable()
-    {
+    public void Pass_useInVariable() {
         var code = @"
 main
  var x = Fruit.apple
@@ -161,8 +157,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_equality()
-    {
+    public void Pass_equality() {
         var code = @"
 main
     var x = Fruit.apple
@@ -211,10 +206,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\n");
     }
 
-
     [TestMethod]
-    public void Pass_SwitchCaseOnEnumeration()
-    {
+    public void Pass_SwitchCaseOnEnumeration() {
         var code = @"
 main
       var f = Fruit.orange
@@ -281,8 +274,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_coercionToString()
-    {
+    public void Pass_coercionToString() {
         var code = @"
 main
   var a = ""Eat more "" + Fruit.apple + ""s!""
@@ -326,12 +318,13 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Eat more apples!\r\n");
     }
+
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_InvalidTypeName()
-    {
+    public void Fail_InvalidTypeName() {
         var code = @"
 main
 end main
@@ -345,8 +338,7 @@ end enumeration
     }
 
     [TestMethod]
-    public void Fail_InvalidValueName ()
-    {
+    public void Fail_InvalidValueName() {
         var code = @"
 main
 end main
@@ -360,8 +352,7 @@ end enumeration
     }
 
     [TestMethod]
-    public void Fail_AssigningIntsToValues()
-    {
+    public void Fail_AssigningIntsToValues() {
         var code = @"
 main
 end main
@@ -375,8 +366,7 @@ end enumeration
     }
 
     [TestMethod]
-    public void Fail_coercionToInt()
-    {
+    public void Fail_coercionToInt() {
         var code = @"
 main
  var a = 1
@@ -396,6 +386,5 @@ end enumeration
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-   
     #endregion
 }

@@ -4,7 +4,6 @@ namespace CSharpLanguageModel.Models;
 
 // TODO change to statement block
 public record MainCodeModel(ICodeModel Statements) : ICodeModel {
-
     public string ToString(int indent) => ToString();
 
     public override string ToString() =>

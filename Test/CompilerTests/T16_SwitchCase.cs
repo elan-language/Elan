@@ -1,18 +1,15 @@
-﻿using System.Xml.Serialization;
-using Compiler;
+﻿using Compiler;
 
 namespace Test.CompilerTests;
 
 using static Helpers;
 
 [TestClass]
-public class T16_SwitchCase
-{
+public class T16_SwitchCase {
     #region Passes
 
     [TestMethod]
-    public void Pass_Minimal()
-    {
+    public void Pass_Minimal() {
         var code = @"
 main
   for i = 1 to 3
@@ -72,8 +69,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_BracketsIgnored()
-    {
+    public void Pass_BracketsIgnored() {
         var code = @"
 main
   for i = 1 to 3
@@ -134,8 +130,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_DefaultIsUsed()
-    {
+    public void Pass_DefaultIsUsed() {
         var code = @"
 main
   for i = 1 to 3
@@ -187,8 +182,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_SwitchOnExpression()
-    {
+    public void Pass_SwitchOnExpression() {
         var code = @"
 main
   for i = 1 to 3
@@ -243,12 +237,13 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "b\r\nc\r\nc\r\n");
     }
+
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_NoDefault()
-    {
+    public void Fail_NoDefault() {
         var code = @"
 main
   for i = 1 to 4
@@ -264,14 +259,12 @@ main
 end main
 ";
 
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_NoCase()
-    {
+    public void Fail_NoCase() {
         var code = @"
 main
   for i = 1 to 4
@@ -283,17 +276,12 @@ main
 end main
 ";
 
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
-
-
-
     [TestMethod]
-    public void Fail_IncompatibleCaseType()
-    {
+    public void Fail_IncompatibleCaseType() {
         var code = @"
 main
   for i = 1 to 3
@@ -320,8 +308,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_UseOfVariableForCase()
-    {
+    public void Fail_UseOfVariableForCase() {
         var code = @"
 main
   var a = 2
@@ -342,8 +329,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_UseOfExpression()
-    {
+    public void Fail_UseOfExpression() {
         var code = @"
 main
   for i = 1 to 3
@@ -364,8 +350,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_CaseAfterDefault()
-    {
+    public void Fail_CaseAfterDefault() {
         var code = @"
 main
   for i = 1 to 3
@@ -386,8 +371,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_WithColons()
-    {
+    public void Fail_WithColons() {
         var code = @"
 main
   for i = 1 to 4
@@ -402,14 +386,12 @@ main
 end main
 ";
 
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_actionOnSameLineAsCase()
-    {
+    public void Fail_actionOnSameLineAsCase() {
         var code = @"
 main
   for i = 1 to 3
@@ -425,8 +407,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_missingExpression()
-    {
+    public void Fail_missingExpression() {
         var code = @"
 main
   for i = 1 to 3
@@ -444,8 +425,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_caseValueMissing()
-    {
+    public void Fail_caseValueMissing() {
         var code = @"
 main
   for i = 1 to 3

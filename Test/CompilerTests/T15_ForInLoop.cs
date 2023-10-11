@@ -1,19 +1,15 @@
 ﻿using Compiler;
-using static Antlr4.Runtime.Atn.SemanticContext;
-using System.Runtime.Intrinsics.X86;
 
 namespace Test.CompilerTests;
 
-using static Antlr4.Runtime.Atn.SemanticContext;
 using static Helpers;
 
 [TestClass]
-public class T15_ForInLoop
-{
+public class T15_ForInLoop {
     #region Passes
+
     [TestMethod]
-    public void Pass_List()
-    {
+    public void Pass_List() {
         var code = @"
 main
     var a = {7,8,9}
@@ -59,8 +55,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Array()
-    {
+    public void Pass_Array() {
         var code = @"
 main
     var a = {7,8,9}.asArray()
@@ -106,8 +101,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_string()
-    {
+    public void Pass_string() {
         var code = @"
 main
     var a = ""hello""
@@ -149,8 +143,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_doubleLoop()
-    {
+    public void Pass_doubleLoop() {
         var code = @"
 main
     for x in ""12""
@@ -193,14 +186,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "13\r\n14\r\n23\r\n24\r\n");
     }
 
-   
     #endregion
 
     #region Fails
 
     [TestMethod]
-    public void Fail_variableIsScoped()
-    {
+    public void Fail_variableIsScoped() {
         var code = @"
 main
     var a = {7,8,9}
@@ -243,9 +234,9 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeDoesNotCompile(compileData);
     }
+
     [TestMethod]
-    public void Fail_NoEndFor()
-    {
+    public void Fail_NoEndFor() {
         var code = @"
 main
   var a = ""hello""
@@ -259,8 +250,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_applyToANonIterable()
-    {
+    public void Fail_applyToANonIterable() {
         var code = @"
 main
     var y = 10
@@ -280,8 +270,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_CannotAlterTheIterableWithinLoop()
-    {
+    public void Fail_CannotAlterTheIterableWithinLoop() {
         var code = @"
 main
   var a ={1,2,3,4,5}

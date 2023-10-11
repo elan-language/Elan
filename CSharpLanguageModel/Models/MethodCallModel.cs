@@ -3,7 +3,6 @@
 using static CodeHelpers;
 
 public record MethodCallModel(MethodType MethodType, ICodeModel Id, IEnumerable<ICodeModel> Parameters) : ICodeModel {
-    
     public string ToString(int indent) =>
         MethodType switch {
             MethodType.Function => $@"{Indent(indent)}{Id}({Parameters.AsCommaSeparatedString()})",

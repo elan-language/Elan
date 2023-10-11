@@ -4,15 +4,11 @@ using SymbolTable;
 namespace Compiler;
 
 public class SecondPassVisitor {
-   
-
     static SecondPassVisitor() {
         Transforms.Add(CompilerTransforms.TransformSystemCallNodes);
     }
 
-    public SecondPassVisitor(SymbolTableImpl symbolTable) {
-        SymbolTable = symbolTable;
-    }
+    public SecondPassVisitor(SymbolTableImpl symbolTable) => SymbolTable = symbolTable;
 
     private SymbolTableImpl SymbolTable { get; }
     private static IList<Func<IAstNode[], IScope, IAstNode?>> Transforms { get; } = new List<Func<IAstNode[], IScope, IAstNode?>>();
@@ -60,7 +56,6 @@ public class SecondPassVisitor {
 
         return null;
     }
-
 
     private IAstNode? Visit(IAstNode[] nodeHierarchy, IScope currentScope) {
         var currentNode = nodeHierarchy.Last();

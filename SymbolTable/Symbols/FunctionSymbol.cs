@@ -1,6 +1,6 @@
 ﻿using SymbolTable.SymbolTypes;
 
-namespace SymbolTable.Symbols; 
+namespace SymbolTable.Symbols;
 
 public class FunctionSymbol : MethodSymbol {
     public FunctionSymbol(string name, ISymbolType returnType, IScope enclosingScope) : base(name, returnType, enclosingScope) { }

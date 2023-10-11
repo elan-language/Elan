@@ -88,7 +88,7 @@ public static partial class Helpers {
         Assert.AreEqual(NormalizeNewLines(expectedOutput), NormalizeNewLines(stdOut));
     }
 
-    public static void AssertObjectCodeFails(CompileData compileData, string expectedError,   string? optionalInput = null) {
+    public static void AssertObjectCodeFails(CompileData compileData, string expectedError, string? optionalInput = null) {
         var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
         var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
 
@@ -96,7 +96,6 @@ public static partial class Helpers {
 
         Assert.IsTrue(stdErr.Contains(expectedError));
     }
-
 
     public static void AssertDoesNotParse(CompileData compileData, string[]? expected = null) {
         Assert.IsTrue(compileData.ParserErrors.Length > 0, "Expected parse error");

@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T20_StatementBodiedFunctions
-{
+public class T20_StatementBodiedFunctions {
     #region Passes
 
     [TestMethod]
-    public void Pass_SimpleCase()
-    {
+    public void Pass_SimpleCase() {
         var code = @"
 main
     printLine(foo(3,4))
@@ -54,8 +52,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Recursive()
-    {
+    public void Pass_Recursive() {
         var code = @"
 main
     printLine(factorial(5))
@@ -109,14 +106,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "120\r\n");
     }
 
-
     #endregion
 
     #region Fails
 
     [TestMethod]
-    public void Fail_noEnd()
-    {
+    public void Fail_noEnd() {
         var code = @"
 main
     foo(3,4)
@@ -126,13 +121,12 @@ function foo(a Int, b Int) as Int
     return a * b
 ";
 
-       var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_noReturnType()
-    {
+    public void Fail_noReturnType() {
         var code = @"
 main
 end main
@@ -147,8 +141,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_noAs()
-    {
+    public void Fail_noAs() {
         var code = @"
 main
 end main
@@ -163,8 +156,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_noReturn()
-    {
+    public void Fail_noReturn() {
         var code = @"
 main
 end main
@@ -179,8 +171,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_returnTypeIncompatible()
-    {
+    public void Fail_returnTypeIncompatible() {
         var code = @"
 main
    var a = """"
@@ -202,8 +193,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_noReturn2()
-    {
+    public void Fail_noReturn2() {
         var code = @"
 main
 end main
@@ -218,8 +208,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_embeddedReturns()
-    {
+    public void Fail_embeddedReturns() {
         var code = @"
 main
 end main
@@ -237,8 +226,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_nonMatchingReturn2()
-    {
+    public void Fail_nonMatchingReturn2() {
         var code = @"
 main
 end main
@@ -257,8 +245,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_statementAfterReturn()
-    {
+    public void Fail_statementAfterReturn() {
         var code = @"
 main
 end main
@@ -268,15 +255,13 @@ function foo(a Int, b Int) as Int
     var c = a + b
 end function
 ";
-      
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_CanNotContainSystemCalls()
-    {
+    public void Fail_CanNotContainSystemCalls() {
         var code = @"
 main
 end main
@@ -295,8 +280,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_CanNotContainProcedureCall()
-    {
+    public void Fail_CanNotContainProcedureCall() {
         var code = @"
 main
     var result = foo(3,4)
@@ -321,8 +305,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_CannotModifyParam()
-    {
+    public void Fail_CannotModifyParam() {
         var code = @"
 main
     var result = foo(3,4)
@@ -343,8 +326,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_TooManyParams()
-    {
+    public void Fail_TooManyParams() {
         var code = @"
 main
     var result = foo(3,4,5)
@@ -365,8 +347,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_NotEnoughParams()
-    {
+    public void Fail_NotEnoughParams() {
         var code = @"
 main
     var result = foo(3)
@@ -387,8 +368,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_WrongParamType()
-    {
+    public void Fail_WrongParamType() {
         var code = @"
 main
     var result = foo(3, ""b"")

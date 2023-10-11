@@ -4,13 +4,12 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
-public class Template_TestClass
-{
+[TestClass] [Ignore]
+public class Template_TestClass {
     #region Passes
+
     [TestMethod]
-    public void Pass_Template()
-    {
+    public void Pass_Template() {
         var code = @"
 main
  printLine()
@@ -44,8 +43,10 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "\r\n");
     }
+
     #endregion
 
     #region Fails
+
     #endregion
 }

@@ -5,12 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T13_StringManipulation
-{
+public class T13_StringManipulation {
     #region Passes
+
     [TestMethod]
-    public void Pass_AppendStrings()
-    {
+    public void Pass_AppendStrings() {
         var code = @"
 main
     var a = ""Hello""
@@ -50,8 +49,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_AppendOrPrependChar()
-    {
+    public void Pass_AppendOrPrependChar() {
         var code = @"
 main
     printLine('_'+""Hello""+'!')
@@ -87,8 +85,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_AppendNumber()
-    {
+    public void Pass_AppendNumber() {
         var code = @"
 main
     printLine(""Hello""+3.1)
@@ -124,8 +121,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Indexing()
-    {
+    public void Pass_Indexing() {
         var code = @"
 main
     var a = ""abcde""
@@ -163,8 +159,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Ranges()
-    {
+    public void Pass_Ranges() {
         var code = @"
 main
     var a = ""abcde""
@@ -206,8 +201,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_EqualityTesting()
-    {
+    public void Pass_EqualityTesting() {
         var code = @"
 main
     printLine(""abc"" == ""abc"")
@@ -255,8 +249,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ComparisonMethods()
-    {
+    public void Pass_ComparisonMethods() {
         var code = @"
 main
     printLine(""abc"".isBefore(""abC""))
@@ -302,8 +295,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_UseAsStringExplicitly()
-    {
+    public void Pass_UseAsStringExplicitly() {
         var code = @"
 main
     var a = ""abcde""
@@ -343,8 +335,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Interpolation()
-    {
+    public void Pass_Interpolation() {
         var code = @"
 main
     var a = 3
@@ -386,8 +377,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_UseBracesInString()
-    {
+    public void Pass_UseBracesInString() {
         var code = @"
 main
     var a = 3
@@ -429,8 +419,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_literalNewline()
-    {
+    public void Pass_literalNewline() {
         var code = @"
 main
     var c = ""Hello
@@ -470,8 +459,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_newLineConstant()
-    {
+    public void Pass_newLineConstant() {
         var code = @"
 main
     var c = ""Hello ""+ newLine + ""World!""
@@ -509,8 +497,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_AppendStringToNumber()
-    {
+    public void Pass_AppendStringToNumber() {
         var code = @"
 main
     var a = 3.1 + ""Hello""
@@ -552,8 +539,7 @@ public static class Program {
     #region Fails
 
     [TestMethod]
-    public void Fail_IndexOutOfRange()
-    {
+    public void Fail_IndexOutOfRange() {
         var code = @"
 main
     var a = ""abcde""
@@ -588,11 +574,8 @@ public static class Program {
         AssertObjectCodeFails(compileData, "Index was outside the bounds of the array.");
     }
 
-  
-
     [TestMethod]
-    public void Fail_ComparisonOperators()
-    {
+    public void Fail_ComparisonOperators() {
         var code = @"
 main
     printLine(""abc"" < ""abC"")
@@ -637,8 +620,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_CoerceNumberToString()
-    {
+    public void Fail_CoerceNumberToString() {
         var code = @"
 main
     var a = ""abcde""

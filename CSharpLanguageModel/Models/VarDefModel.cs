@@ -3,7 +3,7 @@
 using static CodeHelpers;
 
 public record VarDefModel(ICodeModel Id, ICodeModel Expression) : ICodeModel {
+    public string ToString(int indent) => $@"{Indent(indent)}var {Id} = {Expression};";
 
     public override string ToString() => ToString(0);
-    public  string ToString(int indent) => $@"{Indent(indent)}var {Id} = {Expression};";
 }

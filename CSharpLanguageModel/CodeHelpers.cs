@@ -1,21 +1,17 @@
-﻿using System.Security;
-using AbstractSyntaxTree;
+﻿using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using Compiler;
 using CSharpLanguageModel.Models;
-using StandardLibrary;
 using ValueType = AbstractSyntaxTree.ValueType;
 
 namespace CSharpLanguageModel;
 
 public static class CodeHelpers {
     public enum MethodType {
-        SystemCall, 
-        Procedure, 
+        SystemCall,
+        Procedure,
         Function
     }
-
-
 
     private const int IndentSpaces = 2;
 
@@ -83,7 +79,7 @@ public static class CodeHelpers {
             Operator.Minus => ("-", false),
             Operator.Multiply => ("*", false),
             Operator.IntDivide => ("/", false),
-            Operator.Modulus => ("%", false),    
+            Operator.Modulus => ("%", false),
             Operator.Equal => ("==", false),
             Operator.Power => ($"{typeof(Math).FullName}.{nameof(Math.Pow)}", true),
             Operator.Divide => ($"{typeof(WrapperFunctions).FullName}.{nameof(WrapperFunctions.FloatDiv)}", true),

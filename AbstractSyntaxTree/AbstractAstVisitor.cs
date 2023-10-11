@@ -3,7 +3,6 @@
 namespace AbstractSyntaxTree;
 
 public abstract class AbstractAstVisitor<T> {
-
     protected abstract void Enter(IAstNode node);
 
     protected abstract void Exit(IAstNode node);

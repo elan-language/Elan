@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T17_Dictionaries
-{
+public class T17_Dictionaries {
     #region Passes
 
     [TestMethod]
@@ -35,7 +34,6 @@ public static class Program {
   }
 }";
 
-
         var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -48,8 +46,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_AccessByKey()
-    {
+    public void Pass_AccessByKey() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -86,8 +83,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_keys()
-    {
+    public void Pass_keys() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -124,8 +120,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_hasKey()
-    {
+    public void Pass_hasKey() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -163,8 +158,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_values()
-    {
+    public void Pass_values() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -200,8 +194,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Set()
-    {
+    public void Pass_Set() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -244,8 +237,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_RemoveEntry()
-    {
+    public void Pass_RemoveEntry() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -275,7 +267,7 @@ public static class Program {
 }";
 
         var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (varDef var (assignableValue b) = (expression (expression (value a)) . (methodCall remove ( (argumentList (expression (value (literal (literalValue 'b'))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end main) <EOF>)";
-        
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -286,8 +278,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_RemoveInvalidKey()
-    {
+    public void Pass_RemoveInvalidKey() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -326,8 +317,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CreateEmptyDictionary()
-    {
+    public void Pass_CreateEmptyDictionary() {
         var code = @"#
 main
   var a = Dictionary<String, Int>()
@@ -361,7 +351,6 @@ public static class Program {
   }
 }";
 
-
         var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (newInstance (type (dataStructureType Dictionary (genericSpecifier < (type String) , (type Int) >))) ( )))) (varDef var (assignableValue b) = (expression (expression (value a)) . (methodCall set ( (argumentList (expression (value (literal (literalDataStructure ""Foo"")))) , (expression (value (literal (literalValue 1))))) )))) (assignment (assignableValue b) = (expression (expression (value b)) . (methodCall set ( (argumentList (expression (value (literal (literalDataStructure ""Bar"")))) , (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall print ( (argumentList (expression (expression (value b)) . (methodCall length ( )))) )))) (callStatement (expression (methodCall print ( (argumentList (expression (expression (value b)) (index [ (expression (value (literal (literalDataStructure ""Foo"")))) ]))) )))) (callStatement (expression (methodCall print ( (argumentList (expression (expression (value b)) (index [ (expression (value (literal (literalDataStructure ""Bar"")))) ]))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -370,14 +359,15 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "213"); 
+        AssertObjectCodeExecutes(compileData, "213");
     }
+
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_RepeatedKey()
-    {
+    public void Fail_RepeatedKey() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'a':10}
 main
@@ -392,12 +382,11 @@ end main
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeFails(compileData, "An element with the same key but a different value already exists. Key: 'a'"); 
+        AssertObjectCodeFails(compileData, "An element with the same key but a different value already exists. Key: 'a'");
     }
 
     [TestMethod]
-    public void Fail_InconsistentTypes1()
-    {
+    public void Fail_InconsistentTypes1() {
         var code = @"#
 constant a = {'a':1, 'b':3.1, 'z':10}
 main
@@ -414,8 +403,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_InconsistentTypes2()
-    {
+    public void Fail_InconsistentTypes2() {
         var code = @"#
 constant a = {'a':1, 'b':3.1, ""Z"":10}
 main
@@ -432,8 +420,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_AccessByInvalidKey()
-    {
+    public void Fail_AccessByInvalidKey() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -468,13 +455,8 @@ public static class Program {
         AssertObjectCodeFails(compileData, "Unhandled exception. System.Collections.Generic.KeyNotFoundException"); //Messaging saying key does not exist or similar
     }
 
-
- 
-
-
     [TestMethod]
-    public void Fail_RemoveInvalidKeyType()
-    {
+    public void Fail_RemoveInvalidKeyType() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -492,8 +474,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_SetInvalidKeyType()
-    {
+    public void Fail_SetInvalidKeyType() {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
@@ -511,5 +492,6 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
+
     #endregion
 }

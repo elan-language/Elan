@@ -1,5 +1,4 @@
 ﻿using Compiler;
-using System.Collections.Immutable;
 
 namespace Test.CompilerTests;
 
@@ -7,8 +6,8 @@ using static Helpers;
 
 [TestClass]
 public class T14_Lists {
-
     #region Passes
+
     [TestMethod]
     public void Pass_literalList() {
         var code = @"
@@ -47,10 +46,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
     }
 
-
     [TestMethod]
-    public void Pass_literalListOfString()
-    {
+    public void Pass_literalListOfString() {
         var code = @"
 main
     var a = {""Foo"", ""Bar""}
@@ -87,8 +84,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_literalListWithCoercion()
-    {
+    public void Pass_literalListWithCoercion() {
         var code = @"
 main
     var a = {4.1,5,6,7,8}
@@ -126,8 +122,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_length()
-    {
+    public void Pass_length() {
         var code = @"
 main
     var a = {4,5,6,7,8}
@@ -165,8 +160,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_emptyList()
-    {
+    public void Pass_emptyList() {
         var code = @"
 main
     var a = List<Int>()
@@ -204,8 +198,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_index()
-    {
+    public void Pass_index() {
         var code = @"
 main
     var a = {4,5,6,7,8}
@@ -242,8 +235,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_range()
-    {
+    public void Pass_range() {
         var code = @"
 main
     var a = {4,5,6,7,8}
@@ -284,8 +276,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_addElementToList()
-    {
+    public void Pass_addElementToList() {
         var code = @"
 main
     var a = {4,5,6,7,8}
@@ -326,8 +317,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_addListToElement()
-    {
+    public void Pass_addListToElement() {
         var code = @"
 main
     var a = {4,5,6,7,8}
@@ -368,8 +358,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_addListToListUsingPlus()
-    {
+    public void Pass_addListToListUsingPlus() {
         var code = @"
 main
     var a = {4,5,6,7,8}
@@ -411,8 +400,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_constantLists()
-    {
+    public void Pass_constantLists() {
         var code = @"
 constant a = {4,5,6,7,8}
 main
@@ -449,8 +437,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_createEmptyListUsingConstructor()
-    {
+    public void Pass_createEmptyListUsingConstructor() {
         var code = @"
 main
     var a = List<Int>()
@@ -486,12 +473,13 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "empty list\r\n");
     }
+
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_emptyLiteralList()
-    {
+    public void Fail_emptyLiteralList() {
         var code = @"
 main
     var a = {}
@@ -503,8 +491,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_literalListInconsistentTypes1()
-    {
+    public void Fail_literalListInconsistentTypes1() {
         var code = @"
 main
     var a = {3, ""apples""}
@@ -517,13 +504,12 @@ end main
     }
 
     [TestMethod]
-    public void Fail_literalListInconsistentTypes2()
-    {
+    public void Fail_literalListInconsistentTypes2() {
         var code = @"
 main
     var a = {3, 3.1}
 end main
-";  //Because list type is decided by FIRST element
+"; //Because list type is decided by FIRST element
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -531,8 +517,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_OutOfRange()
-    {
+    public void Fail_OutOfRange() {
         var code = @"
 main
     var a = {4,5,6,7,8}
@@ -567,5 +552,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeFails(compileData, "Specified argument was out of the range of valid values");
     }
+
     #endregion
 }
