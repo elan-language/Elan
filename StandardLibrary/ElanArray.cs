@@ -2,9 +2,9 @@
 
 namespace StandardLibrary;
 
-public interface IArray { }
+public interface IElanArray { }
 
-public class ElanArray<T> : IArray, IEnumerable<T> {
+public class ElanArray<T> : IElanArray, IEnumerable<T> {
     private readonly bool twoD;
     private readonly T[][] wrappedArray;
 

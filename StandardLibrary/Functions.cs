@@ -131,9 +131,9 @@ public static class Functions {
 
     public static string asString(string s) => s;
 
-    private static string EmptyMessage(IEnumerable e) => e is IArray ? "empty array" : e is IElanDictionary ? "empty dictionary" : "empty list";
+    private static string EmptyMessage(IEnumerable e) => e is IElanArray ? "empty array" : e is IElanDictionary ? "empty dictionary" : "empty list";
 
-    private static string Type(IEnumerable e) => e is IArray ? "Array" : e is IElanDictionary ? "Dictionary" : "List";
+    private static string Type(IEnumerable e) => e is IElanArray ? "Array" : e is IElanDictionary ? "Dictionary" : "List";
 
     public static string asString(IEnumerable e) {
         var a = e.Cast<object>().Select(asString).ToArray();

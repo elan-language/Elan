@@ -3,9 +3,9 @@ using System.Collections.Immutable;
 
 namespace StandardLibrary;
 
-public interface IList { }
+public interface IElanList { }
 
-public class ElanList<T> : IList, IEnumerable<T> {
+public class ElanList<T> : IElanList, IEnumerable<T> {
     private readonly ImmutableList<T> wrappedList;
 
     public ElanList() => wrappedList = ImmutableList.Create<T>();
