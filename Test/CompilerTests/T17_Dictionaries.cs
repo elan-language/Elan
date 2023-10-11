@@ -26,7 +26,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
 }
 
 public static class Program {
@@ -65,7 +65,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
 }
 
 public static class Program {
@@ -103,7 +103,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
 }
 
 public static class Program {
@@ -142,7 +142,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
 }
 
 public static class Program {
@@ -180,7 +180,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
 }
 
 public static class Program {
@@ -220,7 +220,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
 }
 
 public static class Program {
@@ -263,7 +263,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
 }
 
 public static class Program {
@@ -304,7 +304,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
 }
 
 public static class Program {
@@ -375,7 +375,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_RepeatedKey()
     {
         var code = @"#
@@ -391,7 +391,8 @@ end main
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeFails(compileData, "An element with the same key but a different value already exists. Key: 'a'"); 
     }
 
     [TestMethod]
@@ -448,7 +449,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
 }
 
 public static class Program {

@@ -14,7 +14,9 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
 
     public ElanDictionary() => wrappedDictionary = ImmutableDictionary.Create<TKey, TValue>();
 
-    public ElanDictionary(params KeyValuePair<TKey, TValue>[] items) => wrappedDictionary = ImmutableDictionary.CreateRange(items);
+    private ElanDictionary(params KeyValuePair<TKey, TValue>[] items) => wrappedDictionary = ImmutableDictionary.CreateRange(items);
+
+    public ElanDictionary(params (TKey, TValue)[] items) => wrappedDictionary = ImmutableDictionary.CreateRange(items.Select(t => KeyValuePair.Create(t.Item1, t.Item2)));
 
     public ElanDictionary(KeyValuePair<TKey, TValue> item) => wrappedDictionary = ImmutableDictionary.CreateRange(new[] { item });
 

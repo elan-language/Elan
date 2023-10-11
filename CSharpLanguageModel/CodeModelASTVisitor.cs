@@ -60,7 +60,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             PropertyNode n => HandleScope(BuildPropertyModel, n),
             EnumDefNode n  => HandleScope(BuildEnumDefModel, n),
             EnumValueNode n  => HandleScope(BuildEnumValueModel, n),
-            KvpNode n => HandleScope(BuildKvpModel, n),
+            PairNode n => HandleScope(BuildKvpModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -260,10 +260,10 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new EnumValueModel(value, type);
     }
 
-    private KvpModel BuildKvpModel(KvpNode kvpNode) {
-        var key = Visit(kvpNode.Key);
-        var value = Visit(kvpNode.Value);
+    private PairModel BuildKvpModel(PairNode pairNode) {
+        var key = Visit(pairNode.Key);
+        var value = Visit(pairNode.Value);
 
-        return new KvpModel(key, value);
+        return new PairModel(key, value);
     }
 }

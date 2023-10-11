@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record KvpNode(IAstNode Key, IAstNode Value) : IAstNode {
+public record PairNode(IAstNode Key, IAstNode Value) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] {  Key, Value };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

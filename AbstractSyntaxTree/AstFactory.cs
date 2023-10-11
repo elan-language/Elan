@@ -237,7 +237,7 @@ public static class AstFactory {
         var key = visitor.Visit(context.literal().First());
         var value = visitor.Visit(context.literal().Last());
 
-        return new KvpNode(key, value);
+        return new PairNode(key, value);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralDataStructureContext context) {

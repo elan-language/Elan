@@ -63,7 +63,7 @@ public static class CodeHelpers {
             ValueNode vn => ValueNodeToCSharpType(vn),
             LiteralListNode lln => $"StandardLibrary.List<{NodeToCSharpType(lln.ItemNodes.First())}>",
             LiteralDictionaryNode ldn => $"StandardLibrary.ElanDictionary<{NodeToCSharpType(ldn.ItemNodes.First())}>",
-            KvpNode kn => $"{NodeToCSharpType(kn.Key)},{NodeToCSharpType(kn.Value)}",
+            PairNode kn => $"{NodeToCSharpType(kn.Key)},{NodeToCSharpType(kn.Value)}",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }
