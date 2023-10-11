@@ -10,6 +10,11 @@ public class Array<T> : IArray, IEnumerable<T> {
 
     public Array() : this(0) { }
 
+    public Array(IEnumerable<T> init) {
+        wrappedArray = new T[1][];
+        wrappedArray[0] = init.ToArray();
+    }
+
     public Array(int size) {
         wrappedArray = new T[1][];
         wrappedArray[0] = new T[size];
