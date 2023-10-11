@@ -325,29 +325,48 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Dictionary {a:1,b:3,z:10}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_CreateEmptyDictionary()
     {
         var code = @"#
 main
   var a = new Dictionary<String, Int>()
   var b = a.set(""Foo"",1)
-  b = set(""Bar"", 3)
+  b = b.set(""Bar"", 3)
   printLine(b)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = new StandardLibrary.ElanDictionary<string, int>();
+    var b = set(a, @$""Foo"", 1);
+    b = set(b, @$""Bar"", 3);
+    printLine(b);
+  }
+}";
 
 
-        var parseTree = @"";
+        var parseTree = @"*";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, @"Dictionary {Foo:1,Bar:3}\r\n"); 
+        AssertObjectCodeExecutes(compileData, "Dictionary {Bar:3,Foo:1}\r\n"); 
     }
     #endregion
 

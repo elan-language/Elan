@@ -2,5 +2,6 @@
 
 public enum DataStructure {
     Array,
-    List
+    List,
+    Dictionary
 }

@@ -459,6 +459,10 @@ public static class AstFactory {
             return new DataStructureTypeNode(DataStructure.Array, genericTypes.ToImmutableArray());
         }
 
+        if (context.DICTIONARY() is not null) {
+            return new DataStructureTypeNode(DataStructure.Dictionary, genericTypes.ToImmutableArray());
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 

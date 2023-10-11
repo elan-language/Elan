@@ -51,6 +51,7 @@ public static class CodeHelpers {
         type switch {
             DataStructure.List => "List",
             DataStructure.Array => "Array",
+            DataStructure.Dictionary => "ElanDictionary",
             _ => throw new NotImplementedException(type.ToString() ?? "null")
         };
 
