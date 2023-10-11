@@ -30,7 +30,7 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
     public int Count => wrappedDictionary.Count;
     public bool ContainsKey(TKey key) => wrappedDictionary.ContainsKey(key);
 
-    public bool TryGetValue(TKey key, out TValue value) => wrappedDictionary.TryGetValue(key, out value);
+    public bool TryGetValue(TKey key, out TValue value) => wrappedDictionary.TryGetValue(key, out value!);
 
     public TValue this[TKey key] => wrappedDictionary[key];
 

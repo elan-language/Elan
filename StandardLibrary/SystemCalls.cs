@@ -46,7 +46,7 @@ public static class SystemCalls {
         return input();
     }
 
-    public static string input() => Console.ReadLine();
+    public static string input() => Console.ReadLine() ?? "";
 
     public static char readKey(bool writeKey = false) {
         char k;

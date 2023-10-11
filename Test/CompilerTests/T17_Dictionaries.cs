@@ -482,8 +482,6 @@ main
 end main
 ";
 
-        var objectCode = @"";
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
