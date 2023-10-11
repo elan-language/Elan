@@ -2,6 +2,7 @@
 // ReSharper disable InconsistentNaming
 
 using System.Collections;
+using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using static StandardLibrary.Constants;
 
@@ -24,7 +25,11 @@ public static class Functions {
 
     #region dictionary
 
-   // public static IEnumerable<TKey> keys<TKey, TValue>(ElanDictionary<TKey, TValue> l) where TKey : notnull => l.Keys;
+    public static IEnumerable<TKey> keys<TKey, TValue>(ElanDictionary<TKey, TValue> d) where TKey : notnull => d.Keys;
+
+    public static IEnumerable<TValue> values<TKey, TValue>(ElanDictionary<TKey, TValue> d) where TKey : notnull => d.Values;
+
+    public static IImmutableDictionary<TKey, TValue> remove<TKey, TValue>(ElanDictionary<TKey, TValue> d, TKey key) where TKey : notnull => d.Remove(key);
 
     #endregion
 
@@ -112,7 +117,7 @@ public static class Functions {
         return obj switch {
             bool b => b ? "true" : "false",
             string s => s,
-            IDictionary d => asString(d),
+            IElanDictionary d => asString(d),
             IEnumerable l => asString(l),
             ElanException e => e.message,
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
@@ -122,16 +127,16 @@ public static class Functions {
 
     public static string asString(string s) => s;
 
-    private static string EmptyMessage(IEnumerable e) => e is IArray ? "empty array" : e is IDictionary ? "empty dictionary" : "empty list";
+    private static string EmptyMessage(IEnumerable e) => e is IArray ? "empty array" : e is IElanDictionary ? "empty dictionary" : "empty list";
 
-    private static string Type(IEnumerable e) => e is IArray ? "Array" : e is IDictionary ? "Dictionary" : "List";
+    private static string Type(IEnumerable e) => e is IArray ? "Array" : e is IElanDictionary ? "Dictionary" : "List";
 
     public static string asString(IEnumerable e) {
         var a = e.Cast<object>().Select(asString).ToArray();
         return a.Any() ? $"{Type(e)} {{{string.Join(',', a)}}}" : EmptyMessage(e);
     }
 
-    public static string asString(IDictionary d) {
+    public static string asString(IElanDictionary d) {
         var keys = d.ObjectKeys.Select(asString).ToArray();
         var values = d.ObjectValues.Select(asString).ToArray();
         var ss = keys.Zip(values).Select(i => $"{i.First}:{i.Second}").ToArray();

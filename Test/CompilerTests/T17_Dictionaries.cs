@@ -85,7 +85,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_keys()
     {
         var code = @"#
@@ -95,7 +95,22 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(keys(a));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -105,7 +120,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{'a', 'b', 'z'}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {a,b,z}\r\n");
     }
 
     [TestMethod, Ignore]
@@ -178,7 +193,7 @@ end mainLine
         AssertObjectCodeExecutes(compileData, "{'a':1, 'b':3, 'z':10}\r\n{'a':1,'b':4,'d':2,'z':10}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_RemoveEntry()
     {
         var code = @"#
@@ -187,19 +202,37 @@ main
   var b = a.remove('b')
   printLine(a)
   printLine(b)
-end mainLine
+end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanDictionary<char,int> a = new StandardLibrary.ElanDictionary<char,int>(KeyValuePair.Create('a', 1), KeyValuePair.Create('b', 3), KeyValuePair.Create('z', 10));
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var b = remove(a, 'b');
+    printLine(a);
+    printLine(b);
+  }
+}";
+
+        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (varDef var (assignableValue b) = (expression (expression (value a)) . (methodCall remove ( (argumentList (expression (value (literal (literalValue 'b'))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end main) <EOF>)";
+        
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "{'a':1, 'b':3, 'z':10}\r\n{'a':1,'z':10}\r\n");
+        AssertObjectCodeExecutes(compileData, "Dictionary {a:1,b:3,z:10}\r\nDictionary {a:1,z:10}\r\n");
     }
 
     [TestMethod, Ignore]

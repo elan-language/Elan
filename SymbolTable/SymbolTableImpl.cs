@@ -17,6 +17,8 @@ public class SymbolTableImpl {
             "Decimal" => DecimalSymbolType.Instance,
             "Char" => CharSymbolType.Instance,
             "Boolean" => BooleanSymbolType.Instance,
+            "IEnumerable`1" => new IterableSymbolType(),
+            "IImmutableDictionary`2" => new DictionarySymbolType(),
             _ => throw new NotImplementedException(type.Name)
         };
 
