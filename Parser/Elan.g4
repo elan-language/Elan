@@ -110,7 +110,7 @@ constructor:
 
 // INSTANTIATION
 newInstance:
-	NEW type OPEN_BRACKET (argumentList)? CLOSE_BRACKET (withClause)?
+	type OPEN_BRACKET argumentList? CLOSE_BRACKET withClause?
 	| IDENTIFIER withClause
 	;
 
@@ -230,12 +230,7 @@ literalList: OPEN_BRACE (NL? literal (COMMA literal)* NL?) CLOSE_BRACE;
 
 listDecomp: OPEN_BRACE IDENTIFIER COLON IDENTIFIER CLOSE_BRACE;
 
-arrayDefinition: 
-	NEW ARRAY genericSpecifier OPEN_BRACKET LITERAL_INTEGER? CLOSE_BRACKET listDefinition?
-	| NEW ARRAY genericSpecifier listDefinition
-	| NEW ARRAY OPEN_BRACKET LITERAL_INTEGER? CLOSE_BRACKET listDefinition
-	| NEW ARRAY listDefinition
-	;
+arrayDefinition: ARRAY genericSpecifier OPEN_BRACKET LITERAL_INTEGER? CLOSE_BRACKET;
 
 dictionaryDefinition: OPEN_BRACE (NL? kvp (COMMA kvp)* NL?) CLOSE_BRACE;
 

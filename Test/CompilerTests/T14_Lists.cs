@@ -169,7 +169,7 @@ public static class Program {
     {
         var code = @"
 main
-    var a = new List<Int>()
+    var a = List<Int>()
     printLine(a.length())
 end main
 ";
@@ -453,7 +453,7 @@ public static class Program {
     {
         var code = @"
 main
-    var a = new List<Int>()
+    var a = List<Int>()
     printLine(a)
 end main
 ";
