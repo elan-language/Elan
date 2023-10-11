@@ -363,6 +363,7 @@ end main
 ";
 
         var parseTree = @"*";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -447,42 +448,44 @@ public static class Program {
  
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_RemoveInvalidKeyType()
     {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
   var b = a.remove(""b"")
-end mainLine
+end main
 ";
 
-        var objectCode = @"";
+        var parseTree = @"*";
 
-        var parseTree = @"";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_SetInvalidKeyType()
     {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  var b = a.Set(""b"", 4)
-end mainLine
+  var b = a.set(""b"", 4)
+end main
 ";
 
         var objectCode = @"";
 
-        var parseTree = @"";
+        var parseTree = @"*";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
     #endregion
 }
