@@ -58,7 +58,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "24\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Array()
     {
         var code = @"

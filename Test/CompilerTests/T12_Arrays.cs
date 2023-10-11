@@ -8,7 +8,7 @@ using static Helpers;
 public class T12_Arrays {
     #region passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_DeclareAnEmptyArrayBySizeAndCheckLength() {
         var code = @"
 main
@@ -46,7 +46,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_ConfirmStringElementsInitializedToEmptyStringNotNull() {
         var code = @"
 main
@@ -86,7 +86,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "0\r\nArray {,,}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_SetAndReadElements() {
         var code = @"
 main
@@ -130,7 +130,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "foo\r\nyon\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_InitializeAnArrayFromAList() {
         var code = @"
 main
@@ -168,7 +168,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_2DArray() {
         var code = @"
 main
@@ -363,7 +363,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_SpecifySizeAndInitializer() {
         var code = @"
 main

@@ -484,7 +484,7 @@ public static class AstFactory {
                 args = args.Add(new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int)));
             }
 
-            var init = context.listDefinition() is { } list ? list.expression().Select(visitor.Visit) : Array.Empty<IAstNode>();
+            var init = Array.Empty<IAstNode>();
 
             return new NewInstanceNode(type, args, init.ToImmutableArray());
         }

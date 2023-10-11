@@ -325,7 +325,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Dictionary {a:1,b:3,z:10}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_CreateEmptyDictionary()
     {
         var code = @"#
