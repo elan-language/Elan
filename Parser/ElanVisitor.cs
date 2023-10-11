@@ -176,17 +176,23 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitMutableClass([NotNull] ElanParser.MutableClassContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.abstractClass"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAbstractClass([NotNull] ElanParser.AbstractClassContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.immutableClass"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitImmutableClass([NotNull] ElanParser.ImmutableClassContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.abstractClass"/>.
+	/// Visit a parse tree produced by <see cref="ElanParser.abstractImmutableClass"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitAbstractClass([NotNull] ElanParser.AbstractClassContext context);
+	Result VisitAbstractImmutableClass([NotNull] ElanParser.AbstractImmutableClassContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.inherits"/>.
 	/// </summary>
