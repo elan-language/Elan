@@ -58,12 +58,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "24\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Array()
     {
         var code = @"
 main
-    var a = new Array<Int>() {7,8,9}
+    var a = {7,8,9}.asArray()
     var n = 0
     for x in a
         n = n + x
@@ -85,7 +85,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new StandardLibrary.Array<int>() {7, 8, 9};
+    var a = asArray(new StandardLibrary.List<int>(7, 8, 9));
     var n = 0;
     foreach (var x in a) {
       n = n + x;
@@ -94,7 +94,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (dataStructureDefinition (arrayDefinition new Array (genericSpecifier < (type Int) >) ( ) (listDefinition { (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalValue 8)))) , (expression (value (literal (literalValue 9)))) })))))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (forIn for x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 7)) , (literal (literalValue 8)) , (literal (literalValue 9)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (forIn for x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
