@@ -4,25 +4,25 @@ namespace StandardLibrary;
 
 public interface IArray { }
 
-public class Array<T> : IArray, IEnumerable<T> {
+public class ElanArray<T> : IArray, IEnumerable<T> {
     private readonly bool twoD;
     private readonly T[][] wrappedArray;
 
-    public Array() : this(0) { }
+    public ElanArray() : this(0) { }
 
-    public Array(IEnumerable<T> init) {
+    public ElanArray(IEnumerable<T> init) {
         wrappedArray = new T[1][];
         wrappedArray[0] = init.ToArray();
     }
 
-    public Array(int size) {
+    public ElanArray(int size) {
         wrappedArray = new T[1][];
         wrappedArray[0] = new T[size];
 
         Array.Fill(wrappedArray[0], Default);
     }
 
-    public Array(int size1, int size2) {
+    public ElanArray(int size1, int size2) {
         twoD = true;
         wrappedArray = new T[size1][];
 

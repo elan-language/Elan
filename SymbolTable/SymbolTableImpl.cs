@@ -32,7 +32,7 @@ public class SymbolTableImpl {
             "Boolean" => BooleanSymbolType.Instance,
             "IEnumerable`1" => new IterableSymbolType(),
             "IImmutableDictionary`2" => new DictionarySymbolType(),
-            "Array`1" => new ArraySymbolType(),
+            "ElanArray`1" => new ArraySymbolType(),
             _ => throw new NotImplementedException(type.Name)
         };
 

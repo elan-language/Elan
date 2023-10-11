@@ -93,25 +93,25 @@ public class FunctionsTests {
 
     [TestMethod]
     public void AsStringArray() {
-        var a = new Array<bool> { true, false, false };
+        var a = new ElanArray<bool> { true, false, false };
         Assert.AreEqual("Array {true,false,false}", asString(a));
     }
 
     [TestMethod]
     public void AsStringArray2() {
-        var a = new Array<bool>(4);
+        var a = new ElanArray<bool>(4);
         Assert.AreEqual("Array {false,false,false,false}", asString(a));
     }
 
     [TestMethod]
     public void AsStringArray3() {
-        var t = new Array<string> { "", "", "" };
+        var t = new ElanArray<string> { "", "", "" };
         Assert.AreEqual("Array {,,}", asString(t));
     }
 
     [TestMethod]
     public void AsStringEmptyArray() {
-        var t = new Array<string>();
+        var t = new ElanArray<string>();
         Assert.AreEqual("empty array", asString(t));
     }
 

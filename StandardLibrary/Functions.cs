@@ -21,7 +21,7 @@ public static class Functions {
 
     public static int length(IEnumerable l) => l.Cast<object>().ToArray().Length;
 
-    public static Array<T> asArray<T>(IEnumerable<T> l) => new(l);
+    public static ElanArray<T> asArray<T>(IEnumerable<T> l) => new(l);
 
     #endregion
 

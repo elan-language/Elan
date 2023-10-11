@@ -46,7 +46,7 @@ public static class CodeHelpers {
     public static string DataStructureTypeToCSharpType(DataStructure type) =>
         type switch {
             DataStructure.List => "ElanList",
-            DataStructure.Array => "Array",
+            DataStructure.Array => "ElanArray",
             DataStructure.Dictionary => "ElanDictionary",
             _ => throw new NotImplementedException(type.ToString() ?? "null")
         };
