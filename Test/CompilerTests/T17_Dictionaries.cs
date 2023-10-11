@@ -333,7 +333,9 @@ main
   var a = new Dictionary<String, Int>()
   var b = a.set(""Foo"",1)
   b = b.set(""Bar"", 3)
-  printLine(b)
+  print(b.length())
+  print(b[""Foo""])
+  print(b[""Bar""])
 end main
 ";
 
@@ -353,12 +355,14 @@ public static class Program {
     var a = new StandardLibrary.ElanDictionary<string, int>();
     var b = set(a, @$""Foo"", 1);
     b = set(b, @$""Bar"", 3);
-    printLine(b);
+    print(length(b));
+    print(b[@$""Foo""]);
+    print(b[@$""Bar""]);
   }
 }";
 
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (newInstance new (type (dataStructureType Dictionary (genericSpecifier < (type String) , (type Int) >))) ( )))) (varDef var (assignableValue b) = (expression (expression (value a)) . (methodCall set ( (argumentList (expression (value (literal (literalDataStructure ""Foo"")))) , (expression (value (literal (literalValue 1))))) )))) (assignment (assignableValue b) = (expression (expression (value b)) . (methodCall set ( (argumentList (expression (value (literal (literalDataStructure ""Bar"")))) , (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall print ( (argumentList (expression (expression (value b)) . (methodCall length ( )))) )))) (callStatement (expression (methodCall print ( (argumentList (expression (expression (value b)) (index [ (expression (value (literal (literalDataStructure ""Foo"")))) ]))) )))) (callStatement (expression (methodCall print ( (argumentList (expression (expression (value b)) (index [ (expression (value (literal (literalDataStructure ""Bar"")))) ]))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -366,7 +370,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Dictionary {Foo:3,Bar:1}\r\n"); 
+        AssertObjectCodeExecutes(compileData, "213"); 
     }
     #endregion
 
