@@ -45,7 +45,7 @@ public static class CodeHelpers {
 
     public static string DataStructureTypeToCSharpType(DataStructure type) =>
         type switch {
-            DataStructure.List => "List",
+            DataStructure.List => "ElanList",
             DataStructure.Array => "Array",
             DataStructure.Dictionary => "ElanDictionary",
             _ => throw new NotImplementedException(type.ToString() ?? "null")
@@ -57,7 +57,7 @@ public static class CodeHelpers {
     public static string NodeToCSharpType(IAstNode node) {
         return node switch {
             ValueNode vn => ValueNodeToCSharpType(vn),
-            LiteralListNode lln => $"StandardLibrary.List<{NodeToCSharpType(lln.ItemNodes.First())}>",
+            LiteralListNode lln => $"StandardLibrary.ElanList<{NodeToCSharpType(lln.ItemNodes.First())}>",
             LiteralDictionaryNode ldn => $"StandardLibrary.ElanDictionary<{NodeToCSharpType(ldn.ItemNodes.First())}>",
             PairNode kn => $"{NodeToCSharpType(kn.Key)},{NodeToCSharpType(kn.Value)}",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")

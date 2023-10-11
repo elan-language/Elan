@@ -152,7 +152,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = asArray(new StandardLibrary.List<string>(@$""foo"", @$""bar"", @$""yon""));
+    var a = asArray(new StandardLibrary.ElanList<string>(@$""foo"", @$""bar"", @$""yon""));
     printLine(length(a));
   }
 }";

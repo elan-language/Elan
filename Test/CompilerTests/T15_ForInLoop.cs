@@ -34,7 +34,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new StandardLibrary.List<int>(7, 8, 9);
+    var a = new StandardLibrary.ElanList<int>(7, 8, 9);
     var n = 0;
     foreach (var x in a) {
       n = n + x;
@@ -80,7 +80,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = asArray(new StandardLibrary.List<int>(7, 8, 9));
+    var a = asArray(new StandardLibrary.ElanList<int>(7, 8, 9));
     var n = 0;
     foreach (var x in a) {
       n = n + x;
@@ -216,7 +216,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = new StandardLibrary.List<int>(7, 8, 9);
+    var a = new StandardLibrary.ElanList<int>(7, 8, 9);
     var x = @$""hello"";
     foreach (var x in a) {
       printLine(x);

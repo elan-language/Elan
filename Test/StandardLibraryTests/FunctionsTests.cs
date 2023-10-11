@@ -81,13 +81,13 @@ public class FunctionsTests {
 
     [TestMethod]
     public void AsStringList() {
-        var t = new StandardLibrary.List<int>(1, 2, 3, 4, 5);
+        var t = new StandardLibrary.ElanList<int>(1, 2, 3, 4, 5);
         Assert.AreEqual("List {1,2,3,4,5}", asString(t));
     }
 
     [TestMethod]
     public void AsStringEmptyList() {
-        var t = new StandardLibrary.List<int>();
+        var t = new StandardLibrary.ElanList<int>();
         Assert.AreEqual("empty list", asString(t));
     }
 
