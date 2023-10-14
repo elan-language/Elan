@@ -30,7 +30,6 @@ INHERITS:      'inherits';
 LAMBDA:		   'lambda';
 LET:           'let';
 MAIN:		   'main';
-NEW:           'new';
 PARTIAL: 	   'partial'; // partial function application
 PRIVATE:       'private';
 PROCEDURE:	   'procedure';
