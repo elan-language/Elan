@@ -78,7 +78,6 @@ MOD:                      'mod';
 INT_DIV:				  'div';
 LT:                       '<';
 GT:                       '>';
-NULLABLE:                 '?';
 OP_AND:                   'and';
 OP_NOT:                   'not';
 OP_OR:                    'or';
