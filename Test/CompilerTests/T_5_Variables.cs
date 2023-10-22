@@ -46,6 +46,46 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
+
+    [TestMethod]
+    public void Pass_Int_Expression()
+    {
+        var code = @"#
+main
+  var a = 3 + 4
+  printLine(a)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 3 + 4;
+    printLine(a);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalValue 3)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 4)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "7\r\n");
+    }
+
     [TestMethod]
     public void Pass_Reassign() {
         var code = @"#
