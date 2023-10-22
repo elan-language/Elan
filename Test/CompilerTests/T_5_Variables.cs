@@ -297,7 +297,7 @@ end main
     public void fail_useOfKeywordAsName() {
         var code = @"#
 main
-  var new = 4.1
+  var if = 4.1
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
