@@ -153,5 +153,21 @@ public static class Functions {
     public static string asString<T>(ITuple t) =>
         Enumerable.Range(1, t.Length - 1).Aggregate($"({asString(t[0])}", (s, x) => s + $", {asString(t[x])}") + ")";
 
+
     #endregion
+
+    public static string typeAndProperties(object o) {
+        var type = o.GetType();
+        var name = type.Name;
+        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var pNames = properties.Select(p => p.Name);
+        var pValues = properties.Select(p => p.GetValue(o));
+        var pStrings = pValues.Select(asString);
+        var nameValues = pNames.Zip(pStrings);
+        var pnv = nameValues.Select(nv => $"{nv.First}:{nv.Second}");
+
+        var pString = string.Join(", ", pnv);
+
+        return $"{name} {{{pString}}}";
+    }
 }

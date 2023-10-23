@@ -65,6 +65,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             ConstructorNode n => HandleScope(BuildConstructorModel, n),
             PropertyDefNode n => HandleScope(BuildPropertyDefModel, n),
             TypeNode n => HandleScope(BuildTypeModel, n),
+            SelfNode n => HandleScope(BuildSelfModel, n),
+            ReturnExpressionNode n => Visit(n.Expression),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -301,4 +303,6 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         
         return new TypeModel(id);
     }
+
+    private ScalarValueModel BuildSelfModel(SelfNode selfNode) => new("this");
 }

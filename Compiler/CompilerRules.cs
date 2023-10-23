@@ -11,7 +11,7 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
         if (leafNode is FunctionCallNode mcn) {
             var otherNodes = nodes.SkipLast(1).ToArray();
-            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or ProcedureCallNode or FunctionCallNode or SystemCallNode)) {
+            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or ProcedureCallNode or FunctionCallNode or SystemCallNode or ReturnExpressionNode)) {
                 return "Cannot have unassigned expression";
             }
         }
@@ -122,6 +122,19 @@ public static class CompilerRules {
                 if (paramNodes.Any(pn => Match(pn.Id, an.Id))) {
                     return "Cannot modify param in constructor";
                 }
+            }
+        }
+
+        return null;
+    }
+
+    public static string? ClassMustHaveAsString(IAstNode[] nodes, IScope currentScope) {
+        var leafNode = nodes.Last();
+
+        if (leafNode is ClassDefNode cdn) {
+            var children = cdn.Functions.OfType<FunctionDefNode>();
+            if (!children.Any(n => n is { Signature: MethodSignatureNode { Id : IdentifierNode { Id : "asString" } } })) {
+                return "Class must have asString";
             }
         }
 
