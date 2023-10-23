@@ -32,7 +32,7 @@ class Foo
     end procedure
 
     function asString() as String
-         return p2
+         return p""""
     end function
 
 end class
@@ -71,7 +71,7 @@ class Foo
     end procedure
 
     function asString() as String
-         return p2
+         return p""""
     end function
 
 end class
@@ -93,7 +93,7 @@ end class
 
     #region Fails
 
-    public void Pass_ProcedureCannotBeCalledDirectly()
+    public void Fail_ProcedureCannotBeCalledDirectly()
     {
         var code = @"#
 main
@@ -113,14 +113,11 @@ class Foo
     end procedure
 
     function asString() as String
-         return p2
+         return """"
     end function
 
 end class
 ";
-
-        var objectCode = @"";
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
