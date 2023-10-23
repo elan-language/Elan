@@ -11,7 +11,7 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
         if (leafNode is FunctionCallNode mcn) {
             var otherNodes = nodes.SkipLast(1).ToArray();
-            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or ProcedureCallNode or FunctionCallNode or SystemCallNode)) {
+            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or ProcedureCallNode or FunctionCallNode or SystemCallNode or ReturnExpressionNode)) {
                 return "Cannot have unassigned expression";
             }
         }

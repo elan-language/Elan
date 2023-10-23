@@ -161,8 +161,7 @@ class Foo
     private property p2 as String
 
     function asString() as String
-         var a = self.typeAndProperties()
-         return a
+         return self.typeAndProperties()
     end function
 
 end class
@@ -184,8 +183,8 @@ public static partial class Globals {
     public int p1 { get; set; }
     private string p2 { get; set; } = """";
     public string asString() {
-      var a = typeAndProperties(this);
-      return a;
+
+      return typeAndProperties(this);
     }
   }
 }

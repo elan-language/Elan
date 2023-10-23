@@ -66,6 +66,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             PropertyDefNode n => HandleScope(BuildPropertyDefModel, n),
             TypeNode n => HandleScope(BuildTypeModel, n),
             SelfNode n => HandleScope(BuildSelfModel, n),
+            ReturnExpressionNode n => Visit(n.Expression),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };

@@ -525,7 +525,7 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionWithBodyContext context) {
         var signature = visitor.Visit(context.functionSignature());
         var statementBlock = visitor.Visit(context.statementBlock());
-        var ret = visitor.Visit(context.expression());
+        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
 
         return new FunctionDefNode(signature, statementBlock, ret);
     }
