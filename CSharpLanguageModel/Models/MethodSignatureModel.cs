@@ -8,7 +8,7 @@ public record MethodSignatureModel(ICodeModel Id, IEnumerable<ICodeModel> Parame
     private string Prefix => ReturnType is not null ? "" : "ref ";
 
     public string ToString(int indent) =>
-        $@"public static {ReturnTypeString} {Id}({Parameters.AsCommaSeparatedString(Prefix)})";
+        $@"{ReturnTypeString} {Id}({Parameters.AsCommaSeparatedString(Prefix)})";
 
     public override string ToString() => ToString(0);
 }

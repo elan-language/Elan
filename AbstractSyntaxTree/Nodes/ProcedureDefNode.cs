@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record ProcedureDefNode(IAstNode Signature, IAstNode StatementBlock) : IAstNode {
+public record ProcedureDefNode(IAstNode Signature, IAstNode StatementBlock, bool Standalone = true) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Signature, StatementBlock };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

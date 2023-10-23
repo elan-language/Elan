@@ -3,6 +3,7 @@
 
 using System.Collections;
 using System.Collections.Immutable;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using static StandardLibrary.Constants;
 
@@ -125,6 +126,7 @@ public static class Functions {
             IEnumerable l => asString(l),
             ElanException e => e.message,
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
+            _ when obj.GetType().GetMethod("asString") is { }  mi => mi.Invoke(obj, null) as string,
             _ => obj.ToString()
         };
     }

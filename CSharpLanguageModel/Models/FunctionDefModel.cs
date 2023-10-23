@@ -2,12 +2,14 @@
 
 namespace CSharpLanguageModel.Models;
 
-public record FunctionDefModel(ICodeModel Signature, ICodeModel Statements, ICodeModel Return) : ICodeModel {
-    public string ToString(int indent) => ToString();
+public record FunctionDefModel(ICodeModel Signature, ICodeModel Statements, ICodeModel Return, bool Standalone) : ICodeModel {
+    public override string ToString() => ToString(0);
 
-    public override string ToString() =>
-        $@"{Indent1}{Signature} {{
-{Indent(Statements, 2)}
-{Indent(2)}return {Return};
-{Indent1}}}";
+    private string Qual => Standalone ? "static " : ""; 
+
+    public string ToString(int indent) =>
+        $@"{Indent(indent)}public {Qual}{Signature} {{
+{Indent(Statements, indent + 1)}
+{Indent(indent + 1)}return {Return};
+{Indent(indent)}}}";
 }

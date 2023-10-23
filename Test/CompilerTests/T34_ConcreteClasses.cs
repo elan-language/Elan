@@ -16,6 +16,7 @@ main
     var x = Foo()
     printLine(x.p1)
     printLine(x.p2)
+    printLine(x.asString())
 end main
 
 class Foo
@@ -47,6 +48,10 @@ public static partial class Globals {
     }
     public int p1 { get; set; }
     public string p2 { get; set; } = """";
+    public string asString() {
+
+      return @$"""";
+    }
   }
 }
 
@@ -55,6 +60,7 @@ public static class Program {
     var x = new Foo();
     printLine(x.p1);
     printLine(x.p2);
+    printLine(asString(x));
   }
 }";
 
@@ -66,7 +72,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5\r\n\r\n"); //N.B. Important that String prop should be auto-initialised to "" not null
+        AssertObjectCodeExecutes(compileData, "5\r\n\r\n\r\n"); //N.B. Important that String prop should be auto-initialised to "" not null
     }
 
     [TestMethod, Ignore]

@@ -202,7 +202,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var signature = Visit(procedureDefNode.Signature);
         var statementBlock = Visit(procedureDefNode.StatementBlock);
 
-        return new ProcedureDefModel(signature, statementBlock);
+        return new ProcedureDefModel(signature, statementBlock, procedureDefNode.Standalone);
     }
 
     private FunctionDefModel BuildFunctionDefModel(FunctionDefNode functionDefNode) {
@@ -210,13 +210,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var statementBlock = Visit(functionDefNode.StatementBlock);
         var ret = Visit(functionDefNode.Return);
 
-        return new FunctionDefModel(signature, statementBlock, ret);
+        return new FunctionDefModel(signature, statementBlock, ret, functionDefNode.Standalone);
     }
 
-    private MethodSignatureModel BuildMethodSignatureModel(MethodSignatureNode procedureDefNode) {
-        var id = Visit(procedureDefNode.Id);
-        var parameters = procedureDefNode.Parameters.Select(Visit);
-        var returnType = procedureDefNode.ReturnType is { } rt ? Visit(rt) : null;
+    private MethodSignatureModel BuildMethodSignatureModel(MethodSignatureNode methodSignatureNode) {
+        var id = Visit(methodSignatureNode.Id);
+        var parameters = methodSignatureNode.Parameters.Select(Visit);
+        var returnType = methodSignatureNode.ReturnType is { } rt ? Visit(rt) : null;
         return new MethodSignatureModel(id, parameters, returnType);
     }
 
@@ -274,8 +274,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var type = Visit(classDefNode.Type);
         var constructor = Visit(classDefNode.Constructor);
         var properties = classDefNode.Properties.Select(Visit);
+        var functions = classDefNode.Functions.Select(Visit);
 
-        return new ClassDefModel(type, constructor,  properties);
+        return new ClassDefModel(type, constructor,  properties, functions);
     }
 
     private ConstructorModel BuildConstructorModel(ConstructorNode constructorNode) {
