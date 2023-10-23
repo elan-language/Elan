@@ -175,6 +175,10 @@ public static class AstFactory {
             return visitor.Visit(ds);
         }
 
+        if (context.SELF() is { } sf) {
+            return visitor.Visit(sf);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 

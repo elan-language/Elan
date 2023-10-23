@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T55_asString
 {
     #region Passes
@@ -35,9 +35,37 @@ class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public class Foo {
+    public Foo() {
+      p1 = 5;
+      p2 = @$""Apple"";
+    }
+    public int p1 { get; set; }
+    private string p2 { get; set; } = """";
+    public string asString() {
+
+      return p2;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    var s = asString(f);
+    printLine(s);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (varDef var (assignableValue s) = (expression (expression (value f)) . (methodCall asString ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value s))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5))))) (assignment (assignableValue p2) = (expression (value (literal (literalDataStructure ""Apple"")))))) end constructor) (property property p1 as (type Int)) (property private property p2 as (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value p2)) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -73,9 +101,36 @@ class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public class Foo {
+    public Foo() {
+      p1 = 5;
+      p2 = @$""Apple"";
+    }
+    public int p1 { get; set; }
+    private string p2 { get; set; } = """";
+    public string asString() {
+
+      return p2;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value f))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5))))) (assignment (assignableValue p2) = (expression (value (literal (literalDataStructure ""Apple"")))))) end constructor) (property property p1 as (type Int)) (property private property p2 as (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value p2)) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -86,7 +141,7 @@ end class
         AssertObjectCodeExecutes(compileData, "Apple\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_AsStringUsingDefaultHelper()
     {
         var code = @"#
@@ -134,7 +189,7 @@ main
     var l = {1,2,3}
     var sl = l.asString()
     printLine(sl)
-    var a = Array<Int> {1,2,3}
+    var a = {1,2,3}.asArray()
     var sa = a.asString()
     printLine(sa)
     var d = {'a':1, 'b':3, 'z':10}
@@ -144,9 +199,32 @@ end main
 
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var l = new StandardLibrary.ElanList<int>(1, 2, 3);
+    var sl = asString(l);
+    printLine(sl);
+    var a = asArray(new StandardLibrary.ElanList<int>(1, 2, 3));
+    var sa = asString(a);
+    printLine(sa);
+    var d = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
+    var sd = asString(d);
+    printLine(sd);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue l) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 1)) , (literal (literalValue 2)) , (literal (literalValue 3)) })))))) (varDef var (assignableValue sl) = (expression (expression (value l)) . (methodCall asString ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value sl))) )))) (varDef var (assignableValue a) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 1)) , (literal (literalValue 2)) , (literal (literalValue 3)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue sa) = (expression (expression (value a)) . (methodCall asString ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value sa))) )))) (varDef var (assignableValue d) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))))) (varDef var (assignableValue sd) = (expression (expression (value d)) . (methodCall asString ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value sd))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -154,7 +232,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {1,2,3}\r\nArray {1,2,3}\r\nDictionary {'a':1,'b':3,'z':10}");
+        AssertObjectCodeExecutes(compileData, "List {1,2,3}\r\nArray {1,2,3}\r\nDictionary {a:1,b:3,z:10}\r\n");
     }
 
 

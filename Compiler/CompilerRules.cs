@@ -128,6 +128,19 @@ public static class CompilerRules {
         return null;
     }
 
+    public static string? ClassMustHaveAsString(IAstNode[] nodes, IScope currentScope) {
+        var leafNode = nodes.Last();
+
+        if (leafNode is ClassDefNode cdn) {
+            var children = cdn.Functions.OfType<FunctionDefNode>();
+            if (!children.Any(n => n is { Signature: MethodSignatureNode { Id : IdentifierNode { Id : "asString" } } })) {
+                return "Class must have asString";
+            }
+        }
+
+        return null;
+    }
+
 
     public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();

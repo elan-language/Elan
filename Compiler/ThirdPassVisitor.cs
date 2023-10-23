@@ -14,6 +14,7 @@ public class ThirdPassVisitor {
         Rules.Add(CompilerRules.ArrayInitialization);
         Rules.Add(CompilerRules.FunctionConstraintsRule);
         Rules.Add(CompilerRules.ConstructorConstraintsRule);
+        Rules.Add(CompilerRules.ClassMustHaveAsString);
         Rules.Add(CompilerRules.MethodCallsShouldBeResolvedRule);
     }
 
