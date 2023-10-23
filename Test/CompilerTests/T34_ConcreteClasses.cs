@@ -10,7 +10,8 @@ public class T34_ConcreteClasses
     #region Passes
 
     [TestMethod]
-    public void Pass_Class_SimpleInstantiation_PropertyAccess_Methods() {
+    public void Pass_Class_SimpleInstantiation_PropertyAccess_Methods()
+    {
         var code = @"#
 main
     var x = Foo()
@@ -108,12 +109,10 @@ end class
         AssertObjectCodeExecutes(compileData, "7\r\nApple"); //N.B. String prop should be auto-initialised to "" not null
     }
 
+    #endregion
 
-
-        #endregion
-
-        #region Fails
-        public void Fail_NoConstructor()
+    #region Fails
+    public void Fail_NoConstructor()
     {
         var code = @"#
 class Foo
@@ -149,7 +148,6 @@ end class
         AssertDoesNotParse(compileData);
     }
 
-
     [TestMethod, Ignore]
     public void Fail_AttemptToModifyAPropertyDirectly()
     {
@@ -180,7 +178,6 @@ end class
         AssertDoesNotCompile(compileData);
     }
 
-
     [TestMethod, Ignore]
     public void Fail_OverloadedConstructor()
     {
@@ -205,7 +202,6 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
 
     [TestMethod, Ignore]
     public void Fail_InstantiateWithoutRequiredArgs()
