@@ -145,6 +145,7 @@ public static class Program {
     #endregion
 
     #region Fails
+    [TestMethod]
     public void Fail_NoConstructor()
     {
         var code = @"#
@@ -163,6 +164,7 @@ end class
         AssertDoesNotParse(compileData);
     }
 
+    [TestMethod]
     public void Fail_InitialisePropertyInLine()
     {
         var code = @"#
