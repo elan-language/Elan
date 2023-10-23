@@ -60,7 +60,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             PropertyNode n => HandleScope(BuildPropertyModel, n),
             EnumDefNode n => HandleScope(BuildEnumDefModel, n),
             EnumValueNode n => HandleScope(BuildEnumValueModel, n),
-            PairNode n => HandleScope(BuildKvpModel, n),
+            PairNode n => HandleScope(BuildKvpModel, n), 
+            ClassDefNode n => HandleScope(BuildClassDefModel, n),
+            ConstructorNode n => HandleScope(BuildConstructorModel, n),
+            PropertyDefNode n => HandleScope(BuildPropertyDefModel, n),
+            TypeNode n => HandleScope(BuildTypeModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -264,5 +268,36 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var value = Visit(pairNode.Value);
 
         return new PairModel(key, value);
+    }
+
+    private ClassDefModel BuildClassDefModel(ClassDefNode classDefNode) {
+        var type = Visit(classDefNode.Type);
+        var constructor = Visit(classDefNode.Constructor);
+        var properties = classDefNode.Properties.Select(Visit);
+
+        return new ClassDefModel(type, constructor,  properties);
+    }
+
+    private ConstructorModel BuildConstructorModel(ConstructorNode constructorNode) {
+      
+        var body = Visit(constructorNode.StatementBlock);
+        var parameters = constructorNode.Parameters.Select(Visit);
+
+        return new ConstructorModel(parameters, body);
+    }
+
+    private PropertyDefModel BuildPropertyDefModel(PropertyDefNode constructorNode) {
+      
+        var id = Visit(constructorNode.Id);
+        var type = Visit(constructorNode.Type);
+
+        return new PropertyDefModel(id, type);
+    }
+
+    private TypeModel BuildTypeModel(TypeNode typeNode) {
+      
+        var id = Visit(typeNode.TypeName);
+        
+        return new TypeModel(id);
     }
 }

@@ -61,6 +61,10 @@ public static class AstFactory {
             EnumDefContext c => visitor.Build(c),
             EnumTypeContext c => visitor.Build(c),
             EnumValueContext c => visitor.Build(c),
+            ClassDefContext c => visitor.Build(c),
+            MutableClassContext c => visitor.Build(c),
+            ConstructorContext c => visitor.Build(c),
+            PropertyContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -72,7 +76,8 @@ public static class AstFactory {
         var procedures = context.procedureDef().Select(visitor.Visit);
         var functions = context.functionDef().Select(visitor.Visit);
         var enumerations = context.enumDef().Select(visitor.Visit);
-        var globals = constants.Concat(procedures).Concat(functions).Concat(enumerations).ToImmutableArray();
+        var classes = context.classDef().Select(visitor.Visit);
+        var globals = constants.Concat(procedures).Concat(functions).Concat(enumerations).Concat(classes).ToImmutableArray();
         var mainNode = context.main().Select(visitor.Visit<MainNode>).Single();
 
         return new FileNode(globals, mainNode);
@@ -445,6 +450,12 @@ public static class AstFactory {
             return new ValueTypeNode(Helpers.MapValueType(vt.GetText()));
         }
 
+        if (context.TYPENAME() is { } tn) {
+            var typeName = visitor.Visit(tn);
+            return new TypeNode(typeName);
+        }
+
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -574,4 +585,36 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumTypeContext context) => visitor.Visit(context.TYPENAME());
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ClassDefContext context) {
+        if (context.mutableClass() is { } mc) {
+            return visitor.Visit(mc);
+        }
+
+        throw new NotImplementedException(context.children.First().GetText()); 
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, MutableClassContext context) {
+        var typeName = visitor.Visit(context.TYPENAME());
+        var constructor = visitor.Visit(context.constructor());
+        var properties = context.property().Select(visitor.Visit);
+
+        return new ClassDefNode(typeName, constructor, properties.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ConstructorContext context) {
+        var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var body = visitor.Visit(context.statementBlock());
+
+        return new ConstructorNode(parameters.ToImmutableArray(), body);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, PropertyContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var type = visitor.Visit(context.type());
+
+
+
+        return new PropertyDefNode(id, type);
+    }
 }
