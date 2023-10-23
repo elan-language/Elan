@@ -175,8 +175,8 @@ public static class AstFactory {
             return visitor.Visit(ds);
         }
 
-        if (context.SELF() is { } sf) {
-            return visitor.Visit(sf);
+        if (context.SELF() is not null) {
+            return new SelfNode();
         }
 
         throw new NotImplementedException(context.children.First().GetText());

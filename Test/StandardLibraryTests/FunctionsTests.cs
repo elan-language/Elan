@@ -1,4 +1,5 @@
-﻿using StandardLibrary;
+﻿using System.Security.Cryptography.X509Certificates;
+using StandardLibrary;
 using static StandardLibrary.Functions;
 
 namespace Test.CompilerTests;
@@ -132,6 +133,21 @@ public class FunctionsTests {
         var t = (true, false);
         Assert.AreEqual("(true, false)", asString(t));
     }
+
+
+    public class TestClass {
+        public int P1 => 5;
+        private string P2 => "hello";
+
+    }
+
+
+    [TestMethod]
+    public void TypeAndProperties() {
+        
+        Assert.AreEqual("TestClass {P1:5, P2:hello}", typeAndProperties(new TestClass()));
+    }
+
 
     #endregion
 }

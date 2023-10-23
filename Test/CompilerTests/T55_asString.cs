@@ -141,7 +141,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Apple\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_AsStringUsingDefaultHelper()
     {
         var code = @"#
@@ -161,13 +161,41 @@ class Foo
     private property p2 as String
 
     function asString() as String
-         return self.typeAndProperties()
+         var a = self.typeAndProperties()
+         return a
     end function
 
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Foo {
+    public Foo() {
+      p1 = 5;
+      p2 = @$""Apple"";
+    }
+    public int p1 { get; set; }
+    private string p2 { get; set; } = """";
+    public string asString() {
+      var a = typeAndProperties(this);
+      return a;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f);
+  }
+}";
 
         var parseTree = @"*";
 
@@ -177,7 +205,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Foo {p1:5,p2:\"Apple\"}\r\n");
+        AssertObjectCodeExecutes(compileData, "Foo {p1:5, p2:Apple}\r\n");
     }
 
 
