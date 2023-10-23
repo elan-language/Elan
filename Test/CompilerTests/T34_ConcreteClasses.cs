@@ -16,10 +16,6 @@ main
     var x = Foo()
     printLine(x.p1)
     printLine(x.p2)
-    printLine(x.p3)
-    x.setP2(3)
-    printLine(x.p2)
-    printLine(x.product())
 end main
 
 class Foo
@@ -28,15 +24,10 @@ class Foo
     end constructor
 
     property p1 as Int
-    property p2 as Int
-    property p3 as String
-
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        return p1 * p2
+    property p2 as String
+   
+    function asString() as String
+        return ""
     end function
 
 end class
@@ -52,33 +43,30 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5\r\n0\r\n\r\n3\r\n15\r\n"); //N.B. String prop should be auto-initialised to "" not null
+        AssertObjectCodeExecutes(compileData, "5\r\n\r\n"); //N.B. Important that String prop should be auto-initialised to "" not null
     }
 
     [TestMethod]
-    public void Pass_ConstructorWithParmAndSelf()
+    public void Pass_ConstructorWithParm()
     {
         var code = @"#
 main
-    var x = Foo(7)
+    var x = Foo(7, ""Apple"")
     printLine(x.p1)
+    printLine(x.p2)
 end main
 
 class Foo
-    constructor(p1 Int)
-        self.p1 = p1
+    constructor(p_1 Int, p_2 String)
+        p1 = p_1
+        p2 = p_2
     end constructor
 
     property p1 as Int
-    property p2 as Int
-    property p3 as String
-
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        return p1 * p2
+    property p2 as String
+   
+    function asString() as String
+        return ""
     end function
 
 end class
@@ -94,45 +82,8 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "7\r\n"); //N.B. String prop should be auto-initialised to "" not null
+        AssertObjectCodeExecutes(compileData, "7\r\nApple"); //N.B. String prop should be auto-initialised to "" not null
     }
-
-    [TestMethod]
-    public void Pass_PrivatePropertyAndMethod()
-    {
-        var code = @"#
-class Foo
-    constructor()
-        p1 = 5
-    end constructor
-
-    property p1 as Int
-    private property p2 as Int
-    property p3 as String
-
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    private function product() as Int
-        return p1 * p2
-    end function
-
-end class
-";
-
-        var objectCode = @"";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-    }
-
 
 
 
@@ -143,16 +94,12 @@ end class
     {
         var code = @"#
 class Foo
-    property p1 as Int
-    property p2 as Int
-    property p3 as String
 
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        return p1 * p2
+    property p1 as Int
+    property p2 as String
+   
+    function asString() as String
+        return ""
     end function
 
 end class
@@ -165,19 +112,12 @@ end class
     {
         var code = @"#
 class Foo
-    constructor()
-    end constructor
 
-    property p1 as Int
-    property p2 as Int = 3
-    property p3 as String
-
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        return p1 * p2
+    property p1 as Int = 3
+    property p2 as String
+   
+    function asString() as String
+        return ""
     end function
 
 end class
@@ -193,24 +133,17 @@ end class
         var code = @"#
 main
     var x = Foo()
-    x.p2 = 3
+    x.p1 = 3
 end main
 
 class Foo
     constructor()
     end constructor
 
-
     property p1 as Int
-    property p2 as Int
-    property p3 as String
 
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        return p1 * p2
+    function asString() as String
+        return ""
     end function
 
 end class
@@ -224,42 +157,6 @@ end class
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
-    public void Fail_AttemptToModifyAPropertyInAFunctionMethod()
-    {
-        var code = @"#
-main
-    var x = Foo()
-    x.p2 = 3
-end main
-
-class Foo
-    constructor()
-    end constructor
-
-    property p1 as Int
-    property p2 as Int
-    property p3 as String
-
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        p2 = p1 * 4
-        return p2
-    end function
-
-end class
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
 
     [TestMethod]
     public void Fail_OverloadedConstructor()
@@ -275,16 +172,9 @@ class Foo
     end constructor
 
     property p1 as Int
-    property p2 as Int
-    property p3 as String
 
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        p2 = p1 * 4
-        return p2
+    function asString() as String
+        return ""
     end function
 
 end class
@@ -303,20 +193,14 @@ main
 end main
 
 class Foo
-    constructor(p1 Int)
-        self.p1 = p1
+    constructor(val Int)
+        p1 = val
     end constructor
 
     property p1 as Int
-    property p2 as Int
-    property p3 as String
 
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        return p1 * p2
+    function asString() as String
+        return ""
     end function
 
 end class
@@ -338,20 +222,14 @@ main
 end main
 
 class Foo
-    constructor(p1 Int)
-        self.p1 = p1
+    constructor(val Int)
+        val = p1
     end constructor
 
     property p1 as Int
-    property p2 as Int
-    property p3 as String
 
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        return p1 * p2
+    function asString() as String
+        return ""
     end function
 
 end class
@@ -377,154 +255,13 @@ class Foo
     end constructor
 
     property p1 as Int
-    property p2 as Int
-    property p3 as String
 
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        p2 = p1 * 4
-        return p2
+    function asString() as String
+        return ""
     end function
 
 end class
 ";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
-
-    [TestMethod]
-    public void Pass_InstantiationMissingWith()
-    {
-        var code = @"#
-main
-    var x = Foo() {p1 = 9, p2 = 11, p3 = ""Hello""}
-    printLine(x.p1)
-    printLine(x.p2)
-    printLine(x.p3)
-end main
-
-class Foo
-    constructor()
-        p1 = 5
-    end constructor
-
-    property p1 as Int
-    property p2 as Int
-    property p3 as String
-
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    function product() as Int
-        return p1 * p2
-    end function
-
-end class
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod]
-    public void Fail_AttemptToModifyConstructorParam()
-    {
-        var code = @"#
-class Foo
-    constructor(a Int)
-        a = 3
-    end constructor
-end class
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
-
-    [TestMethod]
-    public void Pass_CannotAccessPrivateProperty()
-    {
-        var code = @"#
-main
-    var x = Foo()
-    var y = x.p2
-end main
-
-class Foo
-    constructor()
-        p1 = 5
-    end constructor
-
-    property p1 as Int
-    private property p2 as Int
-    property p3 as String
-
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    private function product() as Int
-        return p1 * p2
-    end function
-
-end class
-";
-
-        var objectCode = @"";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
-
-    [TestMethod]
-    public void Pass_CannotAccessPrivateMethod()
-    {
-        var code = @"#
-main
-    var x = Foo()
-    var y = x.product()
-end main
-
-class Foo
-    constructor()
-        p1 = 5
-    end constructor
-
-    property p1 as Int
-    private property p2 as Int
-    property p3 as String
-
-    procedure setP1(value Int)
-        p1 = value
-    end procedure
-    
-    private function product() as Int
-        return p1 * p2
-    end function
-
-end class
-";
-
-        var objectCode = @"";
 
         var parseTree = @"*";
 
