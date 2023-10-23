@@ -65,7 +65,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall asString ( )))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 as (type Int)) (property property p2 as (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -76,7 +76,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5\r\n\r\n\r\n"); //N.B. Important that String prop should be auto-initialised to "" not null
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ConstructorWithParm()
     {
         var code = @"#
@@ -94,7 +94,6 @@ class Foo
 
     property p1 as Int
     property p2 as String
-   
     function asString() as String
         return """"
     end function
@@ -102,9 +101,37 @@ class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public class Foo {
+    public Foo(int p_1, string p_2) {
+      p1 = p_1;
+      p2 = p_2;
+    }
+    public int p1 { get; set; }
+    public string p2 { get; set; } = """";
+    public string asString() {
+
+      return @$"""";
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Foo(7, @$""Apple"");
+    printLine(x.p1);
+    printLine(x.p2);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalDataStructure ""Apple""))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p_1 (type Int)) , (parameter p_2 (type String))) ) (statementBlock (assignment (assignableValue p1) = (expression (value p_1))) (assignment (assignableValue p2) = (expression (value p_2)))) end constructor) (property property p1 as (type Int)) (property property p2 as (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -112,7 +139,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "7\r\nApple"); //N.B. String prop should be auto-initialised to "" not null
+        AssertObjectCodeExecutes(compileData, "7\r\nApple\r\n"); //N.B. String prop should be auto-initialised to "" not null
     }
 
     #endregion
