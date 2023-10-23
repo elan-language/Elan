@@ -50,8 +50,83 @@ end class
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "5\r\n7\r\n");
     }
+
+    public void Pass_ProcedureCanContainSystemCall()
+    {
+        var code = @"#
+main
+    var f = Foo()
+    f.display()
+end main
+
+class Foo
+    constructor()
+        p1 = 5
+    end constructor
+
+    property p1 as Int
+
+    procedure display()
+        printLine(p1)
+    end procedure
+
+    function asString() as String
+         return p2
+    end function
+
+end class
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "5\r\n");
+    }
     #endregion
 
     #region Fails
+
+    public void Pass_ProcedureCannotBeCalledDirectly()
+    {
+        var code = @"#
+main
+    var f = Foo()
+    display(f)
+end main
+
+class Foo
+    constructor()
+        p1 = 5
+    end constructor
+
+    property p1 as Int
+
+    procedure display()
+        printLine(p1)
+    end procedure
+
+    function asString() as String
+         return p2
+    end function
+
+end class
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
     #endregion
 }
