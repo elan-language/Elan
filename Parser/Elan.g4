@@ -20,7 +20,7 @@ varDef: NL VAR assignableValue ASSIGN expression;
 
 assignment: NL assignableValue ASSIGN expression;
 
-assignableValue: (((SELF DOT)|GLOBAL)?  IDENTIFIER index?) | tupleDecomp | listDecomp;
+assignableValue: (nameQualifier?  IDENTIFIER index?) | tupleDecomp | listDecomp;
 
 methodCall: GLOBAL? (CURRY|PARTIAL)? IDENTIFIER genericSpecifier? OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
@@ -207,8 +207,12 @@ index: OPEN_SQ_BRACKET (expression | expression COMMA expression | range) CLOSE_
 range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT expression; 
 
 // VALUES
-value: literal | (((SELF DOT)| GLOBAL)? IDENTIFIER)  |dataStructureDefinition | SELF;
+value: literal | nameQualifier? IDENTIFIER  |dataStructureDefinition | SELF;
 
+nameQualifier: (SELF | GLOBAL | namespace) DOT;
+
+namespace: IDENTIFIER | namespace DOT IDENTIFIER;
+ 
 // LITERALS
 literal: literalValue | literalDataStructure ; 
 

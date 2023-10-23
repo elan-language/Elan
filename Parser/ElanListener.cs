@@ -521,6 +521,26 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitValue([NotNull] ElanParser.ValueContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.nameQualifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNameQualifier([NotNull] ElanParser.NameQualifierContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.nameQualifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNameQualifier([NotNull] ElanParser.NameQualifierContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.namespace"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNamespace([NotNull] ElanParser.NamespaceContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.namespace"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNamespace([NotNull] ElanParser.NamespaceContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.literal"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
