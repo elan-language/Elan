@@ -4,12 +4,12 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T51_ProcedureMethods
 {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_HappyCase()
     {
         var code = @"#
@@ -24,21 +24,46 @@ class Foo
     constructor()
         p1 = 5
     end constructor
-
     property p1 as Int
-
-    procedure setP1(value Int) 
+    procedure setP1(value Int)
         p1 = value
     end procedure
-
     function asString() as String
-         return p""""
+         return """"
     end function
-
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Foo {
+    public Foo() {
+      p1 = 5;
+    }
+    public int p1 { get; set; }
+    public string asString() {
+
+      return @$"""";
+    }
+    public void setP1(ref int value) {
+      p1 = value;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f.p1);
+    printLine(f.p1);
+  }
+}";
 
         var parseTree = @"*";
 
@@ -51,6 +76,7 @@ end class
         AssertObjectCodeExecutes(compileData, "5\r\n7\r\n");
     }
 
+    [TestMethod, Ignore]
     public void Pass_ProcedureCanContainSystemCall()
     {
         var code = @"#
@@ -93,6 +119,7 @@ end class
 
     #region Fails
 
+    [TestMethod, Ignore]
     public void Fail_ProcedureCannotBeCalledDirectly()
     {
         var code = @"#

@@ -603,8 +603,9 @@ public static class AstFactory {
         var constructor = visitor.Visit(context.constructor());
         var properties = context.property().Select(visitor.Visit);
         var functions = context.functionDef().Select(fd => visitor.Visit<FunctionDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
+        var procedures = context.procedureDef().Select(fd => visitor.Visit<ProcedureDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
 
-        return new ClassDefNode(typeName, constructor, properties.ToImmutableArray(), functions.ToImmutableArray());
+        return new ClassDefNode(typeName, constructor, properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ConstructorContext context) {
