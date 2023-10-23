@@ -287,12 +287,12 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new ConstructorModel(parameters, body);
     }
 
-    private PropertyDefModel BuildPropertyDefModel(PropertyDefNode constructorNode) {
+    private PropertyDefModel BuildPropertyDefModel(PropertyDefNode propertyDefNode) {
       
-        var id = Visit(constructorNode.Id);
-        var type = Visit(constructorNode.Type);
+        var id = Visit(propertyDefNode.Id);
+        var type = Visit(propertyDefNode.Type);
 
-        return new PropertyDefModel(id, type);
+        return new PropertyDefModel(id, type, propertyDefNode.IsPrivate);
     }
 
     private TypeModel BuildTypeModel(TypeNode typeNode) {

@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T56_PrivateProperties
 {
     #region Passes
@@ -13,6 +13,11 @@ public class T56_PrivateProperties
     public void Pass_PrivatePropertyCanBeDeclared()
     {
         var code = @"#
+main
+    var x = Foo()
+end main
+
+
 class Foo
     constructor()
         p1 = 5
@@ -30,7 +35,33 @@ class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Foo {
+    public Foo() {
+      p1 = 5;
+      p2 = @$""Apple"";
+    }
+    public int p1 { get; set; }
+    private string p2 { get; set; } = """";
+    public string asString() {
+
+      return @$"""";
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Foo();
+  }
+}";
 
         var parseTree = @"*";
 
@@ -39,6 +70,7 @@ end class
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
     }
 
     #endregion
@@ -78,7 +110,8 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     #endregion
