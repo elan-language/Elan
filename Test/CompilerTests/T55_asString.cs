@@ -16,7 +16,7 @@ public class T55_asString
 main
     var f = Foo()
     var s = f.asString()
-    print(s)
+    printLine(s)
 end main
 class Foo
     constructor()
@@ -45,7 +45,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Apple");
+        AssertObjectCodeExecutes(compileData, "Apple\r\n");
     }
 
     [TestMethod]
