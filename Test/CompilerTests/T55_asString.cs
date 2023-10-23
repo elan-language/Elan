@@ -54,7 +54,7 @@ end class
         var code = @"#
 main
     var f = Foo()
-    print(f)
+    printLine(f)
 end main
 class Foo
     constructor()
@@ -83,7 +83,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Apple");
+        AssertObjectCodeExecutes(compileData, "Apple\r\n");
     }
 
     [TestMethod]
@@ -92,7 +92,7 @@ end class
         var code = @"#
 main
     var f = Foo()
-    print(f)
+    printLine(f)
 end main
 
 class Foo
@@ -122,7 +122,39 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Foo {p1:5,p2:\"Apple\"}");
+        AssertObjectCodeExecutes(compileData, "Foo {p1:5,p2:\"Apple\"}\r\n");
+    }
+
+
+    [TestMethod]
+    public void Pass_AsStringOnVariousDataTypes()
+    {
+        var code = @"#
+main
+    var l = {1,2,3}
+    var sl = l.asString()
+    printLine(sl)
+    var a = Array<Int> {1,2,3}
+    var sa = a.asString()
+    printLine(sa)
+    var d = {'a':1, 'b':3, 'z':10}
+    var sd = d.asString()
+    printLine(sd)
+end main
+
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "List {1,2,3}\r\nArray {1,2,3}\r\nDictionary {'a':1,'b':3,'z':10}");
     }
 
 
