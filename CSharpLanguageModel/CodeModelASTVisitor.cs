@@ -10,7 +10,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     protected override void Exit(IAstNode node) { }
 
     private FileCodeModel BuildFileModel(FileNode fileNode) {
-        var main = Visit(fileNode.MainNode);
+        var main = fileNode.MainNode is { } mn ? Visit(mn) : null;
         var globals = fileNode.GlobalNodes.Select(Visit);
         return new FileCodeModel(globals, main);
     }

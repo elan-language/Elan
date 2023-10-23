@@ -272,7 +272,7 @@ end main
 
 class Foo
     constructor(val Int)
-        val = p1
+        p1 = val
     end constructor
 
     property p1 as Int

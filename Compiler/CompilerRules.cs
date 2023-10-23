@@ -40,7 +40,15 @@ public static class CompilerRules {
         return null;
     }
 
-    private static bool Match(IAstNode n1, IAstNode n2) => n1 is IdentifierNode idn1 && n2 is IdentifierNode idn2 && idn1.Id == idn2.Id;
+    private static bool Match(IAstNode n1, IAstNode n2) {
+        //return n1 is IdentifierNode idn1 && n2 is IdentifierNode idn2 && idn1.Id == idn2.Id;
+
+        return n2 switch {
+            IdentifierNode idn2 when n1 is IdentifierNode idn1 => idn1.Id == idn2.Id,
+            IndexedExpressionNode ien when n1 is IdentifierNode idn1 => Match(idn1, ien.Expression) || ien.Expression.Children.Any(c => Match(idn1, c)),
+            _ => false
+        };
+    }
 
     private static IEnumerable<IAstNode> Expand(this IEnumerable<IAstNode> nodes) {
         return nodes.SelectMany(n => n is StatementBlockNode ? n.Children : new[] { n });
@@ -102,6 +110,24 @@ public static class CompilerRules {
 
         return null;
     }
+
+    public static string? ConstructorConstraintsRule(IAstNode[] nodes, IScope currentScope) {
+        var leafNode = nodes.Last();
+        
+        if (leafNode is AssignmentNode an) {
+            var otherNodes = nodes.SkipLast(1).Expand().ToArray();
+            if (otherNodes.Any(n => n is ConstructorNode)) {
+                var paramNodes = otherNodes.OfType<ConstructorNode>().Single().Parameters.OfType<ParameterNode>();
+
+                if (paramNodes.Any(pn => Match(pn.Id, an.Id))) {
+                    return "Cannot modify param in constructor";
+                }
+            }
+        }
+
+        return null;
+    }
+
 
     public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
