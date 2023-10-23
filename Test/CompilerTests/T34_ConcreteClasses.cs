@@ -47,7 +47,7 @@ public static partial class Globals {
       p1 = 5;
     }
     public int p1 { get; set; }
-    public string p2 { get; set; }
+    public string p2 { get; set; } = """";
   }
 }
 
@@ -67,7 +67,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5\r\n"); //N.B. Important that String prop should be auto-initialised to "" not null
+        AssertObjectCodeExecutes(compileData, "5\r\n\r\n"); //N.B. Important that String prop should be auto-initialised to "" not null
     }
 
     [TestMethod, Ignore]
