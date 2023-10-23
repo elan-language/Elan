@@ -132,7 +132,7 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
 
         if (leafNode is ClassDefNode cdn) {
-            var children = cdn.Functions.OfType<FunctionDefNode>();
+            var children = cdn.Methods.OfType<FunctionDefNode>();
             if (!children.Any(n => n is { Signature: MethodSignatureNode { Id : IdentifierNode { Id : "asString" } } })) {
                 return "Class must have asString";
             }

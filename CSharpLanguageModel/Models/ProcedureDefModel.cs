@@ -3,12 +3,12 @@
 namespace CSharpLanguageModel.Models;
 
 public record ProcedureDefModel(ICodeModel Signature, ICodeModel Statements, bool Standalone) : ICodeModel {
-    public string ToString(int indent) => ToString();
+    public override string ToString() => ToString(0);
 
     private string Qual => Standalone ? "static " : ""; 
 
-    public override string ToString() =>
-        $@"{Indent1}public {Qual}{Signature} {{
-{Indent(Statements, 2)}
-{Indent1}}}";
+    public string ToString(int indent) =>
+        $@"{Indent(indent)}public {Qual}{Signature} {{
+{Indent(Statements, indent + 1)}
+{Indent(indent)}}}";
 }

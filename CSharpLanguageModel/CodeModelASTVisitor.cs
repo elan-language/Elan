@@ -276,7 +276,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var type = Visit(classDefNode.Type);
         var constructor = Visit(classDefNode.Constructor);
         var properties = classDefNode.Properties.Select(Visit);
-        var functions = classDefNode.Functions.Select(Visit);
+        var functions = classDefNode.Methods.Select(Visit);
 
         return new ClassDefModel(type, constructor,  properties, functions);
     }
