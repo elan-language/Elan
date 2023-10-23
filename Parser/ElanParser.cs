@@ -724,7 +724,9 @@ public partial class ElanParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(ElanParser.IDENTIFIER, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OPEN_BRACKET() { return GetToken(ElanParser.OPEN_BRACKET, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CLOSE_BRACKET() { return GetToken(ElanParser.CLOSE_BRACKET, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode GLOBAL() { return GetToken(ElanParser.GLOBAL, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public NameQualifierContext nameQualifier() {
+			return GetRuleContext<NameQualifierContext>(0);
+		}
 		[System.Diagnostics.DebuggerNonUserCode] public GenericSpecifierContext genericSpecifier() {
 			return GetRuleContext<GenericSpecifierContext>(0);
 		}
@@ -761,10 +763,10 @@ public partial class ElanParser : Parser {
 			State = 211;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if (_la==GLOBAL) {
+			if (_la==GLOBAL || _la==SELF) {
 				{
 				State = 210;
-				Match(GLOBAL);
+				nameQualifier();
 				}
 			}
 
@@ -6353,7 +6355,7 @@ public partial class ElanParser : Parser {
 		198,11,1,0,0,0,199,201,3,98,49,0,200,199,1,0,0,0,200,201,1,0,0,0,201,202,
 		1,0,0,0,202,204,5,79,0,0,203,205,3,92,46,0,204,203,1,0,0,0,204,205,1,0,
 		0,0,205,209,1,0,0,0,206,209,3,112,56,0,207,209,3,118,59,0,208,200,1,0,
-		0,0,208,206,1,0,0,0,208,207,1,0,0,0,209,13,1,0,0,0,210,212,5,19,0,0,211,
+		0,0,208,206,1,0,0,0,208,207,1,0,0,0,209,13,1,0,0,0,210,212,3,98,49,0,211,
 		210,1,0,0,0,211,212,1,0,0,0,212,214,1,0,0,0,213,215,7,0,0,0,214,213,1,
 		0,0,0,214,215,1,0,0,0,215,216,1,0,0,0,216,218,5,79,0,0,217,219,3,144,72,
 		0,218,217,1,0,0,0,218,219,1,0,0,0,219,220,1,0,0,0,220,222,5,55,0,0,221,

@@ -22,7 +22,7 @@ assignment: NL assignableValue ASSIGN expression;
 
 assignableValue: (nameQualifier?  IDENTIFIER index?) | tupleDecomp | listDecomp;
 
-methodCall: GLOBAL? (CURRY|PARTIAL)? IDENTIFIER genericSpecifier? OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
+methodCall: nameQualifier? (CURRY|PARTIAL)? IDENTIFIER genericSpecifier? OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
 argumentList: expression (COMMA expression)*;
 
