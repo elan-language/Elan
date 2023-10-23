@@ -209,9 +209,7 @@ range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT exp
 // VALUES
 value: literal | nameQualifier? IDENTIFIER  |dataStructureDefinition | SELF;
 
-nameQualifier: (SELF | GLOBAL | namespace) DOT;
-
-namespace: IDENTIFIER | namespace DOT IDENTIFIER;
+nameQualifier: (SELF | GLOBAL ) DOT; // might add 'namespace' as a further option in future
  
 // LITERALS
 literal: literalValue | literalDataStructure ; 
