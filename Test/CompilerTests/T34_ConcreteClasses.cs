@@ -89,7 +89,7 @@ class Foo
     property p2 as String
    
     function asString() as String
-        return ""
+        return """"
     end function
 
 end class
@@ -122,7 +122,7 @@ class Foo
     property p2 as String
    
     function asString() as String
-        return ""
+        return """"
     end function
 
 end class
@@ -140,7 +140,7 @@ class Foo
     property p2 as String
    
     function asString() as String
-        return ""
+        return """"
     end function
 
 end class
@@ -166,7 +166,7 @@ class Foo
     property p1 as Int
 
     function asString() as String
-        return ""
+        return """"
     end function
 
 end class
@@ -197,7 +197,7 @@ class Foo
     property p1 as Int
 
     function asString() as String
-        return ""
+        return """"
     end function
 
 end class
@@ -223,7 +223,7 @@ class Foo
     property p1 as Int
 
     function asString() as String
-        return ""
+        return """"
     end function
 
 end class
@@ -252,7 +252,7 @@ class Foo
     property p1 as Int
 
     function asString() as String
-        return ""
+        return """"
     end function
 
 end class
@@ -280,7 +280,7 @@ class Foo
     property p1 as Int
 
     function asString() as String
-        return ""
+        return """"
     end function
 
 end class
