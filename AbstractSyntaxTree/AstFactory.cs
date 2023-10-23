@@ -78,7 +78,7 @@ public static class AstFactory {
         var enumerations = context.enumDef().Select(visitor.Visit);
         var classes = context.classDef().Select(visitor.Visit);
         var globals = constants.Concat(procedures).Concat(functions).Concat(enumerations).Concat(classes).ToImmutableArray();
-        var mainNode = context.main().Select(visitor.Visit<MainNode>).Single();
+        var mainNode = context.main().Select(visitor.Visit<MainNode>).SingleOrDefault();
 
         return new FileNode(globals, mainNode);
     }
@@ -613,9 +613,9 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, PropertyContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var type = visitor.Visit(context.type());
+        var isPrivate = context.PRIVATE() is not null;
 
 
-
-        return new PropertyDefNode(id, type);
+        return new PropertyDefNode(id, type, isPrivate);
     }
 }

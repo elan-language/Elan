@@ -181,7 +181,7 @@ end class
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_AttemptToModifyAPropertyDirectly()
     {
         var code = @"#
@@ -199,19 +199,15 @@ class Foo
     function asString() as String
         return """"
     end function
-
 end class
 ";
 
-        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_OverloadedConstructor()
     {
         var code = @"#
@@ -236,7 +232,7 @@ end class
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_InstantiateWithoutRequiredArgs()
     {
         var code = @"#
@@ -262,10 +258,11 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_InstantiateWithWrongArgType()
     {
         var code = @"#
@@ -275,7 +272,7 @@ end main
 
 class Foo
     constructor(val Int)
-        val = p1
+        p1 = val
     end constructor
 
     property p1 as Int
@@ -291,10 +288,11 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_SupplyingArgumentNotSpecified()
     {
         var code = @"#
@@ -320,7 +318,8 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     #endregion

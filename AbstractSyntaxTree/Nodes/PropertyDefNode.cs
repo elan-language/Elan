@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record PropertyDefNode(IAstNode Id, IAstNode Type) : IAstNode {
+public record PropertyDefNode(IAstNode Id, IAstNode Type, bool IsPrivate) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Id, Type };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

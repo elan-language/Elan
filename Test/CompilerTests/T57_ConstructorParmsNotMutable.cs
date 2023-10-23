@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T57_ConstructorParmsNotMutable
 {
     #region Passes

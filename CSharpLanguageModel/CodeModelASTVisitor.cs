@@ -10,7 +10,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     protected override void Exit(IAstNode node) { }
 
     private FileCodeModel BuildFileModel(FileNode fileNode) {
-        var main = Visit(fileNode.MainNode);
+        var main = fileNode.MainNode is { } mn ? Visit(mn) : null;
         var globals = fileNode.GlobalNodes.Select(Visit);
         return new FileCodeModel(globals, main);
     }
@@ -287,12 +287,12 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new ConstructorModel(parameters, body);
     }
 
-    private PropertyDefModel BuildPropertyDefModel(PropertyDefNode constructorNode) {
+    private PropertyDefModel BuildPropertyDefModel(PropertyDefNode propertyDefNode) {
       
-        var id = Visit(constructorNode.Id);
-        var type = Visit(constructorNode.Type);
+        var id = Visit(propertyDefNode.Id);
+        var type = Visit(propertyDefNode.Type);
 
-        return new PropertyDefModel(id, type);
+        return new PropertyDefModel(id, type, propertyDefNode.IsPrivate);
     }
 
     private TypeModel BuildTypeModel(TypeNode typeNode) {
