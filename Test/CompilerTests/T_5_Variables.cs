@@ -46,7 +46,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n");
     }
 
-
     [TestMethod]
     public void Pass_Int_Expression()
     {
@@ -204,7 +203,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "4\r\n");
     }
-
     #endregion
 
     #region Fails

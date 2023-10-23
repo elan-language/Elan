@@ -23,6 +23,7 @@ END:		   'end'; //used with another keyword to delimit a statement block
 ENUMERATION:   'enumeration';
 FOR:           'for';
 FUNCTION:	   'function';
+GLOBAL:			'global';
 IF:            'if'; 
 IMMUTABLE:	   'immutable';
 IN:            'in'; // for...in
