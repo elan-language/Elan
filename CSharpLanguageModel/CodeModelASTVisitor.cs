@@ -66,7 +66,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             PropertyDefNode n => HandleScope(BuildPropertyDefModel, n),
             TypeNode n => HandleScope(BuildTypeModel, n),
             SelfNode n => HandleScope(BuildSelfModel, n),
+            GlobalNode n => HandleScope(BuildGlobalModel, n),
             ReturnExpressionNode n => Visit(n.Expression),
+            QualifiedNode n => HandleScope(BuildQualifiedModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -309,4 +311,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private ScalarValueModel BuildSelfModel(SelfNode selfNode) => new("this");
+
+    private ScalarValueModel BuildGlobalModel(GlobalNode globalNode) => new("Globals");
+
+    private QualifiedValueModel BuildQualifiedModel(QualifiedNode qualifiedNode) => new(Visit(qualifiedNode.Qualifier), Visit(qualifiedNode.Qualified));
 }

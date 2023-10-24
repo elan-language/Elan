@@ -35,12 +35,27 @@ public static class CompilerTransforms {
 
     public static IAstNode? TransformMethodCallNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {
-            MethodCallNode mcn => currentScope.Resolve(mcn.Name) switch {
-                SystemCallSymbol => new SystemCallNode(mcn.Id, mcn.Parameters) { DotCalled = mcn.DotCalled },
-                ProcedureSymbol => new ProcedureCallNode(mcn),
-                FunctionSymbol => new FunctionCallNode(mcn),
+            MethodCallNode mcn => Resolve(currentScope, mcn) switch {
+                (SystemCallSymbol, _) => new SystemCallNode(mcn.Id, mcn.Parameters) { DotCalled = mcn.DotCalled },
+                (ProcedureSymbol, false) => new ProcedureCallNode(mcn),
+                (ProcedureSymbol, true) => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                (FunctionSymbol, false) => new FunctionCallNode(mcn),
+                (FunctionSymbol, true) => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 _ => TransformClassMethods(mcn, nodes, currentScope)
             },
             _ => null
         };
+
+    private static IScope GetGlobalScope(IScope scope) =>
+        scope is GlobalScope
+            ? scope
+            : scope.EnclosingScope is { } s
+                ? GetGlobalScope(s)
+                : scope;
+
+    private static (ISymbol?, bool) Resolve(IScope currentScope, MethodCallNode mcn) {
+        var isGlobal = mcn.Qualifier is GlobalNode;
+        var scope = isGlobal ? GetGlobalScope(currentScope) : currentScope;
+        return (scope.Resolve(mcn.Name), isGlobal);
+    }
 }

@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T59_Global
 {
     #region Passes
@@ -57,7 +57,7 @@ constant a = 4
 main
     var f = Foo()
     printLine(f.prop())
-    printLine(f.const())
+    printLine(f.cons())
 end main
 
 class Foo
@@ -71,18 +71,53 @@ class Foo
         return a
     end function
 
-    function const() as Int
+    function cons() as Int
         return global.a
     end function
 
-    function as String() as String
+    function asString() as String
         return """"
     end function
 
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public const int a = 4;
+  public class Foo {
+    public Foo() {
+      a = 3;
+    }
+    public int a { get; set; }
+    public int prop() {
+
+      return a;
+    }
+    public int cons() {
+
+      return Globals.a;
+    }
+    public string asString() {
+
+      return @$"""";
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f.prop());
+    printLine(f.cons());
+  }
+}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -125,14 +160,56 @@ class Foo
         return 3
     end function
 
-    function as String() as String
+    function asString() as String
         return """"
     end function
 
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static int bar() {
+
+    return 4;
+  }
+  public class Foo {
+    public Foo() {
+
+    }
+
+    public int loc() {
+
+      return bar();
+    }
+    public int glob() {
+
+      return Globals.bar();
+    }
+    public int bar() {
+
+      return 3;
+    }
+    public string asString() {
+
+      return @$"""";
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f.loc());
+    printLine(f.glob());
+  }
+}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -159,14 +236,13 @@ main
 end main
 ";
 
-        var objectCode = @"";
-
         var parseTree = @"*";
 
-var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod]
@@ -176,7 +252,7 @@ var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
 main
     var f = Foo()
     printLine(f.prop())
-    printLine(f.const())
+    printLine(f.cons())
 end main
 
 class Foo
@@ -190,11 +266,11 @@ class Foo
         return a
     end function
 
-    function const() as Int
+    function cons() as Int
         return global.a
     end function
 
-    function as String() as String
+    function asString() as String
         return """"
     end function
 
@@ -204,7 +280,8 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod]
@@ -233,7 +310,7 @@ class Foo
         return 3
     end function
 
-    function as String() as String
+    function asString() as String
         return """"
     end function
 

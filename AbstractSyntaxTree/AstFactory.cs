@@ -168,6 +168,13 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {
+
+        if (context.nameQualifier() is {} nq) {
+            var nqn = visitor.Visit(nq);
+            var idn = visitor.Visit(context.IDENTIFIER());
+            return new QualifiedNode(nqn, idn);
+        }
+
         if (context.literal() is { } lv) {
             return visitor.Visit(context.literal());
         }
@@ -180,10 +187,7 @@ public static class AstFactory {
             return visitor.Visit(ds);
         }
 
-        if (context.nameQualifier() is {} nq) {
-            return visitor.Visit(nq);
-        }
-
+        
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -630,6 +634,14 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, NameQualifierContext context) {
-        return new SelfNode();
+        if (context.GLOBAL() is not null) {
+            return new GlobalNode();
+        }
+
+        if (context.SELF() is not null) {
+            return new SelfNode();
+        }
+
+        throw new NotImplementedException(context.children.First().GetText());
     }
 }
