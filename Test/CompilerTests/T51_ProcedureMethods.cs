@@ -9,7 +9,7 @@ public class T51_ProcedureMethods
 {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_HappyCase()
     {
         var code = @"#
@@ -61,6 +61,8 @@ public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
     printLine(f.p1);
+    var _setP1_0 = 7;
+    f.setP1(ref _setP1_0);
     printLine(f.p1);
   }
 }";

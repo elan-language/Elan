@@ -17,6 +17,7 @@ public class SymbolTableVisitor {
             ProcedureDefNode n => VisitProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
             ClassDefNode n => VisitClassDefNode(n),
+            VarDefNode n => VisitVarDefNode(n),
             null => throw new NotImplementedException("null"),
             _ => VisitChildren(astNode)
         };
@@ -68,6 +69,39 @@ public class SymbolTableVisitor {
         VisitChildren(classDefNode);
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return classDefNode;
+    }
+
+    private static ISymbolType ConvertToBuiltInSymbol(string type) =>
+        type switch {
+            "Int" => IntSymbolType.Instance,
+            "String" => StringSymbolType.Instance,
+            "Float" => FloatSymbolType.Instance,
+            "Decimal" => DecimalSymbolType.Instance,
+            "Boolean" => BooleanSymbolType.Instance,
+            "Char" => CharSymbolType.Instance,
+             _ => new ClassSymbolType(type)
+        };
+
+    private static string GetTypeName(IAstNode node) {
+        return node switch {
+            IdentifierNode idn => idn.Id,
+            TypeNode tn => GetTypeName(tn.TypeName),
+            NewInstanceNode nin => GetTypeName(nin.Type),
+            ValueNode vn => GetTypeName(vn.TypeNode),
+            ValueTypeNode vtn => vtn.Type.ToString(),
+            _ => ""
+        };
+    }
+
+    private IAstNode VisitVarDefNode(VarDefNode varDefNode) {
+        var name = varDefNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(varDefNode.Id.GetType().ToString());
+        var type = ConvertToBuiltInSymbol(GetTypeName(varDefNode.Expression));
+
+
+        var ms = new VariableSymbol(name, type, currentScope);
+        currentScope.Define(ms);
+        VisitChildren(varDefNode);
+        return varDefNode;
     }
 
     private IAstNode VisitChildren(IAstNode node) {
