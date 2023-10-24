@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T53_self
 {
     #region Passes
@@ -31,7 +31,32 @@ class Foo
 
 end class
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Foo {
+    public Foo(int p1) {
+      this.p1 = p1;
+    }
+    public int p1 { get; set; }
+    public string asString() {
+
+      return @$"""";
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Foo(7);
+    printLine(x.p1);
+  }
+}";
 
         var parseTree = @"*";
         
@@ -75,7 +100,8 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
 

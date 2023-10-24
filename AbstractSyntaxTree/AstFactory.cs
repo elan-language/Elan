@@ -220,6 +220,13 @@ public static class AstFactory {
             return new IndexedExpressionNode(expr, index);
         }
 
+        if (context.nameQualifier() is { } nq) {
+            var qual = visitor.Visit(nq);
+            var expr = visitor.Visit(context.IDENTIFIER());
+
+            return new QualifiedNode(qual, expr);
+        }
+
         if (context.IDENTIFIER() is { } id) {
             return visitor.Visit(id);
         }
