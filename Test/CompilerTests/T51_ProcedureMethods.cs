@@ -67,7 +67,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . p1)) )))) (callStatement (expression (expression (value f)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 7))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . p1)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 as (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter value (type Int))) )) (statementBlock (assignment (assignableValue p1) = (expression (value value)))) end procedure) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -78,7 +78,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5\r\n7\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ProcedureCanContainSystemCall()
     {
         var code = @"#
@@ -99,15 +99,43 @@ class Foo
     end procedure
 
     function asString() as String
-         return p""""
+         return """"
     end function
 
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public class Foo {
+    public Foo() {
+      p1 = 5;
+    }
+    public int p1 { get; set; }
+    public string asString() {
+
+      return @$"""";
+    }
+    public void display() {
+      printLine(p1);
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    f.display();
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (expression (value f)) . (methodCall display ( ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 as (type Int)) (procedureDef procedure (procedureSignature display ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value p1))) ))))) end procedure) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -121,7 +149,7 @@ end class
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_ProcedureCannotBeCalledDirectly()
     {
         var code = @"#
