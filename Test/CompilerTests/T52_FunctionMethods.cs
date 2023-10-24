@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T52_FunctionMethods
 {
     #region Passes
@@ -25,7 +25,7 @@ class Foo
 
     property p1 as Int
 
-    function times(value Int) 
+    function times(value Int) as Int
         return p1 * value
     end function
 
@@ -36,7 +36,36 @@ class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Foo {
+    public Foo() {
+      p1 = 5;
+    }
+    public int p1 { get; set; }
+    public int times(int value) {
+
+      return p1 * value;
+    }
+    public string asString() {
+
+      return @$"""";
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f.times(2));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -49,7 +78,7 @@ end class
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod]
+    [TestMethod. Ignore]
     public void Pass_FunctionMethodMayCallOtherFunctionMethod()
     {
         var code = @"#
@@ -65,11 +94,11 @@ class Foo
 
     property p1 as Int
 
-    function times(value Int) 
-        return p1PlusOne * value
+    function times(value Int) as Int
+        return p1PlusOne() * value
     end function
 
-    function p1PlusOne() 
+    function p1PlusOne() as Int
         return p1 +1 
     end function
 
@@ -80,7 +109,40 @@ class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Foo {
+    public Foo() {
+      p1 = 5;
+    }
+    public int p1 { get; set; }
+    public int times(int value) {
+
+      return p1PlusOne() * value;
+    }
+    public int p1PlusOne() {
+
+      return p1 + 1;
+    }
+    public string asString() {
+
+      return @$"""";
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f.times(2));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -98,6 +160,7 @@ end class
 
     #region Fails
 
+    [TestMethod]
     public void Fail_FunctionCannotBeCalledDirectly()
     {
         var code = @"#
@@ -113,7 +176,7 @@ class Foo
 
     property p1 as Int
 
-    function times(value Int) 
+    function times(value Int) as Int
         return p1 * value
     end function
 
@@ -131,6 +194,7 @@ end class
         AssertDoesNotCompile(compileData);
     }
 
+    [TestMethod]
     public void Fail_FunctionMethodCannotMutateProperty()
     {
         var code = @"#
@@ -141,7 +205,7 @@ class Foo
 
     property p1 as Int
 
-    function times(value Int) 
+    function times(value Int) as Int
         p1 = p1 * value
         return p1
     end function
@@ -160,6 +224,7 @@ end class
         AssertDoesNotCompile(compileData);
     }
 
+    [TestMethod]
     public void Fail_FunctionMethodCannotCallProcedureMethod()
     {
         var code = @"#
@@ -170,7 +235,7 @@ class Foo
 
     property p1 as Int
 
-    function times(value Int) 
+    function times(value Int) as Int
         setP1(p1 * value)
         return p1
     end function
