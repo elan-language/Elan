@@ -145,7 +145,7 @@ public class FunctionsTests {
     [TestMethod]
     public void TypeAndProperties() {
         
-        Assert.AreEqual("TestClass {P1:5, P2:hello}", new TestClass().typeAndProperties());
+        Assert.AreEqual("TestClass {P1:5, P2:hello}", typeAndProperties(new TestClass()));
     }
 
 

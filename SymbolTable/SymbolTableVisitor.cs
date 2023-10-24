@@ -16,6 +16,7 @@ public class SymbolTableVisitor {
             MainNode n => VisitMainNode(n),
             ProcedureDefNode n => VisitProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
+            ClassDefNode n => VisitClassDefNode(n),
             null => throw new NotImplementedException("null"),
             _ => VisitChildren(astNode)
         };
@@ -58,6 +59,15 @@ public class SymbolTableVisitor {
         VisitChildren(mainNode);
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return mainNode;
+    }
+
+    private IAstNode VisitClassDefNode(ClassDefNode classDefNode) {
+        var ms = new ClassSymbol(classDefNode.Name, currentScope);
+        currentScope.Define(ms);
+        currentScope = ms;
+        VisitChildren(classDefNode);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return classDefNode;
     }
 
     private IAstNode VisitChildren(IAstNode node) {

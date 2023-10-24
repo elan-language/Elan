@@ -5,6 +5,9 @@ namespace AbstractSyntaxTree.Nodes;
 public record ClassDefNode(IAstNode Type, IAstNode Constructor, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods) : IAstNode {
     public IEnumerable<IAstNode> Children => Properties.Prepend(Constructor).Prepend(Type).Concat(Methods);
 
+
+    public string Name => ((IdentifierNode)Type).Id;
+
     public IAstNode Replace(IAstNode from, IAstNode to) {
         return from switch {
             _ when from == Type => this with { Type = to },

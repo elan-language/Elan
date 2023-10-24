@@ -184,7 +184,7 @@ public static partial class Globals {
     private string p2 { get; set; } = """";
     public string asString() {
 
-      return this.typeAndProperties();
+      return typeAndProperties(this);
     }
   }
 }

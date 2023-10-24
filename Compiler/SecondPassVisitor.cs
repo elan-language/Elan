@@ -5,7 +5,7 @@ namespace Compiler;
 
 public class SecondPassVisitor {
     static SecondPassVisitor() {
-        Transforms.Add(CompilerTransforms.TransformSystemCallNodes);
+        Transforms.Add(CompilerTransforms.TransformMethodCallNodes);
     }
 
     public SecondPassVisitor(SymbolTableImpl symbolTable) => SymbolTable = symbolTable;

@@ -103,7 +103,9 @@ public static class AstFactory {
             if (context.methodCall() is { } dmc) {
                 var ms = visitor.Visit<MethodCallNode>(dmc);
                 var exp = visitor.Visit(context.expression().First());
-                return new MethodCallNode(ms, exp) { DotCalled = true };
+                //return new MethodCallNode(ms, exp) { DotCalled = true };
+
+                return ms with { DotCalled = true, Qualifier = exp };
             }
 
             if (context.IDENTIFIER() is { } id) {

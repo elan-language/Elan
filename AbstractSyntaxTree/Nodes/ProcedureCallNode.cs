@@ -5,6 +5,8 @@ namespace AbstractSyntaxTree.Nodes;
 public record ProcedureCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters) : IAstNode {
     public string Name => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
 
+    public ProcedureCallNode(MethodCallNode node) : this(node.Id, null, node.Parameters.SafePrepend(node.Qualifier).ToImmutableArray()) { }
+
     public IEnumerable<IAstNode> Children => Parameters.SafePrepend(Qualifier).Prepend(Id);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
