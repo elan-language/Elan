@@ -62,6 +62,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             EnumValueNode n => HandleScope(BuildEnumValueModel, n),
             PairNode n => HandleScope(BuildKvpModel, n), 
             ClassDefNode n => HandleScope(BuildClassDefModel, n),
+            AbstractClassDefNode n => HandleScope(BuildAbstractClassDefModel, n),
             ConstructorNode n => HandleScope(BuildConstructorModel, n),
             PropertyDefNode n => HandleScope(BuildPropertyDefModel, n),
             TypeNode n => HandleScope(BuildTypeModel, n),
@@ -284,7 +285,15 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var properties = classDefNode.Properties.Select(Visit);
         var functions = classDefNode.Methods.Select(Visit);
 
-        return new ClassDefModel(type, constructor,  properties, functions);
+        return new ClassDefModel(type, constructor, properties, functions);
+    }
+
+    private ClassDefModel BuildAbstractClassDefModel(AbstractClassDefNode classDefNode) {
+        var type = Visit(classDefNode.Type);
+        var properties = classDefNode.Properties.Select(Visit);
+        var functions = classDefNode.Methods.Select(Visit);
+
+        return new ClassDefModel(type, null,  properties, functions);
     }
 
     private ConstructorModel BuildConstructorModel(ConstructorNode constructorNode) {
