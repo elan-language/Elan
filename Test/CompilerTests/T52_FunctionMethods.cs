@@ -78,7 +78,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_FunctionMethodMayCallOtherFunctionMethod()
     {
         var code = @"#

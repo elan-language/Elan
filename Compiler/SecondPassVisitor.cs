@@ -16,6 +16,7 @@ public class SecondPassVisitor {
     private IScope Enter(IAstNode node, IScope currentScope) {
         return node switch {
             MainNode => currentScope.Resolve("main") as IScope ?? throw new ArgumentNullException(),
+            ClassDefNode cdn => currentScope.Resolve(cdn.Name) as IScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
     }
@@ -23,6 +24,7 @@ public class SecondPassVisitor {
     private IScope Exit(IAstNode node, IScope currentScope) {
         return node switch {
             MainNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            ClassDefNode cdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(), 
             _ => currentScope
         };
     }
