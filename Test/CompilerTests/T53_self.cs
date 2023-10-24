@@ -69,6 +69,48 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "7\r\n");
     }
 
+    [TestMethod, Ignore]
+    public void Pass_UsingSelfAsAnInstance()
+    {
+        var code = @"#
+main
+    var f = Foo()
+    printLine(f.bar())
+end main
+
+function doubled(f Foo) as Int
+    return 2 * f.p1
+end function
+
+class Foo
+    constructor()
+        p1 = 3
+    end constructor
+
+    property p1 as Int
+
+    function bar() as Int
+        return doubled(self)
+    end function
+
+    function asString() as String
+        return """"
+    end function
+
+end class
+";
+        var objectCode = @"";
+
+        var parseTree = @"";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3\r\n");
+    }
+
     #endregion
 
     #region Fails
