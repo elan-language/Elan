@@ -38,7 +38,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (constantDef constant a = (literal (literalValue 4))) (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 3))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (nameQualifier global .) a))) ))))) end main) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -119,7 +119,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (constantDef constant a = (literal (literalValue 4))) (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall prop ( )))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall cons ( )))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue a) = (expression (value (literal (literalValue 3)))))) end constructor) (property property a as (type Int)) (functionDef (functionWithBody function (functionSignature prop ( ) as (type Int)) statementBlock return (expression (value a)) end function)) (functionDef (functionWithBody function (functionSignature cons ( ) as (type Int)) statementBlock return (expression (value (nameQualifier global .) a)) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -211,7 +211,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall loc ( )))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall glob ( )))) ))))) end main) (functionDef (functionWithBody function (functionSignature bar ( ) as (type Int)) statementBlock return (expression (value (literal (literalValue 4)))) end function)) (classDef (mutableClass class Foo (constructor constructor ( ) statementBlock end constructor) (functionDef (functionWithBody function (functionSignature loc ( ) as (type Int)) statementBlock return (expression (methodCall bar ( ))) end function)) (functionDef (functionWithBody function (functionSignature glob ( ) as (type Int)) statementBlock return (expression (methodCall (nameQualifier global .) bar ( ))) end function)) (functionDef (functionWithBody function (functionSignature bar ( ) as (type Int)) statementBlock return (expression (value (literal (literalValue 3)))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -285,7 +285,7 @@ end class
     }
 
     [TestMethod]
-    public void Pass_NoSuchGlobalSubroutine()
+    public void Fail_NoSuchGlobalSubroutine()
     {
         var code = @"#
 main

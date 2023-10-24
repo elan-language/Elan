@@ -67,7 +67,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall times ( (argumentList (expression (value (literal (literalValue 2))))) )))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 as (type Int)) (functionDef (functionWithBody function (functionSignature times ( (parameterList (parameter value (type Int))) ) as (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value value))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -144,7 +144,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall times ( (argumentList (expression (value (literal (literalValue 2))))) )))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 as (type Int)) (functionDef (functionWithBody function (functionSignature times ( (parameterList (parameter value (type Int))) ) as (type Int)) statementBlock return (expression (expression (methodCall p1PlusOne ( ))) (binaryOp (arithmeticOp *)) (expression (value value))) end function)) (functionDef (functionWithBody function (functionSignature p1PlusOne ( ) as (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

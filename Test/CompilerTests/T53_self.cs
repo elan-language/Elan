@@ -58,7 +58,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p1 (type Int))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end constructor) (property property p1 as (type Int)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
         
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
