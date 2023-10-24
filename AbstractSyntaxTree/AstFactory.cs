@@ -65,6 +65,7 @@ public static class AstFactory {
             MutableClassContext c => visitor.Build(c),
             ConstructorContext c => visitor.Build(c),
             PropertyContext c => visitor.Build(c),
+            NameQualifierContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -159,7 +160,9 @@ public static class AstFactory {
         var id = visitor.Visit(context.IDENTIFIER());
         var pps = (context.argumentList()?.expression().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
 
-        return new MethodCallNode(id, pps);
+        var nqr = context.nameQualifier() is { } nq ? visitor.Visit(nq) : null;
+
+        return new MethodCallNode(id, nqr, pps);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {
@@ -175,8 +178,8 @@ public static class AstFactory {
             return visitor.Visit(ds);
         }
 
-        if (context.SELF() is not null) {
-            return new SelfNode();
+        if (context.nameQualifier() is {} nq) {
+            return visitor.Visit(nq);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -525,7 +528,7 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionWithBodyContext context) {
         var signature = visitor.Visit(context.functionSignature());
         var statementBlock = visitor.Visit(context.statementBlock());
-        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
+        var ret =  new ReturnExpressionNode(visitor.Visit(context.expression()));
 
         return new FunctionDefNode(signature, statementBlock, ret);
     }
@@ -622,5 +625,9 @@ public static class AstFactory {
 
 
         return new PropertyDefNode(id, type, isPrivate);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, NameQualifierContext context) {
+        return new SelfNode();
     }
 }

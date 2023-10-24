@@ -2,11 +2,14 @@
 
 using static CodeHelpers;
 
-public record ProcedureCallModel(ICodeModel Id, IEnumerable<(ICodeModel, bool)> Parameters) : ICodeModel {
+public record ProcedureCallModel(ICodeModel Id, ICodeModel? Qualifier, IEnumerable<(ICodeModel, bool)> Parameters) : ICodeModel {
+    
+    private string Qual => Qualifier is null ? "" : $"{Qualifier}.";
+    
     public string ToString(int indent) {
         var parameters = Parameters.Select((p, i) => p.Item2 ? p.Item1 : new ScalarValueModel(GeneratedId(i)));
 
-        return $@"{GenerateVariables(indent)}{Indent(indent)}{Id}({parameters.AsCommaSeparatedString("ref ")})";
+        return $@"{GenerateVariables(indent)}{Indent(indent)}{Qual}{Id}({parameters.AsCommaSeparatedString("ref ")})";
     }
 
     private static string Prefix(bool byRef) => byRef ? "ref " : "";

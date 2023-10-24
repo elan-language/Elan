@@ -9,8 +9,8 @@ public static class CompilerTransforms {
         nodes.Last() switch {
             MethodCallNode mcn => currentScope.Resolve(mcn.Name) switch {
                 SystemCallSymbol => new SystemCallNode(mcn.Id, mcn.Parameters) { DotCalled = mcn.DotCalled },
-                ProcedureSymbol => new ProcedureCallNode(mcn.Id, mcn.Parameters),
-                FunctionSymbol => new FunctionCallNode(mcn.Id, mcn.Parameters),
+                ProcedureSymbol => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                FunctionSymbol => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 _ => null
             },
             _ => null

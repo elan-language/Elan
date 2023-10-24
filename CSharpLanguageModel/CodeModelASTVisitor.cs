@@ -81,15 +81,19 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private ProcedureCallModel BuildProcedureCallModel(ProcedureCallNode procedureCallNode) {
         var parameters = procedureCallNode.Parameters.Select(Visit);
         var passByRef = procedureCallNode.Parameters.Select(p => p is IdentifierNode);
+        var qual = procedureCallNode.Qualifier is { } q ? Visit(q) : null;
 
         var zip = parameters.Zip(passByRef);
 
-        return new ProcedureCallModel(Visit(procedureCallNode.Id), zip);
+        return new ProcedureCallModel(Visit(procedureCallNode.Id), qual, zip);
     }
 
-    private MethodCallModel BuildSystemCallModel(SystemCallNode systemCallNode) => new(CodeHelpers.MethodType.SystemCall, Visit(systemCallNode.Id), systemCallNode.Parameters.Select(Visit));
+    private MethodCallModel BuildSystemCallModel(SystemCallNode systemCallNode) => new(CodeHelpers.MethodType.SystemCall, Visit(systemCallNode.Id), null, systemCallNode.Parameters.Select(Visit));
 
-    private MethodCallModel BuildFunctionCallModel(FunctionCallNode functionCallNode) => new(CodeHelpers.MethodType.Function, Visit(functionCallNode.Id), functionCallNode.Parameters.Select(Visit));
+    private MethodCallModel BuildFunctionCallModel(FunctionCallNode functionCallNode) {
+        var qual = functionCallNode.Qualifier is { } q ? Visit(q) : null;
+        return new(CodeHelpers.MethodType.Function, Visit(functionCallNode.Id), qual, functionCallNode.Parameters.Select(Visit));
+    }
 
     private ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
 

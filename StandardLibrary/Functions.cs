@@ -156,7 +156,7 @@ public static class Functions {
 
     #endregion
 
-    public static string typeAndProperties(object o) {
+    public static string typeAndProperties(this object o) {
         var type = o.GetType();
         var name = type.Name;
         var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
