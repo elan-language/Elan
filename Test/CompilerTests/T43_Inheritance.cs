@@ -102,10 +102,278 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5\r\n0\r\n\r\n3\r\n15\r\n"); //N.B. String prop should be auto-initialised to "" not null
     }
 
+    [TestMethod, Ignore]
+    public void Pass_InheritFromMoreThanOneAbstractClass()
+    {
+        var code = @"#
+main
+    var x = Bar()
+    var l = List<Foo>() + x
+end main
+
+abstract class Foo
+    property p1 as Int
+    property p2 as Int
+end class
+
+abstract class Yon
+    procedure setP1(v Int)
+    function product() as Int
+end class
+
+class Bar inherits Foo, Yon
+    constructor()
+        p1 = 3
+        p2 = 4
+    end constructor
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(p1 Int)
+        self.p1 = p1
+    end procedure
+
+    function product() as Int
+        return p1 * p2
+    end function
+
+    function asString() as String 
+        return """"
+    end function
+end class
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "5\r\n0\r\n\r\n3\r\n15\r\n"); //N.B. String prop should be auto-initialised to "" not null
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_SuperclassesCanDefineSameMember()
+    {
+        var code = @"#
+main
+    var x = Bar()
+    var l = List<Foo>() + x
+end main
+
+abstract class Foo
+    property p1 as Int
+    property p2 as Int
+end class
+
+abstract class Yon
+    property p1 as Int
+    procedure setP1(v Int)
+    function product() as Int
+end class
+
+class Bar inherits Foo, Yon
+    constructor()
+        p1 = 3
+        p2 = 4
+    end constructor
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(p1 Int)
+        self.p1 = p1
+    end procedure
+
+    function product() as Int
+        return p1 * p2
+    end function
+
+    function asString() as String 
+        return """"
+    end function
+end class
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "5\r\n0\r\n\r\n3\r\n15\r\n"); //N.B. String prop should be auto-initialised to "" not null
+    }
+
     #endregion
 
     #region Fails
- 
+    [TestMethod, Ignore]
+    public void Fail_CannotInheritFromConcreteClass()
+    {
+        var code = @"#
+main
+    var x = Bar()
+    var l = List<Foo>() + x
+end main
+
+class Foo
+    property p1 as Int
+    property p2 as Int
+end class
+
+class Bar inherits Foo
+    constructor()
+        p1 = 3
+        p2 = 4
+    end constructor
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(p1 Int)
+        self.p1 = p1
+    end procedure
+
+    function product() as Int
+        return p1 * p2
+    end function
+
+    function asString() as String 
+        return """"
+    end function
+end class
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
+    [TestMethod, Ignore]
+    public void Fail_MustImplementAllInheritedMethods()
+    {
+        var code = @"#
+main
+    var x = Bar()
+    var l = List<Foo>() + x
+end main
+
+abstract class Foo
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(v Int)
+
+    function product() as Int
+end class
+
+class Bar inherits Foo
+    constructor()
+        p1 = 3
+        p2 = 4
+    end constructor
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(p1 Int)
+        self.p1 = p1
+    end procedure
+
+    function asString() as String 
+        return """"
+    end function
+end class
+";
+
+       var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
+    [TestMethod, Ignore]
+    public void Fail_ImplementedMethodMustHaveSameSignature()
+    {
+        var code = @"#
+main
+    var x = Bar()
+    var l = List<Foo>() + x
+end main
+
+abstract class Foo
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(v Int)
+
+    function product() as Int
+end class
+
+class Bar inherits Foo
+    constructor()
+        p1 = 3
+        p2 = 4
+    end constructor
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(p1 Int)
+        self.p1 = p1
+    end procedure
+
+    function product() as Float
+        return p1 * p2
+    end function
+
+    function asString() as String 
+        return """"
+    end function
+end class
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_AbstractClassDefinesMethodBody()
+    {
+        var code = @"#
+main
+    var x = Bar()
+    var l = List<Foo>() + x
+end main
+
+abstract class Foo
+    property p1 as Int
+    property p2 as Int
+
+    procedure setP1(v Int)
+        self.p1 = p1
+    end procedure
+
+    function product() as Int
+end class
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
 
     #endregion
 }
