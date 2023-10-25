@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T20_StatementBodiedFunctions {
+public class T20_Functions_StatementBodied {
     #region Passes
 
     [TestMethod]

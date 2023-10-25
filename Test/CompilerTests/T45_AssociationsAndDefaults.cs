@@ -105,14 +105,61 @@ public static class Program {
     }
 
     [TestMethod, Ignore]
-    public void Pass_AllPropertiesHaveDefaultValues()
+    public void Pass_PropertiesOfAllStandardTypesHaveDefaultValues()
+    {
+        var code = @"#
+main
+    var g = Game()
+    printLine(g.i)
+    printLine(g.f)
+    printLine(g.b)
+    printLine(g.c)
+    printLine(g.s)
+    printLine(g.li)
+    printLine(g.dsi)
+    printLine(g.ai)
+end main
+
+class Game
+    constructor()
+    end constructor
+
+    property i as Int
+    property f as Float
+    property b as Boolean
+    property c as Char
+    property s as String
+    property li as List<Int>
+    property dsi as Dictionary<String, Int>
+    property ai as Array<Int>
+   
+    function asString() as String
+        return ""A game""
+    end function
+
+end class
+
+";
+        var objectCode = @"";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "0\r\n0\r\nfalse\r\n'\\0'\r\n\"\"\r\nList {}\r\nDictionary {}\r\nArray {}"); //Not sure if char is correct - use C# default
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_PropertiesOfClassTypesHaveDefaultValues()
     {
         var code = @"#
 main
     var g = Game()
     printLine(g.p1)
-    printLine(g.p2)
-    printLine(g.previousScores)
+    printLine(g.previousGame)
 end main
 
 class Game
@@ -120,9 +167,7 @@ class Game
     end constructor
 
     property p1 as Player
-    property p2 as Player
-
-    property previousScores as List<Int>
+    property previousGame as Game
 
     function asString() as String
         return ""A game""
@@ -152,7 +197,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "\"\"\r\n\"\"\r\nList {}");
+        AssertObjectCodeExecutes(compileData, "default Player\r\ndefault Game\r\n");
     }
 
     [TestMethod, Ignore]
