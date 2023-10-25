@@ -69,7 +69,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "7\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_UsingSelfAsAnInstance()
     {
         var code = @"#
@@ -99,16 +99,49 @@ class Foo
 
 end class
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+  public static int doubled(Foo f) {
+
+    return 2 * f.p1;
+  }
+  public class Foo {
+    public Foo() {
+      p1 = 3;
+    }
+    public int p1 { get; set; }
+    public int bar() {
+
+      return doubled(this);
+    }
+    public string asString() {
+
+      return @$"""";
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f.bar());
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall bar ( )))) ))))) end main) (functionDef (functionWithBody function (functionSignature doubled ( (parameterList (parameter f (type Foo))) ) as (type Int)) statementBlock return (expression (expression (value (literal (literalValue 2)))) (binaryOp (arithmeticOp *)) (expression (expression (value f)) . p1)) end function)) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3)))))) end constructor) (property property p1 as (type Int)) (functionDef (functionWithBody function (functionSignature bar ( ) as (type Int)) statementBlock return (expression (methodCall doubled ( (argumentList (expression (value self))) ))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3\r\n");
+        AssertObjectCodeExecutes(compileData, "6\r\n");
     }
 
     #endregion

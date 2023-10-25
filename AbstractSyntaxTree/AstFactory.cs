@@ -189,7 +189,10 @@ public static class AstFactory {
             return visitor.Visit(ds);
         }
 
-        
+        if (context.SELF() is { } s) {
+            return new SelfNode();
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
