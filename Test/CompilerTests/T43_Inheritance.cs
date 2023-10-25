@@ -344,8 +344,13 @@ main
 end main
 
 class Foo
+    constructor()
+    end constructor
     property p1 as Int
     property p2 as Int
+    function asString() as String 
+        return """"
+    end function
 end class
 
 class Bar inherits Foo
@@ -378,7 +383,7 @@ end class
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_MustImplementAllInheritedMethods()
     {
         var code = @"#
@@ -419,10 +424,11 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_ImplementedMethodMustHaveSameSignature()
     {
         var code = @"#
@@ -467,10 +473,11 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_AbstractClassDefinesMethodBody()
     {
         var code = @"#

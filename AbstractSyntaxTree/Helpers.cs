@@ -31,6 +31,7 @@ public static class Helpers {
         return type switch {
             "String" => ValueType.String,
             "Int" => ValueType.Int,
+            "Float" => ValueType.Float,
             _ => throw new NotSupportedException(type)
         };
     }
