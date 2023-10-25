@@ -17,6 +17,7 @@ public class SymbolTableVisitor {
             ProcedureDefNode n => VisitProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
             ClassDefNode n => VisitClassDefNode(n),
+            AbstractClassDefNode n => VisitAbstractClassDefNode(n),
             VarDefNode n => VisitVarDefNode(n),
             null => throw new NotImplementedException("null"),
             _ => VisitChildren(astNode)
@@ -63,12 +64,21 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitClassDefNode(ClassDefNode classDefNode) {
-        var ms = new ClassSymbol(classDefNode.Name, currentScope);
+        var ms = new ClassSymbol(classDefNode.Name, ClassSymbolTypeType.Mutable, currentScope);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(classDefNode);
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return classDefNode;
+    }
+
+    private IAstNode VisitAbstractClassDefNode(AbstractClassDefNode abstractClassDefNode) {
+        var ms = new ClassSymbol(abstractClassDefNode.Name, ClassSymbolTypeType.Abstract, currentScope);
+        currentScope.Define(ms);
+        currentScope = ms;
+        VisitChildren(abstractClassDefNode);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return abstractClassDefNode;
     }
 
     private static ISymbolType ConvertToBuiltInSymbol(string type) =>

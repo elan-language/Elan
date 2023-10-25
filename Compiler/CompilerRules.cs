@@ -141,6 +141,21 @@ public static class CompilerRules {
         return null;
     }
 
+    public static string? ClassCannotInheritConcreteClass(IAstNode[] nodes, IScope currentScope) {
+        var leafNode = nodes.Last();
+
+        var typeNodes = leafNode switch {
+            ClassDefNode cdn => cdn.Inherits.OfType<TypeNode>(),
+            AbstractClassDefNode acdn => acdn.Inherits.OfType<TypeNode>(),
+            _ => Array.Empty<TypeNode>()
+        };
+
+        var inherits = typeNodes.Select(tn => ((IdentifierNode)tn.TypeName).Id);
+        var classSymbols = inherits.Select(currentScope.Resolve).OfType<ClassSymbol>();
+        return classSymbols.Any(s => s.ClassType is not ClassSymbolTypeType.Abstract) ? "Class cannot inherit from concrete class" : null;
+    }
+
+
 
     public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();

@@ -334,7 +334,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CannotInheritFromConcreteClass()
     {
         var code = @"#
@@ -372,6 +372,39 @@ class Bar inherits Foo
     function asString() as String 
         return """"
     end function
+end class
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_AbstractClassCannotInheritFromConcreteClass()
+    {
+        var code = @"#
+main
+    var x = Bar()
+    var l = List<Foo>() + x
+end main
+
+class Foo
+    constructor()
+    end constructor
+    property p1 as Int
+    property p2 as Int
+    function asString() as String 
+        return """"
+    end function
+end class
+
+abstract class Bar inherits Foo
+    property p1 as Int
+    property p2 as Int
 end class
 ";
 
