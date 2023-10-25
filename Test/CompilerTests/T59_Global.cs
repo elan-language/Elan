@@ -92,21 +92,28 @@ using static StandardLibrary.Constants;
 public static partial class Globals {
   public const int a = 4;
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
     public Foo() {
       a = 3;
     }
-    public int a { get; set; }
-    public int prop() {
+    public int a { get; private set; }
+    public virtual int prop() {
 
       return a;
     }
-    public int cons() {
+    public virtual int cons() {
 
       return Globals.a;
     }
-    public string asString() {
+    public virtual string asString() {
 
       return @$"""";
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }
@@ -180,25 +187,32 @@ public static partial class Globals {
     return 4;
   }
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
     public Foo() {
 
     }
 
-    public int loc() {
+    public virtual int loc() {
 
       return bar();
     }
-    public int glob() {
+    public virtual int glob() {
 
       return Globals.bar();
     }
-    public int bar() {
+    public virtual int bar() {
 
       return 3;
     }
-    public string asString() {
+    public virtual string asString() {
 
       return @$"""";
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }

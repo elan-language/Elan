@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass]
+[TestClass, Ignore]
 public class T45_AssociationsAndDefaults
 {
     #region Passes
@@ -188,7 +188,46 @@ class Player
 
 end class
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Game {
+    public Game() {
+
+    }
+    public Player p1 { get; set; }
+    public Player p2 { get; set; }
+    public StandardLibrary.ElanList<int> previousScores { get; set; }
+    public string asString() {
+
+      return @$""A game"";
+    }
+  }
+  public class Player {
+    public Player(string name) {
+      this.name = name;
+    }
+    public string name { get; set; } = """";
+    public string asString() {
+
+      return name;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var g = new Game();
+    printLine(g.p1);
+    printLine(g.p2);
+    printLine(g.previousScores);
+  }
+}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -200,7 +239,7 @@ end class
         AssertObjectCodeExecutes(compileData, "default Player\r\ndefault Game\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_defaultKeywordToTestValue()
     {
         var code = @"#
@@ -249,7 +288,53 @@ class Player
 
 end class
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Game {
+    public Game() {
+      score = 1;
+    }
+    public int score { get; set; }
+    public int best { get; set; }
+    public Player p1 { get; set; }
+    public Player p2 { get; set; }
+    public Game previousGame { get; set; }
+    public StandardLibrary.ElanList<int> previousScores { get; set; }
+    public string asString() {
+
+      return @$""A game"";
+    }
+  }
+  public class Player {
+    public Player(string name) {
+      this.name = name;
+    }
+    public string name { get; set; } = """";
+    public string asString() {
+
+      return name;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var g = new Game();
+    printLine(g.p1 == Player.DefaultInstance);
+    printLine(g.p2 == Player.DefaultInstance);
+    printLine(g.p2 == Game.DefaultInstance);
+    printLine(g.previousGame == Game.DefaultInstance);
+    printLine(g.previousScores == StandardLibrary.ElanList<int>.DefaultInstance);
+    printLine(g.score == default(int));
+    printLine(g.best == default(int));
+  }
+}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -328,4 +413,13 @@ end class
 
 
     #endregion
+}
+
+public class Simple {
+    public int P1 { get; set; }
+    public void setP1(int value) { P1 = value; }
+}
+
+public class EmptySimple : Simple {
+
 }

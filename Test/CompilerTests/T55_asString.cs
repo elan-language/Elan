@@ -44,15 +44,22 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
     public Foo() {
       p1 = 5;
       p2 = @$""Apple"";
     }
-    public int p1 { get; set; }
+    public int p1 { get; private set; }
     private string p2 { get; set; } = """";
-    public string asString() {
+    public virtual string asString() {
 
       return p2;
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }
@@ -110,15 +117,22 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
     public Foo() {
       p1 = 5;
       p2 = @$""Apple"";
     }
-    public int p1 { get; set; }
+    public int p1 { get; private set; }
     private string p2 { get; set; } = """";
-    public string asString() {
+    public virtual string asString() {
 
       return p2;
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }
@@ -176,15 +190,22 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
     public Foo() {
       p1 = 5;
       p2 = @$""Apple"";
     }
-    public int p1 { get; set; }
+    public int p1 { get; private set; }
     private string p2 { get; set; } = """";
-    public string asString() {
+    public virtual string asString() {
 
       return typeAndProperties(this);
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }

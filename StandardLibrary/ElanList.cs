@@ -6,6 +6,9 @@ namespace StandardLibrary;
 public interface IElanList { }
 
 public class ElanList<T> : IElanList, IEnumerable<T> {
+
+    public static ElanList<T> DefaultInstance { get; } = new();
+
     private readonly ImmutableList<T> wrappedList;
 
     public ElanList() => wrappedList = ImmutableList.Create<T>();
@@ -61,4 +64,20 @@ public class ElanList<T> : IElanList, IEnumerable<T> {
     public static ElanList<T> operator +(ElanList<T> a, ElanList<T> b) => a.AddRange(b);
 
     public static ElanList<T> operator +(T a, ElanList<T> b) => b.Insert(0, a);
+
+    public static bool operator ==(ElanList<T> a, object b) {
+        if (b.GetType() != typeof(ElanList<T>)) {
+            return false;
+        }
+
+        var other = (ElanList<T>)b;
+
+        if (other.Count != a.Count) {
+            return false;
+        }
+
+        return a.Zip(other).All(z => z.First?.Equals(z.Second) == true);
+    }
+
+    public static bool operator !=(ElanList<T> a, object b) => !(a == b);
 }

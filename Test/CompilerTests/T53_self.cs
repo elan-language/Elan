@@ -40,13 +40,20 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+    private Foo() {}
     public Foo(int p1) {
       this.p1 = p1;
     }
-    public int p1 { get; set; }
-    public string asString() {
+    public int p1 { get; private set; }
+    public virtual string asString() {
 
       return @$"""";
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }
@@ -112,17 +119,24 @@ public static partial class Globals {
     return 2 * f.p1;
   }
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
     public Foo() {
       p1 = 3;
     }
-    public int p1 { get; set; }
-    public int bar() {
+    public int p1 { get; private set; }
+    public virtual int bar() {
 
       return doubled(this);
     }
-    public string asString() {
+    public virtual string asString() {
 
       return @$"""";
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }

@@ -43,16 +43,23 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
     public Foo() {
       p1 = 5;
     }
-    public int p1 { get; set; }
-    public string asString() {
+    public int p1 { get; private set; }
+    public virtual string asString() {
 
       return @$"""";
     }
-    public void setP1(ref int value) {
+    public virtual void setP1(ref int value) {
       p1 = value;
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override void setP1(ref int value) { }
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }
@@ -114,16 +121,23 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
     public Foo() {
       p1 = 5;
     }
-    public int p1 { get; set; }
-    public string asString() {
+    public int p1 { get; private set; }
+    public virtual string asString() {
 
       return @$"""";
     }
-    public void display() {
+    public virtual void display() {
       printLine(p1);
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override void display() { }
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }

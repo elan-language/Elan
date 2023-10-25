@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using StandardLibrary;
 
 namespace Test.CompilerTests;
 
@@ -44,14 +45,21 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
     public Foo() {
       p1 = 5;
     }
-    public int p1 { get; set; }
-    public string p2 { get; set; } = """";
-    public string asString() {
+    public int p1 { get; private set; }
+    public string p2 { get; private set; } = """";
+    public virtual string asString() {
 
       return @$"""";
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }
@@ -110,15 +118,22 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+    private Foo() {}
     public Foo(int p_1, string p_2) {
       p1 = p_1;
       p2 = p_2;
     }
-    public int p1 { get; set; }
-    public string p2 { get; set; } = """";
-    public string asString() {
+    public int p1 { get; private set; }
+    public string p2 { get; private set; } = """";
+    public virtual string asString() {
 
       return @$"""";
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""Default Foo"";  }
     }
   }
 }

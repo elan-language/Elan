@@ -70,6 +70,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             GlobalNode n => HandleScope(BuildGlobalModel, n),
             ReturnExpressionNode n => Visit(n.Expression),
             QualifiedNode n => HandleScope(BuildQualifiedModel, n),
+            DefaultNode n => HandleScope(BuildDefaultModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -279,20 +280,32 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new PairModel(key, value);
     }
 
+    private static IAstNode GetSignatures(IAstNode node) {
+        return node switch {
+            ProcedureDefNode pdn => pdn.Signature,
+            FunctionDefNode fdn => fdn.Signature,
+            _ => throw new NotImplementedException(node.GetType().ToString())
+        };
+    }
+
     private ClassDefModel BuildClassDefModel(ClassDefNode classDefNode) {
         var type = Visit(classDefNode.Type);
         var inherits = classDefNode.Inherits.Select(Visit);
         var constructor = Visit(classDefNode.Constructor);
-        var properties = classDefNode.Properties.Select(Visit);
+        var properties = classDefNode.Properties.Select(Visit).ToList();
         var functions = classDefNode.Methods.Select(Visit);
 
-        return new ClassDefModel(type, inherits, constructor, properties, functions);
+        var pSignatures = classDefNode.Methods.OfType<ProcedureDefNode>().Select(n => n.Signature).Select(Visit);
+        
+        var defaultClassModel = new DefaultClassDefModel(type, pSignatures);
+
+        return new ClassDefModel(type, inherits, constructor, properties, functions, classDefNode.HasDefaultConstructor, defaultClassModel);
     }
 
     private AbstractClassDefModel BuildAbstractClassDefModel(AbstractClassDefNode abstractClassDefNode) {
         var type = Visit(abstractClassDefNode.Type);
         var inherits = abstractClassDefNode.Inherits.Select(Visit);
-        var properties = abstractClassDefNode.Properties.Select(Visit);
+        var properties = abstractClassDefNode.Properties.Select(Visit).OfType<PropertyDefModel>() .Select(p => p with {IsAbstract = true});
         var functions = abstractClassDefNode.Methods.Select(Visit);
 
         return new AbstractClassDefModel(type, inherits, properties, functions);
@@ -311,7 +324,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var id = Visit(propertyDefNode.Id);
         var type = Visit(propertyDefNode.Type);
 
-        return new PropertyDefModel(id, type, propertyDefNode.IsPrivate);
+        return new PropertyDefModel(id, type, propertyDefNode.IsPrivate, false);
     }
 
     private TypeModel BuildTypeModel(TypeNode typeNode) {
@@ -326,4 +339,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private ScalarValueModel BuildGlobalModel(GlobalNode globalNode) => new("Globals");
 
     private QualifiedValueModel BuildQualifiedModel(QualifiedNode qualifiedNode) => new(Visit(qualifiedNode.Qualifier), Visit(qualifiedNode.Qualified));
+
+    private DefaultModel BuildDefaultModel(DefaultNode defaultNode) {
+      
+        var id = Visit(defaultNode.Type);
+        
+        return new DefaultModel(id, defaultNode.TypeType);
+    }
 }

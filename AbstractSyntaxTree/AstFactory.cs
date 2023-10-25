@@ -193,6 +193,10 @@ public static class AstFactory {
             return new SelfNode();
         }
 
+        if (context.DEFAULT() is not null) {
+            return new DefaultNode(visitor.Visit(context.type()));
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 

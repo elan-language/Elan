@@ -62,28 +62,35 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public interface Foo {
-    public int p1 { get; set; }
-    public int p2 { get; set; }
+    public int p1 { get; }
+    public int p2 { get; }
     public int product();
     public void setP1(ref int v);
   }
   public class Bar : Foo {
+    public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
+
     public Bar() {
       p1 = 3;
       p2 = 4;
     }
-    public int p1 { get; set; }
-    public int p2 { get; set; }
-    public int product() {
+    public int p1 { get; private set; }
+    public int p2 { get; private set; }
+    public virtual int product() {
 
       return p1 * p2;
     }
-    public string asString() {
+    public virtual string asString() {
 
       return @$"""";
     }
-    public void setP1(ref int p1) {
+    public virtual void setP1(ref int p1) {
       this.p1 = p1;
+    }
+    private class _DefaultBar : Bar {
+      public _DefaultBar() { }
+      public override void setP1(ref int p1) { }
+      public override string asString() { return ""Default Bar"";  }
     }
   }
 }
@@ -167,8 +174,8 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public interface Foo {
-    public int p1 { get; set; }
-    public int p2 { get; set; }
+    public int p1 { get; }
+    public int p2 { get; }
 
   }
   public interface Yon {
@@ -177,22 +184,29 @@ public static partial class Globals {
     public void setP1(ref int v);
   }
   public class Bar : Foo, Yon {
+    public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
+
     public Bar() {
       p1 = 3;
       p2 = 4;
     }
-    public int p1 { get; set; }
-    public int p2 { get; set; }
-    public int product() {
+    public int p1 { get; private set; }
+    public int p2 { get; private set; }
+    public virtual int product() {
 
       return p1 * p2;
     }
-    public string asString() {
+    public virtual string asString() {
 
       return @$"""";
     }
-    public void setP1(ref int p1) {
+    public virtual void setP1(ref int p1) {
       this.p1 = p1;
+    }
+    private class _DefaultBar : Bar {
+      public _DefaultBar() { }
+      public override void setP1(ref int p1) { }
+      public override string asString() { return ""Default Bar"";  }
     }
   }
 }
@@ -277,32 +291,39 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public interface Foo {
-    public int p1 { get; set; }
-    public int p2 { get; set; }
+    public int p1 { get; }
+    public int p2 { get; }
 
   }
   public interface Yon {
-    public int p1 { get; set; }
+    public int p1 { get; }
     public int product();
     public void setP1(ref int v);
   }
   public class Bar : Foo, Yon {
+    public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
+
     public Bar() {
       p1 = 3;
       p2 = 4;
     }
-    public int p1 { get; set; }
-    public int p2 { get; set; }
-    public int product() {
+    public int p1 { get; private set; }
+    public int p2 { get; private set; }
+    public virtual int product() {
 
       return p1 * p2;
     }
-    public string asString() {
+    public virtual string asString() {
 
       return @$"""";
     }
-    public void setP1(ref int p1) {
+    public virtual void setP1(ref int p1) {
       this.p1 = p1;
+    }
+    private class _DefaultBar : Bar {
+      public _DefaultBar() { }
+      public override void setP1(ref int p1) { }
+      public override string asString() { return ""Default Bar"";  }
     }
   }
 }
