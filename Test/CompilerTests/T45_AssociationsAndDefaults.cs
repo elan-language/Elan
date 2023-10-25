@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T45_AssociationsAndDefaults
 {
     #region Passes
@@ -15,8 +15,8 @@ public class T45_AssociationsAndDefaults
         var code = @"#
 main
     var g = Game()
-    printLine(g.p1)
     printLine(g.p2)
+    printLine(g.p1)
     printLine(g.previousScores)
 end main
 
@@ -51,7 +51,48 @@ class Player
 
 end class
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Game {
+    public Game() {
+      p2 = new Player(@$""Chloe"");
+      p1 = new Player(@$""Joe"");
+      previousScores = new StandardLibrary.ElanList<int>(5, 2, 4);
+    }
+    public Player p1 { get; set; }
+    public Player p2 { get; set; }
+    public StandardLibrary.ElanList<int> previousScores { get; set; }
+    public string asString() {
+
+      return @$""A game"";
+    }
+  }
+  public class Player {
+    public Player(string name) {
+      this.name = name;
+    }
+    public string name { get; set; } = """";
+    public string asString() {
+
+      return name;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var g = new Game();
+    printLine(g.p2);
+    printLine(g.p1);
+    printLine(g.previousScores);
+  }
+}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -60,10 +101,10 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Chloe\r\nJoe\r\nList {5,2,4}");
+        AssertObjectCodeExecutes(compileData, "Chloe\r\nJoe\r\nList {5,2,4}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_AllPropertiesHaveDefaultValues()
     {
         var code = @"#
@@ -114,7 +155,7 @@ end class
         AssertObjectCodeExecutes(compileData, "\"\"\r\n\"\"\r\nList {}");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_defaultKeywordToTestValue()
     {
         var code = @"#
@@ -175,7 +216,7 @@ end class
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\ntrue\r\ntrue\r\nfalse\r\nfalse\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]    
     public void Pass_defaultValueCanBeAssigned()
     {
         var code = @"#
