@@ -101,7 +101,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"*";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Bar) ( )))) (varDef var (assignableValue l) = (expression (expression (newInstance (type (dataStructureType List (genericSpecifier < (type Foo) >))) ( ))) (binaryOp (arithmeticOp +)) (expression (value x)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) )))) (callStatement (expression (expression (value x)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 4))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) ))))) end main) (classDef (abstractClass abstract class Foo (property property p1 as (type Int)) (property property p2 as (type Int)) procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) function (functionSignature product ( ) as (type Int)) end class)) (classDef (mutableClass class Bar (inherits inherits (type Foo)) (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue p2) = (expression (value (literal (literalValue 4)))))) end constructor) (property property p1 as (type Int)) (property property p2 as (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter p1 (type Int))) )) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end procedure) (functionDef (functionWithBody function (functionSignature product ( ) as (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p2))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -112,13 +112,18 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n4\r\n12\r\n16\r\n"); //N.B. String prop should be auto-initialised to "" not null
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_InheritFromMoreThanOneAbstractClass()
     {
         var code = @"#
 main
     var x = Bar()
     var l = List<Foo>() + x
+    printLine(x.p1)
+    printLine(x.p2)
+    printLine(x.product())
+    x.setP1(4)
+    printLine(x.product())
 end main
 
 abstract class Foo
@@ -153,9 +158,59 @@ class Bar inherits Foo, Yon
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public interface Foo {
+    public int p1 { get; set; }
+    public int p2 { get; set; }
+
+  }
+  public interface Yon {
+
+    public int product();
+    public void setP1(ref int v);
+  }
+  public class Bar : Foo, Yon {
+    public Bar() {
+      p1 = 3;
+      p2 = 4;
+    }
+    public int p1 { get; set; }
+    public int p2 { get; set; }
+    public int product() {
+
+      return p1 * p2;
+    }
+    public string asString() {
+
+      return @$"""";
+    }
+    public void setP1(ref int p1) {
+      this.p1 = p1;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Bar();
+    var l = new StandardLibrary.ElanList<Foo>() + x;
+    printLine(x.p1);
+    printLine(x.p2);
+    printLine(x.product());
+    var _setP1_0 = 4;
+    x.setP1(ref _setP1_0);
+    printLine(x.product());
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Bar) ( )))) (varDef var (assignableValue l) = (expression (expression (newInstance (type (dataStructureType List (genericSpecifier < (type Foo) >))) ( ))) (binaryOp (arithmeticOp +)) (expression (value x)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) )))) (callStatement (expression (expression (value x)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 4))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) ))))) end main) (classDef (abstractClass abstract class Foo (property property p1 as (type Int)) (property property p2 as (type Int)) end class)) (classDef (abstractClass abstract class Yon procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) function (functionSignature product ( ) as (type Int)) end class)) (classDef (mutableClass class Bar (inherits inherits (type Foo) , (type Yon)) (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue p2) = (expression (value (literal (literalValue 4)))))) end constructor) (property property p1 as (type Int)) (property property p2 as (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter p1 (type Int))) )) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end procedure) (functionDef (functionWithBody function (functionSignature product ( ) as (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p2))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -163,16 +218,21 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5\r\n0\r\n\r\n3\r\n15\r\n"); //N.B. String prop should be auto-initialised to "" not null
+        AssertObjectCodeExecutes(compileData, "3\r\n4\r\n12\r\n16\r\n"); //N.B. String prop should be auto-initialised to "" not null
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_SuperclassesCanDefineSameMember()
     {
         var code = @"#
 main
     var x = Bar()
     var l = List<Foo>() + x
+    printLine(x.p1)
+    printLine(x.p2)
+    printLine(x.product())
+    x.setP1(4)
+    printLine(x.product())
 end main
 
 abstract class Foo
@@ -208,9 +268,59 @@ class Bar inherits Foo, Yon
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public interface Foo {
+    public int p1 { get; set; }
+    public int p2 { get; set; }
+
+  }
+  public interface Yon {
+    public int p1 { get; set; }
+    public int product();
+    public void setP1(ref int v);
+  }
+  public class Bar : Foo, Yon {
+    public Bar() {
+      p1 = 3;
+      p2 = 4;
+    }
+    public int p1 { get; set; }
+    public int p2 { get; set; }
+    public int product() {
+
+      return p1 * p2;
+    }
+    public string asString() {
+
+      return @$"""";
+    }
+    public void setP1(ref int p1) {
+      this.p1 = p1;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Bar();
+    var l = new StandardLibrary.ElanList<Foo>() + x;
+    printLine(x.p1);
+    printLine(x.p2);
+    printLine(x.product());
+    var _setP1_0 = 4;
+    x.setP1(ref _setP1_0);
+    printLine(x.product());
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Bar) ( )))) (varDef var (assignableValue l) = (expression (expression (newInstance (type (dataStructureType List (genericSpecifier < (type Foo) >))) ( ))) (binaryOp (arithmeticOp +)) (expression (value x)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) )))) (callStatement (expression (expression (value x)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 4))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) ))))) end main) (classDef (abstractClass abstract class Foo (property property p1 as (type Int)) (property property p2 as (type Int)) end class)) (classDef (abstractClass abstract class Yon (property property p1 as (type Int)) procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) function (functionSignature product ( ) as (type Int)) end class)) (classDef (mutableClass class Bar (inherits inherits (type Foo) , (type Yon)) (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue p2) = (expression (value (literal (literalValue 4)))))) end constructor) (property property p1 as (type Int)) (property property p2 as (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter p1 (type Int))) )) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end procedure) (functionDef (functionWithBody function (functionSignature product ( ) as (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p2))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -218,7 +328,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5\r\n0\r\n\r\n3\r\n15\r\n"); //N.B. String prop should be auto-initialised to "" not null
+        AssertObjectCodeExecutes(compileData, "3\r\n4\r\n12\r\n16\r\n"); //N.B. String prop should be auto-initialised to "" not null
     }
 
     #endregion
@@ -361,7 +471,7 @@ end class
     }
 
     [TestMethod, Ignore]
-    public void Pass_AbstractClassDefinesMethodBody()
+    public void Fail_AbstractClassDefinesMethodBody()
     {
         var code = @"#
 main
