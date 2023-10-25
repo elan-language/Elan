@@ -29,6 +29,10 @@ public static class CodeHelpers {
         return string.Join("\r\n", mm.Select(cm => $"{cm.ToString(indent)}{term}"));
     }
 
+    public static string AsLineSeparatedString(this IEnumerable<ICodeModel> mm, string prefix = "", string term = "", int indent = 0) {
+        return string.Join("\r\n", mm.Select(cm => $"{Indent(indent)}{prefix}{cm}{term}"));
+    }
+
     public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0)));
 
     public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm, string prefix) => string.Join(", ", mm.Select(v => $"{prefix}{v}"));

@@ -281,19 +281,21 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private ClassDefModel BuildClassDefModel(ClassDefNode classDefNode) {
         var type = Visit(classDefNode.Type);
+        var inherits = classDefNode.Inherits.Select(Visit);
         var constructor = Visit(classDefNode.Constructor);
         var properties = classDefNode.Properties.Select(Visit);
         var functions = classDefNode.Methods.Select(Visit);
 
-        return new ClassDefModel(type, constructor, properties, functions);
+        return new ClassDefModel(type, inherits, constructor, properties, functions);
     }
 
-    private ClassDefModel BuildAbstractClassDefModel(AbstractClassDefNode classDefNode) {
-        var type = Visit(classDefNode.Type);
-        var properties = classDefNode.Properties.Select(Visit);
-        var functions = classDefNode.Methods.Select(Visit);
+    private AbstractClassDefModel BuildAbstractClassDefModel(AbstractClassDefNode abstractClassDefNode) {
+        var type = Visit(abstractClassDefNode.Type);
+        var inherits = abstractClassDefNode.Inherits.Select(Visit);
+        var properties = abstractClassDefNode.Properties.Select(Visit);
+        var functions = abstractClassDefNode.Methods.Select(Visit);
 
-        return new ClassDefModel(type, null,  properties, functions);
+        return new AbstractClassDefModel(type, inherits, properties, functions);
     }
 
     private ConstructorModel BuildConstructorModel(ConstructorNode constructorNode) {

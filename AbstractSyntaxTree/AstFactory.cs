@@ -67,6 +67,7 @@ public static class AstFactory {
             ConstructorContext c => visitor.Build(c),
             PropertyContext c => visitor.Build(c),
             NameQualifierContext c => visitor.Build(c),
+         
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -621,21 +622,23 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, MutableClassContext context) {
         var typeName = visitor.Visit(context.TYPENAME());
+        var inherits = context.inherits() is { } ih ? ih.type().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var constructor = visitor.Visit(context.constructor());
         var properties = context.property().Select(visitor.Visit);
         var functions = context.functionDef().Select(fd => visitor.Visit<FunctionDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
         var procedures = context.procedureDef().Select(fd => visitor.Visit<ProcedureDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
 
-        return new ClassDefNode(typeName, constructor, properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray());
+        return new ClassDefNode(typeName, inherits.ToImmutableArray(), constructor, properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AbstractClassContext context) {
         var typeName = visitor.Visit(context.TYPENAME());
+        var inherits = context.inherits() is { } ih ? ih.type().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var properties = context.property().Select(visitor.Visit);
         var functions = context.functionSignature().Select(visitor.Visit);
         var procedures = context.procedureSignature().Select(visitor.Visit);
 
-        return new AbstractClassDefNode(typeName, properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray());
+        return new AbstractClassDefNode(typeName, inherits.ToImmutableArray(), properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ConstructorContext context) {
@@ -665,4 +668,6 @@ public static class AstFactory {
 
         throw new NotImplementedException(context.children.First().GetText());
     }
+
+    
 }
