@@ -17,7 +17,6 @@ main
     var g = Game()
     printLine(g.p1)
     printLine(g.p2)
-    printLine(g.previousGame)
     printLine(g.previousScores)
 end main
 
@@ -25,14 +24,11 @@ class Game
     constructor()
        p2 = Player(""Chloe"")
        p1 = Player(""Joe"")
-       previousGame = Game()
        previousScores = {5,2,4}
     end constructor
 
     property p1 as Player
     property p2 as Player
-
-    property previousGame as Game
 
     property previousScores as List<Int>
 
@@ -64,7 +60,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Chloe\r\nJoe\r\nA game\r\nList {5,2,4}");
+        AssertObjectCodeExecutes(compileData, "Chloe\r\nJoe\r\nList {5,2,4}");
     }
 
     [TestMethod]
@@ -75,7 +71,6 @@ main
     var g = Game()
     printLine(g.p1)
     printLine(g.p2)
-    printLine(g.previousGame)
     printLine(g.previousScores)
 end main
 
@@ -85,8 +80,6 @@ class Game
 
     property p1 as Player
     property p2 as Player
-
-    property previousGame as Game
 
     property previousScores as List<Int>
 
@@ -118,7 +111,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "\"\"\r\n\"\"\r\nA game\r\nList {}");
+        AssertObjectCodeExecutes(compileData, "\"\"\r\n\"\"\r\nList {}");
     }
 
     [TestMethod]
