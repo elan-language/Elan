@@ -207,7 +207,7 @@ index: OPEN_SQ_BRACKET (expression | expression COMMA expression | range) CLOSE_
 range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT expression; 
 
 // VALUES
-value: literal | nameQualifier? IDENTIFIER  |dataStructureDefinition | SELF;
+value: literal | nameQualifier? IDENTIFIER  |dataStructureDefinition | SELF | DEFAULT type;
 
 nameQualifier: (SELF | GLOBAL ) DOT; // might add 'namespace' as a further option in future
  
