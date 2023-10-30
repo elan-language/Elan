@@ -59,7 +59,7 @@ public static partial class Globals {
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override void setP1(ref int value) { }
-      public override string asString() { return ""Default Foo"";  }
+      public override string asString() { return ""default Foo"";  }
     }
   }
 }
@@ -137,7 +137,7 @@ public static partial class Globals {
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override void display() { }
-      public override string asString() { return ""Default Foo"";  }
+      public override string asString() { return ""default Foo"";  }
     }
   }
 }

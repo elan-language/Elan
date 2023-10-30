@@ -32,6 +32,8 @@ public static class Helpers {
             "String" => ValueType.String,
             "Int" => ValueType.Int,
             "Float" => ValueType.Float,
+            "Char" => ValueType.Char,
+            "Bool" => ValueType.Bool,
             _ => throw new NotSupportedException(type)
         };
     }

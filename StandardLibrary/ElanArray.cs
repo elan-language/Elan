@@ -5,6 +5,8 @@ namespace StandardLibrary;
 public interface IElanArray { }
 
 public class ElanArray<T> : IElanArray, IEnumerable<T> {
+    public static ElanArray<T> DefaultInstance { get; } = new();
+
     private readonly bool twoD;
     private readonly T[][] wrappedArray;
 

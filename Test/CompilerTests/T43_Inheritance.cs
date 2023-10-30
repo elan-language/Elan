@@ -90,7 +90,7 @@ public static partial class Globals {
     private class _DefaultBar : Bar {
       public _DefaultBar() { }
       public override void setP1(ref int p1) { }
-      public override string asString() { return ""Default Bar"";  }
+      public override string asString() { return ""default Bar"";  }
     }
   }
 }
@@ -206,7 +206,7 @@ public static partial class Globals {
     private class _DefaultBar : Bar {
       public _DefaultBar() { }
       public override void setP1(ref int p1) { }
-      public override string asString() { return ""Default Bar"";  }
+      public override string asString() { return ""default Bar"";  }
     }
   }
 }
@@ -323,7 +323,7 @@ public static partial class Globals {
     private class _DefaultBar : Bar {
       public _DefaultBar() { }
       public override void setP1(ref int p1) { }
-      public override string asString() { return ""Default Bar"";  }
+      public override string asString() { return ""default Bar"";  }
     }
   }
 }
