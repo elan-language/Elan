@@ -20,7 +20,7 @@ varDef: NL VAR assignableValue ASSIGN expression;
 
 assignment: NL assignableValue ASSIGN expression;
 
-assignableValue: (nameQualifier?  IDENTIFIER index?) | tupleDecomp | listDecomp;
+assignableValue: (nameQualifier?  IDENTIFIER index?) | deconstructedTuple | listDecomp;
 
 methodCall: nameQualifier? (CURRY|PARTIAL)? IDENTIFIER genericSpecifier? OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
@@ -226,7 +226,7 @@ tupleDefinition:  OPEN_BRACKET expression COMMA expression (COMMA expression)* C
 
 literalTuple:  OPEN_BRACKET literal COMMA literal (COMMA literal)* CLOSE_BRACKET; 
 
-tupleDecomp: OPEN_BRACKET IDENTIFIER (COMMA IDENTIFIER)+  CLOSE_BRACKET;
+deconstructedTuple: OPEN_BRACKET VAR? IDENTIFIER (COMMA VAR? IDENTIFIER)+  CLOSE_BRACKET;
  
 listDefinition: OPEN_BRACE (expression (COMMA expression)*) CLOSE_BRACE;
 

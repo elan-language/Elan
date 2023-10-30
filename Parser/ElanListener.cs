@@ -591,15 +591,15 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitLiteralTuple([NotNull] ElanParser.LiteralTupleContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.tupleDecomp"/>.
+	/// Enter a parse tree produced by <see cref="ElanParser.deconstructedTuple"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterTupleDecomp([NotNull] ElanParser.TupleDecompContext context);
+	void EnterDeconstructedTuple([NotNull] ElanParser.DeconstructedTupleContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.tupleDecomp"/>.
+	/// Exit a parse tree produced by <see cref="ElanParser.deconstructedTuple"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitTupleDecomp([NotNull] ElanParser.TupleDecompContext context);
+	void ExitDeconstructedTuple([NotNull] ElanParser.DeconstructedTupleContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.listDefinition"/>.
 	/// </summary>
