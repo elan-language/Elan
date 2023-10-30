@@ -708,17 +708,17 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitLiteralTuple([NotNull] ElanParser.LiteralTupleContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.tupleDecomp"/>.
+	/// Enter a parse tree produced by <see cref="ElanParser.deconstructedTuple"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterTupleDecomp([NotNull] ElanParser.TupleDecompContext context) { }
+	public virtual void EnterDeconstructedTuple([NotNull] ElanParser.DeconstructedTupleContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.tupleDecomp"/>.
+	/// Exit a parse tree produced by <see cref="ElanParser.deconstructedTuple"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitTupleDecomp([NotNull] ElanParser.TupleDecompContext context) { }
+	public virtual void ExitDeconstructedTuple([NotNull] ElanParser.DeconstructedTupleContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.listDefinition"/>.
 	/// <para>The default implementation does nothing.</para>
