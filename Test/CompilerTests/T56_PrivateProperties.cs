@@ -24,11 +24,11 @@ class Foo
         p2 = ""Apple""
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    private property p2 as String
+    private property p2 String
 
-    function asString() as String
+    function asString() -> String
          return """"
     end function
 
@@ -70,7 +70,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5))))) (assignment (assignableValue p2) = (expression (value (literal (literalDataStructure ""Apple"")))))) end constructor) (property property p1 as (type Int)) (property private property p2 as (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5))))) (assignment (assignableValue p2) = (expression (value (literal (literalDataStructure ""Apple"")))))) end constructor) (property property p1 (type Int)) (property private property p2 (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -99,11 +99,11 @@ class Foo
         p2 = ""Apple""
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    private property p2 as String
+    private property p2 String
 
-    function asString() as String
+    function asString() -> String
          return """"
     end function
 

@@ -54,7 +54,7 @@ expressionFunction:
 
 letIn: LET NL? assignableValue ASSIGN expression (COMMA assignableValue ASSIGN expression)* NL? IN NL?; 
    
-functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET NL? AS NL? type;
+functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET NL? ARROW NL? type;
 
 // CONSTANTS
 constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
@@ -100,7 +100,7 @@ abstractImmutableClass:
  
 inherits: INHERITS type (COMMA type)*;
 
-property: NL PRIVATE? PROPERTY IDENTIFIER AS type; 
+property: NL PRIVATE? PROPERTY IDENTIFIER type; 
 
 constructor: 
 	NL CONSTRUCTOR OPEN_BRACKET parameterList? CLOSE_BRACKET

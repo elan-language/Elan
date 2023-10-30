@@ -25,11 +25,11 @@ class Foo
     constructor()
         p1 = 5
     end constructor
-    property p1 as Int
+    property p1 Int
 
-    property p2 as String
+    property p2 String
 
-    function asString() as String
+    function asString() -> String
          return """"
     end function
 
@@ -73,7 +73,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall asString ( )))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 as (type Int)) (property property p2 as (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall asString ( )))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -100,9 +100,9 @@ class Foo
         p2 = p_2
     end constructor
 
-    property p1 as Int
-    property p2 as String
-    function asString() as String
+    property p1 Int
+    property p2 String
+    function asString() -> String
         return """"
     end function
 
@@ -146,7 +146,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalDataStructure ""Apple""))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p_1 (type Int)) , (parameter p_2 (type String))) ) (statementBlock (assignment (assignableValue p1) = (expression (value p_1))) (assignment (assignableValue p2) = (expression (value p_2)))) end constructor) (property property p1 as (type Int)) (property property p2 as (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalDataStructure ""Apple""))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p_1 (type Int)) , (parameter p_2 (type String))) ) (statementBlock (assignment (assignableValue p1) = (expression (value p_1))) (assignment (assignableValue p2) = (expression (value p_2)))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -166,10 +166,10 @@ public static class Program {
         var code = @"#
 class Foo
 
-    property p1 as Int
-    property p2 as String
+    property p1 Int
+    property p2 String
    
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 
@@ -185,10 +185,10 @@ end class
         var code = @"#
 class Foo
 
-    property p1 as Int = 3
-    property p2 as String
+    property p1 Int = 3
+    property p2 String
    
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 
@@ -211,9 +211,9 @@ class Foo
     constructor()
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 end class
@@ -237,9 +237,9 @@ class Foo
         p1 = val
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 
@@ -262,9 +262,9 @@ class Foo
         p1 = val
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 
@@ -292,9 +292,9 @@ class Foo
         p1 = val
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 
@@ -321,9 +321,9 @@ class Foo
     constructor()
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 

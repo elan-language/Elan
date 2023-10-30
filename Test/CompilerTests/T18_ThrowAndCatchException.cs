@@ -256,7 +256,7 @@ main
    var s = foo()
 end main
 
-function foo(x String) as String
+function foo(x String) -> String
   throwException(x)
   return x
 end function

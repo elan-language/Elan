@@ -186,7 +186,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_PowerHasHigherPrecedenceThanIntDivision() {
-        //Point of this test is that dividing an integer by an integer is implemented as a funciton, not an operator, in C#
+        //Point of this test is that dividing an integer by an integer is implemented a funciton, not an operator, in C#
         var code = @"#
 main
   var x = 16 / 2 ^ 3

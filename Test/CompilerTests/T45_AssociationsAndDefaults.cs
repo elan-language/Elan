@@ -27,12 +27,12 @@ class Game
        previousScores = {5,2,4}
     end constructor
 
-    property p1 as Player
-    property p2 as Player
+    property p1 Player
+    property p2 Player
 
-    property previousScores as List<Int>
+    property previousScores List<Int>
 
-    function asString() as String
+    function asString() -> String
         return ""A game""
     end function
 
@@ -43,9 +43,9 @@ class Player
         self.name = name
     end constructor
 
-    property name as String
+    property name String
 
-    function asString() as String
+    function asString() -> String
         return name
     end function
 
@@ -124,16 +124,16 @@ class Game
     constructor()
     end constructor
 
-    property i as Int
-    property f as Float
-    property b as Boolean
-    property c as Char
-    property s as String
-    property li as List<Int>
-    property dsi as Dictionary<String, Int>
-    property ai as Array<Int>
+    property i Int
+    property f Float
+    property b Boolean
+    property c Char
+    property s String
+    property li List<Int>
+    property dsi Dictionary<String, Int>
+    property ai Array<Int>
    
-    function asString() as String
+    function asString() -> String
         return ""A game""
     end function
 
@@ -166,10 +166,10 @@ class Game
     constructor()
     end constructor
 
-    property p1 as Player
-    property previousGame as Game
+    property p1 Player
+    property previousGame Game
 
-    function asString() as String
+    function asString() -> String
         return ""A game""
     end function
 
@@ -180,9 +180,9 @@ class Player
         self.name = name
     end constructor
 
-    property name as String
+    property name String
 
-    function asString() as String
+    function asString() -> String
         return name
     end function
 
@@ -259,17 +259,17 @@ class Game
         score = 1
     end constructor
 
-    property score as Int
-    property best as Int
+    property score Int
+    property best Int
 
-    property p1 as Player
-    property p2 as Player
+    property p1 Player
+    property p2 Player
 
-    property previousGame as Game
+    property previousGame Game
 
-    property previousScores as List<Int>
+    property previousScores List<Int>
 
-    function asString() as String
+    function asString() -> String
         return ""A game""
     end function
 
@@ -280,9 +280,9 @@ class Player
         self.name = name
     end constructor
 
-    property name as String
+    property name String
 
-    function asString() as String
+    function asString() -> String
         return name
     end function
 
@@ -362,21 +362,21 @@ class Game
        score = 10
     end constructor
 
-    property score as Int
-    property best as Int
+    property score Int
+    property best Int
 
-    property p1 as Player
-    property p2 as Player
+    property p1 Player
+    property p2 Player
 
     procedure setScore(newScore Int)
         score = newScore
     end procedure
 
-    property previousGame as Game
+    property previousGame Game
 
-    property previousScores as List<Int>
+    property previousScores List<Int>
 
-    function asString() as String
+    function asString() -> String
         return ""A game""
     end function
 
@@ -387,9 +387,9 @@ class Player
         self.name = name
     end constructor
 
-    property name as String
+    property name String
 
-    function asString() as String
+    function asString() -> String
         return name
     end function
 
