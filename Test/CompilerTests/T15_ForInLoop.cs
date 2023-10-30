@@ -14,9 +14,9 @@ public class T15_ForInLoop {
 main
     var a = {7,8,9}
     var n = 0
-    for x in a
+    foreach x in a
         n = n + x
-    end for
+    end foreach
     printLine(n)
 end main
 ";
@@ -43,7 +43,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 7)) , (literal (literalValue 8)) , (literal (literalValue 9)) })))))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (forIn for x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 7)) , (literal (literalValue 8)) , (literal (literalValue 9)) })))))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (foreach foreach x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end foreach)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -60,9 +60,9 @@ public static class Program {
 main
     var a = {7,8,9}.asArray()
     var n = 0
-    for x in a
+    foreach x in a
         n = n + x
-    end for
+    end foreach
     printLine(n)
 end main
 ";
@@ -89,7 +89,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 7)) , (literal (literalValue 8)) , (literal (literalValue 9)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (forIn for x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end for)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 7)) , (literal (literalValue 8)) , (literal (literalValue 9)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (foreach foreach x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end foreach)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -105,9 +105,9 @@ public static class Program {
         var code = @"
 main
     var a = ""hello""
-    for x in a
+    foreach x in a
         printLine(x)
-    end for
+    end foreach
 end main
 ";
 
@@ -131,7 +131,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""hello""))))) (proceduralControlFlow (forIn for x in (expression (value a)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end for))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""hello""))))) (proceduralControlFlow (foreach foreach x in (expression (value a)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end foreach))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -146,11 +146,11 @@ public static class Program {
     public void Pass_doubleLoop() {
         var code = @"
 main
-    for x in ""12""
-        for y in ""34""
+    foreach x in ""12""
+        foreach y in ""34""
             printLine(""{x}{y }"")
-        end for
-    end for
+        end foreach
+    end foreach
 end main
 ";
 
@@ -175,7 +175,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (forIn for x in (expression (value (literal (literalDataStructure ""12"")))) (statementBlock (proceduralControlFlow (forIn for y in (expression (value (literal (literalDataStructure ""34"")))) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""{x}{y }""))))) ))))) end for))) end for))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (foreach foreach x in (expression (value (literal (literalDataStructure ""12"")))) (statementBlock (proceduralControlFlow (foreach foreach y in (expression (value (literal (literalDataStructure ""34"")))) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""{x}{y }""))))) ))))) end foreach))) end foreach))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -196,9 +196,9 @@ public static class Program {
 main
     var a = {7,8,9}
     var x = ""hello"";
-    for x in a
+    foreach x in a
        printLine(x)
-    end for
+    end foreach
     printLine(x)
 end main
 ";
@@ -236,12 +236,13 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_NoEndFor() {
+    public void Fail_NoEndForeach() {
         var code = @"
 main
   var a = ""hello""
-  for x in a
+  foreach x in a
    printLine(x)
+  end for
 end main
 ";
 
@@ -254,9 +255,9 @@ end main
         var code = @"
 main
     var y = 10
-    for x in y
+    foreach x in y
        printLine(x)
-    end for
+    end foreach
 end main
 ";
 
@@ -274,9 +275,9 @@ end main
         var code = @"
 main
   var a ={1,2,3,4,5}
-  for x in a
+  foreach x in a
     a = a + x
-  end for
+  end foreach
 end main
 ";
         var parseTree = @"*";

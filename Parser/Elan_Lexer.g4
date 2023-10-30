@@ -22,6 +22,7 @@ ELSE:          'else';
 END:		   'end'; //used with another keyword to delimit a statement block
 ENUMERATION:   'enumeration';
 FOR:           'for';
+FOREACH:       'foreach';
 FUNCTION:	   'function';
 GLOBAL:			'global';
 IF:            'if'; 

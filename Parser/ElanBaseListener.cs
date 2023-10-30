@@ -456,17 +456,17 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitFor([NotNull] ElanParser.ForContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.forIn"/>.
+	/// Enter a parse tree produced by <see cref="ElanParser.foreach"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterForIn([NotNull] ElanParser.ForInContext context) { }
+	public virtual void EnterForeach([NotNull] ElanParser.ForeachContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.forIn"/>.
+	/// Exit a parse tree produced by <see cref="ElanParser.foreach"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitForIn([NotNull] ElanParser.ForInContext context) { }
+	public virtual void ExitForeach([NotNull] ElanParser.ForeachContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.while"/>.
 	/// <para>The default implementation does nothing.</para>
