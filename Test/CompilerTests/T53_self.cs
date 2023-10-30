@@ -45,7 +45,7 @@ public static partial class Globals {
     public Foo(int p1) {
       this.p1 = p1;
     }
-    public int p1 { get; private set; }
+    public int p1 { get; private set; } = default;
     public virtual string asString() {
 
       return @$"""";
@@ -124,7 +124,7 @@ public static partial class Globals {
     public Foo() {
       p1 = 3;
     }
-    public int p1 { get; private set; }
+    public int p1 { get; private set; } = default;
     public virtual int bar() {
 
       return doubled(this);

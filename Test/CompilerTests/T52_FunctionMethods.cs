@@ -50,7 +50,7 @@ public static partial class Globals {
     public Foo() {
       p1 = 5;
     }
-    public int p1 { get; private set; }
+    public int p1 { get; private set; } = default;
     public virtual int times(int value) {
 
       return p1 * value;
@@ -130,7 +130,7 @@ public static partial class Globals {
     public Foo() {
       p1 = 5;
     }
-    public int p1 { get; private set; }
+    public int p1 { get; private set; } = default;
     public virtual int times(int value) {
 
       return p1PlusOne() * value;

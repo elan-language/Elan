@@ -97,7 +97,7 @@ public static partial class Globals {
     public Foo() {
       a = 3;
     }
-    public int a { get; private set; }
+    public int a { get; private set; } = default;
     public virtual int prop() {
 
       return a;

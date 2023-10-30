@@ -74,8 +74,8 @@ public static partial class Globals {
       p1 = 3;
       p2 = 4;
     }
-    public int p1 { get; private set; }
-    public int p2 { get; private set; }
+    public int p1 { get; private set; } = default;
+    public int p2 { get; private set; } = default;
     public virtual int product() {
 
       return p1 * p2;
@@ -190,8 +190,8 @@ public static partial class Globals {
       p1 = 3;
       p2 = 4;
     }
-    public int p1 { get; private set; }
-    public int p2 { get; private set; }
+    public int p1 { get; private set; } = default;
+    public int p2 { get; private set; } = default;
     public virtual int product() {
 
       return p1 * p2;
@@ -307,8 +307,8 @@ public static partial class Globals {
       p1 = 3;
       p2 = 4;
     }
-    public int p1 { get; private set; }
-    public int p2 { get; private set; }
+    public int p1 { get; private set; } = default;
+    public int p2 { get; private set; } = default;
     public virtual int product() {
 
       return p1 * p2;

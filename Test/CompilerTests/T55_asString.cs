@@ -50,7 +50,7 @@ public static partial class Globals {
       p1 = 5;
       p2 = @$""Apple"";
     }
-    public int p1 { get; private set; }
+    public int p1 { get; private set; } = default;
     private string p2 { get; set; } = """";
     public virtual string asString() {
 
@@ -123,7 +123,7 @@ public static partial class Globals {
       p1 = 5;
       p2 = @$""Apple"";
     }
-    public int p1 { get; private set; }
+    public int p1 { get; private set; } = default;
     private string p2 { get; set; } = """";
     public virtual string asString() {
 
@@ -196,7 +196,7 @@ public static partial class Globals {
       p1 = 5;
       p2 = @$""Apple"";
     }
-    public int p1 { get; private set; }
+    public int p1 { get; private set; } = default;
     private string p2 { get; set; } = """";
     public virtual string asString() {
 

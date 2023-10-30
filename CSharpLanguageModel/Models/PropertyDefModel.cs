@@ -3,8 +3,17 @@
 using static CodeHelpers;
 
 public record PropertyDefModel(ICodeModel Id, ICodeModel Type, bool IsPrivate, bool IsAbstract) : ICodeModel {
+    private string Init =>
+        IsAbstract
+            ? ""
+            : Type switch {
+                ScalarValueModel { Value: "string" } => @" = """";",
+                ScalarValueModel => " = default;",
+                TypeModel => $" = {Type}.DefaultInstance;",
+                DataStructureTypeModel => $" = {Type}.DefaultInstance;",
+                _ => throw new NotImplementedException()
+            };
 
-    private string Init => Type.ToString() == "string" ? @" = """";" : "";
 
     private string Access => IsPrivate ? @"private" : "public";
 
