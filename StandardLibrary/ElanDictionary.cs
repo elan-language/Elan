@@ -10,6 +10,9 @@ public interface IElanDictionary : IEnumerable {
 }
 
 public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, IElanDictionary where TKey : notnull {
+
+    public static ElanDictionary<TKey, TValue> DefaultInstance { get; } = new();
+
     private readonly ImmutableDictionary<TKey, TValue> wrappedDictionary;
 
     public ElanDictionary() => wrappedDictionary = ImmutableDictionary.Create<TKey, TValue>();

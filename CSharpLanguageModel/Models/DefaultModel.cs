@@ -6,7 +6,7 @@ public record DefaultModel(ICodeModel Type, TypeType DefaultTypeType) : ICodeMod
     public string ToString(int indent) => DefaultTypeType switch {
         TypeType.Value => $@"default({Type})",
         TypeType.Class => $"{Type}.DefaultInstance",
-        _ => "Todo"
+        _ => throw new NotImplementedException()
     };
 
     public override string ToString() => ToString(0);

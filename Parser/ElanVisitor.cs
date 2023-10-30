@@ -242,11 +242,11 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFor([NotNull] ElanParser.ForContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.forIn"/>.
+	/// Visit a parse tree produced by <see cref="ElanParser.foreach"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitForIn([NotNull] ElanParser.ForeachContext context);
+	Result VisitForeach([NotNull] ElanParser.ForeachContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.while"/>.
 	/// </summary>
@@ -325,6 +325,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitValue([NotNull] ElanParser.ValueContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.nameQualifier"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNameQualifier([NotNull] ElanParser.NameQualifierContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.literal"/>.
 	/// </summary>

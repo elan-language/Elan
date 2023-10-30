@@ -77,7 +77,7 @@ public static partial class Globals {
     private class _DefaultGame : Game {
       public _DefaultGame() { }
 
-      public override string asString() { return ""Default Game"";  }
+      public override string asString() { return ""default Game"";  }
     }
   }
   public class Player {
@@ -94,7 +94,7 @@ public static partial class Globals {
     private class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
 
-      public override string asString() { return ""Default Player"";  }
+      public override string asString() { return ""default Player"";  }
     }
   }
 }
@@ -118,7 +118,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Chloe\r\nJoe\r\nList {5,2,4}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_PropertiesOfAllStandardTypesHaveDefaultValues()
     {
         var code = @"#
@@ -140,13 +140,13 @@ class Game
 
     property i Int
     property f Float
-    property b Boolean
+    property b Bool
     property c Char
     property s String
     property li List<Int>
     property dsi Dictionary<String, Int>
     property ai Array<Int>
-   
+
     function asString() -> String
         return ""A game""
     end function
@@ -154,7 +154,53 @@ class Game
 end class
 
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Game {
+    public static Game DefaultInstance { get; } = new Game._DefaultGame();
+
+    public Game() {
+
+    }
+    public int i { get; private set; } = default;
+    public double f { get; private set; } = default;
+    public bool b { get; private set; } = default;
+    public char c { get; private set; } = default;
+    public string s { get; private set; } = """";
+    public StandardLibrary.ElanList<int> li { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public StandardLibrary.ElanDictionary<string, int> dsi { get; private set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
+    public StandardLibrary.ElanArray<int> ai { get; private set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
+    public virtual string asString() {
+
+      return @$""A game"";
+    }
+    private class _DefaultGame : Game {
+      public _DefaultGame() { }
+
+      public override string asString() { return ""default Game"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var g = new Game();
+    printLine(g.i);
+    printLine(g.f);
+    printLine(g.b);
+    printLine(g.c);
+    printLine(g.s);
+    printLine(g.li);
+    printLine(g.dsi);
+    printLine(g.ai);
+  }
+}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -163,10 +209,10 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "0\r\n0\r\nfalse\r\n'\\0'\r\n\"\"\r\nList {}\r\nDictionary {}\r\nArray {}"); //Not sure if char is correct - use C# default
+        AssertObjectCodeExecutes(compileData, $"0\r\n0\r\nfalse\r\n{default(char)}\r\n\r\nempty list\r\nempty dictionary\r\nempty array\r\n"); //Not sure if char is correct - use C# default
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_PropertiesOfClassTypesHaveDefaultValues()
     {
         var code = @"#
@@ -211,25 +257,38 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public class Game {
+    public static Game DefaultInstance { get; } = new Game._DefaultGame();
+
     public Game() {
 
     }
-    public Player p1 { get; set; }
-    public Player p2 { get; set; }
-    public StandardLibrary.ElanList<int> previousScores { get; set; }
-    public string asString() {
+    public Player p1 { get; private set; } = Player.DefaultInstance;
+    public Game previousGame { get; private set; } = Game.DefaultInstance;
+    public virtual string asString() {
 
       return @$""A game"";
     }
+    private class _DefaultGame : Game {
+      public _DefaultGame() { }
+
+      public override string asString() { return ""default Game"";  }
+    }
   }
   public class Player {
+    public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
+    private Player() {}
     public Player(string name) {
       this.name = name;
     }
-    public string name { get; set; } = """";
-    public string asString() {
+    public string name { get; private set; } = """";
+    public virtual string asString() {
 
       return name;
+    }
+    private class _DefaultPlayer : Player {
+      public _DefaultPlayer() { }
+
+      public override string asString() { return ""default Player"";  }
     }
   }
 }
@@ -238,8 +297,7 @@ public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
     printLine(g.p1);
-    printLine(g.p2);
-    printLine(g.previousScores);
+    printLine(g.previousGame);
   }
 }";
 
@@ -329,7 +387,7 @@ public static partial class Globals {
     private class _DefaultGame : Game {
       public _DefaultGame() { }
 
-      public override string asString() { return ""Default Game"";  }
+      public override string asString() { return ""default Game"";  }
     }
   }
   public class Player {
@@ -346,7 +404,7 @@ public static partial class Globals {
     private class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
 
-      public override string asString() { return ""Default Player"";  }
+      public override string asString() { return ""default Player"";  }
     }
   }
 }
@@ -373,7 +431,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\ntrue\r\ntrue\r\nfalse\r\ntrue\r\n");
     }
 
-    [TestMethod, Ignore]    
+    [TestMethod]    
     public void Pass_defaultValueCanBeAssigned()
     {
         var code = @"#
@@ -422,7 +480,67 @@ class Player
 
 end class
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Game {
+    public static Game DefaultInstance { get; } = new Game._DefaultGame();
+
+    public Game() {
+      score = 10;
+    }
+    public int score { get; private set; } = default;
+    public int best { get; private set; } = default;
+    public Player p1 { get; private set; } = Player.DefaultInstance;
+    public Player p2 { get; private set; } = Player.DefaultInstance;
+    public Game previousGame { get; private set; } = Game.DefaultInstance;
+    public StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual string asString() {
+
+      return @$""A game"";
+    }
+    public virtual void setScore(ref int newScore) {
+      score = newScore;
+    }
+    private class _DefaultGame : Game {
+      public _DefaultGame() { }
+      public override void setScore(ref int newScore) { }
+      public override string asString() { return ""default Game"";  }
+    }
+  }
+  public class Player {
+    public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
+    private Player() {}
+    public Player(string name) {
+      this.name = name;
+    }
+    public string name { get; private set; } = """";
+    public virtual string asString() {
+
+      return name;
+    }
+    private class _DefaultPlayer : Player {
+      public _DefaultPlayer() { }
+
+      public override string asString() { return ""default Player"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var g = new Game();
+    printLine(g.score);
+    var _setScore_0 = default(int);
+    g.setScore(ref _setScore_0);
+    printLine(g.score);
+  }
+}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
