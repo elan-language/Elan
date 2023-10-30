@@ -1,5 +1,4 @@
 ﻿using Compiler;
-
 namespace Test.CompilerTests;
 
 using static Helpers;
@@ -8,7 +7,6 @@ using static Helpers;
 public class T44_ImmutableClass
 {
     #region Passes
-
     [TestMethod]
     public void Pass_BasicImmutableClass()
     {
@@ -170,10 +168,6 @@ public static class Program {
     #endregion
 
     #region Fails
-    // can't have a procedure method
-    // inheriting from an abstract immutable must specify immutable
-    // immutable and abstract being the wrong way around
-
     [TestMethod]
     public void Fail_ProcedureMethod()
     {
@@ -197,7 +191,6 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
 
     [TestMethod]
     public void Fail_ProcedureMethodOnAbstractImmutableClass()
