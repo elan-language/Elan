@@ -182,7 +182,7 @@ caseDefault :
 expression: 
 	  bracketedExpression
 	| methodCall
-	| value
+	| value 
 	| expression index
 	| expression DOT methodCall
 	| expression DOT IDENTIFIER 
@@ -194,6 +194,7 @@ expression:
 	| ifExpression
 	| lambda
 	| letIn expression
+	| expression withClause
 	| NL expression // so that any expression may be broken over multiple lines at its 'natural joints' i.e. before any sub-expression
 	;
 
