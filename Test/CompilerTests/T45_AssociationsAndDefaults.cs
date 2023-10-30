@@ -746,16 +746,3 @@ public static class Program {
 
     #endregion
 }
-
-public class Simple {
-    public Simple() {
-        P1 = 100;
-    }
-
-    public virtual int P1 { get; set; }
-    public void setP1(int value) { P1 = value; }
-}
-
-public class EmptySimple : Simple {
-    public override int P1 => 0;
-}
