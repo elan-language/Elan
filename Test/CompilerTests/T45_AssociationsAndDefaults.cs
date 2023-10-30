@@ -59,7 +59,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Game {
+  public record class Game {
     public static Game DefaultInstance { get; } = new Game._DefaultGame();
 
     public Game() {
@@ -74,7 +74,7 @@ public static partial class Globals {
 
       return @$""A game"";
     }
-    private class _DefaultGame : Game {
+    private record class _DefaultGame : Game {
       public _DefaultGame() { }
       public override Player p1 => Player.DefaultInstance;
       public override Player p2 => Player.DefaultInstance;
@@ -83,7 +83,7 @@ public static partial class Globals {
       public override string asString() { return ""default Game"";  }
     }
   }
-  public class Player {
+  public record class Player {
     public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
     private Player() {}
     public Player(string name) {
@@ -94,7 +94,7 @@ public static partial class Globals {
 
       return name;
     }
-    private class _DefaultPlayer : Player {
+    private record class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
       public override string name => """";
 
@@ -166,7 +166,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Game {
+  public record class Game {
     public static Game DefaultInstance { get; } = new Game._DefaultGame();
 
     public Game() {
@@ -184,7 +184,7 @@ public static partial class Globals {
 
       return @$""A game"";
     }
-    private class _DefaultGame : Game {
+    private record class _DefaultGame : Game {
       public _DefaultGame() { }
       public override int i => default;
       public override double f => default;
@@ -255,7 +255,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Game {
+  public record class Game {
     public static Game DefaultInstance { get; } = new Game._DefaultGame();
 
     public Game() {
@@ -266,7 +266,7 @@ public static partial class Globals {
 
       return @$""A game"";
     }
-    private class _DefaultGame : Game {
+    private record class _DefaultGame : Game {
       public _DefaultGame() { }
       public override int i => default;
 
@@ -336,7 +336,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Game {
+  public record class Game {
     public static Game DefaultInstance { get; } = new Game._DefaultGame();
 
     public Game() {
@@ -348,7 +348,7 @@ public static partial class Globals {
 
       return @$""A game"";
     }
-    private class _DefaultGame : Game {
+    private record class _DefaultGame : Game {
       public _DefaultGame() { }
       public override Player p1 => Player.DefaultInstance;
       public override Game previousGame => Game.DefaultInstance;
@@ -356,7 +356,7 @@ public static partial class Globals {
       public override string asString() { return ""default Game"";  }
     }
   }
-  public class Player {
+  public record class Player {
     public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
     private Player() {}
     public Player(string name) {
@@ -367,7 +367,7 @@ public static partial class Globals {
 
       return name;
     }
-    private class _DefaultPlayer : Player {
+    private record class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
       public override string name => """";
 
@@ -451,7 +451,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Game {
+  public record class Game {
     public static Game DefaultInstance { get; } = new Game._DefaultGame();
 
     public Game() {
@@ -467,7 +467,7 @@ public static partial class Globals {
 
       return @$""A game"";
     }
-    private class _DefaultGame : Game {
+    private record class _DefaultGame : Game {
       public _DefaultGame() { }
       public override int score => default;
       public override int best => default;
@@ -479,7 +479,7 @@ public static partial class Globals {
       public override string asString() { return ""default Game"";  }
     }
   }
-  public class Player {
+  public record class Player {
     public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
     private Player() {}
     public Player(string name) {
@@ -490,7 +490,7 @@ public static partial class Globals {
 
       return name;
     }
-    private class _DefaultPlayer : Player {
+    private record class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
       public override string name => """";
 
@@ -578,7 +578,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Game {
+  public record class Game {
     public static Game DefaultInstance { get; } = new Game._DefaultGame();
 
     public Game() {
@@ -597,7 +597,7 @@ public static partial class Globals {
     public virtual void setScore(ref int newScore) {
       score = newScore;
     }
-    private class _DefaultGame : Game {
+    private record class _DefaultGame : Game {
       public _DefaultGame() { }
       public override int score => default;
       public override int best => default;
@@ -609,7 +609,7 @@ public static partial class Globals {
       public override string asString() { return ""default Game"";  }
     }
   }
-  public class Player {
+  public record class Player {
     public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
     private Player() {}
     public Player(string name) {
@@ -620,7 +620,7 @@ public static partial class Globals {
 
       return name;
     }
-    private class _DefaultPlayer : Player {
+    private record class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
       public override string name => """";
 
@@ -689,7 +689,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Foo {
+  public record class Foo {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
 
     public Foo() {
@@ -703,7 +703,7 @@ public static partial class Globals {
 
       return @$""A Foo"";
     }
-    private class _DefaultFoo : Foo {
+    private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override StandardLibrary.ElanList<int> a => StandardLibrary.ElanList<int>.DefaultInstance;
       public override string b => """";

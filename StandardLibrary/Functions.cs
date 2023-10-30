@@ -3,6 +3,7 @@
 
 using System.Collections;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using static StandardLibrary.Constants;
@@ -159,7 +160,7 @@ public static class Functions {
     public static string typeAndProperties(object o) {
         var type = o.GetType();
         var name = type.Name;
-        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetCustomAttribute<CompilerGeneratedAttribute>() is null).ToArray();
         var pNames = properties.Select(p => p.Name);
         var pValues = properties.Select(p => p.GetValue(o));
         var pStrings = pValues.Select(asString);

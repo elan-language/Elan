@@ -43,7 +43,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Foo {
+  public record class Foo {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
 
     public Foo() {
@@ -56,7 +56,7 @@ public static partial class Globals {
 
       return p2;
     }
-    private class _DefaultFoo : Foo {
+    private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override int p1 => default;
       protected override string p2 => """";
@@ -118,7 +118,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Foo {
+  public record class Foo {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
 
     public Foo() {
@@ -131,7 +131,7 @@ public static partial class Globals {
 
       return p2;
     }
-    private class _DefaultFoo : Foo {
+    private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override int p1 => default;
       protected override string p2 => """";
@@ -193,7 +193,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Foo {
+  public record class Foo {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
 
     public Foo() {
@@ -206,7 +206,7 @@ public static partial class Globals {
 
       return typeAndProperties(this);
     }
-    private class _DefaultFoo : Foo {
+    private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override int p1 => default;
       protected override string p2 => """";

@@ -62,6 +62,7 @@ public static class AstFactory {
             EnumTypeContext c => visitor.Build(c),
             EnumValueContext c => visitor.Build(c),
             ClassDefContext c => visitor.Build(c),
+            ImmutableClassContext c => visitor.Build(c),
             MutableClassContext c => visitor.Build(c),
             AbstractClassContext c => visitor.Build(c),
             ConstructorContext c => visitor.Build(c),
@@ -620,6 +621,10 @@ public static class AstFactory {
             return visitor.Visit(mc);
         }
 
+        if (context.immutableClass() is { } ic) {
+            return visitor.Visit(ic);
+        }
+
         if (context.abstractClass() is { } ac) {
             return visitor.Visit(ac);
         }
@@ -635,7 +640,17 @@ public static class AstFactory {
         var functions = context.functionDef().Select(fd => visitor.Visit<FunctionDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
         var procedures = context.procedureDef().Select(fd => visitor.Visit<ProcedureDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
 
-        return new ClassDefNode(typeName, inherits.ToImmutableArray(), constructor, properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray());
+        return new ClassDefNode(typeName, inherits.ToImmutableArray(), constructor, properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray(), false);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ImmutableClassContext context) {
+        var typeName = visitor.Visit(context.TYPENAME());
+        var inherits = context.inherits() is { } ih ? ih.type().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var constructor = visitor.Visit(context.constructor());
+        var properties = context.property().Select(visitor.Visit);
+        var functions = context.functionDef().Select(fd => visitor.Visit<FunctionDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
+        
+        return new ClassDefNode(typeName, inherits.ToImmutableArray(), constructor, properties.ToImmutableArray(), functions.ToImmutableArray(), true);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AbstractClassContext context) {

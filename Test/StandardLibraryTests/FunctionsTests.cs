@@ -134,18 +134,35 @@ public class FunctionsTests {
         Assert.AreEqual("(true, false)", asString(t));
     }
 
+    public record class Foo {
+        public static Foo DefaultInstance { get; } = new _DefaultFoo();
 
-    public class TestClass {
-        public int P1 => 5;
-        private string P2 => "hello";
+        public Foo() {
+            p1 = 5;
+            p2 = @"Apple";
+        }
 
+        public virtual int p1 { get; private set; }
+        protected virtual string p2 { get; set; } = "";
+        public virtual string asString() => typeAndProperties(this);
+
+        private record class _DefaultFoo : Foo {
+            public override int p1 => default;
+            protected override string p2 => "";
+
+            public override string asString() {
+                return "default Foo";
+            }
+        }
     }
+
+    
 
 
     [TestMethod]
     public void TypeAndProperties() {
         
-        Assert.AreEqual("TestClass {P1:5, P2:hello}", typeAndProperties(new TestClass()));
+        Assert.AreEqual("Foo {p1:5, p2:Apple}", typeAndProperties(new Foo()));
     }
 
 

@@ -91,7 +91,7 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public const int a = 4;
-  public class Foo {
+  public record class Foo {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
 
     public Foo() {
@@ -110,7 +110,7 @@ public static partial class Globals {
 
       return @$"""";
     }
-    private class _DefaultFoo : Foo {
+    private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override int a => default;
 
@@ -187,7 +187,7 @@ public static partial class Globals {
 
     return 4;
   }
-  public class Foo {
+  public record class Foo {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
 
     public Foo() {
@@ -210,7 +210,7 @@ public static partial class Globals {
 
       return @$"""";
     }
-    private class _DefaultFoo : Foo {
+    private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
 
 

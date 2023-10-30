@@ -39,7 +39,7 @@ using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public class Foo {
+  public record class Foo {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
     private Foo() {}
     public Foo(int p1) {
@@ -50,7 +50,7 @@ public static partial class Globals {
 
       return @$"""";
     }
-    private class _DefaultFoo : Foo {
+    private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override int p1 => default;
 
@@ -119,7 +119,7 @@ public static partial class Globals {
 
     return 2 * f.p1;
   }
-  public class Foo {
+  public record class Foo {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
 
     public Foo() {
@@ -134,7 +134,7 @@ public static partial class Globals {
 
       return @$"""";
     }
-    private class _DefaultFoo : Foo {
+    private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override int p1 => default;
 

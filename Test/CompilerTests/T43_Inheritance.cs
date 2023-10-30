@@ -67,7 +67,7 @@ public static partial class Globals {
     public int product();
     public void setP1(ref int v);
   }
-  public class Bar : Foo {
+  public record class Bar : Foo {
     public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
 
     public Bar() {
@@ -87,7 +87,7 @@ public static partial class Globals {
     public virtual void setP1(ref int p1) {
       this.p1 = p1;
     }
-    private class _DefaultBar : Bar {
+    private record class _DefaultBar : Bar {
       public _DefaultBar() { }
       public override int p1 => default;
       public override int p2 => default;
@@ -185,7 +185,7 @@ public static partial class Globals {
     public int product();
     public void setP1(ref int v);
   }
-  public class Bar : Foo, Yon {
+  public record class Bar : Foo, Yon {
     public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
 
     public Bar() {
@@ -205,7 +205,7 @@ public static partial class Globals {
     public virtual void setP1(ref int p1) {
       this.p1 = p1;
     }
-    private class _DefaultBar : Bar {
+    private record class _DefaultBar : Bar {
       public _DefaultBar() { }
       public override int p1 => default;
       public override int p2 => default;
@@ -304,7 +304,7 @@ public static partial class Globals {
     public int product();
     public void setP1(ref int v);
   }
-  public class Bar : Foo, Yon {
+  public record class Bar : Foo, Yon {
     public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
 
     public Bar() {
@@ -324,7 +324,7 @@ public static partial class Globals {
     public virtual void setP1(ref int p1) {
       this.p1 = p1;
     }
-    private class _DefaultBar : Bar {
+    private record class _DefaultBar : Bar {
       public _DefaultBar() { }
       public override int p1 => default;
       public override int p2 => default;

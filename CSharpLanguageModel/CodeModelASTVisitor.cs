@@ -295,9 +295,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var properties = classDefNode.Properties.Select(Visit).ToList();
         var functions = classDefNode.Methods.Select(Visit);
 
+        if (classDefNode.Immutable) {
+            properties = properties.OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Immutable }).Cast<ICodeModel>().ToList();
+        }
+
         var pSignatures = classDefNode.Methods.OfType<ProcedureDefNode>().Select(n => n.Signature).Select(Visit);
 
-        var dProperties = properties.OfType<PropertyDefModel>().Select(p => p with { IsDefault = true });
+        var dProperties = properties.OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Default });
         
         var defaultClassModel = new DefaultClassDefModel(type, dProperties,  pSignatures);
 
@@ -307,7 +311,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private AbstractClassDefModel BuildAbstractClassDefModel(AbstractClassDefNode abstractClassDefNode) {
         var type = Visit(abstractClassDefNode.Type);
         var inherits = abstractClassDefNode.Inherits.Select(Visit);
-        var properties = abstractClassDefNode.Properties.Select(Visit).OfType<PropertyDefModel>() .Select(p => p with {IsAbstract = true});
+        var properties = abstractClassDefNode.Properties.Select(Visit).OfType<PropertyDefModel>() .Select(p => p with {PropertyType = PropertyType.Abstract});
         var functions = abstractClassDefNode.Methods.Select(Visit);
 
         return new AbstractClassDefModel(type, inherits, properties, functions);
@@ -322,11 +326,10 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private PropertyDefModel BuildPropertyDefModel(PropertyDefNode propertyDefNode) {
-      
         var id = Visit(propertyDefNode.Id);
         var type = Visit(propertyDefNode.Type);
 
-        return new PropertyDefModel(id, type, propertyDefNode.IsPrivate, false, false);
+        return new PropertyDefModel(id, type, PropertyType.Mutable, propertyDefNode.IsPrivate);
     }
 
     private TypeModel BuildTypeModel(TypeNode typeNode) {
