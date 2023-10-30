@@ -118,7 +118,7 @@ class Foo
     property p1 Int
     property p2 String
 
-    procedure setP1(v int)
+    procedure setP1(v Int)
         p1 = v
     end procedure
 
@@ -129,7 +129,7 @@ end class
 ";
         var objectCode = @"";
 
-        var parseTree = @"";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalDataStructure ""Apple""))))) )))) (varDef var (assignableValue y) = (expression (value x))) (callStatement (expression (expression (value y)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 3))))) )))) (varDef var (assignableValue z) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 8)))) , (expression (value (literal (literalDataStructure ""Orange""))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value x)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p1 (type Int)) , (parameter p2 (type String))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1))) (assignment (assignableValue (nameQualifier self .) p2) = (expression (value p2)))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) (statementBlock (assignment (assignableValue p1) = (expression (value v)))) end procedure) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure ""{p1} {p2}"")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
