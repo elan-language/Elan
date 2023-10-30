@@ -67,15 +67,18 @@ public static partial class Globals {
       p1 = new Player(@$""Joe"");
       previousScores = new StandardLibrary.ElanList<int>(5, 2, 4);
     }
-    public Player p1 { get; private set; } = Player.DefaultInstance;
-    public Player p2 { get; private set; } = Player.DefaultInstance;
-    public StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual Player p1 { get; private set; } = Player.DefaultInstance;
+    public virtual Player p2 { get; private set; } = Player.DefaultInstance;
+    public virtual StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
     }
     private class _DefaultGame : Game {
       public _DefaultGame() { }
+      public override Player p1 => Player.DefaultInstance;
+      public override Player p2 => Player.DefaultInstance;
+      public override StandardLibrary.ElanList<int> previousScores => StandardLibrary.ElanList<int>.DefaultInstance;
 
       public override string asString() { return ""default Game"";  }
     }
@@ -86,13 +89,14 @@ public static partial class Globals {
     public Player(string name) {
       this.name = name;
     }
-    public string name { get; private set; } = """";
+    public virtual string name { get; private set; } = """";
     public virtual string asString() {
 
       return name;
     }
     private class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
+      public override string name => """";
 
       public override string asString() { return ""default Player"";  }
     }
@@ -168,20 +172,28 @@ public static partial class Globals {
     public Game() {
 
     }
-    public int i { get; private set; } = default;
-    public double f { get; private set; } = default;
-    public bool b { get; private set; } = default;
-    public char c { get; private set; } = default;
-    public string s { get; private set; } = """";
-    public StandardLibrary.ElanList<int> li { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
-    public StandardLibrary.ElanDictionary<string, int> dsi { get; private set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
-    public StandardLibrary.ElanArray<int> ai { get; private set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
+    public virtual int i { get; private set; } = default;
+    public virtual double f { get; private set; } = default;
+    public virtual bool b { get; private set; } = default;
+    public virtual char c { get; private set; } = default;
+    public virtual string s { get; private set; } = """";
+    public virtual StandardLibrary.ElanList<int> li { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual StandardLibrary.ElanDictionary<string, int> dsi { get; private set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
+    public virtual StandardLibrary.ElanArray<int> ai { get; private set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
     }
     private class _DefaultGame : Game {
       public _DefaultGame() { }
+      public override int i => default;
+      public override double f => default;
+      public override bool b => default;
+      public override char c => default;
+      public override string s => """";
+      public override StandardLibrary.ElanList<int> li => StandardLibrary.ElanList<int>.DefaultInstance;
+      public override StandardLibrary.ElanDictionary<string, int> dsi => StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
+      public override StandardLibrary.ElanArray<int> ai => StandardLibrary.ElanArray<int>.DefaultInstance;
 
       public override string asString() { return ""default Game"";  }
     }
@@ -210,6 +222,74 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, $"0\r\n0\r\nfalse\r\n{default(char)}\r\n\r\nempty list\r\nempty dictionary\r\nempty array\r\n"); //Not sure if char is correct - use C# default
+    }
+
+     [TestMethod]
+    public void Pass_DefaultValuesNotPickedUpFromDefaultConstructor()
+    {
+        var code = @"#
+main
+    var g = default Game
+    printLine(g.i)
+end main
+
+class Game
+    constructor()
+       i = 100
+    end constructor
+
+    property i Int
+
+    function asString() -> String
+        return ""A game""
+    end function
+
+end class
+
+";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Game {
+    public static Game DefaultInstance { get; } = new Game._DefaultGame();
+
+    public Game() {
+      i = 100;
+    }
+    public virtual int i { get; private set; } = default;
+    public virtual string asString() {
+
+      return @$""A game"";
+    }
+    private class _DefaultGame : Game {
+      public _DefaultGame() { }
+      public override int i => default;
+
+      public override string asString() { return ""default Game"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var g = Game.DefaultInstance;
+    printLine(g.i);
+  }
+}";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, $"0\r\n");
     }
 
     [TestMethod]
@@ -262,14 +342,16 @@ public static partial class Globals {
     public Game() {
 
     }
-    public Player p1 { get; private set; } = Player.DefaultInstance;
-    public Game previousGame { get; private set; } = Game.DefaultInstance;
+    public virtual Player p1 { get; private set; } = Player.DefaultInstance;
+    public virtual Game previousGame { get; private set; } = Game.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
     }
     private class _DefaultGame : Game {
       public _DefaultGame() { }
+      public override Player p1 => Player.DefaultInstance;
+      public override Game previousGame => Game.DefaultInstance;
 
       public override string asString() { return ""default Game"";  }
     }
@@ -280,13 +362,14 @@ public static partial class Globals {
     public Player(string name) {
       this.name = name;
     }
-    public string name { get; private set; } = """";
+    public virtual string name { get; private set; } = """";
     public virtual string asString() {
 
       return name;
     }
     private class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
+      public override string name => """";
 
       public override string asString() { return ""default Player"";  }
     }
@@ -374,18 +457,24 @@ public static partial class Globals {
     public Game() {
       score = 1;
     }
-    public int score { get; private set; } = default;
-    public int best { get; private set; } = default;
-    public Player p1 { get; private set; } = Player.DefaultInstance;
-    public Player p2 { get; private set; } = Player.DefaultInstance;
-    public Game previousGame { get; private set; } = Game.DefaultInstance;
-    public StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual int score { get; private set; } = default;
+    public virtual int best { get; private set; } = default;
+    public virtual Player p1 { get; private set; } = Player.DefaultInstance;
+    public virtual Player p2 { get; private set; } = Player.DefaultInstance;
+    public virtual Game previousGame { get; private set; } = Game.DefaultInstance;
+    public virtual StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
     }
     private class _DefaultGame : Game {
       public _DefaultGame() { }
+      public override int score => default;
+      public override int best => default;
+      public override Player p1 => Player.DefaultInstance;
+      public override Player p2 => Player.DefaultInstance;
+      public override Game previousGame => Game.DefaultInstance;
+      public override StandardLibrary.ElanList<int> previousScores => StandardLibrary.ElanList<int>.DefaultInstance;
 
       public override string asString() { return ""default Game"";  }
     }
@@ -396,13 +485,14 @@ public static partial class Globals {
     public Player(string name) {
       this.name = name;
     }
-    public string name { get; private set; } = """";
+    public virtual string name { get; private set; } = """";
     public virtual string asString() {
 
       return name;
     }
     private class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
+      public override string name => """";
 
       public override string asString() { return ""default Player"";  }
     }
@@ -494,12 +584,12 @@ public static partial class Globals {
     public Game() {
       score = 10;
     }
-    public int score { get; private set; } = default;
-    public int best { get; private set; } = default;
-    public Player p1 { get; private set; } = Player.DefaultInstance;
-    public Player p2 { get; private set; } = Player.DefaultInstance;
-    public Game previousGame { get; private set; } = Game.DefaultInstance;
-    public StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual int score { get; private set; } = default;
+    public virtual int best { get; private set; } = default;
+    public virtual Player p1 { get; private set; } = Player.DefaultInstance;
+    public virtual Player p2 { get; private set; } = Player.DefaultInstance;
+    public virtual Game previousGame { get; private set; } = Game.DefaultInstance;
+    public virtual StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
@@ -509,6 +599,12 @@ public static partial class Globals {
     }
     private class _DefaultGame : Game {
       public _DefaultGame() { }
+      public override int score => default;
+      public override int best => default;
+      public override Player p1 => Player.DefaultInstance;
+      public override Player p2 => Player.DefaultInstance;
+      public override Game previousGame => Game.DefaultInstance;
+      public override StandardLibrary.ElanList<int> previousScores => StandardLibrary.ElanList<int>.DefaultInstance;
       public override void setScore(ref int newScore) { }
       public override string asString() { return ""default Game"";  }
     }
@@ -519,13 +615,14 @@ public static partial class Globals {
     public Player(string name) {
       this.name = name;
     }
-    public string name { get; private set; } = """";
+    public virtual string name { get; private set; } = """";
     public virtual string asString() {
 
       return name;
     }
     private class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
+      public override string name => """";
 
       public override string asString() { return ""default Player"";  }
     }
@@ -598,16 +695,20 @@ public static partial class Globals {
     public Foo() {
 
     }
-    public StandardLibrary.ElanList<int> a { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
-    public string b { get; private set; } = """";
-    public StandardLibrary.ElanDictionary<string, int> c { get; private set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
-    public StandardLibrary.ElanArray<int> d { get; private set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
+    public virtual StandardLibrary.ElanList<int> a { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual string b { get; private set; } = """";
+    public virtual StandardLibrary.ElanDictionary<string, int> c { get; private set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
+    public virtual StandardLibrary.ElanArray<int> d { get; private set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A Foo"";
     }
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
+      public override StandardLibrary.ElanList<int> a => StandardLibrary.ElanList<int>.DefaultInstance;
+      public override string b => """";
+      public override StandardLibrary.ElanDictionary<string, int> c => StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
+      public override StandardLibrary.ElanArray<int> d => StandardLibrary.ElanArray<int>.DefaultInstance;
 
       public override string asString() { return ""default Foo"";  }
     }
@@ -647,10 +748,14 @@ public static class Program {
 }
 
 public class Simple {
-    public int P1 { get; set; }
+    public Simple() {
+        P1 = 100;
+    }
+
+    public virtual int P1 { get; set; }
     public void setP1(int value) { P1 = value; }
 }
 
 public class EmptySimple : Simple {
-
+    public override int P1 => 0;
 }

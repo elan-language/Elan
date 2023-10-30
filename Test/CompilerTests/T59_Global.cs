@@ -97,7 +97,7 @@ public static partial class Globals {
     public Foo() {
       a = 3;
     }
-    public int a { get; private set; } = default;
+    public virtual int a { get; private set; } = default;
     public virtual int prop() {
 
       return a;
@@ -112,6 +112,7 @@ public static partial class Globals {
     }
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
+      public override int a => default;
 
       public override string asString() { return ""default Foo"";  }
     }
@@ -211,6 +212,7 @@ public static partial class Globals {
     }
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
+
 
       public override string asString() { return ""default Foo"";  }
     }

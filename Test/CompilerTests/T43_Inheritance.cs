@@ -74,8 +74,8 @@ public static partial class Globals {
       p1 = 3;
       p2 = 4;
     }
-    public int p1 { get; private set; } = default;
-    public int p2 { get; private set; } = default;
+    public virtual int p1 { get; private set; } = default;
+    public virtual int p2 { get; private set; } = default;
     public virtual int product() {
 
       return p1 * p2;
@@ -89,6 +89,8 @@ public static partial class Globals {
     }
     private class _DefaultBar : Bar {
       public _DefaultBar() { }
+      public override int p1 => default;
+      public override int p2 => default;
       public override void setP1(ref int p1) { }
       public override string asString() { return ""default Bar"";  }
     }
@@ -190,8 +192,8 @@ public static partial class Globals {
       p1 = 3;
       p2 = 4;
     }
-    public int p1 { get; private set; } = default;
-    public int p2 { get; private set; } = default;
+    public virtual int p1 { get; private set; } = default;
+    public virtual int p2 { get; private set; } = default;
     public virtual int product() {
 
       return p1 * p2;
@@ -205,6 +207,8 @@ public static partial class Globals {
     }
     private class _DefaultBar : Bar {
       public _DefaultBar() { }
+      public override int p1 => default;
+      public override int p2 => default;
       public override void setP1(ref int p1) { }
       public override string asString() { return ""default Bar"";  }
     }
@@ -307,8 +311,8 @@ public static partial class Globals {
       p1 = 3;
       p2 = 4;
     }
-    public int p1 { get; private set; } = default;
-    public int p2 { get; private set; } = default;
+    public virtual int p1 { get; private set; } = default;
+    public virtual int p2 { get; private set; } = default;
     public virtual int product() {
 
       return p1 * p2;
@@ -322,6 +326,8 @@ public static partial class Globals {
     }
     private class _DefaultBar : Bar {
       public _DefaultBar() { }
+      public override int p1 => default;
+      public override int p2 => default;
       public override void setP1(ref int p1) { }
       public override string asString() { return ""default Bar"";  }
     }

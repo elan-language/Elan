@@ -50,14 +50,16 @@ public static partial class Globals {
       p1 = 5;
       p2 = @$""Apple"";
     }
-    public int p1 { get; private set; } = default;
-    private string p2 { get; set; } = """";
+    public virtual int p1 { get; private set; } = default;
+    protected virtual string p2 { get; set; } = """";
     public virtual string asString() {
 
       return p2;
     }
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
+      public override int p1 => default;
+      protected override string p2 => """";
 
       public override string asString() { return ""default Foo"";  }
     }
@@ -123,14 +125,16 @@ public static partial class Globals {
       p1 = 5;
       p2 = @$""Apple"";
     }
-    public int p1 { get; private set; } = default;
-    private string p2 { get; set; } = """";
+    public virtual int p1 { get; private set; } = default;
+    protected virtual string p2 { get; set; } = """";
     public virtual string asString() {
 
       return p2;
     }
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
+      public override int p1 => default;
+      protected override string p2 => """";
 
       public override string asString() { return ""default Foo"";  }
     }
@@ -196,14 +200,16 @@ public static partial class Globals {
       p1 = 5;
       p2 = @$""Apple"";
     }
-    public int p1 { get; private set; } = default;
-    private string p2 { get; set; } = """";
+    public virtual int p1 { get; private set; } = default;
+    protected virtual string p2 { get; set; } = """";
     public virtual string asString() {
 
       return typeAndProperties(this);
     }
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
+      public override int p1 => default;
+      protected override string p2 => """";
 
       public override string asString() { return ""default Foo"";  }
     }

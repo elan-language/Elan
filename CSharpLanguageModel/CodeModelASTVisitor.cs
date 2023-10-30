@@ -296,8 +296,10 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var functions = classDefNode.Methods.Select(Visit);
 
         var pSignatures = classDefNode.Methods.OfType<ProcedureDefNode>().Select(n => n.Signature).Select(Visit);
+
+        var dProperties = properties.OfType<PropertyDefModel>().Select(p => p with { IsDefault = true });
         
-        var defaultClassModel = new DefaultClassDefModel(type, pSignatures);
+        var defaultClassModel = new DefaultClassDefModel(type, dProperties,  pSignatures);
 
         return new ClassDefModel(type, inherits, constructor, properties, functions, classDefNode.HasDefaultConstructor, defaultClassModel);
     }
@@ -324,7 +326,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var id = Visit(propertyDefNode.Id);
         var type = Visit(propertyDefNode.Type);
 
-        return new PropertyDefModel(id, type, propertyDefNode.IsPrivate, false);
+        return new PropertyDefModel(id, type, propertyDefNode.IsPrivate, false, false);
     }
 
     private TypeModel BuildTypeModel(TypeNode typeNode) {

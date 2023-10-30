@@ -45,13 +45,14 @@ public static partial class Globals {
     public Foo(int p1) {
       this.p1 = p1;
     }
-    public int p1 { get; private set; } = default;
+    public virtual int p1 { get; private set; } = default;
     public virtual string asString() {
 
       return @$"""";
     }
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
+      public override int p1 => default;
 
       public override string asString() { return ""default Foo"";  }
     }
@@ -124,7 +125,7 @@ public static partial class Globals {
     public Foo() {
       p1 = 3;
     }
-    public int p1 { get; private set; } = default;
+    public virtual int p1 { get; private set; } = default;
     public virtual int bar() {
 
       return doubled(this);
@@ -135,6 +136,7 @@ public static partial class Globals {
     }
     private class _DefaultFoo : Foo {
       public _DefaultFoo() { }
+      public override int p1 => default;
 
       public override string asString() { return ""default Foo"";  }
     }
