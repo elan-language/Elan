@@ -10,7 +10,7 @@ public class T48_InspectingTypes
 {
     #region Passes
 
-    [TestMethod]
+    [TestMethod] // See commented out stubs in standard library
     public void Pass_typeMethod()
     {
         var code = @"#
