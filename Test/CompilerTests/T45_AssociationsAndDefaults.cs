@@ -552,6 +552,92 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "10\r\n0\r\n");
     }
 
+
+    [TestMethod, Ignore]
+    public void Pass_defaultForStandardDataStructures()
+    {
+        var code = @"#
+main
+    var f = Foo()
+    printLine(f.a)
+    printLine(f.b)
+    printLine(f.c)
+    printLine(f.d)
+    printLine(f.a is default List<Int>)
+    printLine(f.b is default String)
+    printLine(f.c is default Dicionary<String,Int>)
+    printLine(f.d is default Array<Int>)
+end main
+
+class Foo
+    constructor()
+    end constructor
+
+    property a List<Int>
+    property b String
+    property c Dictionary<String, Int>
+    property d Array<Int>
+
+    function asString() -> String
+        return ""A Foo""
+    end function
+
+end class
+";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+    public StandardLibrary.ElanList<int> a { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public string b { get; private set; } = """";
+    public StandardLibrary.ElanDictionary<string, int> c { get; private set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
+    public StandardLibrary.ElanArray<int> d { get; private set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
+    public virtual string asString() {
+
+      return @$""A Foo"";
+    }
+    private class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f.a);
+    printLine(f.b);
+    printLine(f.c);
+    printLine(f.d);
+    printLine(f.a == StandardLibrary.ElanList<int>.DefaultInstance);
+    printLine(f.b == default(string));
+    printLine(f.c == Dicionary.DefaultInstance);
+    printLine(f.d == StandardLibrary.ElanArray<int>.DefaultInstance);
+  }
+}";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "List {}\r\n\"\"\r\nDictionary {}\r\nArray {}\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\n");
+    }
+
     #endregion
 
     #region Fails
