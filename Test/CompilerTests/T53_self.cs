@@ -23,9 +23,9 @@ class Foo
         self.p1 = p1
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 
@@ -65,7 +65,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p1 (type Int))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end constructor) (property property p1 as (type Int)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p1 (type Int))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end constructor) (property property p1 (type Int)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
         
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -85,7 +85,7 @@ main
     printLine(f.bar())
 end main
 
-function doubled(f Foo) as Int
+function doubled(f Foo) -> Int
     return 2 * f.p1
 end function
 
@@ -94,13 +94,13 @@ class Foo
         p1 = 3
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function bar() as Int
+    function bar() -> Int
         return doubled(self)
     end function
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 
@@ -148,7 +148,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall bar ( )))) ))))) end main) (functionDef (functionWithBody function (functionSignature doubled ( (parameterList (parameter f (type Foo))) ) as (type Int)) statementBlock return (expression (expression (value (literal (literalValue 2)))) (binaryOp (arithmeticOp *)) (expression (expression (value f)) . p1)) end function)) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3)))))) end constructor) (property property p1 as (type Int)) (functionDef (functionWithBody function (functionSignature bar ( ) as (type Int)) statementBlock return (expression (methodCall doubled ( (argumentList (expression (value self))) ))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall bar ( )))) ))))) end main) (functionDef (functionWithBody function (functionSignature doubled ( (parameterList (parameter f (type Foo))) ) -> (type Int)) statementBlock return (expression (expression (value (literal (literalValue 2)))) (binaryOp (arithmeticOp *)) (expression (expression (value f)) . p1)) end function)) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3)))))) end constructor) (property property p1 (type Int)) (functionDef (functionWithBody function (functionSignature bar ( ) -> (type Int)) statementBlock return (expression (methodCall doubled ( (argumentList (expression (value self))) ))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -176,9 +176,9 @@ class Foo
         self.p = p1
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 
@@ -208,9 +208,9 @@ class Foo
         p1 = p1
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 

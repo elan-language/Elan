@@ -23,12 +23,12 @@ main
 end main
 
 abstract class Foo
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(v Int)
 
-    function product() as Int
+    function product() -> Int
 end class
 
 class Bar inherits Foo
@@ -36,18 +36,18 @@ class Bar inherits Foo
         p1 = 3
         p2 = 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(p1 Int)
         self.p1 = p1
     end procedure
 
-    function product() as Int
+    function product() -> Int
         return p1 * p2
     end function
 
-    function asString() as String 
+    function asString() -> String 
         return """"
     end function
 end class
@@ -108,7 +108,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Bar) ( )))) (varDef var (assignableValue l) = (expression (expression (newInstance (type (dataStructureType List (genericSpecifier < (type Foo) >))) ( ))) (binaryOp (arithmeticOp +)) (expression (value x)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) )))) (callStatement (expression (expression (value x)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 4))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) ))))) end main) (classDef (abstractClass abstract class Foo (property property p1 as (type Int)) (property property p2 as (type Int)) procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) function (functionSignature product ( ) as (type Int)) end class)) (classDef (mutableClass class Bar (inherits inherits (type Foo)) (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue p2) = (expression (value (literal (literalValue 4)))))) end constructor) (property property p1 as (type Int)) (property property p2 as (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter p1 (type Int))) )) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end procedure) (functionDef (functionWithBody function (functionSignature product ( ) as (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p2))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Bar) ( )))) (varDef var (assignableValue l) = (expression (expression (newInstance (type (dataStructureType List (genericSpecifier < (type Foo) >))) ( ))) (binaryOp (arithmeticOp +)) (expression (value x)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) )))) (callStatement (expression (expression (value x)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 4))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) ))))) end main) (classDef (abstractClass abstract class Foo (property property p1 (type Int)) (property property p2 (type Int)) procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) function (functionSignature product ( ) -> (type Int)) end class)) (classDef (mutableClass class Bar (inherits inherits (type Foo)) (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue p2) = (expression (value (literal (literalValue 4)))))) end constructor) (property property p1 (type Int)) (property property p2 (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter p1 (type Int))) )) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end procedure) (functionDef (functionWithBody function (functionSignature product ( ) -> (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p2))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -134,13 +134,13 @@ main
 end main
 
 abstract class Foo
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 end class
 
 abstract class Yon
     procedure setP1(v Int)
-    function product() as Int
+    function product() -> Int
 end class
 
 class Bar inherits Foo, Yon
@@ -148,18 +148,18 @@ class Bar inherits Foo, Yon
         p1 = 3
         p2 = 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(p1 Int)
         self.p1 = p1
     end procedure
 
-    function product() as Int
+    function product() -> Int
         return p1 * p2
     end function
 
-    function asString() as String 
+    function asString() -> String 
         return """"
     end function
 end class
@@ -224,7 +224,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Bar) ( )))) (varDef var (assignableValue l) = (expression (expression (newInstance (type (dataStructureType List (genericSpecifier < (type Foo) >))) ( ))) (binaryOp (arithmeticOp +)) (expression (value x)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) )))) (callStatement (expression (expression (value x)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 4))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) ))))) end main) (classDef (abstractClass abstract class Foo (property property p1 as (type Int)) (property property p2 as (type Int)) end class)) (classDef (abstractClass abstract class Yon procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) function (functionSignature product ( ) as (type Int)) end class)) (classDef (mutableClass class Bar (inherits inherits (type Foo) , (type Yon)) (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue p2) = (expression (value (literal (literalValue 4)))))) end constructor) (property property p1 as (type Int)) (property property p2 as (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter p1 (type Int))) )) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end procedure) (functionDef (functionWithBody function (functionSignature product ( ) as (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p2))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Bar) ( )))) (varDef var (assignableValue l) = (expression (expression (newInstance (type (dataStructureType List (genericSpecifier < (type Foo) >))) ( ))) (binaryOp (arithmeticOp +)) (expression (value x)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) )))) (callStatement (expression (expression (value x)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 4))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) ))))) end main) (classDef (abstractClass abstract class Foo (property property p1 (type Int)) (property property p2 (type Int)) end class)) (classDef (abstractClass abstract class Yon procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) function (functionSignature product ( ) -> (type Int)) end class)) (classDef (mutableClass class Bar (inherits inherits (type Foo) , (type Yon)) (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue p2) = (expression (value (literal (literalValue 4)))))) end constructor) (property property p1 (type Int)) (property property p2 (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter p1 (type Int))) )) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end procedure) (functionDef (functionWithBody function (functionSignature product ( ) -> (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p2))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -250,14 +250,14 @@ main
 end main
 
 abstract class Foo
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 end class
 
 abstract class Yon
-    property p1 as Int
+    property p1 Int
     procedure setP1(v Int)
-    function product() as Int
+    function product() -> Int
 end class
 
 class Bar inherits Foo, Yon
@@ -265,18 +265,18 @@ class Bar inherits Foo, Yon
         p1 = 3
         p2 = 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(p1 Int)
         self.p1 = p1
     end procedure
 
-    function product() as Int
+    function product() -> Int
         return p1 * p2
     end function
 
-    function asString() as String 
+    function asString() -> String 
         return """"
     end function
 end class
@@ -341,7 +341,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Bar) ( )))) (varDef var (assignableValue l) = (expression (expression (newInstance (type (dataStructureType List (genericSpecifier < (type Foo) >))) ( ))) (binaryOp (arithmeticOp +)) (expression (value x)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) )))) (callStatement (expression (expression (value x)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 4))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) ))))) end main) (classDef (abstractClass abstract class Foo (property property p1 as (type Int)) (property property p2 as (type Int)) end class)) (classDef (abstractClass abstract class Yon (property property p1 as (type Int)) procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) function (functionSignature product ( ) as (type Int)) end class)) (classDef (mutableClass class Bar (inherits inherits (type Foo) , (type Yon)) (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue p2) = (expression (value (literal (literalValue 4)))))) end constructor) (property property p1 as (type Int)) (property property p2 as (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter p1 (type Int))) )) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end procedure) (functionDef (functionWithBody function (functionSignature product ( ) as (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p2))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) as (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Bar) ( )))) (varDef var (assignableValue l) = (expression (expression (newInstance (type (dataStructureType List (genericSpecifier < (type Foo) >))) ( ))) (binaryOp (arithmeticOp +)) (expression (value x)))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) )))) (callStatement (expression (expression (value x)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 4))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . (methodCall product ( )))) ))))) end main) (classDef (abstractClass abstract class Foo (property property p1 (type Int)) (property property p2 (type Int)) end class)) (classDef (abstractClass abstract class Yon (property property p1 (type Int)) procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) function (functionSignature product ( ) -> (type Int)) end class)) (classDef (mutableClass class Bar (inherits inherits (type Foo) , (type Yon)) (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) (assignment (assignableValue p2) = (expression (value (literal (literalValue 4)))))) end constructor) (property property p1 (type Int)) (property property p2 (type Int)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter p1 (type Int))) )) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end procedure) (functionDef (functionWithBody function (functionSignature product ( ) -> (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p2))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -367,9 +367,9 @@ end main
 class Foo
     constructor()
     end constructor
-    property p1 as Int
-    property p2 as Int
-    function asString() as String 
+    property p1 Int
+    property p2 Int
+    function asString() -> String 
         return """"
     end function
 end class
@@ -379,18 +379,18 @@ class Bar inherits Foo
         p1 = 3
         p2 = 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(p1 Int)
         self.p1 = p1
     end procedure
 
-    function product() as Int
+    function product() -> Int
         return p1 * p2
     end function
 
-    function asString() as String 
+    function asString() -> String 
         return """"
     end function
 end class
@@ -416,16 +416,16 @@ end main
 class Foo
     constructor()
     end constructor
-    property p1 as Int
-    property p2 as Int
-    function asString() as String 
+    property p1 Int
+    property p2 Int
+    function asString() -> String 
         return """"
     end function
 end class
 
 abstract class Bar inherits Foo
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 end class
 ";
 
@@ -447,12 +447,12 @@ main
 end main
 
 abstract class Foo
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(v Int)
 
-    function product() as Int
+    function product() -> Int
 end class
 
 class Bar inherits Foo
@@ -460,14 +460,14 @@ class Bar inherits Foo
         p1 = 3
         p2 = 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(p1 Int)
         self.p1 = p1
     end procedure
 
-    function asString() as String 
+    function asString() -> String 
         return """"
     end function
 end class
@@ -492,12 +492,12 @@ main
 end main
 
 abstract class Foo
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(v Int)
 
-    function product() as Int
+    function product() -> Int
 end class
 
 class Bar inherits Foo
@@ -505,18 +505,18 @@ class Bar inherits Foo
         p1 = 3
         p2 = 4
     end constructor
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(p1 Int)
         self.p1 = p1
     end procedure
 
-    function product() as Float
+    function product() -> Float
         return p1 * p2
     end function
 
-    function asString() as String 
+    function asString() -> String 
         return """"
     end function
 end class
@@ -541,14 +541,14 @@ main
 end main
 
 abstract class Foo
-    property p1 as Int
-    property p2 as Int
+    property p1 Int
+    property p2 Int
 
     procedure setP1(v Int)
         self.p1 = p1
     end procedure
 
-    function product() as Int
+    function product() -> Int
 end class
 ";
 

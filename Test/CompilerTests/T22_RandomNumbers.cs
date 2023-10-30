@@ -21,7 +21,7 @@ end main
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
-        //TODO: V Important here is the error message - explaining that you can't make this system call *within* an expression, only as RHS of assignment
+        //TODO: V Important here is the error message - explaining that you can't make this system call *within* an expression, only RHS of assignment
     }
 
     #endregion

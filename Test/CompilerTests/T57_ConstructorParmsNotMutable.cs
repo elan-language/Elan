@@ -21,9 +21,9 @@ class Foo
         p_1 = p1
     end constructor
 
-    property p1 as Int
+    property p1 Int
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 
@@ -46,7 +46,7 @@ class Foo
         a[0] = 4
     end constructor
 
-    function asString() as String
+    function asString() -> String
         return """"
     end function
 end class

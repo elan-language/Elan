@@ -15,7 +15,7 @@ main
     printLine(foo(3,4))
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     return a * b
 end function
 ";
@@ -40,7 +40,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall foo ( (argumentList (expression (value (literal (literalValue 3)))) , (expression (value (literal (literalValue 4))))) )))) ))))) end main) (functionDef (functionWithBody function (functionSignature foo ( (parameterList (parameter a (type Int)) , (parameter b (type Int))) ) as (type Int)) statementBlock return (expression (expression (value a)) (binaryOp (arithmeticOp *)) (expression (value b))) end function)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall foo ( (argumentList (expression (value (literal (literalValue 3)))) , (expression (value (literal (literalValue 4))))) )))) ))))) end main) (functionDef (functionWithBody function (functionSignature foo ( (parameterList (parameter a (type Int)) , (parameter b (type Int))) ) -> (type Int)) statementBlock return (expression (expression (value a)) (binaryOp (arithmeticOp *)) (expression (value b))) end function)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -58,7 +58,7 @@ main
     printLine(factorial(5))
 end main
 
-function factorial(a Int) as Int
+function factorial(a Int) -> Int
     var result = 0;
     if a > 2 then
         result = a * factorial(a-1)
@@ -95,7 +95,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall factorial ( (argumentList (expression (value (literal (literalValue 5))))) )))) ))))) end main) (functionDef (functionWithBody function (functionSignature factorial ( (parameterList (parameter a (type Int))) ) as (type Int)) (statementBlock (varDef var (assignableValue result) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (if if (expression (expression (value a)) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 2))))) then (statementBlock (assignment (assignableValue result) = (expression (expression (value a)) (binaryOp (arithmeticOp *)) (expression (methodCall factorial ( (argumentList (expression (expression (value a)) (binaryOp (arithmeticOp -)) (expression (value (literal (literalValue 1)))))) )))))) else (statementBlock (assignment (assignableValue result) = (expression (value a)))) end if))) return (expression (value result)) end function)) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall factorial ( (argumentList (expression (value (literal (literalValue 5))))) )))) ))))) end main) (functionDef (functionWithBody function (functionSignature factorial ( (parameterList (parameter a (type Int))) ) -> (type Int)) (statementBlock (varDef var (assignableValue result) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (if if (expression (expression (value a)) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 2))))) then (statementBlock (assignment (assignableValue result) = (expression (expression (value a)) (binaryOp (arithmeticOp *)) (expression (methodCall factorial ( (argumentList (expression (expression (value a)) (binaryOp (arithmeticOp -)) (expression (value (literal (literalValue 1)))))) )))))) else (statementBlock (assignment (assignableValue result) = (expression (value a)))) end if))) return (expression (value result)) end function)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -117,7 +117,7 @@ main
     foo(3,4)
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     return a * b
 ";
 
@@ -161,7 +161,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     var c = a * b
 end function
 ";
@@ -178,7 +178,7 @@ main
    a = foo(3,4)
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     var c = a * b
     return c
 end function
@@ -198,7 +198,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     var c = a * b
     return
 end function
@@ -213,7 +213,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) as Bool
+function foo(a Int, b Int) -> Bool
     if 2 > 1 then
         return true
     else
@@ -231,7 +231,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     return a / b
 end function
 ";
@@ -250,7 +250,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     return a * b
     var c = a + b
 end function
@@ -266,7 +266,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     print(a)
     return a * b
 end function
@@ -287,7 +287,7 @@ main
     printLine(result)
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     bar()
     return a * b
 end function
@@ -312,7 +312,7 @@ main
     printLine(result)
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     a = a + 1
     return a * b
 end function
@@ -333,7 +333,7 @@ main
     printLine(result)
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     return a * b
 end function
 ";
@@ -354,7 +354,7 @@ main
     printLine(result)
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     return a * b
 end function
 ";
@@ -375,7 +375,7 @@ main
     printLine(result)
 end main
 
-function foo(a Int, b Int) as Int
+function foo(a Int, b Int) -> Int
     return a * b
 end function
 ";

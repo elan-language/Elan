@@ -155,8 +155,6 @@ public static class CompilerRules {
         return classSymbols.Any(s => s.ClassType is not ClassSymbolTypeType.Abstract) ? "Class cannot inherit from concrete class" : null;
     }
 
-
-
     public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is MethodCallNode mcn) {
