@@ -127,6 +127,30 @@ end class
         AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\n");
     }
 
+    [TestMethod]
+    public void Pass_Tuple()
+    {
+        var code = @"#
+main
+    var x = (3, ""Apple"")
+    printLine(x.type())
+end main
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "(Int, String)\r\n");
+    }
+
+
     #endregion
 
     #region Fails
