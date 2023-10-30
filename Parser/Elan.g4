@@ -117,7 +117,7 @@ newInstance:
 withClause: WITH OPEN_BRACE assignment (COMMA assignment)* CLOSE_BRACE;
 
 // CONTROL FLOW STATMENTS
-proceduralControlFlow: if | for | forIn | while | repeat | try | switch;
+proceduralControlFlow: if | for | foreach | while | repeat | try | switch;
 
 if:
 	NL IF expression THEN
@@ -135,10 +135,10 @@ for:
 	NL END FOR
 	;
 
-forIn: 
-	NL FOR IDENTIFIER IN expression 
+foreach: 
+	NL FOREACH IDENTIFIER IN expression 
     statementBlock
-    NL END FOR
+    NL END FOREACH
 	;
           
 while: 
