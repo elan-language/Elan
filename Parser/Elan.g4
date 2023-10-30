@@ -50,7 +50,7 @@ functionWithBody:
 	;
 
 expressionFunction: 
-	NL FUNCTION functionSignature ARROW letIn? expression; 
+	NL FUNCTION functionSignature ASSIGN expression; 
 
 letIn: LET assignableValue ASSIGN expression (COMMA assignableValue ASSIGN expression)* NL IN; 
    
@@ -193,6 +193,7 @@ expression:
 	| newInstance
 	| ifExpression
 	| lambda
+	| letIn expression
 	| NL expression // so that any expression may be broken over multiple lines at its 'natural joints' i.e. before any sub-expression
 	;
 
