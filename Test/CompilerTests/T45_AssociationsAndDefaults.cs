@@ -553,7 +553,7 @@ public static class Program {
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_defaultForStandardDataStructures()
     {
         var code = @"#
@@ -565,7 +565,7 @@ main
     printLine(f.d)
     printLine(f.a is default List<Int>)
     printLine(f.b is default String)
-    printLine(f.c is default Dicionary<String,Int>)
+    printLine(f.c is default Dictionary<String,Int>)
     printLine(f.d is default Array<Int>)
 end main
 
@@ -622,8 +622,8 @@ public static class Program {
     printLine(f.c);
     printLine(f.d);
     printLine(f.a == StandardLibrary.ElanList<int>.DefaultInstance);
-    printLine(f.b == default(string));
-    printLine(f.c == Dicionary.DefaultInstance);
+    printLine(f.b == """");
+    printLine(f.c == StandardLibrary.ElanDictionary<string, int>.DefaultInstance);
     printLine(f.d == StandardLibrary.ElanArray<int>.DefaultInstance);
   }
 }";
@@ -635,7 +635,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {}\r\n\"\"\r\nDictionary {}\r\nArray {}\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\n");
+        AssertObjectCodeExecutes(compileData, "empty list\r\n\r\nempty dictionary\r\nempty array\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\n");
     }
 
     #endregion
