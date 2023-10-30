@@ -37,7 +37,7 @@ procedureSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET;
 
 parameterList: parameter (COMMA parameter)*;
 
-parameter: NL? IDENTIFIER type; 
+parameter: IDENTIFIER type; 
 
 // FUNCTIONS
 functionDef: functionWithBody | expressionFunction;
@@ -50,11 +50,11 @@ functionWithBody:
 	;
 
 expressionFunction: 
-	NL FUNCTION functionSignature NL? ARROW NL? letIn? expression; 
+	NL FUNCTION functionSignature ARROW letIn? expression; 
 
-letIn: LET NL? assignableValue ASSIGN expression (COMMA assignableValue ASSIGN expression)* NL? IN NL?; 
+letIn: LET assignableValue ASSIGN expression (COMMA assignableValue ASSIGN expression)* NL IN; 
    
-functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET NL? ARROW NL? type;
+functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET ARROW type;
 
 // CONSTANTS
 constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
@@ -62,7 +62,7 @@ constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
 // ENUMERATIONS
 enumDef: 
 	NL ENUMERATION enumType
-	  NL IDENTIFIER (COMMA NL? IDENTIFIER)*  
+	  NL IDENTIFIER (COMMA IDENTIFIER)*  
 	NL END ENUMERATION
 	;
 
@@ -198,7 +198,7 @@ expression:
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET ; //made into rule so that compiler can add the brackets explicitly
 
-ifExpression: NL? IF expression NL? THEN expression NL? ELSE expression;
+ifExpression: IF expression NL THEN expression NL ELSE expression;
 
 lambda: LAMBDA argumentList ARROW expression;
 
@@ -226,17 +226,17 @@ literalTuple:  OPEN_BRACKET literal COMMA literal (COMMA literal)* CLOSE_BRACKET
 
 tupleDecomp: OPEN_BRACKET IDENTIFIER (COMMA IDENTIFIER)+  CLOSE_BRACKET;
  
-listDefinition: OPEN_BRACE (NL? expression (COMMA expression)* NL?) CLOSE_BRACE;
+listDefinition: OPEN_BRACE (expression (COMMA expression)*) CLOSE_BRACE;
 
-literalList: OPEN_BRACE (NL? literal (COMMA literal)* NL?) CLOSE_BRACE;
+literalList: OPEN_BRACE (literal (COMMA literal)* ) CLOSE_BRACE;
 
 listDecomp: OPEN_BRACE IDENTIFIER COLON IDENTIFIER CLOSE_BRACE;
 
 arrayDefinition: ARRAY genericSpecifier OPEN_BRACKET LITERAL_INTEGER? CLOSE_BRACKET;
 
-dictionaryDefinition: OPEN_BRACE (NL? kvp (COMMA kvp)* NL?) CLOSE_BRACE;
+dictionaryDefinition: OPEN_BRACE (kvp (COMMA kvp)* ) CLOSE_BRACE;
 
-literalDictionary: OPEN_BRACE (NL? literalKvp (COMMA literalKvp)* NL?) CLOSE_BRACE;
+literalDictionary: OPEN_BRACE (literalKvp (COMMA literalKvp)*) CLOSE_BRACE;
 
 kvp: expression COLON expression;
 
