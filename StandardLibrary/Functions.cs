@@ -85,12 +85,15 @@ public static class Functions {
 
     #endregion
 
-    #region Type handling
+    #region Type inspection
 
     // TYpe is not a yet an Elan thing 
-    //public static Type GetType(object o) => o.GetType();
-    //public static bool ImplementsType<T>(object o) => o.GetType() == typeof(T) ||  o.GetType().IsSubclassOf(typeof(T));
+    //public static string type(object o) => throw new NotImplementedException();
+    //public static string isType(Type t) => throw new NotImplementedException();
+    //public static bool isSubTypeOf(Type t) => throw new NotImplementedException();
+    #endregion
 
+    #region Type conversion
     public static double asFloat(int x) => x;
     public static double asFloat(decimal x) => (double)x;
     public static decimal asDecimal(int x) => x;
