@@ -83,7 +83,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n9\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_AbstractImmutableClass()
     {
         var code = @"#
@@ -95,28 +95,69 @@ end main
 
 abstract immutable class Bar
     property p1 Int
-
     function square() -> Int
 end class
 
-immutable class Foo inherits bar
+immutable class Foo inherits Bar
     constructor(p1 Int)
         self.p1 = p1
     end constructor
-
+    property p1 Int
     function square() -> Int
         return p1 * p1
-    end function
-    
+    end function 
     function asString() -> String
         return """"
     end function
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+  public interface Bar {
+    public int p1 { get; }
+    public int square();
+  }
+  public record class Foo : Bar {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+    private Foo() {}
+    public Foo(int p1) {
+      this.p1 = p1;
+    }
+    public virtual int p1 { get; init; } = default;
+    public virtual int square() {
+
+      return p1 * p1;
+    }
+    public virtual string asString() {
+
+      return @$"""";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo(3);
+    printLine(f.p1);
+    printLine(f.square());
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall square ( )))) ))))) end main) (classDef (abstractImmutableClass abstract immutable class Bar (property property p1 (type Int)) function (functionSignature square ( ) -> (type Int)) end class)) (classDef (immutableClass immutable class Foo (inherits inherits (type Bar)) (constructor constructor ( (parameterList (parameter p1 (type Int))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end constructor) (property property p1 (type Int)) (functionDef (functionWithBody function (functionSignature square ( ) -> (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value p1))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -133,7 +174,7 @@ end class
     // inheriting from an abstract immutable must specify immutable
     // immutable and abstract being the wrong way around
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_ProcedureMethod()
     {
         var code = @"#
@@ -158,8 +199,8 @@ end class
     }
 
 
-    [TestMethod, Ignore]
-    public void Pass_ProcedureMethodOnAbstractImmutableClass()
+    [TestMethod]
+    public void Fail_ProcedureMethodOnAbstractImmutableClass()
     {
         var code = @"#
 abstract immutable class Bar
@@ -173,8 +214,8 @@ end class
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Pass_AbstractAndImmutableReversed()
+    [TestMethod]
+    public void Fail_AbstractAndImmutableReversed()
     {
         var code = @"#
 immutable abstract class Bar

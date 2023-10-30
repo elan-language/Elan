@@ -65,6 +65,7 @@ public static class AstFactory {
             ImmutableClassContext c => visitor.Build(c),
             MutableClassContext c => visitor.Build(c),
             AbstractClassContext c => visitor.Build(c),
+            AbstractImmutableClassContext c => visitor.Build(c),
             ConstructorContext c => visitor.Build(c),
             PropertyContext c => visitor.Build(c),
             NameQualifierContext c => visitor.Build(c),
@@ -629,6 +630,10 @@ public static class AstFactory {
             return visitor.Visit(ac);
         }
 
+        if (context.abstractImmutableClass() is { } aic) {
+            return visitor.Visit(aic);
+        }
+
         throw new NotImplementedException(context.children.First().GetText()); 
     }
 
@@ -661,6 +666,15 @@ public static class AstFactory {
         var procedures = context.procedureSignature().Select(visitor.Visit);
 
         return new AbstractClassDefNode(typeName, inherits.ToImmutableArray(), properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AbstractImmutableClassContext context) {
+        var typeName = visitor.Visit(context.TYPENAME());
+        var inherits = context.inherits() is { } ih ? ih.type().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var properties = context.property().Select(visitor.Visit);
+        var functions = context.functionSignature().Select(visitor.Visit);
+        
+        return new AbstractClassDefNode(typeName, inherits.ToImmutableArray(), properties.ToImmutableArray(), functions.ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ConstructorContext context) {
