@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T15_ForInLoop {
+public class T15_ForEachLoop {
     #region Passes
 
     [TestMethod]
