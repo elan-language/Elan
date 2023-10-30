@@ -368,11 +368,11 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitLiteralTuple([NotNull] ElanParser.LiteralTupleContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.tupleDecomp"/>.
+	/// Visit a parse tree produced by <see cref="ElanParser.deconstructedTuple"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitTupleDecomp([NotNull] ElanParser.TupleDecompContext context);
+	Result VisitDeconstructedTuple([NotNull] ElanParser.DeconstructedTupleContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.listDefinition"/>.
 	/// </summary>

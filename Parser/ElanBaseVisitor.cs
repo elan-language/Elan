@@ -595,7 +595,7 @@ public partial class ElanBaseVisitor<Result> : AbstractParseTreeVisitor<Result>,
 	/// <return>The visitor result.</return>
 	public virtual Result VisitLiteralTuple([NotNull] ElanParser.LiteralTupleContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.tupleDecomp"/>.
+	/// Visit a parse tree produced by <see cref="ElanParser.deconstructedTuple"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -603,7 +603,7 @@ public partial class ElanBaseVisitor<Result> : AbstractParseTreeVisitor<Result>,
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitTupleDecomp([NotNull] ElanParser.TupleDecompContext context) { return VisitChildren(context); }
+	public virtual Result VisitDeconstructedTuple([NotNull] ElanParser.DeconstructedTupleContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.listDefinition"/>.
 	/// <para>
