@@ -4,12 +4,12 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T44_ImmutableClass
 {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_BasicImmutableClass()
     {
         var code = @"#
@@ -48,7 +48,7 @@ end class
         AssertObjectCodeExecutes(compileData, "3\r\n9\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_AbstractImmutableClass()
     {
         var code = @"#
@@ -98,7 +98,7 @@ end class
     // inheriting from an abstract immutable must specify immutable
     // immutable and abstract being the wrong way around
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_ProcedureMethod()
     {
         var code = @"#
@@ -123,7 +123,7 @@ end class
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_ProcedureMethodOnAbstractImmutableClass()
     {
         var code = @"#
@@ -138,7 +138,7 @@ end class
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_AbstractAndImmutableReversed()
     {
         var code = @"#
