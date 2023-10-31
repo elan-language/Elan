@@ -108,6 +108,18 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAssignment([NotNull] ElanParser.AssignmentContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.inlineAsignment"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterInlineAsignment([NotNull] ElanParser.InlineAsignmentContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.inlineAsignment"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitInlineAsignment([NotNull] ElanParser.InlineAsignmentContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.assignableValue"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

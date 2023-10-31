@@ -20,6 +20,8 @@ varDef: NL VAR assignableValue ASSIGN expression;
 
 assignment: NL assignableValue ASSIGN expression;
 
+inlineAsignment: assignableValue ASSIGN expression;
+
 assignableValue: (nameQualifier?  IDENTIFIER index?) | deconstructedTuple | listDecomp;
 
 methodCall: nameQualifier? (CURRY|PARTIAL)? IDENTIFIER genericSpecifier? OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
@@ -114,7 +116,7 @@ newInstance:
 	| IDENTIFIER withClause
 	;
 
-withClause: WITH OPEN_BRACE assignment (COMMA assignment)* CLOSE_BRACE;
+withClause: WITH OPEN_BRACE inlineAsignment (COMMA inlineAsignment)* CLOSE_BRACE;
 
 // CONTROL FLOW STATEMENTS
 proceduralControlFlow: if | for | foreach | while | repeat | try | switch;
