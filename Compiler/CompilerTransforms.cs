@@ -7,6 +7,16 @@ using SymbolTable.SymbolTypes;
 namespace Compiler;
 
 public static class CompilerTransforms {
+    private static ISymbolType? GetExpressionType(IAstNode expression, IScope currentScope) {
+        return expression switch {
+            IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
+                VariableSymbol vs => vs.ReturnType,
+                _ => null
+            },
+            _ => null
+        };
+    }
+
 
     private static IAstNode? TransformClassMethods(MethodCallNode mcn,   IAstNode[] nodes, IScope currentScope) {
 
@@ -50,6 +60,13 @@ public static class CompilerTransforms {
             },
             _ => null
         };
+
+    public static IAstNode? TransformIndexNodes(IAstNode[] nodes, IScope currentScope) =>
+        nodes.Last() switch {
+            IndexedExpressionNode ien when GetExpressionType(ien.Expression, currentScope) is TupleSymbolType => new ItemizedExpressionNode(ien.Expression, ien.Range),
+            _ => null
+        };
+
 
     private static IScope GetGlobalScope(IScope scope) =>
         scope is GlobalScope

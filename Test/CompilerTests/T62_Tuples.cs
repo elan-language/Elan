@@ -10,7 +10,7 @@ public class T62_Tuples
 {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_CreatingTuplesAndReadingContents()
     {
         var code = @"#
@@ -37,8 +37,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
     printLine(x);
-    printLine(x[0]);
-    printLine(x[1]);
+    printLine(x.Item1);
+    printLine(x.Item2);
   }
 }";
 
@@ -50,7 +50,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "(3,Apple)\r\n3\r\nApple\r\n");
+        AssertObjectCodeExecutes(compileData, "(3, Apple)\r\n3\r\nApple\r\n");
     }
 
     [TestMethod]
@@ -186,7 +186,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_OutOfRangeError()
     {
         var code = @"#
@@ -196,20 +196,35 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = (3, @$""Apple"");
+    printLine(x.Item3);
+  }
+}";
+
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Some error");
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_AssignItemToWrongType()
     {
         var code = @"#
@@ -219,12 +234,13 @@ main
     y = x[1]
 end main
 ";
-        var parseTree = @"";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod, Ignore]
@@ -241,7 +257,8 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
 

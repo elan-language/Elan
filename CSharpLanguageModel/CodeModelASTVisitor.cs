@@ -44,6 +44,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             LiteralTupleNode n => HandleScope(BuildLiteralTupleModel, n),
             LiteralDictionaryNode n => HandleScope(BuildLiteralDictionaryModel, n),
             IndexedExpressionNode n => HandleScope(BuildIndexedExpressionModel, n),
+            ItemizedExpressionNode n => HandleScope(BuildItemizedExpressionModel, n),
             RangeExpressionNode n => HandleScope(BuildRangeExpressionModel, n),
             NewInstanceNode n => HandleScope(BuildNewInstanceModel, n),
             DataStructureTypeNode n => HandleScope(BuildDataStructureTypeModel, n),
@@ -191,6 +192,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var range = Visit(indexedExpressionNode.Range);
 
         return new IndexedExpressionModel(expression, range);
+    }
+
+    private ItemizedExpressionModel BuildItemizedExpressionModel(ItemizedExpressionNode itemizedExpressionNode) {
+        var expression = Visit(itemizedExpressionNode.Expression);
+        var range = Visit(itemizedExpressionNode.Range);
+
+        return new ItemizedExpressionModel(expression, range);
     }
 
     private RangeExpressionModel BuildRangeExpressionModel(RangeExpressionNode rangeExpressionNode) {

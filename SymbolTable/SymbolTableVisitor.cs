@@ -89,6 +89,7 @@ public class SymbolTableVisitor {
             "Decimal" => DecimalSymbolType.Instance,
             "Boolean" => BooleanSymbolType.Instance,
             "Char" => CharSymbolType.Instance,
+            "Tuple" => new TupleSymbolType(),
              _ => new ClassSymbolType(type)
         };
 
@@ -99,6 +100,7 @@ public class SymbolTableVisitor {
             NewInstanceNode nin => GetTypeName(nin.Type),
             ValueNode vn => GetTypeName(vn.TypeNode),
             ValueTypeNode vtn => vtn.Type.ToString(),
+            LiteralTupleNode => "Tuple",
             _ => ""
         };
     }
