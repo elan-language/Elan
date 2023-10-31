@@ -25,6 +25,7 @@ public static class AstFactory {
             ConstantDefContext c => visitor.Build(c),
             AssignableValueContext c => visitor.Build(c),
             AssignmentContext c => visitor.Build(c),
+            InlineAsignmentContext c => visitor.Build(c),
             LiteralContext c => visitor.Build(c),
             BinaryOpContext c => visitor.Build(c),
             ArithmeticOpContext c => visitor.Build(c),
@@ -221,7 +222,14 @@ public static class AstFactory {
         var id = visitor.Visit(context.assignableValue());
         var expr = visitor.Visit(context.expression());
 
-        return new AssignmentNode(id, expr);
+        return new AssignmentNode(id, expr, false);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, InlineAsignmentContext context) {
+        var id = visitor.Visit(context.assignableValue());
+        var expr = visitor.Visit(context.expression());
+
+        return new AssignmentNode(id, expr, true);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssignableValueContext context) {
@@ -479,8 +487,9 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, NewInstanceContext context) {
         var type = visitor.Visit(context.type());
         var args = context.argumentList() is { } al ? al.expression().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var with = context.withClause() is { } wc ? wc.inlineAsignment().Select(visitor.Visit) : Array.Empty<IAstNode>();
 
-        return new NewInstanceNode(type, args.ToImmutableArray());
+        return new NewInstanceNode(type, args.ToImmutableArray(), with.ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TypeContext context) {
@@ -537,7 +546,7 @@ public static class AstFactory {
                 args = args.Add(new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int)));
             }
 
-            return new NewInstanceNode(type, args);
+            return new NewInstanceNode(type, args, ImmutableArray<IAstNode>.Empty);
         }
 
         throw new NotImplementedException(context.children.First().GetText());

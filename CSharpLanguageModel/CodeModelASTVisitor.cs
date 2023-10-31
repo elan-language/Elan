@@ -81,7 +81,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private ConstantDefModel BuildConstantDefModel(ConstantDefNode constantDefNode) => new(Visit(constantDefNode.Id), CodeHelpers.NodeToPrefixedCSharpType(constantDefNode.Expression), Visit(constantDefNode.Expression));
 
-    private AssignmentModel BuildAssignmentModel(AssignmentNode assignmentNode) => new(Visit(assignmentNode.Id), Visit(assignmentNode.Expression));
+    private AssignmentModel BuildAssignmentModel(AssignmentNode assignmentNode) => new(Visit(assignmentNode.Id), Visit(assignmentNode.Expression), assignmentNode.Inline);
 
     private ProcedureCallModel BuildProcedureCallModel(ProcedureCallNode procedureCallNode) {
         var parameters = procedureCallNode.Parameters.Select(Visit);
@@ -201,8 +201,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private NewInstanceModel BuildNewInstanceModel(NewInstanceNode newInstanceNode) {
         var type = Visit(newInstanceNode.Type);
         var args = newInstanceNode.Arguments.Select(Visit);
+        var with = newInstanceNode.With.Select(Visit);
 
-        return new NewInstanceModel(type, args);
+        return new NewInstanceModel(type, args, with);
     }
 
     private DataStructureTypeModel BuildDataStructureTypeModel(DataStructureTypeNode dataStructureTypeNode) {

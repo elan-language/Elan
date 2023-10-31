@@ -2,13 +2,13 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record NewInstanceNode(IAstNode Type, ImmutableArray<IAstNode> Arguments) : IAstNode {
+public record NewInstanceNode(IAstNode Type, ImmutableArray<IAstNode> Arguments, ImmutableArray<IAstNode> With) : IAstNode {
     public IEnumerable<IAstNode> Children => Arguments.Prepend(Type);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
         return from switch {
             _ when from == Type => this with { Type = to },
-            _ => this with { Arguments = Arguments.SafeReplace(from, to) }
+            _ => this with { Arguments = Arguments.SafeReplace(from, to), With = With.SafeReplace(from, to)}
         };
     }
 }
