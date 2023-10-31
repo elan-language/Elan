@@ -142,7 +142,7 @@ public class FunctionsTests {
             p2 = @"Apple";
         }
 
-        public virtual int p1 { get; private set; }
+        public virtual int p1 { get; set; }
         protected virtual string p2 { get; set; } = "";
         public virtual string asString() => typeAndProperties(this);
 

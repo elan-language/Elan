@@ -67,9 +67,9 @@ public static partial class Globals {
       p1 = new Player(@$""Joe"");
       previousScores = new StandardLibrary.ElanList<int>(5, 2, 4);
     }
-    public virtual Player p1 { get; private set; } = Player.DefaultInstance;
-    public virtual Player p2 { get; private set; } = Player.DefaultInstance;
-    public virtual StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual Player p1 { get; set; } = Player.DefaultInstance;
+    public virtual Player p2 { get; set; } = Player.DefaultInstance;
+    public virtual StandardLibrary.ElanList<int> previousScores { get; set; } = StandardLibrary.ElanList<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
@@ -89,7 +89,7 @@ public static partial class Globals {
     public Player(string name) {
       this.name = name;
     }
-    public virtual string name { get; private set; } = """";
+    public virtual string name { get; set; } = """";
     public virtual string asString() {
 
       return name;
@@ -172,14 +172,14 @@ public static partial class Globals {
     public Game() {
 
     }
-    public virtual int i { get; private set; } = default;
-    public virtual double f { get; private set; } = default;
-    public virtual bool b { get; private set; } = default;
-    public virtual char c { get; private set; } = default;
-    public virtual string s { get; private set; } = """";
-    public virtual StandardLibrary.ElanList<int> li { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
-    public virtual StandardLibrary.ElanDictionary<string, int> dsi { get; private set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
-    public virtual StandardLibrary.ElanArray<int> ai { get; private set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
+    public virtual int i { get; set; } = default;
+    public virtual double f { get; set; } = default;
+    public virtual bool b { get; set; } = default;
+    public virtual char c { get; set; } = default;
+    public virtual string s { get; set; } = """";
+    public virtual StandardLibrary.ElanList<int> li { get; set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual StandardLibrary.ElanDictionary<string, int> dsi { get; set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
+    public virtual StandardLibrary.ElanArray<int> ai { get; set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
@@ -261,7 +261,7 @@ public static partial class Globals {
     public Game() {
       i = 100;
     }
-    public virtual int i { get; private set; } = default;
+    public virtual int i { get; set; } = default;
     public virtual string asString() {
 
       return @$""A game"";
@@ -342,8 +342,8 @@ public static partial class Globals {
     public Game() {
 
     }
-    public virtual Player p1 { get; private set; } = Player.DefaultInstance;
-    public virtual Game previousGame { get; private set; } = Game.DefaultInstance;
+    public virtual Player p1 { get; set; } = Player.DefaultInstance;
+    public virtual Game previousGame { get; set; } = Game.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
@@ -362,7 +362,7 @@ public static partial class Globals {
     public Player(string name) {
       this.name = name;
     }
-    public virtual string name { get; private set; } = """";
+    public virtual string name { get; set; } = """";
     public virtual string asString() {
 
       return name;
@@ -457,12 +457,12 @@ public static partial class Globals {
     public Game() {
       score = 1;
     }
-    public virtual int score { get; private set; } = default;
-    public virtual int best { get; private set; } = default;
-    public virtual Player p1 { get; private set; } = Player.DefaultInstance;
-    public virtual Player p2 { get; private set; } = Player.DefaultInstance;
-    public virtual Game previousGame { get; private set; } = Game.DefaultInstance;
-    public virtual StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual int score { get; set; } = default;
+    public virtual int best { get; set; } = default;
+    public virtual Player p1 { get; set; } = Player.DefaultInstance;
+    public virtual Player p2 { get; set; } = Player.DefaultInstance;
+    public virtual Game previousGame { get; set; } = Game.DefaultInstance;
+    public virtual StandardLibrary.ElanList<int> previousScores { get; set; } = StandardLibrary.ElanList<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
@@ -485,7 +485,7 @@ public static partial class Globals {
     public Player(string name) {
       this.name = name;
     }
-    public virtual string name { get; private set; } = """";
+    public virtual string name { get; set; } = """";
     public virtual string asString() {
 
       return name;
@@ -584,12 +584,12 @@ public static partial class Globals {
     public Game() {
       score = 10;
     }
-    public virtual int score { get; private set; } = default;
-    public virtual int best { get; private set; } = default;
-    public virtual Player p1 { get; private set; } = Player.DefaultInstance;
-    public virtual Player p2 { get; private set; } = Player.DefaultInstance;
-    public virtual Game previousGame { get; private set; } = Game.DefaultInstance;
-    public virtual StandardLibrary.ElanList<int> previousScores { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual int score { get; set; } = default;
+    public virtual int best { get; set; } = default;
+    public virtual Player p1 { get; set; } = Player.DefaultInstance;
+    public virtual Player p2 { get; set; } = Player.DefaultInstance;
+    public virtual Game previousGame { get; set; } = Game.DefaultInstance;
+    public virtual StandardLibrary.ElanList<int> previousScores { get; set; } = StandardLibrary.ElanList<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A game"";
@@ -615,7 +615,7 @@ public static partial class Globals {
     public Player(string name) {
       this.name = name;
     }
-    public virtual string name { get; private set; } = """";
+    public virtual string name { get; set; } = """";
     public virtual string asString() {
 
       return name;
@@ -695,10 +695,10 @@ public static partial class Globals {
     public Foo() {
 
     }
-    public virtual StandardLibrary.ElanList<int> a { get; private set; } = StandardLibrary.ElanList<int>.DefaultInstance;
-    public virtual string b { get; private set; } = """";
-    public virtual StandardLibrary.ElanDictionary<string, int> c { get; private set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
-    public virtual StandardLibrary.ElanArray<int> d { get; private set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
+    public virtual StandardLibrary.ElanList<int> a { get; set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual string b { get; set; } = """";
+    public virtual StandardLibrary.ElanDictionary<string, int> c { get; set; } = StandardLibrary.ElanDictionary<string, int>.DefaultInstance;
+    public virtual StandardLibrary.ElanArray<int> d { get; set; } = StandardLibrary.ElanArray<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A Foo"";

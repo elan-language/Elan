@@ -36,8 +36,7 @@ public record PropertyDefModel(ICodeModel Id, ICodeModel Type, PropertyType Prop
     private string Setter => PropertyType switch {
         PropertyType.Abstract => "",
         PropertyType.Immutable => " init;",
-        _ when IsPrivate  => " set;",
-        _ => " private set;"
+        _ => " set;"
     };
 
     private string Body => $"{{ get;{Setter} }}";

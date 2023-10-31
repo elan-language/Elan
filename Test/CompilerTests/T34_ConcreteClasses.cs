@@ -50,8 +50,8 @@ public static partial class Globals {
     public Foo() {
       p1 = 5;
     }
-    public virtual int p1 { get; private set; } = default;
-    public virtual string p2 { get; private set; } = """";
+    public virtual int p1 { get; set; } = default;
+    public virtual string p2 { get; set; } = """";
     public virtual string asString() {
 
       return @$"""";
@@ -126,8 +126,8 @@ public static partial class Globals {
       p1 = p_1;
       p2 = p_2;
     }
-    public virtual int p1 { get; private set; } = default;
-    public virtual string p2 { get; private set; } = """";
+    public virtual int p1 { get; set; } = default;
+    public virtual string p2 { get; set; } = """";
     public virtual string asString() {
 
       return @$"""";

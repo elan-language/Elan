@@ -48,7 +48,7 @@ public static partial class Globals {
     public Foo() {
       p1 = 5;
     }
-    public virtual int p1 { get; private set; } = default;
+    public virtual int p1 { get; set; } = default;
     public virtual string asString() {
 
       return @$"""";
@@ -127,7 +127,7 @@ public static partial class Globals {
     public Foo() {
       p1 = 5;
     }
-    public virtual int p1 { get; private set; } = default;
+    public virtual int p1 { get; set; } = default;
     public virtual string asString() {
 
       return @$"""";

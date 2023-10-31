@@ -10,7 +10,7 @@ public class T54_With
 {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_InstantiatingClassWithZeroParamConstructor()
     {
         var code = @"#
@@ -49,8 +49,8 @@ public static partial class Globals {
     public Foo() {
       p1 = 5;
     }
-    public virtual int p1 { get; private set; } = default;
-    public virtual string p2 { get; private set; } = """";
+    public virtual int p1 { get; set; } = default;
+    public virtual string p2 { get; set; } = """";
     public virtual string asString() {
 
       return @$"""";

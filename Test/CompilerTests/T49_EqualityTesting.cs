@@ -54,8 +54,8 @@ public static partial class Globals {
       this.p1 = p1;
       this.p2 = p2;
     }
-    public virtual int p1 { get; private set; } = default;
-    public virtual string p2 { get; private set; } = """";
+    public virtual int p1 { get; set; } = default;
+    public virtual string p2 { get; set; } = """";
     public virtual string asString() {
 
       return @$""{p1} {p2}"";
@@ -142,8 +142,8 @@ public static partial class Globals {
       this.p1 = p1;
       this.p2 = p2;
     }
-    public virtual int p1 { get; private set; } = default;
-    public virtual string p2 { get; private set; } = """";
+    public virtual int p1 { get; set; } = default;
+    public virtual string p2 { get; set; } = """";
     public virtual string asString() {
 
       return @$""{p1} {p2}"";
