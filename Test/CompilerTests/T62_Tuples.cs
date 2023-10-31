@@ -5,12 +5,12 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T62_Tuples
 {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_CreatingTuplesAndReadingContents()
     {
         var code = @"#
@@ -22,9 +22,27 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = (3, @$""Apple"");
+    printLine(x);
+    printLine(x[0]);
+    printLine(x[1]);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (index [ (expression (value (literal (literalValue 0)))) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (index [ (expression (value (literal (literalValue 1)))) ]))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -35,7 +53,7 @@ end main
         AssertObjectCodeExecutes(compileData, "(3,Apple)\r\n3\r\nApple\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_DeconstructIntoExistingVariables()
     {
         var code = @"#
@@ -62,7 +80,7 @@ end main
         AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_DeconstructIntoNewVariables()
     {
         var code = @"#
@@ -86,7 +104,7 @@ end main
         AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_AssignANewTupleOfSameType()
     {
         var code = @"#
@@ -113,7 +131,7 @@ end main
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_OutOfRangeError()
     {
         var code = @"#
@@ -136,7 +154,7 @@ end main
         AssertObjectCodeExecutes(compileData, "Some error");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_AssignItemToWrongType()
     {
         var code = @"#
@@ -154,7 +172,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_ImmutableSoCannotAssignAnItem()
     {
         var code = @"#
@@ -172,7 +190,7 @@ end main
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_DeconstructIntoWrongType()
     {
         var code = @"#
@@ -193,7 +211,7 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_AssignANewTupleOfWrongType()
     {
         var code = @"#

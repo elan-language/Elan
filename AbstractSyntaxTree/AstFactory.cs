@@ -39,6 +39,7 @@ public static class AstFactory {
             ConditionalOpContext c => visitor.Build(c),
             UnaryOpContext c => visitor.Build(c),
             LiteralListContext c => visitor.Build(c),
+            LiteralTupleContext c => visitor.Build(c),
             LiteralDictionaryContext c => visitor.Build(c),
             IndexContext c => visitor.Build(c),
             RangeContext c => visitor.Build(c),
@@ -289,6 +290,10 @@ public static class AstFactory {
             return visitor.Visit(ld);
         }
 
+        if (context.literalTuple() is { } lt) {
+            return visitor.Visit(lt);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -435,6 +440,12 @@ public static class AstFactory {
         var items = context.literal().Select(visitor.Visit);
 
         return new LiteralListNode(items.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralTupleContext context) {
+        var items = context.literal().Select(visitor.Visit);
+
+        return new LiteralTupleNode(items.ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralDictionaryContext context) {

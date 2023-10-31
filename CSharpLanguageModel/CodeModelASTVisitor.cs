@@ -41,6 +41,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             BracketNode n => HandleScope(BuildBracketModel, n),
             CallStatementNode n => HandleScope(BuildCallStatementModel, n),
             LiteralListNode n => HandleScope(BuildLiteralListModel, n),
+            LiteralTupleNode n => HandleScope(BuildLiteralTupleModel, n),
             LiteralDictionaryNode n => HandleScope(BuildLiteralDictionaryModel, n),
             IndexedExpressionNode n => HandleScope(BuildIndexedExpressionModel, n),
             RangeExpressionNode n => HandleScope(BuildRangeExpressionModel, n),
@@ -155,6 +156,12 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var items = literalListNode.ItemNodes.Select(Visit);
 
         return new LiteralListModel(items, type);
+    }
+
+    private LiteralTupleModel BuildLiteralTupleModel(LiteralTupleNode literalListNode) {
+        var items = literalListNode.ItemNodes.Select(Visit);
+
+        return new LiteralTupleModel(items);
     }
 
     private LiteralDictionaryModel BuildLiteralDictionaryModel(LiteralDictionaryNode literalDictionaryNode) {
