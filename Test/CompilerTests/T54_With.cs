@@ -84,7 +84,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ConstructorWithParm()
     {
         var code = @"#
@@ -109,9 +109,45 @@ class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+    private Foo() {}
+    public Foo(int p1) {
+      this.p1 = p1;
+    }
+    public virtual int p1 { get; set; } = default;
+    public virtual string p2 { get; set; } = """";
+    public virtual string asString() {
+
+      return @$"""";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+      public override string p2 => """";
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Foo(7) with {p1 = 3, p2 = @$""Apple""};
+    printLine(x.p1);
+    printLine(x.p2);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7))))) ) (withClause with { (inlineAsignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) , (inlineAsignment (assignableValue p2) = (expression (value (literal (literalDataStructure ""Apple""))))) })))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p1 (type Int))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -122,7 +158,7 @@ end class
         AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_AppliedToInstanceButReturnedOneIsNewInstance()
     {
         var code = @"#
@@ -149,9 +185,47 @@ class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+      p1 = 5;
+    }
+    public virtual int p1 { get; set; } = default;
+    public virtual string p2 { get; set; } = """";
+    public virtual string asString() {
+
+      return @$"""";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+      public override string p2 => """";
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Foo();
+    var y = x with {p1 = 3, p2 = @$""Apple""};
+    printLine(y.p1);
+    printLine(y.p2);
+    printLine(x.p1);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( )))) (varDef var (assignableValue y) = (expression (expression (value x)) (withClause with { (inlineAsignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) , (inlineAsignment (assignableValue p2) = (expression (value (literal (literalDataStructure ""Apple""))))) }))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value y)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value y)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -159,10 +233,10 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n5/r/n");
+        AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n5\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_WorksWithImmutableClass()
     {
         var code = @"#
@@ -189,9 +263,47 @@ immutable class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+      p1 = 5;
+    }
+    public virtual int p1 { get; init; } = default;
+    public virtual string p2 { get; init; } = """";
+    public virtual string asString() {
+
+      return @$"""";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+      public override string p2 => """";
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Foo();
+    var y = x with {p1 = 3, p2 = @$""Apple""};
+    printLine(y.p1);
+    printLine(y.p2);
+    printLine(x.p1);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( )))) (varDef var (assignableValue y) = (expression (expression (value x)) (withClause with { (inlineAsignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) , (inlineAsignment (assignableValue p2) = (expression (value (literal (literalDataStructure ""Apple""))))) }))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value y)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value y)) . p2)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) ))))) end main) (classDef (immutableClass immutable class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -199,13 +311,13 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n5/r/n");
+        AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n5\r\n");
     }
     #endregion
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_NonMatchingProperty()
     {
         var code = @"#
@@ -229,12 +341,13 @@ class Foo
 
 end class
 ";
-        var parseTree = @"";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( ) (withClause with { (inlineAsignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) , (inlineAsignment (assignableValue p3) = (expression (value (literal (literalDataStructure ""Apple""))))) })))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
     #endregion
 }

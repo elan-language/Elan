@@ -72,6 +72,7 @@ public static class AstFactory {
             PropertyContext c => visitor.Build(c),
             NameQualifierContext c => visitor.Build(c),
          
+         
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -159,6 +160,13 @@ public static class AstFactory {
 
         if (context.NL() is not null) {
             return visitor.Visit(context.expression().Single());
+        }
+
+        if (context.withClause() is { } wc) {
+            var expr = visitor.Visit(context.expression().Single());
+            var with =  wc.inlineAsignment().Select(visitor.Visit);
+
+            return new WithNode(expr, with.ToImmutableArray());
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -725,5 +733,5 @@ public static class AstFactory {
         throw new NotImplementedException(context.children.First().GetText());
     }
 
-    
+   
 }

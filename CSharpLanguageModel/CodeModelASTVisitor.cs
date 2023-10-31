@@ -72,6 +72,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             ReturnExpressionNode n => Visit(n.Expression),
             QualifiedNode n => HandleScope(BuildQualifiedModel, n),
             DefaultNode n => HandleScope(BuildDefaultModel, n),
+            WithNode n => HandleScope(BuildWithModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -358,5 +359,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var id = Visit(defaultNode.Type);
         
         return new DefaultModel(id, defaultNode.TypeType);
+    }
+
+    private WithModel BuildWithModel(WithNode defaultNode) {
+
+        var expr = Visit(defaultNode.Expression);
+        var assignments = defaultNode.AssignmentNodes.Select(Visit);
+        
+        return new WithModel(expr, assignments);
     }
 }
