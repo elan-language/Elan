@@ -142,7 +142,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_AssignANewTupleOfSameType()
     {
         var code = @"#
@@ -153,9 +153,26 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = (3, @$""Apple"");
+    x = (4, @$""Pear"");
+    printLine(x);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (assignment (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 4)) , (literal (literalDataStructure ""Pear"")) ))))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -163,7 +180,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "(4,Pair)\r\n");
+        AssertObjectCodeExecutes(compileData, "(4, Pear)\r\n");
     }
 
     #endregion
@@ -228,43 +245,43 @@ end main
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_DeconstructIntoWrongType()
     {
         var code = @"#
 main
     var x = (3,""Apple"")
     var y = 0
-    var z = ""
+    var z = """"
     (z, y) = x
     printLine(y)
     printLine(z)
 end main
 ";
-        var parseTree = @"";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (varDef var (assignableValue y) = (expression (value (literal (literalValue 0))))) (varDef var (assignableValue z) = (expression (value (literal (literalDataStructure """"))))) (assignment (assignableValue (deconstructedTuple ( z , y ))) = (expression (value x))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value z))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_AssignANewTupleOfWrongType()
     {
         var code = @"#
 main
     var x = (3,""Apple"")
-    x = ('4',""Pear"")
+    x = (""4"",""Pear"")
     printLine(x)
 end main
 ";
-        var parseTree = @"";
-
+       
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
     #endregion
 }
