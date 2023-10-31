@@ -140,7 +140,7 @@ end class
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_StringEquality()
     {
         var code = @"#
@@ -152,9 +152,28 @@ main
     printLine(x is z)
 end main
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = @$""Apple"";
+    var y = @$""Apple"";
+    var z = @$""apple"";
+    printLine(x == y);
+    printLine(x == z);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure ""Apple""))))) (varDef var (assignableValue y) = (expression (value (literal (literalDataStructure ""Apple""))))) (varDef var (assignableValue z) = (expression (value (literal (literalDataStructure ""apple""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
