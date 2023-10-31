@@ -209,8 +209,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\n");
     }
 
-    [TestMethod, Ignore]
-    public void Pass_ArraytEquality()
+    [TestMethod]
+    public void Pass_ArrayEquality()
     {
         var code = @"#
 main
@@ -223,9 +223,30 @@ main
     printLine(x is w)
 end main
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = asArray(new StandardLibrary.ElanList<int>(3, 4, 5));
+    var y = asArray(new StandardLibrary.ElanList<int>(3, 4, 5));
+    var z = asArray(new StandardLibrary.ElanList<int>(4, 3, 5));
+    var w = new StandardLibrary.ElanList<int>(3, 4, 5);
+    printLine(x == y);
+    printLine(x == z);
+    printLine(x == w);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 3)) , (literal (literalValue 4)) , (literal (literalValue 5)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue y) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 3)) , (literal (literalValue 4)) , (literal (literalValue 5)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue z) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 4)) , (literal (literalValue 3)) , (literal (literalValue 5)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue w) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 3)) , (literal (literalValue 4)) , (literal (literalValue 5)) })))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value w)))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -236,25 +257,48 @@ end main
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\nfalse\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DictionaryEquality()
     {
         var code = @"#
 main
     var x = {'a':3,'b':4,'c':5}
     var y = {'a':3,'b':4,'c':5}
-    var z = {'b':4,'c':5,'a':3,}
+    var z = {'b':4,'c':5,'a':3}
     var w = {'a':3,'b':6,'c':5}
-    var v = {""b"":4,""c"":5,""a"":3,}
+    var v = {""b"":4,""c"":5,""a"":3}
     printLine(x is y)
     printLine(x is z)
     printLine(x is w)
     printLine(x is v)
 end main
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new StandardLibrary.ElanDictionary<char,int>(('a', 3), ('b', 4), ('c', 5));
+    var y = new StandardLibrary.ElanDictionary<char,int>(('a', 3), ('b', 4), ('c', 5));
+    var z = new StandardLibrary.ElanDictionary<char,int>(('b', 4), ('c', 5), ('a', 3));
+    var w = new StandardLibrary.ElanDictionary<char,int>(('a', 3), ('b', 6), ('c', 5));
+    var v = new StandardLibrary.ElanDictionary<string,int>((@$""b"", 4), (@$""c"", 5), (@$""a"", 3));
+    printLine(x == y);
+    printLine(x == z);
+    printLine(x == w);
+    printLine(x == v);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 4))) , (literalKvp (literal (literalValue 'c')) : (literal (literalValue 5))) })))))) (varDef var (assignableValue y) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 4))) , (literalKvp (literal (literalValue 'c')) : (literal (literalValue 5))) })))))) (varDef var (assignableValue z) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'b')) : (literal (literalValue 4))) , (literalKvp (literal (literalValue 'c')) : (literal (literalValue 5))) , (literalKvp (literal (literalValue 'a')) : (literal (literalValue 3))) })))))) (varDef var (assignableValue w) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 6))) , (literalKvp (literal (literalValue 'c')) : (literal (literalValue 5))) })))))) (varDef var (assignableValue v) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalDataStructure ""b"")) : (literal (literalValue 4))) , (literalKvp (literal (literalDataStructure ""c"")) : (literal (literalValue 5))) , (literalKvp (literal (literalDataStructure ""a"")) : (literal (literalValue 3))) })))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value w)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value v)))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

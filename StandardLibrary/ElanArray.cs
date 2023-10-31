@@ -68,4 +68,24 @@ public class ElanArray<T> : IElanArray, IEnumerable<T> {
     public void Add(T item) {
         wrappedArray[0] = wrappedArray[0].Append(item).ToArray();
     }
+
+    public static bool operator ==(ElanArray<T> a, object? b) {
+        if (b is null || b.GetType() != typeof(ElanArray<T>)) {
+            return false;
+        }
+
+        var other = (ElanArray<T>)b;
+
+        if (other.Count != a.Count) {
+            return false;
+        }
+
+        return a.Zip(other).All(z => z.First?.Equals(z.Second) == true);
+    }
+
+    public static bool operator !=(ElanArray<T> a, object? b) => !(a == b);
+
+    public override bool Equals(object? obj) => this == obj;
+
+    public override int GetHashCode() => GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + i?.GetHashCode() ?? 0);
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 
 namespace StandardLibrary;
 
@@ -27,7 +28,7 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
     public IEnumerable<object> ObjectKeys => Keys.Cast<object>();
     public IEnumerable<object> ObjectValues => Values.Cast<object>();
 
-    IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() => throw new NotImplementedException();
+    IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() => wrappedDictionary.GetEnumerator();
 
     public IEnumerator GetEnumerator() => wrappedDictionary.GetEnumerator();
     public int Count => wrappedDictionary.Count;
@@ -66,4 +67,35 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
     public bool TryGetKey(TKey equalKey, out TKey actualKey) => wrappedDictionary.TryGetKey(equalKey, out actualKey);
 
     private static ElanDictionary<TKey, TValue> Wrap(ImmutableDictionary<TKey, TValue> dict) => new(dict);
+
+    public static bool operator ==(ElanDictionary<TKey, TValue> a, object? b) {
+        static bool EqualKvp(KeyValuePair<TKey, TValue> kvp1, KeyValuePair<TKey, TValue> kvp2 ) {
+            return kvp1.Key.Equals(kvp2.Key) && (kvp1.Value?.Equals(kvp2.Value) == true);
+        }
+
+
+        if (b is null || b.GetType() != typeof(ElanDictionary<TKey, TValue>)) {
+            return false;
+        }
+
+        var other = (ElanDictionary<TKey, TValue>)b;
+
+        if (other.Count != a.Count) {
+            return false;
+        }
+
+        return a.Zip(other).All(z =>  EqualKvp(z.First, z.Second));
+    }
+
+    public static bool operator !=(ElanDictionary<TKey, TValue> a, object? b) => !(a == b);
+
+    public override bool Equals(object? obj) => this == obj;
+
+    public override int GetHashCode() {
+        static int KvpHashCode(KeyValuePair<TKey, TValue> kvp1) {
+            return kvp1.Key.GetHashCode() + (kvp1.Value?.GetHashCode() ?? 0);
+        }
+
+        return GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + KvpHashCode(i));
+    }
 }

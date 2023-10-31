@@ -83,5 +83,5 @@ public class ElanList<T> : IElanList, IEnumerable<T> {
 
     public override bool Equals(object? obj) => this == obj;
 
-    public override int GetHashCode() => GetType().GetHashCode() + this.Aggregate(0, (s, i) => s = s + i?.GetHashCode() ?? 0);
+    public override int GetHashCode() => GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + i?.GetHashCode() ?? 0);
 }
