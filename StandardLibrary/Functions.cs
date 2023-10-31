@@ -87,10 +87,7 @@ public static class Functions {
 
     #region Type inspection
 
-    // TYpe is not a yet an Elan thing 
     //public static string type(object o) => throw new NotImplementedException();
-    //public static string isType(Type t) => throw new NotImplementedException();
-    //public static bool isSubTypeOf(Type t) => throw new NotImplementedException();
     #endregion
 
     #region Type conversion
