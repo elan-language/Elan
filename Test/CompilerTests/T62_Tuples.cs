@@ -53,23 +53,43 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "(3,Apple)\r\n3\r\nApple\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DeconstructIntoExistingVariables()
     {
         var code = @"#
 main
     var x = (3,""Apple"")
     var y = 0
-    var z = ""
+    var z = """"
     (y, z) = x
     printLine(y)
     printLine(z)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"";
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = (3, @$""Apple"");
+    var y = 0;
+    var z = @$"""";
+    (y, z) = x;
+    printLine(y);
+    printLine(z);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (varDef var (assignableValue y) = (expression (value (literal (literalValue 0))))) (varDef var (assignableValue z) = (expression (value (literal (literalDataStructure """"))))) (assignment (assignableValue (deconstructedTuple ( y , z ))) = (expression (value x))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value z))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

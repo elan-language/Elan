@@ -71,7 +71,7 @@ public static class AstFactory {
             ConstructorContext c => visitor.Build(c),
             PropertyContext c => visitor.Build(c),
             NameQualifierContext c => visitor.Build(c),
-         
+            DeconstructedTupleContext c => visitor.Build(c),
          
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
@@ -257,6 +257,10 @@ public static class AstFactory {
 
         if (context.IDENTIFIER() is { } id) {
             return visitor.Visit(id);
+        }
+
+        if (context.deconstructedTuple() is { } dt) {
+            return visitor.Visit(dt);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -735,5 +739,12 @@ public static class AstFactory {
         throw new NotImplementedException(context.children.First().GetText());
     }
 
-   
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DeconstructedTupleContext context) {
+
+        var ids = context.IDENTIFIER().Select(visitor.Visit);
+
+
+        return new DeconstructionNode(ids.ToImmutableArray());
+    }
+
 }
