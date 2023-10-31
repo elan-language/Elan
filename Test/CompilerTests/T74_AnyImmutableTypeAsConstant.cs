@@ -115,7 +115,7 @@ main
 end main
 
 immutable class Foo
-    constructor(p1 3)
+    constructor(p1 Int)
         self.p1 = p1 * 2
     end constructor
 
@@ -166,7 +166,7 @@ constant k = Array<Int>(3)
 constant k = Foo(3)
 
 class Foo
-    constructor(p1 3)
+    constructor(p1 Int)
         self.p1 = p1 * 2
     end constructor
 
