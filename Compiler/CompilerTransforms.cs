@@ -17,21 +17,26 @@ public static class CompilerTransforms {
             var type = varSymbol is VariableSymbol vs ? vs.ReturnType : throw new NotSupportedException();
 
             if (type is ClassSymbolType cst) {
-
-                var classSymbol = currentScope.Resolve(cst.Name) as IScope;
-
-                return classSymbol?.Resolve(mcn.Name) switch {
-                    ProcedureSymbol => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                    FunctionSymbol => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                    _ => null
-                };
+                return GetNode(mcn, currentScope, cst);
             }
         }
 
         return null;
     }
 
+    private static IAstNode? GetNode(MethodCallNode mcn, IScope currentScope, ClassSymbolType cst) {
+        var rhs = currentScope.Resolve(cst.Name);
 
+        return rhs switch {
+            IScope scope => scope.Resolve(mcn.Name) switch {
+                ProcedureSymbol => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                FunctionSymbol => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                _ => null
+            },
+            VariableSymbol vs => GetNode(mcn, currentScope, (ClassSymbolType)vs.ReturnType),
+            _ => null
+        };
+    }
 
     public static IAstNode? TransformMethodCallNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {

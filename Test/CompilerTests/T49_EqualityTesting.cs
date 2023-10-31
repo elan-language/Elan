@@ -95,7 +95,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\ntrue\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ActuallyTheSameReference()
     {
         var code = @"#
@@ -127,7 +127,52 @@ class Foo
     end function
 end class
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+    private Foo() {}
+    public Foo(int p1, string p2) {
+      this.p1 = p1;
+      this.p2 = p2;
+    }
+    public virtual int p1 { get; private set; } = default;
+    public virtual string p2 { get; private set; } = """";
+    public virtual string asString() {
+
+      return @$""{p1} {p2}"";
+    }
+    public virtual void setP1(ref int v) {
+      p1 = v;
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+      public override string p2 => """";
+      public override void setP1(ref int v) { }
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Foo(7, @$""Apple"");
+    var y = x;
+    var _setP1_0 = 3;
+    y.setP1(ref _setP1_0);
+    var z = new Foo(8, @$""Orange"");
+    printLine(x == x);
+    printLine(x == y);
+    printLine(x == z);
+  }
+}";
 
         var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalDataStructure ""Apple""))))) )))) (varDef var (assignableValue y) = (expression (value x))) (callStatement (expression (expression (value y)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 3))))) )))) (varDef var (assignableValue z) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 8)))) , (expression (value (literal (literalDataStructure ""Orange""))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value x)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p1 (type Int)) , (parameter p2 (type String))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1))) (assignment (assignableValue (nameQualifier self .) p2) = (expression (value p2)))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) (statementBlock (assignment (assignableValue p1) = (expression (value v)))) end procedure) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure ""{p1} {p2}"")))) end function)) end class)) <EOF>)";
 
