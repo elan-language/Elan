@@ -57,7 +57,7 @@ letIn: LET assignableValue ASSIGN expression (COMMA assignableValue ASSIGN expre
 functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET ARROW type;
 
 // CONSTANTS
-constantDef: NL CONSTANT IDENTIFIER ASSIGN literal;
+constantDef: NL CONSTANT IDENTIFIER ASSIGN (literal | newInstance);
 
 // ENUMERATIONS
 enumDef: 
@@ -116,7 +116,7 @@ newInstance:
 
 withClause: WITH OPEN_BRACE assignment (COMMA assignment)* CLOSE_BRACE;
 
-// CONTROL FLOW STATMENTS
+// CONTROL FLOW STATEMENTS
 proceduralControlFlow: if | for | foreach | while | repeat | try | switch;
 
 if:

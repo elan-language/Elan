@@ -16,22 +16,7 @@ main
 end main
 ";
 
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static Globals;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    printLine();
-  }
-}";
+        var objectCode = @"";
 
         var parseTree = @"*";
 
