@@ -9,7 +9,6 @@ SINGLE_LINE_COMMENT: NL? COMMENT_MARKER  InputCharacter*    -> skip;
 COMMENT_MARKER: '#';
 
 // Keywords
-AS:			   'as';
 ABSTRACT:      'abstract';
 CASE: 		   'case';
 CATCH:         'catch';
@@ -17,7 +16,7 @@ CLASS:         'class';
 CONSTANT:      'constant';
 CONSTRUCTOR:   'constructor';
 CURRY:   	   'curry';
-DEFAULT: 	   'default'; //for use with switch...case
+DEFAULT: 	   'default'; //for use with switch...case and as default for a type
 ELSE:          'else';
 END:		   'end'; //used with another keyword to delimit a statement block
 ENUMERATION:   'enumeration';
@@ -27,7 +26,7 @@ FUNCTION:	   'function';
 GLOBAL:			'global';
 IF:            'if'; 
 IMMUTABLE:	   'immutable';
-IN:            'in'; // for...in
+IN:            'in'; // foreach...in
 INHERITS:      'inherits';
 LAMBDA:		   'lambda';
 LET:           'let';
