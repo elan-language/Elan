@@ -371,6 +371,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private DeconstructionModel BuildDeconstructionModel(DeconstructionNode defaultNode) {
         var ids = defaultNode.ItemNodes.Select(Visit);
-        return new DeconstructionModel(ids);
+        var isNew = defaultNode.IsNew;
+        return new DeconstructionModel(ids, isNew);
     }
 }
