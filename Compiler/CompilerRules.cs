@@ -56,6 +56,21 @@ public static class CompilerRules {
 
     public static string? CannotMutateControlVariableRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
+        if (leafNode is ItemizedExpressionNode ien) {
+            var parent = nodes.SkipLast(1).Last();
+
+            if (parent is AssignmentNode an) {
+                if (an.Id == ien) {
+                    return "cannot assign to node element";
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static string? CannotMutateTupleRule(IAstNode[] nodes, IScope currentScope) {
+        var leafNode = nodes.Last();
         if (leafNode is AssignmentNode an) {
             var otherNodes = nodes.SkipLast(1).ToArray();
 

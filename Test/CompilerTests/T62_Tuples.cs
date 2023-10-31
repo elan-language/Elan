@@ -243,7 +243,7 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_ImmutableSoCannotAssignAnItem()
     {
         var code = @"#
@@ -252,13 +252,12 @@ main
     x[0] = 4
 end main
 ";
-        var parseTree = @"";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (assignment (assignableValue x (index [ (expression (value (literal (literalValue 0)))) ])) = (expression (value (literal (literalValue 4)))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData);
     }
 
 
