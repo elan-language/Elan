@@ -65,8 +65,8 @@ public class ElanList<T> : IElanList, IEnumerable<T> {
 
     public static ElanList<T> operator +(T a, ElanList<T> b) => b.Insert(0, a);
 
-    public static bool operator ==(ElanList<T> a, object b) {
-        if (b.GetType() != typeof(ElanList<T>)) {
+    public static bool operator ==(ElanList<T> a, object? b) {
+        if (b is null || b.GetType() != typeof(ElanList<T>)) {
             return false;
         }
 
@@ -79,5 +79,9 @@ public class ElanList<T> : IElanList, IEnumerable<T> {
         return a.Zip(other).All(z => z.First?.Equals(z.Second) == true);
     }
 
-    public static bool operator !=(ElanList<T> a, object b) => !(a == b);
+    public static bool operator !=(ElanList<T> a, object? b) => !(a == b);
+
+    public override bool Equals(object? obj) => this == obj;
+
+    public override int GetHashCode() => GetType().GetHashCode() + this.Aggregate(0, (s, i) => s = s + i?.GetHashCode() ?? 0);
 }
