@@ -24,7 +24,7 @@ inlineAsignment: assignableValue ASSIGN expression;
 
 assignableValue: (nameQualifier?  IDENTIFIER index?) | deconstructedTuple | listDecomp;
 
-methodCall: nameQualifier? (CURRY|PARTIAL)? IDENTIFIER genericSpecifier? OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
+methodCall: nameQualifier? (CURRY|PARTIAL)? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
 argumentList: expression (COMMA expression)*;
 
