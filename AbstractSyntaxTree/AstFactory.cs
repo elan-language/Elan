@@ -495,9 +495,11 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, NewInstanceContext context) {
         var type = visitor.Visit(context.type());
         var args = context.argumentList() is { } al ? al.expression().Select(visitor.Visit) : Array.Empty<IAstNode>();
-        var with = context.withClause() is { } wc ? wc.inlineAsignment().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var with = (context.withClause() is { } wc ? wc.inlineAsignment().Select(visitor.Visit) : Array.Empty<IAstNode>()).ToImmutableArray();
 
-        return new NewInstanceNode(type, args.ToImmutableArray(), with.ToImmutableArray());
+        var nin = new NewInstanceNode(type, args.ToImmutableArray());
+
+        return with.Any() ? new WithNode(nin, with) : nin;
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TypeContext context) {
@@ -554,7 +556,7 @@ public static class AstFactory {
                 args = args.Add(new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int)));
             }
 
-            return new NewInstanceNode(type, args, ImmutableArray<IAstNode>.Empty);
+            return new NewInstanceNode(type, args);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
