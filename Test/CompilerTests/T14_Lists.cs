@@ -46,6 +46,40 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
     }
 
+    [TestMethod, Ignore]
+    public void Pass_literalListOfClass() {
+        var code = @"
+main
+    var a = Foo()
+    var b = {a}
+    printLine(b)
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function asString() -> String
+    return """"
+  end function
+
+end class
+
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
+    }
+
     [TestMethod]
     public void Pass_literalListOfString() {
         var code = @"
