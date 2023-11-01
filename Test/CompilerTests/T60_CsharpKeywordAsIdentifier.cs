@@ -333,33 +333,6 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Fail_ElanKeywordWithChangedCase() {
-        var code = @"
-main
-    var pRocedure = 1
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod, Ignore]
-    public void Fail_ElanKeywordTypeEvenWithChangedCase() {
-        var code = @"
-class Main 
-    constructor()
-    end constructor
-
-    function asString() -> String
-        return """"
-    end function
-end class
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
     #endregion
 }
 
