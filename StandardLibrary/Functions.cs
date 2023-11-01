@@ -101,30 +101,27 @@ public static class Functions {
 
     #region Type inspection
 
-    private static string MapType(Type t) {
-        return t.Name switch {
-            "int" => "Int",
-            "double" => "Float",
-            "char" => "Char",
-            _ => t.Name
+   
+
+
+    private static string MapTypeNames(Type? t) {
+        return t?.Name switch {
+            "Int32" => "Int",
+            "Double" => "Float",
+            "Char" => "Char",
+            "Boolean" => "Bool",
+            "String" => "String",
+            "ElanList`1" => $"List<{MapTypeNames(t.GenericTypeArguments.Single())}>",
+            "ElanArray`1" => $"Array<{MapTypeNames(t.GenericTypeArguments.Single())}>",
+            "ElanDictionary`2" => $"Dictionary<{MapTypeNames(t.GenericTypeArguments.First())},{MapTypeNames(t.GenericTypeArguments.Last())}>",
+            _ => t?.Name ?? throw new NotImplementedException()
         };
     }
 
 
-    private static string MapTypeNames(object o) {
-        return o switch {
-            int => "Int",
-            string => "String",
-
-            IElanList => $"List<{MapType(o.GetType().GenericTypeArguments.Single())}>", 
-            _ => o.GetType().Name
-        };
-    }
 
 
-
-
-    public static string type(object o) => MapTypeNames(o);
+    public static string type(object o) => MapTypeNames(o.GetType());
 
     #endregion
 
