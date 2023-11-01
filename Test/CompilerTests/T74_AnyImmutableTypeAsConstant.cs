@@ -86,7 +86,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "(3, Apple)\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_List()
     {
         var code = @"
@@ -97,9 +97,24 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> k = new StandardLibrary.ElanList<int>(1, 2, 3);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(k);
+  }
+}";
+
+        var parseTree = @"(file (constantDef constant k = (literal (literalDataStructure (literalList { (literal (literalValue 1)) , (literal (literalValue 2)) , (literal (literalValue 3)) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value k))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -110,7 +125,7 @@ end main
         AssertObjectCodeExecutes(compileData, "List {1,2,3}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Dictionary()
     {
         var code = @"
@@ -121,9 +136,24 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanDictionary<char,int> k = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('c', 3));
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(k);
+  }
+}";
+
+        var parseTree = @"(file (constantDef constant k = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'c')) : (literal (literalValue 3))) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value k))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -131,7 +161,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Dictionary {'a':1,'b':3,'c':3}\r\n");
+        AssertObjectCodeExecutes(compileData, "Dictionary {a:1,b:3,c:3}\r\n");
     }
 
     [TestMethod, Ignore]
