@@ -168,6 +168,74 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
+        [TestMethod, Ignore]
+    public void Pass_FunctionMethodNameHidesGlobalFunction() {
+        var code = @"#
+main
+    var f = Foo()
+    printLine(f)
+end main
+
+class Foo
+    constructor()
+        p1 = 5
+    end constructor
+
+    property p1 Int
+
+    function asString() -> String
+         return p1.asString()
+    end function
+
+end class
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+      p1 = 5;
+    }
+    public virtual int p1 { get; set; } = default;
+    public virtual string asString() {
+
+      return asString(p1);
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    printLine(f);
+  }
+}";
+
+        var parseTree = @"*";
+        
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "5\r\n");
+    }
+
     #endregion
 
     #region Fails

@@ -253,30 +253,61 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "1111111111111111111111111111111111111111111111111111");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_CSKeywordAsType() {
         var code = @"
 main
     var m = Base(3)
-    printLine(m)
+    printLine(m.p1)
 end main
 
 class Base
     constructor(p1 Int)
         self.p1 = p1
     end constructor
-
-    property p1 as Int
-
+    property p1 Int
     function asString() -> String
-        return p1.asString()
+        return """"
     end function
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public record class Base {
+    public static Base DefaultInstance { get; } = new Base._DefaultBase();
+    private Base() {}
+    public Base(int p1) {
+      this.p1 = p1;
+    }
+    public virtual int p1 { get; set; } = default;
+    public virtual string asString() {
+
+      return @$"""";
+    }
+    private record class _DefaultBase : Base {
+      public _DefaultBase() { }
+      public override int p1 => default;
+
+      public override string asString() { return ""default Base"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var m = new Base(3);
+    printLine(m.p1);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue m) = (expression (newInstance (type Base) ( (argumentList (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value m)) . p1)) ))))) end main) (classDef (mutableClass class Base (constructor constructor ( (parameterList (parameter p1 (type Int))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end constructor) (property property p1 (type Int)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -329,4 +360,31 @@ end class
     }
 
     #endregion
+}
+
+
+
+
+public static partial class Globals {
+
+    public static string? asString(int i) => "";
+
+    public record class Base {
+        public static Base DefaultInstance { get; } = new Base._DefaultBase();
+        private Base() {}
+        public Base(int p1) {
+            this.p1 = p1;
+        }
+        public virtual int p1 { get; set; } = default;
+        public virtual string asString() {
+
+            return Globals.asString(p1);
+        }
+        private record class _DefaultBase : Base {
+            public _DefaultBase() { }
+            public override int p1 => default;
+
+            public override string asString() { return "default Base";  }
+        }
+    }
 }
