@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass] [Ignore]
+[TestClass]
 public class T74_AnyImmutableTypeAsConstant
 {
     #region Passes
@@ -19,9 +19,24 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public const string k = @$""Apple"";
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(k);
+  }
+}";
+
+        var parseTree = @"(file (constantDef constant k = (literal (literalDataStructure ""Apple""))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value k))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -32,7 +47,7 @@ end main
         AssertObjectCodeExecutes(compileData, "Apple\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Tuple()
     {
         var code = @"
@@ -56,7 +71,7 @@ end main
         AssertObjectCodeExecutes(compileData, "(3,Apple)\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_List()
     {
         var code = @"
@@ -80,7 +95,7 @@ end main
         AssertObjectCodeExecutes(compileData, "List {1,2,3}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Dictionary()
     {
         var code = @"
@@ -104,7 +119,7 @@ end main
         AssertObjectCodeExecutes(compileData, "Dictionary {'a':1,'b':3,'c':3}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_ImmutableClass()
     {
         var code = @"
@@ -145,7 +160,7 @@ end class
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_Array()
     {
         var code = @"
@@ -159,7 +174,7 @@ constant k = Array<Int>(3)
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_MutableClass()
     {
         var code = @"
