@@ -47,7 +47,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Apple\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Tuple()
     {
         var code = @"
@@ -58,9 +58,24 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public static readonly (int, string) k = (3, @$""Apple"");
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(k);
+  }
+}";
+
+        var parseTree = @"(file (constantDef constant k = (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value k))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -68,7 +83,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "(3,Apple)\r\n");
+        AssertObjectCodeExecutes(compileData, "(3, Apple)\r\n");
     }
 
     [TestMethod, Ignore]
