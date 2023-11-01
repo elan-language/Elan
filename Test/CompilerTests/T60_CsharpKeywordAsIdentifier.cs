@@ -8,7 +8,7 @@ using static Helpers;
 public class T60_CsharpKeywordAsIdentifier {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_CSkeywordAsIdentifier() {
         var code = @"
 main
@@ -64,11 +64,183 @@ main
     var virtual = 1
     var void = 1
     var volatile  = 1
-    printLine(""{base}{bool}{break}{byte}{char}{checked}{const}{continue}{decimal}{delegate}{do}{double}{enum}{event}{explicit}{extern}{finally}{fixed}{float}{goto}{implicit}{int}{interface}{internal}{lock}{long}{namespace}{new}{null}{object}{operator}{out}{override}{params}{protected}{public}{readonly}{ref}{sbyte}{sealed}{short}{sizeof}{stackalloc}{static}{string}{struct}{this}{throw}{typeof}{uint}{ulong}{unchecked}{unsafe}{ushort}{using}{virtual}{void}{volatile}"")
+    
+    print(base);
+    print(break)
+    print(byte)
+    print(checked)
+    print(const)
+    print(continue)
+    print(delegate)
+    print(do)
+    print(double)
+    print(enum)
+    print(event)
+    print(explicit)
+    print(extern)
+    print(finally)
+    print(fixed)
+    print(goto)
+    print(implicit)
+    print(interface)
+    print(internal)
+    print(lock)
+    print(long)
+    print(namespace)
+    print(new)
+    print(null)
+    print(object)
+    print(operator)
+    print(out)
+    print(override)
+    print(params)
+    print(protected)
+    print(public)
+    print(readonly)
+    print(ref)
+    print(sbyte)
+    print(sealed)
+    print(short)
+    print(sizeof)
+    print(stackalloc)
+    print(static)
+    print(struct)
+    print(this)
+    print(throw)
+    print(typeof)
+    print(uint)
+    print(ulong)
+    print(unchecked)
+    print(unsafe)
+    print(ushort)
+    print(using)
+    print(virtual)
+    print(void)
+    print(volatile )
+
+
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var @base = 1;
+    var @break = 1;
+    var @byte = 1;
+    var @checked = 1;
+    var @const = 1;
+    var @continue = 1;
+    var @delegate = 1;
+    var @do = 1;
+    var @double = 1;
+    var @enum = 1;
+    var @event = 1;
+    var @explicit = 1;
+    var @extern = 1;
+    var @finally = 1;
+    var @fixed = 1;
+    var @goto = 1;
+    var @implicit = 1;
+    var @interface = 1;
+    var @internal = 1;
+    var @lock = 1;
+    var @long = 1;
+    var @namespace = 1;
+    var @new = 1;
+    var @null = 1;
+    var @object = 1;
+    var @operator = 1;
+    var @out = 1;
+    var @override = 1;
+    var @params = 1;
+    var @protected = 1;
+    var @public = 1;
+    var @readonly = 1;
+    var @ref = 1;
+    var @sbyte = 1;
+    var @sealed = 1;
+    var @short = 1;
+    var @sizeof = 1;
+    var @stackalloc = 1;
+    var @static = 1;
+    var @struct = 1;
+    var @this = 1;
+    var @throw = 1;
+    var @typeof = 1;
+    var @uint = 1;
+    var @ulong = 1;
+    var @unchecked = 1;
+    var @unsafe = 1;
+    var @ushort = 1;
+    var @using = 1;
+    var @virtual = 1;
+    var @void = 1;
+    var @volatile = 1;
+    print(@base);
+    print(@break);
+    print(@byte);
+    print(@checked);
+    print(@const);
+    print(@continue);
+    print(@delegate);
+    print(@do);
+    print(@double);
+    print(@enum);
+    print(@event);
+    print(@explicit);
+    print(@extern);
+    print(@finally);
+    print(@fixed);
+    print(@goto);
+    print(@implicit);
+    print(@interface);
+    print(@internal);
+    print(@lock);
+    print(@long);
+    print(@namespace);
+    print(@new);
+    print(@null);
+    print(@object);
+    print(@operator);
+    print(@out);
+    print(@override);
+    print(@params);
+    print(@protected);
+    print(@public);
+    print(@readonly);
+    print(@ref);
+    print(@sbyte);
+    print(@sealed);
+    print(@short);
+    print(@sizeof);
+    print(@stackalloc);
+    print(@static);
+    print(@struct);
+    print(@this);
+    print(@throw);
+    print(@typeof);
+    print(@uint);
+    print(@ulong);
+    print(@unchecked);
+    print(@unsafe);
+    print(@ushort);
+    print(@using);
+    print(@virtual);
+    print(@void);
+    print(@volatile);
+  }
+}";
 
         var parseTree = @"*";
 
@@ -78,7 +250,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "1111111111111111111111111111111111111111111111111111\r\n");
+        AssertObjectCodeExecutes(compileData, "1111111111111111111111111111111111111111111111111111");
     }
 
     [TestMethod, Ignore]

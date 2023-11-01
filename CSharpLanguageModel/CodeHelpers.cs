@@ -104,4 +104,62 @@ public static class CodeHelpers {
             _ => throw new NotImplementedException(op.ToString())
         };
     }
+
+
+    public static string Prefix(string id) => CSharpKeywords.Contains(id) ? $"@{id}" : id;
+
+    private static readonly string[] CSharpKeywords = new[] {
+        "base",
+        "break",
+        "byte",
+        "checked",
+        "const",
+        "continue",
+        "delegate",
+        "do",
+        "double",
+        "enum",
+        "event",
+        "explicit",
+        "extern",
+        "finally",
+        "fixed",
+        "goto",
+        "implicit",
+        "interface",
+        "internal",
+        "lock",
+        "long",
+        "namespace",
+        "new",
+        "null",
+        "object",
+        "operator",
+        "out",
+        "override",
+        "params",
+        "protected",
+        "public",
+        "readonly",
+        "ref",
+        "sbyte",
+        "sealed",
+        "short",
+        "sizeof",
+        "stackalloc",
+        "static",
+        "struct",
+        "this",
+        "throw",
+        "typeof",
+        "uint",
+        "ulong",
+        "unchecked",
+        "unsafe",
+        "ushort",
+        "using",
+        "virtual",
+        "void",
+        "volatile"
+    };
 }
