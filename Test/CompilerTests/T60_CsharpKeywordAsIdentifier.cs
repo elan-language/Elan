@@ -332,33 +332,5 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
     #endregion
-}
-
-
-
-
-public static partial class Globals {
-
-    public static string? asString(int i) => "";
-
-    public record class Base {
-        public static Base DefaultInstance { get; } = new Base._DefaultBase();
-        private Base() {}
-        public Base(int p1) {
-            this.p1 = p1;
-        }
-        public virtual int p1 { get; set; } = default;
-        public virtual string asString() {
-
-            return Globals.asString(p1);
-        }
-        private record class _DefaultBase : Base {
-            public _DefaultBase() { }
-            public override int p1 => default;
-
-            public override string asString() { return "default Base";  }
-        }
-    }
 }
