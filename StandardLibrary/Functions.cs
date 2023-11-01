@@ -11,12 +11,6 @@ namespace StandardLibrary;
 
 [ElanStandardLibrary]
 public static class Functions {
-    #region String handling
-
-    public const string newLine = @"
-";
-
-    #endregion
 
     public static string typeAndProperties(object o) {
         var type = o.GetType();

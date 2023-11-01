@@ -462,7 +462,7 @@ public static class Program {
     public void Pass_newLineConstant() {
         var code = @"
 main
-    var c = ""Hello ""+ newLine + ""World!""
+    var c = ""Hello ""+ newline + ""World!""
     printLine(c)
 end main
 ";
@@ -480,12 +480,12 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var c = @$""Hello "" + newLine + @$""World!"";
+    var c = @$""Hello "" + newline + @$""World!"";
     printLine(c);
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue c) = (expression (expression (expression (value (literal (literalDataStructure ""Hello "")))) (binaryOp (arithmeticOp +)) (expression (value newLine))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""World!"")))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue c) = (expression (expression (expression (value (literal (literalDataStructure ""Hello "")))) (binaryOp (arithmeticOp +)) (expression (value newline))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""World!"")))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
