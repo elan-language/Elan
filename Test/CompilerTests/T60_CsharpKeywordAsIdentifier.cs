@@ -322,8 +322,8 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod, Ignore]
-    public void Fail_ElanKeywordAsIdentier() {
+    [TestMethod]
+    public void Fail_ElanKeywordAsIdentifier() {
         var code = @"
 main
     var procedure = 1
@@ -333,6 +333,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
+    [TestMethod, Ignore]
     public void Fail_ElanKeywordWithChangedCase() {
         var code = @"
 main
