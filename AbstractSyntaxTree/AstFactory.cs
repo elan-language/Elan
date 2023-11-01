@@ -221,9 +221,10 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ConstantDefContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
-        var expr = visitor.Visit(context.literal());
+        var expr = context.literal() is { } l ? visitor.Visit(l) : null;
+        var newInstance = context.newInstance() is { } n ? visitor.Visit(n) : null;
 
-        return new ConstantDefNode(id, expr);
+        return new ConstantDefNode(id, expr ?? newInstance!);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssignmentContext context) {

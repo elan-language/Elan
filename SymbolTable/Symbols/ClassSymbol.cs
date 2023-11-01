@@ -2,6 +2,7 @@
 
 public enum ClassSymbolTypeType {
     Mutable,
+    Immutable,
     Abstract
 }
 

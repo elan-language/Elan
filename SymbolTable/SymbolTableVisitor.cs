@@ -64,7 +64,7 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitClassDefNode(ClassDefNode classDefNode) {
-        var ms = new ClassSymbol(classDefNode.Name, ClassSymbolTypeType.Mutable, currentScope);
+        var ms = new ClassSymbol(classDefNode.Name, classDefNode.Immutable ? ClassSymbolTypeType.Immutable : ClassSymbolTypeType.Mutable, currentScope);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(classDefNode);
@@ -90,7 +90,7 @@ public class SymbolTableVisitor {
             "Boolean" => BooleanSymbolType.Instance,
             "Char" => CharSymbolType.Instance,
             "Tuple" => new TupleSymbolType(),
-             _ => new ClassSymbolType(type)
+            _ => new ClassSymbolType(type)
         };
 
     private static string GetTypeName(IAstNode node) {
@@ -108,7 +108,6 @@ public class SymbolTableVisitor {
     private IAstNode VisitVarDefNode(VarDefNode varDefNode) {
         var name = varDefNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(varDefNode.Id.GetType().ToString());
         var type = ConvertToBuiltInSymbol(GetTypeName(varDefNode.Expression));
-
 
         var ms = new VariableSymbol(name, type, currentScope);
         currentScope.Define(ms);

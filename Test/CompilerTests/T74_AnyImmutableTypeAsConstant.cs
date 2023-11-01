@@ -164,7 +164,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Dictionary {a:1,b:3,c:3}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ImmutableClass()
     {
         var code = @"
@@ -187,9 +187,42 @@ immutable class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
 
-        var parseTree = @"*";
+public static partial class Globals {
+  public static readonly Foo k = new Foo(3);
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+    private Foo() {}
+    public Foo(int p1) {
+      this.p1 = p1 * 2;
+    }
+    public virtual int p1 { get; init; } = default;
+    public virtual string asString() {
+
+      return @$""{p1}"";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(k);
+  }
+}";
+
+        var parseTree = @"(file (constantDef constant k = (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 3))))) ))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value k))) ))))) end main) (classDef (immutableClass immutable class Foo (constructor constructor ( (parameterList (parameter p1 (type Int))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (expression (value p1)) (binaryOp (arithmeticOp *)) (expression (value (literal (literalValue 2))))))) end constructor) (property property p1 (type Int)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure ""{p1}"")))) end function)) end class)) <EOF>)";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -205,7 +238,7 @@ end class
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_Array()
     {
         var code = @"
@@ -219,8 +252,8 @@ constant k = Array<Int>(3)
         AssertDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Pass_MutableClass()
+    [TestMethod]
+    public void Fail_MutableClass()
     {
         var code = @"
 constant k = Foo(3)
@@ -242,7 +275,6 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
         AssertDoesNotCompile(compileData);
     }
     #endregion

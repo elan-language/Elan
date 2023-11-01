@@ -12,6 +12,7 @@ public class ThirdPassVisitor {
         Rules.Add(CompilerRules.SystemCallMustBeAssignedRule);
         Rules.Add(CompilerRules.CannotMutateControlVariableRule);
         Rules.Add(CompilerRules.CannotMutateTupleRule);
+        Rules.Add(CompilerRules.NoMutableConstantsRule);
         Rules.Add(CompilerRules.ArrayInitialization);
         Rules.Add(CompilerRules.FunctionConstraintsRule);
         Rules.Add(CompilerRules.ConstructorConstraintsRule);
