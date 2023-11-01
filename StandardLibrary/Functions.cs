@@ -101,7 +101,30 @@ public static class Functions {
 
     #region Type inspection
 
-    //public static string type(object o) => throw new NotImplementedException();
+    private static string MapType(Type t) {
+        return t.Name switch {
+            "int" => "Int",
+            "double" => "Float",
+            "char" => "Char",
+            _ => t.Name
+        };
+    }
+
+
+    private static string MapTypeNames(object o) {
+        return o switch {
+            int => "Int",
+            string => "String",
+
+            IElanList => $"List<{MapType(o.GetType().GenericTypeArguments.Single())}>", 
+            _ => o.GetType().Name
+        };
+    }
+
+
+
+
+    public static string type(object o) => MapTypeNames(o);
 
     #endregion
 
