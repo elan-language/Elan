@@ -1,6 +1,6 @@
 ﻿using static StandardLibrary.SystemCalls;
 
-namespace Test.StandardLibraryTests; 
+namespace Test.StandardLibraryTests;
 
 [TestClass]
 public class RandomNumberGeneration {

@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using StandardLibrary;
+﻿using StandardLibrary;
 using static StandardLibrary.Functions;
 
 namespace Test.CompilerTests;
@@ -82,13 +81,13 @@ public class FunctionsTests {
 
     [TestMethod]
     public void AsStringList() {
-        var t = new StandardLibrary.ElanList<int>(1, 2, 3, 4, 5);
+        var t = new ElanList<int>(1, 2, 3, 4, 5);
         Assert.AreEqual("List {1,2,3,4,5}", asString(t));
     }
 
     [TestMethod]
     public void AsStringEmptyList() {
-        var t = new StandardLibrary.ElanList<int>();
+        var t = new ElanList<int>();
         Assert.AreEqual("empty list", asString(t));
     }
 
@@ -135,12 +134,12 @@ public class FunctionsTests {
     }
 
     public record class Foo {
-        public static Foo DefaultInstance { get; } = new _DefaultFoo();
-
         public Foo() {
             p1 = 5;
             p2 = @"Apple";
         }
+
+        public static Foo DefaultInstance { get; } = new _DefaultFoo();
 
         public virtual int p1 { get; set; }
         protected virtual string p2 { get; set; } = "";
@@ -150,21 +149,14 @@ public class FunctionsTests {
             public override int p1 => default;
             protected override string p2 => "";
 
-            public override string asString() {
-                return "default Foo";
-            }
+            public override string asString() => "default Foo";
         }
     }
 
-    
-
-
     [TestMethod]
     public void TypeAndProperties() {
-        
         Assert.AreEqual("Foo {p1:5, p2:Apple}", typeAndProperties(new Foo()));
     }
-
 
     #endregion
 }

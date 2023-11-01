@@ -1,18 +1,15 @@
 ﻿using Compiler;
-using StandardLibrary;
 
 namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
-public class T48_InspectingTypes
-{
+[TestClass] [Ignore]
+public class T48_InspectingTypes {
     #region Passes
 
     [TestMethod] // See commented out stubs in standard library
-    public void Pass_typeMethod()
-    {
+    public void Pass_typeMethod() {
         var code = @"#
 main
     var x = 3
@@ -51,8 +48,7 @@ end class
     }
 
     [TestMethod]
-    public void Pass_testTypes()
-    {
+    public void Pass_testTypes() {
         var code = @"#
 main
     var x = 3
@@ -85,12 +81,11 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\ntrue\r\n"); 
+        AssertObjectCodeExecutes(compileData, "false\r\ntrue\r\ntrue\r\ntrue\r\n");
     }
 
     [TestMethod]
-    public void Pass_testSubType()
-    {
+    public void Pass_testSubType() {
         var code = @"#
 main
     var x = 3
@@ -128,8 +123,7 @@ end class
     }
 
     [TestMethod]
-    public void Pass_Tuple()
-    {
+    public void Pass_Tuple() {
         var code = @"#
 main
     var x = (3, ""Apple"")
@@ -149,7 +143,6 @@ end main
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "(Int, String)\r\n");
     }
-
 
     #endregion
 

@@ -47,8 +47,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Int_Expression()
-    {
+    public void Pass_Int_Expression() {
         var code = @"#
 main
   var a = 3 + 4
@@ -203,6 +202,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "4\r\n");
     }
+
     #endregion
 
     #region Fails

@@ -1,5 +1,4 @@
-﻿using System.Formats.Asn1;
-using AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
@@ -17,9 +16,7 @@ public static class CompilerTransforms {
         };
     }
 
-
-    private static IAstNode? TransformClassMethods(MethodCallNode mcn,   IAstNode[] nodes, IScope currentScope) {
-
+    private static IAstNode? TransformClassMethods(MethodCallNode mcn, IAstNode[] nodes, IScope currentScope) {
         var id = mcn.Qualifier is IdentifierNode idn ? idn.Id : null;
 
         if (id != null) {
@@ -66,7 +63,6 @@ public static class CompilerTransforms {
             IndexedExpressionNode ien when GetExpressionType(ien.Expression, currentScope) is TupleSymbolType => new ItemizedExpressionNode(ien.Expression, ien.Range),
             _ => null
         };
-
 
     private static IScope GetGlobalScope(IScope scope) =>
         scope is GlobalScope

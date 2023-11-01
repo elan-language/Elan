@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T74_AnyImmutableTypeAsConstant
-{
+public class T74_AnyImmutableTypeAsConstant {
     #region Passes
 
     [TestMethod]
@@ -48,8 +47,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Tuple()
-    {
+    public void Pass_Tuple() {
         var code = @"
 constant k = (3, ""Apple"")
 
@@ -87,8 +85,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_List()
-    {
+    public void Pass_List() {
         var code = @"
 constant k = {1,2,3}
 
@@ -126,8 +123,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Dictionary()
-    {
+    public void Pass_Dictionary() {
         var code = @"
 constant k = {'a':1, 'b':3, 'c':3}
 
@@ -165,8 +161,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ImmutableClass()
-    {
+    public void Pass_ImmutableClass() {
         var code = @"
 constant k = Foo(3)
 
@@ -233,14 +228,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "6\r\n");
     }
 
-
     #endregion
 
     #region Fails
 
     [TestMethod]
-    public void Fail_Array()
-    {
+    public void Fail_Array() {
         var code = @"
 constant k = Array<Int>(3)
 ";
@@ -253,8 +246,7 @@ constant k = Array<Int>(3)
     }
 
     [TestMethod]
-    public void Fail_MutableClass()
-    {
+    public void Fail_MutableClass() {
         var code = @"
 constant k = Foo(3)
 
@@ -277,5 +269,6 @@ end class
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
     }
+
     #endregion
 }

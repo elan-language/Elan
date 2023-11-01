@@ -25,7 +25,7 @@ public class SecondPassVisitor {
     private IScope Exit(IAstNode node, IScope currentScope) {
         return node switch {
             MainNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            ClassDefNode cdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(), 
+            ClassDefNode cdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
     }

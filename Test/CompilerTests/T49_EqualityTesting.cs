@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T49_EqualityTesting
-{
+public class T49_EqualityTesting {
     #region Passes
 
     [TestMethod]
-    public void Pass_DifferentInstancesWithSameValuesAreEqual()
-    {
+    public void Pass_DifferentInstancesWithSameValuesAreEqual() {
         var code = @"#
 main
     var x = Foo(7, ""Apple"")
@@ -96,8 +94,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ActuallyTheSameReference()
-    {
+    public void Pass_ActuallyTheSameReference() {
         var code = @"#
 main
     var x = Foo(7, ""Apple"")
@@ -186,8 +183,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_StringEquality()
-    {
+    public void Pass_StringEquality() {
         var code = @"#
 main
     var x = ""Apple""
@@ -230,8 +226,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ListEquality()
-    {
+    public void Pass_ListEquality() {
         var code = @"#
 main
     var x = {3,4,5}
@@ -274,8 +269,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ArrayEquality()
-    {
+    public void Pass_ArrayEquality() {
         var code = @"#
 main
     var x = {3,4,5}.asArray()
@@ -322,8 +316,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_DictionaryEquality()
-    {
+    public void Pass_DictionaryEquality() {
         var code = @"#
 main
     var x = {'a':3,'b':4,'c':5}

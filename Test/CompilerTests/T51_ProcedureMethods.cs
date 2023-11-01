@@ -5,13 +5,48 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T51_ProcedureMethods
-{
+public class T51_ProcedureMethods {
+    #region Fails
+
+    [TestMethod]
+    public void Fail_ProcedureCannotBeCalledDirectly() {
+        var code = @"#
+main
+    var f = Foo()
+    display(f)
+end main
+
+class Foo
+    constructor()
+        p1 = 5
+    end constructor
+
+    property p1 Int
+
+    procedure display()
+        printLine(p1)
+    end procedure
+
+    function asString() -> String
+         return """"
+    end function
+
+end class
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
+    #endregion
+
     #region Passes
 
     [TestMethod]
-    public void Pass_HappyCase()
-    {
+    public void Pass_HappyCase() {
         var code = @"#
 main
     var f = Foo()
@@ -87,8 +122,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ProcedureCanContainSystemCall()
-    {
+    public void Pass_ProcedureCanContainSystemCall() {
         var code = @"#
 main
     var f = Foo()
@@ -161,42 +195,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "5\r\n");
     }
-    #endregion
 
-    #region Fails
-
-    [TestMethod]
-    public void Fail_ProcedureCannotBeCalledDirectly()
-    {
-        var code = @"#
-main
-    var f = Foo()
-    display(f)
-end main
-
-class Foo
-    constructor()
-        p1 = 5
-    end constructor
-
-    property p1 Int
-
-    procedure display()
-        printLine(p1)
-    end procedure
-
-    function asString() -> String
-         return """"
-    end function
-
-end class
-";
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-    }
     #endregion
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 
 namespace StandardLibrary;
 
@@ -11,9 +10,6 @@ public interface IElanDictionary : IEnumerable {
 }
 
 public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, IElanDictionary where TKey : notnull {
-
-    public static ElanDictionary<TKey, TValue> DefaultInstance { get; } = new();
-
     private readonly ImmutableDictionary<TKey, TValue> wrappedDictionary;
 
     public ElanDictionary() => wrappedDictionary = ImmutableDictionary.Create<TKey, TValue>();
@@ -25,6 +21,8 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
     public ElanDictionary(KeyValuePair<TKey, TValue> item) => wrappedDictionary = ImmutableDictionary.CreateRange(new[] { item });
 
     private ElanDictionary(ImmutableDictionary<TKey, TValue> dictionary) => wrappedDictionary = dictionary;
+
+    public static ElanDictionary<TKey, TValue> DefaultInstance { get; } = new();
     public IEnumerable<object> ObjectKeys => Keys.Cast<object>();
     public IEnumerable<object> ObjectValues => Values.Cast<object>();
 
@@ -69,10 +67,7 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
     private static ElanDictionary<TKey, TValue> Wrap(ImmutableDictionary<TKey, TValue> dict) => new(dict);
 
     public static bool operator ==(ElanDictionary<TKey, TValue> a, object? b) {
-        static bool EqualKvp(KeyValuePair<TKey, TValue> kvp1, KeyValuePair<TKey, TValue> kvp2 ) {
-            return kvp1.Key.Equals(kvp2.Key) && (kvp1.Value?.Equals(kvp2.Value) == true);
-        }
-
+        static bool EqualKvp(KeyValuePair<TKey, TValue> kvp1, KeyValuePair<TKey, TValue> kvp2) => kvp1.Key.Equals(kvp2.Key) && kvp1.Value?.Equals(kvp2.Value) == true;
 
         if (b is null || b.GetType() != typeof(ElanDictionary<TKey, TValue>)) {
             return false;
@@ -84,7 +79,7 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
             return false;
         }
 
-        return a.Zip(other).All(z =>  EqualKvp(z.First, z.Second));
+        return a.Zip(other).All(z => EqualKvp(z.First, z.Second));
     }
 
     public static bool operator !=(ElanDictionary<TKey, TValue> a, object? b) => !(a == b);
@@ -92,9 +87,7 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
     public override bool Equals(object? obj) => this == obj;
 
     public override int GetHashCode() {
-        static int KvpHashCode(KeyValuePair<TKey, TValue> kvp1) {
-            return kvp1.Key.GetHashCode() + (kvp1.Value?.GetHashCode() ?? 0);
-        }
+        static int KvpHashCode(KeyValuePair<TKey, TValue> kvp1) => kvp1.Key.GetHashCode() + (kvp1.Value?.GetHashCode() ?? 0);
 
         return GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + KvpHashCode(i));
     }

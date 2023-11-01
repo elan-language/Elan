@@ -72,7 +72,6 @@ public static class AstFactory {
             PropertyContext c => visitor.Build(c),
             NameQualifierContext c => visitor.Build(c),
             DeconstructedTupleContext c => visitor.Build(c),
-         
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -164,7 +163,7 @@ public static class AstFactory {
 
         if (context.withClause() is { } wc) {
             var expr = visitor.Visit(context.expression().Single());
-            var with =  wc.inlineAsignment().Select(visitor.Visit);
+            var with = wc.inlineAsignment().Select(visitor.Visit);
 
             return new WithNode(expr, with.ToImmutableArray());
         }
@@ -182,8 +181,7 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {
-
-        if (context.nameQualifier() is {} nq) {
+        if (context.nameQualifier() is { } nq) {
             var nqn = visitor.Visit(nq);
             var idn = visitor.Visit(context.IDENTIFIER());
             return new QualifiedNode(nqn, idn);
@@ -521,7 +519,6 @@ public static class AstFactory {
             return new TypeNode(typeName);
         }
 
-
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -587,7 +584,7 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionWithBodyContext context) {
         var signature = visitor.Visit(context.functionSignature());
         var statementBlock = visitor.Visit(context.statementBlock());
-        var ret =  new ReturnExpressionNode(visitor.Visit(context.expression()));
+        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
 
         return new FunctionDefNode(signature, statementBlock, ret);
     }
@@ -669,7 +666,7 @@ public static class AstFactory {
             return visitor.Visit(aic);
         }
 
-        throw new NotImplementedException(context.children.First().GetText()); 
+        throw new NotImplementedException(context.children.First().GetText());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, MutableClassContext context) {
@@ -689,7 +686,7 @@ public static class AstFactory {
         var constructor = visitor.Visit(context.constructor());
         var properties = context.property().Select(visitor.Visit);
         var functions = context.functionDef().Select(fd => visitor.Visit<FunctionDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
-        
+
         return new ClassDefNode(typeName, inherits.ToImmutableArray(), constructor, properties.ToImmutableArray(), functions.ToImmutableArray(), true);
     }
 
@@ -708,7 +705,7 @@ public static class AstFactory {
         var inherits = context.inherits() is { } ih ? ih.type().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var properties = context.property().Select(visitor.Visit);
         var functions = context.functionSignature().Select(visitor.Visit);
-        
+
         return new AbstractClassDefNode(typeName, inherits.ToImmutableArray(), properties.ToImmutableArray(), functions.ToImmutableArray());
     }
 
@@ -723,7 +720,6 @@ public static class AstFactory {
         var id = visitor.Visit(context.IDENTIFIER());
         var type = visitor.Visit(context.type());
         var isPrivate = context.PRIVATE() is not null;
-
 
         return new PropertyDefNode(id, type, isPrivate);
     }
@@ -741,11 +737,9 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DeconstructedTupleContext context) {
-
         var ids = context.IDENTIFIER().Select(visitor.Visit).ToImmutableArray();
         var isNew = Enumerable.Range(0, ids.Length).Select(i => context.VAR(i) is not null);
 
         return new DeconstructionNode(ids, isNew.ToImmutableArray());
     }
-
 }

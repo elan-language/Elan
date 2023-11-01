@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T56_PrivateProperties
-{
+public class T56_PrivateProperties {
     #region Passes
 
     [TestMethod]
-    public void Pass_PrivatePropertyCanBeDeclared()
-    {
+    public void Pass_PrivatePropertyCanBeDeclared() {
         var code = @"#
 main
     var x = Foo()
@@ -87,8 +85,7 @@ public static class Program {
     #region Fails
 
     [TestMethod]
-    public void Fail_PrivatePropertyCannotBeAccessed()
-    {
+    public void Fail_PrivatePropertyCannotBeAccessed() {
         var code = @"#
 main
     var f = Foo()
@@ -111,8 +108,6 @@ class Foo
 
 end class
 ";
-
-        var objectCode = @"";
 
         var parseTree = @"*";
 

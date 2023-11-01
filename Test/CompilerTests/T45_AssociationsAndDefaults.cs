@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T45_AssociationsAndDefaults
-{
+public class T45_AssociationsAndDefaults {
     #region Passes
 
     [TestMethod]
-    public void Pass_CanHavePropertiesThatAreDataStructuresOrObjects()
-    {
+    public void Pass_CanHavePropertiesThatAreDataStructuresOrObjects() {
         var code = @"#
 main
     var g = Game()
@@ -123,8 +121,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_PropertiesOfAllStandardTypesHaveDefaultValues()
-    {
+    public void Pass_PropertiesOfAllStandardTypesHaveDefaultValues() {
         var code = @"#
 main
     var g = Game()
@@ -224,9 +221,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, $"0\r\n0\r\nfalse\r\n{default(char)}\r\n\r\nempty list\r\nempty dictionary\r\nempty array\r\n"); //Not sure if char is correct - use C# default
     }
 
-     [TestMethod]
-    public void Pass_DefaultValuesNotPickedUpFromDefaultConstructor()
-    {
+    [TestMethod]
+    public void Pass_DefaultValuesNotPickedUpFromDefaultConstructor() {
         var code = @"#
 main
     var g = default Game
@@ -289,12 +285,11 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, $"0\r\n");
+        AssertObjectCodeExecutes(compileData, "0\r\n");
     }
 
     [TestMethod]
-    public void Pass_PropertiesOfClassTypesHaveDefaultValues()
-    {
+    public void Pass_PropertiesOfClassTypesHaveDefaultValues() {
         var code = @"#
 main
     var g = Game()
@@ -395,8 +390,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_defaultKeywordToTestValue()
-    {
+    public void Pass_defaultKeywordToTestValue() {
         var code = @"#
 main
     var g = Game()
@@ -521,9 +515,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\ntrue\r\ntrue\r\nfalse\r\ntrue\r\n");
     }
 
-    [TestMethod]    
-    public void Pass_defaultValueCanBeAssigned()
-    {
+    [TestMethod]
+    public void Pass_defaultValueCanBeAssigned() {
         var code = @"#
 main
     var g = Game()
@@ -649,10 +642,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "10\r\n0\r\n");
     }
 
-
     [TestMethod]
-    public void Pass_defaultForStandardDataStructures()
-    {
+    public void Pass_defaultForStandardDataStructures() {
         var code = @"#
 main
     var f = Foo()
@@ -742,7 +733,6 @@ public static class Program {
     #endregion
 
     #region Fails
-
 
     #endregion
 }

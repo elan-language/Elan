@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T59_Global
-{
+public class T59_Global {
     #region Passes
 
     [TestMethod]
-    public void Pass_DisambiguateConstantFromLocalVariable()
-    {
+    public void Pass_DisambiguateConstantFromLocalVariable() {
         var code = @"#
 constant a = 4
 main
@@ -49,8 +47,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_DisambiguateConstantFromInstanceProperty()
-    {
+    public void Pass_DisambiguateConstantFromInstanceProperty() {
         var code = @"#
 constant a = 4
 
@@ -137,10 +134,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\n4\r\n");
     }
 
-
     [TestMethod]
-    public void Pass_DisambiguateGlobalFunctionFromInstanceFunction()
-    {
+    public void Pass_DisambiguateGlobalFunctionFromInstanceFunction() {
         var code = @"#
 main
     var f = Foo()
@@ -242,8 +237,7 @@ public static class Program {
     #region Fails
 
     [TestMethod]
-    public void Fail_NoSuchGlobal()
-    {
+    public void Fail_NoSuchGlobal() {
         var code = @"#
 constant b = 4
 main
@@ -262,8 +256,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_NoSuchGlobalConstant()
-    {
+    public void Fail_NoSuchGlobalConstant() {
         var code = @"#
 main
     var f = Foo()
@@ -301,8 +294,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_NoSuchGlobalSubroutine()
-    {
+    public void Fail_NoSuchGlobalSubroutine() {
         var code = @"#
 main
     var f = Foo()

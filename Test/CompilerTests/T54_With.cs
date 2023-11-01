@@ -1,18 +1,51 @@
 ﻿using Compiler;
-using StandardLibrary;
 
 namespace Test.CompilerTests;
 
 using static Helpers;
 
 [TestClass]
-public class T54_With
-{
+public class T54_With {
+    #region Fails
+
+    [TestMethod]
+    public void Fail_NonMatchingProperty() {
+        var code = @"#
+main
+    var x = Foo() with {p1 = 3, p3 = ""Apple"" }
+    printLine(x.p1)
+    printLine(x.p2)
+end main
+
+class Foo
+    constructor()
+        p1 = 5
+    end constructor
+    property p1 Int
+
+    property p2 String
+
+    function asString() -> String
+         return """"
+    end function
+
+end class
+";
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( ) (withClause with { (inlineAsignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) , (inlineAsignment (assignableValue p3) = (expression (value (literal (literalDataStructure ""Apple""))))) })))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
+    }
+
+    #endregion
+
     #region Passes
 
     [TestMethod]
-    public void Pass_InstantiatingClassWithZeroParamConstructor()
-    {
+    public void Pass_InstantiatingClassWithZeroParamConstructor() {
         var code = @"#
 main
     var x = Foo() with {p1 = 3, p2 = ""Apple"" }
@@ -85,8 +118,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ConstructorWithParm()
-    {
+    public void Pass_ConstructorWithParm() {
         var code = @"#
 main
     var x = Foo(7) with {p1 = 3, p2 = ""Apple"" }
@@ -159,8 +191,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_AppliedToInstanceButReturnedOneIsNewInstance()
-    {
+    public void Pass_AppliedToInstanceButReturnedOneIsNewInstance() {
         var code = @"#
 main
     var x = Foo()
@@ -237,8 +268,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_WorksWithImmutableClass()
-    {
+    public void Pass_WorksWithImmutableClass() {
         var code = @"#
 main
     var x = Foo()
@@ -313,41 +343,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n5\r\n");
     }
-    #endregion
 
-    #region Fails
-
-    [TestMethod]
-    public void Fail_NonMatchingProperty()
-    {
-        var code = @"#
-main
-    var x = Foo() with {p1 = 3, p3 = ""Apple"" }
-    printLine(x.p1)
-    printLine(x.p2)
-end main
-
-class Foo
-    constructor()
-        p1 = 5
-    end constructor
-    property p1 Int
-
-    property p2 String
-
-    function asString() -> String
-         return """"
-    end function
-
-end class
-";
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( ) (withClause with { (inlineAsignment (assignableValue p1) = (expression (value (literal (literalValue 3))))) , (inlineAsignment (assignableValue p3) = (expression (value (literal (literalDataStructure ""Apple""))))) })))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p2)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
-    }
     #endregion
 }

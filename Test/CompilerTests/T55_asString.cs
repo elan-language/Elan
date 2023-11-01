@@ -5,13 +5,38 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T55_asString
-{
+public class T55_asString {
+    #region Fails
+
+    [TestMethod]
+    public void Fail_ClassHasNoAsString() {
+        var code = @"#
+class Foo
+    constructor()
+        p1 = 5
+        p2 = ""Apple""
+    end constructor
+
+    property p1 Int
+
+    private property p2 String
+end class
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData);
+    }
+
+    #endregion
+
     #region Passes
 
     [TestMethod]
-    public void Pass_AsStringMayBeCalled()
-    {
+    public void Pass_AsStringMayBeCalled() {
         var code = @"#
 main
     var f = Foo()
@@ -86,8 +111,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_AsStringCalledWhenObjectPrinted()
-    {
+    public void Pass_AsStringCalledWhenObjectPrinted() {
         var code = @"#
 main
     var f = Foo()
@@ -160,8 +184,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_AsStringUsingDefaultHelper()
-    {
+    public void Pass_AsStringUsingDefaultHelper() {
         var code = @"#
 main
     var f = Foo()
@@ -234,10 +257,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Foo {p1:5, p2:Apple}\r\n");
     }
 
-
     [TestMethod]
-    public void Pass_AsStringOnVariousDataTypes()
-    {
+    public void Pass_AsStringOnVariousDataTypes() {
         var code = @"#
 main
     var l = {1,2,3}
@@ -287,37 +308,6 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "List {1,2,3}\r\nArray {1,2,3}\r\nDictionary {a:1,b:3,z:10}\r\n");
-    }
-
-
-    #endregion
-
-    #region Fails
-
-    [TestMethod]
-    public void Fail_ClassHasNoAsString()
-    {
-        var code = @"#
-class Foo
-    constructor()
-        p1 = 5
-        p2 = ""Apple""
-    end constructor
-
-    property p1 Int
-
-    private property p2 String
-end class
-";
-
-        var objectCode = @"";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
     }
 
     #endregion

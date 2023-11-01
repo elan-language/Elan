@@ -6,9 +6,6 @@ namespace StandardLibrary;
 public interface IElanList { }
 
 public class ElanList<T> : IElanList, IEnumerable<T> {
-
-    public static ElanList<T> DefaultInstance { get; } = new();
-
     private readonly ImmutableList<T> wrappedList;
 
     public ElanList() => wrappedList = ImmutableList.Create<T>();
@@ -18,6 +15,8 @@ public class ElanList<T> : IElanList, IEnumerable<T> {
     public ElanList(T item) => wrappedList = ImmutableList.Create(item);
 
     private ElanList(ImmutableList<T> list) => wrappedList = list;
+
+    public static ElanList<T> DefaultInstance { get; } = new();
 
     public int Count => wrappedList.Count;
 

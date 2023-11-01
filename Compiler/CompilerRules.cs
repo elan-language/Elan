@@ -152,7 +152,7 @@ public static class CompilerRules {
 
     public static string? ConstructorConstraintsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        
+
         if (leafNode is AssignmentNode an) {
             var otherNodes = nodes.SkipLast(1).Expand().ToArray();
             if (otherNodes.Any(n => n is ConstructorNode)) {

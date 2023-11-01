@@ -5,16 +5,15 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T57_ConstructorParmsNotMutable
-{
+public class T57_ConstructorParmsNotMutable {
     #region Passes
+
     #endregion
 
     #region Fails
 
     [TestMethod]
-    public void Fail_reassigningIntParam()
-    {
+    public void Fail_reassigningIntParam() {
         var code = @"#
 class Foo
     constructor(p_1 Int)
@@ -38,8 +37,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_MutatingArrayParam()
-    {
+    public void Fail_MutatingArrayParam() {
         var code = @"#
 class Foo
     constructor(a Array<Int>)
@@ -58,5 +56,6 @@ end class
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
     }
+
     #endregion
 }

@@ -17,7 +17,7 @@ public record ClassDefModel(ICodeModel Type, IEnumerable<ICodeModel> Inherits, I
 
     private string DefaultConstructor(int indent) => HasDefaultConstructor ? "" : $"{Indent(indent + 1)}private {Type}() {{}}";
 
-    private string DefaultInstance(int indent) => $"{Indent(indent + 1)}public static {Type} DefaultInstance {{ get; }} = new {Type}._Default{Type}();"; 
+    private string DefaultInstance(int indent) => $"{Indent(indent + 1)}public static {Type} DefaultInstance {{ get; }} = new {Type}._Default{Type}();";
 
     private string InheritsAsString() => Inherits.Any() ? $" : {Inherits.AsCommaSeparatedString()}" : "";
 

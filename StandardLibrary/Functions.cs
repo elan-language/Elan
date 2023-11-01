@@ -3,7 +3,6 @@
 
 using System.Collections;
 using System.Collections.Immutable;
-using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using static StandardLibrary.Constants;
@@ -18,6 +17,21 @@ public static class Functions {
 ";
 
     #endregion
+
+    public static string typeAndProperties(object o) {
+        var type = o.GetType();
+        var name = type.Name;
+        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetCustomAttribute<CompilerGeneratedAttribute>() is null).ToArray();
+        var pNames = properties.Select(p => p.Name);
+        var pValues = properties.Select(p => p.GetValue(o));
+        var pStrings = pValues.Select(asString);
+        var nameValues = pNames.Zip(pStrings);
+        var pnv = nameValues.Select(nv => $"{nv.First}:{nv.Second}");
+
+        var pString = string.Join(", ", pnv);
+
+        return $"{name} {{{pString}}}";
+    }
 
     #region lists
 
@@ -88,9 +102,11 @@ public static class Functions {
     #region Type inspection
 
     //public static string type(object o) => throw new NotImplementedException();
+
     #endregion
 
     #region Type conversion
+
     public static double asFloat(int x) => x;
     public static double asFloat(decimal x) => (double)x;
     public static decimal asDecimal(int x) => x;
@@ -127,7 +143,7 @@ public static class Functions {
             IEnumerable l => asString(l),
             ElanException e => e.message,
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
-            _ when obj.GetType().GetMethod("asString") is { }  mi => mi.Invoke(obj, null) as string,
+            _ when obj.GetType().GetMethod("asString") is { } mi => mi.Invoke(obj, null) as string,
             _ => obj.ToString()
         };
     }
@@ -154,21 +170,5 @@ public static class Functions {
     public static string asString<T>(ITuple t) =>
         Enumerable.Range(1, t.Length - 1).Aggregate($"({asString(t[0])}", (s, x) => s + $", {asString(t[x])}") + ")";
 
-
     #endregion
-
-    public static string typeAndProperties(object o) {
-        var type = o.GetType();
-        var name = type.Name;
-        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetCustomAttribute<CompilerGeneratedAttribute>() is null).ToArray();
-        var pNames = properties.Select(p => p.Name);
-        var pValues = properties.Select(p => p.GetValue(o));
-        var pStrings = pValues.Select(asString);
-        var nameValues = pNames.Zip(pStrings);
-        var pnv = nameValues.Select(nv => $"{nv.First}:{nv.Second}");
-
-        var pString = string.Join(", ", pnv);
-
-        return $"{name} {{{pString}}}";
-    }
 }

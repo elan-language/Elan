@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass] [Ignore]
-public class T46_typeMethod
-{
+public class T46_typeMethod {
     #region Passes
 
     [TestMethod]
@@ -51,8 +50,7 @@ end class
     }
 
     [TestMethod]
-    public void Pass_TypeTesting()
-    {
+    public void Pass_TypeTesting() {
         var code = @"
 main
     printLine(1.type() is 2.type());

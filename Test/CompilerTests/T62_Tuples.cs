@@ -1,18 +1,15 @@
 ﻿using Compiler;
-using StandardLibrary;
 
 namespace Test.CompilerTests;
 
 using static Helpers;
 
 [TestClass]
-public class T62_Tuples
-{
+public class T62_Tuples {
     #region Passes
 
     [TestMethod]
-    public void Pass_CreatingTuplesAndReadingContents()
-    {
+    public void Pass_CreatingTuplesAndReadingContents() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -54,8 +51,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_DeconstructIntoExistingVariables()
-    {
+    public void Pass_DeconstructIntoExistingVariables() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -101,8 +97,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_DeconstructIntoNewVariables()
-    {
+    public void Pass_DeconstructIntoNewVariables() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -143,8 +138,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_AssignANewTupleOfSameType()
-    {
+    public void Pass_AssignANewTupleOfSameType() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -186,9 +180,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_OutOfRangeError()
-    {
+    public void Fail_OutOfRangeError() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -225,8 +219,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_AssignItemToWrongType()
-    {
+    public void Fail_AssignItemToWrongType() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -244,8 +237,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_ImmutableSoCannotAssignAnItem()
-    {
+    public void Fail_ImmutableSoCannotAssignAnItem() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -260,10 +252,8 @@ end main
         AssertDoesNotCompile(compileData);
     }
 
-
     [TestMethod]
-    public void Fail_DeconstructIntoWrongType()
-    {
+    public void Fail_DeconstructIntoWrongType() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -284,8 +274,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_AssignANewTupleOfWrongType()
-    {
+    public void Pass_AssignANewTupleOfWrongType() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -293,11 +282,12 @@ main
     printLine(x)
 end main
 ";
-       
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
+
     #endregion
 }

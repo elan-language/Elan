@@ -3,7 +3,6 @@
 using static CodeHelpers;
 
 public record DefaultClassDefModel(ICodeModel Type, IEnumerable<ICodeModel> Properties, IEnumerable<ICodeModel> Procedures) : ICodeModel {
-
     public string ToString(int indent) =>
         $@"{Indent(indent)}private record class _Default{Type} : {Type} {{
 {DefaultConstructor(indent)}

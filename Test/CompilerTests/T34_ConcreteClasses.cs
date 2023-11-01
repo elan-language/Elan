@@ -1,18 +1,15 @@
 ﻿using Compiler;
-using StandardLibrary;
 
 namespace Test.CompilerTests;
 
 using static Helpers;
 
 [TestClass]
-public class T34_ConcreteClasses
-{
+public class T34_ConcreteClasses {
     #region Passes
 
     [TestMethod]
-    public void Pass_Class_SimpleInstantiation_PropertyAccess_Methods()
-    {
+    public void Pass_Class_SimpleInstantiation_PropertyAccess_Methods() {
         var code = @"#
 main
     var x = Foo()
@@ -87,8 +84,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ConstructorWithParm()
-    {
+    public void Pass_ConstructorWithParm() {
         var code = @"#
 main
     var x = Foo(7, ""Apple"")
@@ -164,9 +160,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_NoConstructor()
-    {
+    public void Fail_NoConstructor() {
         var code = @"#
 class Foo
 
@@ -184,8 +180,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_InitialisePropertyInLine()
-    {
+    public void Fail_InitialisePropertyInLine() {
         var code = @"#
 class Foo
 
@@ -203,8 +198,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_AttemptToModifyAPropertyDirectly()
-    {
+    public void Fail_AttemptToModifyAPropertyDirectly() {
         var code = @"#
 main
     var x = Foo()
@@ -223,14 +217,12 @@ class Foo
 end class
 ";
 
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail_OverloadedConstructor()
-    {
+    public void Fail_OverloadedConstructor() {
         var code = @"#
 
 class Foo
@@ -254,8 +246,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_InstantiateWithoutRequiredArgs()
-    {
+    public void Fail_InstantiateWithoutRequiredArgs() {
         var code = @"#
 main
     var x = Foo()
@@ -284,8 +275,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_InstantiateWithWrongArgType()
-    {
+    public void Fail_InstantiateWithWrongArgType() {
         var code = @"#
 main
     var x = Foo(7.1)
@@ -314,8 +304,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_SupplyingArgumentNotSpecified()
-    {
+    public void Fail_SupplyingArgumentNotSpecified() {
         var code = @"#
 main
     var x = Foo(7)

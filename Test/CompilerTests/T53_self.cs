@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T53_self
-{
+public class T53_self {
     #region Passes
 
     [TestMethod]
-    public void Pass_DisambiguateParamAndProperty()
-    {
+    public void Pass_DisambiguateParamAndProperty() {
         var code = @"#
 main
     var x = Foo(7)
@@ -67,7 +65,7 @@ public static class Program {
 }";
 
         var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) . p1)) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p1 (type Int))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end constructor) (property property p1 (type Int)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
-        
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -78,8 +76,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_UsingSelfAsAnInstance()
-    {
+    public void Pass_UsingSelfAsAnInstance() {
         var code = @"#
 main
     var f = Foo()
@@ -165,8 +162,7 @@ public static class Program {
     #region Fails
 
     [TestMethod]
-    public void Fail_NoSuchProperty()
-    {
+    public void Fail_NoSuchProperty() {
         var code = @"#
 main
     var x = Foo(7)
@@ -195,10 +191,8 @@ end class
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-
     [TestMethod]
-    public void Fail_MissingSelfCausesCompileErrorDueToAssigningToParam()
-    {
+    public void Fail_MissingSelfCausesCompileErrorDueToAssigningToParam() {
         var code = @"#
 main
     var x = Foo(7)
@@ -225,5 +219,6 @@ end class
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
     }
+
     #endregion
 }

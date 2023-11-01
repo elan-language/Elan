@@ -1,15 +1,15 @@
 ﻿using Compiler;
+
 namespace Test.CompilerTests;
 
 using static Helpers;
 
 [TestClass]
-public class T44_ImmutableClass
-{
+public class T44_ImmutableClass {
     #region Passes
+
     [TestMethod]
-    public void Pass_BasicImmutableClass()
-    {
+    public void Pass_BasicImmutableClass() {
         var code = @"#
 main
     var f = Foo(3)
@@ -82,8 +82,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_AbstractImmutableClass()
-    {
+    public void Pass_AbstractImmutableClass() {
         var code = @"#
 main
     var f = Foo(3)
@@ -168,9 +167,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_ProcedureMethod()
-    {
+    public void Fail_ProcedureMethod() {
         var code = @"#
 immutable class Foo
     constructor(p1 Int)
@@ -193,8 +192,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_ProcedureMethodOnAbstractImmutableClass()
-    {
+    public void Fail_ProcedureMethodOnAbstractImmutableClass() {
         var code = @"#
 abstract immutable class Bar
     property p1 Int
@@ -208,8 +206,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_AbstractAndImmutableReversed()
-    {
+    public void Fail_AbstractAndImmutableReversed() {
         var code = @"#
 immutable abstract class Bar
     property p1 Int
@@ -221,5 +218,6 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 }

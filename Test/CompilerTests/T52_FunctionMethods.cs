@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T52_FunctionMethods
-{
+public class T52_FunctionMethods {
     #region Passes
 
     [TestMethod]
-    public void Pass_HappyCase()
-    {
+    public void Pass_HappyCase() {
         var code = @"#
 main
     var f = Foo()
@@ -87,8 +85,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_FunctionMethodMayCallOtherFunctionMethod()
-    {
+    public void Pass_FunctionMethodMayCallOtherFunctionMethod() {
         var code = @"#
 main
     var f = Foo()
@@ -171,14 +168,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-
     #endregion
 
     #region Fails
 
     [TestMethod]
-    public void Fail_FunctionCannotBeCalledDirectly()
-    {
+    public void Fail_FunctionCannotBeCalledDirectly() {
         var code = @"#
 main
     var f = Foo()
@@ -211,8 +206,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_FunctionMethodCannotMutateProperty()
-    {
+    public void Fail_FunctionMethodCannotMutateProperty() {
         var code = @"#
 class Foo
     constructor()
@@ -241,8 +235,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_FunctionMethodCannotCallProcedureMethod()
-    {
+    public void Fail_FunctionMethodCannotCallProcedureMethod() {
         var code = @"#
 class Foo
     constructor()
@@ -267,12 +260,13 @@ class Foo
 end class
 ";
 
-       var parseTree = @"*";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData);
     }
+
     #endregion
 }

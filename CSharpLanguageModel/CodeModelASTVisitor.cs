@@ -62,7 +62,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             PropertyNode n => HandleScope(BuildPropertyModel, n),
             EnumDefNode n => HandleScope(BuildEnumDefModel, n),
             EnumValueNode n => HandleScope(BuildEnumValueModel, n),
-            PairNode n => HandleScope(BuildKvpModel, n), 
+            PairNode n => HandleScope(BuildKvpModel, n),
             ClassDefNode n => HandleScope(BuildClassDefModel, n),
             AbstractClassDefNode n => HandleScope(BuildAbstractClassDefModel, n),
             ConstructorNode n => HandleScope(BuildConstructorModel, n),
@@ -100,7 +100,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private MethodCallModel BuildFunctionCallModel(FunctionCallNode functionCallNode) {
         var qual = functionCallNode.Qualifier is { } q ? Visit(q) : null;
-        return new(CodeHelpers.MethodType.Function, Visit(functionCallNode.Id), qual, functionCallNode.Parameters.Select(Visit));
+        return new MethodCallModel(CodeHelpers.MethodType.Function, Visit(functionCallNode.Id), qual, functionCallNode.Parameters.Select(Visit));
     }
 
     private ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
@@ -211,7 +211,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private NewInstanceModel BuildNewInstanceModel(NewInstanceNode newInstanceNode) {
         var type = Visit(newInstanceNode.Type);
         var args = newInstanceNode.Arguments.Select(Visit);
-        
+
         return new NewInstanceModel(type, args);
     }
 
@@ -319,8 +319,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var pSignatures = classDefNode.Methods.OfType<ProcedureDefNode>().Select(n => n.Signature).Select(Visit);
 
         var dProperties = properties.OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Default });
-        
-        var defaultClassModel = new DefaultClassDefModel(type, dProperties,  pSignatures);
+
+        var defaultClassModel = new DefaultClassDefModel(type, dProperties, pSignatures);
 
         return new ClassDefModel(type, inherits, constructor, properties, functions, classDefNode.HasDefaultConstructor, defaultClassModel);
     }
@@ -328,14 +328,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private AbstractClassDefModel BuildAbstractClassDefModel(AbstractClassDefNode abstractClassDefNode) {
         var type = Visit(abstractClassDefNode.Type);
         var inherits = abstractClassDefNode.Inherits.Select(Visit);
-        var properties = abstractClassDefNode.Properties.Select(Visit).OfType<PropertyDefModel>() .Select(p => p with {PropertyType = PropertyType.Abstract});
+        var properties = abstractClassDefNode.Properties.Select(Visit).OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Abstract });
         var functions = abstractClassDefNode.Methods.Select(Visit);
 
         return new AbstractClassDefModel(type, inherits, properties, functions);
     }
 
     private ConstructorModel BuildConstructorModel(ConstructorNode constructorNode) {
-      
         var body = Visit(constructorNode.StatementBlock);
         var parameters = constructorNode.Parameters.Select(Visit);
 
@@ -350,9 +349,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private TypeModel BuildTypeModel(TypeNode typeNode) {
-      
         var id = Visit(typeNode.TypeName);
-        
+
         return new TypeModel(id);
     }
 
@@ -363,17 +361,15 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private QualifiedValueModel BuildQualifiedModel(QualifiedNode qualifiedNode) => new(Visit(qualifiedNode.Qualifier), Visit(qualifiedNode.Qualified));
 
     private DefaultModel BuildDefaultModel(DefaultNode defaultNode) {
-      
         var id = Visit(defaultNode.Type);
-        
+
         return new DefaultModel(id, defaultNode.TypeType);
     }
 
     private WithModel BuildWithModel(WithNode withNode) {
-
         var expr = Visit(withNode.Expression);
         var assignments = withNode.AssignmentNodes.Select(Visit);
-        
+
         return new WithModel(expr, assignments);
     }
 

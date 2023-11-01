@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T43_Inheritance
-{
+public class T43_Inheritance {
     #region Passes
 
     [TestMethod]
@@ -122,8 +121,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_InheritFromMoreThanOneAbstractClass()
-    {
+    public void Pass_InheritFromMoreThanOneAbstractClass() {
         var code = @"#
 main
     var x = Bar()
@@ -240,8 +238,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_SuperclassesCanDefineSameMember()
-    {
+    public void Pass_SuperclassesCanDefineSameMember() {
         var code = @"#
 main
     var x = Bar()
@@ -361,9 +358,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_CannotInheritFromConcreteClass()
-    {
+    public void Fail_CannotInheritFromConcreteClass() {
         var code = @"#
 main
     var x = Bar()
@@ -411,8 +408,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_AbstractClassCannotInheritFromConcreteClass()
-    {
+    public void Fail_AbstractClassCannotInheritFromConcreteClass() {
         var code = @"#
 main
     var x = Bar()
@@ -444,8 +440,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_MustImplementAllInheritedMethods()
-    {
+    public void Fail_MustImplementAllInheritedMethods() {
         var code = @"#
 main
     var x = Bar()
@@ -479,7 +474,7 @@ class Bar inherits Foo
 end class
 ";
 
-       var parseTree = @"*";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -489,8 +484,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_ImplementedMethodMustHaveSameSignature()
-    {
+    public void Fail_ImplementedMethodMustHaveSameSignature() {
         var code = @"#
 main
     var x = Bar()
@@ -538,8 +532,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_AbstractClassDefinesMethodBody()
-    {
+    public void Fail_AbstractClassDefinesMethodBody() {
         var code = @"#
 main
     var x = Bar()

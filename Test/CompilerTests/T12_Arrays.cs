@@ -370,7 +370,7 @@ main
     var a = Array<String>(3) {""foo"",""bar"",""yon""}
 end main
 ";
-        
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }

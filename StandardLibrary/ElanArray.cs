@@ -5,8 +5,6 @@ namespace StandardLibrary;
 public interface IElanArray { }
 
 public class ElanArray<T> : IElanArray, IEnumerable<T> {
-    public static ElanArray<T> DefaultInstance { get; } = new();
-
     private readonly bool twoD;
     private readonly T[][] wrappedArray;
 
@@ -33,6 +31,8 @@ public class ElanArray<T> : IElanArray, IEnumerable<T> {
             Array.Fill(wrappedArray[i], Default);
         }
     }
+
+    public static ElanArray<T> DefaultInstance { get; } = new();
 
     private static T? Default => typeof(T) == typeof(string) ? (T)(object)"" : default;
 

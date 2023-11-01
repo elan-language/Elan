@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-[Ignore]
-public class T60_CsharpKeywordAsIdentifier
-{
+public class T60_CsharpKeywordAsIdentifier {
     #region Passes
-    [TestMethod]
-    public void Pass_CSkeywordAsIdentifier()
-    {
+
+    [TestMethod, Ignore]
+    public void Pass_CSkeywordAsIdentifier() {
         var code = @"
 main
     var base = 1
@@ -83,10 +81,9 @@ end main
         AssertObjectCodeExecutes(compileData, "1111111111111111111111111111111111111111111111111111\r\n");
     }
 
-        [TestMethod]
-        public void Pass_CSKeywordAsType()
-        {
-            var code = @"
+    [TestMethod, Ignore]
+    public void Pass_CSKeywordAsType() {
+        var code = @"
 main
     var m = Base(3)
     printLine(m)
@@ -105,24 +102,25 @@ class Base
 end class
 ";
 
-            var objectCode = @"";
+        var objectCode = @"";
 
-            var parseTree = @"*";
+        var parseTree = @"*";
 
-            var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-            AssertParses(compileData);
-            AssertParseTreeIs(compileData, parseTree);
-            AssertCompiles(compileData);
-            AssertObjectCodeIs(compileData, objectCode);
-            AssertObjectCodeCompiles(compileData);
-            AssertObjectCodeExecutes(compileData, "3\r\n");
-        }
-        #endregion
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3\r\n");
+    }
 
-        #region Fails
-        [TestMethod]
-    public void Fail_ElanKeywordAsIdentier()
-    {
+    #endregion
+
+    #region Fails
+
+    [TestMethod, Ignore]
+    public void Fail_ElanKeywordAsIdentier() {
         var code = @"
 main
     var procedure = 1
@@ -132,8 +130,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    public void Fail_ElanKeywordWithChangedCase()
-    {
+    public void Fail_ElanKeywordWithChangedCase() {
         var code = @"
 main
     var pRocedure = 1
@@ -143,9 +140,8 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
-    public void Fail_ElanKeywordTypeEvenWithChangedCase()
-    {
+    [TestMethod, Ignore]
+    public void Fail_ElanKeywordTypeEvenWithChangedCase() {
         var code = @"
 class Main 
     constructor()
@@ -159,6 +155,6 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-    #endregion
 
+    #endregion
 }
