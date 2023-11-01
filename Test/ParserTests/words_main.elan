@@ -1,11 +1,11 @@
 ﻿
 main
     print(welcome)
-    var player1 = new Player("Player One")
-    var player2 = new Player("Player Two")
-    var allowedWords = new List<String>()
+    var player1 = Player("Player One")
+    var player2 = Player("Player Two")
+    var allowedWords = List<String>()
     loadAllowedWords(allowedWords)
-    var game = new Game(player1, player2, allowedWords)
+    var game = Game(player1, player2, allowedWords)
     var choice = ""
     var randomStart = false
     while choice is not "9"

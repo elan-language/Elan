@@ -1,16 +1,16 @@
 ﻿
 class Game
-    property allowedWords as List<String> 
-    property player1 as Player
-    property player2 as Player
-    property tileQueue as TileQueue
-
     constructor(player1 Player, player2 Player,allowedWords List<String>)
         self.player1 = player1
         self.player2 = player2 
         self.allowedWords = allowedWords
-        tileQueue = new QueueOfTiles()
+        tileQueue = QueueOfTiles()
     end constructor
+
+    property allowedWords List<String> 
+    property player1 Player
+    property player2 Player
+    property tileQueue TileQueue
 
     procedure initialiseForRandomStart()
         setStartingHand(player1)
@@ -24,7 +24,7 @@ class Game
         tileQueue.initialise()
     end procedure
 
-    function checkWordIsValid(word String) as String
+    function checkWordIsValid(word String) -> String
         return allowedWords.contains(word)
     end function
 
@@ -39,7 +39,7 @@ class Game
         player.setTilesInHand(hand)
     end procedure
 
-    function isPlayable() as Boolean
+    function isPlayable() -> Boolean
         return player1.tilesPlayed <= maxTilesPlayed and
             player2.tilesPlayed <= maxTilesPlayed and
             player1.tilesInHand.length() < maxHandSize and
@@ -51,7 +51,7 @@ class Game
         player2.deductAnyPenalty()
     end procedure
 
-    function checkWordIsInTiles(word String, player Player) as Boolean
+    function checkWordIsInTiles(word String, player Player) -> Boolean
         var inTiles = true
         var copyOfTiles = player.tilesInHand
         for count = 0 to word.length() - 1
@@ -60,7 +60,7 @@ class Game
             else if copyOfTiles.contains('*') then
                copyOfTiles = copyOfTiles.remove(copyOfTiles.indexOf('*'), 1)
             else
-                    inTiles = false
+               inTiles = false
             end if
         end for
         return inTiles
@@ -72,7 +72,7 @@ class Game
         player.addToScore(getScoreForWord(wordAsPlayed))
     end procedure
 
-    function getScoreForWord(word String) as Int
+    function getScoreForWord(word String) -> Int
         var score = 0
         for count = 0 to word.length() - 1
             score = score + tileDictionary[word[count]]
@@ -85,7 +85,7 @@ class Game
         return score
     end function
 
-    function listTileValues(player Player) as String
+    function listTileValues(player Player) -> String
         var values = "                  "
         for c in player.tilesInHand
             values = values + tileDictionary[c]
@@ -93,7 +93,7 @@ class Game
         return values
     end function
 
-    function showTileQueue() as String
+    function showTileQueue() -> String
         return tileQueue.show()
     end function
 
@@ -114,16 +114,18 @@ class Game
         end for
     end procedure
 
-
-    function tileValuesAsString() as String
-        var s = "\nTILE VALUES\n"
+    function tileValuesAsString() -> String
+        var s = "
+TILE VALUES
+"
         for tile in tileDictionary
-            s = s + "Point for {tile.Key}: {tile.Value}"
+            var k = tile.Key
+            var v = tile.Value
+            s = s + "Point for {k}: {v}"
         end for
         s = s + newline()
         return s
     end function
-
 
     procedure fillHandWithTiles(player Player)
         while player.tilesInHand.length() <= maxHandSize
@@ -134,4 +136,7 @@ class Game
         end while
     end procedure
 
+    function asString() -> String 
+        return "A Game"
+    end function
 end class

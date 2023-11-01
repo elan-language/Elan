@@ -1,24 +1,25 @@
 ﻿
 class QueueOfTiles
-    private property contents as Array<String>
-    private property rear as Int
-    private property maxSize as Int
-
     constructor(maxSize Int)
         self.maxSize = maxSize
         contents = new Array<String>(maxSize)
         rear = -1 # signifies 'empty'
     end constructor
 
+    private property contents Array<String>
+    private property rear Int
+    private property maxSize Int
+
     procedure initialise()
-        var rnd = random()
         rear = -1
         for count = 0 to maxSize - 2
-           add(rnd)
+           add()
         end for
     end procedure
 
-    function isNotEmpty() as Boolean -> rear > -1
+    function isNotEmpty() as Boolean
+         return rear > -1
+    end function
 
     procedure withdrawNextLetter(letter String)
         if isNotEmpty() then
@@ -31,18 +32,22 @@ class QueueOfTiles
         end if
     end procedure
 
-    procedure add(rnd Random)
+    procedure add()
         if rear < maxSize - 1 then
             rear = rear + 1
-            var n = rnd.next(0, 30)
-            contents[rear] = letters[n].asString()
+            var n = random(0, 30)
+            contents[rear] = letters[n].asString()  #where is 'letters'?
         end if
     end procedure
 
-    function show() as String
+    function show() -> String
        if rear >= 0 then
          result = contents.reduce(start, lambda s, x -> s + x) + newline()
        end if
        return result
+    end function
+
+    function asString() -> String 
+        return self.typeAndProperties()
     end function
 end class

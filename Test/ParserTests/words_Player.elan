@@ -1,15 +1,14 @@
 ﻿
 class Player
-
-    property name as String
-    property score as Int
-    property tilesPlayed as Int
-    property tilesInHand as String
-
     constructor(name String)
         self.name = name
         score = 50
     end constructor
+
+    property name String
+    property score Int
+    property tilesPlayed Int
+    property tilesInHand String
 
     procedure setTilesInHand(tiles String)
         tilesInHand = tiles
@@ -27,7 +26,7 @@ class Player
         tilesInHand = tilesInHand.remove(tilesInHand.indexOf(letter), 1)
     end procedure
 
-    function wordAsWouldBePlayed(word String) as String
+    function wordAsWouldBePlayed(word String) -> String
         var wordAsPlayed = ""
         tilesPlayed = tilesPlayed + word.length()
         for letter in word
@@ -47,4 +46,7 @@ class Player
         tilesInHand = tilesInHand - playerTiles.reduce(0, lambda penalty,tile -> penalty - tileDictionary[tile])
     end procedure
 
+    function asString() -> String 
+        return name
+    end function
 end class

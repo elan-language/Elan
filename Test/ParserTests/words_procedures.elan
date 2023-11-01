@@ -10,7 +10,7 @@ procedure play(game Game)
     displayWinner(game)
 end procedure
 
-procedure loadAllowedWords(allowedWords List< String >)
+procedure loadAllowedWords(allowedWords ListString>)
     try
         var file = openRead("aqawords.txt")
         while not fileReader.endOfStream
@@ -18,7 +18,7 @@ procedure loadAllowedWords(allowedWords List< String >)
             allowedWords =allowedWords.add(line.trim().toUpper())
         end while
         file.close()
-    catch e Exception
+    catch
         allowedWords.clear()
     end try
 end procedure
