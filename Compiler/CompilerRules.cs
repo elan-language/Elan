@@ -71,18 +71,23 @@ public static class CompilerRules {
 
     public static string? NoMutableConstantsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is TypeNode tn) {
-            var id = tn is { TypeName: IdentifierNode idn } ? idn.Id : "";
 
-            var type = currentScope.Resolve(id);
+        var otherNodes = nodes.SkipLast(1).ToArray();
 
-            if (type is ClassSymbol { ClassType: ClassSymbolTypeType.Mutable }) {
-                return "cannot have constant mutable class";
+        if (otherNodes.Any(n => n is ConstantDefNode)) {
+            if (leafNode is TypeNode tn) {
+                var id = tn is { TypeName: IdentifierNode idn } ? idn.Id : "";
+
+                var type = currentScope.Resolve(id);
+
+                if (type is ClassSymbol { ClassType: ClassSymbolTypeType.Mutable }) {
+                    return "cannot have constant mutable class";
+                }
             }
-        }
 
-        if (leafNode is DataStructureTypeNode) {
-            return "cannot have constant array";
+            if (leafNode is DataStructureTypeNode) {
+                return "cannot have constant array";
+            }
         }
 
         return null;
