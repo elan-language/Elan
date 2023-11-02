@@ -2,9 +2,7 @@ lexer grammar Elan_Lexer;
 
 NL: [\r\n\f]+ ;
 
-SINGLE_LINE_COMMENT: NL? COMMENT_MARKER  InputCharacter*    -> skip; 
-
-COMMENT_MARKER: '#';
+SINGLE_LINE_COMMENT: NL? '#' InputCharacter*    -> skip; 
 
 // Keywords
 ABSTRACT:      'abstract';
@@ -14,9 +12,9 @@ CLASS:         'class';
 CONSTANT:      'constant';
 CONSTRUCTOR:   'constructor';
 CURRY:   	   'curry';
-DEFAULT: 	   'default'; //for use with switch...case and as default for a type
+DEFAULT: 	   'default'; 
 ELSE:          'else';
-END:		   'end'; //used with another keyword to delimit a statement block
+END:		   'end'; 
 ENUMERATION:   'enumeration';
 FOR:           'for';
 FOREACH:       'foreach';
@@ -24,12 +22,12 @@ FUNCTION:	   'function';
 GLOBAL:			'global';
 IF:            'if'; 
 IMMUTABLE:	   'immutable';
-IN:            'in'; // foreach...in
+IN:            'in';
 INHERITS:      'inherits';
 LAMBDA:		   'lambda';
 LET:           'let';
 MAIN:		   'main';
-PARTIAL: 	   'partial'; // partial function application
+PARTIAL: 	   'partial';
 PRIVATE:       'private';
 PROCEDURE:	   'procedure';
 PROPERTY:      'property';
@@ -86,28 +84,20 @@ OP_NE:                    '<>' | ('is' [ \t]* 'not');
 OP_LE:                    '<=';
 OP_GE:                    '>=';
 
-//Identifiers
-// must be defined after all keywords
-// https://msdn.microsoft.com/en-us/library/aa664670(v=vs.71).aspx
-
 TYPENAME:           IdentifierStartingUC;
 IDENTIFIER:         IdentifierStartingLC;
 
-//B.1.8 Literals
 LITERAL_INTEGER:     [0-9] ('_'* [0-9])*;
 LITERAL_FLOAT:        ([0-9] ('_'* [0-9])*)? '.' [0-9] ('_'* [0-9])* ExponentPart? [FfDdMm]? | [0-9] ('_'* [0-9])* ([FfDdMm] | ExponentPart [FfDdMm]?);
 LITERAL_DECIMAL:	 LITERAL_FLOAT 'D';
 
 LITERAL_CHAR:                   '\'' (~['\\\r\n\u0085] | CommonCharacter) '\'';
-LITERAL_STRING:                      '"'  (~["\u0085] | CommonCharacter)* '"'; //Elan regular string is interpolated and verbatim
-
-//Must be defined after other uses of it
+LITERAL_STRING:                      '"'  (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES:   (Whitespace)+  -> skip;
 
 // Fragments
-
-fragment InputCharacter:       ~[\r\n\u0085];
+fragment InputCharacter: ~[\r\n\u0085];
 
 fragment NewLineCharacter
 	: '\u000D' //'<Carriage Return CHARACTER (U+000D)>'
@@ -144,10 +134,7 @@ fragment HexEscapeSequence
 	| '\\x' HexDigit HexDigit HexDigit HexDigit
 	;
 
-fragment NewLine
-	: '\r\n' | '\r' | '\n'
-	| '\u0085' // <Next Line CHARACTER (U+0085)>'
-	;
+fragment NewLine: '\r\n' | '\r' | '\n'| '\u0085';
 
 fragment Whitespace
 	: UnicodeClassZS //'<Any Character With Unicode Class Zs>'
@@ -161,17 +148,11 @@ fragment UnicodeClassZS
 	| '\u00A0' // NO_BREAK SPACE
 	;
 
-fragment IdentifierStartingUCorLC
-	: (UnicodeClassLL|UnicodeClassLU) IdentifierPartCharacter*
-	;
+fragment IdentifierStartingUCorLC: (UnicodeClassLL|UnicodeClassLU) IdentifierPartCharacter*;
 
-fragment IdentifierStartingLC
-	: UnicodeClassLL IdentifierPartCharacter*
-	;
+fragment IdentifierStartingLC: UnicodeClassLL IdentifierPartCharacter*;
 
-fragment IdentifierStartingUC
-	: UnicodeClassLU IdentifierPartCharacter*
-	;
+fragment IdentifierStartingUC: UnicodeClassLU IdentifierPartCharacter*;
 
 fragment IdentifierPartCharacter
 	: UnicodeClassLU
@@ -180,31 +161,21 @@ fragment IdentifierPartCharacter
 	| '_'
 	;
 
-//'<A Unicode Character Of Classes Lu, Ll, Lt, Lm, Lo, Or Nl>'
-// WARNING: ignores UnicodeEscapeSequence
 fragment LetterCharacter
 	: UnicodeClassLU
 	| UnicodeClassLL
 	| UnicodeEscapeSequence
 	;
 
-//'<A Unicode Character Of The Class Nd>'
-// WARNING: ignores UnicodeEscapeSequence
 fragment DecimalDigitCharacter
 	: UnicodeClassND
 	| UnicodeEscapeSequence
 	;
 
-//'<A Unicode Character Of The Class Pc>'
-// WARNING: ignores UnicodeEscapeSequence
 fragment ConnectingCharacter:  UnicodeEscapeSequence;
 
-
-//'<A Unicode Character Of The Class Cf>'
-// WARNING: ignores UnicodeEscapeSequence
 fragment FormattingCharacter: UnicodeEscapeSequence;
 
-//B.1.5 Unicode Character Escape Sequences
 fragment UnicodeEscapeSequence
 	: '\\u' HexDigit HexDigit HexDigit HexDigit
 	| '\\U' HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit
@@ -221,6 +192,5 @@ NEWLINE
   : '\r'? '\n'
   | '\r'
   ;
-
 
 WS  :   [ \t]+ -> skip ;
