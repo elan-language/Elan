@@ -4,14 +4,14 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore] 
+[TestClass] 
 public class T81_CompletePrograms
 {
     #region Passes
 
-    [TestMethod]
-    public void Pass_Template() {
-         var code = ReadInCodeFile("Wordle.elan");
+    [TestMethod, Ignore]
+    public void Pass_BinarySearch() {
+         var code = ReadElanSourceCodeFile("binarySearch.elan");
 
         var objectCode = @"";
 
@@ -26,6 +26,23 @@ public class T81_CompletePrograms
         
     }
 
+    [TestMethod, Ignore]
+    public void Pass_MergeSort()
+    {
+        var code = ReadElanSourceCodeFile("mergeSort.elan");
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+
+    }
     #endregion
 
     #region Fails

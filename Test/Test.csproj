@@ -22,6 +22,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="ElanSourceCode\binarySearch.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ElanSourceCode\mergeSort.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ParserTests\binarySearch.elan">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
@@ -52,10 +58,6 @@
 		<None Update="ParserTests\words_QueueOfTiles.elan">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="NewFolder\" />
 	</ItemGroup>
 
 </Project>

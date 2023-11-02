@@ -1,12 +1,11 @@
 
 main
-   print("How many digits? ")
-   var n = inputint
-   var digits = new List<Int>()
+   var n = input("How many digits? ")
+   var digits = List<Int>()
    for i = 1 to n
        print("Digit {i}: ")
-       var digit = inputint
-       digits = digits + digit
+       var digit = input()
+       digits = digits.asInt() + digit
    end for
    var frequencies = range(10).map(lambda digit -> digits.count(lambda d -> d is digit))
    var max = frequencies.reduce(lambda (c, soFar) -> if c < soFar then soFar else c)

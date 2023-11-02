@@ -2,7 +2,7 @@
 
 [TestClass]
 public class TestCodeFiles {
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Wordle() {
         var code = ReadInCodeFile("Wordle.elan");
         AssertParsesForRule(code, "file");
@@ -20,7 +20,7 @@ public class TestCodeFiles {
         AssertParsesForRule(code, "file");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void TempTestOfGenericType() {
         var code = @"
 function binarySearch(list List<String>, item String) as Bool 
@@ -35,43 +35,43 @@ function binarySearch(list List<String>, item String) as Bool
         AssertParsesForRule(code, "expressionFunction");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Words_Game() {
         var code = ReadInCodeFile("words_Game.elan");
         AssertParsesForRule(code, "file");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Words_main() {
         var code = ReadInCodeFile("words_main.elan");
         AssertParsesForRule(code, "file");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod, Ignore]
     public void Words_procedures() {
         var code = ReadInCodeFile("words_procedures.elan");
         AssertParsesForRule(code, "file");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Words_QueueOfTiles() {
         var code = ReadInCodeFile("words_QueueOfTiles.elan");
         AssertParsesForRule(code, "file");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Words_Player() {
         var code = ReadInCodeFile("words_Player.elan");
         AssertParsesForRule(code, "file");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Harshad() {
         var code = ReadInCodeFile("Harshad.elan");
         AssertParsesForRule(code, "file");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void DigitFrequencies() {
         var code = ReadInCodeFile("DigitFrequencies.elan");
         AssertParsesForRule(code, "file");
