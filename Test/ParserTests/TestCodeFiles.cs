@@ -1,6 +1,6 @@
 ﻿namespace Test.ParserTests;
 
-[TestClass] [Ignore]
+[TestClass]
 public class TestCodeFiles {
     [TestMethod]
     public void Wordle() {

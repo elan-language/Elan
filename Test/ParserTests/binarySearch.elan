@@ -1,12 +1,18 @@
 
-function binarySearch(list List<String>, item String) as Bool 
-    -> let 
-            mid = list.len() div 2,
-            value = list[mid]
-        in
-            if list.isEmpty() then false 
-            else if item == value then true
-            else if item < value then binarySearch(list[0..mid], item) 
-            else binarySearch(list[mid+1..], item)
+function binarySearch(list List<String>, item String) ->  Bool 
+  var mid = list.len() div 2
+  var value = list[mid]
+  var result = false
+  if not list.isEmpty() then  
+     if item == value then
+        result = true
+     else if item < value then
+        binarySearch(list[0..mid], item) 
+     else 
+        binarySearch(list[mid+1..], item)
+     end if
+  end if
+  return result
+end function
             
 

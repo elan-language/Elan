@@ -114,4 +114,6 @@ public static partial class Helpers {
     public static void AssertDoesNotCompile(CompileData compileData) {
         Assert.IsTrue(compileData.CompileErrors.Length > 0, "Unexpectedly Compiled");
     }
+
+    public static string ReadInCodeFile(string fileName) => File.ReadAllText($"ElanSourceCode\\{fileName}");
 }
