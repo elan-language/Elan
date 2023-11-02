@@ -1,7 +1,5 @@
 lexer grammar Elan_Lexer;
 
-BYTE_ORDER_MARK: '\u00EF\u00BB\u00BF';
-
 NL: [\r\n\f]+ ;
 
 SINGLE_LINE_COMMENT: NL? COMMENT_MARKER  InputCharacter*    -> skip; 
@@ -100,43 +98,21 @@ LITERAL_INTEGER:     [0-9] ('_'* [0-9])*;
 LITERAL_FLOAT:        ([0-9] ('_'* [0-9])*)? '.' [0-9] ('_'* [0-9])* ExponentPart? [FfDdMm]? | [0-9] ('_'* [0-9])* ([FfDdMm] | ExponentPart [FfDdMm]?);
 LITERAL_DECIMAL:	 LITERAL_FLOAT 'D';
 
-LITERAL_CHAR:                   '\'' (~['\\\r\n\u0085\u2028\u2029] | CommonCharacter) '\'';
-LITERAL_STRING:                      '"'  (~["\u0085\u2028\u2029] | CommonCharacter)* '"'; //Elan regular string is interpolated and verbatim
-VERBATIM_ONLY_STRING:                    '"""' (~'"' | '""')* '"';
+LITERAL_CHAR:                   '\'' (~['\\\r\n\u0085] | CommonCharacter) '\'';
+LITERAL_STRING:                      '"'  (~["\u0085] | CommonCharacter)* '"'; //Elan regular string is interpolated and verbatim
 
 //Must be defined after other uses of it
 
 WHITESPACES:   (Whitespace)+  -> skip;
 
-
-// https://msdn.microsoft.com/en-us/library/dn961160.aspx
-//mode INTERPOLATION_STRING;
-
-/* DOUBLE_CURLY_INSIDE:           '{{';
-OPEN_BRACE_INSIDE:             '{' { this.OpenBraceInside(); } -> skip, pushMode(DEFAULT_MODE);
-REGULAR_CHAR_INSIDE:           { this.IsRegularCharInside() }? SimpleEscapeSequence;
-VERBATIM_DOUBLE_QUOTE_INSIDE: { this.IsVerbatimDoubleQuoteInside() }? '""';
-DOUBLE_QUOTE_INSIDE:           '"' { this.OnDoubleQuoteInside(); } -> popMode;
-REGULAR_STRING_INSIDE:         { this.IsRegularCharInside() }? ~('{' | '\\' | '"')+;
-VERBATIM_INSIDE_STRING:       { this.IsVerbatimDoubleQuoteInside() }? ~('{' | '"')+;
-
-//mode INTERPOLATION_FORMAT;
-
-DOUBLE_CURLY_CLOSE_INSIDE:      '}}' -> type(FORMAT_STRING);
-CLOSE_BRACE_INSIDE:             '}' { this.OnCloseBraceInside(); }   -> skip, popMode;
-FORMAT_STRING:                  ~'}'+;
- */
-
 // Fragments
 
-fragment InputCharacter:       ~[\r\n\u0085\u2028\u2029];
+fragment InputCharacter:       ~[\r\n\u0085];
 
 fragment NewLineCharacter
 	: '\u000D' //'<Carriage Return CHARACTER (U+000D)>'
 	| '\u000A' //'<Line Feed CHARACTER (U+000A)>'
 	| '\u0085' //'<Next Line CHARACTER (U+0085)>'
-	| '\u2028' //'<Line Separator CHARACTER (U+2028)>'
-	| '\u2029' //'<Paragraph Separator CHARACTER (U+2029)>'
 	;
 
 fragment ExponentPart:              [eE] ('+' | '-')? [0-9] ('_'* [0-9])*;
