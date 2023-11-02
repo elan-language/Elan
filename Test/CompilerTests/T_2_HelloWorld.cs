@@ -4,9 +4,10 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-// Ticket #2
 [TestClass]
 public class T_2_HelloWorld {
+
+    #region Passes
     [TestMethod]
     public void Pass1() {
         var code = @"#
@@ -33,7 +34,6 @@ public static class Program {
 }";
 
         var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) ))))) end main) <EOF>)";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -223,6 +223,9 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "\r\n");
     }
 
+    #endregion
+
+    #region Fails
     [TestMethod]
     public void Fail1() {
         var code = @"#
@@ -253,4 +256,5 @@ main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+    #endregion
 }
