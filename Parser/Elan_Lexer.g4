@@ -1,7 +1,6 @@
 lexer grammar Elan_Lexer;
 
 NL: [\r\n\f]+ ;
-
 SINGLE_LINE_COMMENT: NL? '#' InputCharacter*    -> skip; 
 
 // Keywords
@@ -62,9 +61,9 @@ OPEN_SQ_BRACKET:          '[';
 CLOSE_SQ_BRACKET:         ']';
 OPEN_BRACKET:              '(';
 CLOSE_BRACKET:             ')';
-DOUBLE_DOT:               '..'; // used for ranges
+DOUBLE_DOT:               '..';
 DOT:                      '.';
-COMMA:                    ',' [ \t]* NL?;  //Any comma-separated list (of data, params etc) should be allowed to be split over more than one line.
+COMMA:                    ','; 
 COLON:                    ':';
 PLUS:                     '+';
 MINUS:                    '-';
@@ -80,7 +79,7 @@ OP_NOT:                   'not';
 OP_OR:                    'or';
 OP_XOR:                   'xor';
 OP_EQ:                    '==' | 'is';
-OP_NE:                    '<>' | ('is' [ \t]* 'not');
+OP_NE:                    '<>' | ('is' (Whitespace)* 'not');
 OP_LE:                    '<=';
 OP_GE:                    '>=';
 
@@ -96,13 +95,12 @@ LITERAL_STRING:                      '"'  (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES:   (Whitespace)+  -> skip;
 
-// Fragments
 fragment InputCharacter: ~[\r\n\u0085];
 
 fragment NewLineCharacter
-	: '\u000D' //'<Carriage Return CHARACTER (U+000D)>'
-	| '\u000A' //'<Line Feed CHARACTER (U+000A)>'
-	| '\u0085' //'<Next Line CHARACTER (U+0085)>'
+	: '\u000D' // Carriage Return
+	| '\u000A' // Line Feed 
+	| '\u0085' // Next Line 
 	;
 
 fragment ExponentPart:              [eE] ('+' | '-')? [0-9] ('_'* [0-9])*;
@@ -138,9 +136,9 @@ fragment NewLine: '\r\n' | '\r' | '\n'| '\u0085';
 
 fragment Whitespace
 	: UnicodeClassZS //'<Any Character With Unicode Class Zs>'
-	| '\u0009' //'<Horizontal Tab Character (U+0009)>'
-	| '\u000B' //'<Vertical Tab Character (U+000B)>'
-	| '\u000C' //'<Form Feed Character (U+000C)>'
+	| '\u0009' // Horizontal Tab 
+	| '\u000B' // Vertical Tab
+	| '\u000C' // Form Feed
 	;
 
 fragment UnicodeClassZS
@@ -183,7 +181,6 @@ fragment UnicodeEscapeSequence
 
 fragment HexDigit : [0-9] | [A-F] | [a-f];
 
-// Unicode character classes
 fragment UnicodeClassLU: '\u0041'..'\u005a';
 fragment UnicodeClassLL	: '\u0061'..'\u007A';
 fragment UnicodeClassND	: '\u0030'..'\u0039';
