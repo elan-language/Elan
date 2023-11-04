@@ -68,6 +68,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitAssignment([NotNull] ElanParser.AssignmentContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.inlineAsignment"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInlineAsignment([NotNull] ElanParser.InlineAsignmentContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.assignableValue"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
