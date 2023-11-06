@@ -1,13 +1,15 @@
 ﻿
 main
+    seedRandom(1)
     var q = QueueOfTiles(10)
+    q.initialise()
     printLine(q.show())
 end main
 
 constant startHandSize = 15
 constant maxHandSize = 20
 constant maxTilesPlayed = 50
-constant letters = " * ***ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+constant letters = "****ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 constant mainMenu = "
 ========= 
 MAIN MENU
@@ -31,7 +33,7 @@ class QueueOfTiles
 
     procedure initialise()
         rear = -1
-        for count = 0 to maxSize - 2
+        for count = 0 to maxSize - 1
            add()
         end for
     end procedure
