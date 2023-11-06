@@ -67,6 +67,7 @@ public static class CodeHelpers {
             NewInstanceNode nin => $"{NodeToCSharpType(nin.Type)}",
             TypeNode tn => tn is { TypeName: IdentifierNode idn } ? idn.Id : throw new NotImplementedException(),
             PairNode kn => $"{NodeToCSharpType(kn.Key)},{NodeToCSharpType(kn.Value)}",
+            IdentifierWithTypeNode idtn => NodeToCSharpType(idtn.Type),
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }

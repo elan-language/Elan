@@ -45,7 +45,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_literalListOfClass() {
         var code = @"
 main
@@ -59,14 +59,47 @@ class Foo
   end constructor
 
   function asString() -> String
-    return """"
+    return ""foo""
   end function
 
 end class
 
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+
+    public virtual string asString() {
+
+      return @$""foo"";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = new Foo();
+    var b = new StandardLibrary.ElanList<Foo>(a);
+    printLine(b);
+  }
+}";
 
         var parseTree = @"*";
 
@@ -76,7 +109,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {4,5,6,7,8}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {foo}\r\n");
     }
 
     [TestMethod]

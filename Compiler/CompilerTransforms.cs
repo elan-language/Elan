@@ -64,6 +64,27 @@ public static class CompilerTransforms {
             _ => null
         };
 
+    private static IAstNode MapSymbolToTypeNode(ISymbolType? type) {
+        return type switch {
+            ClassSymbolType cst => new TypeNode(new IdentifierNode(cst.Name)),
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    private static IAstNode TypeIdentifier(IdentifierNode node, IScope currentScope) {
+        var type = GetExpressionType(node, currentScope);
+        var typeNode = MapSymbolToTypeNode(type);
+
+        return new IdentifierWithTypeNode(node.Id, typeNode);
+    }
+
+
+    public static IAstNode? TransformLiteralListNodes(IAstNode[] nodes, IScope currentScope) =>
+        nodes.Last() switch {
+            LiteralListNode lln when lln.ItemNodes.First() is IdentifierNode idn and not IdentifierWithTypeNode => lln.Replace(idn, TypeIdentifier(idn, currentScope)),
+            _ => null
+        };
+
     public static IAstNode? TransformIndexNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {
             IndexedExpressionNode ien when GetExpressionType(ien.Expression, currentScope) is TupleSymbolType => new ItemizedExpressionNode(ien.Expression, ien.Range),
