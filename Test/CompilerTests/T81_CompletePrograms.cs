@@ -12,23 +12,33 @@ public class T81_CompletePrograms
     [TestMethod]
     public void Pass_BinarySearch() {
         var code = @"
+main
+    var li = {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
+    printLine(binarySearch(li, ""lemon""))
+    printLine(binarySearch(li, ""apple""))
+    printLine(binarySearch(li, ""strawberry""))
+    printLine(binarySearch(li, ""blueberry""))
+end main
+
 function binarySearch(li List<String>, item String) ->  Bool 
-  var mid = li.length() div 2
-  var value = li[mid]
   var result = false
-  if not li.isEmpty() then  
-     if item == value then
+  if li.length() is 0 then  
+    result = false
+  else if li.length() is 1 then
+    result = li[0] is item
+  else 
+    var mid = li.length() div 2
+    var value = li[mid]
+    if item is value then
         result = true
-     else if item.isBefore(value) then
+    else if item.isBefore(value) then
         result = binarySearch(li[0..mid], item) 
-     else 
+    else 
         result = binarySearch(li[mid+1..], item)
-     end if
+    end if
   end if
   return result
 end function
-main
-end main
 ";
 
         var objectCode = @"using System.Collections.Generic;
@@ -40,10 +50,16 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static bool binarySearch(StandardLibrary.ElanList<string> li, string item) {
-    var mid = length(li) / 2;
-    var value = li[mid];
     var result = false;
-    if (!isEmpty(li)) {
+    if (length(li) == 0) {
+      result = false;
+    }
+    else if (length(li) == 1) {
+      result = li[0] == item;
+    }
+    else {
+      var mid = length(li) / 2;
+      var value = li[mid];
       if (item == value) {
         result = true;
       }
@@ -60,7 +76,11 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-
+    var li = new StandardLibrary.ElanList<string>(@$""apple"", @$""apricot"", @$""banana"", @$""lemon"", @$""lime"", @$""melon"", @$""orange"", @$""pear"", @$""plum"", @$""strawberry"");
+    printLine(binarySearch(li, @$""lemon""));
+    printLine(binarySearch(li, @$""apple""));
+    printLine(binarySearch(li, @$""strawberry""));
+    printLine(binarySearch(li, @$""blueberry""));
   }
 }";
 
@@ -72,6 +92,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\ntrue\r\nfalse\r\n");
         
     }
 
@@ -93,10 +114,10 @@ function merge(a List<String>, b List<String>) -> List<String>
       result = b 
     else if b.isEmpty() then
       result = a
-    else if head(a).isBefore(head(b)) then 
-      result = head(a) + merge(tail(a), b) 
+    else if a[0].isBefore(b[0]) then 
+      result = a[0] + merge(a[1..], b) 
     else 
-      result = head(b) + merge(a, tail(b))
+      result = b[0] + merge(a, b[1..])
     end if
     return result
 end function
@@ -128,11 +149,11 @@ public static partial class Globals {
     else if (isEmpty(b)) {
       result = a;
     }
-    else if (isBefore(head(a), head(b))) {
-      result = head(a) + merge(tail(a), b);
+    else if (isBefore(a[0], b[0])) {
+      result = a[0] + merge(a[(1)..], b);
     }
     else {
-      result = head(b) + merge(a, tail(b));
+      result = b[0] + merge(a, b[(1)..]);
     }
     return result;
   }
