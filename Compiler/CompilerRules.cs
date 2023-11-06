@@ -11,7 +11,14 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
         if (leafNode is FunctionCallNode mcn) {
             var otherNodes = nodes.SkipLast(1).ToArray();
-            if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode or ProcedureCallNode or FunctionCallNode or SystemCallNode or ReturnExpressionNode)) {
+            // todo add role interface
+            if (!otherNodes.Any(n => n is AssignmentNode 
+                                    or VarDefNode 
+                                    or ProcedureCallNode 
+                                    or FunctionCallNode 
+                                    or SystemCallNode 
+                                    or IfStatementNode
+                                    or ReturnExpressionNode)) {
                 return "Cannot have unassigned expression";
             }
         }
@@ -197,7 +204,7 @@ public static class CompilerRules {
     public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is MethodCallNode mcn) {
-            return "Unresolved method call";
+            return $"Unresolved method call: {mcn.Id}";
         }
 
         return null;

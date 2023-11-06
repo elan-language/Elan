@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using StandardLibrary;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
@@ -33,6 +34,8 @@ public class SymbolTableImpl {
             "IEnumerable`1" => new IterableSymbolType(),
             "IImmutableDictionary`2" => new DictionarySymbolType(),
             "ElanArray`1" => new ArraySymbolType(),
+            "ElanList`1" => new ListSymbolType(),
+            _ when type.IsGenericParameter => new GenericSymbolType(),
             _ => throw new NotImplementedException(type.Name)
         };
 

@@ -31,7 +31,13 @@ public static class Functions {
 
     public static int length(IEnumerable l) => l.Cast<object>().ToArray().Length;
 
+    public static bool isEmpty(IEnumerable l) => !l.Cast<object>().Any();
+
     public static ElanArray<T> asArray<T>(IEnumerable<T> l) => new(l);
+
+    public static T head<T>(ElanList<T> l) => l.First();
+
+    public static ElanList<T> tail<T>(ElanList<T> l) => new(l.Skip(1).ToArray());
 
     #endregion
 

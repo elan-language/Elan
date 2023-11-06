@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree.Nodes;
+﻿using System.Data;
+using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 
 namespace Compiler;
@@ -14,11 +15,18 @@ public class SecondPassVisitor {
     private SymbolTableImpl SymbolTable { get; }
     private static IList<Func<IAstNode[], IScope, IAstNode?>> Transforms { get; } = new List<Func<IAstNode[], IScope, IAstNode?>>();
 
+    private static string SignatureId(IAstNode signature) =>
+        signature switch {
+            MethodSignatureNode { Id: IdentifierNode idn } => idn.Id,
+            _ => throw new NotImplementedException()
+        };
+
     private IScope Enter(IAstNode node, IScope currentScope) {
         return node switch {
             MainNode => currentScope.Resolve("main") as IScope ?? throw new ArgumentNullException(),
             ClassDefNode cdn => currentScope.Resolve(cdn.Name) as IScope ?? throw new ArgumentNullException(),
-            _ => currentScope
+            FunctionDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
+            _ => currentScope,
         };
     }
 
@@ -26,6 +34,7 @@ public class SecondPassVisitor {
         return node switch {
             MainNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             ClassDefNode cdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            FunctionDefNode fdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
     }

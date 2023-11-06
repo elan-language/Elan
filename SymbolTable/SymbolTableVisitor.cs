@@ -19,6 +19,7 @@ public class SymbolTableVisitor {
             ClassDefNode n => VisitClassDefNode(n),
             AbstractClassDefNode n => VisitAbstractClassDefNode(n),
             VarDefNode n => VisitVarDefNode(n),
+            ParameterNode n => VisitParameterNode(n),
             null => throw new NotImplementedException("null"),
             _ => VisitChildren(astNode)
         };
@@ -113,6 +114,16 @@ public class SymbolTableVisitor {
         currentScope.Define(ms);
         VisitChildren(varDefNode);
         return varDefNode;
+    }
+
+    private IAstNode VisitParameterNode(ParameterNode parameterNode) {
+        var name = parameterNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(parameterNode.Id.GetType().ToString());
+        var type = ConvertToBuiltInSymbol(GetTypeName(parameterNode.TypeNode));
+
+        var ms = new VariableSymbol(name, type, currentScope);
+        currentScope.Define(ms);
+        VisitChildren(parameterNode);
+        return parameterNode;
     }
 
     private IAstNode VisitChildren(IAstNode node) {
