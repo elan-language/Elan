@@ -4,6 +4,20 @@ main
     printLine(q.show())
 end main
 
+constant startHandSize = 15
+constant maxHandSize = 20
+constant maxTilesPlayed = 50
+constant letters = " * ***ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+constant mainMenu = "
+========= 
+MAIN MENU
+=========
+
+1. Play game with random start hand,
+2. Play game with training start hand
+9. Quit"
+constant tileDictionary = {'A': 1,'B': 2,'C': 2,'D': 2,'E': 1,'F': 3,'G': 2,'H': 3,'I': 1,'J': 5,'K': 3,'L': 2,'M': 2,'N': 1,'O': 1,'P': 2,'Q': 5,'R': 1,'S': 1,'T': 1,'U': 2,'V': 3,'W': 3,'X': 5,'Y': 3,'Z': 5}
+
 class QueueOfTiles
     constructor(maxSize Int)
         self.maxSize = maxSize
@@ -41,7 +55,7 @@ class QueueOfTiles
         if rear < maxSize - 1 then
             rear = rear + 1
             var n = random(0, 30)
-            contents[rear] = letters[n]
+            contents[rear] = letters[n].asString()
         end if
     end procedure
 
