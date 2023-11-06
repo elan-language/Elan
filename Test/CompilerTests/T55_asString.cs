@@ -94,7 +94,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    var s = asString(f);
+    var s = StandardLibrary.Functions.asString(f);
     printLine(s);
   }
 }";
@@ -227,7 +227,7 @@ public static partial class Globals {
     protected virtual string p2 { get; set; } = """";
     public virtual string asString() {
 
-      return typeAndProperties(this);
+      return StandardLibrary.Functions.typeAndProperties(this);
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
@@ -288,13 +288,13 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var l = new StandardLibrary.ElanList<int>(1, 2, 3);
-    var sl = asString(l);
+    var sl = StandardLibrary.Functions.asString(l);
     printLine(sl);
-    var a = asArray(new StandardLibrary.ElanList<int>(1, 2, 3));
-    var sa = asString(a);
+    var a = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(1, 2, 3));
+    var sa = StandardLibrary.Functions.asString(a);
     printLine(sa);
     var d = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
-    var sd = asString(d);
+    var sd = StandardLibrary.Functions.asString(d);
     printLine(sd);
   }
 }";

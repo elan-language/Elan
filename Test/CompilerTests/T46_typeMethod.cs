@@ -66,15 +66,15 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(type(1));
-    printLine(type(1.1));
-    printLine(type('a'));
-    printLine(type(false));
-    printLine(type(@$""a""));
-    printLine(type(new StandardLibrary.ElanList<int>(1, 2, 3)));
-    printLine(type(new StandardLibrary.ElanDictionary<char,int>(('a', 3))));
-    printLine(type(asArray(new StandardLibrary.ElanList<int>(1, 2, 3))));
-    printLine(type(new Foo(3)));
+    printLine(StandardLibrary.Functions.type(1));
+    printLine(StandardLibrary.Functions.type(1.1));
+    printLine(StandardLibrary.Functions.type('a'));
+    printLine(StandardLibrary.Functions.type(false));
+    printLine(StandardLibrary.Functions.type(@$""a""));
+    printLine(StandardLibrary.Functions.type(new StandardLibrary.ElanList<int>(1, 2, 3)));
+    printLine(StandardLibrary.Functions.type(new StandardLibrary.ElanDictionary<char,int>(('a', 3))));
+    printLine(StandardLibrary.Functions.type(StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(1, 2, 3))));
+    printLine(StandardLibrary.Functions.type(new Foo(3)));
   }
 }";
 
@@ -140,8 +140,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(type(1) == type(2));
-    printLine(type(1.0) == type(2));
+    printLine(StandardLibrary.Functions.type(1) == StandardLibrary.Functions.type(2));
+    printLine(StandardLibrary.Functions.type(1.0) == StandardLibrary.Functions.type(2));
   }
 }";
 

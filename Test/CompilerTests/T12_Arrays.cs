@@ -31,7 +31,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanArray<string>(3);
-    printLine(length(a));
+    printLine(StandardLibrary.Functions.length(a));
   }
 }";
 
@@ -70,7 +70,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanArray<string>(3);
-    printLine(length(a[0]));
+    printLine(StandardLibrary.Functions.length(a[0]));
     printLine(a);
   }
 }";
@@ -152,8 +152,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = asArray(new StandardLibrary.ElanList<string>(@$""foo"", @$""bar"", @$""yon""));
-    printLine(length(a));
+    var a = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<string>(@$""foo"", @$""bar"", @$""yon""));
+    printLine(StandardLibrary.Functions.length(a));
   }
 }";
 

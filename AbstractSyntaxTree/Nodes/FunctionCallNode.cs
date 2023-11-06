@@ -1,9 +1,10 @@
 ﻿using System.Collections.Immutable;
+using System.Reflection.Metadata;
 
 namespace AbstractSyntaxTree.Nodes;
 
 public record FunctionCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters) : IAstNode {
-    public FunctionCallNode(MethodCallNode node) : this(node.Id, null, node.Parameters.SafePrepend(node.Qualifier).ToImmutableArray()) { }
+    public FunctionCallNode(MethodCallNode node, IAstNode? nsNode) : this(node.Id, nsNode, node.Parameters.SafePrepend(node.Qualifier).ToImmutableArray()) { }
     public string Name => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
 
     public IEnumerable<IAstNode> Children => Parameters.SafePrepend(Qualifier).Prepend(Id);

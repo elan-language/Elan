@@ -31,7 +31,7 @@ public class SymbolTableVisitor {
             _ => throw new NotImplementedException("null")
         };
 
-        var ms = new ProcedureSymbol(name, currentScope);
+        var ms = new ProcedureSymbol(name, currentScope, currentScope is GlobalScope ? NameSpace.UserGlobal : NameSpace.UserLocal);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(procedureDefNode);
@@ -47,7 +47,7 @@ public class SymbolTableVisitor {
 
         ISymbolType rt = null; // todo
 
-        var ms = new FunctionSymbol(name, rt, currentScope);
+        var ms = new FunctionSymbol(name, rt, currentScope, currentScope is GlobalScope ? NameSpace.UserGlobal : NameSpace.UserLocal);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(functionDefNode);
@@ -56,7 +56,7 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitMainNode(MainNode mainNode) {
-        var ms = new ProcedureSymbol("main", currentScope);
+        var ms = new ProcedureSymbol("main", currentScope, NameSpace.System);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(mainNode);

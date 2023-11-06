@@ -36,7 +36,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(foo(3, 4));
+    printLine(Globals.foo(3, 4));
   }
 }";
 
@@ -80,7 +80,7 @@ public static partial class Globals {
   public static int factorial(int a) {
     var result = 0;
     if (a > 2) {
-      result = a * factorial(a - 1);
+      result = a * Globals.factorial(a - 1);
     }
     else {
       result = a;
@@ -91,7 +91,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(factorial(5));
+    printLine(Globals.factorial(5));
   }
 }";
 

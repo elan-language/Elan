@@ -3,9 +3,9 @@
 namespace SymbolTable.Symbols;
 
 public class FunctionSymbol : MethodSymbol {
-    public FunctionSymbol(string name, ISymbolType returnType, IScope enclosingScope) : base(name, returnType, enclosingScope) { }
+    public FunctionSymbol(string name, ISymbolType returnType, IScope enclosingScope, NameSpace nameSpace) : base(name, returnType, enclosingScope, nameSpace) { }
 
-    public FunctionSymbol(string name, ISymbolType returnType) : base(name, returnType) { }
+    public FunctionSymbol(string name, ISymbolType returnType, NameSpace nameSpace) : base(name, returnType, nameSpace) { }
 
     public override string ScopeName => "Function";
 }

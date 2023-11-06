@@ -44,7 +44,7 @@ public class SymbolTableImpl {
     private static bool IsSystemCall(MethodInfo m) => m.GetCustomAttribute<ElanSystemCallAttribute>() is not null || m.DeclaringType?.GetCustomAttribute<ElanSystemCallAttribute>() is not null;
 
     private void InitTypeSystem(MethodInfo[] stdLib, MethodInfo[] systemCalls) {
-        foreach (var slf in stdLib.Select(sc => new FunctionSymbol(sc.Name, ConvertToBuiltInSymbol(sc.ReturnType)))) {
+        foreach (var slf in stdLib.Select(sc => new FunctionSymbol(sc.Name, ConvertToBuiltInSymbol(sc.ReturnType), NameSpace.Library))) {
             GlobalScope.Define(slf);
         }
 

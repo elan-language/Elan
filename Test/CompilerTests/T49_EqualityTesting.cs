@@ -294,9 +294,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var x = asArray(new StandardLibrary.ElanList<int>(3, 4, 5));
-    var y = asArray(new StandardLibrary.ElanList<int>(3, 4, 5));
-    var z = asArray(new StandardLibrary.ElanList<int>(4, 3, 5));
+    var x = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(3, 4, 5));
+    var y = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(3, 4, 5));
+    var z = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(4, 3, 5));
     var w = new StandardLibrary.ElanList<int>(3, 4, 5);
     printLine(x == y);
     printLine(x == z);

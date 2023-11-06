@@ -68,7 +68,7 @@ public static class Program {
     var x = new Foo();
     printLine(x.p1);
     printLine(x.p2);
-    printLine(asString(x));
+    printLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
