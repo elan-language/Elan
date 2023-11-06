@@ -1,8 +1,12 @@
-﻿
+main
+    var q = QueueOfTiles(10)
+    printLine(q.show())
+end main
+
 class QueueOfTiles
     constructor(maxSize Int)
         self.maxSize = maxSize
-        contents = new Array<String>(maxSize)
+        contents = Array<String>(maxSize)
         rear = -1 # signifies 'empty'
     end constructor
 
@@ -17,8 +21,8 @@ class QueueOfTiles
         end for
     end procedure
 
-    function isNotEmpty() as Boolean
-         return rear > -1
+    function isNotEmpty() -> Boolean
+         return rear is not -1
     end function
 
     procedure withdrawNextLetter(letter String)
@@ -26,9 +30,9 @@ class QueueOfTiles
             letter = contents[0]
             for count = 1 to rear
                 contents[count - 1] = contents[count]
-                contents[rear] = ""
+                contents[rear] = """"
             end for
-            rear = read - 1
+            rear = rear - 1
         end if
     end procedure
 
@@ -36,15 +40,16 @@ class QueueOfTiles
         if rear < maxSize - 1 then
             rear = rear + 1
             var n = random(0, 30)
-            contents[rear] = letters[n].asString()  #where is 'letters'?
+            contents[rear] = contents[n].asString()  #where is 'letters'?
         end if
     end procedure
 
     function show() -> String
-       if rear >= 0 then
-         result = contents.reduce(start, lambda s, x -> s + x) + newline()
-       end if
-       return result
+       var result = """"
+       foreach letter in contents
+         result = result + letter       
+       end foreach
+       return result + newline
     end function
 
     function asString() -> String 

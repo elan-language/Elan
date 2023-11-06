@@ -1,18 +1,27 @@
+main
+    var li = {"apple","apricot","banana","lemon","lime","melon","orange","pear","plum","strawberry"}
+    printLine(binarySearch(li, "lemon"))
+    printLine(binarySearch(li, "apple"))
+    printLine(binarySearch(li, "strawberry"))
+    printLine(binarySearch(li, "blueberry"))
+end main
 
 function binarySearch(li List<String>, item String) ->  Bool 
-  var mid = li.len() div 2
-  var value = li[mid]
   var result = false
-  if not li.isEmpty() then  
-     if item == value then
+  if li.length() is 0 then  
+    result = false
+  else if li.length() is 1 then
+    result = li[0] is item
+  else 
+    var mid = li.length() div 2
+    var value = li[mid]
+    if item is value then
         result = true
-     else if item < value then
+    else if item.isBefore(value) then
         result = binarySearch(li[0..mid], item) 
-     else 
+    else 
         result = binarySearch(li[mid+1..], item)
-     end if
+    end if
   end if
   return result
 end function
-            
-
