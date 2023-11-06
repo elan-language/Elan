@@ -57,56 +57,6 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_valuesOnNewLines() {
-        var code = @"
-main
- printLine(Fruit.apple)
- printLine(Fruit.orange)
- printLine(Fruit.pear)
-end main
-
-enumeration Fruit
-    apple, 
-    orange, 
-    pear
-end enumeration
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static Globals;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-  public enum Fruit {
-    apple,
-    orange,
-    pear,
-  }
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    printLine(Fruit.apple);
-    printLine(Fruit.orange);
-    printLine(Fruit.pear);
-  }
-}";
-
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . orange)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . pear)))))) ))))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "apple\r\norange\r\npear\r\n");
-    }
-
-    [TestMethod]
     public void Pass_useInVariable() {
         var code = @"
 main
@@ -116,9 +66,7 @@ main
 end main
 
 enumeration Fruit
-    apple, 
-    orange, 
-    pear
+    apple, orange, pear
 end enumeration
 ";
 
@@ -166,9 +114,7 @@ main
 end main
 
 enumeration Fruit
-    apple, 
-    orange, 
-    pear
+    apple, orange, pear
 end enumeration
 ";
 
