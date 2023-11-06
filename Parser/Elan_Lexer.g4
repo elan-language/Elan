@@ -37,6 +37,7 @@ RETURN:        'return';
 SELF:		   'self';
 STEP:		   'step';
 SWITCH:        'switch';
+TEST:		   'test';
 THEN:		   'then';
 TO:			   'to';
 TRY:           'try';
