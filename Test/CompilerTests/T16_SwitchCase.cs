@@ -30,7 +30,6 @@ end main
 using System.Collections.Immutable;
 using static Globals;
 using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -90,7 +89,6 @@ end main
 using System.Collections.Immutable;
 using static Globals;
 using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -148,7 +146,6 @@ end main
 using System.Collections.Immutable;
 using static Globals;
 using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -202,7 +199,6 @@ end main
 using System.Collections.Immutable;
 using static Globals;
 using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
