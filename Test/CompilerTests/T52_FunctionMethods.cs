@@ -169,6 +169,131 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_FunctionMethodMayCallOtherClassFunctionMethod() {
+        var code = @"#
+main
+    var f = Foo()
+    var b = Bar()
+    printLine(f.times(b))
+end main
+
+class Foo
+    constructor()
+        p1 = 5
+    end constructor
+
+    property p1 Int
+
+    function times(b Bar) -> Int
+        return p1PlusOne() * b.p1PlusOne()
+    end function
+
+    function p1PlusOne() -> Int
+        return p1 +1 
+    end function
+
+    function asString() -> String
+         return """"
+    end function
+
+end class
+
+class Bar
+    constructor()
+        p1 = 1
+    end constructor
+
+    property p1 Int
+
+    function p1PlusOne() -> Int
+        return p1 +1 
+    end function
+
+    function asString() -> String
+         return """"
+    end function
+
+end class
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Functions;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+      p1 = 5;
+    }
+    public virtual int p1 { get; set; } = default;
+    public virtual int times(Bar b) {
+
+      return p1PlusOne() * b.p1PlusOne();
+    }
+    public virtual int p1PlusOne() {
+
+      return p1 + 1;
+    }
+    public virtual string asString() {
+
+      return @$"""";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+  public record class Bar {
+    public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
+
+    public Bar() {
+      p1 = 1;
+    }
+    public virtual int p1 { get; set; } = default;
+    public virtual int p1PlusOne() {
+
+      return p1 + 1;
+    }
+    public virtual string asString() {
+
+      return @$"""";
+    }
+    private record class _DefaultBar : Bar {
+      public _DefaultBar() { }
+      public override int p1 => default;
+
+      public override string asString() { return ""default Bar"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    var b = new Bar();
+    printLine(f.times(b));
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (newInstance (type Foo) ( )))) (varDef var (assignableValue b) = (expression (newInstance (type Bar) ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value f)) . (methodCall times ( (argumentList (expression (value b))) )))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 5)))))) end constructor) (property property p1 (type Int)) (functionDef (functionWithBody function (functionSignature times ( (parameterList (parameter b (type Bar))) ) -> (type Int)) statementBlock return (expression (expression (methodCall p1PlusOne ( ))) (binaryOp (arithmeticOp *)) (expression (expression (value b)) . (methodCall p1PlusOne ( )))) end function)) (functionDef (functionWithBody function (functionSignature p1PlusOne ( ) -> (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) (classDef (mutableClass class Bar (constructor constructor ( ) (statementBlock (assignment (assignableValue p1) = (expression (value (literal (literalValue 1)))))) end constructor) (property property p1 (type Int)) (functionDef (functionWithBody function (functionSignature p1PlusOne ( ) -> (type Int)) statementBlock return (expression (expression (value p1)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))) end function)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "12\r\n");
+    }
+
+    [TestMethod]
     public void Pass_FunctionMethodNameHidesGlobalFunction() {
         var code = @"#
 main
