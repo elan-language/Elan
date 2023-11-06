@@ -113,6 +113,73 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_literalListOfValueId() {
+        var code = @"
+main
+    var a = 1
+    var b = {a}
+    printLine(b)
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function asString() -> String
+    return ""foo""
+  end function
+
+end class
+
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+
+    public virtual string asString() {
+
+      return @$""foo"";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 1;
+    var b = new StandardLibrary.ElanList<int>(a);
+    printLine(b);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "List {1}\r\n");
+    }
+
+    [TestMethod]
     public void Pass_literalListOfString() {
         var code = @"
 main

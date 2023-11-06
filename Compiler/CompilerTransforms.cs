@@ -67,6 +67,7 @@ public static class CompilerTransforms {
     private static IAstNode MapSymbolToTypeNode(ISymbolType? type) {
         return type switch {
             ClassSymbolType cst => new TypeNode(new IdentifierNode(cst.Name)),
+            IntSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.Int),
             _ => throw new NotImplementedException()
         };
     }
