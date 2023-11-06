@@ -159,7 +159,6 @@ public static class Program {
 using System.Collections.Immutable;
 using static Globals;
 using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Functions;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -222,7 +221,7 @@ MAIN MENU
       if (rear < maxSize - 1) {
         rear = rear + 1;
         var n = random(0, 30);
-        contents[rear] = asString(letters[n]);
+        contents[rear] = StandardLibrary.Functions.asString(letters[n]);
       }
     }
     private record class _DefaultQueueOfTiles : QueueOfTiles {

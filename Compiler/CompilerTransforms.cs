@@ -77,9 +77,16 @@ public static class CompilerTransforms {
                 ? GetGlobalScope(s)
                 : scope;
 
+    private static string? GetId(IAstNode? node) => node switch {
+        IdentifierNode idn => idn.Id,
+        IndexedExpressionNode ien => GetId(ien.Expression),
+        _ => null
+    };
+
+
     private static (ISymbol?, bool) Resolve(IScope currentScope, MethodCallNode mcn) {
         var isGlobal = mcn.Qualifier is GlobalNode;
-        var qualifiedId = mcn is { Qualifier: IdentifierNode idn } ? idn.Id : null;
+        var qualifiedId = GetId(mcn.Qualifier);
 
         if (qualifiedId is not null) {
             var symbol = GetGlobalScope(currentScope).Resolve(qualifiedId);
