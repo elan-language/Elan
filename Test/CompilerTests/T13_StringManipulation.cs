@@ -274,12 +274,12 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(isBefore(@$""abc"", @$""abC""));
-    printLine(isAfter(@$""abcd"", @$""abc""));
-    printLine(isAfterOrSameAs(@$""abc"", @$""abc""));
-    printLine(isBeforeOrSameAs(@$""abc"", @$""abc""));
-    printLine(isAfterOrSameAs(@$""abcd"", @$""abc""));
-    printLine(isBeforeOrSameAs(@$""abcd"", @$""abc""));
+    printLine(StandardLibrary.Functions.isBefore(@$""abc"", @$""abC""));
+    printLine(StandardLibrary.Functions.isAfter(@$""abcd"", @$""abc""));
+    printLine(StandardLibrary.Functions.isAfterOrSameAs(@$""abc"", @$""abc""));
+    printLine(StandardLibrary.Functions.isBeforeOrSameAs(@$""abc"", @$""abc""));
+    printLine(StandardLibrary.Functions.isAfterOrSameAs(@$""abcd"", @$""abc""));
+    printLine(StandardLibrary.Functions.isBeforeOrSameAs(@$""abcd"", @$""abc""));
   }
 }";
 
@@ -318,7 +318,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
-    a = asString((2.1 + 3.4));
+    a = StandardLibrary.Functions.asString((2.1 + 3.4));
     print(a);
   }
 }";

@@ -168,7 +168,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-        [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_FunctionMethodNameHidesGlobalFunction() {
         var code = @"#
 main
@@ -207,7 +207,7 @@ public static partial class Globals {
     public virtual int p1 { get; set; } = default;
     public virtual string asString() {
 
-      return asString(p1);
+      return StandardLibrary.Functions.asString(p1);
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }

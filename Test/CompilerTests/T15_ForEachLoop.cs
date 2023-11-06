@@ -80,7 +80,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = asArray(new StandardLibrary.ElanList<int>(7, 8, 9));
+    var a = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(7, 8, 9));
     var n = 0;
     foreach (var x in a) {
       n = n + x;

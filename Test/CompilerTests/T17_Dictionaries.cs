@@ -104,7 +104,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(keys(a));
+    printLine(StandardLibrary.Functions.keys(a));
   }
 }";
 
@@ -142,8 +142,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(hasKey(a, 'b'));
-    printLine(hasKey(a, 'd'));
+    printLine(StandardLibrary.Functions.hasKey(a, 'b'));
+    printLine(StandardLibrary.Functions.hasKey(a, 'd'));
   }
 }";
 
@@ -179,7 +179,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(values(a));
+    printLine(StandardLibrary.Functions.values(a));
   }
 }";
 
@@ -218,8 +218,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var b = set(a, 'b', 4);
-    var c = set(b, 'd', 2);
+    var b = StandardLibrary.Functions.set(a, 'b', 4);
+    var c = StandardLibrary.Functions.set(b, 'd', 2);
     printLine(a);
     printLine(c);
   }
@@ -260,7 +260,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var b = remove(a, 'b');
+    var b = StandardLibrary.Functions.remove(a, 'b');
     printLine(a);
     printLine(b);
   }
@@ -300,7 +300,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var b = remove(a, 'c');
+    var b = StandardLibrary.Functions.remove(a, 'c');
     printLine(b);
   }
 }";
@@ -343,9 +343,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanDictionary<string, int>();
-    var b = set(a, @$""Foo"", 1);
-    b = set(b, @$""Bar"", 3);
-    print(length(b));
+    var b = StandardLibrary.Functions.set(a, @$""Foo"", 1);
+    b = StandardLibrary.Functions.set(b, @$""Bar"", 3);
+    print(StandardLibrary.Functions.length(b));
     print(b[@$""Foo""]);
     print(b[@$""Bar""]);
   }

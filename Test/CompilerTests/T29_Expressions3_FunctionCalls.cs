@@ -66,7 +66,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var x = sin(Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30);
+    var x = StandardLibrary.Functions.sin(Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30);
     printLine(x);
   }
 }";
@@ -106,7 +106,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30;
-    var y = sin(x);
+    var y = StandardLibrary.Functions.sin(x);
     printLine(y);
   }
 }";
@@ -146,7 +146,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30;
-    var y = 2 + sin(x);
+    var y = 2 + StandardLibrary.Functions.sin(x);
     printLine(y);
   }
 }";
@@ -186,7 +186,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
-    var y = System.Math.Pow(sin(x), 2) + System.Math.Pow(cos(x), 2);
+    var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
     printLine(y);
   }
 }";
@@ -224,7 +224,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var x = min(3.1, 3);
+    var x = StandardLibrary.Functions.min(3.1, 3);
     printLine(x);
   }
 }";
@@ -261,7 +261,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var x = max(3, 3.1);
+    var x = StandardLibrary.Functions.max(3, 3.1);
     printLine(x);
   }
 }";

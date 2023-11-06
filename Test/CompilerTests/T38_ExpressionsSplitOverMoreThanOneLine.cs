@@ -33,7 +33,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
-    var y = System.Math.Pow(sin(x), 2) + System.Math.Pow(cos(x), 2);
+    var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
     printLine(y);
   }
 }";
@@ -74,7 +74,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
-    var y = System.Math.Pow(sin(x), 2) + System.Math.Pow(cos(x), 2);
+    var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
     printLine(y);
   }
 }";
@@ -114,7 +114,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
-    var y = System.Math.Pow(sin(x), 2) + System.Math.Pow(cos(x), 2);
+    var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
     printLine(y);
   }
 }";

@@ -178,7 +178,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
-    printLine(length(a));
+    printLine(StandardLibrary.Functions.length(a));
   }
 }";
 
@@ -216,7 +216,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>();
-    printLine(length(a));
+    printLine(StandardLibrary.Functions.length(a));
   }
 }";
 

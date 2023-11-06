@@ -125,7 +125,7 @@ public static partial class Globals {
     public virtual int p1 { get; set; } = default;
     public virtual int bar() {
 
-      return doubled(this);
+      return Globals.doubled(this);
     }
     public virtual string asString() {
 
