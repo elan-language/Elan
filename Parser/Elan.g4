@@ -1,12 +1,18 @@
 grammar Elan;
 import Elan_Lexer;
 
-file: (main | procedureDef | functionDef | constantDef | enumDef | classDef  )* NL* EOF;
+file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test )* NL* EOF;
 
 main: 
 	NL MAIN 
     statementBlock
     NL END MAIN 
+    ;
+
+test: 
+	NL TEST IDENTIFIER
+    statementBlock
+    NL END TEST 
     ;
 
 // STATEMENTS
