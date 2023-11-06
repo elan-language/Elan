@@ -68,6 +68,10 @@ public static class CompilerTransforms {
         return type switch {
             ClassSymbolType cst => new TypeNode(new IdentifierNode(cst.Name)),
             IntSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.Int),
+            FloatSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.Float),
+            CharSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.Char),
+            StringSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.String),
+            BooleanSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.Bool),
             _ => throw new NotImplementedException()
         };
     }

@@ -117,8 +117,20 @@ public static class Program {
         var code = @"
 main
     var a = 1
-    var b = {a}
-    printLine(b)
+    var b = 1.1
+    var c = 'c'
+    var d = ""d""
+    var e = true
+    var v = {a}
+    var w = {b}
+    var x = {c}
+    var y = {d}
+    var z = {e}
+    printLine(v)
+    printLine(w)
+    printLine(x)
+    printLine(y)
+    printLine(z)
 end main
 
 class Foo
@@ -163,8 +175,20 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 1;
-    var b = new StandardLibrary.ElanList<int>(a);
-    printLine(b);
+    var b = 1.1;
+    var c = 'c';
+    var d = @$""d"";
+    var e = true;
+    var v = new StandardLibrary.ElanList<int>(a);
+    var w = new StandardLibrary.ElanList<double>(b);
+    var x = new StandardLibrary.ElanList<char>(c);
+    var y = new StandardLibrary.ElanList<string>(d);
+    var z = new StandardLibrary.ElanList<bool>(e);
+    printLine(v);
+    printLine(w);
+    printLine(x);
+    printLine(y);
+    printLine(z);
   }
 }";
 
@@ -176,7 +200,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {1}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {1}\r\nList {1.1}\r\nList {c}\r\nList {d}\r\nList {true}\r\n");
     }
 
     [TestMethod]
