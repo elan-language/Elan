@@ -51,14 +51,14 @@ using static StandardLibrary.Constants;
 public static partial class Globals {
   public static bool binarySearch(StandardLibrary.ElanList<string> li, string item) {
     var result = false;
-    if (length(li) == 0) {
+    if (StandardLibrary.Functions.length(li) == 0) {
       result = false;
     }
-    else if (length(li) == 1) {
+    else if (StandardLibrary.Functions.length(li) == 1) {
       result = li[0] == item;
     }
     else {
-      var mid = length(li) / 2;
+      var mid = StandardLibrary.Functions.length(li) / 2;
       var value = li[mid];
       if (item == value) {
         result = true;
@@ -77,10 +77,10 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var li = new StandardLibrary.ElanList<string>(@$""apple"", @$""apricot"", @$""banana"", @$""lemon"", @$""lime"", @$""melon"", @$""orange"", @$""pear"", @$""plum"", @$""strawberry"");
-    printLine(binarySearch(li, @$""lemon""));
-    printLine(binarySearch(li, @$""apple""));
-    printLine(binarySearch(li, @$""strawberry""));
-    printLine(binarySearch(li, @$""blueberry""));
+    printLine(Globals.binarySearch(li, @$""lemon""));
+    printLine(Globals.binarySearch(li, @$""apple""));
+    printLine(Globals.binarySearch(li, @$""strawberry""));
+    printLine(Globals.binarySearch(li, @$""blueberry""));
   }
 }";
 
@@ -149,11 +149,11 @@ public static partial class Globals {
     else if (StandardLibrary.Functions.isEmpty(b)) {
       result = a;
     }
-    else if (isBefore(a[0], b[0])) {
-      result = a[0] + merge(a[(1)..], b);
+    else if (StandardLibrary.Functions.isBefore(a[0], b[0])) {
+      result = a[0] + Globals.merge(a[(1)..], b);
     }
     else {
-      result = b[0] + merge(a, b[(1)..]);
+      result = b[0] + Globals.merge(a, b[(1)..]);
     }
     return result;
   }
