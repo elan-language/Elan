@@ -1,0 +1,59 @@
+﻿
+main
+    var q = QueueOfTiles(10)
+    printLine(q.show())
+end main
+
+class QueueOfTiles
+    constructor(maxSize Int)
+        self.maxSize = maxSize
+        contents = Array<String>(maxSize)
+        rear = -1 # signifies 'empty'
+    end constructor
+
+    private property contents Array<String>
+    private property rear Int
+    private property maxSize Int
+
+    procedure initialise()
+        rear = -1
+        for count = 0 to maxSize - 2
+           add()
+        end for
+    end procedure
+
+    function isNotEmpty() -> Boolean
+         return rear is not -1
+    end function
+
+    procedure withdrawNextLetter(letter String)
+        if isNotEmpty() then
+            letter = contents[0]
+            for count = 1 to rear
+                contents[count - 1] = contents[count]
+                contents[rear] = ""
+            end for
+            rear = rear - 1
+        end if
+    end procedure
+
+    procedure add()
+        if rear < maxSize - 1 then
+            rear = rear + 1
+            var n = random(0, 30)
+            contents[rear] = letters[n]
+        end if
+    end procedure
+
+    function show() -> String
+       var result = ""
+       foreach letter in contents
+         result = result + letter       
+       end foreach
+       return result + newline
+    end function
+
+    function asString() -> String 
+        return self.typeAndProperties()
+    end function
+end class
