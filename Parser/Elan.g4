@@ -223,7 +223,7 @@ nameQualifier: (SELF | GLOBAL ) DOT; // might add 'namespace' as a further optio
 // LITERALS
 literal: literalValue | literalDataStructure ; 
 
-literalValue:  BOOL_VALUE | LITERAL_INTEGER | LITERAL_FLOAT | LITERAL_DECIMAL| LITERAL_CHAR | enumValue ;
+literalValue:  BOOL_VALUE | LITERAL_INTEGER | LITERAL_FLOAT | LITERAL_CHAR | enumValue ;
 
 dataStructureDefinition:  listDefinition | arrayDefinition | tupleDefinition | dictionaryDefinition  ;
  

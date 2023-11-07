@@ -262,7 +262,73 @@ public static class Program {
     public void Pass_Player()
     {
         var code = ReadElanSourceCodeFile("words_Player.elan");
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanDictionary<char,int> tileDictionary = new StandardLibrary.ElanDictionary<char,int>(('A', 1), ('B', 2), ('C', 2), ('D', 2), ('E', 1), ('F', 3), ('G', 2), ('H', 3), ('I', 1), ('J', 5), ('K', 3), ('L', 2), ('M', 2), ('N', 1), ('O', 1), ('P', 2), ('Q', 5), ('R', 1), ('S', 1), ('T', 1), ('U', 2), ('V', 3), ('W', 3), ('X', 5), ('Y', 3), ('Z', 5));
+  public record class Player {
+    public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
+    private Player() {}
+    public Player(string name) {
+      this.name = name;
+      score = 50;
+    }
+    public virtual string name { get; set; } = """";
+    public virtual int score { get; set; } = default;
+    public virtual int tilesPlayed { get; set; } = default;
+    public virtual string tilesInHand { get; set; } = """";
+    public virtual string asString() {
+
+      return name;
+    }
+    public virtual void setTilesInHand(ref string tiles) {
+      tilesInHand = tiles;
+    }
+    public virtual void addToLetters(ref char letter) {
+      tilesInHand = tilesInHand + letter;
+    }
+    public virtual void addToScore(ref int points) {
+      score = score + points;
+    }
+    public virtual void removeLetter(ref char letter) {
+      var i = StandardLibrary.Functions.indexOf(tilesInHand, letter);
+      tilesInHand = tilesInHand[..(i - 1)] + tilesInHand[(i + 1)..];
+    }
+    public virtual void removeLetters(ref string wordAsPlayed) {
+      foreach (var letter in wordAsPlayed) {
+        removeLetter(ref letter);
+      }
+    }
+    public virtual void deductAnyPenalty() {
+      var x = 0;
+    }
+    private record class _DefaultPlayer : Player {
+      public _DefaultPlayer() { }
+      public override string name => """";
+      public override int score => default;
+      public override int tilesPlayed => default;
+      public override string tilesInHand => """";
+      public override void setTilesInHand(ref string tiles) { }
+      public override void addToLetters(ref char letter) { }
+      public override void addToScore(ref int points) { }
+      public override void removeLetter(ref char letter) { }
+      public override void removeLetters(ref string wordAsPlayed) { }
+      public override void deductAnyPenalty() { }
+      public override string asString() { return ""default Player"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var p = new Player(@$""Richard"");
+    printLine(p.name);
+  }
+}";
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

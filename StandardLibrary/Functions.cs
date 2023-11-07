@@ -93,11 +93,14 @@ public static class Functions {
     public static bool isAfter(string a, string b) => a.CompareTo(b) > 0;
     public static bool isAfterOrSameAs(string a, string b) => a.CompareTo(b) >= 0;
 
+    public static bool contains(string s, string x) => s.Contains(x);
+    public static bool contains(string s, char x) => s.Contains(x);
+
     #endregion
 
     #region Type inspection
 
-   
+
 
 
     private static string MapTypeNames(Type? t) {
