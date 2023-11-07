@@ -19,7 +19,7 @@ public static class CompilerRules {
                                     or SystemCallNode 
                                     or IfStatementNode
                                     or ReturnExpressionNode)) {
-                return "Cannot have unassigned expression";
+                return $"Cannot have unassigned expression : {leafNode}";
             }
         }
 
@@ -32,15 +32,15 @@ public static class CompilerRules {
             var otherNodes = nodes.SkipLast(1).ToArray();
 
             if (scn.DotCalled) {
-                return "Cannot have dot call a system expression";
+                return $"Cannot have dot call a system expression in {leafNode}";
             }
 
             if (otherNodes.Any(n => n is SystemCallNode or FunctionCallNode or ProcedureCallNode)) {
-                return "Cannot have system call in expression";
+                return $"Cannot have system call in expression : {leafNode}";
             }
 
             if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode)) {
-                return "Cannot have unassigned system call";
+                return $"Cannot have unassigned system call : {leafNode}";
             }
         }
 
@@ -68,7 +68,7 @@ public static class CompilerRules {
 
             if (parent is AssignmentNode an) {
                 if (an.Id == ien) {
-                    return "cannot assign to node element";
+                    return $"cannot assign to node element : {leafNode}";
                 }
             }
         }
@@ -88,12 +88,12 @@ public static class CompilerRules {
                 var type = currentScope.Resolve(id);
 
                 if (type is ClassSymbol { ClassType: ClassSymbolTypeType.Mutable }) {
-                    return "cannot have constant mutable class";
+                    return $"cannot have constant mutable class {leafNode}";
                 }
             }
 
             if (leafNode is DataStructureTypeNode) {
-                return "cannot have constant array";
+                return $"cannot have constant array : {leafNode}";
             }
         }
 
@@ -107,14 +107,14 @@ public static class CompilerRules {
 
             foreach (var forNode in otherNodes.OfType<ForStatementNode>()) {
                 if (Match(forNode.Id, an.Id)) {
-                    return "May not mutate control variable";
+                    return $"May not mutate control variable : {leafNode}";
                 }
             }
 
             foreach (var forInNode in otherNodes.OfType<ForInStatementNode>()) {
                 if (forInNode.Expression is IdentifierNode idn) {
                     if (Match(idn, an.Id)) {
-                        return "May not mutate control variable";
+                        return $"May not mutate control variable : {leafNode}";
                     }
                 }
             }
@@ -127,7 +127,7 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
         if (leafNode is NewInstanceNode { Type : DataStructureTypeNode { Type: DataStructure.Array } } nin) {
             if (nin.Arguments.Length is 0) {
-                return "Array must have size";
+                return $"Array must have size : {leafNode}";
             }
         }
 
@@ -139,7 +139,7 @@ public static class CompilerRules {
         if (leafNode is SystemCallNode or ProcedureCallNode) {
             var otherNodes = nodes.SkipLast(1).ToArray();
             if (otherNodes.Any(n => n is FunctionDefNode)) {
-                return "Cannot have system call in function";
+                return $"Cannot have system call in function : {leafNode}";
             }
         }
 
@@ -149,7 +149,7 @@ public static class CompilerRules {
                 var varNodes = otherNodes.OfType<VarDefNode>();
 
                 if (!varNodes.Any(vn => Match(vn.Id, an.Id))) {
-                    return "Cannot modify param in function";
+                    return $"Cannot modify param in function : {leafNode}";
                 }
             }
         }
@@ -166,7 +166,7 @@ public static class CompilerRules {
                 var paramNodes = otherNodes.OfType<ConstructorNode>().Single().Parameters.OfType<ParameterNode>();
 
                 if (paramNodes.Any(pn => Match(pn.Id, an.Id))) {
-                    return "Cannot modify param in constructor";
+                    return $"Cannot modify param in constructor : {leafNode}";
                 }
             }
         }
@@ -180,7 +180,7 @@ public static class CompilerRules {
         if (leafNode is ClassDefNode cdn) {
             var children = cdn.Methods.OfType<FunctionDefNode>();
             if (!children.Any(n => n is { Signature: MethodSignatureNode { Id : IdentifierNode { Id : "asString" } } })) {
-                return "Class must have asString";
+                return $"Class must have asString : {leafNode}";
             }
         }
 
@@ -204,7 +204,7 @@ public static class CompilerRules {
     public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is MethodCallNode mcn) {
-            return $"Unresolved method call: {mcn.Id}";
+            return $"Unresolved method call : {leafNode}";
         }
 
         return null;
