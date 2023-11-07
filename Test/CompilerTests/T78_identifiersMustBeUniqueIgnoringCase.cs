@@ -32,6 +32,29 @@ end main
         AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
+    [TestMethod]
+    public void Pass_CanHaveIdentiferSameAsTypeExceptCase()
+    {
+        var code = @"#
+main
+    var string = ""Hello World!""
+    printLine(string)
+end main
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
+    }
+
 
 
     #endregion

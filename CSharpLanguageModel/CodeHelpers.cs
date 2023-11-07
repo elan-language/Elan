@@ -16,7 +16,7 @@ public static class CodeHelpers {
 
     private const int IndentSpaces = 2;
 
-    private static readonly string[] CSharpKeywords = {
+    private static readonly string[] CSharpKeywordsExceptElanKeywords = {
         "base",
         "break",
         "byte",
@@ -75,7 +75,7 @@ public static class CodeHelpers {
 
     public static string Indent1 => Indent(1);
 
-    public static Regex CSharpKeywordRegex { get; } = new($@"{{\s*({string.Join("|", CSharpKeywords)})\s*}}");
+    public static Regex CSharpKeywordRegex { get; } = new($@"{{\s*({string.Join("|", CSharpKeywordsExceptElanKeywords)})\s*}}");
 
     public static string Indent(ICodeModel model, int indent) => model.ToString(indent);
 
@@ -164,7 +164,7 @@ public static class CodeHelpers {
         };
     }
 
-    public static string Prefix(string id) => CSharpKeywords.Contains(id) ? $"@{id}" : id;
+    public static string Prefix(string id) => CSharpKeywordsExceptElanKeywords.Contains(id) ? $"@{id}" : id;
     public static int UniqueId() => Interlocked.Increment(ref uniqueId);
 
     public static void ResetUniqueId() => Interlocked.Exchange(ref uniqueId, 0); // for testing
