@@ -49,7 +49,7 @@ WITH: 		   'with';
 BOOL_VALUE: 'true' | 'false';
 
 // Types
-VALUE_TYPE:  'Value' | 'Int' | 'Float' | 'Decimal' | 'Number' | 'Char' | 'String' | 'Bool' ;
+VALUE_TYPE:   'Int' | 'Float' | 'Char' | 'String' | 'Bool' ;
 ARRAY: 'Array';
 LIST:  'List';
 DICTIONARY: 'Dictionary';
@@ -89,9 +89,8 @@ OP_GE:                    '>=';
 TYPENAME:           IdentifierStartingUC;
 IDENTIFIER:         IdentifierStartingLC;
 
-LITERAL_INTEGER:     [0-9] ('_'* [0-9])*;
-LITERAL_FLOAT:        ([0-9] ('_'* [0-9])*)? '.' [0-9] ('_'* [0-9])* ExponentPart? [FfDdMm]? | [0-9] ('_'* [0-9])* ([FfDdMm] | ExponentPart [FfDdMm]?);
-LITERAL_DECIMAL:	 LITERAL_FLOAT 'D';
+LITERAL_INTEGER:     [0-9] [0-9]*;
+LITERAL_FLOAT:        LITERAL_INTEGER DOT LITERAL_INTEGER ExponentPart?;
 
 LITERAL_CHAR:                   '\'' (~['\\\r\n\u0085] | CommonCharacter) '\'';
 LITERAL_STRING:                      '"'  (~["\u0085] | CommonCharacter)* '"';
@@ -106,7 +105,7 @@ fragment NewLineCharacter
 	| '\u0085' // Next Line 
 	;
 
-fragment ExponentPart:              [eE] ('+' | '-')? [0-9] ('_'* [0-9])*;
+fragment ExponentPart:   [eE] (PLUS | MINUS)? LITERAL_INTEGER;
 
 fragment CommonCharacter
 	: SimpleEscapeSequence
