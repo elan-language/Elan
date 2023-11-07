@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -6,6 +7,13 @@ using static Helpers;
 
 [TestClass]
 public class T45_AssociationsAndDefaults {
+
+    [TestInitialize]
+    public void TestInit() {
+        CodeHelpers.ResetUniqueId();
+    }
+
+
     #region Passes
 
     [TestMethod]
@@ -619,8 +627,8 @@ public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
     printLine(g.score);
-    var _setScore_0 = default(int);
-    g.setScore(ref _setScore_0);
+    var _setScore_1_0 = default(int);
+    g.setScore(ref _setScore_1_0);
     printLine(g.score);
   }
 }";

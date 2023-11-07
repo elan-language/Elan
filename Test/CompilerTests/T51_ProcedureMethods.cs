@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -6,6 +7,12 @@ using static Helpers;
 
 [TestClass]
 public class T51_ProcedureMethods {
+
+    [TestInitialize]
+    public void TestInit() {
+        CodeHelpers.ResetUniqueId();
+    }
+
     #region Fails
 
     [TestMethod]
@@ -103,8 +110,8 @@ public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
     printLine(f.p1);
-    var _setP1_0 = 7;
-    f.setP1(ref _setP1_0);
+    var _setP1_1_0 = 7;
+    f.setP1(ref _setP1_1_0);
     printLine(f.p1);
   }
 }";

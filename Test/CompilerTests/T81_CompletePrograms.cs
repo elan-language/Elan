@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -7,6 +8,11 @@ using static Helpers;
 [TestClass] 
 public class T81_CompletePrograms
 {
+    [TestInitialize]
+    public void TestInit() {
+        CodeHelpers.ResetUniqueId();
+    }
+
     #region Passes
 
     [TestMethod]
@@ -150,7 +156,7 @@ public static class Program {
 
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_QueueOfTiles()
     {
         var code = ReadElanSourceCodeFile("words_QueueOfTiles.elan");

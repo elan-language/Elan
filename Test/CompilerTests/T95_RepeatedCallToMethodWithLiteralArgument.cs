@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -7,9 +8,15 @@ using static Helpers;
 [TestClass]
 public class T95_RepeatedCallToProcedureWithLiteralArgument
 {
+    [TestInitialize]
+    public void TestInit() {
+        CodeHelpers.ResetUniqueId();
+    }
+
+
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Template() {
         var code = @"
 main
@@ -22,7 +29,26 @@ procedure square(x Int)
 end procedure
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static void square(ref int x) {
+    printLine(x * x);
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var _square_1_0 = 3;
+    square(ref _square_1_0);
+    var _square_2_0 = 5;
+    square(ref _square_2_0);
+  }
+}";
 
         var parseTree = @"*";
 

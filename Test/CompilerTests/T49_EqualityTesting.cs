@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -6,6 +7,12 @@ using static Helpers;
 
 [TestClass]
 public class T49_EqualityTesting {
+
+    [TestInitialize]
+    public void TestInit() {
+        CodeHelpers.ResetUniqueId();
+    }
+
     #region Passes
 
     [TestMethod]
@@ -160,8 +167,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Foo(7, @$""Apple"");
     var y = x;
-    var _setP1_0 = 3;
-    y.setP1(ref _setP1_0);
+    var _setP1_1_0 = 3;
+    y.setP1(ref _setP1_1_0);
     var z = new Foo(8, @$""Orange"");
     printLine(x == x);
     printLine(x == y);

@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -6,6 +7,14 @@ using static Helpers;
 
 [TestClass]
 public class T19_Procedures {
+
+    [TestInitialize]
+    public void TestInit() {
+        CodeHelpers.ResetUniqueId();
+    }
+
+
+
     #region Passes
 
     [TestMethod]
@@ -130,9 +139,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 1;
-    var _foo_0 = a + 1;
-    var _foo_1 = @$""hello"";
-    foo(ref _foo_0, ref _foo_1);
+    var _foo_1_0 = a + 1;
+    var _foo_1_1 = @$""hello"";
+    foo(ref _foo_1_0, ref _foo_1_1);
   }
 }";
 
@@ -275,16 +284,16 @@ public static partial class Globals {
   public static void foo(ref int a) {
     if (a > 0) {
       printLine(a);
-      var _foo_0 = a - 1;
-      foo(ref _foo_0);
+      var _foo_1_0 = a - 1;
+      foo(ref _foo_1_0);
     }
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    var _foo_0 = 3;
-    foo(ref _foo_0);
+    var _foo_2_0 = 3;
+    foo(ref _foo_2_0);
   }
 }";
 
@@ -491,8 +500,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var _foo_0 = 3;
-    foo(ref _foo_0);
+    var _foo_2_0 = 3;
+    foo(ref _foo_2_0);
   }
 }";
 

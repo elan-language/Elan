@@ -1,9 +1,13 @@
-﻿namespace CSharpLanguageModel.Models;
+﻿using System.Xml;
+
+namespace CSharpLanguageModel.Models;
 
 using static CodeHelpers;
 
 public record ProcedureCallModel(ICodeModel Id, ICodeModel? Qualifier, IEnumerable<(ICodeModel, bool)> Parameters) : ICodeModel {
     private string Qual => Qualifier is null ? "" : $"{Qualifier}.";
+
+    private int UniqueId { get; } = UniqueId(); 
 
     public string ToString(int indent) {
         var parameters = Parameters.Select((p, i) => p.Item2 ? p.Item1 : new ScalarValueModel(GeneratedId(i)));
@@ -13,7 +17,7 @@ public record ProcedureCallModel(ICodeModel Id, ICodeModel? Qualifier, IEnumerab
 
     private static string Prefix(bool byRef) => byRef ? "ref " : "";
 
-    private string GeneratedId(int i) => $"_{Id}_{i}";
+    private string GeneratedId(int i) => $"_{Id}_{UniqueId}_{i}";
 
     private string GenerateVariables(int indent) {
         var toCreate = Parameters.Select((p, i) => p.Item2 ? "" : $"var {GeneratedId(i)} = {p.Item1}").Where(s => !string.IsNullOrEmpty(s)).ToArray();

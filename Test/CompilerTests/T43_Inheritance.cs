@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -6,6 +7,12 @@ using static Helpers;
 
 [TestClass]
 public class T43_Inheritance {
+
+    [TestInitialize]
+    public void TestInit() {
+        CodeHelpers.ResetUniqueId();
+    }
+
     #region Passes
 
     [TestMethod]
@@ -102,8 +109,8 @@ public static class Program {
     printLine(x.p1);
     printLine(x.p2);
     printLine(x.product());
-    var _setP1_0 = 4;
-    x.setP1(ref _setP1_0);
+    var _setP1_1_0 = 4;
+    x.setP1(ref _setP1_1_0);
     printLine(x.product());
   }
 }";
@@ -218,8 +225,8 @@ public static class Program {
     printLine(x.p1);
     printLine(x.p2);
     printLine(x.product());
-    var _setP1_0 = 4;
-    x.setP1(ref _setP1_0);
+    var _setP1_1_0 = 4;
+    x.setP1(ref _setP1_1_0);
     printLine(x.product());
   }
 }";
@@ -335,8 +342,8 @@ public static class Program {
     printLine(x.p1);
     printLine(x.p2);
     printLine(x.product());
-    var _setP1_0 = 4;
-    x.setP1(ref _setP1_0);
+    var _setP1_1_0 = 4;
+    x.setP1(ref _setP1_1_0);
     printLine(x.product());
   }
 }";
