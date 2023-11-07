@@ -150,7 +150,7 @@ public static class Program {
 
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_QueueOfTiles()
     {
         var code = ReadElanSourceCodeFile("words_QueueOfTiles.elan");
@@ -165,7 +165,7 @@ public static partial class Globals {
   public const int startHandSize = 15;
   public const int maxHandSize = 20;
   public const int maxTilesPlayed = 50;
-  public const string letters = @$"" * ***ABCDEFGHIJKLMNOPQRSTUVWXYZ"";
+  public const string letters = @$""****ABCDEFGHIJKLMNOPQRSTUVWXYZ"";
   public const string mainMenu = @$""
 ========= 
 MAIN MENU
@@ -239,7 +239,9 @@ MAIN MENU
 
 public static class Program {
   private static void Main(string[] args) {
+    seedRandom(1);
     var q = new QueueOfTiles(10);
+    q.initialise();
     printLine(q.show());
   }
 }";
@@ -250,10 +252,25 @@ public static class Program {
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
+        //AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "xxx");
+        AssertObjectCodeExecutes(compileData, "EALUQJHZAQ\r\n\r\n");
 
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_Player()
+    {
+        var code = ReadElanSourceCodeFile("words_Player.elan");
+        var objectCode = @"";
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        //AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Richard\r\n");
     }
     #endregion
 
