@@ -4,6 +4,11 @@ main
     var q = QueueOfTiles(10)
     q.initialise()
     printLine(q.show())
+    printLine(q.isNotEmpty()) 
+    var l = ""
+    q.withdrawNextLetter(l)
+    printLine(l)
+    printLine(q.show())
 end main
 
 constant startHandSize = 15
@@ -47,8 +52,8 @@ class QueueOfTiles
             letter = contents[0]
             for count = 1 to rear
                 contents[count - 1] = contents[count]
-                contents[rear] = ""
             end for
+            contents[rear] = ""
             rear = rear - 1
         end if
     end procedure
@@ -70,6 +75,6 @@ class QueueOfTiles
     end function
 
     function asString() -> String 
-        return self.typeAndProperties()
+        return show()
     end function
 end class
