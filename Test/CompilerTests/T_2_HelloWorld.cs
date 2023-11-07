@@ -7,6 +7,11 @@ using static Helpers;
 [TestClass]
 public class T_2_HelloWorld {
 
+    [AssemblyInitialize]
+    public static void ClassInit(TestContext context) {
+        Helpers.CleanUpArtifacts();
+    }
+
     #region Passes
     [TestMethod]
     public void Pass1() {

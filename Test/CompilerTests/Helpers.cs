@@ -116,4 +116,12 @@ public static partial class Helpers {
     }
 
     public static string ReadElanSourceCodeFile(string fileName) => File.ReadAllText($"ElanSourceCode\\{fileName}");
+
+    public static void CleanUpArtifacts() {
+        var wd = $@"{Directory.GetCurrentDirectory()}\obj";
+
+        if (Directory.Exists(wd)) {
+            Directory.Delete(wd, true);
+        }
+    }
 }
