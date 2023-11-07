@@ -224,7 +224,7 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Unresolved method");
+        AssertDoesNotCompile(compileData, "Calling unknown method");
     }
 
     [TestMethod]
