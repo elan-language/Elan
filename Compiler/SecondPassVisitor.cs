@@ -27,6 +27,7 @@ public class SecondPassVisitor {
             MainNode => currentScope.Resolve("main") as IScope ?? throw new ArgumentNullException(),
             ClassDefNode cdn => currentScope.Resolve(cdn.Name) as IScope ?? throw new ArgumentNullException(),
             FunctionDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
+            ProcedureDefNode pdn => currentScope.Resolve(SignatureId(pdn.Signature)) as IScope ?? throw new ArgumentNullException(),
             _ => currentScope,
         };
     }
@@ -36,6 +37,7 @@ public class SecondPassVisitor {
             MainNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             ClassDefNode cdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             FunctionDefNode fdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            ProcedureDefNode pdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
     }

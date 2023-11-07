@@ -189,7 +189,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Richard\r\nABCDEIOU\r\nABCDEIOUN\r\nABCDEIUN\r\nABCEIN\r\nCAB\r\nCA*\r\n50\r\n42\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Game()
     {
         var code = ReadElanSourceCodeFile("words_Game.elan");

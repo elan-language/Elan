@@ -12,7 +12,7 @@ class Game
     property allowedWords List<String> 
     property player1 Player
     property player2 Player
-    property tileQueue TileQueue
+    property tileQueue QueueOfTiles
 
     procedure initialiseForRandomStart()
         setStartingHand(player1)
@@ -124,7 +124,7 @@ TILE VALUES
             var v = tileDictionary[k]
             s = s + "Point for {k}: {v}"
         end foreach
-        s = s + newline()
+        s = s + newline
         return s
     end function
 
