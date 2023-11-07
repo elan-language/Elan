@@ -33,27 +33,29 @@ class Player
         tilesInHand = tilesInHand[..i-1] + tilesInHand[i+1..]
     end procedure
 
-    function wordAsWouldBePlayed(word String) -> String
-        var wordAsPlayed = ""
+    procedure wordAsWouldBePlayed(word String, asPlayed String)
+        asPlayed = ""
         tilesPlayed = tilesPlayed + word.length()
         foreach letter in word
              var c = letter
              if not tilesInHand.contains(letter) then 
                c = '*'
              end if
-            wordAsPlayed = wordsAsPlayed + c
+             asPlayed = asPlayed + c
         end foreach
-        return wordAsPlayed
-    end function
+    end procedure
 
     procedure removeLetters(wordAsPlayed String)
         foreach letter in wordAsPlayed
-             removeLetter(letter)
+             var x = letter
+             removeLetter(x)
         end foreach
     end procedure
 
     procedure deductAnyPenalty()
-      var x  = 0
+      foreach tile in tilesInHand
+        score = score - tileDictionary[tile])
+      end foreach
     end procedure
 
     function asString() -> String 
