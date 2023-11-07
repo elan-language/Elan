@@ -9,7 +9,7 @@ public class T_2_HelloWorld {
 
     #region Passes
     [TestMethod]
-    public void Pass1() {
+    public void Pass_StringLiteral() {
         var code = @"#
 main
   printLine(""Hello World!"")
@@ -43,7 +43,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass2() {
+    public void Pass_IntegerLiteral() {
         var code = @"#
 main
   printLine(1)
@@ -78,7 +78,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass3() {
+    public void Pass_FloatLiteral() {
         var code = @"#
 main
   printLine(2.1)
@@ -113,7 +113,112 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass4() {
+    public void Pass_FloatWithExponent()
+    {
+        var code = @"#
+main
+  printLine(2.1E4)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(2.1E4);
+  }
+}";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "21000\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_FloatWithExponent2()
+    {
+        var code = @"#
+main
+  printLine(2.1E100)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(2.1E100);
+  }
+}";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2.1E+100\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_FloatWithExponent3()
+    {
+        var code = @"#
+main
+  printLine(2.1e-4)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(2.1e-4);
+  }
+}";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "0.00021\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_CharLiteral() {
         var code = @"#
 main
   printLine('%')
@@ -148,7 +253,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass5() {
+    public void Pass_BoolLiteral() {
         var code = @"#
 main
   printLine(true)
@@ -183,7 +288,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass6() {
+    public void Pass_EmptyLine() {
         var code = @"#
 main
   printLine()
@@ -221,16 +326,16 @@ public static class Program {
 
     #region Fails
     [TestMethod]
-    public void Fail1() {
+    public void Fail_noMain() {
         var code = @"#
-  printLine(""Hello World`)
+printLine(""Hello World`)
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Fail2() {
+    public void Fail_noEnd() {
         var code = @"#
 main
   printLine(""Hello World!"")
@@ -241,7 +346,7 @@ main
     }
 
     [TestMethod]
-    public void Fail3() {
+    public void Fail_WrongCasing() {
         var code = @"#
 main
   printline(""Hello World!"")
