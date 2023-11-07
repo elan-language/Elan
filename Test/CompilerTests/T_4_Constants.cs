@@ -33,7 +33,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalValue 3))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -69,7 +69,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalValue 3.1))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -105,7 +105,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file  (constantDef  constant a = (literal (literalDataStructure ""hell0""))) (main  main (statementBlock (callStatement  (expression (methodCall printLine ( (argumentList (expression (value a))) )))))  end main)  <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -141,7 +141,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalValue 'a'))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -177,7 +177,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalValue true))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);

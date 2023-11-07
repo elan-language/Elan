@@ -42,7 +42,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 1))))) )))) (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2))))) ))))) end procedure) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -89,7 +89,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 2))))) (varDef var (assignableValue b) = (expression (value (literal (literalDataStructure ""hello""))))) (callStatement (expression (methodCall foo ( (argumentList (expression (value a)) , (expression (value b))) ))))) end main) (procedureDef procedure (procedureSignature foo ( (parameterList (parameter a (type Int)) , (parameter b (type String))) )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end procedure) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -136,7 +136,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 1))))) (callStatement (expression (methodCall foo ( (argumentList (expression (expression (value a)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))) , (expression (value (literal (literalDataStructure ""hello""))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( (parameterList (parameter a (type Int)) , (parameter b (type String))) )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end procedure) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -187,7 +187,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 1))))) (varDef var (assignableValue b) = (expression (value (literal (literalDataStructure ""hello""))))) (callStatement (expression (methodCall foo ( (argumentList (expression (value a)) , (expression (value b))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end main) (procedureDef procedure (procedureSignature foo ( (parameterList (parameter a (type Int)) , (parameter b (type String))) )) (statementBlock (assignment (assignableValue a) = (expression (expression (value a)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1)))))) (assignment (assignableValue b) = (expression (expression (value b)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""!""))))))) end procedure) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -239,7 +239,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall foo ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 1))))) )))) (callStatement (expression (methodCall bar ( ))))) end procedure) (procedureDef procedure (procedureSignature bar ( )) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2))))) ))))) end procedure) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -288,7 +288,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall foo ( (argumentList (expression (value (literal (literalValue 3))))) ))))) end main) (procedureDef procedure (procedureSignature foo ( (parameterList (parameter a (type Int))) )) (statementBlock (proceduralControlFlow (if if (expression (expression (value a)) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 0))))) then (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall foo ( (argumentList (expression (expression (value a)) (binaryOp (arithmeticOp -)) (expression (value (literal (literalValue 1)))))) ))))) end if))) end procedure) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

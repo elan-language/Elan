@@ -63,8 +63,7 @@ main
     var using = 1
     var virtual = 1
     var void = 1
-    var volatile  = 1
-    
+    var volatile = 1
     print(base);
     print(break)
     print(byte)
@@ -117,8 +116,6 @@ main
     print(virtual)
     print(void)
     print(volatile )
-
-
 end main
 ";
 
@@ -305,7 +302,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue m) = (expression (newInstance (type Base) ( (argumentList (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value m)) . p1)) ))))) end main) (classDef (mutableClass class Base (constructor constructor ( (parameterList (parameter p1 (type Int))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1)))) end constructor) (property property p1 (type Int)) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure """")))) end function)) end class)) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

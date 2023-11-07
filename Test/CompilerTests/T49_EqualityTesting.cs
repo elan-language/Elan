@@ -81,7 +81,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalDataStructure ""Apple""))))) )))) (varDef var (assignableValue y) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalDataStructure ""Orange""))))) )))) (varDef var (assignableValue z) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalDataStructure ""Orange""))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value x)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value y)) (binaryOp (conditionalOp is)) (expression (value z)))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p1 (type Int)) , (parameter p2 (type String))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1))) (assignment (assignableValue (nameQualifier self .) p2) = (expression (value p2)))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) (statementBlock (assignment (assignableValue p1) = (expression (value v)))) end procedure) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure ""{p1} {p2}"")))) end function)) end class)) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -169,7 +169,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 7)))) , (expression (value (literal (literalDataStructure ""Apple""))))) )))) (varDef var (assignableValue y) = (expression (value x))) (callStatement (expression (expression (value y)) . (methodCall setP1 ( (argumentList (expression (value (literal (literalValue 3))))) )))) (varDef var (assignableValue z) = (expression (newInstance (type Foo) ( (argumentList (expression (value (literal (literalValue 8)))) , (expression (value (literal (literalDataStructure ""Orange""))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value x)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) ))))) end main) (classDef (mutableClass class Foo (constructor constructor ( (parameterList (parameter p1 (type Int)) , (parameter p2 (type String))) ) (statementBlock (assignment (assignableValue (nameQualifier self .) p1) = (expression (value p1))) (assignment (assignableValue (nameQualifier self .) p2) = (expression (value p2)))) end constructor) (property property p1 (type Int)) (property property p2 (type String)) (procedureDef procedure (procedureSignature setP1 ( (parameterList (parameter v (type Int))) )) (statementBlock (assignment (assignableValue p1) = (expression (value v)))) end procedure) (functionDef (functionWithBody function (functionSignature asString ( ) -> (type String)) statementBlock return (expression (value (literal (literalDataStructure ""{p1} {p2}"")))) end function)) end class)) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -211,7 +211,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure ""Apple""))))) (varDef var (assignableValue y) = (expression (value (literal (literalDataStructure ""Apple""))))) (varDef var (assignableValue z) = (expression (value (literal (literalDataStructure ""apple""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -253,7 +253,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 3)) , (literal (literalValue 4)) , (literal (literalValue 5)) })))))) (varDef var (assignableValue y) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 3)) , (literal (literalValue 4)) , (literal (literalValue 5)) })))))) (varDef var (assignableValue z) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 4)) , (literal (literalValue 3)) , (literal (literalValue 5)) })))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -299,7 +299,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 3)) , (literal (literalValue 4)) , (literal (literalValue 5)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue y) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 3)) , (literal (literalValue 4)) , (literal (literalValue 5)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue z) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 4)) , (literal (literalValue 3)) , (literal (literalValue 5)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue w) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 3)) , (literal (literalValue 4)) , (literal (literalValue 5)) })))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value w)))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -349,7 +349,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 4))) , (literalKvp (literal (literalValue 'c')) : (literal (literalValue 5))) })))))) (varDef var (assignableValue y) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 4))) , (literalKvp (literal (literalValue 'c')) : (literal (literalValue 5))) })))))) (varDef var (assignableValue z) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'b')) : (literal (literalValue 4))) , (literalKvp (literal (literalValue 'c')) : (literal (literalValue 5))) , (literalKvp (literal (literalValue 'a')) : (literal (literalValue 3))) })))))) (varDef var (assignableValue w) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 6))) , (literalKvp (literal (literalValue 'c')) : (literal (literalValue 5))) })))))) (varDef var (assignableValue v) = (expression (value (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalDataStructure ""b"")) : (literal (literalValue 4))) , (literalKvp (literal (literalDataStructure ""c"")) : (literal (literalValue 5))) , (literalKvp (literal (literalDataStructure ""a"")) : (literal (literalValue 3))) })))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value y)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value z)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value w)))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value v)))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

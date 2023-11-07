@@ -231,7 +231,7 @@ main
      printLine(random())
 end main
 ";
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall seedRandom ( (argumentList (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall random ( )))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);

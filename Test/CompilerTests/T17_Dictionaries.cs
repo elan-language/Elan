@@ -33,7 +33,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -69,7 +69,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 'z')))) ]))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -143,7 +143,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) . (methodCall hasKey ( (argumentList (expression (value (literal (literalValue 'b'))))) )))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) . (methodCall hasKey ( (argumentList (expression (value (literal (literalValue 'd'))))) )))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -178,7 +178,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) . (methodCall values ( )))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -219,7 +219,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (varDef var (assignableValue b) = (expression (expression (value a)) . (methodCall set ( (argumentList (expression (value (literal (literalValue 'b')))) , (expression (value (literal (literalValue 4))))) )))) (varDef var (assignableValue c) = (expression (expression (value b)) . (methodCall set ( (argumentList (expression (value (literal (literalValue 'd')))) , (expression (value (literal (literalValue 2))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -259,7 +259,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (varDef var (assignableValue b) = (expression (expression (value a)) . (methodCall remove ( (argumentList (expression (value (literal (literalValue 'b'))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -297,7 +297,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (varDef var (assignableValue b) = (expression (expression (value a)) . (methodCall remove ( (argumentList (expression (value (literal (literalValue 'c'))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value b))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -342,7 +342,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (newInstance (type (dataStructureType Dictionary (genericSpecifier < (type String) , (type Int) >))) ( )))) (varDef var (assignableValue b) = (expression (expression (value a)) . (methodCall set ( (argumentList (expression (value (literal (literalDataStructure ""Foo"")))) , (expression (value (literal (literalValue 1))))) )))) (assignment (assignableValue b) = (expression (expression (value b)) . (methodCall set ( (argumentList (expression (value (literal (literalDataStructure ""Bar"")))) , (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall print ( (argumentList (expression (expression (value b)) . (methodCall length ( )))) )))) (callStatement (expression (methodCall print ( (argumentList (expression (expression (value b)) (index [ (expression (value (literal (literalDataStructure ""Foo"")))) ]))) )))) (callStatement (expression (methodCall print ( (argumentList (expression (expression (value b)) (index [ (expression (value (literal (literalDataStructure ""Bar"")))) ]))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -435,7 +435,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (constantDef constant a = (literal (literalDataStructure (literalDictionary { (literalKvp (literal (literalValue 'a')) : (literal (literalValue 1))) , (literalKvp (literal (literalValue 'b')) : (literal (literalValue 3))) , (literalKvp (literal (literalValue 'z')) : (literal (literalValue 10))) })))) (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 'c')))) ]))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);

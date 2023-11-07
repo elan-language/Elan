@@ -18,7 +18,9 @@ test:
 // STATEMENTS
 statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement )*;
 
-callStatement: NL expression; //Intended for a freestanding procedure/system call as a statement, 
+callStatement: NL (methodCall | (assignableValue DOT methodCall));
+
+ //Intended for a freestanding procedure/system call as a statement, 
 // or expression terminated by a procedure or system call that consumes result'.
 // Not possible to specify this as a syntax distinct from an expression. Compile rules will enforce that you can't use a non-consumed expression
 

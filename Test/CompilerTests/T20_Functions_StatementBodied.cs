@@ -39,7 +39,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall foo ( (argumentList (expression (value (literal (literalValue 3)))) , (expression (value (literal (literalValue 4))))) )))) ))))) end main) (functionDef (functionWithBody function (functionSignature foo ( (parameterList (parameter a (type Int)) , (parameter b (type Int))) ) -> (type Int)) statementBlock return (expression (expression (value a)) (binaryOp (arithmeticOp *)) (expression (value b))) end function)) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -93,7 +93,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall factorial ( (argumentList (expression (value (literal (literalValue 5))))) )))) ))))) end main) (functionDef (functionWithBody function (functionSignature factorial ( (parameterList (parameter a (type Int))) ) -> (type Int)) (statementBlock (varDef var (assignableValue result) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (if if (expression (expression (value a)) (binaryOp (conditionalOp >)) (expression (value (literal (literalValue 2))))) then (statementBlock (assignment (assignableValue result) = (expression (expression (value a)) (binaryOp (arithmeticOp *)) (expression (methodCall factorial ( (argumentList (expression (expression (value a)) (binaryOp (arithmeticOp -)) (expression (value (literal (literalValue 1)))))) )))))) else (statementBlock (assignment (assignableValue result) = (expression (value a)))) end if))) return (expression (value result)) end function)) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

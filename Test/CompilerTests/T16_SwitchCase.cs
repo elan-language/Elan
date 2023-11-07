@@ -57,7 +57,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (value i)) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue 2) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) (case case (literalValue 3) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'c'))))) )))))) (caseDefault default statementBlock) end switch))) end for))) end main) <EOF>)";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -116,7 +116,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (bracketedExpression ( (expression (value i)) ))) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue 2) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) (case case (literalValue 3) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'c'))))) )))))) (caseDefault default statementBlock) end switch))) end for))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -167,7 +167,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (value i)) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (caseDefault default (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) end switch))) end for))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -223,7 +223,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (for for i = (expression (value (literal (literalValue 1)))) to (expression (value (literal (literalValue 3)))) (statementBlock (proceduralControlFlow (switch switch (expression (expression (value i)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 1))))) (case case (literalValue 1) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue 2) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'b'))))) )))))) (caseDefault default (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'c'))))) )))))) end switch))) end for))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

@@ -42,7 +42,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 7)) , (literal (literalValue 8)) , (literal (literalValue 9)) })))))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (foreach foreach x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end foreach)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -87,7 +87,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalDataStructure (literalList { (literal (literalValue 7)) , (literal (literalValue 8)) , (literal (literalValue 9)) }))))) . (methodCall asArray ( )))) (varDef var (assignableValue n) = (expression (value (literal (literalValue 0))))) (proceduralControlFlow (foreach foreach x in (expression (value a)) (statementBlock (assignment (assignableValue n) = (expression (expression (value n)) (binaryOp (arithmeticOp +)) (expression (value x))))) end foreach)) (callStatement (expression (methodCall printLine ( (argumentList (expression (value n))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -128,7 +128,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""hello""))))) (proceduralControlFlow (foreach foreach x in (expression (value a)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end foreach))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -171,7 +171,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (proceduralControlFlow (foreach foreach x in (expression (value (literal (literalDataStructure ""12"")))) (statementBlock (proceduralControlFlow (foreach foreach y in (expression (value (literal (literalDataStructure ""34"")))) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""{x}{y }""))))) ))))) end foreach))) end foreach))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

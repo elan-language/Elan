@@ -101,8 +101,16 @@ public static class AstFactory {
         return new MainNode(block);
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CallStatementContext context) =>
-        new CallStatementNode(visitor.Visit(context.expression()));
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CallStatementContext context) {
+        if (context.DOT() is not null) {
+            var ms = visitor.Visit<MethodCallNode>(context.methodCall());
+            var exp = visitor.Visit(context.assignableValue());
+
+            return  new CallStatementNode(ms with { DotCalled = true, Qualifier = exp });
+        }
+
+        return  new CallStatementNode(visitor.Visit(context.methodCall()));
+    }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionContext context) {
         if (context.DOT() is not null) {

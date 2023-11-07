@@ -36,7 +36,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""Hello""))))) (varDef var (assignableValue b) = (expression (value (literal (literalDataStructure ""World!""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (expression (value a)) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure "" ""))))) (binaryOp (arithmeticOp +)) (expression (value b)))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -71,7 +71,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (expression (value (literal (literalValue '_')))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""Hello""))))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue '!')))))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -106,7 +106,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""Hello"")))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 3.1)))))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -143,7 +143,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""abcde""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (expression (value (literal (literalValue 2)))) ]))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -184,7 +184,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""abcde""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (range (expression (value (literal (literalValue 1)))) .. (expression (value (literal (literalValue 3))))) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (range (expression (value (literal (literalValue 2)))) ..) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value a)) (index [ (range .. (expression (value (literal (literalValue 2))))) ]))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -231,7 +231,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalDataStructure ""abc"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalDataStructure ""abcd"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp ==)) (expression (value (literal (literalDataStructure ""Abc"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp is)) (expression (value (literal (literalDataStructure ""abc"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp <>)) (expression (value (literal (literalDataStructure ""abcd"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp is not)) (expression (value (literal (literalDataStructure ""abcd"")))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value (literal (literalDataStructure ""abc"")))) (binaryOp (conditionalOp is not)) (expression (value (literal (literalDataStructure ""Abc"")))))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -315,7 +315,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalDataStructure ""abcde""))))) (assignment (assignableValue a) = (expression (expression (bracketedExpression ( (expression (expression (value (literal (literalValue 2.1)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalValue 3.4))))) ))) . (methodCall asString ( )))) (callStatement (expression (methodCall print ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -356,7 +356,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 3))))) (varDef var (assignableValue b) = (expression (value (literal (literalValue 4))))) (varDef var (assignableValue c) = (expression (value (literal (literalDataStructure ""{a} x {b} = {a * b}""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -397,7 +397,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (value (literal (literalValue 3))))) (varDef var (assignableValue b) = (expression (value (literal (literalValue 4))))) (varDef var (assignableValue c) = (expression (value (literal (literalDataStructure ""{{{a} x {b}}} = {a * b}""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -436,7 +436,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue c) = (expression (value (literal (literalDataStructure ""Hello World!""))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -473,7 +473,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue c) = (expression (expression (expression (value (literal (literalDataStructure ""Hello "")))) (binaryOp (arithmeticOp +)) (expression (value newline))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""World!"")))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value c))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -510,7 +510,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue a) = (expression (expression (value (literal (literalValue 3.1)))) (binaryOp (arithmeticOp +)) (expression (value (literal (literalDataStructure ""Hello"")))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value a))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

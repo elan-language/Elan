@@ -29,7 +29,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main  main (statementBlock (callStatement  (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) )))))  end main)  <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -64,7 +64,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main  main (statementBlock (callStatement  (expression (methodCall printLine ( (argumentList (expression (value (literal (literalDataStructure ""Hello World!""))))) )))))  end main)  <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

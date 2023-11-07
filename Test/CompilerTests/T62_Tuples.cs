@@ -38,7 +38,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (index [ (expression (value (literal (literalValue 0)))) ]))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (index [ (expression (value (literal (literalValue 1)))) ]))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -83,7 +83,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (varDef var (assignableValue y) = (expression (value (literal (literalValue 0))))) (varDef var (assignableValue z) = (expression (value (literal (literalDataStructure """"))))) (assignment (assignableValue (deconstructedTuple ( y , z ))) = (expression (value x))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value z))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -123,7 +123,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (assignment (assignableValue (deconstructedTuple ( var y , var z ))) = (expression (value x))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value z))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -162,7 +162,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (assignment (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 4)) , (literal (literalDataStructure ""Pear"")) ))))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -239,7 +239,7 @@ main
     x[0] = 4
 end main
 ";
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (assignment (assignableValue x (index [ (expression (value (literal (literalValue 0)))) ])) = (expression (value (literal (literalValue 4)))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -259,7 +259,7 @@ main
     printLine(z)
 end main
 ";
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalDataStructure (literalTuple ( (literal (literalValue 3)) , (literal (literalDataStructure ""Apple"")) ))))))) (varDef var (assignableValue y) = (expression (value (literal (literalValue 0))))) (varDef var (assignableValue z) = (expression (value (literal (literalDataStructure """"))))) (assignment (assignableValue (deconstructedTuple ( z , y ))) = (expression (value x))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value z))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

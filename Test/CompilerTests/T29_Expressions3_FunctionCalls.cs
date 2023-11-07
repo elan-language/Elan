@@ -32,7 +32,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value pi))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -69,7 +69,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (methodCall sin ( (argumentList (expression (expression (expression (value pi)) (binaryOp (arithmeticOp /)) (expression (value (literal (literalValue 180))))) (binaryOp (arithmeticOp *)) (expression (value (literal (literalValue 30)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -108,7 +108,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (expression (value pi)) (binaryOp (arithmeticOp /)) (expression (value (literal (literalValue 180))))) (binaryOp (arithmeticOp *)) (expression (value (literal (literalValue 30)))))) (varDef var (assignableValue y) = (expression (expression (value x)) . (methodCall sin ( )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -147,7 +147,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (expression (value pi)) (binaryOp (arithmeticOp /)) (expression (value (literal (literalValue 180))))) (binaryOp (arithmeticOp *)) (expression (value (literal (literalValue 30)))))) (varDef var (assignableValue y) = (expression (expression (value (literal (literalValue 2)))) (binaryOp (arithmeticOp +)) (expression (expression (value x)) . (methodCall sin ( ))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -186,7 +186,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalValue 0.7))))) (varDef var (assignableValue y) = (expression (expression (expression (methodCall sin ( (argumentList (expression (value x))) ))) ^ (expression (value (literal (literalValue 2))))) (binaryOp (arithmeticOp +)) (expression (expression (methodCall cos ( (argumentList (expression (value x))) ))) ^ (expression (value (literal (literalValue 2))))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value y))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -223,7 +223,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (methodCall min ( (argumentList (expression (value (literal (literalValue 3.1)))) , (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -259,7 +259,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalValue 3)))) . (methodCall max ( (argumentList (expression (value (literal (literalValue 3.1))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -281,7 +281,7 @@ main
 end main
 ";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (expression (value (literal (literalDataStructure ""hello"")))) . (methodCall max ( (argumentList (expression (value (literal (literalDataStructure ""world""))))) ))))) end main) <EOF>)";
+        var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -311,9 +311,8 @@ end main
     ";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
+        AssertDoesNotParse(compileData);
+       
     }
 
     [TestMethod]

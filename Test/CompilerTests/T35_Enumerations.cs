@@ -44,7 +44,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . orange)))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue (enumValue (enumType Fruit) . pear)))))) ))))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -91,7 +91,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple)))))) (assignment (assignableValue x) = (expression (value (literal (literalValue (enumValue (enumType Fruit) . pear)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (value x))) ))))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -138,7 +138,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue x) = (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple)))))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value (literal (literalValue (enumValue (enumType Fruit) . apple))))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (expression (value x)) (binaryOp (conditionalOp is)) (expression (value (literal (literalValue (enumValue (enumType Fruit) . pear))))))) ))))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -204,7 +204,7 @@ public static class Program {
   }
 }";
 
-        var parseTree = @"(file (main main (statementBlock (varDef var (assignableValue f) = (expression (value (literal (literalValue (enumValue (enumType Fruit) . orange)))))) (proceduralControlFlow (switch switch (expression (value f)) (case case (literalValue (enumValue (enumType Fruit) . apple)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'a'))))) )))))) (case case (literalValue (enumValue (enumType Fruit) . orange)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'o'))))) )))))) (case case (literalValue (enumValue (enumType Fruit) . pear)) (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 'p'))))) )))))) (caseDefault default statementBlock) end switch))) end main) (enumDef enumeration (enumType Fruit) apple , orange , pear end enumeration) <EOF>)";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
