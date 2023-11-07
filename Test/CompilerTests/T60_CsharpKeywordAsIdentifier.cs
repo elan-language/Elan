@@ -64,7 +64,7 @@ main
     var virtual = 1
     var void = 1
     var volatile = 1
-    print(base);
+    print(base)
     print(break)
     print(byte)
     print(checked)
