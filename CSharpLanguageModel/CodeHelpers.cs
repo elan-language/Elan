@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree;
+﻿using System.Text.RegularExpressions;
+using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using Compiler;
 using CSharpLanguageModel.Models;
@@ -162,4 +163,6 @@ public static class CodeHelpers {
         "void",
         "volatile"
     };
+
+    public static Regex CSharpKeywordRegex { get; } = new($@"{{\s*({string.Join("|", CSharpKeywords)})\s*}}");
 }

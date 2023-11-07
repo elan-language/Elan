@@ -91,4 +91,6 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
 
         return GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + KvpHashCode(i));
     }
+
+    public override string ToString() => Functions.asString(this);
 }

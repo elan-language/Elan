@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass] [Ignore]
+[TestClass]
 public class T79_InterpolatedStrings
 {
     #region Passes
@@ -20,7 +20,24 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 1;
+    var b = @$""Apple"";
+    var c = new StandardLibrary.ElanList<int>(1, 2, 3);
+    printLine(@$""{a} {b} {c}"");
+  }
+}";
 
         var parseTree = @"*";
 
@@ -43,7 +60,22 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var @new = 1;
+    printLine(@$""{@new}"");
+  }
+}";
 
         var parseTree = @"*";
 
@@ -59,7 +91,7 @@ end main
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_useExpression()
     {
         var code = @"
