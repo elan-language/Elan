@@ -55,18 +55,18 @@ public static class CodeHelpers {
             _ => throw new NotImplementedException(type.ToString() ?? "null")
         };
 
-    // todo fix cast
-    public static string ValueNodeToCSharpType(ValueNode node) => ValueTypeToCSharpType(((ValueTypeNode)node.TypeNode).Type);
 
     public static string NodeToCSharpType(IAstNode node) {
         return node switch {
-            ValueNode vn => ValueNodeToCSharpType(vn),
+            ValueNode vn => NodeToCSharpType(vn.TypeNode),
             LiteralListNode lln => $"StandardLibrary.ElanList<{NodeToCSharpType(lln.ItemNodes.First())}>",
             LiteralDictionaryNode ldn => $"StandardLibrary.ElanDictionary<{NodeToCSharpType(ldn.ItemNodes.First())}>",
             LiteralTupleNode ltn => $"({string.Join(", ", ltn.ItemNodes.Select(NodeToCSharpType))})",
             NewInstanceNode nin => $"{NodeToCSharpType(nin.Type)}",
             TypeNode tn => tn is { TypeName: IdentifierNode idn } ? idn.Id : throw new NotImplementedException(),
             PairNode kn => $"{NodeToCSharpType(kn.Key)},{NodeToCSharpType(kn.Value)}",
+            IdentifierWithTypeNode idtn => NodeToCSharpType(idtn.Type),
+            ValueTypeNode vtn =>  ValueTypeToCSharpType(vtn.Type),
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }

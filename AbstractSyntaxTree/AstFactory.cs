@@ -545,6 +545,10 @@ public static class AstFactory {
             return visitor.Visit(ad);
         }
 
+        if (context.listDefinition() is { } ld) {
+            return visitor.Visit(ld);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -564,7 +568,11 @@ public static class AstFactory {
         throw new NotImplementedException(context.children.First().GetText());
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ListDefinitionContext context) => throw new NotImplementedException(context.children.First().GetText());
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ListDefinitionContext context) {
+        var exprs = context.expression().Select(visitor.Visit);
+
+        return new LiteralListNode(exprs.ToImmutableArray());
+    }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureDefContext context) {
         var signature = visitor.Visit(context.procedureSignature());

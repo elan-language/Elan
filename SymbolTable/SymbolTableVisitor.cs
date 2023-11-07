@@ -88,7 +88,7 @@ public class SymbolTableVisitor {
             "String" => StringSymbolType.Instance,
             "Float" => FloatSymbolType.Instance,
             "Decimal" => DecimalSymbolType.Instance,
-            "Boolean" => BooleanSymbolType.Instance,
+            "Bool" => BooleanSymbolType.Instance,
             "Char" => CharSymbolType.Instance,
             "Tuple" => new TupleSymbolType(),
             _ => new ClassSymbolType(type)

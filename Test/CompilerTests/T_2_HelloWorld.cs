@@ -217,6 +217,41 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "\r\n");
     }
 
+    [TestMethod, Ignore]
+    public void Pass7() {
+        var code = @"#
+main
+  printLine(2.10D)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    printLine(2.10M);
+  }
+}";
+
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall printLine ( (argumentList (expression (value (literal (literalValue 2.10D))))) ))))) end main) <EOF>)";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2.1\r\n");
+    }
+
     #endregion
 
     #region Fails
