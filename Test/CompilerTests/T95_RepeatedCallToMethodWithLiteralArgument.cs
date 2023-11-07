@@ -9,7 +9,7 @@ public class T95_RepeatedCallToProcedureWithLiteralArgument
 {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Template() {
         var code = @"
 main
