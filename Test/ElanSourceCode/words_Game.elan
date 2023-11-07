@@ -1,4 +1,6 @@
-﻿
+﻿main
+end main
+
 class Game
     constructor(player1 Player, player2 Player,allowedWords List<String>)
         self.player1 = player1
@@ -137,5 +139,121 @@ TILE VALUES
 
     function asString() -> String 
         return "A Game"
+    end function
+end class
+
+class QueueOfTiles
+    constructor(maxSize Int)
+        self.maxSize = maxSize
+        contents = Array<String>(maxSize)
+        rear = -1 # signifies 'empty'
+    end constructor
+
+    private property contents Array<String>
+    private property rear Int
+    private property maxSize Int
+
+    procedure initialise()
+        rear = -1
+        for count = 0 to maxSize - 1
+           add()
+        end for
+    end procedure
+
+    function length() -> Int
+         return rear + 1
+    end function
+
+    function isNotEmpty() -> Boolean
+         return rear is not -1
+    end function
+
+    procedure withdrawNextLetter(letter String)
+        if isNotEmpty() then
+            letter = contents[0]
+            for count = 1 to rear
+                contents[count - 1] = contents[count]
+            end for
+            contents[rear] = ""
+            rear = rear - 1
+        end if
+    end procedure
+
+    procedure add()
+        if rear < maxSize - 1 then
+            rear = rear + 1
+            var n = random(0, 30)
+            contents[rear] = letters[n].asString()
+        end if
+    end procedure
+
+    function show() -> String
+       var result = ""
+       foreach letter in contents
+         result = result + letter       
+       end foreach
+       return result + newline
+    end function
+
+    function asString() -> String 
+        return show()
+    end function
+end class
+
+class Player
+    constructor(name String)
+        self.name = name
+        score = 50
+    end constructor
+
+    property name String
+    property score Int
+    property tilesPlayed Int
+    property tilesInHand String
+
+    procedure setTilesInHand(tiles String)
+        tilesInHand = tiles
+    end procedure
+
+    procedure addToLetters(letter Char)
+        tilesInHand = tilesInHand + letter
+    end procedure
+
+    procedure addToScore(points Int)
+        score = score + points
+    end procedure
+
+    procedure removeLetter(letter Char)
+        var i = tilesInHand.indexOf(letter)
+        tilesInHand = tilesInHand[..i] + tilesInHand[i+1..]
+    end procedure
+
+    procedure wordAsWouldBePlayed(word String, asPlayed String)
+        asPlayed = ""
+        tilesPlayed = tilesPlayed + word.length()
+        foreach letter in word
+             var c = letter
+             if not tilesInHand.contains(letter) then 
+               c = '*'
+             end if
+             asPlayed = asPlayed + c
+        end foreach
+    end procedure
+
+    procedure removeLetters(wordAsPlayed String)
+        foreach letter in wordAsPlayed
+             var x = letter
+             removeLetter(x)
+        end foreach
+    end procedure
+
+    procedure deductAnyPenalty()
+      foreach tile in tilesInHand
+        score = score - tileDictionary[tile]
+      end foreach
+    end procedure
+
+    function asString() -> String 
+        return name
     end function
 end class
