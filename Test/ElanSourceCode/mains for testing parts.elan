@@ -1,0 +1,30 @@
+﻿# QueueOfTiles
+    seedRandom(1)
+    var q = QueueOfTiles(10)
+    q.initialise()
+    printLine(q.show())
+    printLine(q.isNotEmpty()) 
+    var l = ""
+    q.withdrawNextLetter(l)
+    printLine(l)
+    printLine(q.show())
+# Player
+    var p = Player("Richard")
+    printLine(p.name)
+    p.setTilesInHand("ABCDEIOU")
+    printLine(p.tilesInHand)
+    p.addToLetters('N')
+    printLine(p.tilesInHand)
+    p.removeLetter('O')
+    printLine(p.tilesInHand)
+    p.removeLetters("DU")
+    printLine(p.tilesInHand)
+    var asPlayed = ""
+    p.wordAsWouldBePlayed("CAB", asPlayed)
+    printLine(asPlayed)
+    var can = "CAD"
+    p.wordAsWouldBePlayed(can, asPlayed)
+    printLine(asPlayed)
+    printLine(p.score)
+    p.deductAnyPenalty()
+    printLine(p.score)

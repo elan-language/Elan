@@ -10,7 +10,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="ElanSourceCode\Constants.cs" />
 	  <Compile Remove="ElanSourceCode\QueueOfTiles.cs" />
+	  <Compile Remove="ElanSourceCode\words_complete.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -36,6 +38,9 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ElanSourceCode\Wordle.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ElanSourceCode\words_Constants.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ElanSourceCode\words_Game.elan">

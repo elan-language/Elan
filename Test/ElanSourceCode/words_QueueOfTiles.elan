@@ -1,16 +1,81 @@
-﻿
-main
-    seedRandom(1)
-    var q = QueueOfTiles(10)
-    q.initialise()
-    printLine(q.show())
-    printLine(q.isNotEmpty()) 
-    var l = ""
-    q.withdrawNextLetter(l)
-    printLine(l)
-    printLine(q.show())
-end main
+﻿class QueueOfTiles
+    constructor(maxSize Int)
+        self.maxSize = maxSize
+        contents = Array<String>(maxSize)
+        rear = -1 # signifies 'empty'
+    end constructor
 
+    private property contents Array<String>
+    private property rear Int
+    private property maxSize Int
+
+    procedure initialise()
+        rear = -1
+        for count = 0 to maxSize - 1
+           add()
+        end for
+    end procedure
+
+    function isNotEmpty() -> Boolean
+         return rear is not -1
+    end function
+
+    procedure withdrawNextLetter(letter String)
+        if isNotEmpty() then
+            letter = contents[0]
+            for count = 1 to rear
+                contents[count - 1] = contents[count]
+            end for
+            contents[rear] = ""
+            rear = rear - 1
+        end if
+    end procedure
+
+    procedure add()
+        if rear < maxSize - 1 then
+            rear = rear + 1
+            var n = random(0, 30)
+            contents[rear] = letters[n].asString()
+        end if
+    end procedure
+
+    function show() -> String
+       var result = ""
+       foreach letter in contents
+         result = result + letter       
+       end foreach
+       return result + newline
+    end function
+
+    function asString() -> String 
+        return show()
+    end function
+end class
+
+constant welcome = "
+++++++++++++++++++++++++++++++++++++++
+Welcome to the WORDS WITH AQA game
+++++++++++++++++++++++++++++++++++++++
+
+
+"
+constant tileChoiceMenu = "
+Do you want to
+     replace the tiles you used(1) OR
+     get three extra tiles(2) OR
+     replace the tiles you used and get three extra tiles(3) OR
+     get no new tiles(4) ? "
+
+constant menu3 = "
+Either
+    enter the word you would like to play OR
+    press 1 to display the letter values OR
+    press 4 to view the tile queue OR
+    press 7 to view your tiles again OR
+    press 0 to fill hand and stop the game" 
+
+constant tileMenuChoices = { "1", "2", "3", "4" }
+constant tileDictionary = {'A': 1,'B': 2,'C': 2,'D': 2,'E': 1,'F': 3,'G': 2,'H': 3,'I': 1,'J': 5,'K': 3,'L': 2,'M': 2,'N': 1,'O': 1,'P': 2,'Q': 5,'R': 1,'S': 1,'T': 1,'U': 2,'V': 3,'W': 3,'X': 5,'Y': 3,'Z': 5}
 constant startHandSize = 15
 constant maxHandSize = 20
 constant maxTilesPlayed = 50
@@ -23,114 +88,3 @@ MAIN MENU
 1. Play game with random start hand,
 2. Play game with training start hand
 9. Quit"
-constant tileDictionary = {'A': 1,'B': 2,'C': 2,'D': 2,'E': 1,'F': 3,'G': 2,'H': 3,'I': 1,'J': 5,'K': 3,'L': 2,'M': 2,'N': 1,'O': 1,'P': 2,'Q': 5,'R': 1,'S': 1,'T': 1,'U': 2,'V': 3,'W': 3,'X': 5,'Y': 3,'Z': 5}
-
-class QueueOfTiles
-    constructor(maxSize Int)
-        self.maxSize = maxSize
-        contents = Array<String>(maxSize)
-        rear = -1 # signifies 'empty'
-    end constructor
-
-    private property contents Array<String>
-    private property rear Int
-    private property maxSize Int
-
-    procedure initialise()
-        rear = -1
-        for count = 0 to maxSize - 1
-           add()
-        end for
-    end procedure
-
-    function isNotEmpty() -> Boolean
-         return rear is not -1
-    end function
-
-    procedure withdrawNextLetter(letter String)
-        if isNotEmpty() then
-            letter = contents[0]
-            for count = 1 to rear
-                contents[count - 1] = contents[count]
-            end for
-            contents[rear] = ""
-            rear = rear - 1
-        end if
-    end procedure
-
-    procedure add()
-        if rear < maxSize - 1 then
-            rear = rear + 1
-            var n = random(0, 30)
-            contents[rear] = letters[n].asString()
-        end if
-    end procedure
-
-    function show() -> String
-       var result = ""
-       foreach letter in contents
-         result = result + letter       
-       end foreach
-       return result + newline
-    end function
-
-    function asString() -> String 
-        return show()
-    end function
-end class
-
-
-
-class QueueOfTiles
-    constructor(maxSize Int)
-        self.maxSize = maxSize
-        contents = Array<String>(maxSize)
-        rear = -1 # signifies 'empty'
-    end constructor
-
-    private property contents Array<String>
-    private property rear Int
-    private property maxSize Int
-
-    procedure initialise()
-        rear = -1
-        for count = 0 to maxSize - 1
-           add()
-        end for
-    end procedure
-
-    function isNotEmpty() -> Boolean
-         return rear is not -1
-    end function
-
-    procedure withdrawNextLetter(letter String)
-        if isNotEmpty() then
-            letter = contents[0]
-            for count = 1 to rear
-                contents[count - 1] = contents[count]
-            end for
-            contents[rear] = ""
-            rear = rear - 1
-        end if
-    end procedure
-
-    procedure add()
-        if rear < maxSize - 1 then
-            rear = rear + 1
-            var n = random(0, 30)
-            contents[rear] = letters[n].asString()
-        end if
-    end procedure
-
-    function show() -> String
-       var result = ""
-       foreach letter in contents
-         result = result + letter       
-       end foreach
-       return result + newline
-    end function
-
-    function asString() -> String 
-        return show()
-    end function
-end class

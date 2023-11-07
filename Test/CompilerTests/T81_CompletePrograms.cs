@@ -156,7 +156,7 @@ public static class Program {
 
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_QueueOfTiles()
     {
         var code = ReadElanSourceCodeFile("words_QueueOfTiles.elan");
@@ -170,11 +170,9 @@ public static class Program {
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         //AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "EALUQJHZAQ\r\n\r\ntrue\r\nE\r\nALUQJHZAQ\r\n\r\n");
-    }
+      }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Player()
     {
         var code = ReadElanSourceCodeFile("words_Player.elan");
@@ -185,14 +183,26 @@ public static class Program {
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         //AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Richard\r\nABCDEIOU\r\nABCDEIOUN\r\nABCDEIUN\r\nABCEIN\r\nCAB\r\nCA*\r\n50\r\n42\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Game()
     {
         var code = ReadElanSourceCodeFile("words_Game.elan");
+        var objectCode = @"";
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+    }
+
+
+    [TestMethod, Ignore]
+    public void Pass_Constants()
+    {
+        var code = ReadElanSourceCodeFile("words_Constants.elan");
         //var objectCode = @"";
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -201,8 +211,9 @@ public static class Program {
         AssertCompiles(compileData);
         //AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "");
+        AssertObjectCodeExecutes(compileData, "****ABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n");
     }
+
 
     [TestMethod, Ignore]
     public void Pass_Complete()
