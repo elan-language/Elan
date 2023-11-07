@@ -182,9 +182,35 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Richard\r\nABCDEIOU\r\nABCDEIOUN\r\nABCDEIUN\r\nABCEIN\r\nCAB\r\nCA*\r\n50\r\n42\r\n");
     }
-    #endregion
 
-    #region Fails
+    [TestMethod, Ignore]
+    public void Pass_Game()
+    {
+        var code = ReadElanSourceCodeFile("words_Game.elan");
+        //var objectCode = @"";
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        //AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "");
+    }
 
+    [TestMethod, Ignore]
+    public void Pass_Complete()
+    {
+        var code = ReadElanSourceCodeFile("words_complete.elan");
+        //var objectCode = @"";
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        //AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "");
+    }
     #endregion
 }

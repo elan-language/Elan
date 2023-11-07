@@ -87,9 +87,9 @@ class Game
 
     function listTileValues(player Player) -> String
         var values = "                  "
-        for c in player.tilesInHand
+        foreach c in player.tilesInHand
             values = values + tileDictionary[c]
-        end for
+        end foreach
         return values
     end function
 
@@ -118,11 +118,10 @@ class Game
         var s = "
 TILE VALUES
 "
-        for tile in tileDictionary
-            var k = tile.Key
-            var v = tile.Value
+        foreach k in tileDictionary.keys()
+            var v = tileDictionary[k]
             s = s + "Point for {k}: {v}"
-        end for
+        end foreach
         s = s + newline()
         return s
     end function

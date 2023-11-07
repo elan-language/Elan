@@ -47,7 +47,7 @@
 		<None Update="ElanSourceCode\words_Player.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\words_procedures.elan">
+		<None Update="ElanSourceCode\words_complete.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ElanSourceCode\words_QueueOfTiles.elan">
