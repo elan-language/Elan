@@ -90,25 +90,5 @@ public static class Program {
 
     #endregion
 
-    #region Fails
-    [TestMethod, Ignore]
-    public void Fail_useExpression()
-    {
-        var code = @"
-main
-    var a = 1
-    printLine(""{a + 1}"")
-end main
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "x");
-    }
-
-
-    #endregion
+    
 }
