@@ -8,7 +8,7 @@ constant tileDictionary = {'A': 1,'B': 2,'C': 2,'D': 2,'E': 1,'F': 3,'G': 2,'H':
 class Player
     constructor(name String)
         self.name = name
-         score = 50
+        score = 50
     end constructor
 
     property name String
@@ -54,7 +54,7 @@ class Player
 
     procedure deductAnyPenalty()
       foreach tile in tilesInHand
-        score = score - tileDictionary[tile])
+        score = score - tileDictionary[tile]
       end foreach
     end procedure
 
