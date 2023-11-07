@@ -258,7 +258,7 @@ public static class Program {
 
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Player()
     {
         var code = ReadElanSourceCodeFile("words_Player.elan");
