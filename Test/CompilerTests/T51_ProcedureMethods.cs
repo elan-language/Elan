@@ -9,7 +9,7 @@ public class T51_ProcedureMethods {
     #region Fails
 
     [TestMethod]
-    public void Fail_ProcedureCannotBeCalledDirectly() {
+    public void Fail_ProcedureMethodCannotBeCalledDirectly() {
         var code = @"#
 main
     var f = Foo()
@@ -38,7 +38,7 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "Calling unknown method");
     }
 
     #endregion

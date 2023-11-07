@@ -19,7 +19,7 @@ public static class CompilerRules {
                                     or SystemCallNode 
                                     or IfStatementNode
                                     or ReturnExpressionNode)) {
-                return $"Cannot have unassigned expression : {leafNode}";
+                return $"Expression generates result that is neither assigned nor returned : {leafNode}";
             }
         }
 
@@ -32,15 +32,15 @@ public static class CompilerRules {
             var otherNodes = nodes.SkipLast(1).ToArray();
 
             if (scn.DotCalled) {
-                return $"Cannot have dot call a system expression in {leafNode}";
+                return $"Cannot use a system call in an expression {leafNode}";
             }
 
             if (otherNodes.Any(n => n is SystemCallNode or FunctionCallNode or ProcedureCallNode)) {
-                return $"Cannot have system call in expression : {leafNode}";
+                return $"Cannot use a system call in an expression : {leafNode}";
             }
 
             if (!otherNodes.Any(n => n is AssignmentNode or VarDefNode)) {
-                return $"Cannot have unassigned system call : {leafNode}";
+                return $"System call generates a result that is neither assigned nor returned : {leafNode}";
             }
         }
 
@@ -68,7 +68,7 @@ public static class CompilerRules {
 
             if (parent is AssignmentNode an) {
                 if (an.Id == ien) {
-                    return $"cannot assign to node element : {leafNode}";
+                    return $"Cannot modify an element within a tuple : {leafNode}";
                 }
             }
         }
@@ -88,12 +88,12 @@ public static class CompilerRules {
                 var type = currentScope.Resolve(id);
 
                 if (type is ClassSymbol { ClassType: ClassSymbolTypeType.Mutable }) {
-                    return $"cannot have constant mutable class {leafNode}";
+                    return $"A class cannot be constant unless it is immutable {leafNode}";
                 }
             }
 
             if (leafNode is DataStructureTypeNode) {
-                return $"cannot have constant array : {leafNode}";
+                return $"An array may not be a constant : {leafNode}";
             }
         }
 
@@ -107,14 +107,14 @@ public static class CompilerRules {
 
             foreach (var forNode in otherNodes.OfType<ForStatementNode>()) {
                 if (Match(forNode.Id, an.Id)) {
-                    return $"May not mutate control variable : {leafNode}";
+                    return $"Cannot modify control variable : {leafNode}";
                 }
             }
 
             foreach (var forInNode in otherNodes.OfType<ForInStatementNode>()) {
                 if (forInNode.Expression is IdentifierNode idn) {
                     if (Match(idn, an.Id)) {
-                        return $"May not mutate control variable : {leafNode}";
+                        return $"Cannot modify control variable : {leafNode}";
                     }
                 }
             }
@@ -127,7 +127,7 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
         if (leafNode is NewInstanceNode { Type : DataStructureTypeNode { Type: DataStructure.Array } } nin) {
             if (nin.Arguments.Length is 0) {
-                return $"Array must have size : {leafNode}";
+                return $"Array must have size specified in round brackets : {leafNode}";
             }
         }
 
@@ -180,7 +180,7 @@ public static class CompilerRules {
         if (leafNode is ClassDefNode cdn) {
             var children = cdn.Methods.OfType<FunctionDefNode>();
             if (!children.Any(n => n is { Signature: MethodSignatureNode { Id : IdentifierNode { Id : "asString" } } })) {
-                return $"Class must have asString : {leafNode}";
+                return $"Class must have asString method: {leafNode}";
             }
         }
 
@@ -198,13 +198,13 @@ public static class CompilerRules {
 
         var inherits = typeNodes.Select(tn => ((IdentifierNode)tn.TypeName).Id);
         var classSymbols = inherits.Select(currentScope.Resolve).OfType<ClassSymbol>();
-        return classSymbols.Any(s => s.ClassType is not ClassSymbolTypeType.Abstract) ? "Class cannot inherit from concrete class" : null;
+        return classSymbols.Any(s => s.ClassType is not ClassSymbolTypeType.Abstract) ? "Cannot inherit from concrete class" : null;
     }
 
     public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is MethodCallNode mcn) {
-            return $"Unresolved method call : {leafNode}";
+            return $"Calling unknown method : {leafNode}";
         }
 
         return null;

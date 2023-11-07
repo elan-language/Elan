@@ -259,7 +259,7 @@ end function
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "Cannot have system call in function");
     }
 
     [TestMethod]

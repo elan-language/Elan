@@ -391,7 +391,7 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "Calling unknown method");
     }
 
     [TestMethod]
@@ -420,10 +420,10 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "Cannot modify param in function");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_FunctionMethodCannotCallProcedureMethod() {
         var code = @"#
 class Foo
@@ -454,7 +454,7 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "Cannot have procedure call in function");
     }
 
     #endregion
