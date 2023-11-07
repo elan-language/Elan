@@ -21,7 +21,7 @@ public static class CompilerTransforms {
 
         if (id != null) {
             var varSymbol = currentScope.Resolve(id);
-            var type = varSymbol is VariableSymbol vs ? vs.ReturnType : throw new NotSupportedException();
+            var type = varSymbol is VariableSymbol vs ? vs.ReturnType : null;
 
             if (type is ClassSymbolType cst) {
                 return GetNode(mcn, currentScope, cst);
