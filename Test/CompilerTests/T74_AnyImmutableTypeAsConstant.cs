@@ -237,7 +237,7 @@ constant k = Array<Int>(3)
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "An array may not be a constant");
     }
 
     [TestMethod]
@@ -262,7 +262,7 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "A class cannot be constant unless it is immutable");
     }
 
     #endregion

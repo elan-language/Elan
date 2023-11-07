@@ -215,7 +215,7 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "Cannot modify param in constructor");
     }
 
     #endregion

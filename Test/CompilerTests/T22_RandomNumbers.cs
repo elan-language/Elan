@@ -6,26 +6,6 @@ using static Helpers;
 
 [TestClass]
 public class T22_RandomNumbers {
-    #region Fails
-
-    [TestMethod]
-    public void Fail_CalledWithinExpression() {
-        var code = @"#
-main
-     seedRandom(3)
-     printLine(random())
-end main
-";
-        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall seedRandom ( (argumentList (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall random ( )))) ))))) end main) <EOF>)";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData);
-        //TODO: V Important here is the error message - explaining that you can't make this system call *within* an expression, only RHS of assignment
-    }
-
-    #endregion
-
     #region Passes
 
     [TestMethod]
@@ -236,6 +216,26 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "7\r\n9\r\n");
+    }
+
+    #endregion
+
+    #region Fails
+
+    [TestMethod]
+    public void Fail_CalledWithinExpression()
+    {
+        var code = @"#
+main
+     seedRandom(3)
+     printLine(random())
+end main
+";
+        var parseTree = @"(file (main main (statementBlock (callStatement (expression (methodCall seedRandom ( (argumentList (expression (value (literal (literalValue 3))))) )))) (callStatement (expression (methodCall printLine ( (argumentList (expression (methodCall random ( )))) ))))) end main) <EOF>)";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Cannot use a system call in an expression");
     }
 
     #endregion

@@ -5,7 +5,8 @@ using Compiler;
 
 namespace Test.CompilerTests;
 
-public static partial class Helpers {
+public static partial class Helpers
+{
     // because now windows newlines on appveyor
     public static readonly string NL = Environment.GetEnvironmentVariable("APPVEYOR") is "True" ? @"\n" : @"\r\n";
 
@@ -16,8 +17,10 @@ public static partial class Helpers {
 
     public static string NormalizeNewLines(string inp) => inp.Replace("\r", "");
 
-    private static Process CreateProcess(string exe, string workingDir) {
-        var start = new ProcessStartInfo {
+    private static Process CreateProcess(string exe, string workingDir)
+    {
+        var start = new ProcessStartInfo
+        {
             FileName = exe,
             Arguments = "",
             UseShellExecute = false,
@@ -34,15 +37,18 @@ public static partial class Helpers {
         return Process.Start(start) ?? throw new NullReferenceException("Process failed to start");
     }
 
-    private static (string, string) Execute(string exe, string workingDir, string? input = null) {
+    private static (string, string) Execute(string exe, string workingDir, string? input = null)
+    {
         using var process = CreateProcess(exe, workingDir);
 
-        if (input is not null) {
+        if (input is not null)
+        {
             using var stdIn = process.StandardInput;
             stdIn.WriteLine(input);
         }
 
-        if (!process.WaitForExit(20000)) {
+        if (!process.WaitForExit(20000))
+        {
             process.Kill();
         }
 
@@ -51,35 +57,43 @@ public static partial class Helpers {
         return (stdOut.ReadToEnd(), stdErr.ReadToEnd());
     }
 
-    public static void AssertParses(CompileData compileData) {
+    public static void AssertParses(CompileData compileData)
+    {
         Assert.IsTrue(compileData.ParserErrors.Length == 0, "Unexpected parse error");
     }
 
-    public static void AssertParseTreeIs(CompileData compileData, string expectedParseTree) {
-        if (expectedParseTree is "*" && !string.IsNullOrWhiteSpace(compileData.ParseStringTree)) {
+    public static void AssertParseTreeIs(CompileData compileData, string expectedParseTree)
+    {
+        if (expectedParseTree is "*" && !string.IsNullOrWhiteSpace(compileData.ParseStringTree))
+        {
             return;
         }
 
         Assert.AreEqual(CollapseWs(expectedParseTree), CollapseWs(compileData.ParseStringTree));
     }
 
-    public static void AssertCompiles(CompileData compileData) {
+    public static void AssertCompiles(CompileData compileData)
+    {
         Assert.IsTrue(compileData.CompileErrors.Length == 0, "Failed to compile");
     }
 
-    public static void AssertObjectCodeIs(CompileData compileData, string objectCode) {
+    public static void AssertObjectCodeIs(CompileData compileData, string objectCode)
+    {
         Assert.AreEqual(NormalizeNewLines(objectCode), NormalizeNewLines(compileData.ObjectCode));
     }
 
-    public static void AssertObjectCodeCompiles(CompileData compileData) {
+    public static void AssertObjectCodeCompiles(CompileData compileData)
+    {
         Assert.IsTrue(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), CollapseWs(compileData.ObjectCodeCompileStdOut));
     }
 
-    public static void AssertObjectCodeDoesNotCompile(CompileData compileData) {
+    public static void AssertObjectCodeDoesNotCompile(CompileData compileData)
+    {
         Assert.IsFalse(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), "Unexpectedly compiled object code");
     }
 
-    public static void AssertObjectCodeExecutes(CompileData compileData, string expectedOutput, string? optionalInput = null) {
+    public static void AssertObjectCodeExecutes(CompileData compileData, string expectedOutput, string? optionalInput = null)
+    {
         var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
         var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
 
@@ -88,7 +102,8 @@ public static partial class Helpers {
         Assert.AreEqual(NormalizeNewLines(expectedOutput), NormalizeNewLines(stdOut));
     }
 
-    public static void AssertObjectCodeFails(CompileData compileData, string expectedError, string? optionalInput = null) {
+    public static void AssertObjectCodeFails(CompileData compileData, string expectedError, string? optionalInput = null)
+    {
         var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
         var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
 
@@ -97,30 +112,42 @@ public static partial class Helpers {
         Assert.IsTrue(stdErr.Contains(expectedError));
     }
 
-    public static void AssertDoesNotParse(CompileData compileData, string[]? expected = null) {
+    public static void AssertDoesNotParse(CompileData compileData, string[]? expected = null)
+    {
         Assert.IsTrue(compileData.ParserErrors.Length > 0, "Expected parse error");
 
         var errors = compileData.ParserErrors.Select(e => e.Message).ToArray();
 
         var zip = expected?.Zip(errors);
 
-        foreach (var (e, a) in zip ?? Array.Empty<(string, string)>()) {
-            if (e is not "*") {
+        foreach (var (e, a) in zip ?? Array.Empty<(string, string)>())
+        {
+            if (e is not "*")
+            {
                 Assert.AreEqual(e, a);
             }
         }
     }
 
-    public static void AssertDoesNotCompile(CompileData compileData) {
+    public static void AssertDoesNotCompile(CompileData compileData, string messageStarting)
+    {
         Assert.IsTrue(compileData.CompileErrors.Length > 0, "Unexpectedly Compiled");
+        var actual = compileData.CompileErrors[0];
+        if (messageStarting != "*" && !actual.StartsWith(messageStarting))
+        {
+            Assert.AreEqual(messageStarting, actual);
+        }
     }
+
 
     public static string ReadElanSourceCodeFile(string fileName) => File.ReadAllText($"ElanSourceCode\\{fileName}");
 
-    public static void CleanUpArtifacts() {
+    public static void CleanUpArtifacts()
+    {
         var wd = $@"{Directory.GetCurrentDirectory()}\obj";
 
-        if (Directory.Exists(wd)) {
+        if (Directory.Exists(wd))
+        {
             Directory.Delete(wd, true);
         }
     }
