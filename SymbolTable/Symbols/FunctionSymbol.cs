@@ -7,5 +7,5 @@ public class FunctionSymbol : MethodSymbol {
 
     public FunctionSymbol(string name, ISymbolType returnType, NameSpace nameSpace) : base(name, returnType, nameSpace) { }
 
-    public override string ScopeName => "Function";
+    public override string ScopeName => $"Function '{Name}'";
 }

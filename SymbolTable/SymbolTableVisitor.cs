@@ -5,6 +5,9 @@ using SymbolTable.SymbolTypes;
 namespace SymbolTable;
 
 public class SymbolTableVisitor {
+
+    public readonly IList<string> SymbolErrors = new List<string>();
+
     private IScope currentScope;
 
     public SymbolTableVisitor() => currentScope = SymbolTable.GlobalScope;
@@ -16,6 +19,7 @@ public class SymbolTableVisitor {
             MainNode n => VisitMainNode(n),
             ProcedureDefNode n => VisitProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
+            ConstructorNode n => VisitConstructorNode(n),
             ClassDefNode n => VisitClassDefNode(n),
             AbstractClassDefNode n => VisitAbstractClassDefNode(n),
             VarDefNode n => VisitVarDefNode(n),
@@ -38,6 +42,17 @@ public class SymbolTableVisitor {
         VisitChildren(procedureDefNode);
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return procedureDefNode;
+    }
+
+    private IAstNode VisitConstructorNode(ConstructorNode constructorNode) {
+        var name = "constructor";
+
+        var ms = new ProcedureSymbol(name, currentScope, NameSpace.UserLocal);
+        currentScope.Define(ms);
+        currentScope = ms;
+        VisitChildren(constructorNode);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return constructorNode;
     }
 
     private IAstNode VisitFunctionDefNode(FunctionDefNode functionDefNode) {
@@ -139,7 +154,12 @@ public class SymbolTableVisitor {
 
     private IAstNode VisitChildren(IAstNode node) {
         foreach (var child in node.Children) {
-            Visit(child);
+            try {
+                Visit(child);
+            }
+            catch (SymbolException e) {
+                SymbolErrors.Add(e.Message);
+            }
         }
 
         return node;

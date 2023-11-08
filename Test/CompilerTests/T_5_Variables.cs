@@ -223,8 +223,8 @@ end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "Duplicate id 'a' in scope Procedure: 'main'");
+       
     }
 
     [TestMethod]

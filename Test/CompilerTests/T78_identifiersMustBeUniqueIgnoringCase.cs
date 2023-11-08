@@ -4,12 +4,12 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T78_identifiersMustBeUniqueIgnoringCase
 {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_CanUseCSharpKeywordWithDifferentCase()
     {
         var code = @"#
@@ -32,7 +32,7 @@ end main
         AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_CanHaveIdentiferSameAsTypeExceptCase()
     {
         var code = @"#
@@ -61,7 +61,7 @@ end main
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_DeclareSameVarNameWithDifferentCase()
     {
         var code = @"
@@ -79,7 +79,7 @@ end main
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_ElanKeywordWithChangedCase()
     {
         var code = @"
@@ -95,7 +95,7 @@ end main
         AssertDoesNotCompile(compileData, "x");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_ElanKeywordTypeEvenWithChangedCase()
     {
         var code = @"
@@ -117,7 +117,7 @@ end class
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CSharpKeywordWithCorrectCaseIfAlteredCaseAlreadyUsed()
     {
         var code = @"
@@ -132,6 +132,23 @@ end main
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "x");
+    }
+
+    [TestMethod]        
+    public void Fail_SameVariableNameInScope()
+    {
+        var code = @"
+main
+    var id = 1
+    var id = 1
+end main
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Duplicate id 'id' in scope Procedure: 'main'");
     }
 
 

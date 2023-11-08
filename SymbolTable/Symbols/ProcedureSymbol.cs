@@ -7,5 +7,5 @@ public class ProcedureSymbol : MethodSymbol {
 
     public ProcedureSymbol(string name, NameSpace nameSpace) : base(name, VoidSymbolType.Instance, nameSpace) { }
 
-    public override string ScopeName => "Procedure";
+    public override string ScopeName => $"Procedure: '{Name}'";
 }

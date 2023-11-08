@@ -45,11 +45,11 @@ public class SymbolTableImpl {
 
     private void InitTypeSystem(MethodInfo[] stdLib, MethodInfo[] systemCalls) {
         foreach (var slf in stdLib.Select(sc => new FunctionSymbol(sc.Name, ConvertToBuiltInSymbol(sc.ReturnType), NameSpace.Library))) {
-            GlobalScope.Define(slf);
+            GlobalScope.DefineSystem(slf);
         }
 
         foreach (var sc in systemCalls.Select(sc => new SystemCallSymbol(sc.Name, ConvertToBuiltInSymbol(sc.ReturnType)))) {
-            GlobalScope.Define(sc);
+            GlobalScope.DefineSystem(sc);
         }
     }
 }

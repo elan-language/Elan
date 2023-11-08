@@ -5,7 +5,7 @@ namespace SymbolTable.Symbols;
 public enum NameSpace {
     System,
     Library,
-    UserGlobal, 
+    UserGlobal,
     UserLocal
 }
 

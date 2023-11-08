@@ -17,7 +17,7 @@ public class ClassSymbol : BaseScope, ISymbol {
     public ClassSymbolTypeType ClassType { get; }
     public override IScope? EnclosingScope { get; }
 
-    public override string ScopeName => "Class";
+    public override string ScopeName => $"Class '{Name}'";
 
     public string Name { get; }
     public IScope? Scope { get; set; }
