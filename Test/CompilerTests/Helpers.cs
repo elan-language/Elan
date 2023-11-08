@@ -74,7 +74,7 @@ public static partial class Helpers
 
     public static void AssertCompiles(CompileData compileData)
     {
-        Assert.IsTrue(compileData.CompileErrors.Length == 0, "Failed to compile");
+        Assert.IsTrue(compileData.CompileErrors.Length == 0, $"Failed to compile :\r\n {string.Join("\r\n", compileData.CompileErrors)}");
     }
 
     public static void AssertObjectCodeIs(CompileData compileData, string objectCode)

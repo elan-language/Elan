@@ -289,7 +289,7 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UnconsumedExpressionResult1() {
         var code = @"#
     main
@@ -315,7 +315,7 @@ end main
        
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UnconsumedExpressionResult3() {
         var code = @"#
     main
