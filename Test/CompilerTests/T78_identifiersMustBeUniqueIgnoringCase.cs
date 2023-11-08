@@ -168,11 +168,11 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Duplicate id 'foo' in scope Procedure: 'main'");
+        AssertDoesNotCompile(compileData, "Duplicate id 'foo' in scope 'main'");
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_ElanKeywordWithChangedCase()
     {
         var code = @"
@@ -185,10 +185,10 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "x");
+        AssertDoesNotCompile(compileData, "Elan Keyword clash 'pRocedure' in scope 'main'");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_ElanKeywordTypeEvenWithChangedCase()
     {
         var code = @"
@@ -206,7 +206,7 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "x");
+        AssertDoesNotCompile(compileData, "Elan Keyword clash 'Main' in scope GlobalScope");
     }
 
 
@@ -224,7 +224,7 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Duplicate id 'break' in scope Procedure: 'main'");
+        AssertDoesNotCompile(compileData, "Duplicate id 'break' in scope 'main'");
     }
 
     [TestMethod]        
@@ -241,7 +241,7 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Duplicate id 'id' in scope Procedure: 'main'");
+        AssertDoesNotCompile(compileData, "Duplicate id 'id' in scope 'main'");
     }
 
 

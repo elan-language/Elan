@@ -32,7 +32,7 @@ public class ThirdPassVisitor {
     private void Enter(IAstNode node) {
         switch (node) {
             case MainNode:
-                currentScope = currentScope.Resolve("main") as IScope ?? throw new ArgumentNullException();
+                currentScope = currentScope.Resolve(Constants.WellKnownMainId) as IScope ?? throw new ArgumentNullException();
                 break;
         }
     }

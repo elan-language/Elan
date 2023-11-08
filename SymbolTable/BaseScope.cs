@@ -19,12 +19,20 @@ public abstract class BaseScope : IScope {
     private static string NormalizeName(string name) => name.Length > 1 ? $"{name[0]}{name[1..].ToLower()}" : name; 
 
     public virtual void Define(ISymbol symbol) {
+        ValidateName(symbol);
+
+        symbols[symbol.Name] = symbol;
+        symbol.Scope = this;
+    }
+
+    private void ValidateName(ISymbol symbol) {
         if (symbols.Keys.Select(NormalizeName).Contains(NormalizeName(symbol.Name))) {
             throw new SymbolException($"Duplicate id '{symbol.Name}' in scope {ScopeName}");
         }
 
-        symbols[symbol.Name] = symbol;
-        symbol.Scope = this;
+        if (Constants.ElanKeywords.Contains(symbol.Name.ToLower())) {
+            throw new SymbolException($"Elan Keyword clash '{symbol.Name}' in scope {ScopeName}");
+        }
     }
 
     public virtual ISymbol? Resolve(string name) => symbols.TryGetValue(name, out var symbol) ? symbol : EnclosingScope?.Resolve(name);

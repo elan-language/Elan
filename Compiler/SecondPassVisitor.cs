@@ -24,11 +24,11 @@ public class SecondPassVisitor {
 
     private IScope Enter(IAstNode node, IScope currentScope) {
         return node switch {
-            MainNode => currentScope.Resolve("main") as IScope ?? throw new ArgumentNullException(),
+            MainNode => currentScope.Resolve(Constants.WellKnownMainId) as IScope ?? throw new ArgumentNullException(),
             ClassDefNode cdn => currentScope.Resolve(cdn.Name) as IScope ?? throw new ArgumentNullException(),
             FunctionDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
             ProcedureDefNode pdn => currentScope.Resolve(SignatureId(pdn.Signature)) as IScope ?? throw new ArgumentNullException(),
-            ConstructorNode cn => currentScope.Resolve("constructor") as IScope ?? throw new ArgumentNullException(),
+            ConstructorNode cn => currentScope.Resolve(Constants.WellKnownConstructorId) as IScope ?? throw new ArgumentNullException(),
             _ => currentScope,
         };
     }

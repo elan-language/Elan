@@ -6,6 +6,9 @@ namespace SymbolTable;
 
 public class SymbolTableVisitor {
 
+  
+
+
     public readonly IList<string> SymbolErrors = new List<string>();
 
     private IScope currentScope;
@@ -45,9 +48,7 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitConstructorNode(ConstructorNode constructorNode) {
-        var name = "constructor";
-
-        var ms = new ProcedureSymbol(name, currentScope, NameSpace.UserLocal);
+        var ms = new ProcedureSymbol(Constants.WellKnownConstructorId, currentScope, NameSpace.UserLocal);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(constructorNode);
@@ -72,7 +73,7 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitMainNode(MainNode mainNode) {
-        var ms = new ProcedureSymbol("main", currentScope, NameSpace.System);
+        var ms = new ProcedureSymbol(Constants.WellKnownMainId, currentScope, NameSpace.System);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(mainNode);
