@@ -170,9 +170,10 @@ public static class Program {
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         //AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
       }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Player()
     {
         var code = ReadElanSourceCodeFile("words_Player.elan");
@@ -183,9 +184,10 @@ public static class Program {
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         //AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod, Ignore ]
     public void Pass_Game()
     {
         var code = ReadElanSourceCodeFile("words_Game.elan");
@@ -195,11 +197,12 @@ public static class Program {
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
+        //AssertObjectCodeIs(compileData, objectCode);
+        //AssertObjectCodeCompiles(compileData);
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Constants()
     {
         var code = ReadElanSourceCodeFile("words_Constants.elan");

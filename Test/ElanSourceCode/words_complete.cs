@@ -7,25 +7,25 @@ using static StandardLibrary.Constants;
 public static partial class Globals
 {
     public const string welcome = @$"
-    ++++++++++++++++++++++++++++++++++++++
-    Welcome to the WORDS WITH AQA game
-    ++++++++++++++++++++++++++++++++++++++
-    
-    
-    ";
+++++++++++++++++++++++++++++++++++++++
+Welcome to the WORDS WITH AQA game
+++++++++++++++++++++++++++++++++++++++
+
+
+";
     public const string tileChoiceMenu = @$"
-    Do you want to
-         replace the tiles you used(1) OR
-         get three extra tiles(2) OR
-         replace the tiles you used and get three extra tiles(3) OR
-         get no new tiles(4) ? ";
+Do you want to
+     replace the tiles you used(1) OR
+     get three extra tiles(2) OR
+     replace the tiles you used and get three extra tiles(3) OR
+     get no new tiles(4) ? ";
     public const string menu3 = @$"
-    Either
-        enter the word you would like to play OR
-        press 1 to display the letter values OR
-        press 4 to view the tile queue OR
-        press 7 to view your tiles again OR
-        press 0 to fill hand and stop the game";
+Either
+    enter the word you would like to play OR
+    press 1 to display the letter values OR
+    press 4 to view the tile queue OR
+    press 7 to view your tiles again OR
+    press 0 to fill hand and stop the game";
     public static readonly StandardLibrary.ElanList<string> tileMenuChoices = new StandardLibrary.ElanList<string>(@$"1", @$"2", @$"3", @$"4");
     public static readonly StandardLibrary.ElanDictionary<char, int> tileDictionary = new StandardLibrary.ElanDictionary<char, int>(('A', 1), ('B', 2), ('C', 2), ('D', 2), ('E', 1), ('F', 3), ('G', 2), ('H', 3), ('I', 1), ('J', 5), ('K', 3), ('L', 2), ('M', 2), ('N', 1), ('O', 1), ('P', 2), ('Q', 5), ('R', 1), ('S', 1), ('T', 1), ('U', 2), ('V', 3), ('W', 3), ('X', 5), ('Y', 3), ('Z', 5));
     public const int startHandSize = 15;
@@ -33,169 +33,13 @@ public static partial class Globals
     public const int maxTilesPlayed = 50;
     public const string letters = @$"****ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public const string mainMenu = @$"
-    ========= 
-    MAIN MENU
-    =========
-    
-    1. Play game with random start hand,
-    2. Play game with training start hand
-    9. Quit";
+========= 
+MAIN MENU
+=========
 
-    public record class QueueOfTiles
-    {
-        public static QueueOfTiles DefaultInstance { get; } = new QueueOfTiles._DefaultQueueOfTiles();
-        private QueueOfTiles() { }
-        public QueueOfTiles(int maxSize)
-        {
-            this.maxSize = maxSize;
-            contents = new StandardLibrary.ElanArray<string>(maxSize);
-            rear = -1;
-        }
-        protected virtual StandardLibrary.ElanArray<string> contents { get; set; } = StandardLibrary.ElanArray<string>.DefaultInstance;
-        protected virtual int rear { get; set; } = default;
-        protected virtual int maxSize { get; set; } = default;
-        public virtual Boolean isNotEmpty()
-        {
-
-            return rear != -1;
-        }
-        public virtual string show()
-        {
-            var result = @$"";
-            foreach (var letter in contents)
-            {
-                result = result + letter;
-            }
-            return result + newline;
-        }
-        public virtual string asString()
-        {
-
-            return show();
-        }
-        public virtual void initialise()
-        {
-            rear = -1;
-            for (var count = 0; count <= maxSize - 1; count = count + 1)
-            {
-                add();
-            }
-        }
-        public virtual void withdrawNextLetter(ref string letter)
-        {
-            if (isNotEmpty())
-            {
-                letter = contents[0];
-                for (var count = 1; count <= rear; count = count + 1)
-                {
-                    contents[count - 1] = contents[count];
-                }
-                contents[rear] = @$"";
-                rear = rear - 1;
-            }
-        }
-        public virtual void add()
-        {
-            if (rear < maxSize - 1)
-            {
-                rear = rear + 1;
-                var n = random(0, 30);
-                contents[rear] = StandardLibrary.Functions.asString(letters[n]);
-            }
-        }
-        private record class _DefaultQueueOfTiles : QueueOfTiles
-        {
-            public _DefaultQueueOfTiles() { }
-            protected override StandardLibrary.ElanArray<string> contents => StandardLibrary.ElanArray<string>.DefaultInstance;
-            protected override int rear => default;
-            protected override int maxSize => default;
-            public override void initialise() { }
-            public override void withdrawNextLetter(ref string letter) { }
-            public override void add() { }
-            public override string asString() { return "default QueueOfTiles"; }
-        }
-    }
-    public record class Player
-    {
-        public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
-        private Player() { }
-        public Player(string name)
-        {
-            this.name = name;
-            score = 50;
-        }
-        public virtual string name { get; set; } = "";
-        public virtual int score { get; set; } = default;
-        public virtual int tilesPlayed { get; set; } = default;
-        public virtual string tilesInHand { get; set; } = "";
-        public virtual string asString()
-        {
-
-            return name;
-        }
-        public virtual void setTilesInHand(ref string tiles)
-        {
-            tilesInHand = tiles;
-        }
-        public virtual void addToLetters(ref char letter)
-        {
-            tilesInHand = tilesInHand + letter;
-        }
-        public virtual void addToScore(ref int points)
-        {
-            score = score + points;
-        }
-        public virtual void removeLetter(ref char letter)
-        {
-            var i = StandardLibrary.Functions.indexOf(tilesInHand, letter);
-            tilesInHand = tilesInHand[..(i)] + tilesInHand[(i + 1)..];
-        }
-        public virtual void wordAsWouldBePlayed(ref string word, ref string asPlayed)
-        {
-            asPlayed = @$"";
-            tilesPlayed = tilesPlayed + StandardLibrary.Functions.length(word);
-            foreach (var letter in word)
-            {
-                var c = letter;
-                if (!StandardLibrary.Functions.contains(tilesInHand, letter))
-                {
-                    c = '*';
-                }
-                asPlayed = asPlayed + c;
-            }
-        }
-        public virtual void removeLetters(ref string wordAsPlayed)
-        {
-            foreach (var letter in wordAsPlayed)
-            {
-                var x = letter;
-                removeLetter(ref x);
-            }
-        }
-        public virtual void deductAnyPenalty()
-        {
-            foreach (var tile in tilesInHand)
-            {
-                score = score - tileDictionary[tile];
-            }
-        }
-        private record class _DefaultPlayer : Player
-        {
-            public _DefaultPlayer() { }
-            public override string name => "";
-            public override int score => default;
-            public override int tilesPlayed => default;
-            public override string tilesInHand => "";
-            public override void setTilesInHand(ref string tiles) { }
-            public override void addToLetters(ref char letter) { }
-            public override void addToScore(ref int points) { }
-            public override void removeLetter(ref char letter) { }
-            public override void wordAsWouldBePlayed(ref string word, ref string asPlayed) { }
-            public override void removeLetters(ref string wordAsPlayed) { }
-            public override void deductAnyPenalty() { }
-            public override string asString() { return "default Player"; }
-        }
-    }
+1. Play game with random start hand,
+2. Play game with training start hand
+9. Quit";
     public record class Game
     {
         public static Game DefaultInstance { get; } = new Game._DefaultGame();
@@ -379,13 +223,167 @@ TILE VALUES
             public override string asString() { return "default Game"; }
         }
     }
+    public record class Player
+    {
+        public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
+        private Player() { }
+        public Player(string name)
+        {
+            this.name = name;
+            score = 50;
+        }
+        public virtual string name { get; set; } = "";
+        public virtual int score { get; set; } = default;
+        public virtual int tilesPlayed { get; set; } = default;
+        public virtual string tilesInHand { get; set; } = "";
+        public virtual string asString()
+        {
+
+            return name;
+        }
+        public virtual void setTilesInHand(ref string tiles)
+        {
+            tilesInHand = tiles;
+        }
+        public virtual void addToLetters(ref char letter)
+        {
+            tilesInHand = tilesInHand + letter;
+        }
+        public virtual void addToScore(ref int points)
+        {
+            score = score + points;
+        }
+        public virtual void removeLetter(ref char letter)
+        {
+            var i = StandardLibrary.Functions.indexOf(tilesInHand, letter);
+            tilesInHand = tilesInHand[..(i)] + tilesInHand[(i + 1)..];
+        }
+        public virtual void wordAsWouldBePlayed(ref string word, ref string asPlayed)
+        {
+            asPlayed = @$"";
+            tilesPlayed = tilesPlayed + StandardLibrary.Functions.length(word);
+            foreach (var letter in word)
+            {
+                var c = letter;
+                if (!StandardLibrary.Functions.contains(tilesInHand, letter))
+                {
+                    c = '*';
+                }
+                asPlayed = asPlayed + c;
+            }
+        }
+        public virtual void removeLetters(ref string wordAsPlayed)
+        {
+            foreach (var letter in wordAsPlayed)
+            {
+                var x = letter;
+                removeLetter(ref x);
+            }
+        }
+        public virtual void deductAnyPenalty()
+        {
+            foreach (var tile in tilesInHand)
+            {
+                score = score - tileDictionary[tile];
+            }
+        }
+        private record class _DefaultPlayer : Player
+        {
+            public _DefaultPlayer() { }
+            public override string name => "";
+            public override int score => default;
+            public override int tilesPlayed => default;
+            public override string tilesInHand => "";
+            public override void setTilesInHand(ref string tiles) { }
+            public override void addToLetters(ref char letter) { }
+            public override void addToScore(ref int points) { }
+            public override void removeLetter(ref char letter) { }
+            public override void wordAsWouldBePlayed(ref string word, ref string asPlayed) { }
+            public override void removeLetters(ref string wordAsPlayed) { }
+            public override void deductAnyPenalty() { }
+            public override string asString() { return "default Player"; }
+        }
+    }
+    public record class QueueOfTiles
+    {
+        public static QueueOfTiles DefaultInstance { get; } = new QueueOfTiles._DefaultQueueOfTiles();
+        private QueueOfTiles() { }
+        public QueueOfTiles(int maxSize)
+        {
+            this.maxSize = maxSize;
+            contents = new StandardLibrary.ElanArray<string>(maxSize);
+            rear = -1;
+        }
+        protected virtual StandardLibrary.ElanArray<string> contents { get; set; } = StandardLibrary.ElanArray<string>.DefaultInstance;
+        protected virtual int rear { get; set; } = default;
+        protected virtual int maxSize { get; set; } = default;
+        public virtual Boolean isNotEmpty()
+        {
+
+            return rear != -1;
+        }
+        public virtual string show()
+        {
+            var result = @$"";
+            foreach (var letter in contents)
+            {
+                result = result + letter;
+            }
+            return result + newline;
+        }
+        public virtual string asString()
+        {
+
+            return show();
+        }
+        public virtual void initialise()
+        {
+            rear = -1;
+            for (var count = 0; count <= maxSize - 1; count = count + 1)
+            {
+                add();
+            }
+        }
+        public virtual void withdrawNextLetter(ref string letter)
+        {
+            if (isNotEmpty())
+            {
+                letter = contents[0];
+                for (var count = 1; count <= rear; count = count + 1)
+                {
+                    contents[count - 1] = contents[count];
+                }
+                contents[rear] = @$"";
+                rear = rear - 1;
+            }
+        }
+        public virtual void add()
+        {
+            if (rear < maxSize - 1)
+            {
+                rear = rear + 1;
+                var n = random(0, 30);
+                contents[rear] = StandardLibrary.Functions.asString(letters[n]);
+            }
+        }
+        private record class _DefaultQueueOfTiles : QueueOfTiles
+        {
+            public _DefaultQueueOfTiles() { }
+            protected override StandardLibrary.ElanArray<string> contents => StandardLibrary.ElanArray<string>.DefaultInstance;
+            protected override int rear => default;
+            protected override int maxSize => default;
+            public override void initialise() { }
+            public override void withdrawNextLetter(ref string letter) { }
+            public override void add() { }
+            public override string asString() { return "default QueueOfTiles"; }
+        }
+    }
 }
 
-//public static class Program
-//{
-//    //private static void Main(string[] args)
-//    //{
-//    //}
-//}
+public static class Program
+{
+    private static void Main(string[] args)
+    {
 
-
+    }
+}

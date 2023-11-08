@@ -1,4 +1,7 @@
-﻿class QueueOfTiles
+﻿main
+end main
+
+class QueueOfTiles
     constructor(maxSize Int)
         self.maxSize = maxSize
         contents = Array<String>(maxSize)

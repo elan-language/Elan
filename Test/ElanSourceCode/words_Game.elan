@@ -1,4 +1,7 @@
-﻿class Game
+﻿main
+end main
+
+class Game
     constructor(player1 Player, player2 Player,allowedWords List<String>)
         self.player1 = player1
         self.player2 = player2 
@@ -66,8 +69,9 @@
     end function
 
     procedure updateAfterAllowedWord(player Player, word String)
-        var wordAsPlayed = player.wordAsWouldBePlayed(word)
-        player.removeLetters(wordAsPLayed)
+        var wordAsPlayed = ""
+        player.wordAsWouldBePlayed(word, wordAsPlayed)
+        player.removeLetters(wordAsPlayed)
         player.addToScore(getScoreForWord(wordAsPlayed))
     end procedure
 
@@ -106,7 +110,7 @@
                 noOfEndOfTurnTiles = word.length() + 3
         end if
         for count = 0 to noOfEndOfTurnTiles - 1
-            letter = ""
+            var letter = ""
             tileQueue.withdrawNextLetter(letter)
             player.addToLetters(letter)
             tileQueue.add()
