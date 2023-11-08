@@ -154,7 +154,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_DeclareSameVarNameWithDifferentCase()
     {
         var code = @"
@@ -168,7 +168,7 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "x");
+        AssertDoesNotCompile(compileData, "Duplicate id 'foo' in scope Procedure: 'main'");
     }
 
 
@@ -210,7 +210,7 @@ end class
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CSharpKeywordWithCorrectCaseIfAlteredCaseAlreadyUsed()
     {
         var code = @"
@@ -224,7 +224,7 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "x");
+        AssertDoesNotCompile(compileData, "Duplicate id 'break' in scope Procedure: 'main'");
     }
 
     [TestMethod]        
