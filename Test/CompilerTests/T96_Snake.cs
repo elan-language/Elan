@@ -41,7 +41,18 @@ public class T96_Snake
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "\r\n");
+        AssertObjectCodeExecutes(compileData, "8,6\r\n6,6\r\n10,6\r\n8,6\r\n12,6\r\n10,6\r\ntrue\r\n12,10\r\n12,9\r\n");
+    }
+
+    [TestMethod,Ignore]
+    public void Pass_ConsoleUI()
+    {
+        var code = ReadElanSourceCodeFile("snake_COnsoleUI.elan");
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeCompiles(compileData);
     }
 
     #endregion

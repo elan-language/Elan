@@ -1,0 +1,204 @@
+﻿main
+    printLine(welcome)
+    var k = readKey()
+    var newGame = true
+    while newGame
+        playGame()
+        print("Do you want to play again (y/n)?")
+        var answer = ' '
+        repeat
+            ans = readKey()
+        until answer is 'y' or answer is 'n'
+        if answer is 'n' then
+            newGame = false
+        end if
+    end while
+end main
+
+constant bodyColour = Colour.green
+constant appleColour = Colour.red
+constant directionByKey = { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}
+constant welcome = "Welcome to the Snake game. 
+
+Use the w,a,s, and d keys to control the direction of the snake. Letting the snake get to any edge will lose you the game, as will letting the snake's head pass over its body. Eating an apple will
+cause the snake to grow by 
+
+If you want to re-size the window, please do so now, before starting the game.
+
+Click on this window to get 'focus' (and see a flashing cursor). Then press any key to start.."
+
+procedure playGame()
+    var charMap = CharMapLive()
+    charMap.fillBackground()
+    var currentDirection = Direction.right
+    var game = Game(charMap.width, charMap.height, currentDirection)
+    var gameOn = true
+    game.setNewApplePosition()
+    while gameOn
+        var head = game.head
+        charMap.putBlock(head.x, head.y, bodyColour)
+        charMap.putBlock(head.x + 1, head.y, bodyColour)
+        var apple = game.apple
+        charMap.putBlock(apple.x, apple.y, appleColour)
+        charMap.putBlock(apple.x + 1, apple.y, appleColour)
+        var priorTail = game.tail
+        pause(200)
+        if keyHasBeenPressed() then
+            var k = readKey()
+            currentDirection = directionByKey[k]
+        end if
+        game.clockTick(currentDirection, gameOn)
+        if not game.tail is priorTail then
+            charMap.clear(priorTail.x, priorTail.y)
+            charMap.clear(priorTail.x + 1, priorTail.y) # Need to clear two blocks to cover one square
+        end if
+#       charMap.display() # needed if using a CharacterMapBuffered
+    end while
+    clearKeyBuffer()
+    charMap.setCursor(0, 0)
+    printLine("Game Over! Score: {game.GetScore()}")
+end procedure
+
+class Game    
+    constructor (width Int, height Int, startingDirection Direction)
+        self.width = width
+        self.height = height
+        var halfW = width div 2
+        var halfH = height div 2
+        var centreW = halfW
+        if (halfW mod 2) is not 0 then
+          centreW = halfW + 1
+        end if
+        var centreH = halfH
+        if (halfH mod 2) is not 0 then
+          centreH = halfH + 1
+        end if
+        snake = Snake(centreW, centreH, startingDirection) 
+        setNewApplePosition()
+    end constructor
+
+    private property width Int
+    private property height Int
+    private property snake Snake
+    property apple Square
+
+    function head() -> Square
+      return snake.head
+    end function
+
+    function tail() -> Square
+      return snake.tail()
+    end function
+
+    procedure clockTick(d Direction, continue Bool)
+        snake.advanceHeadOneSquare(d)
+        if snake.head is apple then
+            setNewApplePosition()
+        else
+            snake.advanceTailOneSquare()
+        end if
+        continue = not hasHitEdge() and not snake.hasHitItself()
+    end procedure
+
+    function hasHitEdge() -> Bool
+        var x = snake.head.x
+        var y = snake.head.y
+        return x < 0 or y < 0 or x == width or y == height
+    end function
+
+    procedure setNewApplePosition()
+        var sq = Square(0,0)
+        var collision = false
+        repeat
+            var ranW = random((width-2) div 2)
+            var ranH = random((height-2) div 2) * 2-2
+            sq = Square(ranW * 2, ranH) 
+        until not snake.bodyCovers(sq)
+        apple = sq
+    end procedure
+
+    function getScore() -> Int
+      return snake.numberOfSegments() - 2
+    end function
+
+    function asString() -> String
+      return "Game"
+    end function
+end class
+
+class Snake
+    constructor(x Int, y Int, startingDirection Direction)
+        var tail = Square(x, y)
+        body = {tail}
+        head = tail.getAdjacentSquare(startingDirection)
+    end constructor
+
+    private property body List<Square>
+    property head Square
+
+    function tail() -> Square 
+      return body[body.length() -1]
+    end function
+
+    function hasHitItself() -> Bool 
+      return bodyCovers(head)
+    end function
+
+    function bodyCovers(sq Square) -> Bool
+      var result = false
+      foreach seg in body
+        if (seg is sq) then
+          result = true
+        end if
+      end foreach
+      return result
+    end function
+
+    procedure advanceHeadOneSquare(d Direction)
+        body = body + head
+        head = head.getAdjacentSquare(d)
+    end procedure
+
+    procedure advanceTailOneSquare()
+        body = body[1..]
+    end procedure
+
+    function numberOfSegments() -> Int 
+      return body.length()
+    end function
+
+    function asString() -> String
+      return "Snake"
+    end function
+end class
+
+class Square
+    constructor (x Int, y Int)
+        self.x = x
+        self.y = y
+    end constructor
+
+    property x Int
+    property y Int
+
+    function getAdjacentSquare(d Direction) -> Square
+        var newX = x
+        var newY = y
+        switch d
+            case Direction.left
+                newX = newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
+            case Direction.right
+                newX = newX + 2
+            case Direction.up
+                newY = newY - 1 
+            case Direction.down
+                newY = newY + 1
+            default
+        end switch
+        return Square(newX, newY)
+    end function
+
+    function asString() -> String 
+      return "{x},{y}"
+    end function
+end class
