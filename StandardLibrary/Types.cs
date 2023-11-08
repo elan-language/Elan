@@ -1,29 +1,29 @@
 ﻿namespace StandardLibrary;
 
 public enum Direction {
-    Left,
-    Right,
-    Up,
-    Down
+    left,
+    right,
+    up,
+    down
 }
 
 public enum Colour {
-    Black = 0,
-    DarkBlue = 1,
-    DarkGreen = 2,
-    DarkCyan = 3,
-    DarkRed = 4,
-    DarkMagenta = 5,
-    DarkYellow = 6,
-    Grey = 7,
-    DarkGrey = 8,
-    Blue = 9,
-    Green = 10,
-    Cyan = 11,
-    Red = 12,
-    Magenta = 13,
-    Yellow = 14,
-    White = 15
+    black = 0,
+    darkBlue = 1,
+    darkGreen = 2,
+    darkCyan = 3,
+    darkRed = 4,
+    darkMagenta = 5,
+    darkYellow = 6,
+    grey = 7,
+    darkGrey = 8,
+    blue = 9,
+    green = 10,
+    cyan = 11,
+    red = 12,
+    magenta = 13,
+    yellow = 14,
+    white = 15
 }
 
 public class StopWatch { }
