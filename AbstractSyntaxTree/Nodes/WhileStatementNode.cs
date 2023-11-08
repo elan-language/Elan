@@ -1,6 +1,8 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Roles;
 
-public record WhileStatementNode(IAstNode Expression, IAstNode StatementBlock) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record WhileStatementNode(IAstNode Expression, IAstNode StatementBlock) : IAstNode, ICanWrapExpression {
     public IEnumerable<IAstNode> Children => new[] { Expression, StatementBlock };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

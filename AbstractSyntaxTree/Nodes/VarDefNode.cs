@@ -1,6 +1,8 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Roles;
 
-public record VarDefNode(IAstNode Id, IAstNode Expression) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record VarDefNode(IAstNode Id, IAstNode Expression) : IAstNode, ICanWrapExpression {
     public IEnumerable<IAstNode> Children => new[] { Id, Expression };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

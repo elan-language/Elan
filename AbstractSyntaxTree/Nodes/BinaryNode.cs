@@ -1,6 +1,8 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Roles;
 
-public record BinaryNode(IAstNode Operator, IAstNode Operand1, IAstNode Operand2) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record BinaryNode(IAstNode Operator, IAstNode Operand1, IAstNode Operand2) : IAstNode,  ICanWrapExpression {
     public IEnumerable<IAstNode> Children => new[] { Operator, Operand1, Operand2 };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

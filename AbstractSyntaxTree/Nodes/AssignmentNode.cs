@@ -1,6 +1,8 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Roles;
 
-public record AssignmentNode(IAstNode Id, IAstNode Expression, bool Inline) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record AssignmentNode(IAstNode Id, IAstNode Expression, bool Inline) : IAstNode, ICanWrapExpression {
     public IEnumerable<IAstNode> Children => new[] { Id, Expression };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
