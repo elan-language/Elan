@@ -2,6 +2,7 @@
 using SymbolTable;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
+using ValueType = AbstractSyntaxTree.ValueType;
 
 namespace Compiler;
 
@@ -67,11 +68,11 @@ public static class CompilerTransforms {
     private static IAstNode MapSymbolToTypeNode(ISymbolType? type) {
         return type switch {
             ClassSymbolType cst => new TypeNode(new IdentifierNode(cst.Name)),
-            IntSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.Int),
-            FloatSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.Float),
-            CharSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.Char),
-            StringSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.String),
-            BooleanSymbolType => new ValueTypeNode(AbstractSyntaxTree.ValueType.Bool),
+            IntSymbolType => new ValueTypeNode(ValueType.Int),
+            FloatSymbolType => new ValueTypeNode(ValueType.Float),
+            CharSymbolType => new ValueTypeNode(ValueType.Char),
+            StringSymbolType => new ValueTypeNode(ValueType.String),
+            BooleanSymbolType => new ValueTypeNode(ValueType.Bool),
             _ => throw new NotImplementedException()
         };
     }
@@ -82,7 +83,6 @@ public static class CompilerTransforms {
 
         return new IdentifierWithTypeNode(node.Id, typeNode);
     }
-
 
     public static IAstNode? TransformLiteralListNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {
@@ -109,17 +109,20 @@ public static class CompilerTransforms {
         _ => null
     };
 
-
     private static (ISymbol?, bool) Resolve(IScope currentScope, MethodCallNode mcn) {
         var isGlobal = mcn.Qualifier is GlobalNode;
         var qualifiedId = GetId(mcn.Qualifier);
 
         if (qualifiedId is not null) {
-            var symbol = GetGlobalScope(currentScope).Resolve(qualifiedId);
+            var symbol = currentScope.Resolve(qualifiedId);
 
-            if (symbol is null) {
+            if (symbol is VariableSymbol { ReturnType: ClassSymbolType }) {
+                return (null, false);
+            }
+            if (symbol is VariableSymbol or null) {
                 return (GetGlobalScope(currentScope).Resolve(mcn.Name), isGlobal);
             }
+            
         }
 
         var scope = isGlobal ? GetGlobalScope(currentScope) : currentScope;
