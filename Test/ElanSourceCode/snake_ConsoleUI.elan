@@ -118,7 +118,7 @@ class Game
     end procedure
 
     function getScore() -> Int
-      return snake.numberOfSegments() - 2
+      return snake.length() - 2
     end function
 
     function asString() -> String
@@ -163,7 +163,7 @@ class Snake
         body = body[1..]
     end procedure
 
-    function numberOfSegments() -> Int 
+    function length() -> Int 
       return body.length()
     end function
 
