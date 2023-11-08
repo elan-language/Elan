@@ -38,6 +38,9 @@
 		<None Update="ElanSourceCode\mergeSort.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="ElanSourceCode\snake_Game.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ElanSourceCode\snake_Snake.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

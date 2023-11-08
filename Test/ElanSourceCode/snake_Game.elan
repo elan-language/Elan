@@ -1,17 +1,64 @@
 ﻿main
-  var sn = Snake(3,4, Direction.right)
-  printLine(sn)
-  printLine(sn.head)
-  printLine(sn.tail())
-  sn.advanceHeadOneSquare(Direction.right)
-  printLine(sn.head)
-  printLine(sn.tail())
-  sn.advanceHeadOneSquare(Direction.down)
-  printLine(sn.head)
-  printLine(sn.tail())
-  printLine(sn.bodyCovers(Square(5,4)))
-  printLine(sn.hasHitItself())
 end main
+
+class Game    
+    constructor (width Int, height Int, startingDirection Direction)
+        self.width = width
+        self.height = height
+        var halfW = width / 2
+        var halfH = height / 2
+        var centreW = halfW
+        if (halfW mod 2) is not 0 then
+          centreW = halfW + 1
+        end if
+        var centreH = halfH
+        if (halfH mod 2) is not 0 then
+          centreH = halfH + 1
+        end if
+        snake = Snake(centreW, centreH, startingDirection) 
+        setNewApplePosition()
+    end constructor
+
+    private property width Int
+    private property height Int
+    private property snake Snake
+    property apple Square
+
+    procedure clockTick(d Direction, continue Bool)
+        snake.advanceHeadOneSquare(d)
+        if snake.head is apple then
+            setNewApplePosition()
+        else
+            snake.advanceTailOneSquare()
+        end if
+        continue = not hasHitEdge() and not snake.hasHitItself()
+    end procedure
+
+    function hasHitEdge() -> Bool
+        var x = snake.head.x
+        var y = snake.head.y
+        return x < 0 or y < 0 or x == width or y == height
+    end function
+
+    procedure setNewApplePosition()
+        var sq = Square(0,0)
+        repeat
+            var ranW = random((width-2) / 2)
+            var ranH = random((height-2) / 2) * 2-2
+            sq = Square(ranW * 2, ranH)
+        until not snake.bodyCovers(sq)
+        apple = sq
+    end procedure
+
+    function getScore() -> Int
+      return snake.length() - 2
+    end function
+
+    function asString() -> String
+      return "Game"
+    end function
+end class
+
 
 class Snake
     constructor(x Int, y Int, startingDirection Direction)

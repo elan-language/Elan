@@ -20,10 +20,22 @@ public class T96_Snake
         AssertObjectCodeExecutes(compileData, "3,4\r\ntrue\r\n3,3\r\n3,5\r\n1,4\r\n5,4\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Snake()
     {
         var code = ReadElanSourceCodeFile("snake_Snake.elan");
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Snake\r\n5,4\r\n3,4\r\n7,4\r\n5,4\r\n7,5\r\n7,4\r\ntrue\r\nfalse\r\n");
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_Game()
+    {
+        var code = ReadElanSourceCodeFile("snake_Game.elan");
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
