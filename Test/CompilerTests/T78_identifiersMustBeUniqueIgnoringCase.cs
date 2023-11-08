@@ -9,7 +9,46 @@ public class T78_identifiersMustBeUniqueIgnoringCase
 {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]        
+    public void Pass_SameVariableNameInDifferentScope()
+    {
+        var code = @"
+constant id = 1
+
+main
+    var id = 2
+    printLine(id)
+end main
+";
+        var parseTree = @"*";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public const int id = 1;
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var id = 2;
+    printLine(id);
+  }
+}";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2\r\n");
+    }
+
+    [TestMethod]
     public void Pass_CanUseCSharpKeywordWithDifferentCase()
     {
         var code = @"#
@@ -19,7 +58,22 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var bReak = 1;
+    printLine(bReak);
+  }
+}";
 
         var parseTree = @"*";
         
@@ -32,17 +86,56 @@ end main
         AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_CanHaveIdentiferSameAsTypeExceptCase()
     {
         var code = @"#
 main
-    var string = ""Hello World!""
-    printLine(string)
+    var foo = Foo()
+    printLine(foo)
 end main
+class Foo
+    constructor()
+    end constructor
+    function asString() -> String
+        return ""Hello World!""
+    end function
+end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+
+    public virtual string asString() {
+
+      return @$""Hello World!"";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var foo = new Foo();
+    printLine(foo);
+  }
+}";
 
         var parseTree = @"*";
 
