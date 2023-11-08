@@ -1,0 +1,75 @@
+﻿main
+end main
+
+class Snake
+    constructor(x Int, y Int, startingDirection Direction)
+        var tail = Square(x, y)
+        body = {tail}
+        head = tail.getAdjacentSquare(startingDirection)
+    end constructor
+
+    private property body List<Square>
+    property head Square
+
+    function tail() -> Square 
+      return body[body.length() -1]
+    end function
+
+    function hasHitItself() -> Bool 
+      return bodyCovers(head)
+    end function
+
+    function bodyCovers(sq Square) -> Bool
+      var result = false
+      foreach seg in body
+        if (seg is sq) then
+          result = true
+        end if
+      end foreach
+      return result
+    end function
+
+    procedure advanceHeadOneSquare(d Direction)
+        body = body + head
+        head = head.getAdjacentSquare(d)
+    end procedure
+
+    procedure advanceTailOneSquare()
+        body = body[1..]
+    end procedure
+
+    function length() -> Int 
+      return body.length()
+    end function
+end class
+
+class Square
+    constructor (x Int, y Int)
+        self.x = x
+        self.y = y
+    end constructor
+
+    property x Int
+    property y Int
+
+    function getAdjacentSquare(d Direction) -> Square
+        var newX = x
+        var newY = y
+        switch d
+            case Direction.left
+                newX = newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
+            case Direction.right
+                newX = newX + 2
+            case Direction.up
+                newY = newY - 1 
+            case Direction.down
+                newY = newY + 1
+            default
+        end switch
+        return Square(newX, newY)
+    end function
+
+    function asString() -> String 
+      return "{x},{y}"
+    end function
+end class
