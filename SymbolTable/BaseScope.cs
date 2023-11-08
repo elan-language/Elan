@@ -16,8 +16,10 @@ public abstract class BaseScope : IScope {
         symbol.Scope = this;
     }
 
+    private static string NormalizeName(string name) => name.Length > 1 ? $"{name[0]}{name[1..].ToLower()}" : name; 
+
     public virtual void Define(ISymbol symbol) {
-        if (symbols.ContainsKey(symbol.Name)) {
+        if (symbols.Keys.Select(NormalizeName).Contains(NormalizeName(symbol.Name))) {
             throw new SymbolException($"Duplicate id '{symbol.Name}' in scope {ScopeName}");
         }
 
