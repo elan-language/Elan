@@ -1,0 +1,41 @@
+﻿main
+    var sq1 = Square(3,4)
+    printLine(sq1)
+    var sq2 = Square(3,4)
+    printLine(sq1 is sq2)
+    printLine(sq1.getAdjacentSquare(Direction.up))
+    printLine(sq1.getAdjacentSquare(Direction.down))
+    printLine(sq1.getAdjacentSquare(Direction.left))
+    printLine(sq1.getAdjacentSquare(Direction.right))
+end main
+
+class Square
+    constructor (x Int, y Int)
+        self.x = x
+        self.y = y
+    end constructor
+
+    property x Int
+    property y Int
+
+    function getAdjacentSquare(d Direction) -> Square
+        var newX = x
+        var newY = y
+        switch d
+            case Direction.left
+                newX = newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
+            case Direction.right
+                newX = newX + 2
+            case Direction.up
+                newY = newY - 1 
+            case Direction.down
+                newY = newY + 1
+            default
+        end switch
+        return Square(newX, newY)
+    end function
+
+    function asString() -> String 
+      return "{x},{y}"
+    end function
+end class

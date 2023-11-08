@@ -12,6 +12,7 @@
 	<ItemGroup>
 	  <Compile Remove="ElanSourceCode\Constants.cs" />
 	  <Compile Remove="ElanSourceCode\QueueOfTiles.cs" />
+	  <Compile Remove="ElanSourceCode\Snake.cs" />
 	  <Compile Remove="ElanSourceCode\words_complete.cs" />
 	</ItemGroup>
 
@@ -35,6 +36,12 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ElanSourceCode\mergeSort.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ElanSourceCode\snake_Snake.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ElanSourceCode\snake_Square.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ElanSourceCode\Wordle.elan">
