@@ -1,12 +1,28 @@
 ﻿main
+  var g = Game(10,10, Direction.right)
+  printLine(g.head())
+  printLine(g.tail())
+  g.clockTick(Direction.right, false)
+  printLine(g.head())
+  printLine(g.tail())
+  g.clockTick(Direction.right, false)
+  printLine(g.head())
+  printLine(g.tail())
+  g.clockTick(Direction.down, false)
+  while not g.hasHitEdge()
+   g.clockTick(Direction.down, false)
+  end while
+  printLine(g.hasHitEdge())
+  printLine(g.head())
+  printLine(g.tail())
 end main
 
 class Game    
     constructor (width Int, height Int, startingDirection Direction)
         self.width = width
         self.height = height
-        var halfW = width / 2
-        var halfH = height / 2
+        var halfW = width div 2
+        var halfH = height div 2
         var centreW = halfW
         if (halfW mod 2) is not 0 then
           centreW = halfW + 1
@@ -23,6 +39,14 @@ class Game
     private property height Int
     private property snake Snake
     property apple Square
+
+    function head() -> Square
+      return snake.head
+    end function
+
+    function tail() -> Square
+      return snake.tail()
+    end function
 
     procedure clockTick(d Direction, continue Bool)
         snake.advanceHeadOneSquare(d)
@@ -42,16 +66,17 @@ class Game
 
     procedure setNewApplePosition()
         var sq = Square(0,0)
+        var collision = false
         repeat
-            var ranW = random((width-2) / 2)
-            var ranH = random((height-2) / 2) * 2-2
-            sq = Square(ranW * 2, ranH)
+            var ranW = random((width-2) div 2)
+            var ranH = random((height-2) div 2) * 2-2
+            sq = Square(ranW * 2, ranH) 
         until not snake.bodyCovers(sq)
         apple = sq
     end procedure
 
     function getScore() -> Int
-      return snake.length() - 2
+      return snake.length() - 2 # TODO change back to length
     end function
 
     function asString() -> String
