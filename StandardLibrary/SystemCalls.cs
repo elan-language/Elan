@@ -13,26 +13,6 @@ public static class SystemCalls {
     //public static DateTime now() => DateTime.Now;
 
     //public static DateOnly today() => DateOnly.FromDateTime(DateTime.Today);
-
-    public static void pause(int milliseconds) {
-        Thread.Sleep(milliseconds);
-    }
-
-    #endregion
-
-    #region Exception
-
-    public static void throwException(string message) {
-        throw new ElanException(message);
-    }
-
-    #endregion
-
-    #region Output to screen
-    public static void print(object obj) => Console.WriteLine(asString(obj));
-
-    public static void print() => Console.WriteLine();
-
     #endregion
 
     #region Input from keyboard
@@ -78,9 +58,6 @@ public static class SystemCalls {
 
     #endregion
 
-    #region TODO - simple sounds
-
-    #endregion
 
     #region random numbers
 
@@ -144,20 +121,11 @@ public static class SystemCalls {
 
     ////StreamReader type should map to a Elan type FileReader
     //public static StreamReader openRead(string filePath) => new StreamReader(filePath);
-    //public static string readLine(StreamReader file) => file.ReadLine();
-    //public static string readToEnd(StreamReader file) => file.ReadToEnd();
-    //public static void close(StreamReader file) => file.Close();
-    //public static bool endOfFile(StreamReader file) => file.EndOfStream;
 
-    ////StreamWriter type should map to a Elan type FilerWriter
+    ////StreamWriter type should map to a Elan type FileWriter
     //public static StreamWriter openWrite(string filePath) => new StreamWriter(filePath);
-    //public static void writeLine(StreamWriter file, string data) => file.WriteLine(data);
-    //public static void close(StreamWriter file) {
-    //    file.Flush();
-    //    file.Close();
-    //}
 
-    //Separate method for binary file handling?
+    //Separate methods for binary file handling?
 
     #endregion
 }

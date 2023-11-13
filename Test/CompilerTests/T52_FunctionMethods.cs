@@ -485,7 +485,7 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot have procedure call in function");
+        AssertDoesNotCompile(compileData, "Cannot call a procedure within a function");
     }
 
     #endregion

@@ -49,7 +49,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "(3, Apple)\r\n3\r\nApple\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DeconstructIntoExistingVariables() {
         var code = @"#
 main
@@ -99,7 +99,7 @@ public static class Program {
         var code = @"#
 main
     var x = (3,""Apple"")
-    (var y, var z) = x
+    var (y, z) = x
     print y
     print z
 end main

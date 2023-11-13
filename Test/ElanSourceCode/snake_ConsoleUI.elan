@@ -1,10 +1,10 @@
 ﻿main
-    call printLine(welcome)
+    print welcome
     var k = readKey()
     var newGame = true
     while newGame
         call playGame()
-        call printLine("Do you want to play again (y/n)?")
+        print "Do you want to play again (y/n)?"
         var answer = ' '
         repeat
             set ans to readKey()
@@ -56,7 +56,7 @@ procedure playGame()
     end while
     call clearKeyBuffer()
     call charMap.setCursor(0, 0)
-    call printLine("Game Over! Score: {game.GetScore()}")
+    print "Game Over! Score: {game.GetScore()}"
 end procedure
 
 class Game    

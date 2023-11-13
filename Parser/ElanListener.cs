@@ -251,6 +251,16 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitFunctionSignature([NotNull] ElanParser.FunctionSignatureContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.systemAccessor"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSystemAccessor([NotNull] ElanParser.SystemAccessorContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.systemAccessor"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSystemAccessor([NotNull] ElanParser.SystemAccessorContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.constantDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
