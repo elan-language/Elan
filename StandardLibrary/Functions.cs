@@ -45,9 +45,9 @@ public static class Functions {
 
     public static IEnumerable<TValue> values<TKey, TValue>(IImmutableDictionary<TKey, TValue> d) where TKey : notnull => d.Values;
 
-    public static IImmutableDictionary<TKey, TValue> remove<TKey, TValue>(IImmutableDictionary<TKey, TValue> d, TKey key) where TKey : notnull => d.Remove(key);
+    public static IImmutableDictionary<TKey, TValue> removeItem<TKey, TValue>(IImmutableDictionary<TKey, TValue> d, TKey key) where TKey : notnull => d.Remove(key);
 
-    public static IImmutableDictionary<TKey, TValue> set<TKey, TValue>(IImmutableDictionary<TKey, TValue> d, TKey key, TValue value) where TKey : notnull => d.SetItem(key, value);
+    public static IImmutableDictionary<TKey, TValue> setItem<TKey, TValue>(IImmutableDictionary<TKey, TValue> d, TKey key, TValue value) where TKey : notnull => d.SetItem(key, value);
 
     #endregion
 
