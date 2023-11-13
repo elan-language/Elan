@@ -38,7 +38,7 @@ public partial class ElanParser : Parser {
 	public const int
 		NL=1, SINGLE_LINE_COMMENT=2, COMMENT_MARKER=3, ABSTRACT=4, CASE=5, CATCH=6, 
 		CLASS=7, CONSTANT=8, CONSTRUCTOR=9, CURRY=10, DEFAULT=11, ELSE=12, END=13, 
-		ENUMERATION=14, FOR=15, FOREACH=16, FUNCTION=17, GLOBAL=18, IF=19, IMMUTABLE=20, 
+		ENUM=14, FOR=15, FOREACH=16, FUNCTION=17, GLOBAL=18, IF=19, IMMUTABLE=20, 
 		IN=21, INHERITS=22, LAMBDA=23, LET=24, MAIN=25, PARTIAL=26, PRIVATE=27, 
 		PROCEDURE=28, PROPERTY=29, REPEAT=30, RETURN=31, SELF=32, STEP=33, SWITCH=34, 
 		TEST=35, THEN=36, TO=37, TRY=38, UNTIL=39, VAR=40, WHILE=41, WITH=42, 
@@ -94,20 +94,19 @@ public partial class ElanParser : Parser {
 	private static readonly string[] _LiteralNames = {
 		null, null, null, "'#'", "'abstract'", "'case'", "'catch'", "'class'", 
 		"'constant'", "'constructor'", "'curry'", "'default'", "'else'", "'end'", 
-		"'enumeration'", "'for'", "'foreach'", "'function'", "'global'", "'if'", 
-		"'immutable'", "'in'", "'inherits'", "'lambda'", "'let'", "'main'", "'partial'", 
-		"'private'", "'procedure'", "'property'", "'repeat'", "'return'", "'self'", 
-		"'step'", "'switch'", "'test'", "'then'", "'to'", "'try'", "'until'", 
-		"'var'", "'while'", "'with'", null, null, "'Array'", "'List'", "'Dictionary'", 
-		"'Iter'", "'='", "'->'", "'{'", "'}'", "'['", "']'", "'('", "')'", "'..'", 
-		"'.'", "','", "':'", "'+'", "'-'", "'*'", "'/'", "'^'", "'mod'", "'div'", 
-		"'<'", "'>'", "'and'", "'not'", "'or'", "'xor'", "'is'", null, "'<='", 
-		"'>='"
+		"'enum'", "'for'", "'foreach'", "'function'", "'global'", "'if'", "'immutable'", 
+		"'in'", "'inherits'", "'lambda'", "'let'", "'main'", "'partial'", "'private'", 
+		"'procedure'", "'property'", "'repeat'", "'return'", "'self'", "'step'", 
+		"'switch'", "'test'", "'then'", "'to'", "'try'", "'until'", "'var'", "'while'", 
+		"'with'", null, null, "'Array'", "'List'", "'Dictionary'", "'Iter'", "'='", 
+		"'->'", "'{'", "'}'", "'['", "']'", "'('", "')'", "'..'", "'.'", "','", 
+		"':'", "'+'", "'-'", "'*'", "'/'", "'^'", "'mod'", "'div'", "'<'", "'>'", 
+		"'and'", "'not'", "'or'", "'xor'", "'is'", null, "'<='", "'>='"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, "NL", "SINGLE_LINE_COMMENT", "COMMENT_MARKER", "ABSTRACT", "CASE", 
 		"CATCH", "CLASS", "CONSTANT", "CONSTRUCTOR", "CURRY", "DEFAULT", "ELSE", 
-		"END", "ENUMERATION", "FOR", "FOREACH", "FUNCTION", "GLOBAL", "IF", "IMMUTABLE", 
+		"END", "ENUM", "FOR", "FOREACH", "FUNCTION", "GLOBAL", "IF", "IMMUTABLE", 
 		"IN", "INHERITS", "LAMBDA", "LET", "MAIN", "PARTIAL", "PRIVATE", "PROCEDURE", 
 		"PROPERTY", "REPEAT", "RETURN", "SELF", "STEP", "SWITCH", "TEST", "THEN", 
 		"TO", "TRY", "UNTIL", "VAR", "WHILE", "WITH", "BOOL_VALUE", "VALUE_TYPE", 
@@ -1708,9 +1707,9 @@ public partial class ElanParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NL(int i) {
 			return GetToken(ElanParser.NL, i);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] ENUMERATION() { return GetTokens(ElanParser.ENUMERATION); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ENUMERATION(int i) {
-			return GetToken(ElanParser.ENUMERATION, i);
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] ENUM() { return GetTokens(ElanParser.ENUM); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ENUM(int i) {
+			return GetToken(ElanParser.ENUM, i);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public EnumTypeContext enumType() {
 			return GetRuleContext<EnumTypeContext>(0);
@@ -1752,7 +1751,7 @@ public partial class ElanParser : Parser {
 			State = 334;
 			Match(NL);
 			State = 335;
-			Match(ENUMERATION);
+			Match(ENUM);
 			State = 336;
 			enumType();
 			State = 337;
@@ -1780,7 +1779,7 @@ public partial class ElanParser : Parser {
 			State = 347;
 			Match(END);
 			State = 348;
-			Match(ENUMERATION);
+			Match(ENUM);
 			}
 		}
 		catch (RecognitionException re) {

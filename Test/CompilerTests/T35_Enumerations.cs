@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T35_Enumerations {
+public class T35_enums {
     #region Passes
 
     [TestMethod]
@@ -17,9 +17,9 @@ main
  printLine(Fruit.pear)
 end main
 
-enumeration Fruit
+enum Fruit
     apple, orange, pear
-end enumeration
+end enum
 ";
 
         var objectCode = @"using System.Collections.Generic;
@@ -64,9 +64,9 @@ main
  printLine(x)
 end main
 
-enumeration Fruit
+enum Fruit
     apple, orange, pear
-end enumeration
+end enum
 ";
 
         var objectCode = @"using System.Collections.Generic;
@@ -111,9 +111,9 @@ main
     printLine(x is Fruit.pear)
 end main
 
-enumeration Fruit
+enum Fruit
     apple, orange, pear
-end enumeration
+end enum
 ";
 
         var objectCode = @"using System.Collections.Generic;
@@ -150,7 +150,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_SwitchCaseOnEnumeration() {
+    public void Pass_SwitchCaseOnEnum() {
         var code = @"
 main
       var f = Fruit.orange
@@ -165,9 +165,9 @@ main
       end switch
 end main
 
-enumeration Fruit
+enum Fruit
     apple, orange, pear
-end enumeration
+end enum
 ";
 
         var objectCode = @"using System.Collections.Generic;
@@ -223,9 +223,9 @@ main
   printLine(a)
 end main
 
-enumeration Fruit
+enum Fruit
     apple, orange, pear
-end enumeration
+end enum
 ";
 
         var objectCode = @"using System.Collections.Generic;
@@ -270,9 +270,9 @@ public static class Program {
 main
 end main
 
-enumeration fruit
+enum fruit
     apple, orange, pear
-end enumeration
+end enum
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -284,9 +284,9 @@ end enumeration
 main
 end main
 
-enumeration Fruit
+enum Fruit
     apple, Orange, pear
-end enumeration
+end enum
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -298,9 +298,9 @@ end enumeration
 main
 end main
 
-enumeration Fruit
+enum Fruit
     apple = 1, orange = 2, pear = 3
-end enumeration
+end enum
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -314,9 +314,9 @@ main
  a = Fruit.apple
 end main
 
-enumeration Fruit
+enum Fruit
     apple, orange, pear
-end enumeration
+end enum
 ";
         var parseTree = @"*";
 

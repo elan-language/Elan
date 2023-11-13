@@ -82,9 +82,9 @@ public static class AstFactory {
         var constants = context.constantDef().Select(visitor.Visit);
         var procedures = context.procedureDef().Select(visitor.Visit);
         var functions = context.functionDef().Select(visitor.Visit);
-        var enumerations = context.enumDef().Select(visitor.Visit);
+        var enums = context.enumDef().Select(visitor.Visit);
         var classes = context.classDef().Select(visitor.Visit);
-        var globals = constants.Concat(procedures).Concat(functions).Concat(enumerations).Concat(classes).ToImmutableArray();
+        var globals = constants.Concat(procedures).Concat(functions).Concat(enums).Concat(classes).ToImmutableArray();
         var mainNode = context.main().Select(visitor.Visit<MainNode>).SingleOrDefault();
 
         return new FileNode(globals, mainNode);

@@ -71,9 +71,9 @@ constantDef: NL CONSTANT IDENTIFIER ASSIGN (literal | newInstance);
 
 // ENUMERATIONS
 enumDef: 
-	NL ENUMERATION enumType
+	NL ENUM enumType
 	  NL IDENTIFIER (COMMA IDENTIFIER)*  
-	NL END ENUMERATION
+	NL END ENUM
 	;
 
 enumType: TYPENAME;

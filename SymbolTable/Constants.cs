@@ -7,7 +7,7 @@ public static class Constants {
     public static readonly string[] ElanKeywords = {
         "abstract", "case", "catch", "class",
         "constant", "constructor", "curry", "default", "else", "end",
-        "enumeration", "for", "foreach", "function", "global", "if",
+        "enum", "for", "foreach", "function", "global", "if",
         "immutable", "in", "inherits", "lambda", "let", "main", "partial",
         "private", "procedure", "property", "repeat", "return", "self",
         "step", "switch", "test", "then", "to", "try", "until",

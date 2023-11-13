@@ -16,7 +16,7 @@ CURRY:   	   'curry';
 DEFAULT: 	   'default'; 
 ELSE:          'else';
 END:		   'end'; 
-ENUMERATION:   'enumeration';
+ENUM:   'enum';
 FOR:           'for';
 FOREACH:       'foreach';
 FUNCTION:	   'function';
