@@ -30,6 +30,7 @@ LAMBDA:		   'lambda';
 LET:           'let';
 MAIN:		   'main';
 PARTIAL: 	   'partial';
+PRINT:		   'print';
 PRIVATE:       'private';
 PROCEDURE:	   'procedure';
 PROPERTY:      'property';

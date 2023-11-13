@@ -39,44 +39,44 @@ public partial class ElanParser : Parser {
 		NL=1, SINGLE_LINE_COMMENT=2, COMMENT_MARKER=3, ABSTRACT=4, CALL=5, CASE=6, 
 		CATCH=7, CLASS=8, CONSTANT=9, CONSTRUCTOR=10, CURRY=11, DEFAULT=12, ELSE=13, 
 		END=14, ENUM=15, FOR=16, FOREACH=17, FUNCTION=18, GLOBAL=19, IF=20, IMMUTABLE=21, 
-		IN=22, INHERITS=23, LAMBDA=24, LET=25, MAIN=26, PARTIAL=27, PRIVATE=28, 
-		PROCEDURE=29, PROPERTY=30, REPEAT=31, RETURN=32, SELF=33, SET=34, STEP=35, 
-		SWITCH=36, TEST=37, THEN=38, THROW=39, TO=40, TRY=41, UNTIL=42, VAR=43, 
-		WHILE=44, WITH=45, BOOL_VALUE=46, VALUE_TYPE=47, ARRAY=48, LIST=49, DICTIONARY=50, 
-		ITERABLE=51, ASSIGN=52, ARROW=53, OPEN_BRACE=54, CLOSE_BRACE=55, OPEN_SQ_BRACKET=56, 
-		CLOSE_SQ_BRACKET=57, OPEN_BRACKET=58, CLOSE_BRACKET=59, DOUBLE_DOT=60, 
-		DOT=61, COMMA=62, COLON=63, PLUS=64, MINUS=65, MULT=66, DIVIDE=67, POWER=68, 
-		MOD=69, INT_DIV=70, LT=71, GT=72, OP_AND=73, OP_NOT=74, OP_OR=75, OP_XOR=76, 
-		OP_EQ=77, OP_NE=78, OP_LE=79, OP_GE=80, TYPENAME=81, IDENTIFIER=82, LITERAL_INTEGER=83, 
-		LITERAL_FLOAT=84, LITERAL_CHAR=85, LITERAL_STRING=86, WHITESPACES=87, 
-		NEWLINE=88, WS=89;
+		IN=22, INHERITS=23, LAMBDA=24, LET=25, MAIN=26, PARTIAL=27, PRINT=28, 
+		PRIVATE=29, PROCEDURE=30, PROPERTY=31, REPEAT=32, RETURN=33, SELF=34, 
+		SET=35, STEP=36, SWITCH=37, TEST=38, THEN=39, THROW=40, TO=41, TRY=42, 
+		UNTIL=43, VAR=44, WHILE=45, WITH=46, BOOL_VALUE=47, VALUE_TYPE=48, ARRAY=49, 
+		LIST=50, DICTIONARY=51, ITERABLE=52, ASSIGN=53, ARROW=54, OPEN_BRACE=55, 
+		CLOSE_BRACE=56, OPEN_SQ_BRACKET=57, CLOSE_SQ_BRACKET=58, OPEN_BRACKET=59, 
+		CLOSE_BRACKET=60, DOUBLE_DOT=61, DOT=62, COMMA=63, COLON=64, PLUS=65, 
+		MINUS=66, MULT=67, DIVIDE=68, POWER=69, MOD=70, INT_DIV=71, LT=72, GT=73, 
+		OP_AND=74, OP_NOT=75, OP_OR=76, OP_XOR=77, OP_EQ=78, OP_NE=79, OP_LE=80, 
+		OP_GE=81, TYPENAME=82, IDENTIFIER=83, LITERAL_INTEGER=84, LITERAL_FLOAT=85, 
+		LITERAL_CHAR=86, LITERAL_STRING=87, WHITESPACES=88, NEWLINE=89, WS=90;
 	public const int
 		RULE_file = 0, RULE_main = 1, RULE_test = 2, RULE_statementBlock = 3, 
-		RULE_callStatement = 4, RULE_throwException = 5, RULE_varDef = 6, RULE_assignment = 7, 
-		RULE_inlineAsignment = 8, RULE_assignableValue = 9, RULE_methodCall = 10, 
-		RULE_argumentList = 11, RULE_procedureDef = 12, RULE_procedureSignature = 13, 
-		RULE_parameterList = 14, RULE_parameter = 15, RULE_functionDef = 16, RULE_functionWithBody = 17, 
-		RULE_expressionFunction = 18, RULE_letIn = 19, RULE_functionSignature = 20, 
-		RULE_constantDef = 21, RULE_enumDef = 22, RULE_enumType = 23, RULE_enumValue = 24, 
-		RULE_classDef = 25, RULE_mutableClass = 26, RULE_abstractClass = 27, RULE_immutableClass = 28, 
-		RULE_abstractImmutableClass = 29, RULE_inherits = 30, RULE_property = 31, 
-		RULE_constructor = 32, RULE_newInstance = 33, RULE_withClause = 34, RULE_proceduralControlFlow = 35, 
-		RULE_if = 36, RULE_for = 37, RULE_foreach = 38, RULE_while = 39, RULE_repeat = 40, 
-		RULE_try = 41, RULE_switch = 42, RULE_case = 43, RULE_caseDefault = 44, 
-		RULE_expression = 45, RULE_bracketedExpression = 46, RULE_ifExpression = 47, 
-		RULE_lambda = 48, RULE_index = 49, RULE_range = 50, RULE_value = 51, RULE_nameQualifier = 52, 
-		RULE_literal = 53, RULE_literalValue = 54, RULE_dataStructureDefinition = 55, 
-		RULE_literalDataStructure = 56, RULE_tupleDefinition = 57, RULE_literalTuple = 58, 
-		RULE_deconstructedTuple = 59, RULE_listDefinition = 60, RULE_literalList = 61, 
-		RULE_listDecomp = 62, RULE_arrayDefinition = 63, RULE_dictionaryDefinition = 64, 
-		RULE_literalDictionary = 65, RULE_kvp = 66, RULE_literalKvp = 67, RULE_unaryOp = 68, 
-		RULE_binaryOp = 69, RULE_arithmeticOp = 70, RULE_logicalOp = 71, RULE_conditionalOp = 72, 
-		RULE_type = 73, RULE_dataStructureType = 74, RULE_genericSpecifier = 75, 
-		RULE_tupleType = 76, RULE_funcType = 77;
+		RULE_callStatement = 4, RULE_throwException = 5, RULE_printStatement = 6, 
+		RULE_varDef = 7, RULE_assignment = 8, RULE_inlineAsignment = 9, RULE_assignableValue = 10, 
+		RULE_methodCall = 11, RULE_argumentList = 12, RULE_procedureDef = 13, 
+		RULE_procedureSignature = 14, RULE_parameterList = 15, RULE_parameter = 16, 
+		RULE_functionDef = 17, RULE_functionWithBody = 18, RULE_expressionFunction = 19, 
+		RULE_letIn = 20, RULE_functionSignature = 21, RULE_constantDef = 22, RULE_enumDef = 23, 
+		RULE_enumType = 24, RULE_enumValue = 25, RULE_classDef = 26, RULE_mutableClass = 27, 
+		RULE_abstractClass = 28, RULE_immutableClass = 29, RULE_abstractImmutableClass = 30, 
+		RULE_inherits = 31, RULE_property = 32, RULE_constructor = 33, RULE_newInstance = 34, 
+		RULE_withClause = 35, RULE_proceduralControlFlow = 36, RULE_if = 37, RULE_for = 38, 
+		RULE_foreach = 39, RULE_while = 40, RULE_repeat = 41, RULE_try = 42, RULE_switch = 43, 
+		RULE_case = 44, RULE_caseDefault = 45, RULE_expression = 46, RULE_bracketedExpression = 47, 
+		RULE_ifExpression = 48, RULE_lambda = 49, RULE_index = 50, RULE_range = 51, 
+		RULE_value = 52, RULE_nameQualifier = 53, RULE_literal = 54, RULE_literalValue = 55, 
+		RULE_dataStructureDefinition = 56, RULE_literalDataStructure = 57, RULE_tupleDefinition = 58, 
+		RULE_literalTuple = 59, RULE_deconstructedTuple = 60, RULE_listDefinition = 61, 
+		RULE_literalList = 62, RULE_listDecomp = 63, RULE_arrayDefinition = 64, 
+		RULE_dictionaryDefinition = 65, RULE_literalDictionary = 66, RULE_kvp = 67, 
+		RULE_literalKvp = 68, RULE_unaryOp = 69, RULE_binaryOp = 70, RULE_arithmeticOp = 71, 
+		RULE_logicalOp = 72, RULE_conditionalOp = 73, RULE_type = 74, RULE_dataStructureType = 75, 
+		RULE_genericSpecifier = 76, RULE_tupleType = 77, RULE_funcType = 78;
 	public static readonly string[] ruleNames = {
 		"file", "main", "test", "statementBlock", "callStatement", "throwException", 
-		"varDef", "assignment", "inlineAsignment", "assignableValue", "methodCall", 
-		"argumentList", "procedureDef", "procedureSignature", "parameterList", 
+		"printStatement", "varDef", "assignment", "inlineAsignment", "assignableValue", 
+		"methodCall", "argumentList", "procedureDef", "procedureSignature", "parameterList", 
 		"parameter", "functionDef", "functionWithBody", "expressionFunction", 
 		"letIn", "functionSignature", "constantDef", "enumDef", "enumType", "enumValue", 
 		"classDef", "mutableClass", "abstractClass", "immutableClass", "abstractImmutableClass", 
@@ -96,28 +96,28 @@ public partial class ElanParser : Parser {
 		"'class'", "'constant'", "'constructor'", "'curry'", "'default'", "'else'", 
 		"'end'", "'enum'", "'for'", "'foreach'", "'function'", "'global'", "'if'", 
 		"'immutable'", "'in'", "'inherits'", "'lambda'", "'let'", "'main'", "'partial'", 
-		"'private'", "'procedure'", "'property'", "'repeat'", "'return'", "'self'", 
-		"'set'", "'step'", "'switch'", "'test'", "'then'", "'throw'", "'to'", 
-		"'try'", "'until'", "'var'", "'while'", "'with'", null, null, "'Array'", 
-		"'List'", "'Dictionary'", "'Iter'", "'='", "'->'", "'{'", "'}'", "'['", 
-		"']'", "'('", "')'", "'..'", "'.'", "','", "':'", "'+'", "'-'", "'*'", 
-		"'/'", "'^'", "'mod'", "'div'", "'<'", "'>'", "'and'", "'not'", "'or'", 
-		"'xor'", "'is'", null, "'<='", "'>='"
+		"'print'", "'private'", "'procedure'", "'property'", "'repeat'", "'return'", 
+		"'self'", "'set'", "'step'", "'switch'", "'test'", "'then'", "'throw'", 
+		"'to'", "'try'", "'until'", "'var'", "'while'", "'with'", null, null, 
+		"'Array'", "'List'", "'Dictionary'", "'Iter'", "'='", "'->'", "'{'", "'}'", 
+		"'['", "']'", "'('", "')'", "'..'", "'.'", "','", "':'", "'+'", "'-'", 
+		"'*'", "'/'", "'^'", "'mod'", "'div'", "'<'", "'>'", "'and'", "'not'", 
+		"'or'", "'xor'", "'is'", null, "'<='", "'>='"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, "NL", "SINGLE_LINE_COMMENT", "COMMENT_MARKER", "ABSTRACT", "CALL", 
 		"CASE", "CATCH", "CLASS", "CONSTANT", "CONSTRUCTOR", "CURRY", "DEFAULT", 
 		"ELSE", "END", "ENUM", "FOR", "FOREACH", "FUNCTION", "GLOBAL", "IF", "IMMUTABLE", 
-		"IN", "INHERITS", "LAMBDA", "LET", "MAIN", "PARTIAL", "PRIVATE", "PROCEDURE", 
-		"PROPERTY", "REPEAT", "RETURN", "SELF", "SET", "STEP", "SWITCH", "TEST", 
-		"THEN", "THROW", "TO", "TRY", "UNTIL", "VAR", "WHILE", "WITH", "BOOL_VALUE", 
-		"VALUE_TYPE", "ARRAY", "LIST", "DICTIONARY", "ITERABLE", "ASSIGN", "ARROW", 
-		"OPEN_BRACE", "CLOSE_BRACE", "OPEN_SQ_BRACKET", "CLOSE_SQ_BRACKET", "OPEN_BRACKET", 
-		"CLOSE_BRACKET", "DOUBLE_DOT", "DOT", "COMMA", "COLON", "PLUS", "MINUS", 
-		"MULT", "DIVIDE", "POWER", "MOD", "INT_DIV", "LT", "GT", "OP_AND", "OP_NOT", 
-		"OP_OR", "OP_XOR", "OP_EQ", "OP_NE", "OP_LE", "OP_GE", "TYPENAME", "IDENTIFIER", 
-		"LITERAL_INTEGER", "LITERAL_FLOAT", "LITERAL_CHAR", "LITERAL_STRING", 
-		"WHITESPACES", "NEWLINE", "WS"
+		"IN", "INHERITS", "LAMBDA", "LET", "MAIN", "PARTIAL", "PRINT", "PRIVATE", 
+		"PROCEDURE", "PROPERTY", "REPEAT", "RETURN", "SELF", "SET", "STEP", "SWITCH", 
+		"TEST", "THEN", "THROW", "TO", "TRY", "UNTIL", "VAR", "WHILE", "WITH", 
+		"BOOL_VALUE", "VALUE_TYPE", "ARRAY", "LIST", "DICTIONARY", "ITERABLE", 
+		"ASSIGN", "ARROW", "OPEN_BRACE", "CLOSE_BRACE", "OPEN_SQ_BRACKET", "CLOSE_SQ_BRACKET", 
+		"OPEN_BRACKET", "CLOSE_BRACKET", "DOUBLE_DOT", "DOT", "COMMA", "COLON", 
+		"PLUS", "MINUS", "MULT", "DIVIDE", "POWER", "MOD", "INT_DIV", "LT", "GT", 
+		"OP_AND", "OP_NOT", "OP_OR", "OP_XOR", "OP_EQ", "OP_NE", "OP_LE", "OP_GE", 
+		"TYPENAME", "IDENTIFIER", "LITERAL_INTEGER", "LITERAL_FLOAT", "LITERAL_CHAR", 
+		"LITERAL_STRING", "WHITESPACES", "NEWLINE", "WS"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -225,79 +225,79 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 165;
+			State = 167;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,1,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 163;
+					State = 165;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,0,Context) ) {
 					case 1:
 						{
-						State = 156;
+						State = 158;
 						main();
 						}
 						break;
 					case 2:
 						{
-						State = 157;
+						State = 159;
 						procedureDef();
 						}
 						break;
 					case 3:
 						{
-						State = 158;
+						State = 160;
 						functionDef();
 						}
 						break;
 					case 4:
 						{
-						State = 159;
+						State = 161;
 						constantDef();
 						}
 						break;
 					case 5:
 						{
-						State = 160;
+						State = 162;
 						enumDef();
 						}
 						break;
 					case 6:
 						{
-						State = 161;
+						State = 163;
 						classDef();
 						}
 						break;
 					case 7:
 						{
-						State = 162;
+						State = 164;
 						test();
 						}
 						break;
 					}
 					} 
 				}
-				State = 167;
+				State = 169;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,1,Context);
 			}
-			State = 171;
+			State = 173;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==NL) {
 				{
 				{
-				State = 168;
+				State = 170;
 				Match(NL);
 				}
 				}
-				State = 173;
+				State = 175;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 174;
+			State = 176;
 			Match(Eof);
 			}
 		}
@@ -349,17 +349,17 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 176;
-			Match(NL);
-			State = 177;
-			Match(MAIN);
 			State = 178;
-			statementBlock();
-			State = 179;
 			Match(NL);
+			State = 179;
+			Match(MAIN);
 			State = 180;
-			Match(END);
+			statementBlock();
 			State = 181;
+			Match(NL);
+			State = 182;
+			Match(END);
+			State = 183;
 			Match(MAIN);
 			}
 		}
@@ -412,19 +412,19 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 183;
-			Match(NL);
-			State = 184;
-			Match(TEST);
 			State = 185;
-			Match(IDENTIFIER);
-			State = 186;
-			statementBlock();
-			State = 187;
 			Match(NL);
+			State = 186;
+			Match(TEST);
+			State = 187;
+			Match(IDENTIFIER);
 			State = 188;
-			Match(END);
+			statementBlock();
 			State = 189;
+			Match(NL);
+			State = 190;
+			Match(END);
+			State = 191;
 			Match(TEST);
 			}
 		}
@@ -470,6 +470,12 @@ public partial class ElanParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ThrowExceptionContext throwException(int i) {
 			return GetRuleContext<ThrowExceptionContext>(i);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public PrintStatementContext[] printStatement() {
+			return GetRuleContexts<PrintStatementContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public PrintStatementContext printStatement(int i) {
+			return GetRuleContext<PrintStatementContext>(i);
+		}
 		public StatementBlockContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -495,49 +501,55 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 198;
+			State = 201;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 196;
+					State = 199;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
 					case 1:
 						{
-						State = 191;
+						State = 193;
 						varDef();
 						}
 						break;
 					case 2:
 						{
-						State = 192;
+						State = 194;
 						assignment();
 						}
 						break;
 					case 3:
 						{
-						State = 193;
+						State = 195;
 						proceduralControlFlow();
 						}
 						break;
 					case 4:
 						{
-						State = 194;
+						State = 196;
 						callStatement();
 						}
 						break;
 					case 5:
 						{
-						State = 195;
+						State = 197;
 						throwException();
+						}
+						break;
+					case 6:
+						{
+						State = 198;
+						printStatement();
 						}
 						break;
 					}
 					} 
 				}
-				State = 200;
+				State = 203;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
 			}
@@ -588,27 +600,27 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 201;
+			State = 204;
 			Match(NL);
-			State = 202;
+			State = 205;
 			Match(CALL);
-			State = 208;
+			State = 211;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,5,Context) ) {
 			case 1:
 				{
-				State = 203;
+				State = 206;
 				methodCall();
 				}
 				break;
 			case 2:
 				{
 				{
-				State = 204;
+				State = 207;
 				assignableValue();
-				State = 205;
+				State = 208;
 				Match(DOT);
-				State = 206;
+				State = 209;
 				methodCall();
 				}
 				}
@@ -657,11 +669,11 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 210;
+			State = 213;
 			Match(NL);
-			State = 211;
+			State = 214;
 			Match(THROW);
-			State = 212;
+			State = 215;
 			_la = TokenStream.LA(1);
 			if ( !(_la==IDENTIFIER || _la==LITERAL_STRING) ) {
 			ErrorHandler.RecoverInline(this);
@@ -670,6 +682,55 @@ public partial class ElanParser : Parser {
 				ErrorHandler.ReportMatch(this);
 			    Consume();
 			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class PrintStatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NL() { return GetToken(ElanParser.NL, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode PRINT() { return GetToken(ElanParser.PRINT, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
+			return GetRuleContext<ExpressionContext>(0);
+		}
+		public PrintStatementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_printStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IElanListener typedListener = listener as IElanListener;
+			if (typedListener != null) typedListener.EnterPrintStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IElanListener typedListener = listener as IElanListener;
+			if (typedListener != null) typedListener.ExitPrintStatement(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public PrintStatementContext printStatement() {
+		PrintStatementContext _localctx = new PrintStatementContext(Context, State);
+		EnterRule(_localctx, 12, RULE_printStatement);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 217;
+			Match(NL);
+			State = 218;
+			Match(PRINT);
+			State = 219;
+			expression(0);
 			}
 		}
 		catch (RecognitionException re) {
@@ -713,19 +774,19 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public VarDefContext varDef() {
 		VarDefContext _localctx = new VarDefContext(Context, State);
-		EnterRule(_localctx, 12, RULE_varDef);
+		EnterRule(_localctx, 14, RULE_varDef);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 214;
+			State = 221;
 			Match(NL);
-			State = 215;
+			State = 222;
 			Match(VAR);
-			State = 216;
+			State = 223;
 			assignableValue();
-			State = 217;
+			State = 224;
 			Match(ASSIGN);
-			State = 218;
+			State = 225;
 			expression(0);
 			}
 		}
@@ -770,19 +831,19 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public AssignmentContext assignment() {
 		AssignmentContext _localctx = new AssignmentContext(Context, State);
-		EnterRule(_localctx, 14, RULE_assignment);
+		EnterRule(_localctx, 16, RULE_assignment);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 220;
+			State = 227;
 			Match(NL);
-			State = 221;
+			State = 228;
 			Match(SET);
-			State = 222;
+			State = 229;
 			assignableValue();
-			State = 223;
+			State = 230;
 			Match(TO);
-			State = 224;
+			State = 231;
 			expression(0);
 			}
 		}
@@ -825,15 +886,15 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public InlineAsignmentContext inlineAsignment() {
 		InlineAsignmentContext _localctx = new InlineAsignmentContext(Context, State);
-		EnterRule(_localctx, 16, RULE_inlineAsignment);
+		EnterRule(_localctx, 18, RULE_inlineAsignment);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 226;
+			State = 233;
 			assignableValue();
-			State = 227;
+			State = 234;
 			Match(ASSIGN);
-			State = 228;
+			State = 235;
 			expression(0);
 			}
 		}
@@ -882,10 +943,10 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public AssignableValueContext assignableValue() {
 		AssignableValueContext _localctx = new AssignableValueContext(Context, State);
-		EnterRule(_localctx, 18, RULE_assignableValue);
+		EnterRule(_localctx, 20, RULE_assignableValue);
 		int _la;
 		try {
-			State = 239;
+			State = 246;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case GLOBAL:
@@ -894,24 +955,24 @@ public partial class ElanParser : Parser {
 				EnterOuterAlt(_localctx, 1);
 				{
 				{
-				State = 231;
+				State = 238;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==GLOBAL || _la==SELF) {
 					{
-					State = 230;
+					State = 237;
 					nameQualifier();
 					}
 				}
 
-				State = 233;
+				State = 240;
 				Match(IDENTIFIER);
-				State = 235;
+				State = 242;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==OPEN_SQ_BRACKET) {
 					{
-					State = 234;
+					State = 241;
 					index();
 					}
 				}
@@ -922,14 +983,14 @@ public partial class ElanParser : Parser {
 			case OPEN_BRACKET:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 237;
+				State = 244;
 				deconstructedTuple();
 				}
 				break;
 			case OPEN_BRACE:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 238;
+				State = 245;
 				listDecomp();
 				}
 				break;
@@ -980,27 +1041,27 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public MethodCallContext methodCall() {
 		MethodCallContext _localctx = new MethodCallContext(Context, State);
-		EnterRule(_localctx, 20, RULE_methodCall);
+		EnterRule(_localctx, 22, RULE_methodCall);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 242;
+			State = 249;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==GLOBAL || _la==SELF) {
 				{
-				State = 241;
+				State = 248;
 				nameQualifier();
 				}
 			}
 
-			State = 245;
+			State = 252;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==CURRY || _la==PARTIAL) {
 				{
-				State = 244;
+				State = 251;
 				_la = TokenStream.LA(1);
 				if ( !(_la==CURRY || _la==PARTIAL) ) {
 				ErrorHandler.RecoverInline(this);
@@ -1012,21 +1073,21 @@ public partial class ElanParser : Parser {
 				}
 			}
 
-			State = 247;
+			State = 254;
 			Match(IDENTIFIER);
-			State = 248;
+			State = 255;
 			Match(OPEN_BRACKET);
-			State = 250;
+			State = 257;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 310678014320449538L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 4129281L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 621356028454770690L) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & 4129281L) != 0)) {
 				{
-				State = 249;
+				State = 256;
 				argumentList();
 				}
 			}
 
-			State = 252;
+			State = 259;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -1072,26 +1133,26 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ArgumentListContext argumentList() {
 		ArgumentListContext _localctx = new ArgumentListContext(Context, State);
-		EnterRule(_localctx, 22, RULE_argumentList);
+		EnterRule(_localctx, 24, RULE_argumentList);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 254;
+			State = 261;
 			expression(0);
-			State = 259;
+			State = 266;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 255;
+				State = 262;
 				Match(COMMA);
-				State = 256;
+				State = 263;
 				expression(0);
 				}
 				}
-				State = 261;
+				State = 268;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -1144,23 +1205,23 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ProcedureDefContext procedureDef() {
 		ProcedureDefContext _localctx = new ProcedureDefContext(Context, State);
-		EnterRule(_localctx, 24, RULE_procedureDef);
+		EnterRule(_localctx, 26, RULE_procedureDef);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 262;
+			State = 269;
 			Match(NL);
-			State = 263;
+			State = 270;
 			Match(PROCEDURE);
-			State = 264;
+			State = 271;
 			procedureSignature();
-			State = 265;
+			State = 272;
 			statementBlock();
-			State = 266;
+			State = 273;
 			Match(NL);
-			State = 267;
+			State = 274;
 			Match(END);
-			State = 268;
+			State = 275;
 			Match(PROCEDURE);
 			}
 		}
@@ -1202,26 +1263,26 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ProcedureSignatureContext procedureSignature() {
 		ProcedureSignatureContext _localctx = new ProcedureSignatureContext(Context, State);
-		EnterRule(_localctx, 26, RULE_procedureSignature);
+		EnterRule(_localctx, 28, RULE_procedureSignature);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 270;
+			State = 277;
 			Match(IDENTIFIER);
-			State = 271;
+			State = 278;
 			Match(OPEN_BRACKET);
-			State = 273;
+			State = 280;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==IDENTIFIER) {
 				{
-				State = 272;
+				State = 279;
 				parameterList();
 				}
 			}
 
-			State = 275;
+			State = 282;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -1267,26 +1328,26 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ParameterListContext parameterList() {
 		ParameterListContext _localctx = new ParameterListContext(Context, State);
-		EnterRule(_localctx, 28, RULE_parameterList);
+		EnterRule(_localctx, 30, RULE_parameterList);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 277;
+			State = 284;
 			parameter();
-			State = 282;
+			State = 289;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 278;
+				State = 285;
 				Match(COMMA);
-				State = 279;
+				State = 286;
 				parameter();
 				}
 				}
-				State = 284;
+				State = 291;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -1328,13 +1389,13 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ParameterContext parameter() {
 		ParameterContext _localctx = new ParameterContext(Context, State);
-		EnterRule(_localctx, 30, RULE_parameter);
+		EnterRule(_localctx, 32, RULE_parameter);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 285;
+			State = 292;
 			Match(IDENTIFIER);
-			State = 286;
+			State = 293;
 			type();
 			}
 		}
@@ -1376,22 +1437,22 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public FunctionDefContext functionDef() {
 		FunctionDefContext _localctx = new FunctionDefContext(Context, State);
-		EnterRule(_localctx, 32, RULE_functionDef);
+		EnterRule(_localctx, 34, RULE_functionDef);
 		try {
-			State = 290;
+			State = 297;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,15,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 288;
+				State = 295;
 				functionWithBody();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 289;
+				State = 296;
 				expressionFunction();
 				}
 				break;
@@ -1448,29 +1509,29 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public FunctionWithBodyContext functionWithBody() {
 		FunctionWithBodyContext _localctx = new FunctionWithBodyContext(Context, State);
-		EnterRule(_localctx, 34, RULE_functionWithBody);
+		EnterRule(_localctx, 36, RULE_functionWithBody);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 292;
-			Match(NL);
-			State = 293;
-			Match(FUNCTION);
-			State = 294;
-			functionSignature();
-			State = 295;
-			statementBlock();
-			State = 296;
-			Match(NL);
-			State = 297;
-			Match(RETURN);
-			State = 298;
-			expression(0);
 			State = 299;
 			Match(NL);
 			State = 300;
-			Match(END);
+			Match(FUNCTION);
 			State = 301;
+			functionSignature();
+			State = 302;
+			statementBlock();
+			State = 303;
+			Match(NL);
+			State = 304;
+			Match(RETURN);
+			State = 305;
+			expression(0);
+			State = 306;
+			Match(NL);
+			State = 307;
+			Match(END);
+			State = 308;
 			Match(FUNCTION);
 			}
 		}
@@ -1515,19 +1576,19 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ExpressionFunctionContext expressionFunction() {
 		ExpressionFunctionContext _localctx = new ExpressionFunctionContext(Context, State);
-		EnterRule(_localctx, 36, RULE_expressionFunction);
+		EnterRule(_localctx, 38, RULE_expressionFunction);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 303;
+			State = 310;
 			Match(NL);
-			State = 304;
+			State = 311;
 			Match(FUNCTION);
-			State = 305;
+			State = 312;
 			functionSignature();
-			State = 306;
+			State = 313;
 			Match(ASSIGN);
-			State = 307;
+			State = 314;
 			expression(0);
 			}
 		}
@@ -1586,42 +1647,42 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LetInContext letIn() {
 		LetInContext _localctx = new LetInContext(Context, State);
-		EnterRule(_localctx, 38, RULE_letIn);
+		EnterRule(_localctx, 40, RULE_letIn);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 309;
+			State = 316;
 			Match(LET);
-			State = 310;
+			State = 317;
 			assignableValue();
-			State = 311;
+			State = 318;
 			Match(ASSIGN);
-			State = 312;
+			State = 319;
 			expression(0);
-			State = 320;
+			State = 327;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 313;
+				State = 320;
 				Match(COMMA);
-				State = 314;
+				State = 321;
 				assignableValue();
-				State = 315;
+				State = 322;
 				Match(ASSIGN);
-				State = 316;
+				State = 323;
 				expression(0);
 				}
 				}
-				State = 322;
+				State = 329;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 323;
+			State = 330;
 			Match(NL);
-			State = 324;
+			State = 331;
 			Match(IN);
 			}
 		}
@@ -1667,30 +1728,30 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public FunctionSignatureContext functionSignature() {
 		FunctionSignatureContext _localctx = new FunctionSignatureContext(Context, State);
-		EnterRule(_localctx, 40, RULE_functionSignature);
+		EnterRule(_localctx, 42, RULE_functionSignature);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 326;
+			State = 333;
 			Match(IDENTIFIER);
-			State = 327;
+			State = 334;
 			Match(OPEN_BRACKET);
-			State = 329;
+			State = 336;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==IDENTIFIER) {
 				{
-				State = 328;
+				State = 335;
 				parameterList();
 				}
 			}
 
-			State = 331;
+			State = 338;
 			Match(CLOSE_BRACKET);
-			State = 332;
+			State = 339;
 			Match(ARROW);
-			State = 333;
+			State = 340;
 			type();
 			}
 		}
@@ -1736,30 +1797,30 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ConstantDefContext constantDef() {
 		ConstantDefContext _localctx = new ConstantDefContext(Context, State);
-		EnterRule(_localctx, 42, RULE_constantDef);
+		EnterRule(_localctx, 44, RULE_constantDef);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 335;
+			State = 342;
 			Match(NL);
-			State = 336;
+			State = 343;
 			Match(CONSTANT);
-			State = 337;
+			State = 344;
 			Match(IDENTIFIER);
-			State = 338;
+			State = 345;
 			Match(ASSIGN);
-			State = 341;
+			State = 348;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,18,Context) ) {
 			case 1:
 				{
-				State = 339;
+				State = 346;
 				literal();
 				}
 				break;
 			case 2:
 				{
-				State = 340;
+				State = 347;
 				newInstance();
 				}
 				break;
@@ -1818,42 +1879,42 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public EnumDefContext enumDef() {
 		EnumDefContext _localctx = new EnumDefContext(Context, State);
-		EnterRule(_localctx, 44, RULE_enumDef);
+		EnterRule(_localctx, 46, RULE_enumDef);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 343;
+			State = 350;
 			Match(NL);
-			State = 344;
+			State = 351;
 			Match(ENUM);
-			State = 345;
-			enumType();
-			State = 346;
-			Match(NL);
-			State = 347;
-			Match(IDENTIFIER);
 			State = 352;
+			enumType();
+			State = 353;
+			Match(NL);
+			State = 354;
+			Match(IDENTIFIER);
+			State = 359;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 348;
+				State = 355;
 				Match(COMMA);
-				State = 349;
+				State = 356;
 				Match(IDENTIFIER);
 				}
 				}
-				State = 354;
+				State = 361;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 355;
+			State = 362;
 			Match(NL);
-			State = 356;
+			State = 363;
 			Match(END);
-			State = 357;
+			State = 364;
 			Match(ENUM);
 			}
 		}
@@ -1890,11 +1951,11 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public EnumTypeContext enumType() {
 		EnumTypeContext _localctx = new EnumTypeContext(Context, State);
-		EnterRule(_localctx, 46, RULE_enumType);
+		EnterRule(_localctx, 48, RULE_enumType);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 359;
+			State = 366;
 			Match(TYPENAME);
 			}
 		}
@@ -1935,15 +1996,15 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public EnumValueContext enumValue() {
 		EnumValueContext _localctx = new EnumValueContext(Context, State);
-		EnterRule(_localctx, 48, RULE_enumValue);
+		EnterRule(_localctx, 50, RULE_enumValue);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 361;
+			State = 368;
 			enumType();
-			State = 362;
+			State = 369;
 			Match(DOT);
-			State = 363;
+			State = 370;
 			Match(IDENTIFIER);
 			}
 		}
@@ -1991,36 +2052,36 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ClassDefContext classDef() {
 		ClassDefContext _localctx = new ClassDefContext(Context, State);
-		EnterRule(_localctx, 50, RULE_classDef);
+		EnterRule(_localctx, 52, RULE_classDef);
 		try {
-			State = 369;
+			State = 376;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,20,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 365;
+				State = 372;
 				mutableClass();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 366;
+				State = 373;
 				abstractClass();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 367;
+				State = 374;
 				immutableClass();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 368;
+				State = 375;
 				abstractImmutableClass();
 				}
 				break;
@@ -2092,69 +2153,69 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public MutableClassContext mutableClass() {
 		MutableClassContext _localctx = new MutableClassContext(Context, State);
-		EnterRule(_localctx, 52, RULE_mutableClass);
+		EnterRule(_localctx, 54, RULE_mutableClass);
 		int _la;
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 371;
+			State = 378;
 			Match(NL);
-			State = 372;
+			State = 379;
 			Match(CLASS);
-			State = 373;
+			State = 380;
 			Match(TYPENAME);
-			State = 375;
+			State = 382;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==INHERITS) {
 				{
-				State = 374;
+				State = 381;
 				inherits();
 				}
 			}
 
-			State = 377;
+			State = 384;
 			constructor();
-			State = 383;
+			State = 390;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,23,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 381;
+					State = 388;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,22,Context) ) {
 					case 1:
 						{
-						State = 378;
+						State = 385;
 						property();
 						}
 						break;
 					case 2:
 						{
-						State = 379;
+						State = 386;
 						functionDef();
 						}
 						break;
 					case 3:
 						{
-						State = 380;
+						State = 387;
 						procedureDef();
 						}
 						break;
 					}
 					} 
 				}
-				State = 385;
+				State = 392;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,23,Context);
 			}
-			State = 386;
+			State = 393;
 			Match(NL);
-			State = 387;
+			State = 394;
 			Match(END);
-			State = 388;
+			State = 395;
 			Match(CLASS);
 			}
 		}
@@ -2230,77 +2291,77 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public AbstractClassContext abstractClass() {
 		AbstractClassContext _localctx = new AbstractClassContext(Context, State);
-		EnterRule(_localctx, 54, RULE_abstractClass);
+		EnterRule(_localctx, 56, RULE_abstractClass);
 		int _la;
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 390;
+			State = 397;
 			Match(NL);
-			State = 391;
+			State = 398;
 			Match(ABSTRACT);
-			State = 392;
+			State = 399;
 			Match(CLASS);
-			State = 393;
+			State = 400;
 			Match(TYPENAME);
-			State = 395;
+			State = 402;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==INHERITS) {
 				{
-				State = 394;
+				State = 401;
 				inherits();
 				}
 			}
 
-			State = 406;
+			State = 413;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,26,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 404;
+					State = 411;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,25,Context) ) {
 					case 1:
 						{
-						State = 397;
+						State = 404;
 						property();
 						}
 						break;
 					case 2:
 						{
-						State = 398;
+						State = 405;
 						Match(NL);
-						State = 399;
+						State = 406;
 						Match(FUNCTION);
-						State = 400;
+						State = 407;
 						functionSignature();
 						}
 						break;
 					case 3:
 						{
-						State = 401;
+						State = 408;
 						Match(NL);
-						State = 402;
+						State = 409;
 						Match(PROCEDURE);
-						State = 403;
+						State = 410;
 						procedureSignature();
 						}
 						break;
 					}
 					} 
 				}
-				State = 408;
+				State = 415;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,26,Context);
 			}
-			State = 409;
+			State = 416;
 			Match(NL);
-			State = 410;
+			State = 417;
 			Match(END);
-			State = 411;
+			State = 418;
 			Match(CLASS);
 			}
 		}
@@ -2365,65 +2426,65 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ImmutableClassContext immutableClass() {
 		ImmutableClassContext _localctx = new ImmutableClassContext(Context, State);
-		EnterRule(_localctx, 56, RULE_immutableClass);
+		EnterRule(_localctx, 58, RULE_immutableClass);
 		int _la;
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 413;
+			State = 420;
 			Match(NL);
-			State = 414;
+			State = 421;
 			Match(IMMUTABLE);
-			State = 415;
+			State = 422;
 			Match(CLASS);
-			State = 416;
+			State = 423;
 			Match(TYPENAME);
-			State = 418;
+			State = 425;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==INHERITS) {
 				{
-				State = 417;
+				State = 424;
 				inherits();
 				}
 			}
 
-			State = 420;
+			State = 427;
 			constructor();
-			State = 425;
+			State = 432;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,29,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 423;
+					State = 430;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,28,Context) ) {
 					case 1:
 						{
-						State = 421;
+						State = 428;
 						property();
 						}
 						break;
 					case 2:
 						{
-						State = 422;
+						State = 429;
 						functionDef();
 						}
 						break;
 					}
 					} 
 				}
-				State = 427;
+				State = 434;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,29,Context);
 			}
-			State = 428;
+			State = 435;
 			Match(NL);
-			State = 429;
+			State = 436;
 			Match(END);
-			State = 430;
+			State = 437;
 			Match(CLASS);
 			}
 		}
@@ -2490,69 +2551,69 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public AbstractImmutableClassContext abstractImmutableClass() {
 		AbstractImmutableClassContext _localctx = new AbstractImmutableClassContext(Context, State);
-		EnterRule(_localctx, 58, RULE_abstractImmutableClass);
+		EnterRule(_localctx, 60, RULE_abstractImmutableClass);
 		int _la;
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 432;
+			State = 439;
 			Match(NL);
-			State = 433;
+			State = 440;
 			Match(ABSTRACT);
-			State = 434;
+			State = 441;
 			Match(IMMUTABLE);
-			State = 435;
+			State = 442;
 			Match(CLASS);
-			State = 436;
+			State = 443;
 			Match(TYPENAME);
-			State = 438;
+			State = 445;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==INHERITS) {
 				{
-				State = 437;
+				State = 444;
 				inherits();
 				}
 			}
 
-			State = 446;
+			State = 453;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,32,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 444;
+					State = 451;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,31,Context) ) {
 					case 1:
 						{
-						State = 440;
+						State = 447;
 						property();
 						}
 						break;
 					case 2:
 						{
-						State = 441;
+						State = 448;
 						Match(NL);
-						State = 442;
+						State = 449;
 						Match(FUNCTION);
-						State = 443;
+						State = 450;
 						functionSignature();
 						}
 						break;
 					}
 					} 
 				}
-				State = 448;
+				State = 455;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,32,Context);
 			}
-			State = 449;
+			State = 456;
 			Match(NL);
-			State = 450;
+			State = 457;
 			Match(END);
-			State = 451;
+			State = 458;
 			Match(CLASS);
 			}
 		}
@@ -2599,28 +2660,28 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public InheritsContext inherits() {
 		InheritsContext _localctx = new InheritsContext(Context, State);
-		EnterRule(_localctx, 60, RULE_inherits);
+		EnterRule(_localctx, 62, RULE_inherits);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 453;
+			State = 460;
 			Match(INHERITS);
-			State = 454;
+			State = 461;
 			type();
-			State = 459;
+			State = 466;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 455;
+				State = 462;
 				Match(COMMA);
-				State = 456;
+				State = 463;
 				type();
 				}
 				}
-				State = 461;
+				State = 468;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -2665,28 +2726,28 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public PropertyContext property() {
 		PropertyContext _localctx = new PropertyContext(Context, State);
-		EnterRule(_localctx, 62, RULE_property);
+		EnterRule(_localctx, 64, RULE_property);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 462;
+			State = 469;
 			Match(NL);
-			State = 464;
+			State = 471;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==PRIVATE) {
 				{
-				State = 463;
+				State = 470;
 				Match(PRIVATE);
 				}
 			}
 
-			State = 466;
+			State = 473;
 			Match(PROPERTY);
-			State = 467;
+			State = 474;
 			Match(IDENTIFIER);
-			State = 468;
+			State = 475;
 			type();
 			}
 		}
@@ -2739,36 +2800,36 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ConstructorContext constructor() {
 		ConstructorContext _localctx = new ConstructorContext(Context, State);
-		EnterRule(_localctx, 64, RULE_constructor);
+		EnterRule(_localctx, 66, RULE_constructor);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 470;
+			State = 477;
 			Match(NL);
-			State = 471;
+			State = 478;
 			Match(CONSTRUCTOR);
-			State = 472;
+			State = 479;
 			Match(OPEN_BRACKET);
-			State = 474;
+			State = 481;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==IDENTIFIER) {
 				{
-				State = 473;
+				State = 480;
 				parameterList();
 				}
 			}
 
-			State = 476;
+			State = 483;
 			Match(CLOSE_BRACKET);
-			State = 477;
+			State = 484;
 			statementBlock();
-			State = 478;
+			State = 485;
 			Match(NL);
-			State = 479;
+			State = 486;
 			Match(END);
-			State = 480;
+			State = 487;
 			Match(CONSTRUCTOR);
 			}
 		}
@@ -2816,10 +2877,10 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public NewInstanceContext newInstance() {
 		NewInstanceContext _localctx = new NewInstanceContext(Context, State);
-		EnterRule(_localctx, 66, RULE_newInstance);
+		EnterRule(_localctx, 68, RULE_newInstance);
 		int _la;
 		try {
-			State = 493;
+			State = 500;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case VALUE_TYPE:
@@ -2831,28 +2892,28 @@ public partial class ElanParser : Parser {
 			case TYPENAME:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 482;
+				State = 489;
 				type();
-				State = 483;
+				State = 490;
 				Match(OPEN_BRACKET);
-				State = 485;
+				State = 492;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 310678014320449538L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 4129281L) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 621356028454770690L) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & 4129281L) != 0)) {
 					{
-					State = 484;
+					State = 491;
 					argumentList();
 					}
 				}
 
-				State = 487;
+				State = 494;
 				Match(CLOSE_BRACKET);
-				State = 489;
+				State = 496;
 				ErrorHandler.Sync(this);
 				switch ( Interpreter.AdaptivePredict(TokenStream,37,Context) ) {
 				case 1:
 					{
-					State = 488;
+					State = 495;
 					withClause();
 					}
 					break;
@@ -2862,9 +2923,9 @@ public partial class ElanParser : Parser {
 			case IDENTIFIER:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 491;
+				State = 498;
 				Match(IDENTIFIER);
-				State = 492;
+				State = 499;
 				withClause();
 				}
 				break;
@@ -2917,34 +2978,34 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public WithClauseContext withClause() {
 		WithClauseContext _localctx = new WithClauseContext(Context, State);
-		EnterRule(_localctx, 68, RULE_withClause);
+		EnterRule(_localctx, 70, RULE_withClause);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 495;
-			Match(WITH);
-			State = 496;
-			Match(OPEN_BRACE);
-			State = 497;
-			inlineAsignment();
 			State = 502;
+			Match(WITH);
+			State = 503;
+			Match(OPEN_BRACE);
+			State = 504;
+			inlineAsignment();
+			State = 509;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 498;
+				State = 505;
 				Match(COMMA);
-				State = 499;
+				State = 506;
 				inlineAsignment();
 				}
 				}
-				State = 504;
+				State = 511;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 505;
+			State = 512;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -3001,57 +3062,57 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ProceduralControlFlowContext proceduralControlFlow() {
 		ProceduralControlFlowContext _localctx = new ProceduralControlFlowContext(Context, State);
-		EnterRule(_localctx, 70, RULE_proceduralControlFlow);
+		EnterRule(_localctx, 72, RULE_proceduralControlFlow);
 		try {
-			State = 514;
+			State = 521;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,40,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 507;
+				State = 514;
 				@if();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 508;
+				State = 515;
 				@for();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 509;
+				State = 516;
 				@foreach();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 510;
+				State = 517;
 				@while();
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 511;
+				State = 518;
 				repeat();
 				}
 				break;
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 512;
+				State = 519;
 				@try();
 				}
 				break;
 			case 7:
 				EnterOuterAlt(_localctx, 7);
 				{
-				State = 513;
+				State = 520;
 				@switch();
 				}
 				break;
@@ -3118,66 +3179,66 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public IfContext @if() {
 		IfContext _localctx = new IfContext(Context, State);
-		EnterRule(_localctx, 72, RULE_if);
+		EnterRule(_localctx, 74, RULE_if);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 516;
+			State = 523;
 			Match(NL);
-			State = 517;
+			State = 524;
 			Match(IF);
-			State = 518;
+			State = 525;
 			expression(0);
-			State = 519;
+			State = 526;
 			Match(THEN);
-			State = 520;
+			State = 527;
 			statementBlock();
-			State = 530;
+			State = 537;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,41,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					State = 521;
+					State = 528;
 					Match(NL);
-					State = 522;
+					State = 529;
 					Match(ELSE);
-					State = 523;
+					State = 530;
 					Match(IF);
-					State = 524;
+					State = 531;
 					expression(0);
-					State = 525;
+					State = 532;
 					Match(THEN);
-					State = 526;
+					State = 533;
 					statementBlock();
 					}
 					} 
 				}
-				State = 532;
+				State = 539;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,41,Context);
 			}
-			State = 536;
+			State = 543;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,42,Context) ) {
 			case 1:
 				{
-				State = 533;
+				State = 540;
 				Match(NL);
-				State = 534;
+				State = 541;
 				Match(ELSE);
-				State = 535;
+				State = 542;
 				statementBlock();
 				}
 				break;
 			}
-			State = 538;
+			State = 545;
 			Match(NL);
-			State = 539;
+			State = 546;
 			Match(END);
-			State = 540;
+			State = 547;
 			Match(IF);
 			}
 		}
@@ -3237,54 +3298,54 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ForContext @for() {
 		ForContext _localctx = new ForContext(Context, State);
-		EnterRule(_localctx, 74, RULE_for);
+		EnterRule(_localctx, 76, RULE_for);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 542;
+			State = 549;
 			Match(NL);
-			State = 543;
+			State = 550;
 			Match(FOR);
-			State = 544;
+			State = 551;
 			Match(IDENTIFIER);
-			State = 545;
+			State = 552;
 			Match(ASSIGN);
-			State = 546;
-			expression(0);
-			State = 547;
-			Match(TO);
-			State = 548;
+			State = 553;
 			expression(0);
 			State = 554;
+			Match(TO);
+			State = 555;
+			expression(0);
+			State = 561;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==STEP) {
 				{
-				State = 549;
+				State = 556;
 				Match(STEP);
-				State = 551;
+				State = 558;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==MINUS) {
 					{
-					State = 550;
+					State = 557;
 					Match(MINUS);
 					}
 				}
 
-				State = 553;
+				State = 560;
 				Match(LITERAL_INTEGER);
 				}
 			}
 
-			State = 556;
+			State = 563;
 			statementBlock();
-			State = 557;
+			State = 564;
 			Match(NL);
-			State = 558;
+			State = 565;
 			Match(END);
-			State = 559;
+			State = 566;
 			Match(FOR);
 			}
 		}
@@ -3337,27 +3398,27 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ForeachContext @foreach() {
 		ForeachContext _localctx = new ForeachContext(Context, State);
-		EnterRule(_localctx, 76, RULE_foreach);
+		EnterRule(_localctx, 78, RULE_foreach);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 561;
-			Match(NL);
-			State = 562;
-			Match(FOREACH);
-			State = 563;
-			Match(IDENTIFIER);
-			State = 564;
-			Match(IN);
-			State = 565;
-			expression(0);
-			State = 566;
-			statementBlock();
-			State = 567;
-			Match(NL);
 			State = 568;
-			Match(END);
+			Match(NL);
 			State = 569;
+			Match(FOREACH);
+			State = 570;
+			Match(IDENTIFIER);
+			State = 571;
+			Match(IN);
+			State = 572;
+			expression(0);
+			State = 573;
+			statementBlock();
+			State = 574;
+			Match(NL);
+			State = 575;
+			Match(END);
+			State = 576;
 			Match(FOREACH);
 			}
 		}
@@ -3408,23 +3469,23 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public WhileContext @while() {
 		WhileContext _localctx = new WhileContext(Context, State);
-		EnterRule(_localctx, 78, RULE_while);
+		EnterRule(_localctx, 80, RULE_while);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 571;
+			State = 578;
 			Match(NL);
-			State = 572;
+			State = 579;
 			Match(WHILE);
-			State = 573;
+			State = 580;
 			expression(0);
-			State = 574;
+			State = 581;
 			statementBlock();
-			State = 575;
+			State = 582;
 			Match(NL);
-			State = 576;
+			State = 583;
 			Match(END);
-			State = 577;
+			State = 584;
 			Match(WHILE);
 			}
 		}
@@ -3472,23 +3533,23 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public RepeatContext repeat() {
 		RepeatContext _localctx = new RepeatContext(Context, State);
-		EnterRule(_localctx, 80, RULE_repeat);
+		EnterRule(_localctx, 82, RULE_repeat);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 579;
+			State = 586;
 			Match(NL);
 			{
-			State = 580;
+			State = 587;
 			Match(REPEAT);
 			}
-			State = 581;
+			State = 588;
 			statementBlock();
-			State = 582;
+			State = 589;
 			Match(NL);
-			State = 583;
+			State = 590;
 			Match(UNTIL);
-			State = 584;
+			State = 591;
 			expression(0);
 			}
 		}
@@ -3541,29 +3602,29 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public TryContext @try() {
 		TryContext _localctx = new TryContext(Context, State);
-		EnterRule(_localctx, 82, RULE_try);
+		EnterRule(_localctx, 84, RULE_try);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 586;
-			Match(NL);
-			State = 587;
-			Match(TRY);
-			State = 588;
-			statementBlock();
-			State = 589;
-			Match(NL);
-			State = 590;
-			Match(CATCH);
-			State = 591;
-			Match(IDENTIFIER);
-			State = 592;
-			statementBlock();
 			State = 593;
 			Match(NL);
 			State = 594;
-			Match(END);
+			Match(TRY);
 			State = 595;
+			statementBlock();
+			State = 596;
+			Match(NL);
+			State = 597;
+			Match(CATCH);
+			State = 598;
+			Match(IDENTIFIER);
+			State = 599;
+			statementBlock();
+			State = 600;
+			Match(NL);
+			State = 601;
+			Match(END);
+			State = 602;
 			Match(TRY);
 			}
 		}
@@ -3620,18 +3681,18 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public SwitchContext @switch() {
 		SwitchContext _localctx = new SwitchContext(Context, State);
-		EnterRule(_localctx, 84, RULE_switch);
+		EnterRule(_localctx, 86, RULE_switch);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 597;
+			State = 604;
 			Match(NL);
-			State = 598;
+			State = 605;
 			Match(SWITCH);
-			State = 599;
+			State = 606;
 			expression(0);
-			State = 601;
+			State = 608;
 			ErrorHandler.Sync(this);
 			_alt = 1;
 			do {
@@ -3639,7 +3700,7 @@ public partial class ElanParser : Parser {
 				case 1:
 					{
 					{
-					State = 600;
+					State = 607;
 					@case();
 					}
 					}
@@ -3647,17 +3708,17 @@ public partial class ElanParser : Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				State = 603;
+				State = 610;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,45,Context);
 			} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER );
-			State = 605;
+			State = 612;
 			caseDefault();
-			State = 606;
+			State = 613;
 			Match(NL);
-			State = 607;
+			State = 614;
 			Match(END);
-			State = 608;
+			State = 615;
 			Match(SWITCH);
 			}
 		}
@@ -3702,28 +3763,28 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public CaseContext @case() {
 		CaseContext _localctx = new CaseContext(Context, State);
-		EnterRule(_localctx, 86, RULE_case);
+		EnterRule(_localctx, 88, RULE_case);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 610;
+			State = 617;
 			Match(NL);
-			State = 611;
+			State = 618;
 			Match(CASE);
-			State = 613;
+			State = 620;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==MINUS) {
 				{
-				State = 612;
+				State = 619;
 				Match(MINUS);
 				}
 			}
 
-			State = 615;
+			State = 622;
 			literalValue();
-			State = 616;
+			State = 623;
 			statementBlock();
 			}
 		}
@@ -3764,15 +3825,15 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public CaseDefaultContext caseDefault() {
 		CaseDefaultContext _localctx = new CaseDefaultContext(Context, State);
-		EnterRule(_localctx, 88, RULE_caseDefault);
+		EnterRule(_localctx, 90, RULE_caseDefault);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 618;
+			State = 625;
 			Match(NL);
-			State = 619;
+			State = 626;
 			Match(DEFAULT);
-			State = 620;
+			State = 627;
 			statementBlock();
 			}
 		}
@@ -3858,78 +3919,78 @@ public partial class ElanParser : Parser {
 		int _parentState = State;
 		ExpressionContext _localctx = new ExpressionContext(Context, _parentState);
 		ExpressionContext _prevctx = _localctx;
-		int _startState = 90;
-		EnterRecursionRule(_localctx, 90, RULE_expression, _p);
+		int _startState = 92;
+		EnterRecursionRule(_localctx, 92, RULE_expression, _p);
 		try {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 637;
+			State = 644;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,47,Context) ) {
 			case 1:
 				{
-				State = 623;
+				State = 630;
 				bracketedExpression();
 				}
 				break;
 			case 2:
 				{
-				State = 624;
+				State = 631;
 				methodCall();
 				}
 				break;
 			case 3:
 				{
-				State = 625;
+				State = 632;
 				value();
 				}
 				break;
 			case 4:
 				{
-				State = 626;
+				State = 633;
 				unaryOp();
-				State = 627;
+				State = 634;
 				expression(9);
 				}
 				break;
 			case 5:
 				{
-				State = 629;
+				State = 636;
 				newInstance();
 				}
 				break;
 			case 6:
 				{
-				State = 630;
+				State = 637;
 				ifExpression();
 				}
 				break;
 			case 7:
 				{
-				State = 631;
+				State = 638;
 				lambda();
 				}
 				break;
 			case 8:
 				{
-				State = 632;
+				State = 639;
 				letIn();
-				State = 633;
+				State = 640;
 				expression(3);
 				}
 				break;
 			case 9:
 				{
-				State = 635;
+				State = 642;
 				Match(NL);
-				State = 636;
+				State = 643;
 				expression(1);
 				}
 				break;
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 658;
+			State = 665;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,49,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -3938,18 +3999,18 @@ public partial class ElanParser : Parser {
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 656;
+					State = 663;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,48,Context) ) {
 					case 1:
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 639;
+						State = 646;
 						if (!(Precpred(Context, 8))) throw new FailedPredicateException(this, "Precpred(Context, 8)");
-						State = 640;
+						State = 647;
 						Match(POWER);
-						State = 641;
+						State = 648;
 						expression(9);
 						}
 						break;
@@ -3957,11 +4018,11 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 642;
+						State = 649;
 						if (!(Precpred(Context, 7))) throw new FailedPredicateException(this, "Precpred(Context, 7)");
-						State = 643;
+						State = 650;
 						binaryOp();
-						State = 644;
+						State = 651;
 						expression(8);
 						}
 						break;
@@ -3969,9 +4030,9 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 646;
+						State = 653;
 						if (!(Precpred(Context, 12))) throw new FailedPredicateException(this, "Precpred(Context, 12)");
-						State = 647;
+						State = 654;
 						index();
 						}
 						break;
@@ -3979,11 +4040,11 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 648;
+						State = 655;
 						if (!(Precpred(Context, 11))) throw new FailedPredicateException(this, "Precpred(Context, 11)");
-						State = 649;
+						State = 656;
 						Match(DOT);
-						State = 650;
+						State = 657;
 						methodCall();
 						}
 						break;
@@ -3991,11 +4052,11 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 651;
+						State = 658;
 						if (!(Precpred(Context, 10))) throw new FailedPredicateException(this, "Precpred(Context, 10)");
-						State = 652;
+						State = 659;
 						Match(DOT);
-						State = 653;
+						State = 660;
 						Match(IDENTIFIER);
 						}
 						break;
@@ -4003,16 +4064,16 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 654;
+						State = 661;
 						if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-						State = 655;
+						State = 662;
 						withClause();
 						}
 						break;
 					}
 					} 
 				}
-				State = 660;
+				State = 667;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,49,Context);
 			}
@@ -4055,15 +4116,15 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public BracketedExpressionContext bracketedExpression() {
 		BracketedExpressionContext _localctx = new BracketedExpressionContext(Context, State);
-		EnterRule(_localctx, 92, RULE_bracketedExpression);
+		EnterRule(_localctx, 94, RULE_bracketedExpression);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 661;
+			State = 668;
 			Match(OPEN_BRACKET);
-			State = 662;
+			State = 669;
 			expression(0);
-			State = 663;
+			State = 670;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -4112,25 +4173,25 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public IfExpressionContext ifExpression() {
 		IfExpressionContext _localctx = new IfExpressionContext(Context, State);
-		EnterRule(_localctx, 94, RULE_ifExpression);
+		EnterRule(_localctx, 96, RULE_ifExpression);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 665;
-			Match(IF);
-			State = 666;
-			expression(0);
-			State = 667;
-			Match(NL);
-			State = 668;
-			Match(THEN);
-			State = 669;
-			expression(0);
-			State = 670;
-			Match(NL);
-			State = 671;
-			Match(ELSE);
 			State = 672;
+			Match(IF);
+			State = 673;
+			expression(0);
+			State = 674;
+			Match(NL);
+			State = 675;
+			Match(THEN);
+			State = 676;
+			expression(0);
+			State = 677;
+			Match(NL);
+			State = 678;
+			Match(ELSE);
+			State = 679;
 			expression(0);
 			}
 		}
@@ -4174,17 +4235,17 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LambdaContext lambda() {
 		LambdaContext _localctx = new LambdaContext(Context, State);
-		EnterRule(_localctx, 96, RULE_lambda);
+		EnterRule(_localctx, 98, RULE_lambda);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 674;
+			State = 681;
 			Match(LAMBDA);
-			State = 675;
+			State = 682;
 			argumentList();
-			State = 676;
+			State = 683;
 			Match(ARROW);
-			State = 677;
+			State = 684;
 			expression(0);
 			}
 		}
@@ -4232,39 +4293,39 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public IndexContext index() {
 		IndexContext _localctx = new IndexContext(Context, State);
-		EnterRule(_localctx, 98, RULE_index);
+		EnterRule(_localctx, 100, RULE_index);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 679;
-			Match(OPEN_SQ_BRACKET);
 			State = 686;
+			Match(OPEN_SQ_BRACKET);
+			State = 693;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,50,Context) ) {
 			case 1:
 				{
-				State = 680;
+				State = 687;
 				expression(0);
 				}
 				break;
 			case 2:
 				{
-				State = 681;
+				State = 688;
 				expression(0);
-				State = 682;
+				State = 689;
 				Match(COMMA);
-				State = 683;
+				State = 690;
 				expression(0);
 				}
 				break;
 			case 3:
 				{
-				State = 685;
+				State = 692;
 				range();
 				}
 				break;
 			}
-			State = 688;
+			State = 695;
 			Match(CLOSE_SQ_BRACKET);
 			}
 		}
@@ -4307,37 +4368,37 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public RangeContext range() {
 		RangeContext _localctx = new RangeContext(Context, State);
-		EnterRule(_localctx, 100, RULE_range);
+		EnterRule(_localctx, 102, RULE_range);
 		try {
-			State = 699;
+			State = 706;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,51,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 690;
+				State = 697;
 				expression(0);
-				State = 691;
+				State = 698;
 				Match(DOUBLE_DOT);
-				State = 692;
+				State = 699;
 				expression(0);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 694;
+				State = 701;
 				expression(0);
-				State = 695;
+				State = 702;
 				Match(DOUBLE_DOT);
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 697;
+				State = 704;
 				Match(DOUBLE_DOT);
-				State = 698;
+				State = 705;
 				expression(0);
 				}
 				break;
@@ -4390,56 +4451,56 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ValueContext value() {
 		ValueContext _localctx = new ValueContext(Context, State);
-		EnterRule(_localctx, 102, RULE_value);
+		EnterRule(_localctx, 104, RULE_value);
 		int _la;
 		try {
-			State = 710;
+			State = 717;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,53,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 701;
+				State = 708;
 				literal();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 703;
+				State = 710;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==GLOBAL || _la==SELF) {
 					{
-					State = 702;
+					State = 709;
 					nameQualifier();
 					}
 				}
 
-				State = 705;
+				State = 712;
 				Match(IDENTIFIER);
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 706;
+				State = 713;
 				dataStructureDefinition();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 707;
+				State = 714;
 				Match(SELF);
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 708;
+				State = 715;
 				Match(DEFAULT);
-				State = 709;
+				State = 716;
 				type();
 				}
 				break;
@@ -4480,12 +4541,12 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public NameQualifierContext nameQualifier() {
 		NameQualifierContext _localctx = new NameQualifierContext(Context, State);
-		EnterRule(_localctx, 104, RULE_nameQualifier);
+		EnterRule(_localctx, 106, RULE_nameQualifier);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 712;
+			State = 719;
 			_la = TokenStream.LA(1);
 			if ( !(_la==GLOBAL || _la==SELF) ) {
 			ErrorHandler.RecoverInline(this);
@@ -4494,7 +4555,7 @@ public partial class ElanParser : Parser {
 				ErrorHandler.ReportMatch(this);
 			    Consume();
 			}
-			State = 713;
+			State = 720;
 			Match(DOT);
 			}
 		}
@@ -4536,9 +4597,9 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LiteralContext literal() {
 		LiteralContext _localctx = new LiteralContext(Context, State);
-		EnterRule(_localctx, 106, RULE_literal);
+		EnterRule(_localctx, 108, RULE_literal);
 		try {
-			State = 717;
+			State = 724;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case BOOL_VALUE:
@@ -4548,7 +4609,7 @@ public partial class ElanParser : Parser {
 			case LITERAL_CHAR:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 715;
+				State = 722;
 				literalValue();
 				}
 				break;
@@ -4557,7 +4618,7 @@ public partial class ElanParser : Parser {
 			case LITERAL_STRING:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 716;
+				State = 723;
 				literalDataStructure();
 				}
 				break;
@@ -4604,43 +4665,43 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LiteralValueContext literalValue() {
 		LiteralValueContext _localctx = new LiteralValueContext(Context, State);
-		EnterRule(_localctx, 108, RULE_literalValue);
+		EnterRule(_localctx, 110, RULE_literalValue);
 		try {
-			State = 724;
+			State = 731;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case BOOL_VALUE:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 719;
+				State = 726;
 				Match(BOOL_VALUE);
 				}
 				break;
 			case LITERAL_INTEGER:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 720;
+				State = 727;
 				Match(LITERAL_INTEGER);
 				}
 				break;
 			case LITERAL_FLOAT:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 721;
+				State = 728;
 				Match(LITERAL_FLOAT);
 				}
 				break;
 			case LITERAL_CHAR:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 722;
+				State = 729;
 				Match(LITERAL_CHAR);
 				}
 				break;
 			case TYPENAME:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 723;
+				State = 730;
 				enumValue();
 				}
 				break;
@@ -4692,36 +4753,36 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public DataStructureDefinitionContext dataStructureDefinition() {
 		DataStructureDefinitionContext _localctx = new DataStructureDefinitionContext(Context, State);
-		EnterRule(_localctx, 110, RULE_dataStructureDefinition);
+		EnterRule(_localctx, 112, RULE_dataStructureDefinition);
 		try {
-			State = 730;
+			State = 737;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,56,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 726;
+				State = 733;
 				listDefinition();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 727;
+				State = 734;
 				arrayDefinition();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 728;
+				State = 735;
 				tupleDefinition();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 729;
+				State = 736;
 				dictionaryDefinition();
 				}
 				break;
@@ -4769,36 +4830,36 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LiteralDataStructureContext literalDataStructure() {
 		LiteralDataStructureContext _localctx = new LiteralDataStructureContext(Context, State);
-		EnterRule(_localctx, 112, RULE_literalDataStructure);
+		EnterRule(_localctx, 114, RULE_literalDataStructure);
 		try {
-			State = 736;
+			State = 743;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,57,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 732;
+				State = 739;
 				Match(LITERAL_STRING);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 733;
+				State = 740;
 				literalTuple();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 734;
+				State = 741;
 				literalList();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 735;
+				State = 742;
 				literalDictionary();
 				}
 				break;
@@ -4848,36 +4909,36 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public TupleDefinitionContext tupleDefinition() {
 		TupleDefinitionContext _localctx = new TupleDefinitionContext(Context, State);
-		EnterRule(_localctx, 114, RULE_tupleDefinition);
+		EnterRule(_localctx, 116, RULE_tupleDefinition);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 738;
+			State = 745;
 			Match(OPEN_BRACKET);
-			State = 739;
-			expression(0);
-			State = 740;
-			Match(COMMA);
-			State = 741;
-			expression(0);
 			State = 746;
+			expression(0);
+			State = 747;
+			Match(COMMA);
+			State = 748;
+			expression(0);
+			State = 753;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 742;
+				State = 749;
 				Match(COMMA);
-				State = 743;
+				State = 750;
 				expression(0);
 				}
 				}
-				State = 748;
+				State = 755;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 749;
+			State = 756;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -4925,36 +4986,36 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LiteralTupleContext literalTuple() {
 		LiteralTupleContext _localctx = new LiteralTupleContext(Context, State);
-		EnterRule(_localctx, 116, RULE_literalTuple);
+		EnterRule(_localctx, 118, RULE_literalTuple);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 751;
+			State = 758;
 			Match(OPEN_BRACKET);
-			State = 752;
-			literal();
-			State = 753;
-			Match(COMMA);
-			State = 754;
-			literal();
 			State = 759;
+			literal();
+			State = 760;
+			Match(COMMA);
+			State = 761;
+			literal();
+			State = 766;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 755;
+				State = 762;
 				Match(COMMA);
-				State = 756;
+				State = 763;
 				literal();
 				}
 				}
-				State = 761;
+				State = 768;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 762;
+			State = 769;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -5004,52 +5065,52 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public DeconstructedTupleContext deconstructedTuple() {
 		DeconstructedTupleContext _localctx = new DeconstructedTupleContext(Context, State);
-		EnterRule(_localctx, 118, RULE_deconstructedTuple);
+		EnterRule(_localctx, 120, RULE_deconstructedTuple);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 764;
+			State = 771;
 			Match(OPEN_BRACKET);
-			State = 766;
+			State = 773;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==VAR) {
 				{
-				State = 765;
+				State = 772;
 				Match(VAR);
 				}
 			}
 
-			State = 768;
+			State = 775;
 			Match(IDENTIFIER);
-			State = 774;
+			State = 781;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 769;
+				State = 776;
 				Match(COMMA);
-				State = 771;
+				State = 778;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==VAR) {
 					{
-					State = 770;
+					State = 777;
 					Match(VAR);
 					}
 				}
 
-				State = 773;
+				State = 780;
 				Match(IDENTIFIER);
 				}
 				}
-				State = 776;
+				State = 783;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==COMMA );
-			State = 778;
+			State = 785;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -5097,34 +5158,34 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ListDefinitionContext listDefinition() {
 		ListDefinitionContext _localctx = new ListDefinitionContext(Context, State);
-		EnterRule(_localctx, 120, RULE_listDefinition);
+		EnterRule(_localctx, 122, RULE_listDefinition);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 780;
+			State = 787;
 			Match(OPEN_BRACE);
 			{
-			State = 781;
+			State = 788;
 			expression(0);
-			State = 786;
+			State = 793;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 782;
+				State = 789;
 				Match(COMMA);
-				State = 783;
+				State = 790;
 				expression(0);
 				}
 				}
-				State = 788;
+				State = 795;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
 			}
-			State = 789;
+			State = 796;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5172,34 +5233,34 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LiteralListContext literalList() {
 		LiteralListContext _localctx = new LiteralListContext(Context, State);
-		EnterRule(_localctx, 122, RULE_literalList);
+		EnterRule(_localctx, 124, RULE_literalList);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 791;
+			State = 798;
 			Match(OPEN_BRACE);
 			{
-			State = 792;
+			State = 799;
 			literal();
-			State = 797;
+			State = 804;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 793;
+				State = 800;
 				Match(COMMA);
-				State = 794;
+				State = 801;
 				literal();
 				}
 				}
-				State = 799;
+				State = 806;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
 			}
-			State = 800;
+			State = 807;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5242,19 +5303,19 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ListDecompContext listDecomp() {
 		ListDecompContext _localctx = new ListDecompContext(Context, State);
-		EnterRule(_localctx, 124, RULE_listDecomp);
+		EnterRule(_localctx, 126, RULE_listDecomp);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 802;
+			State = 809;
 			Match(OPEN_BRACE);
-			State = 803;
+			State = 810;
 			Match(IDENTIFIER);
-			State = 804;
+			State = 811;
 			Match(COLON);
-			State = 805;
+			State = 812;
 			Match(IDENTIFIER);
-			State = 806;
+			State = 813;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5297,28 +5358,28 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ArrayDefinitionContext arrayDefinition() {
 		ArrayDefinitionContext _localctx = new ArrayDefinitionContext(Context, State);
-		EnterRule(_localctx, 126, RULE_arrayDefinition);
+		EnterRule(_localctx, 128, RULE_arrayDefinition);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 808;
+			State = 815;
 			Match(ARRAY);
-			State = 809;
+			State = 816;
 			genericSpecifier();
-			State = 810;
+			State = 817;
 			Match(OPEN_BRACKET);
-			State = 812;
+			State = 819;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==LITERAL_INTEGER) {
 				{
-				State = 811;
+				State = 818;
 				Match(LITERAL_INTEGER);
 				}
 			}
 
-			State = 814;
+			State = 821;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -5366,34 +5427,34 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public DictionaryDefinitionContext dictionaryDefinition() {
 		DictionaryDefinitionContext _localctx = new DictionaryDefinitionContext(Context, State);
-		EnterRule(_localctx, 128, RULE_dictionaryDefinition);
+		EnterRule(_localctx, 130, RULE_dictionaryDefinition);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 816;
+			State = 823;
 			Match(OPEN_BRACE);
 			{
-			State = 817;
+			State = 824;
 			kvp();
-			State = 822;
+			State = 829;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 818;
+				State = 825;
 				Match(COMMA);
-				State = 819;
+				State = 826;
 				kvp();
 				}
 				}
-				State = 824;
+				State = 831;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
 			}
-			State = 825;
+			State = 832;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5441,34 +5502,34 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LiteralDictionaryContext literalDictionary() {
 		LiteralDictionaryContext _localctx = new LiteralDictionaryContext(Context, State);
-		EnterRule(_localctx, 130, RULE_literalDictionary);
+		EnterRule(_localctx, 132, RULE_literalDictionary);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 827;
+			State = 834;
 			Match(OPEN_BRACE);
 			{
-			State = 828;
+			State = 835;
 			literalKvp();
-			State = 833;
+			State = 840;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 829;
+				State = 836;
 				Match(COMMA);
-				State = 830;
+				State = 837;
 				literalKvp();
 				}
 				}
-				State = 835;
+				State = 842;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
 			}
-			State = 836;
+			State = 843;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5511,15 +5572,15 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public KvpContext kvp() {
 		KvpContext _localctx = new KvpContext(Context, State);
-		EnterRule(_localctx, 132, RULE_kvp);
+		EnterRule(_localctx, 134, RULE_kvp);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 838;
+			State = 845;
 			expression(0);
-			State = 839;
+			State = 846;
 			Match(COLON);
-			State = 840;
+			State = 847;
 			expression(0);
 			}
 		}
@@ -5562,15 +5623,15 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LiteralKvpContext literalKvp() {
 		LiteralKvpContext _localctx = new LiteralKvpContext(Context, State);
-		EnterRule(_localctx, 134, RULE_literalKvp);
+		EnterRule(_localctx, 136, RULE_literalKvp);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 842;
+			State = 849;
 			literal();
-			State = 843;
+			State = 850;
 			Match(COLON);
-			State = 844;
+			State = 851;
 			literal();
 			}
 		}
@@ -5608,12 +5669,12 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public UnaryOpContext unaryOp() {
 		UnaryOpContext _localctx = new UnaryOpContext(Context, State);
-		EnterRule(_localctx, 136, RULE_unaryOp);
+		EnterRule(_localctx, 138, RULE_unaryOp);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 846;
+			State = 853;
 			_la = TokenStream.LA(1);
 			if ( !(_la==MINUS || _la==OP_NOT) ) {
 			ErrorHandler.RecoverInline(this);
@@ -5665,9 +5726,9 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public BinaryOpContext binaryOp() {
 		BinaryOpContext _localctx = new BinaryOpContext(Context, State);
-		EnterRule(_localctx, 138, RULE_binaryOp);
+		EnterRule(_localctx, 140, RULE_binaryOp);
 		try {
-			State = 851;
+			State = 858;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case PLUS:
@@ -5679,7 +5740,7 @@ public partial class ElanParser : Parser {
 			case INT_DIV:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 848;
+				State = 855;
 				arithmeticOp();
 				}
 				break;
@@ -5688,7 +5749,7 @@ public partial class ElanParser : Parser {
 			case OP_XOR:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 849;
+				State = 856;
 				logicalOp();
 				}
 				break;
@@ -5700,7 +5761,7 @@ public partial class ElanParser : Parser {
 			case OP_GE:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 850;
+				State = 857;
 				conditionalOp();
 				}
 				break;
@@ -5747,14 +5808,14 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ArithmeticOpContext arithmeticOp() {
 		ArithmeticOpContext _localctx = new ArithmeticOpContext(Context, State);
-		EnterRule(_localctx, 140, RULE_arithmeticOp);
+		EnterRule(_localctx, 142, RULE_arithmeticOp);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 853;
+			State = 860;
 			_la = TokenStream.LA(1);
-			if ( !(((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & 127L) != 0)) ) {
+			if ( !(((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 127L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
 			}
 			else {
@@ -5798,14 +5859,14 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public LogicalOpContext logicalOp() {
 		LogicalOpContext _localctx = new LogicalOpContext(Context, State);
-		EnterRule(_localctx, 142, RULE_logicalOp);
+		EnterRule(_localctx, 144, RULE_logicalOp);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 855;
+			State = 862;
 			_la = TokenStream.LA(1);
-			if ( !(((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 13L) != 0)) ) {
+			if ( !(((((_la - 74)) & ~0x3f) == 0 && ((1L << (_la - 74)) & 13L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
 			}
 			else {
@@ -5852,14 +5913,14 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public ConditionalOpContext conditionalOp() {
 		ConditionalOpContext _localctx = new ConditionalOpContext(Context, State);
-		EnterRule(_localctx, 144, RULE_conditionalOp);
+		EnterRule(_localctx, 146, RULE_conditionalOp);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 857;
+			State = 864;
 			_la = TokenStream.LA(1);
-			if ( !(((((_la - 71)) & ~0x3f) == 0 && ((1L << (_la - 71)) & 963L) != 0)) ) {
+			if ( !(((((_la - 72)) & ~0x3f) == 0 && ((1L << (_la - 72)) & 963L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
 			}
 			else {
@@ -5914,52 +5975,52 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public TypeContext type() {
 		TypeContext _localctx = new TypeContext(Context, State);
-		EnterRule(_localctx, 146, RULE_type);
+		EnterRule(_localctx, 148, RULE_type);
 		try {
-			State = 866;
+			State = 873;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,69,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 859;
+				State = 866;
 				Match(VALUE_TYPE);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 860;
+				State = 867;
 				dataStructureType();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 861;
+				State = 868;
 				Match(TYPENAME);
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 862;
+				State = 869;
 				Match(TYPENAME);
-				State = 863;
+				State = 870;
 				genericSpecifier();
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 864;
+				State = 871;
 				tupleType();
 				}
 				break;
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 865;
+				State = 872;
 				funcType();
 				}
 				break;
@@ -6004,21 +6065,21 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public DataStructureTypeContext dataStructureType() {
 		DataStructureTypeContext _localctx = new DataStructureTypeContext(Context, State);
-		EnterRule(_localctx, 148, RULE_dataStructureType);
+		EnterRule(_localctx, 150, RULE_dataStructureType);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 868;
+			State = 875;
 			_la = TokenStream.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 4222124650659840L) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 8444249301319680L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
 			}
 			else {
 				ErrorHandler.ReportMatch(this);
 			    Consume();
 			}
-			State = 869;
+			State = 876;
 			genericSpecifier();
 			}
 		}
@@ -6066,32 +6127,32 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public GenericSpecifierContext genericSpecifier() {
 		GenericSpecifierContext _localctx = new GenericSpecifierContext(Context, State);
-		EnterRule(_localctx, 150, RULE_genericSpecifier);
+		EnterRule(_localctx, 152, RULE_genericSpecifier);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 871;
+			State = 878;
 			Match(LT);
-			State = 872;
+			State = 879;
 			type();
-			State = 877;
+			State = 884;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 873;
+				State = 880;
 				Match(COMMA);
-				State = 874;
+				State = 881;
 				type();
 				}
 				}
-				State = 879;
+				State = 886;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 880;
+			State = 887;
 			Match(GT);
 			}
 		}
@@ -6139,32 +6200,32 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public TupleTypeContext tupleType() {
 		TupleTypeContext _localctx = new TupleTypeContext(Context, State);
-		EnterRule(_localctx, 152, RULE_tupleType);
+		EnterRule(_localctx, 154, RULE_tupleType);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 882;
+			State = 889;
 			Match(OPEN_BRACKET);
-			State = 883;
+			State = 890;
 			type();
-			State = 886;
+			State = 893;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 884;
+				State = 891;
 				Match(COMMA);
-				State = 885;
+				State = 892;
 				type();
 				}
 				}
-				State = 888;
+				State = 895;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==COMMA );
-			State = 890;
+			State = 897;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -6213,36 +6274,36 @@ public partial class ElanParser : Parser {
 	[RuleVersion(0)]
 	public FuncTypeContext funcType() {
 		FuncTypeContext _localctx = new FuncTypeContext(Context, State);
-		EnterRule(_localctx, 154, RULE_funcType);
+		EnterRule(_localctx, 156, RULE_funcType);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 892;
+			State = 899;
 			Match(OPEN_BRACKET);
-			State = 893;
+			State = 900;
 			type();
-			State = 898;
+			State = 905;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 894;
+				State = 901;
 				Match(COMMA);
-				State = 895;
+				State = 902;
 				type();
 				}
 				}
-				State = 900;
+				State = 907;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 901;
+			State = 908;
 			Match(ARROW);
-			State = 902;
+			State = 909;
 			type();
-			State = 903;
+			State = 910;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -6259,7 +6320,7 @@ public partial class ElanParser : Parser {
 
 	public override bool Sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 45: return expression_sempred((ExpressionContext)_localctx, predIndex);
+		case 46: return expression_sempred((ExpressionContext)_localctx, predIndex);
 		}
 		return true;
 	}
@@ -6276,7 +6337,7 @@ public partial class ElanParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,89,906,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,90,913,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
 		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,
 		2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,2,27,7,27,2,28,7,28,
@@ -6287,294 +6348,296 @@ public partial class ElanParser : Parser {
 		2,57,7,57,2,58,7,58,2,59,7,59,2,60,7,60,2,61,7,61,2,62,7,62,2,63,7,63,
 		2,64,7,64,2,65,7,65,2,66,7,66,2,67,7,67,2,68,7,68,2,69,7,69,2,70,7,70,
 		2,71,7,71,2,72,7,72,2,73,7,73,2,74,7,74,2,75,7,75,2,76,7,76,2,77,7,77,
-		1,0,1,0,1,0,1,0,1,0,1,0,1,0,5,0,164,8,0,10,0,12,0,167,9,0,1,0,5,0,170,
-		8,0,10,0,12,0,173,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,2,1,2,
-		1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,5,3,197,8,3,10,3,12,3,200,9,3,
-		1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,4,209,8,4,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,
-		6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,9,3,9,232,8,9,1,9,
-		1,9,3,9,236,8,9,1,9,1,9,3,9,240,8,9,1,10,3,10,243,8,10,1,10,3,10,246,8,
-		10,1,10,1,10,1,10,3,10,251,8,10,1,10,1,10,1,11,1,11,1,11,5,11,258,8,11,
-		10,11,12,11,261,9,11,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,13,1,13,
-		1,13,3,13,274,8,13,1,13,1,13,1,14,1,14,1,14,5,14,281,8,14,10,14,12,14,
-		284,9,14,1,15,1,15,1,15,1,16,1,16,3,16,291,8,16,1,17,1,17,1,17,1,17,1,
-		17,1,17,1,17,1,17,1,17,1,17,1,17,1,18,1,18,1,18,1,18,1,18,1,18,1,19,1,
-		19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,5,19,319,8,19,10,19,12,19,322,9,
-		19,1,19,1,19,1,19,1,20,1,20,1,20,3,20,330,8,20,1,20,1,20,1,20,1,20,1,21,
-		1,21,1,21,1,21,1,21,1,21,3,21,342,8,21,1,22,1,22,1,22,1,22,1,22,1,22,1,
-		22,5,22,351,8,22,10,22,12,22,354,9,22,1,22,1,22,1,22,1,22,1,23,1,23,1,
-		24,1,24,1,24,1,24,1,25,1,25,1,25,1,25,3,25,370,8,25,1,26,1,26,1,26,1,26,
-		3,26,376,8,26,1,26,1,26,1,26,1,26,5,26,382,8,26,10,26,12,26,385,9,26,1,
-		26,1,26,1,26,1,26,1,27,1,27,1,27,1,27,1,27,3,27,396,8,27,1,27,1,27,1,27,
-		1,27,1,27,1,27,1,27,5,27,405,8,27,10,27,12,27,408,9,27,1,27,1,27,1,27,
-		1,27,1,28,1,28,1,28,1,28,1,28,3,28,419,8,28,1,28,1,28,1,28,5,28,424,8,
-		28,10,28,12,28,427,9,28,1,28,1,28,1,28,1,28,1,29,1,29,1,29,1,29,1,29,1,
-		29,3,29,439,8,29,1,29,1,29,1,29,1,29,5,29,445,8,29,10,29,12,29,448,9,29,
-		1,29,1,29,1,29,1,29,1,30,1,30,1,30,1,30,5,30,458,8,30,10,30,12,30,461,
-		9,30,1,31,1,31,3,31,465,8,31,1,31,1,31,1,31,1,31,1,32,1,32,1,32,1,32,3,
-		32,475,8,32,1,32,1,32,1,32,1,32,1,32,1,32,1,33,1,33,1,33,3,33,486,8,33,
-		1,33,1,33,3,33,490,8,33,1,33,1,33,3,33,494,8,33,1,34,1,34,1,34,1,34,1,
-		34,5,34,501,8,34,10,34,12,34,504,9,34,1,34,1,34,1,35,1,35,1,35,1,35,1,
-		35,1,35,1,35,3,35,515,8,35,1,36,1,36,1,36,1,36,1,36,1,36,1,36,1,36,1,36,
-		1,36,1,36,1,36,5,36,529,8,36,10,36,12,36,532,9,36,1,36,1,36,1,36,3,36,
-		537,8,36,1,36,1,36,1,36,1,36,1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,
-		37,3,37,552,8,37,1,37,3,37,555,8,37,1,37,1,37,1,37,1,37,1,37,1,38,1,38,
-		1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,39,1,39,1,39,1,39,1,39,1,39,
-		1,39,1,39,1,40,1,40,1,40,1,40,1,40,1,40,1,40,1,41,1,41,1,41,1,41,1,41,
-		1,41,1,41,1,41,1,41,1,41,1,41,1,42,1,42,1,42,1,42,4,42,602,8,42,11,42,
-		12,42,603,1,42,1,42,1,42,1,42,1,42,1,43,1,43,1,43,3,43,614,8,43,1,43,1,
-		43,1,43,1,44,1,44,1,44,1,44,1,45,1,45,1,45,1,45,1,45,1,45,1,45,1,45,1,
-		45,1,45,1,45,1,45,1,45,1,45,1,45,3,45,638,8,45,1,45,1,45,1,45,1,45,1,45,
-		1,45,1,45,1,45,1,45,1,45,1,45,1,45,1,45,1,45,1,45,1,45,1,45,5,45,657,8,
-		45,10,45,12,45,660,9,45,1,46,1,46,1,46,1,46,1,47,1,47,1,47,1,47,1,47,1,
-		47,1,47,1,47,1,47,1,48,1,48,1,48,1,48,1,48,1,49,1,49,1,49,1,49,1,49,1,
-		49,1,49,3,49,687,8,49,1,49,1,49,1,50,1,50,1,50,1,50,1,50,1,50,1,50,1,50,
-		1,50,3,50,700,8,50,1,51,1,51,3,51,704,8,51,1,51,1,51,1,51,1,51,1,51,3,
-		51,711,8,51,1,52,1,52,1,52,1,53,1,53,3,53,718,8,53,1,54,1,54,1,54,1,54,
-		1,54,3,54,725,8,54,1,55,1,55,1,55,1,55,3,55,731,8,55,1,56,1,56,1,56,1,
-		56,3,56,737,8,56,1,57,1,57,1,57,1,57,1,57,1,57,5,57,745,8,57,10,57,12,
-		57,748,9,57,1,57,1,57,1,58,1,58,1,58,1,58,1,58,1,58,5,58,758,8,58,10,58,
-		12,58,761,9,58,1,58,1,58,1,59,1,59,3,59,767,8,59,1,59,1,59,1,59,3,59,772,
-		8,59,1,59,4,59,775,8,59,11,59,12,59,776,1,59,1,59,1,60,1,60,1,60,1,60,
-		5,60,785,8,60,10,60,12,60,788,9,60,1,60,1,60,1,61,1,61,1,61,1,61,5,61,
-		796,8,61,10,61,12,61,799,9,61,1,61,1,61,1,62,1,62,1,62,1,62,1,62,1,62,
-		1,63,1,63,1,63,1,63,3,63,813,8,63,1,63,1,63,1,64,1,64,1,64,1,64,5,64,821,
-		8,64,10,64,12,64,824,9,64,1,64,1,64,1,65,1,65,1,65,1,65,5,65,832,8,65,
-		10,65,12,65,835,9,65,1,65,1,65,1,66,1,66,1,66,1,66,1,67,1,67,1,67,1,67,
-		1,68,1,68,1,69,1,69,1,69,3,69,852,8,69,1,70,1,70,1,71,1,71,1,72,1,72,1,
-		73,1,73,1,73,1,73,1,73,1,73,1,73,3,73,867,8,73,1,74,1,74,1,74,1,75,1,75,
-		1,75,1,75,5,75,876,8,75,10,75,12,75,879,9,75,1,75,1,75,1,76,1,76,1,76,
-		1,76,4,76,887,8,76,11,76,12,76,888,1,76,1,76,1,77,1,77,1,77,1,77,5,77,
-		897,8,77,10,77,12,77,900,9,77,1,77,1,77,1,77,1,77,1,77,0,1,90,78,0,2,4,
-		6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,
-		54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,
-		102,104,106,108,110,112,114,116,118,120,122,124,126,128,130,132,134,136,
-		138,140,142,144,146,148,150,152,154,0,8,2,0,82,82,86,86,2,0,11,11,27,27,
-		2,0,19,19,33,33,2,0,65,65,74,74,1,0,64,70,2,0,73,73,75,76,2,0,71,72,77,
-		80,1,0,48,51,946,0,165,1,0,0,0,2,176,1,0,0,0,4,183,1,0,0,0,6,198,1,0,0,
-		0,8,201,1,0,0,0,10,210,1,0,0,0,12,214,1,0,0,0,14,220,1,0,0,0,16,226,1,
-		0,0,0,18,239,1,0,0,0,20,242,1,0,0,0,22,254,1,0,0,0,24,262,1,0,0,0,26,270,
-		1,0,0,0,28,277,1,0,0,0,30,285,1,0,0,0,32,290,1,0,0,0,34,292,1,0,0,0,36,
-		303,1,0,0,0,38,309,1,0,0,0,40,326,1,0,0,0,42,335,1,0,0,0,44,343,1,0,0,
-		0,46,359,1,0,0,0,48,361,1,0,0,0,50,369,1,0,0,0,52,371,1,0,0,0,54,390,1,
-		0,0,0,56,413,1,0,0,0,58,432,1,0,0,0,60,453,1,0,0,0,62,462,1,0,0,0,64,470,
-		1,0,0,0,66,493,1,0,0,0,68,495,1,0,0,0,70,514,1,0,0,0,72,516,1,0,0,0,74,
-		542,1,0,0,0,76,561,1,0,0,0,78,571,1,0,0,0,80,579,1,0,0,0,82,586,1,0,0,
-		0,84,597,1,0,0,0,86,610,1,0,0,0,88,618,1,0,0,0,90,637,1,0,0,0,92,661,1,
-		0,0,0,94,665,1,0,0,0,96,674,1,0,0,0,98,679,1,0,0,0,100,699,1,0,0,0,102,
-		710,1,0,0,0,104,712,1,0,0,0,106,717,1,0,0,0,108,724,1,0,0,0,110,730,1,
-		0,0,0,112,736,1,0,0,0,114,738,1,0,0,0,116,751,1,0,0,0,118,764,1,0,0,0,
-		120,780,1,0,0,0,122,791,1,0,0,0,124,802,1,0,0,0,126,808,1,0,0,0,128,816,
-		1,0,0,0,130,827,1,0,0,0,132,838,1,0,0,0,134,842,1,0,0,0,136,846,1,0,0,
-		0,138,851,1,0,0,0,140,853,1,0,0,0,142,855,1,0,0,0,144,857,1,0,0,0,146,
-		866,1,0,0,0,148,868,1,0,0,0,150,871,1,0,0,0,152,882,1,0,0,0,154,892,1,
-		0,0,0,156,164,3,2,1,0,157,164,3,24,12,0,158,164,3,32,16,0,159,164,3,42,
-		21,0,160,164,3,44,22,0,161,164,3,50,25,0,162,164,3,4,2,0,163,156,1,0,0,
-		0,163,157,1,0,0,0,163,158,1,0,0,0,163,159,1,0,0,0,163,160,1,0,0,0,163,
-		161,1,0,0,0,163,162,1,0,0,0,164,167,1,0,0,0,165,163,1,0,0,0,165,166,1,
-		0,0,0,166,171,1,0,0,0,167,165,1,0,0,0,168,170,5,1,0,0,169,168,1,0,0,0,
-		170,173,1,0,0,0,171,169,1,0,0,0,171,172,1,0,0,0,172,174,1,0,0,0,173,171,
-		1,0,0,0,174,175,5,0,0,1,175,1,1,0,0,0,176,177,5,1,0,0,177,178,5,26,0,0,
-		178,179,3,6,3,0,179,180,5,1,0,0,180,181,5,14,0,0,181,182,5,26,0,0,182,
-		3,1,0,0,0,183,184,5,1,0,0,184,185,5,37,0,0,185,186,5,82,0,0,186,187,3,
-		6,3,0,187,188,5,1,0,0,188,189,5,14,0,0,189,190,5,37,0,0,190,5,1,0,0,0,
-		191,197,3,12,6,0,192,197,3,14,7,0,193,197,3,70,35,0,194,197,3,8,4,0,195,
-		197,3,10,5,0,196,191,1,0,0,0,196,192,1,0,0,0,196,193,1,0,0,0,196,194,1,
-		0,0,0,196,195,1,0,0,0,197,200,1,0,0,0,198,196,1,0,0,0,198,199,1,0,0,0,
-		199,7,1,0,0,0,200,198,1,0,0,0,201,202,5,1,0,0,202,208,5,5,0,0,203,209,
-		3,20,10,0,204,205,3,18,9,0,205,206,5,61,0,0,206,207,3,20,10,0,207,209,
-		1,0,0,0,208,203,1,0,0,0,208,204,1,0,0,0,209,9,1,0,0,0,210,211,5,1,0,0,
-		211,212,5,39,0,0,212,213,7,0,0,0,213,11,1,0,0,0,214,215,5,1,0,0,215,216,
-		5,43,0,0,216,217,3,18,9,0,217,218,5,52,0,0,218,219,3,90,45,0,219,13,1,
-		0,0,0,220,221,5,1,0,0,221,222,5,34,0,0,222,223,3,18,9,0,223,224,5,40,0,
-		0,224,225,3,90,45,0,225,15,1,0,0,0,226,227,3,18,9,0,227,228,5,52,0,0,228,
-		229,3,90,45,0,229,17,1,0,0,0,230,232,3,104,52,0,231,230,1,0,0,0,231,232,
-		1,0,0,0,232,233,1,0,0,0,233,235,5,82,0,0,234,236,3,98,49,0,235,234,1,0,
-		0,0,235,236,1,0,0,0,236,240,1,0,0,0,237,240,3,118,59,0,238,240,3,124,62,
-		0,239,231,1,0,0,0,239,237,1,0,0,0,239,238,1,0,0,0,240,19,1,0,0,0,241,243,
-		3,104,52,0,242,241,1,0,0,0,242,243,1,0,0,0,243,245,1,0,0,0,244,246,7,1,
-		0,0,245,244,1,0,0,0,245,246,1,0,0,0,246,247,1,0,0,0,247,248,5,82,0,0,248,
-		250,5,58,0,0,249,251,3,22,11,0,250,249,1,0,0,0,250,251,1,0,0,0,251,252,
-		1,0,0,0,252,253,5,59,0,0,253,21,1,0,0,0,254,259,3,90,45,0,255,256,5,62,
-		0,0,256,258,3,90,45,0,257,255,1,0,0,0,258,261,1,0,0,0,259,257,1,0,0,0,
-		259,260,1,0,0,0,260,23,1,0,0,0,261,259,1,0,0,0,262,263,5,1,0,0,263,264,
-		5,29,0,0,264,265,3,26,13,0,265,266,3,6,3,0,266,267,5,1,0,0,267,268,5,14,
-		0,0,268,269,5,29,0,0,269,25,1,0,0,0,270,271,5,82,0,0,271,273,5,58,0,0,
-		272,274,3,28,14,0,273,272,1,0,0,0,273,274,1,0,0,0,274,275,1,0,0,0,275,
-		276,5,59,0,0,276,27,1,0,0,0,277,282,3,30,15,0,278,279,5,62,0,0,279,281,
-		3,30,15,0,280,278,1,0,0,0,281,284,1,0,0,0,282,280,1,0,0,0,282,283,1,0,
-		0,0,283,29,1,0,0,0,284,282,1,0,0,0,285,286,5,82,0,0,286,287,3,146,73,0,
-		287,31,1,0,0,0,288,291,3,34,17,0,289,291,3,36,18,0,290,288,1,0,0,0,290,
-		289,1,0,0,0,291,33,1,0,0,0,292,293,5,1,0,0,293,294,5,18,0,0,294,295,3,
-		40,20,0,295,296,3,6,3,0,296,297,5,1,0,0,297,298,5,32,0,0,298,299,3,90,
-		45,0,299,300,5,1,0,0,300,301,5,14,0,0,301,302,5,18,0,0,302,35,1,0,0,0,
-		303,304,5,1,0,0,304,305,5,18,0,0,305,306,3,40,20,0,306,307,5,52,0,0,307,
-		308,3,90,45,0,308,37,1,0,0,0,309,310,5,25,0,0,310,311,3,18,9,0,311,312,
-		5,52,0,0,312,320,3,90,45,0,313,314,5,62,0,0,314,315,3,18,9,0,315,316,5,
-		52,0,0,316,317,3,90,45,0,317,319,1,0,0,0,318,313,1,0,0,0,319,322,1,0,0,
-		0,320,318,1,0,0,0,320,321,1,0,0,0,321,323,1,0,0,0,322,320,1,0,0,0,323,
-		324,5,1,0,0,324,325,5,22,0,0,325,39,1,0,0,0,326,327,5,82,0,0,327,329,5,
-		58,0,0,328,330,3,28,14,0,329,328,1,0,0,0,329,330,1,0,0,0,330,331,1,0,0,
-		0,331,332,5,59,0,0,332,333,5,53,0,0,333,334,3,146,73,0,334,41,1,0,0,0,
-		335,336,5,1,0,0,336,337,5,9,0,0,337,338,5,82,0,0,338,341,5,52,0,0,339,
-		342,3,106,53,0,340,342,3,66,33,0,341,339,1,0,0,0,341,340,1,0,0,0,342,43,
-		1,0,0,0,343,344,5,1,0,0,344,345,5,15,0,0,345,346,3,46,23,0,346,347,5,1,
-		0,0,347,352,5,82,0,0,348,349,5,62,0,0,349,351,5,82,0,0,350,348,1,0,0,0,
-		351,354,1,0,0,0,352,350,1,0,0,0,352,353,1,0,0,0,353,355,1,0,0,0,354,352,
-		1,0,0,0,355,356,5,1,0,0,356,357,5,14,0,0,357,358,5,15,0,0,358,45,1,0,0,
-		0,359,360,5,81,0,0,360,47,1,0,0,0,361,362,3,46,23,0,362,363,5,61,0,0,363,
-		364,5,82,0,0,364,49,1,0,0,0,365,370,3,52,26,0,366,370,3,54,27,0,367,370,
-		3,56,28,0,368,370,3,58,29,0,369,365,1,0,0,0,369,366,1,0,0,0,369,367,1,
-		0,0,0,369,368,1,0,0,0,370,51,1,0,0,0,371,372,5,1,0,0,372,373,5,8,0,0,373,
-		375,5,81,0,0,374,376,3,60,30,0,375,374,1,0,0,0,375,376,1,0,0,0,376,377,
-		1,0,0,0,377,383,3,64,32,0,378,382,3,62,31,0,379,382,3,32,16,0,380,382,
-		3,24,12,0,381,378,1,0,0,0,381,379,1,0,0,0,381,380,1,0,0,0,382,385,1,0,
-		0,0,383,381,1,0,0,0,383,384,1,0,0,0,384,386,1,0,0,0,385,383,1,0,0,0,386,
-		387,5,1,0,0,387,388,5,14,0,0,388,389,5,8,0,0,389,53,1,0,0,0,390,391,5,
-		1,0,0,391,392,5,4,0,0,392,393,5,8,0,0,393,395,5,81,0,0,394,396,3,60,30,
-		0,395,394,1,0,0,0,395,396,1,0,0,0,396,406,1,0,0,0,397,405,3,62,31,0,398,
-		399,5,1,0,0,399,400,5,18,0,0,400,405,3,40,20,0,401,402,5,1,0,0,402,403,
-		5,29,0,0,403,405,3,26,13,0,404,397,1,0,0,0,404,398,1,0,0,0,404,401,1,0,
-		0,0,405,408,1,0,0,0,406,404,1,0,0,0,406,407,1,0,0,0,407,409,1,0,0,0,408,
-		406,1,0,0,0,409,410,5,1,0,0,410,411,5,14,0,0,411,412,5,8,0,0,412,55,1,
-		0,0,0,413,414,5,1,0,0,414,415,5,21,0,0,415,416,5,8,0,0,416,418,5,81,0,
-		0,417,419,3,60,30,0,418,417,1,0,0,0,418,419,1,0,0,0,419,420,1,0,0,0,420,
-		425,3,64,32,0,421,424,3,62,31,0,422,424,3,32,16,0,423,421,1,0,0,0,423,
-		422,1,0,0,0,424,427,1,0,0,0,425,423,1,0,0,0,425,426,1,0,0,0,426,428,1,
-		0,0,0,427,425,1,0,0,0,428,429,5,1,0,0,429,430,5,14,0,0,430,431,5,8,0,0,
-		431,57,1,0,0,0,432,433,5,1,0,0,433,434,5,4,0,0,434,435,5,21,0,0,435,436,
-		5,8,0,0,436,438,5,81,0,0,437,439,3,60,30,0,438,437,1,0,0,0,438,439,1,0,
-		0,0,439,446,1,0,0,0,440,445,3,62,31,0,441,442,5,1,0,0,442,443,5,18,0,0,
-		443,445,3,40,20,0,444,440,1,0,0,0,444,441,1,0,0,0,445,448,1,0,0,0,446,
-		444,1,0,0,0,446,447,1,0,0,0,447,449,1,0,0,0,448,446,1,0,0,0,449,450,5,
-		1,0,0,450,451,5,14,0,0,451,452,5,8,0,0,452,59,1,0,0,0,453,454,5,23,0,0,
-		454,459,3,146,73,0,455,456,5,62,0,0,456,458,3,146,73,0,457,455,1,0,0,0,
-		458,461,1,0,0,0,459,457,1,0,0,0,459,460,1,0,0,0,460,61,1,0,0,0,461,459,
-		1,0,0,0,462,464,5,1,0,0,463,465,5,28,0,0,464,463,1,0,0,0,464,465,1,0,0,
-		0,465,466,1,0,0,0,466,467,5,30,0,0,467,468,5,82,0,0,468,469,3,146,73,0,
-		469,63,1,0,0,0,470,471,5,1,0,0,471,472,5,10,0,0,472,474,5,58,0,0,473,475,
-		3,28,14,0,474,473,1,0,0,0,474,475,1,0,0,0,475,476,1,0,0,0,476,477,5,59,
-		0,0,477,478,3,6,3,0,478,479,5,1,0,0,479,480,5,14,0,0,480,481,5,10,0,0,
-		481,65,1,0,0,0,482,483,3,146,73,0,483,485,5,58,0,0,484,486,3,22,11,0,485,
-		484,1,0,0,0,485,486,1,0,0,0,486,487,1,0,0,0,487,489,5,59,0,0,488,490,3,
-		68,34,0,489,488,1,0,0,0,489,490,1,0,0,0,490,494,1,0,0,0,491,492,5,82,0,
-		0,492,494,3,68,34,0,493,482,1,0,0,0,493,491,1,0,0,0,494,67,1,0,0,0,495,
-		496,5,45,0,0,496,497,5,54,0,0,497,502,3,16,8,0,498,499,5,62,0,0,499,501,
-		3,16,8,0,500,498,1,0,0,0,501,504,1,0,0,0,502,500,1,0,0,0,502,503,1,0,0,
-		0,503,505,1,0,0,0,504,502,1,0,0,0,505,506,5,55,0,0,506,69,1,0,0,0,507,
-		515,3,72,36,0,508,515,3,74,37,0,509,515,3,76,38,0,510,515,3,78,39,0,511,
-		515,3,80,40,0,512,515,3,82,41,0,513,515,3,84,42,0,514,507,1,0,0,0,514,
-		508,1,0,0,0,514,509,1,0,0,0,514,510,1,0,0,0,514,511,1,0,0,0,514,512,1,
-		0,0,0,514,513,1,0,0,0,515,71,1,0,0,0,516,517,5,1,0,0,517,518,5,20,0,0,
-		518,519,3,90,45,0,519,520,5,38,0,0,520,530,3,6,3,0,521,522,5,1,0,0,522,
-		523,5,13,0,0,523,524,5,20,0,0,524,525,3,90,45,0,525,526,5,38,0,0,526,527,
-		3,6,3,0,527,529,1,0,0,0,528,521,1,0,0,0,529,532,1,0,0,0,530,528,1,0,0,
-		0,530,531,1,0,0,0,531,536,1,0,0,0,532,530,1,0,0,0,533,534,5,1,0,0,534,
-		535,5,13,0,0,535,537,3,6,3,0,536,533,1,0,0,0,536,537,1,0,0,0,537,538,1,
-		0,0,0,538,539,5,1,0,0,539,540,5,14,0,0,540,541,5,20,0,0,541,73,1,0,0,0,
-		542,543,5,1,0,0,543,544,5,16,0,0,544,545,5,82,0,0,545,546,5,52,0,0,546,
-		547,3,90,45,0,547,548,5,40,0,0,548,554,3,90,45,0,549,551,5,35,0,0,550,
-		552,5,65,0,0,551,550,1,0,0,0,551,552,1,0,0,0,552,553,1,0,0,0,553,555,5,
-		83,0,0,554,549,1,0,0,0,554,555,1,0,0,0,555,556,1,0,0,0,556,557,3,6,3,0,
-		557,558,5,1,0,0,558,559,5,14,0,0,559,560,5,16,0,0,560,75,1,0,0,0,561,562,
-		5,1,0,0,562,563,5,17,0,0,563,564,5,82,0,0,564,565,5,22,0,0,565,566,3,90,
-		45,0,566,567,3,6,3,0,567,568,5,1,0,0,568,569,5,14,0,0,569,570,5,17,0,0,
-		570,77,1,0,0,0,571,572,5,1,0,0,572,573,5,44,0,0,573,574,3,90,45,0,574,
-		575,3,6,3,0,575,576,5,1,0,0,576,577,5,14,0,0,577,578,5,44,0,0,578,79,1,
-		0,0,0,579,580,5,1,0,0,580,581,5,31,0,0,581,582,3,6,3,0,582,583,5,1,0,0,
-		583,584,5,42,0,0,584,585,3,90,45,0,585,81,1,0,0,0,586,587,5,1,0,0,587,
-		588,5,41,0,0,588,589,3,6,3,0,589,590,5,1,0,0,590,591,5,7,0,0,591,592,5,
-		82,0,0,592,593,3,6,3,0,593,594,5,1,0,0,594,595,5,14,0,0,595,596,5,41,0,
-		0,596,83,1,0,0,0,597,598,5,1,0,0,598,599,5,36,0,0,599,601,3,90,45,0,600,
-		602,3,86,43,0,601,600,1,0,0,0,602,603,1,0,0,0,603,601,1,0,0,0,603,604,
-		1,0,0,0,604,605,1,0,0,0,605,606,3,88,44,0,606,607,5,1,0,0,607,608,5,14,
-		0,0,608,609,5,36,0,0,609,85,1,0,0,0,610,611,5,1,0,0,611,613,5,6,0,0,612,
-		614,5,65,0,0,613,612,1,0,0,0,613,614,1,0,0,0,614,615,1,0,0,0,615,616,3,
-		108,54,0,616,617,3,6,3,0,617,87,1,0,0,0,618,619,5,1,0,0,619,620,5,12,0,
-		0,620,621,3,6,3,0,621,89,1,0,0,0,622,623,6,45,-1,0,623,638,3,92,46,0,624,
-		638,3,20,10,0,625,638,3,102,51,0,626,627,3,136,68,0,627,628,3,90,45,9,
-		628,638,1,0,0,0,629,638,3,66,33,0,630,638,3,94,47,0,631,638,3,96,48,0,
-		632,633,3,38,19,0,633,634,3,90,45,3,634,638,1,0,0,0,635,636,5,1,0,0,636,
-		638,3,90,45,1,637,622,1,0,0,0,637,624,1,0,0,0,637,625,1,0,0,0,637,626,
-		1,0,0,0,637,629,1,0,0,0,637,630,1,0,0,0,637,631,1,0,0,0,637,632,1,0,0,
-		0,637,635,1,0,0,0,638,658,1,0,0,0,639,640,10,8,0,0,640,641,5,68,0,0,641,
-		657,3,90,45,9,642,643,10,7,0,0,643,644,3,138,69,0,644,645,3,90,45,8,645,
-		657,1,0,0,0,646,647,10,12,0,0,647,657,3,98,49,0,648,649,10,11,0,0,649,
-		650,5,61,0,0,650,657,3,20,10,0,651,652,10,10,0,0,652,653,5,61,0,0,653,
-		657,5,82,0,0,654,655,10,2,0,0,655,657,3,68,34,0,656,639,1,0,0,0,656,642,
-		1,0,0,0,656,646,1,0,0,0,656,648,1,0,0,0,656,651,1,0,0,0,656,654,1,0,0,
-		0,657,660,1,0,0,0,658,656,1,0,0,0,658,659,1,0,0,0,659,91,1,0,0,0,660,658,
-		1,0,0,0,661,662,5,58,0,0,662,663,3,90,45,0,663,664,5,59,0,0,664,93,1,0,
-		0,0,665,666,5,20,0,0,666,667,3,90,45,0,667,668,5,1,0,0,668,669,5,38,0,
-		0,669,670,3,90,45,0,670,671,5,1,0,0,671,672,5,13,0,0,672,673,3,90,45,0,
-		673,95,1,0,0,0,674,675,5,24,0,0,675,676,3,22,11,0,676,677,5,53,0,0,677,
-		678,3,90,45,0,678,97,1,0,0,0,679,686,5,56,0,0,680,687,3,90,45,0,681,682,
-		3,90,45,0,682,683,5,62,0,0,683,684,3,90,45,0,684,687,1,0,0,0,685,687,3,
-		100,50,0,686,680,1,0,0,0,686,681,1,0,0,0,686,685,1,0,0,0,687,688,1,0,0,
-		0,688,689,5,57,0,0,689,99,1,0,0,0,690,691,3,90,45,0,691,692,5,60,0,0,692,
-		693,3,90,45,0,693,700,1,0,0,0,694,695,3,90,45,0,695,696,5,60,0,0,696,700,
-		1,0,0,0,697,698,5,60,0,0,698,700,3,90,45,0,699,690,1,0,0,0,699,694,1,0,
-		0,0,699,697,1,0,0,0,700,101,1,0,0,0,701,711,3,106,53,0,702,704,3,104,52,
-		0,703,702,1,0,0,0,703,704,1,0,0,0,704,705,1,0,0,0,705,711,5,82,0,0,706,
-		711,3,110,55,0,707,711,5,33,0,0,708,709,5,12,0,0,709,711,3,146,73,0,710,
-		701,1,0,0,0,710,703,1,0,0,0,710,706,1,0,0,0,710,707,1,0,0,0,710,708,1,
-		0,0,0,711,103,1,0,0,0,712,713,7,2,0,0,713,714,5,61,0,0,714,105,1,0,0,0,
-		715,718,3,108,54,0,716,718,3,112,56,0,717,715,1,0,0,0,717,716,1,0,0,0,
-		718,107,1,0,0,0,719,725,5,46,0,0,720,725,5,83,0,0,721,725,5,84,0,0,722,
-		725,5,85,0,0,723,725,3,48,24,0,724,719,1,0,0,0,724,720,1,0,0,0,724,721,
-		1,0,0,0,724,722,1,0,0,0,724,723,1,0,0,0,725,109,1,0,0,0,726,731,3,120,
-		60,0,727,731,3,126,63,0,728,731,3,114,57,0,729,731,3,128,64,0,730,726,
-		1,0,0,0,730,727,1,0,0,0,730,728,1,0,0,0,730,729,1,0,0,0,731,111,1,0,0,
-		0,732,737,5,86,0,0,733,737,3,116,58,0,734,737,3,122,61,0,735,737,3,130,
-		65,0,736,732,1,0,0,0,736,733,1,0,0,0,736,734,1,0,0,0,736,735,1,0,0,0,737,
-		113,1,0,0,0,738,739,5,58,0,0,739,740,3,90,45,0,740,741,5,62,0,0,741,746,
-		3,90,45,0,742,743,5,62,0,0,743,745,3,90,45,0,744,742,1,0,0,0,745,748,1,
-		0,0,0,746,744,1,0,0,0,746,747,1,0,0,0,747,749,1,0,0,0,748,746,1,0,0,0,
-		749,750,5,59,0,0,750,115,1,0,0,0,751,752,5,58,0,0,752,753,3,106,53,0,753,
-		754,5,62,0,0,754,759,3,106,53,0,755,756,5,62,0,0,756,758,3,106,53,0,757,
-		755,1,0,0,0,758,761,1,0,0,0,759,757,1,0,0,0,759,760,1,0,0,0,760,762,1,
-		0,0,0,761,759,1,0,0,0,762,763,5,59,0,0,763,117,1,0,0,0,764,766,5,58,0,
-		0,765,767,5,43,0,0,766,765,1,0,0,0,766,767,1,0,0,0,767,768,1,0,0,0,768,
-		774,5,82,0,0,769,771,5,62,0,0,770,772,5,43,0,0,771,770,1,0,0,0,771,772,
-		1,0,0,0,772,773,1,0,0,0,773,775,5,82,0,0,774,769,1,0,0,0,775,776,1,0,0,
-		0,776,774,1,0,0,0,776,777,1,0,0,0,777,778,1,0,0,0,778,779,5,59,0,0,779,
-		119,1,0,0,0,780,781,5,54,0,0,781,786,3,90,45,0,782,783,5,62,0,0,783,785,
-		3,90,45,0,784,782,1,0,0,0,785,788,1,0,0,0,786,784,1,0,0,0,786,787,1,0,
-		0,0,787,789,1,0,0,0,788,786,1,0,0,0,789,790,5,55,0,0,790,121,1,0,0,0,791,
-		792,5,54,0,0,792,797,3,106,53,0,793,794,5,62,0,0,794,796,3,106,53,0,795,
-		793,1,0,0,0,796,799,1,0,0,0,797,795,1,0,0,0,797,798,1,0,0,0,798,800,1,
-		0,0,0,799,797,1,0,0,0,800,801,5,55,0,0,801,123,1,0,0,0,802,803,5,54,0,
-		0,803,804,5,82,0,0,804,805,5,63,0,0,805,806,5,82,0,0,806,807,5,55,0,0,
-		807,125,1,0,0,0,808,809,5,48,0,0,809,810,3,150,75,0,810,812,5,58,0,0,811,
-		813,5,83,0,0,812,811,1,0,0,0,812,813,1,0,0,0,813,814,1,0,0,0,814,815,5,
-		59,0,0,815,127,1,0,0,0,816,817,5,54,0,0,817,822,3,132,66,0,818,819,5,62,
-		0,0,819,821,3,132,66,0,820,818,1,0,0,0,821,824,1,0,0,0,822,820,1,0,0,0,
-		822,823,1,0,0,0,823,825,1,0,0,0,824,822,1,0,0,0,825,826,5,55,0,0,826,129,
-		1,0,0,0,827,828,5,54,0,0,828,833,3,134,67,0,829,830,5,62,0,0,830,832,3,
-		134,67,0,831,829,1,0,0,0,832,835,1,0,0,0,833,831,1,0,0,0,833,834,1,0,0,
-		0,834,836,1,0,0,0,835,833,1,0,0,0,836,837,5,55,0,0,837,131,1,0,0,0,838,
-		839,3,90,45,0,839,840,5,63,0,0,840,841,3,90,45,0,841,133,1,0,0,0,842,843,
-		3,106,53,0,843,844,5,63,0,0,844,845,3,106,53,0,845,135,1,0,0,0,846,847,
-		7,3,0,0,847,137,1,0,0,0,848,852,3,140,70,0,849,852,3,142,71,0,850,852,
-		3,144,72,0,851,848,1,0,0,0,851,849,1,0,0,0,851,850,1,0,0,0,852,139,1,0,
-		0,0,853,854,7,4,0,0,854,141,1,0,0,0,855,856,7,5,0,0,856,143,1,0,0,0,857,
-		858,7,6,0,0,858,145,1,0,0,0,859,867,5,47,0,0,860,867,3,148,74,0,861,867,
-		5,81,0,0,862,863,5,81,0,0,863,867,3,150,75,0,864,867,3,152,76,0,865,867,
-		3,154,77,0,866,859,1,0,0,0,866,860,1,0,0,0,866,861,1,0,0,0,866,862,1,0,
-		0,0,866,864,1,0,0,0,866,865,1,0,0,0,867,147,1,0,0,0,868,869,7,7,0,0,869,
-		870,3,150,75,0,870,149,1,0,0,0,871,872,5,71,0,0,872,877,3,146,73,0,873,
-		874,5,62,0,0,874,876,3,146,73,0,875,873,1,0,0,0,876,879,1,0,0,0,877,875,
-		1,0,0,0,877,878,1,0,0,0,878,880,1,0,0,0,879,877,1,0,0,0,880,881,5,72,0,
-		0,881,151,1,0,0,0,882,883,5,58,0,0,883,886,3,146,73,0,884,885,5,62,0,0,
-		885,887,3,146,73,0,886,884,1,0,0,0,887,888,1,0,0,0,888,886,1,0,0,0,888,
-		889,1,0,0,0,889,890,1,0,0,0,890,891,5,59,0,0,891,153,1,0,0,0,892,893,5,
-		58,0,0,893,898,3,146,73,0,894,895,5,62,0,0,895,897,3,146,73,0,896,894,
-		1,0,0,0,897,900,1,0,0,0,898,896,1,0,0,0,898,899,1,0,0,0,899,901,1,0,0,
-		0,900,898,1,0,0,0,901,902,5,53,0,0,902,903,3,146,73,0,903,904,5,59,0,0,
-		904,155,1,0,0,0,73,163,165,171,196,198,208,231,235,239,242,245,250,259,
-		273,282,290,320,329,341,352,369,375,381,383,395,404,406,418,423,425,438,
-		444,446,459,464,474,485,489,493,502,514,530,536,551,554,603,613,637,656,
-		658,686,699,703,710,717,724,730,736,746,759,766,771,776,786,797,812,822,
-		833,851,866,877,888,898
+		2,78,7,78,1,0,1,0,1,0,1,0,1,0,1,0,1,0,5,0,166,8,0,10,0,12,0,169,9,0,1,
+		0,5,0,172,8,0,10,0,12,0,175,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,1,3,5,3,200,8,3,10,3,
+		12,3,203,9,3,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,4,212,8,4,1,5,1,5,1,5,1,5,1,
+		6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,1,9,1,9,
+		1,9,1,9,1,10,3,10,239,8,10,1,10,1,10,3,10,243,8,10,1,10,1,10,3,10,247,
+		8,10,1,11,3,11,250,8,11,1,11,3,11,253,8,11,1,11,1,11,1,11,3,11,258,8,11,
+		1,11,1,11,1,12,1,12,1,12,5,12,265,8,12,10,12,12,12,268,9,12,1,13,1,13,
+		1,13,1,13,1,13,1,13,1,13,1,13,1,14,1,14,1,14,3,14,281,8,14,1,14,1,14,1,
+		15,1,15,1,15,5,15,288,8,15,10,15,12,15,291,9,15,1,16,1,16,1,16,1,17,1,
+		17,3,17,298,8,17,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,
+		1,19,1,19,1,19,1,19,1,19,1,19,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,
+		1,20,5,20,326,8,20,10,20,12,20,329,9,20,1,20,1,20,1,20,1,21,1,21,1,21,
+		3,21,337,8,21,1,21,1,21,1,21,1,21,1,22,1,22,1,22,1,22,1,22,1,22,3,22,349,
+		8,22,1,23,1,23,1,23,1,23,1,23,1,23,1,23,5,23,358,8,23,10,23,12,23,361,
+		9,23,1,23,1,23,1,23,1,23,1,24,1,24,1,25,1,25,1,25,1,25,1,26,1,26,1,26,
+		1,26,3,26,377,8,26,1,27,1,27,1,27,1,27,3,27,383,8,27,1,27,1,27,1,27,1,
+		27,5,27,389,8,27,10,27,12,27,392,9,27,1,27,1,27,1,27,1,27,1,28,1,28,1,
+		28,1,28,1,28,3,28,403,8,28,1,28,1,28,1,28,1,28,1,28,1,28,1,28,5,28,412,
+		8,28,10,28,12,28,415,9,28,1,28,1,28,1,28,1,28,1,29,1,29,1,29,1,29,1,29,
+		3,29,426,8,29,1,29,1,29,1,29,5,29,431,8,29,10,29,12,29,434,9,29,1,29,1,
+		29,1,29,1,29,1,30,1,30,1,30,1,30,1,30,1,30,3,30,446,8,30,1,30,1,30,1,30,
+		1,30,5,30,452,8,30,10,30,12,30,455,9,30,1,30,1,30,1,30,1,30,1,31,1,31,
+		1,31,1,31,5,31,465,8,31,10,31,12,31,468,9,31,1,32,1,32,3,32,472,8,32,1,
+		32,1,32,1,32,1,32,1,33,1,33,1,33,1,33,3,33,482,8,33,1,33,1,33,1,33,1,33,
+		1,33,1,33,1,34,1,34,1,34,3,34,493,8,34,1,34,1,34,3,34,497,8,34,1,34,1,
+		34,3,34,501,8,34,1,35,1,35,1,35,1,35,1,35,5,35,508,8,35,10,35,12,35,511,
+		9,35,1,35,1,35,1,36,1,36,1,36,1,36,1,36,1,36,1,36,3,36,522,8,36,1,37,1,
+		37,1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,37,1,37,5,37,536,8,37,10,
+		37,12,37,539,9,37,1,37,1,37,1,37,3,37,544,8,37,1,37,1,37,1,37,1,37,1,38,
+		1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,38,3,38,559,8,38,1,38,3,38,562,8,
+		38,1,38,1,38,1,38,1,38,1,38,1,39,1,39,1,39,1,39,1,39,1,39,1,39,1,39,1,
+		39,1,39,1,40,1,40,1,40,1,40,1,40,1,40,1,40,1,40,1,41,1,41,1,41,1,41,1,
+		41,1,41,1,41,1,42,1,42,1,42,1,42,1,42,1,42,1,42,1,42,1,42,1,42,1,42,1,
+		43,1,43,1,43,1,43,4,43,609,8,43,11,43,12,43,610,1,43,1,43,1,43,1,43,1,
+		43,1,44,1,44,1,44,3,44,621,8,44,1,44,1,44,1,44,1,45,1,45,1,45,1,45,1,46,
+		1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,
+		3,46,645,8,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,46,1,
+		46,1,46,1,46,1,46,1,46,1,46,5,46,664,8,46,10,46,12,46,667,9,46,1,47,1,
+		47,1,47,1,47,1,48,1,48,1,48,1,48,1,48,1,48,1,48,1,48,1,48,1,49,1,49,1,
+		49,1,49,1,49,1,50,1,50,1,50,1,50,1,50,1,50,1,50,3,50,694,8,50,1,50,1,50,
+		1,51,1,51,1,51,1,51,1,51,1,51,1,51,1,51,1,51,3,51,707,8,51,1,52,1,52,3,
+		52,711,8,52,1,52,1,52,1,52,1,52,1,52,3,52,718,8,52,1,53,1,53,1,53,1,54,
+		1,54,3,54,725,8,54,1,55,1,55,1,55,1,55,1,55,3,55,732,8,55,1,56,1,56,1,
+		56,1,56,3,56,738,8,56,1,57,1,57,1,57,1,57,3,57,744,8,57,1,58,1,58,1,58,
+		1,58,1,58,1,58,5,58,752,8,58,10,58,12,58,755,9,58,1,58,1,58,1,59,1,59,
+		1,59,1,59,1,59,1,59,5,59,765,8,59,10,59,12,59,768,9,59,1,59,1,59,1,60,
+		1,60,3,60,774,8,60,1,60,1,60,1,60,3,60,779,8,60,1,60,4,60,782,8,60,11,
+		60,12,60,783,1,60,1,60,1,61,1,61,1,61,1,61,5,61,792,8,61,10,61,12,61,795,
+		9,61,1,61,1,61,1,62,1,62,1,62,1,62,5,62,803,8,62,10,62,12,62,806,9,62,
+		1,62,1,62,1,63,1,63,1,63,1,63,1,63,1,63,1,64,1,64,1,64,1,64,3,64,820,8,
+		64,1,64,1,64,1,65,1,65,1,65,1,65,5,65,828,8,65,10,65,12,65,831,9,65,1,
+		65,1,65,1,66,1,66,1,66,1,66,5,66,839,8,66,10,66,12,66,842,9,66,1,66,1,
+		66,1,67,1,67,1,67,1,67,1,68,1,68,1,68,1,68,1,69,1,69,1,70,1,70,1,70,3,
+		70,859,8,70,1,71,1,71,1,72,1,72,1,73,1,73,1,74,1,74,1,74,1,74,1,74,1,74,
+		1,74,3,74,874,8,74,1,75,1,75,1,75,1,76,1,76,1,76,1,76,5,76,883,8,76,10,
+		76,12,76,886,9,76,1,76,1,76,1,77,1,77,1,77,1,77,4,77,894,8,77,11,77,12,
+		77,895,1,77,1,77,1,78,1,78,1,78,1,78,5,78,904,8,78,10,78,12,78,907,9,78,
+		1,78,1,78,1,78,1,78,1,78,0,1,92,79,0,2,4,6,8,10,12,14,16,18,20,22,24,26,
+		28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,
+		76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,
+		118,120,122,124,126,128,130,132,134,136,138,140,142,144,146,148,150,152,
+		154,156,0,8,2,0,83,83,87,87,2,0,11,11,27,27,2,0,19,19,34,34,2,0,66,66,
+		75,75,1,0,65,71,2,0,74,74,76,77,2,0,72,73,78,81,1,0,49,52,953,0,167,1,
+		0,0,0,2,178,1,0,0,0,4,185,1,0,0,0,6,201,1,0,0,0,8,204,1,0,0,0,10,213,1,
+		0,0,0,12,217,1,0,0,0,14,221,1,0,0,0,16,227,1,0,0,0,18,233,1,0,0,0,20,246,
+		1,0,0,0,22,249,1,0,0,0,24,261,1,0,0,0,26,269,1,0,0,0,28,277,1,0,0,0,30,
+		284,1,0,0,0,32,292,1,0,0,0,34,297,1,0,0,0,36,299,1,0,0,0,38,310,1,0,0,
+		0,40,316,1,0,0,0,42,333,1,0,0,0,44,342,1,0,0,0,46,350,1,0,0,0,48,366,1,
+		0,0,0,50,368,1,0,0,0,52,376,1,0,0,0,54,378,1,0,0,0,56,397,1,0,0,0,58,420,
+		1,0,0,0,60,439,1,0,0,0,62,460,1,0,0,0,64,469,1,0,0,0,66,477,1,0,0,0,68,
+		500,1,0,0,0,70,502,1,0,0,0,72,521,1,0,0,0,74,523,1,0,0,0,76,549,1,0,0,
+		0,78,568,1,0,0,0,80,578,1,0,0,0,82,586,1,0,0,0,84,593,1,0,0,0,86,604,1,
+		0,0,0,88,617,1,0,0,0,90,625,1,0,0,0,92,644,1,0,0,0,94,668,1,0,0,0,96,672,
+		1,0,0,0,98,681,1,0,0,0,100,686,1,0,0,0,102,706,1,0,0,0,104,717,1,0,0,0,
+		106,719,1,0,0,0,108,724,1,0,0,0,110,731,1,0,0,0,112,737,1,0,0,0,114,743,
+		1,0,0,0,116,745,1,0,0,0,118,758,1,0,0,0,120,771,1,0,0,0,122,787,1,0,0,
+		0,124,798,1,0,0,0,126,809,1,0,0,0,128,815,1,0,0,0,130,823,1,0,0,0,132,
+		834,1,0,0,0,134,845,1,0,0,0,136,849,1,0,0,0,138,853,1,0,0,0,140,858,1,
+		0,0,0,142,860,1,0,0,0,144,862,1,0,0,0,146,864,1,0,0,0,148,873,1,0,0,0,
+		150,875,1,0,0,0,152,878,1,0,0,0,154,889,1,0,0,0,156,899,1,0,0,0,158,166,
+		3,2,1,0,159,166,3,26,13,0,160,166,3,34,17,0,161,166,3,44,22,0,162,166,
+		3,46,23,0,163,166,3,52,26,0,164,166,3,4,2,0,165,158,1,0,0,0,165,159,1,
+		0,0,0,165,160,1,0,0,0,165,161,1,0,0,0,165,162,1,0,0,0,165,163,1,0,0,0,
+		165,164,1,0,0,0,166,169,1,0,0,0,167,165,1,0,0,0,167,168,1,0,0,0,168,173,
+		1,0,0,0,169,167,1,0,0,0,170,172,5,1,0,0,171,170,1,0,0,0,172,175,1,0,0,
+		0,173,171,1,0,0,0,173,174,1,0,0,0,174,176,1,0,0,0,175,173,1,0,0,0,176,
+		177,5,0,0,1,177,1,1,0,0,0,178,179,5,1,0,0,179,180,5,26,0,0,180,181,3,6,
+		3,0,181,182,5,1,0,0,182,183,5,14,0,0,183,184,5,26,0,0,184,3,1,0,0,0,185,
+		186,5,1,0,0,186,187,5,38,0,0,187,188,5,83,0,0,188,189,3,6,3,0,189,190,
+		5,1,0,0,190,191,5,14,0,0,191,192,5,38,0,0,192,5,1,0,0,0,193,200,3,14,7,
+		0,194,200,3,16,8,0,195,200,3,72,36,0,196,200,3,8,4,0,197,200,3,10,5,0,
+		198,200,3,12,6,0,199,193,1,0,0,0,199,194,1,0,0,0,199,195,1,0,0,0,199,196,
+		1,0,0,0,199,197,1,0,0,0,199,198,1,0,0,0,200,203,1,0,0,0,201,199,1,0,0,
+		0,201,202,1,0,0,0,202,7,1,0,0,0,203,201,1,0,0,0,204,205,5,1,0,0,205,211,
+		5,5,0,0,206,212,3,22,11,0,207,208,3,20,10,0,208,209,5,62,0,0,209,210,3,
+		22,11,0,210,212,1,0,0,0,211,206,1,0,0,0,211,207,1,0,0,0,212,9,1,0,0,0,
+		213,214,5,1,0,0,214,215,5,40,0,0,215,216,7,0,0,0,216,11,1,0,0,0,217,218,
+		5,1,0,0,218,219,5,28,0,0,219,220,3,92,46,0,220,13,1,0,0,0,221,222,5,1,
+		0,0,222,223,5,44,0,0,223,224,3,20,10,0,224,225,5,53,0,0,225,226,3,92,46,
+		0,226,15,1,0,0,0,227,228,5,1,0,0,228,229,5,35,0,0,229,230,3,20,10,0,230,
+		231,5,41,0,0,231,232,3,92,46,0,232,17,1,0,0,0,233,234,3,20,10,0,234,235,
+		5,53,0,0,235,236,3,92,46,0,236,19,1,0,0,0,237,239,3,106,53,0,238,237,1,
+		0,0,0,238,239,1,0,0,0,239,240,1,0,0,0,240,242,5,83,0,0,241,243,3,100,50,
+		0,242,241,1,0,0,0,242,243,1,0,0,0,243,247,1,0,0,0,244,247,3,120,60,0,245,
+		247,3,126,63,0,246,238,1,0,0,0,246,244,1,0,0,0,246,245,1,0,0,0,247,21,
+		1,0,0,0,248,250,3,106,53,0,249,248,1,0,0,0,249,250,1,0,0,0,250,252,1,0,
+		0,0,251,253,7,1,0,0,252,251,1,0,0,0,252,253,1,0,0,0,253,254,1,0,0,0,254,
+		255,5,83,0,0,255,257,5,59,0,0,256,258,3,24,12,0,257,256,1,0,0,0,257,258,
+		1,0,0,0,258,259,1,0,0,0,259,260,5,60,0,0,260,23,1,0,0,0,261,266,3,92,46,
+		0,262,263,5,63,0,0,263,265,3,92,46,0,264,262,1,0,0,0,265,268,1,0,0,0,266,
+		264,1,0,0,0,266,267,1,0,0,0,267,25,1,0,0,0,268,266,1,0,0,0,269,270,5,1,
+		0,0,270,271,5,30,0,0,271,272,3,28,14,0,272,273,3,6,3,0,273,274,5,1,0,0,
+		274,275,5,14,0,0,275,276,5,30,0,0,276,27,1,0,0,0,277,278,5,83,0,0,278,
+		280,5,59,0,0,279,281,3,30,15,0,280,279,1,0,0,0,280,281,1,0,0,0,281,282,
+		1,0,0,0,282,283,5,60,0,0,283,29,1,0,0,0,284,289,3,32,16,0,285,286,5,63,
+		0,0,286,288,3,32,16,0,287,285,1,0,0,0,288,291,1,0,0,0,289,287,1,0,0,0,
+		289,290,1,0,0,0,290,31,1,0,0,0,291,289,1,0,0,0,292,293,5,83,0,0,293,294,
+		3,148,74,0,294,33,1,0,0,0,295,298,3,36,18,0,296,298,3,38,19,0,297,295,
+		1,0,0,0,297,296,1,0,0,0,298,35,1,0,0,0,299,300,5,1,0,0,300,301,5,18,0,
+		0,301,302,3,42,21,0,302,303,3,6,3,0,303,304,5,1,0,0,304,305,5,33,0,0,305,
+		306,3,92,46,0,306,307,5,1,0,0,307,308,5,14,0,0,308,309,5,18,0,0,309,37,
+		1,0,0,0,310,311,5,1,0,0,311,312,5,18,0,0,312,313,3,42,21,0,313,314,5,53,
+		0,0,314,315,3,92,46,0,315,39,1,0,0,0,316,317,5,25,0,0,317,318,3,20,10,
+		0,318,319,5,53,0,0,319,327,3,92,46,0,320,321,5,63,0,0,321,322,3,20,10,
+		0,322,323,5,53,0,0,323,324,3,92,46,0,324,326,1,0,0,0,325,320,1,0,0,0,326,
+		329,1,0,0,0,327,325,1,0,0,0,327,328,1,0,0,0,328,330,1,0,0,0,329,327,1,
+		0,0,0,330,331,5,1,0,0,331,332,5,22,0,0,332,41,1,0,0,0,333,334,5,83,0,0,
+		334,336,5,59,0,0,335,337,3,30,15,0,336,335,1,0,0,0,336,337,1,0,0,0,337,
+		338,1,0,0,0,338,339,5,60,0,0,339,340,5,54,0,0,340,341,3,148,74,0,341,43,
+		1,0,0,0,342,343,5,1,0,0,343,344,5,9,0,0,344,345,5,83,0,0,345,348,5,53,
+		0,0,346,349,3,108,54,0,347,349,3,68,34,0,348,346,1,0,0,0,348,347,1,0,0,
+		0,349,45,1,0,0,0,350,351,5,1,0,0,351,352,5,15,0,0,352,353,3,48,24,0,353,
+		354,5,1,0,0,354,359,5,83,0,0,355,356,5,63,0,0,356,358,5,83,0,0,357,355,
+		1,0,0,0,358,361,1,0,0,0,359,357,1,0,0,0,359,360,1,0,0,0,360,362,1,0,0,
+		0,361,359,1,0,0,0,362,363,5,1,0,0,363,364,5,14,0,0,364,365,5,15,0,0,365,
+		47,1,0,0,0,366,367,5,82,0,0,367,49,1,0,0,0,368,369,3,48,24,0,369,370,5,
+		62,0,0,370,371,5,83,0,0,371,51,1,0,0,0,372,377,3,54,27,0,373,377,3,56,
+		28,0,374,377,3,58,29,0,375,377,3,60,30,0,376,372,1,0,0,0,376,373,1,0,0,
+		0,376,374,1,0,0,0,376,375,1,0,0,0,377,53,1,0,0,0,378,379,5,1,0,0,379,380,
+		5,8,0,0,380,382,5,82,0,0,381,383,3,62,31,0,382,381,1,0,0,0,382,383,1,0,
+		0,0,383,384,1,0,0,0,384,390,3,66,33,0,385,389,3,64,32,0,386,389,3,34,17,
+		0,387,389,3,26,13,0,388,385,1,0,0,0,388,386,1,0,0,0,388,387,1,0,0,0,389,
+		392,1,0,0,0,390,388,1,0,0,0,390,391,1,0,0,0,391,393,1,0,0,0,392,390,1,
+		0,0,0,393,394,5,1,0,0,394,395,5,14,0,0,395,396,5,8,0,0,396,55,1,0,0,0,
+		397,398,5,1,0,0,398,399,5,4,0,0,399,400,5,8,0,0,400,402,5,82,0,0,401,403,
+		3,62,31,0,402,401,1,0,0,0,402,403,1,0,0,0,403,413,1,0,0,0,404,412,3,64,
+		32,0,405,406,5,1,0,0,406,407,5,18,0,0,407,412,3,42,21,0,408,409,5,1,0,
+		0,409,410,5,30,0,0,410,412,3,28,14,0,411,404,1,0,0,0,411,405,1,0,0,0,411,
+		408,1,0,0,0,412,415,1,0,0,0,413,411,1,0,0,0,413,414,1,0,0,0,414,416,1,
+		0,0,0,415,413,1,0,0,0,416,417,5,1,0,0,417,418,5,14,0,0,418,419,5,8,0,0,
+		419,57,1,0,0,0,420,421,5,1,0,0,421,422,5,21,0,0,422,423,5,8,0,0,423,425,
+		5,82,0,0,424,426,3,62,31,0,425,424,1,0,0,0,425,426,1,0,0,0,426,427,1,0,
+		0,0,427,432,3,66,33,0,428,431,3,64,32,0,429,431,3,34,17,0,430,428,1,0,
+		0,0,430,429,1,0,0,0,431,434,1,0,0,0,432,430,1,0,0,0,432,433,1,0,0,0,433,
+		435,1,0,0,0,434,432,1,0,0,0,435,436,5,1,0,0,436,437,5,14,0,0,437,438,5,
+		8,0,0,438,59,1,0,0,0,439,440,5,1,0,0,440,441,5,4,0,0,441,442,5,21,0,0,
+		442,443,5,8,0,0,443,445,5,82,0,0,444,446,3,62,31,0,445,444,1,0,0,0,445,
+		446,1,0,0,0,446,453,1,0,0,0,447,452,3,64,32,0,448,449,5,1,0,0,449,450,
+		5,18,0,0,450,452,3,42,21,0,451,447,1,0,0,0,451,448,1,0,0,0,452,455,1,0,
+		0,0,453,451,1,0,0,0,453,454,1,0,0,0,454,456,1,0,0,0,455,453,1,0,0,0,456,
+		457,5,1,0,0,457,458,5,14,0,0,458,459,5,8,0,0,459,61,1,0,0,0,460,461,5,
+		23,0,0,461,466,3,148,74,0,462,463,5,63,0,0,463,465,3,148,74,0,464,462,
+		1,0,0,0,465,468,1,0,0,0,466,464,1,0,0,0,466,467,1,0,0,0,467,63,1,0,0,0,
+		468,466,1,0,0,0,469,471,5,1,0,0,470,472,5,29,0,0,471,470,1,0,0,0,471,472,
+		1,0,0,0,472,473,1,0,0,0,473,474,5,31,0,0,474,475,5,83,0,0,475,476,3,148,
+		74,0,476,65,1,0,0,0,477,478,5,1,0,0,478,479,5,10,0,0,479,481,5,59,0,0,
+		480,482,3,30,15,0,481,480,1,0,0,0,481,482,1,0,0,0,482,483,1,0,0,0,483,
+		484,5,60,0,0,484,485,3,6,3,0,485,486,5,1,0,0,486,487,5,14,0,0,487,488,
+		5,10,0,0,488,67,1,0,0,0,489,490,3,148,74,0,490,492,5,59,0,0,491,493,3,
+		24,12,0,492,491,1,0,0,0,492,493,1,0,0,0,493,494,1,0,0,0,494,496,5,60,0,
+		0,495,497,3,70,35,0,496,495,1,0,0,0,496,497,1,0,0,0,497,501,1,0,0,0,498,
+		499,5,83,0,0,499,501,3,70,35,0,500,489,1,0,0,0,500,498,1,0,0,0,501,69,
+		1,0,0,0,502,503,5,46,0,0,503,504,5,55,0,0,504,509,3,18,9,0,505,506,5,63,
+		0,0,506,508,3,18,9,0,507,505,1,0,0,0,508,511,1,0,0,0,509,507,1,0,0,0,509,
+		510,1,0,0,0,510,512,1,0,0,0,511,509,1,0,0,0,512,513,5,56,0,0,513,71,1,
+		0,0,0,514,522,3,74,37,0,515,522,3,76,38,0,516,522,3,78,39,0,517,522,3,
+		80,40,0,518,522,3,82,41,0,519,522,3,84,42,0,520,522,3,86,43,0,521,514,
+		1,0,0,0,521,515,1,0,0,0,521,516,1,0,0,0,521,517,1,0,0,0,521,518,1,0,0,
+		0,521,519,1,0,0,0,521,520,1,0,0,0,522,73,1,0,0,0,523,524,5,1,0,0,524,525,
+		5,20,0,0,525,526,3,92,46,0,526,527,5,39,0,0,527,537,3,6,3,0,528,529,5,
+		1,0,0,529,530,5,13,0,0,530,531,5,20,0,0,531,532,3,92,46,0,532,533,5,39,
+		0,0,533,534,3,6,3,0,534,536,1,0,0,0,535,528,1,0,0,0,536,539,1,0,0,0,537,
+		535,1,0,0,0,537,538,1,0,0,0,538,543,1,0,0,0,539,537,1,0,0,0,540,541,5,
+		1,0,0,541,542,5,13,0,0,542,544,3,6,3,0,543,540,1,0,0,0,543,544,1,0,0,0,
+		544,545,1,0,0,0,545,546,5,1,0,0,546,547,5,14,0,0,547,548,5,20,0,0,548,
+		75,1,0,0,0,549,550,5,1,0,0,550,551,5,16,0,0,551,552,5,83,0,0,552,553,5,
+		53,0,0,553,554,3,92,46,0,554,555,5,41,0,0,555,561,3,92,46,0,556,558,5,
+		36,0,0,557,559,5,66,0,0,558,557,1,0,0,0,558,559,1,0,0,0,559,560,1,0,0,
+		0,560,562,5,84,0,0,561,556,1,0,0,0,561,562,1,0,0,0,562,563,1,0,0,0,563,
+		564,3,6,3,0,564,565,5,1,0,0,565,566,5,14,0,0,566,567,5,16,0,0,567,77,1,
+		0,0,0,568,569,5,1,0,0,569,570,5,17,0,0,570,571,5,83,0,0,571,572,5,22,0,
+		0,572,573,3,92,46,0,573,574,3,6,3,0,574,575,5,1,0,0,575,576,5,14,0,0,576,
+		577,5,17,0,0,577,79,1,0,0,0,578,579,5,1,0,0,579,580,5,45,0,0,580,581,3,
+		92,46,0,581,582,3,6,3,0,582,583,5,1,0,0,583,584,5,14,0,0,584,585,5,45,
+		0,0,585,81,1,0,0,0,586,587,5,1,0,0,587,588,5,32,0,0,588,589,3,6,3,0,589,
+		590,5,1,0,0,590,591,5,43,0,0,591,592,3,92,46,0,592,83,1,0,0,0,593,594,
+		5,1,0,0,594,595,5,42,0,0,595,596,3,6,3,0,596,597,5,1,0,0,597,598,5,7,0,
+		0,598,599,5,83,0,0,599,600,3,6,3,0,600,601,5,1,0,0,601,602,5,14,0,0,602,
+		603,5,42,0,0,603,85,1,0,0,0,604,605,5,1,0,0,605,606,5,37,0,0,606,608,3,
+		92,46,0,607,609,3,88,44,0,608,607,1,0,0,0,609,610,1,0,0,0,610,608,1,0,
+		0,0,610,611,1,0,0,0,611,612,1,0,0,0,612,613,3,90,45,0,613,614,5,1,0,0,
+		614,615,5,14,0,0,615,616,5,37,0,0,616,87,1,0,0,0,617,618,5,1,0,0,618,620,
+		5,6,0,0,619,621,5,66,0,0,620,619,1,0,0,0,620,621,1,0,0,0,621,622,1,0,0,
+		0,622,623,3,110,55,0,623,624,3,6,3,0,624,89,1,0,0,0,625,626,5,1,0,0,626,
+		627,5,12,0,0,627,628,3,6,3,0,628,91,1,0,0,0,629,630,6,46,-1,0,630,645,
+		3,94,47,0,631,645,3,22,11,0,632,645,3,104,52,0,633,634,3,138,69,0,634,
+		635,3,92,46,9,635,645,1,0,0,0,636,645,3,68,34,0,637,645,3,96,48,0,638,
+		645,3,98,49,0,639,640,3,40,20,0,640,641,3,92,46,3,641,645,1,0,0,0,642,
+		643,5,1,0,0,643,645,3,92,46,1,644,629,1,0,0,0,644,631,1,0,0,0,644,632,
+		1,0,0,0,644,633,1,0,0,0,644,636,1,0,0,0,644,637,1,0,0,0,644,638,1,0,0,
+		0,644,639,1,0,0,0,644,642,1,0,0,0,645,665,1,0,0,0,646,647,10,8,0,0,647,
+		648,5,69,0,0,648,664,3,92,46,9,649,650,10,7,0,0,650,651,3,140,70,0,651,
+		652,3,92,46,8,652,664,1,0,0,0,653,654,10,12,0,0,654,664,3,100,50,0,655,
+		656,10,11,0,0,656,657,5,62,0,0,657,664,3,22,11,0,658,659,10,10,0,0,659,
+		660,5,62,0,0,660,664,5,83,0,0,661,662,10,2,0,0,662,664,3,70,35,0,663,646,
+		1,0,0,0,663,649,1,0,0,0,663,653,1,0,0,0,663,655,1,0,0,0,663,658,1,0,0,
+		0,663,661,1,0,0,0,664,667,1,0,0,0,665,663,1,0,0,0,665,666,1,0,0,0,666,
+		93,1,0,0,0,667,665,1,0,0,0,668,669,5,59,0,0,669,670,3,92,46,0,670,671,
+		5,60,0,0,671,95,1,0,0,0,672,673,5,20,0,0,673,674,3,92,46,0,674,675,5,1,
+		0,0,675,676,5,39,0,0,676,677,3,92,46,0,677,678,5,1,0,0,678,679,5,13,0,
+		0,679,680,3,92,46,0,680,97,1,0,0,0,681,682,5,24,0,0,682,683,3,24,12,0,
+		683,684,5,54,0,0,684,685,3,92,46,0,685,99,1,0,0,0,686,693,5,57,0,0,687,
+		694,3,92,46,0,688,689,3,92,46,0,689,690,5,63,0,0,690,691,3,92,46,0,691,
+		694,1,0,0,0,692,694,3,102,51,0,693,687,1,0,0,0,693,688,1,0,0,0,693,692,
+		1,0,0,0,694,695,1,0,0,0,695,696,5,58,0,0,696,101,1,0,0,0,697,698,3,92,
+		46,0,698,699,5,61,0,0,699,700,3,92,46,0,700,707,1,0,0,0,701,702,3,92,46,
+		0,702,703,5,61,0,0,703,707,1,0,0,0,704,705,5,61,0,0,705,707,3,92,46,0,
+		706,697,1,0,0,0,706,701,1,0,0,0,706,704,1,0,0,0,707,103,1,0,0,0,708,718,
+		3,108,54,0,709,711,3,106,53,0,710,709,1,0,0,0,710,711,1,0,0,0,711,712,
+		1,0,0,0,712,718,5,83,0,0,713,718,3,112,56,0,714,718,5,34,0,0,715,716,5,
+		12,0,0,716,718,3,148,74,0,717,708,1,0,0,0,717,710,1,0,0,0,717,713,1,0,
+		0,0,717,714,1,0,0,0,717,715,1,0,0,0,718,105,1,0,0,0,719,720,7,2,0,0,720,
+		721,5,62,0,0,721,107,1,0,0,0,722,725,3,110,55,0,723,725,3,114,57,0,724,
+		722,1,0,0,0,724,723,1,0,0,0,725,109,1,0,0,0,726,732,5,47,0,0,727,732,5,
+		84,0,0,728,732,5,85,0,0,729,732,5,86,0,0,730,732,3,50,25,0,731,726,1,0,
+		0,0,731,727,1,0,0,0,731,728,1,0,0,0,731,729,1,0,0,0,731,730,1,0,0,0,732,
+		111,1,0,0,0,733,738,3,122,61,0,734,738,3,128,64,0,735,738,3,116,58,0,736,
+		738,3,130,65,0,737,733,1,0,0,0,737,734,1,0,0,0,737,735,1,0,0,0,737,736,
+		1,0,0,0,738,113,1,0,0,0,739,744,5,87,0,0,740,744,3,118,59,0,741,744,3,
+		124,62,0,742,744,3,132,66,0,743,739,1,0,0,0,743,740,1,0,0,0,743,741,1,
+		0,0,0,743,742,1,0,0,0,744,115,1,0,0,0,745,746,5,59,0,0,746,747,3,92,46,
+		0,747,748,5,63,0,0,748,753,3,92,46,0,749,750,5,63,0,0,750,752,3,92,46,
+		0,751,749,1,0,0,0,752,755,1,0,0,0,753,751,1,0,0,0,753,754,1,0,0,0,754,
+		756,1,0,0,0,755,753,1,0,0,0,756,757,5,60,0,0,757,117,1,0,0,0,758,759,5,
+		59,0,0,759,760,3,108,54,0,760,761,5,63,0,0,761,766,3,108,54,0,762,763,
+		5,63,0,0,763,765,3,108,54,0,764,762,1,0,0,0,765,768,1,0,0,0,766,764,1,
+		0,0,0,766,767,1,0,0,0,767,769,1,0,0,0,768,766,1,0,0,0,769,770,5,60,0,0,
+		770,119,1,0,0,0,771,773,5,59,0,0,772,774,5,44,0,0,773,772,1,0,0,0,773,
+		774,1,0,0,0,774,775,1,0,0,0,775,781,5,83,0,0,776,778,5,63,0,0,777,779,
+		5,44,0,0,778,777,1,0,0,0,778,779,1,0,0,0,779,780,1,0,0,0,780,782,5,83,
+		0,0,781,776,1,0,0,0,782,783,1,0,0,0,783,781,1,0,0,0,783,784,1,0,0,0,784,
+		785,1,0,0,0,785,786,5,60,0,0,786,121,1,0,0,0,787,788,5,55,0,0,788,793,
+		3,92,46,0,789,790,5,63,0,0,790,792,3,92,46,0,791,789,1,0,0,0,792,795,1,
+		0,0,0,793,791,1,0,0,0,793,794,1,0,0,0,794,796,1,0,0,0,795,793,1,0,0,0,
+		796,797,5,56,0,0,797,123,1,0,0,0,798,799,5,55,0,0,799,804,3,108,54,0,800,
+		801,5,63,0,0,801,803,3,108,54,0,802,800,1,0,0,0,803,806,1,0,0,0,804,802,
+		1,0,0,0,804,805,1,0,0,0,805,807,1,0,0,0,806,804,1,0,0,0,807,808,5,56,0,
+		0,808,125,1,0,0,0,809,810,5,55,0,0,810,811,5,83,0,0,811,812,5,64,0,0,812,
+		813,5,83,0,0,813,814,5,56,0,0,814,127,1,0,0,0,815,816,5,49,0,0,816,817,
+		3,152,76,0,817,819,5,59,0,0,818,820,5,84,0,0,819,818,1,0,0,0,819,820,1,
+		0,0,0,820,821,1,0,0,0,821,822,5,60,0,0,822,129,1,0,0,0,823,824,5,55,0,
+		0,824,829,3,134,67,0,825,826,5,63,0,0,826,828,3,134,67,0,827,825,1,0,0,
+		0,828,831,1,0,0,0,829,827,1,0,0,0,829,830,1,0,0,0,830,832,1,0,0,0,831,
+		829,1,0,0,0,832,833,5,56,0,0,833,131,1,0,0,0,834,835,5,55,0,0,835,840,
+		3,136,68,0,836,837,5,63,0,0,837,839,3,136,68,0,838,836,1,0,0,0,839,842,
+		1,0,0,0,840,838,1,0,0,0,840,841,1,0,0,0,841,843,1,0,0,0,842,840,1,0,0,
+		0,843,844,5,56,0,0,844,133,1,0,0,0,845,846,3,92,46,0,846,847,5,64,0,0,
+		847,848,3,92,46,0,848,135,1,0,0,0,849,850,3,108,54,0,850,851,5,64,0,0,
+		851,852,3,108,54,0,852,137,1,0,0,0,853,854,7,3,0,0,854,139,1,0,0,0,855,
+		859,3,142,71,0,856,859,3,144,72,0,857,859,3,146,73,0,858,855,1,0,0,0,858,
+		856,1,0,0,0,858,857,1,0,0,0,859,141,1,0,0,0,860,861,7,4,0,0,861,143,1,
+		0,0,0,862,863,7,5,0,0,863,145,1,0,0,0,864,865,7,6,0,0,865,147,1,0,0,0,
+		866,874,5,48,0,0,867,874,3,150,75,0,868,874,5,82,0,0,869,870,5,82,0,0,
+		870,874,3,152,76,0,871,874,3,154,77,0,872,874,3,156,78,0,873,866,1,0,0,
+		0,873,867,1,0,0,0,873,868,1,0,0,0,873,869,1,0,0,0,873,871,1,0,0,0,873,
+		872,1,0,0,0,874,149,1,0,0,0,875,876,7,7,0,0,876,877,3,152,76,0,877,151,
+		1,0,0,0,878,879,5,72,0,0,879,884,3,148,74,0,880,881,5,63,0,0,881,883,3,
+		148,74,0,882,880,1,0,0,0,883,886,1,0,0,0,884,882,1,0,0,0,884,885,1,0,0,
+		0,885,887,1,0,0,0,886,884,1,0,0,0,887,888,5,73,0,0,888,153,1,0,0,0,889,
+		890,5,59,0,0,890,893,3,148,74,0,891,892,5,63,0,0,892,894,3,148,74,0,893,
+		891,1,0,0,0,894,895,1,0,0,0,895,893,1,0,0,0,895,896,1,0,0,0,896,897,1,
+		0,0,0,897,898,5,60,0,0,898,155,1,0,0,0,899,900,5,59,0,0,900,905,3,148,
+		74,0,901,902,5,63,0,0,902,904,3,148,74,0,903,901,1,0,0,0,904,907,1,0,0,
+		0,905,903,1,0,0,0,905,906,1,0,0,0,906,908,1,0,0,0,907,905,1,0,0,0,908,
+		909,5,54,0,0,909,910,3,148,74,0,910,911,5,60,0,0,911,157,1,0,0,0,73,165,
+		167,173,199,201,211,238,242,246,249,252,257,266,280,289,297,327,336,348,
+		359,376,382,388,390,402,411,413,425,430,432,445,451,453,466,471,481,492,
+		496,500,509,521,537,543,558,561,610,620,644,663,665,693,706,710,717,724,
+		731,737,743,753,766,773,778,783,793,804,819,829,840,858,873,884,895,905
 	};
 
 	public static readonly ATN _ATN =
