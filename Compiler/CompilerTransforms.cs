@@ -88,7 +88,7 @@ public static class CompilerTransforms {
             FloatSymbolType => new ValueTypeNode(ValueType.Float),
             CharSymbolType => new ValueTypeNode(ValueType.Char),
             StringSymbolType => new ValueTypeNode(ValueType.String),
-            BooleanSymbolType => new ValueTypeNode(ValueType.Bool),
+            BoolSymbolType => new ValueTypeNode(ValueType.Bool),
             _ => throw new NotImplementedException()
         };
     }

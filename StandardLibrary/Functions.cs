@@ -127,17 +127,12 @@ public static class Functions {
     #region Type conversion
 
     public static double asFloat(int x) => x;
-    public static double asFloat(decimal x) => (double)x;
-    public static decimal asDecimal(int x) => x;
-    public static decimal asDecimal(float x) => (decimal)x;
     public static int asInt(double x) => (int)x;
-    public static int asInt(decimal x) => (int)x;
     public static char asChar(int unicode) => (char)unicode;
     public static int unicodeDecimalValue(char c) => c;
     public static string unicodeHexValue(char c) => ((int)c).ToString("X4)");
     public static int asInt(string s) => int.Parse(s);
     public static double asFloat(string s) => double.Parse(s);
-    public static decimal asDecimal(string s) => decimal.Parse(s);
 
     #endregion
 

@@ -7,9 +7,6 @@ namespace SymbolTable;
 
 public class SymbolTableVisitor {
 
-  
-
-
     public readonly IList<string> SymbolErrors = new List<string>();
 
     private IScope currentScope;
@@ -100,21 +97,6 @@ public class SymbolTableVisitor {
         return abstractClassDefNode;
     }
 
-    private static ISymbolType ConvertToBuiltInSymbol(string type) =>
-        type switch {
-            "Int" => IntSymbolType.Instance,
-            "String" => StringSymbolType.Instance,
-            "Float" => FloatSymbolType.Instance,
-            "Decimal" => DecimalSymbolType.Instance,
-            "Bool" => BooleanSymbolType.Instance,
-            "Char" => CharSymbolType.Instance,
-            "Tuple" => new TupleSymbolType(),
-            "Array" => new ArraySymbolType(),
-            "List" => new ListSymbolType(),
-            "Dictionary" => new DictionarySymbolType(),
-            _ when type.StartsWith("Pending:") => new PendingResolveSymbol(type.Split(":").Last()),
-            _ => new ClassSymbolType(type),
-        };
 
     private static bool OperatorEvaluatesToBoolean(Operator op) =>
         op switch {
@@ -138,31 +120,46 @@ public class SymbolTableVisitor {
             _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
         };
 
+    private static ISymbolType MapElanValueTypeToSymbolType(string type) =>
+        type switch {
+            IntSymbolType.Name => IntSymbolType.Instance,
+            StringSymbolType.Name => StringSymbolType.Instance,
+            FloatSymbolType.Name => FloatSymbolType.Instance,
+            BoolSymbolType.Name => BoolSymbolType.Instance,
+            CharSymbolType.Name => CharSymbolType.Instance,
+            _ => throw new NotImplementedException()
+        };
 
-
-    private static string GetTypeName(IAstNode node) {
+    private static ISymbolType MapNodeToSymbolType(IAstNode node) {
         return node switch {
-            IdentifierNode idn => $"Pending:{idn.Id}",
-            TypeNode tn => GetTypeName(tn.TypeName),
-            NewInstanceNode nin => GetTypeName(nin.Type),
-            ValueNode vn => GetTypeName(vn.TypeNode),
-            ValueTypeNode vtn => vtn.Type.ToString(),
-            LiteralTupleNode => "Tuple",
-            LiteralListNode => "List",
-            LiteralDictionaryNode => "Dictionary",
-            DataStructureTypeNode {Type:DataStructure.Array} => "Array",
-            DataStructureTypeNode {Type:DataStructure.List} => "List",
-            DataStructureTypeNode {Type:DataStructure.Dictionary} => "Dictionary",
-            MethodCallNode mcn => $"Pending:{mcn.Name}",
-            BinaryNode { Operator: OperatorNode op } when OperatorEvaluatesToBoolean(op.Value)  => "Bool",
-            BinaryNode bn => GetTypeName(bn.Operand1),
-            _ => ""
+            IdentifierNode idn =>  new PendingResolveSymbol(idn.Id),
+            TypeNode tn => MapNodeToSymbolType(tn.TypeName),
+            NewInstanceNode nin => MapNodeToSymbolType(nin.Type),
+            ValueNode vn => MapNodeToSymbolType(vn.TypeNode),
+            ValueTypeNode vtn => MapElanValueTypeToSymbolType(vtn.Type.ToString()),
+            LiteralTupleNode => new TupleSymbolType(),
+            LiteralListNode => new ListSymbolType(),
+            LiteralDictionaryNode => new DictionarySymbolType(),
+            DataStructureTypeNode {Type:DataStructure.Array} => new ArraySymbolType(),
+            DataStructureTypeNode {Type:DataStructure.List} => new ListSymbolType(),
+            DataStructureTypeNode {Type:DataStructure.Dictionary} => new DictionarySymbolType(),
+            MethodCallNode mcn => new PendingResolveSymbol(mcn.Name),
+            BinaryNode { Operator: OperatorNode op } when OperatorEvaluatesToBoolean(op.Value)  => BoolSymbolType.Instance,
+            BinaryNode bn => MapNodeToSymbolType(bn.Operand1),
+            IndexedExpressionNode ien =>  MapNodeToSymbolType(ien.Expression),
+            BracketNode bn => MapNodeToSymbolType(bn.BracketedNode),
+            UnaryNode un => MapNodeToSymbolType(un.Operand),
+            EnumValueNode en => MapNodeToSymbolType(en.TypeNode),
+            DefaultNode dn => MapNodeToSymbolType(dn.Type),
+            WithNode wn => MapNodeToSymbolType(wn.Expression),
+            PropertyNode pn => MapNodeToSymbolType(pn.Expression),
+            _ => throw new NotImplementedException()
         };
     }
 
     private IAstNode VisitVarDefNode(VarDefNode varDefNode) {
         var name = varDefNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(varDefNode.Id.GetType().ToString());
-        var type = ConvertToBuiltInSymbol(GetTypeName(varDefNode.Expression));
+        var type = MapNodeToSymbolType(varDefNode.Expression);
 
         var ms = new VariableSymbol(name, type, currentScope);
         currentScope.Define(ms);
@@ -170,9 +167,10 @@ public class SymbolTableVisitor {
         return varDefNode;
     }
 
+
     private IAstNode VisitParameterNode(ParameterNode parameterNode) {
         var name = parameterNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(parameterNode.Id.GetType().ToString());
-        var type = ConvertToBuiltInSymbol(GetTypeName(parameterNode.TypeNode));
+        var type = MapNodeToSymbolType(parameterNode.TypeNode);
 
         var ms = new VariableSymbol(name, type, currentScope);
         currentScope.Define(ms);
@@ -182,7 +180,7 @@ public class SymbolTableVisitor {
 
     private IAstNode VisitPropertyDefNode(PropertyDefNode propertyNode) {
         var name = propertyNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(propertyNode.Id.GetType().ToString());
-        var type = ConvertToBuiltInSymbol(GetTypeName(propertyNode.Type));
+        var type = MapNodeToSymbolType(propertyNode.Type);
 
         var ms = new VariableSymbol(name, type, currentScope);
         currentScope.Define(ms);

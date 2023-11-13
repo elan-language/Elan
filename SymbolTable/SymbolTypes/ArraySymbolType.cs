@@ -1,3 +1,8 @@
-﻿namespace SymbolTable.SymbolTypes;
+﻿using Antlr4.Runtime.Tree.Pattern;
 
-public class ArraySymbolType : ISymbolType { }
+namespace SymbolTable.SymbolTypes;
+
+public class ArraySymbolType : ISymbolType {
+
+    public const string Name = "Array";
+}
