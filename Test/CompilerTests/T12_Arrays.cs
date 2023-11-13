@@ -89,8 +89,8 @@ public static class Program {
         var code = @"
 main
     var a = Array<String>(3)
-    a[0] = ""foo""
-    a[2] = ""yon""
+    set a[0] to ""foo""
+    set a[2] to ""yon""
     printLine(a[0])
     printLine(a[2])
 end main
@@ -169,8 +169,8 @@ public static class Program {
         var code = @"
 main
     var a = Array<String>(3,4)
-    a[0,0] = ""foo""
-    a[2,3] = ""yon""
+    set a[0,0] to ""foo""
+    set a[2,3] to ""yon""
     printLine(a[0,0])
     printLine(a[2,3])
 end main
@@ -262,7 +262,7 @@ end main
         var code = @"
 main
     var a = Array<String>(3)
-    a[0,0] = ""foo""
+    set a[0,0] to ""foo""
 end main
 ";
         var parseTree = @"*";
@@ -317,7 +317,7 @@ public static class Program {
         var code = @"
 main
     var a = Array<String>(3)
-    a[0] = true
+    set a[0] to true
 end main
 ";
 

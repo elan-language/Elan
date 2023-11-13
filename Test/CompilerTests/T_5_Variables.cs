@@ -87,7 +87,7 @@ public static class Program {
         var code = @"#
 main
   var a = 3
-  a = 4
+  set a to 4
   printLine(a)
 end main
 ";
@@ -126,7 +126,7 @@ public static class Program {
         var code = @"#
 main
   var a = 3.1
-  a = 4
+  set a to 4
   printLine(a)
 end main
 ";
@@ -243,7 +243,7 @@ end main
         var code = @"#
 main
   var a = 4
-  a = 4.1
+  set a to 4.1
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -257,7 +257,7 @@ end main
         var code = @"#
 main
   var a
-  a = 4.1
+  set a to 4.1
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

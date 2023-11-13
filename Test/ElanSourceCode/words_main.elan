@@ -10,8 +10,8 @@ main
     var randomStart = false
     while choice is not "9"
         print(mainMenu)
-        choice = input("Enter your choice:")
-        randomStart = choice is "1"
+        set choice to input("Enter your choice:")
+        set randomStart to choice is "1"
     end while
     if randomStart then
         game.initialiseForRandomStart()

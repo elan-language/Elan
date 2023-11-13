@@ -39,14 +39,14 @@ end class
 
 class Bar inherits Foo
     constructor()
-        p1 = 3
-        p2 = 4
+        set p1 to 3
+        set p2 to 4
     end constructor
     property p1 Int
     property p2 Int
 
     procedure setP1(p1 Int)
-        self.p1 = p1
+        set self.p1 to p1
     end procedure
 
     function product() -> Int
@@ -151,14 +151,14 @@ end class
 
 class Bar inherits Foo, Yon
     constructor()
-        p1 = 3
-        p2 = 4
+        set p1 to 3
+        set p2 to 4
     end constructor
     property p1 Int
     property p2 Int
 
     procedure setP1(p1 Int)
-        self.p1 = p1
+        set self.p1 to p1
     end procedure
 
     function product() -> Int
@@ -268,14 +268,14 @@ end class
 
 class Bar inherits Foo, Yon
     constructor()
-        p1 = 3
-        p2 = 4
+        set p1 to 3
+        set p2 to 4
     end constructor
     property p1 Int
     property p2 Int
 
     procedure setP1(p1 Int)
-        self.p1 = p1
+        set self.p1 to p1
     end procedure
 
     function product() -> Int
@@ -383,14 +383,14 @@ end class
 
 class Bar inherits Foo
     constructor()
-        p1 = 3
-        p2 = 4
+        set p1 to 3
+        set p2 to 4
     end constructor
     property p1 Int
     property p2 Int
 
     procedure setP1(p1 Int)
-        self.p1 = p1
+        set self.p1 to p1
     end procedure
 
     function product() -> Int
@@ -462,14 +462,14 @@ end class
 
 class Bar inherits Foo
     constructor()
-        p1 = 3
-        p2 = 4
+        set p1 to 3
+        set p2 to 4
     end constructor
     property p1 Int
     property p2 Int
 
     procedure setP1(p1 Int)
-        self.p1 = p1
+        set self.p1 to p1
     end procedure
 
     function asString() -> String 
@@ -506,14 +506,14 @@ end class
 
 class Bar inherits Foo
     constructor()
-        p1 = 3
-        p2 = 4
+        set p1 to 3
+        set p2 to 4
     end constructor
     property p1 Int
     property p2 Int
 
     procedure setP1(p1 Int)
-        self.p1 = p1
+        set self.p1 to p1
     end procedure
 
     function product() -> Float
@@ -548,7 +548,7 @@ abstract class Foo
     property p2 Int
 
     procedure setP1(v Int)
-        self.p1 = p1
+        set self.p1 to p1
     end procedure
 
     function product() -> Int

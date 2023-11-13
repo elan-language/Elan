@@ -18,7 +18,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
 
     property p1 Int
@@ -93,7 +93,7 @@ end main
 
 class Foo
     constructor()
-        p1 = Bar()
+        set p1 to Bar()
     end constructor
 
     property p1 Bar
@@ -110,7 +110,7 @@ end class
 
 class Bar
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
 
     property p1 Int
@@ -208,7 +208,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
 
     property p1 Int
@@ -229,7 +229,7 @@ end class
 
 class Bar
     constructor()
-        p1 = 1
+        set p1 to 1
     end constructor
 
     property p1 Int
@@ -331,7 +331,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
 
     property p1 Int
@@ -402,7 +402,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
 
     property p1 Int
@@ -430,13 +430,13 @@ end class
         var code = @"#
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
 
     property p1 Int
 
     function times(value Int) -> Int
-        p1 = p1 * value
+        set p1 to p1 * value
         return p1
     end function
 
@@ -459,7 +459,7 @@ end class
         var code = @"#
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
 
     property p1 Int
@@ -470,7 +470,7 @@ class Foo
     end function
 
     procedure setP1(value Int) 
-        p1 = value
+        set p1 to value
     end procedure
 
     function asString() -> String

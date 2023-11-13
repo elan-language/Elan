@@ -15,7 +15,7 @@ main
      seedRandom(3)
      var x = random()
      printLine(x)
-     x = random()
+     set x to random()
      printLine(x)
 end main
 ";
@@ -57,7 +57,7 @@ main
      seedRandom(3)
      var x = random(1000.0)
      printLine(x)
-     x = random(1000.0)
+     set x to random(1000.0)
      printLine(x)
 end main
 ";
@@ -99,7 +99,7 @@ main
      seedRandom(3)
      var x = random(100.0, 200.0)
      printLine(x)
-     x = random(100.0, 200.0)
+     set x to random(100.0, 200.0)
      printLine(x)
 end main
 ";
@@ -141,7 +141,7 @@ main
      seedRandom(3)
      var x = random(6)
      printLine(x)
-     x = random(6)
+     set x to random(6)
      printLine(x)
 end main
 ";
@@ -183,7 +183,7 @@ main
      seedRandom(3)
      var x = random(5,10)
      printLine(x)
-     x = random(5,10)
+     set x to random(5,10)
      printLine(x)
 end main
 ";

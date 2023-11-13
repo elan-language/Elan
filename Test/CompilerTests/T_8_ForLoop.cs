@@ -12,7 +12,7 @@ public class T_8_ForLoop {
 main
   var tot = 0
   for i = 1 to 10
-    tot = tot + i
+    set tot to tot + i
   end for
   printLine(tot)
 end main
@@ -55,7 +55,7 @@ public static class Program {
 main
   var tot = 0
   for i = 1 to 10 step 2
-    tot = tot + i
+    set tot to tot + i
   end for
   printLine(tot)
 end main
@@ -98,7 +98,7 @@ public static class Program {
 main
   var tot = 0
   for i = 10 to 3 step -1
-    tot = tot + i
+    set tot to tot + i
   end for
   printLine(tot)
 end main
@@ -142,7 +142,7 @@ main
   var tot = 0
   for i = 1 to 3
     for j = 1 to 4
-      tot = tot + 1
+      set tot to tot + 1
     end for
   end for
   printLine(tot)
@@ -190,7 +190,7 @@ main
   var upper = 10
   var tot = 0
   for i = lower to upper step 2 
-    tot = tot + i
+    set tot to tot + i
   end for
   printLine(tot)
 end main
@@ -235,7 +235,7 @@ public static class Program {
 main
   var tot = 0
   for i = 1.5 to 10
-    tot = tot + i
+    set tot to tot + i
   end for
 end main
 ";
@@ -255,7 +255,7 @@ end main
 main
   var tot = 0
   for i = 1 to 10
-    i = 10
+    set i to 10
   end for
 end main
 ";
@@ -274,7 +274,7 @@ main
   var tot = 0
   for i = 1 to 3
     for j = 1 to 4
-      tot = tot + 1
+      set tot to tot + 1
     end for
 end main
 ";
@@ -288,7 +288,7 @@ end main
 main
   var tot = 0
   for i = 1 to 10
-    tot = tot + i
+    set tot to tot + i
   next i
 end main
 ";
@@ -302,7 +302,7 @@ end main
 main
   var tot = 0
   for i = 1 to 10
-    tot = tot + i
+    set tot to tot + i
     break
   next i
 end main
@@ -317,7 +317,7 @@ end main
 main
   var tot = 0
   for i = 1 to 10
-    tot = tot + i
+    set tot to tot + i
     continue
   next i
 end main

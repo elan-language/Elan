@@ -60,9 +60,9 @@ end main
 function factorial(a Int) -> Int
     var result = 0;
     if a > 2 then
-        result = a * factorial(a-1)
+        set result to a * factorial(a-1)
     else 
-        result = a
+        set result to a
     end if
     return result
 end function
@@ -119,18 +119,18 @@ end main
 function binarySearch(li List<String>, item String) ->  Bool 
   var result = false
   if li.length() is 0 then  
-    result = false
+    set result to false
   else if li.length() is 1 then
-    result = li[0] is item
+    set result to li[0] is item
   else 
     var mid = li.length() div 2
     var value = li[mid]
     if item is value then
-        result = true
+        set result to true
     else if item.isBefore(value) then
-        result = binarySearch(li[0..mid], item) 
+        set result to binarySearch(li[0..mid], item) 
     else 
-        result = binarySearch(li[mid+1..], item)
+        set result to binarySearch(li[mid+1..], item)
     end if
   end if
   return result
@@ -316,7 +316,7 @@ end function
         var code = @"
 main
    var a = """"
-   a = foo(3,4)
+   set a to foo(3,4)
 end main
 
 function foo(a Int, b Int) -> Int
@@ -454,7 +454,7 @@ main
 end main
 
 function foo(a Int, b Int) -> Int
-    a = a + 1
+    set a to a + 1
     return a * b
 end function
 ";

@@ -56,7 +56,7 @@ main
     var x = (3,""Apple"")
     var y = 0
     var z = """"
-    (y, z) = x
+    set (y, z) to x
     printLine(y)
     printLine(z)
 end main
@@ -139,7 +139,7 @@ public static class Program {
         var code = @"#
 main
     var x = (3,""Apple"")
-    x = (4,""Pear"")
+    set x to (4,""Pear"")
     printLine(x)
 end main
 ";
@@ -219,7 +219,7 @@ public static class Program {
 main
     var x = (3,""Apple"")
     var y = 4
-    y = x[1]
+    set y to x[1]
 end main
 ";
         var parseTree = @"*";
@@ -236,7 +236,7 @@ end main
         var code = @"#
 main
     var x = (3,""Apple"")
-    x[0] = 4
+    set x[0] to 4
 end main
 ";
         var parseTree = @"*";
@@ -254,7 +254,7 @@ main
     var x = (3,""Apple"")
     var y = 0
     var z = """"
-    (z, y) = x
+    set (z, y) to x
     printLine(y)
     printLine(z)
 end main
@@ -273,7 +273,7 @@ end main
         var code = @"#
 main
     var x = (3,""Apple"")
-    x = (""4"",""Pear"")
+    set x to (""4"",""Pear"")
     printLine(x)
 end main
 ";

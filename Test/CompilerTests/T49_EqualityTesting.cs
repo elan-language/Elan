@@ -29,14 +29,14 @@ end main
 
 class Foo
     constructor(p1 Int, p2 String)
-        self.p1 = p1
-        self.p2 = p2
+        set self.p1 to p1
+        set self.p2 to p2
     end constructor
     property p1 Int
     property p2 String
 
     procedure setP1(v Int)
-        p1 = v
+        set p1 to v
     end procedure
 
     function asString() -> String
@@ -114,15 +114,15 @@ end main
 
 class Foo
     constructor(p1 Int, p2 String)
-        self.p1 = p1
-        self.p2 = p2
+        set self.p1 to p1
+        set self.p2 to p2
     end constructor
 
     property p1 Int
     property p2 String
 
     procedure setP1(v Int)
-        p1 = v
+        set p1 to v
     end procedure
 
     function asString() -> String

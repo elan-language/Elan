@@ -241,7 +241,7 @@ end main
         var code = @"#
 constant a = 3
 main
-  a = 4
+  set a to 4
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

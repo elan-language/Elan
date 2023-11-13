@@ -255,7 +255,7 @@ end main
 
 class Base
     constructor(p1 Int)
-        self.p1 = p1
+        set self.p1 to p1
     end constructor
     property p1 Int
     function asString() -> String

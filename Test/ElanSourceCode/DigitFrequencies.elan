@@ -5,9 +5,9 @@ end main
 
 class QueueOfTiles
     constructor(maxSize Int)
-        self.maxSize = maxSize
-        contents = Array<String>(maxSize)
-        rear = -1 # signifies 'empty'
+        set self.maxSize to maxSize
+        set contents to Array<String>(maxSize)
+        set rear to -1 # signifies 'empty'
     end constructor
 
     private property contents Array<String>
@@ -15,7 +15,7 @@ class QueueOfTiles
     private property maxSize Int
 
     procedure initialise()
-        rear = -1
+        set rear to -1
         for count = 0 to maxSize - 2
            add()
         end for
@@ -27,27 +27,27 @@ class QueueOfTiles
 
     procedure withdrawNextLetter(letter String)
         if isNotEmpty() then
-            letter = contents[0]
+            set letter to contents[0]
             for count = 1 to rear
-                contents[count - 1] = contents[count]
-                contents[rear] = """"
+                set contents[count - 1] to contents[count]
+                set contents[rear] to """"
             end for
-            rear = rear - 1
+            set rear to rear - 1
         end if
     end procedure
 
     procedure add()
         if rear < maxSize - 1 then
-            rear = rear + 1
+            set rear to rear + 1
             var n = random(0, 30)
-            contents[rear] = contents[n].asString()  #where is 'letters'?
+            set contents[rear] to contents[n].asString()  #where is 'letters'?
         end if
     end procedure
 
     function show() -> String
        var result = """"
        foreach letter in contents
-         result = result + letter       
+         set result to result + letter       
        end foreach
        return result + newline
     end function

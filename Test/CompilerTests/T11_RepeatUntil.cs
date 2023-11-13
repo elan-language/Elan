@@ -12,7 +12,7 @@ public class T11_RepeatUntil {
 main
    var x = 0
    repeat
-     x = x + 1
+     set x to x + 1
    until  x >= 10
    printLine(x)
 end main
@@ -58,10 +58,10 @@ main
    repeat
     var y = 0
        repeat
-         y = y + 1
-         t = t + 1
+         set y to y + 1
+         set t to t + 1
        until  y > 4
-     x = x + 1
+     set x to x + 1
    until  x > 3
    printLine(t)
 end main
@@ -110,7 +110,7 @@ public static class Program {
 main
    var x = 0
    repeat
-     x = x + 1
+     set x to x + 1
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -123,7 +123,7 @@ end main
 main
     var x = 0
     repeat
-      x = x + 1
+      set x to x + 1
    until var x >= 10
 end main
 ";
@@ -153,7 +153,7 @@ end main
 main
     var x = 0
     repeat x >= 10
-      x = x + 1
+      set x to x + 1
     until 
 end main
 ";
@@ -168,7 +168,7 @@ end main
 main
     var x = 0
     repeat
-      x = x + 1
+      set x to x + 1
     until 
 end main
 ";
@@ -182,7 +182,7 @@ end main
 main
     var x = 0
     repeat
-      x = x + 1
+      set x to x + 1
     until >= 10
 end main
 ";

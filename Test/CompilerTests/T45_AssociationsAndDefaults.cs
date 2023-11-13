@@ -28,9 +28,9 @@ end main
 
 class Game
     constructor()
-       p2 = Player(""Chloe"")
-       p1 = Player(""Joe"")
-       previousScores = {5,2,4}
+       set p2 to Player(""Chloe"")
+       set p1 to Player(""Joe"")
+       set previousScores to {5,2,4}
     end constructor
 
     property p1 Player
@@ -46,7 +46,7 @@ end class
 
 class Player
     constructor(name String)
-        self.name = name
+        set self.name to name
     end constructor
 
     property name String
@@ -237,7 +237,7 @@ end main
 
 class Game
     constructor()
-       i = 100
+       set i to 100
     end constructor
 
     property i Int
@@ -317,7 +317,7 @@ end class
 
 class Player
     constructor(name String)
-        self.name = name
+        set self.name to name
     end constructor
 
     property name String
@@ -408,7 +408,7 @@ end main
 
 class Game
     constructor()
-        score = 1
+        set score to 1
     end constructor
 
     property score Int
@@ -429,7 +429,7 @@ end class
 
 class Player
     constructor(name String)
-        self.name = name
+        set self.name to name
     end constructor
 
     property name String
@@ -529,7 +529,7 @@ end main
 
 class Game
     constructor()
-       score = 10
+       set score to 10
     end constructor
 
     property score Int
@@ -539,7 +539,7 @@ class Game
     property p2 Player
 
     procedure setScore(newScore Int)
-        score = newScore
+        set score to newScore
     end procedure
 
     property previousGame Game
@@ -554,7 +554,7 @@ end class
 
 class Player
     constructor(name String)
-        self.name = name
+        set self.name to name
     end constructor
 
     property name String

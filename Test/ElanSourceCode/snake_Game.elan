@@ -19,19 +19,19 @@ end main
 
 class Game    
     constructor (width Int, height Int, startingDirection Direction)
-        self.width = width
-        self.height = height
+        set self.width to width
+        set self.height to height
         var halfW = width div 2
         var halfH = height div 2
         var centreW = halfW
         if (halfW mod 2) is not 0 then
-          centreW = halfW + 1
+          set centreW to halfW + 1
         end if
         var centreH = halfH
         if (halfH mod 2) is not 0 then
-          centreH = halfH + 1
+          set centreH to halfH + 1
         end if
-        snake = Snake(centreW, centreH, startingDirection) 
+        set snake to Snake(centreW, centreH, startingDirection) 
         setNewApplePosition()
     end constructor
 
@@ -55,7 +55,7 @@ class Game
         else
             snake.advanceTailOneSquare()
         end if
-        continue = not hasHitEdge() and not snake.hasHitItself()
+        set continue to not hasHitEdge() and not snake.hasHitItself()
     end procedure
 
     function hasHitEdge() -> Bool
@@ -70,9 +70,9 @@ class Game
         repeat
             var ranW = random((width-2) div 2)
             var ranH = random((height-2) div 2) * 2-2
-            sq = Square(ranW * 2, ranH) 
+            set sq to Square(ranW * 2, ranH) 
         until not snake.bodyCovers(sq)
-        apple = sq
+        set apple to sq
     end procedure
 
     function getScore() -> Int
@@ -88,8 +88,8 @@ end class
 class Snake
     constructor(x Int, y Int, startingDirection Direction)
         var tail = Square(x, y)
-        body = {tail}
-        head = tail.getAdjacentSquare(startingDirection)
+        set body to {tail}
+        set head to tail.getAdjacentSquare(startingDirection)
     end constructor
 
     private property body List<Square>
@@ -107,19 +107,19 @@ class Snake
       var result = false
       foreach seg in body
         if (seg is sq) then
-          result = true
+          set result to true
         end if
       end foreach
       return result
     end function
 
     procedure advanceHeadOneSquare(d Direction)
-        body = body + head
-        head = head.getAdjacentSquare(d)
+        set body to body + head
+        set head to head.getAdjacentSquare(d)
     end procedure
 
     procedure advanceTailOneSquare()
-        body = body[1..]
+        set body to body[1..]
     end procedure
 
     function length() -> Int 
@@ -133,8 +133,8 @@ end class
 
 class Square
     constructor (x Int, y Int)
-        self.x = x
-        self.y = y
+        set self.x to x
+        set self.y to y
     end constructor
 
     property x Int
@@ -145,13 +145,13 @@ class Square
         var newY = y
         switch d
             case Direction.left
-                newX = newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
+                set newX to newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
             case Direction.right
-                newX = newX + 2
+                set newX to newX + 2
             case Direction.up
-                newY = newY - 1 
+                set newY to newY - 1 
             case Direction.down
-                newY = newY + 1
+                set newY to newY + 1
             default
         end switch
         return Square(newX, newY)

@@ -5,8 +5,8 @@ constant tileDictionary = {'A': 1,'B': 2,'C': 2,'D': 2,'E': 1,'F': 3,'G': 2,'H':
 
 class Player
     constructor(name String)
-        self.name = name
-        score = 50
+        set self.name to name
+        set score to 50
     end constructor
 
     property name String
@@ -15,31 +15,31 @@ class Player
     property tilesInHand String
 
     procedure setTilesInHand(tiles String)
-        tilesInHand = tiles
+        set tilesInHand to tiles
     end procedure
 
     procedure addToLetters(letter Char)
-        tilesInHand = tilesInHand + letter
+        set tilesInHand to tilesInHand + letter
     end procedure
 
     procedure addToScore(points Int)
-        score = score + points
+        set score to score + points
     end procedure
 
     procedure removeLetter(letter Char)
         var i = tilesInHand.indexOf(letter)
-        tilesInHand = tilesInHand[..i] + tilesInHand[i+1..]
+        set tilesInHand to tilesInHand[..i] + tilesInHand[i+1..]
     end procedure
 
     procedure wordAsWouldBePlayed(word String, asPlayed String)
-        asPlayed = ""
-        tilesPlayed = tilesPlayed + word.length()
+        set asPlayed to ""
+        set tilesPlayed to tilesPlayed + word.length()
         foreach letter in word
              var c = letter
              if not tilesInHand.contains(letter) then 
-               c = '*'
+               set c to '*'
              end if
-             asPlayed = asPlayed + c
+             set asPlayed to asPlayed + c
         end foreach
     end procedure
 
@@ -52,7 +52,7 @@ class Player
 
     procedure deductAnyPenalty()
       foreach tile in tilesInHand
-        score = score - tileDictionary[tile]
+        set score to score - tileDictionary[tile]
       end foreach
     end procedure
 

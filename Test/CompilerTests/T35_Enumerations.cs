@@ -60,7 +60,7 @@ public static class Program {
         var code = @"
 main
  var x = Fruit.apple
- x = Fruit.pear
+ set x to Fruit.pear
  printLine(x)
 end main
 
@@ -311,7 +311,7 @@ end enum
         var code = @"
 main
  var a = 1
- a = Fruit.apple
+ set a to Fruit.apple
 end main
 
 enum Fruit

@@ -11,8 +11,8 @@ end main
 
 class Square
     constructor (x Int, y Int)
-        self.x = x
-        self.y = y
+        set self.x to x
+        set self.y to y
     end constructor
 
     property x Int
@@ -23,13 +23,13 @@ class Square
         var newY = y
         switch d
             case Direction.left
-                newX = newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
+                set newX to newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
             case Direction.right
-                newX = newX + 2
+                set newX to newX + 2
             case Direction.up
-                newY = newY - 1 
+                set newY to newY - 1 
             case Direction.down
-                newY = newY + 1
+                set newY to newY + 1
             default
         end switch
         return Square(newX, newY)

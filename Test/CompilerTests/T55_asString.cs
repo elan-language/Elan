@@ -13,8 +13,8 @@ public class T55_asString {
         var code = @"#
 class Foo
     constructor()
-        p1 = 5
-        p2 = ""Apple""
+        set p1 to 5
+        set p2 to ""Apple""
     end constructor
 
     property p1 Int
@@ -45,8 +45,8 @@ main
 end main
 class Foo
     constructor()
-        p1 = 5
-        p2 = ""Apple""
+        set p1 to 5
+        set p2 to ""Apple""
     end constructor
 
     property p1 Int
@@ -118,8 +118,8 @@ main
 end main
 class Foo
     constructor()
-        p1 = 5
-        p2 = ""Apple""
+        set p1 to 5
+        set p2 to ""Apple""
     end constructor
 
     property p1 Int
@@ -191,8 +191,8 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
-        p2 = ""Apple""
+        set p1 to 5
+        set p2 to ""Apple""
     end constructor
 
     property p1 Int

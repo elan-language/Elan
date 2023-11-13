@@ -314,7 +314,7 @@ public static class Program {
 main
   var a = Dictionary<String, Int>()
   var b = a.set(""Foo"",1)
-  b = b.set(""Bar"", 3)
+  set b to b.set(""Bar"", 3)
   print(b.length())
   print(b[""Foo""])
   print(b[""Bar""])

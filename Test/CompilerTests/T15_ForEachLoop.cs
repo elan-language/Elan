@@ -15,7 +15,7 @@ main
     var a = {7,8,9}
     var n = 0
     foreach x in a
-        n = n + x
+        set n to n + x
     end foreach
     printLine(n)
 end main
@@ -60,7 +60,7 @@ main
     var a = {7,8,9}.asArray()
     var n = 0
     foreach x in a
-        n = n + x
+        set n to n + x
     end foreach
     printLine(n)
 end main
@@ -271,7 +271,7 @@ end main
 main
   var a ={1,2,3,4,5}
   foreach x in a
-    a = a + x
+    set a to a + x
   end foreach
 end main
 ";

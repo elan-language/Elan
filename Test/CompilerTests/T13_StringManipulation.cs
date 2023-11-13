@@ -292,7 +292,7 @@ public static class Program {
         var code = @"
 main
     var a = ""abcde""
-    a = (2.1 + 3.4).asString()
+    set a to (2.1 + 3.4).asString()
     print(a)
 end main
 ";
@@ -609,7 +609,7 @@ public static class Program {
         var code = @"
 main
     var a = ""abcde""
-    a = 2.1 + 3.4
+    set a to 2.1 + 3.4
     print(a)
 end main
 ";

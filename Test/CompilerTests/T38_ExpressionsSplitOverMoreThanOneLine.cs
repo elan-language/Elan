@@ -188,8 +188,8 @@ end main
         var code = @"#
 main
   var x = 0.7
-  var y 
-     = sin(x) ^ 2  + cos(x) ^ 2
+  set y 
+     to sin(x) ^ 2  + cos(x) ^ 2
   printLine(y)
 end main
 ";

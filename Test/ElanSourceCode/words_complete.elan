@@ -46,8 +46,8 @@ main
     var randomStart = false
     while choice is not "9"
         print(mainMenu)
-        choice = input("Enter your choice:")
-        randomStart = choice is "1"
+        set choice to input("Enter your choice:")
+        set randomStart to choice is "1"
     end while
     if randomStart then
         game.initialiseForRandomStart()
@@ -73,7 +73,7 @@ procedure loadAllowedWords(allowedWords List<String>)
         var file = openRead("aqawords.txt")
         while not fileReader.endOfStream
             var line = file.readLine()
-            allowedWords =allowedWords.add(line.trim().toUpper())
+            set allowedWords toallowedWords.add(line.trim().toUpper())
         end while
         file.close()
     catch e
@@ -84,15 +84,15 @@ end procedure
 procedure getChoice(choice String)
     var choice = ""
     print(menu3)
-    choice = input("> ")
+    set choice to input("> ")
     printLine()
-    choice = choice.asUpperCase()
+    set choice to choice.asUpperCase()
 end procedure
 
 procedure getNewTileChoice(newTileChoice String)
     repeat
         print(tileChoiceMenu)
-        newTileChoice = input("> ")
+        set newTileChoice to input("> ")
     until tileMenuChoices.contains(newTileChoice)
 end procedure
 
@@ -130,17 +130,17 @@ procedure haveTurn(player Player, game Game)
          else if choice is "7" then
              print(game.listTileValues(player))
          else if choice is "0" then
-             validChoice = true
+             set validChoice to true
              game.fillHandWithTiles(player)
          else
-             validWord = game.checkWordIsInTiles(choice, player)
+             set validWord to game.checkWordIsInTiles(choice, player)
          end if
          if validWord then
-             validWord = game.checkWordIsValid(choice)
+             set validWord to game.checkWordIsValid(choice)
              if validWord then
                  print(newline() + "Valid word")
                  game.updateAfterAllowedWord(player, choice)
-                 newTileChoice = getNewTileChoice()
+                 set newTileChoice to getNewTileChoice()
              end if
          end if
          if not validWord then

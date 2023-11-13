@@ -168,8 +168,8 @@ main
 end main
 
 procedure foo (a Int, b String)
-    a = a + 1
-    b = b + ""!""
+    set a to a + 1
+    set b to b + ""!""
 end procedure
 ";
 

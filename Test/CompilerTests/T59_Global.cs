@@ -58,7 +58,7 @@ end main
 
 class Foo
     constructor()
-        a = 3
+        set a to 3
     end constructor
 
     property a Int
@@ -263,7 +263,7 @@ end main
 
 class Foo
     constructor()
-        a = 3
+        set a to 3
     end constructor
 
     property a Int

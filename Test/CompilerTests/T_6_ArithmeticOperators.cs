@@ -295,7 +295,7 @@ public static class Program {
         var code = @"
 main
   var a = 3
-  a = a + 1
+  set a to a + 1
   printLine(a)
 end main
 ";
@@ -350,7 +350,7 @@ public static class Program {
         var code = @"
     main
       var a = 3
-      a += 1
+      set a +to 1
     end main
     ";
 

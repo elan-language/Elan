@@ -20,7 +20,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
     property p1 Int
 
@@ -93,8 +93,8 @@ end main
 
 class Foo
     constructor(p_1 Int, p_2 String)
-        p1 = p_1
-        p2 = p_2
+        set p1 to p_1
+        set p2 to p_2
     end constructor
 
     property p1 Int
@@ -200,7 +200,7 @@ end class
         var code = @"#
 main
     var x = Foo()
-    x.p1 = 3
+    set x.p1 to 3
 end main
 
 class Foo
@@ -228,7 +228,7 @@ class Foo
     end constructor
 
     constructor(val Int)
-        p1 = val
+        set p1 to val
     end constructor
 
     property p1 Int
@@ -252,7 +252,7 @@ end main
 
 class Foo
     constructor(val Int)
-        p1 = val
+        set p1 to val
     end constructor
 
     property p1 Int
@@ -281,7 +281,7 @@ end main
 
 class Foo
     constructor(val Int)
-        p1 = val
+        set p1 to val
     end constructor
 
     property p1 Int

@@ -3,10 +3,10 @@ end main
 
 class Game
     constructor(player1 Player, player2 Player,allowedWords List<String>)
-        self.player1 = player1
-        self.player2 = player2 
-        self.allowedWords = allowedWords
-        tileQueue = QueueOfTiles(100)
+        set self.player1 to player1
+        set self.player2 to player2 
+        set self.allowedWords to allowedWords
+        set tileQueue to QueueOfTiles(100)
     end constructor
 
     property allowedWords List<String> 
@@ -35,7 +35,7 @@ class Game
         for count = 0 to startHandSize - 1
             var item = ""
             tileQueue.remove(item)
-            hand = hand + item
+            set hand to hand + item
             tileQueue.add()
         end for
         player.setTilesInHand(hand)
@@ -58,11 +58,11 @@ class Game
         var copyOfTiles = player.tilesInHand
         for count = 0 to word.length() - 1
             if copyOfTiles.contains(word[count]) then
-               copyOfTiles = copyOfTiles.remove(copyOfTiles.indexOf(word[count]), 1)
+               set copyOfTiles to copyOfTiles.remove(copyOfTiles.indexOf(word[count]), 1)
             else if copyOfTiles.contains('*') then
-               copyOfTiles = copyOfTiles.remove(copyOfTiles.indexOf('*'), 1)
+               set copyOfTiles to copyOfTiles.remove(copyOfTiles.indexOf('*'), 1)
             else
-               inTiles = false
+               set inTiles to false
             end if
         end for
         return inTiles
@@ -78,12 +78,12 @@ class Game
     function getScoreForWord(word String) -> Int
         var score = 0
         for count = 0 to word.length() - 1
-            score = score + tileDictionary[word[count]]
+            set score to score + tileDictionary[word[count]]
         end for
         if word.length() > 7 then
-            score = score + 20
+            set score to score + 20
         else if word.length() > 5 then
-            score = score + 5
+            set score to score + 5
         end if
         return score
     end function
@@ -91,7 +91,7 @@ class Game
     function listTileValues(player Player) -> String
         var values = "                  "
         foreach c in player.tilesInHand
-            values = values + tileDictionary[c]
+            set values to values + tileDictionary[c]
         end foreach
         return values
     end function
@@ -103,11 +103,11 @@ class Game
     procedure addEndOfTurnTiles(player Player, newTileChoice String, word String)
         var noOfEndOfTurnTiles = 0
         if newTileChoice is "1" then
-                noOfEndOfTurnTiles = word.length()
+                set noOfEndOfTurnTiles to word.length()
         else if newTileChoice is "2" then
-                noOfEndOfTurnTiles = 3
+                set noOfEndOfTurnTiles to 3
         else
-                noOfEndOfTurnTiles = word.length() + 3
+                set noOfEndOfTurnTiles to word.length() + 3
         end if
         for count = 0 to noOfEndOfTurnTiles - 1
             var letter = ""
@@ -123,9 +123,9 @@ TILE VALUES
 "
         foreach k in tileDictionary.keys()
             var v = tileDictionary[k]
-            s = s + "Point for {k}: {v}"
+            set s to s + "Point for {k}: {v}"
         end foreach
-        s = s + newline
+        set s to s + newline
         return s
     end function
 
@@ -145,8 +145,8 @@ end class
 
 class Player
     constructor(name String)
-        self.name = name
-        score = 50
+        set self.name to name
+        set score to 50
     end constructor
 
     property name String
@@ -155,31 +155,31 @@ class Player
     property tilesInHand String
 
     procedure setTilesInHand(tiles String)
-        tilesInHand = tiles
+        set tilesInHand to tiles
     end procedure
 
     procedure addToLetters(letter Char)
-        tilesInHand = tilesInHand + letter
+        set tilesInHand to tilesInHand + letter
     end procedure
 
     procedure addToScore(points Int)
-        score = score + points
+        set score to score + points
     end procedure
 
     procedure removeLetter(letter Char)
         var i = tilesInHand.indexOf(letter)
-        tilesInHand = tilesInHand[..i] + tilesInHand[i+1..]
+        set tilesInHand to tilesInHand[..i] + tilesInHand[i+1..]
     end procedure
 
     procedure wordAsWouldBePlayed(word String, asPlayed String)
-        asPlayed = ""
-        tilesPlayed = tilesPlayed + word.length()
+        set asPlayed to ""
+        set tilesPlayed to tilesPlayed + word.length()
         foreach letter in word
              var c = letter
              if not tilesInHand.contains(letter) then 
-               c = '*'
+               set c to '*'
              end if
-             asPlayed = asPlayed + c
+             set asPlayed to asPlayed + c
         end foreach
     end procedure
 
@@ -192,7 +192,7 @@ class Player
 
     procedure deductAnyPenalty()
       foreach tile in tilesInHand
-        score = score - tileDictionary[tile]
+        set score to score - tileDictionary[tile]
       end foreach
     end procedure
 
@@ -203,9 +203,9 @@ end class
 
 class QueueOfTiles
     constructor(maxSize Int)
-        self.maxSize = maxSize
-        contents = Array<String>(maxSize)
-        rear = -1 # signifies 'empty'
+        set self.maxSize to maxSize
+        set contents to Array<String>(maxSize)
+        set rear to -1 # signifies 'empty'
     end constructor
 
     private property contents Array<String>
@@ -213,7 +213,7 @@ class QueueOfTiles
     private property maxSize Int
 
     procedure initialise()
-        rear = -1
+        set rear to -1
         for count = 0 to maxSize - 1
            add()
         end for
@@ -225,27 +225,27 @@ class QueueOfTiles
 
     procedure withdrawNextLetter(letter String)
         if isNotEmpty() then
-            letter = contents[0]
+            set letter to contents[0]
             for count = 1 to rear
-                contents[count - 1] = contents[count]
+                set contents[count - 1] to contents[count]
             end for
-            contents[rear] = ""
-            rear = rear - 1
+            set contents[rear] to ""
+            set rear to rear - 1
         end if
     end procedure
 
     procedure add()
         if rear < maxSize - 1 then
-            rear = rear + 1
+            set rear to rear + 1
             var n = random(0, 30)
-            contents[rear] = letters[n].asString()
+            set contents[rear] to letters[n].asString()
         end if
     end procedure
 
     function show() -> String
        var result = ""
        foreach letter in contents
-         result = result + letter       
+         set result to result + letter       
        end foreach
        return result + newline
     end function

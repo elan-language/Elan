@@ -16,8 +16,8 @@ end main
 class Snake
     constructor(x Int, y Int, startingDirection Direction)
         var tail = Square(x, y)
-        body = {tail}
-        head = tail.getAdjacentSquare(startingDirection)
+        set body to {tail}
+        set head to tail.getAdjacentSquare(startingDirection)
     end constructor
 
     private property body List<Square>
@@ -35,19 +35,19 @@ class Snake
       var result = false
       foreach seg in body
         if (seg is sq) then
-          result = true
+          set result to true
         end if
       end foreach
       return result
     end function
 
     procedure advanceHeadOneSquare(d Direction)
-        body = body + head
-        head = head.getAdjacentSquare(d)
+        set body to body + head
+        set head to head.getAdjacentSquare(d)
     end procedure
 
     procedure advanceTailOneSquare()
-        body = body[1..]
+        set body to body[1..]
     end procedure
 
     function length() -> Int 
@@ -61,8 +61,8 @@ end class
 
 class Square
     constructor (x Int, y Int)
-        self.x = x
-        self.y = y
+        set self.x to x
+        set self.y to y
     end constructor
 
     property x Int
@@ -73,13 +73,13 @@ class Square
         var newY = y
         switch d
             case Direction.left
-                newX = newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
+                set newX to newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
             case Direction.right
-                newX = newX + 2
+                set newX to newX + 2
             case Direction.up
-                newY = newY - 1 
+                set newY to newY - 1 
             case Direction.down
-                newY = newY + 1
+                set newY to newY + 1
             default
         end switch
         return Square(newX, newY)

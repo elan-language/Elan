@@ -12,7 +12,7 @@ public class T10_WhileLoop {
 main
    var x = 0
    while x < 10
-     x = x + 1
+     set x to x + 1
    end while
    printLine(x)
 end main
@@ -58,10 +58,10 @@ main
     while x < 3
         var y = 0
         while y < 4
-            y = y + 1
-            t = t + 1
+            set y to y + 1
+            set t to t + 1
         end while
-        x = x + 1
+        set x to x + 1
     end while
    printLine(t)
 end main
@@ -110,7 +110,7 @@ public static class Program {
 main
    var x = 0
    while x < 10
-     x = x + 1
+     set x to x + 1
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -122,7 +122,7 @@ end main
         var code = @"
 main
    while x < 10
-     x = x + 1
+     set x to x + 1
    end while
 end main
 ";
@@ -140,7 +140,7 @@ end main
         var code = @"
 main
    while var x < 10
-     x = x + 1
+     set x to x + 1
    end while
 end main
 ";
@@ -155,7 +155,7 @@ end main
 main
    var x = 0
    while
-     x = x + 1
+     set x to x + 1
    end while
 end main
 ";
@@ -169,7 +169,7 @@ end main
 main
    var x = 0
    while x < 10
-     x = x + 1
+     set x to x + 1
    do
 end main
 ";

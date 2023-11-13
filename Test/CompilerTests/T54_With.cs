@@ -19,7 +19,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
     property p1 Int
 
@@ -55,7 +55,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
     property p1 Int
 
@@ -127,7 +127,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        self.p1 = p1
+        set self.p1 to p1
     end constructor
     property p1 Int
 
@@ -201,7 +201,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
     property p1 Int
 
@@ -277,7 +277,7 @@ end main
 
 immutable class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
     property p1 Int
 

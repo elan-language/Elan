@@ -8,9 +8,9 @@ main
    var attempt = "RAISE"
    while marking is not "*****"
       printLine(attempt)
-      marking = input("Please mark the attempt")
-      possible = possibleAnswersAfterAttempt(possible, attempt, marking).asList()
-      attempt = bestAttempt(possible, validWords)
+      set marking to input("Please mark the attempt")
+      set possible to possibleAnswersAfterAttempt(possible, attempt, marking).asList()
+      set attempt to bestAttempt(possible, validWords)
    end while
 end main
 
@@ -64,7 +64,7 @@ function betterOf(word1 (String, Int), word2 (String, Int), possAnswers Iter<Str
     let
         (w1, w1Count) = word1,
         (w2, w2Count) = word2,  
-        isBetter = w2Count < w1Count,
+        isBetter to w2Count < w1Count,
         isEqualAndPossAnswer = w2Count is w1Count and possAnswers.contains(w2)
     in
     if isBetter or isEqualAndPossAnswer then word2 else word1

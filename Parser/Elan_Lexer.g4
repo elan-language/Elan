@@ -35,6 +35,7 @@ PROPERTY:      'property';
 REPEAT:		   'repeat';
 RETURN:        'return';
 SELF:		   'self';
+SET:	 	   'set';
 STEP:		   'step';
 SWITCH:        'switch';
 TEST:		   'test';

@@ -17,7 +17,7 @@ public class T57_ConstructorParmsNotMutable {
         var code = @"#
 class Foo
     constructor(p_1 Int)
-        p_1 = p1
+        set p_1 to p1
     end constructor
 
     property p1 Int
@@ -41,7 +41,7 @@ end class
         var code = @"#
 class Foo
     constructor(a Array<Int>)
-        a[0] = 4
+        set a[0] to 4
     end constructor
 
     function asString() -> String

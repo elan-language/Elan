@@ -28,7 +28,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
 
     property p1 Int
@@ -62,7 +62,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
     property p1 Int
 
@@ -99,11 +99,11 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
     property p1 Int
     procedure setP1(value Int)
-        p1 = value
+        set p1 to value
     end procedure
     function asString() -> String
          return """"
@@ -173,7 +173,7 @@ end main
 
 class Foo
     constructor()
-        p1 = 5
+        set p1 to 5
     end constructor
 
     property p1 Int

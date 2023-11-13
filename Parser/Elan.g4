@@ -26,7 +26,7 @@ callStatement: NL (methodCall | (assignableValue DOT methodCall));
 
 varDef: NL VAR assignableValue ASSIGN expression;
 
-assignment: NL assignableValue ASSIGN expression;
+assignment: NL SET assignableValue TO expression;
 
 inlineAsignment: assignableValue ASSIGN expression;
 

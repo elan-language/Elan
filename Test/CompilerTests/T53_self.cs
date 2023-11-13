@@ -18,7 +18,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        self.p1 = p1
+        set self.p1 to p1
     end constructor
 
     property p1 Int
@@ -88,7 +88,7 @@ end function
 
 class Foo
     constructor()
-        p1 = 3
+        set p1 to 3
     end constructor
 
     property p1 Int
@@ -169,7 +169,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        self.p = p1
+        set self.p to p1
     end constructor
 
     property p1 Int
@@ -199,7 +199,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        p1 = p1
+        set p1 to p1
     end constructor
 
     property p1 Int
