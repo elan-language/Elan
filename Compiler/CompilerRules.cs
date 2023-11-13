@@ -137,6 +137,13 @@ public static class CompilerRules {
             }
         }
 
+        if (leafNode is ThrowNode) {
+            var otherNodes = nodes.SkipLast(1).ToArray();
+            if (otherNodes.Any(n => n is FunctionDefNode)) {
+                return $"Cannot throw exception in function : {leafNode}";
+            }
+        }
+
         if (leafNode is AssignmentNode an) {
             var otherNodes = nodes.SkipLast(1).Expand().ToArray();
             if (otherNodes.Any(n => n is FunctionDefNode)) {

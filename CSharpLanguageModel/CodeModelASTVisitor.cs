@@ -76,6 +76,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             DefaultNode n => HandleScope(BuildDefaultModel, n),
             WithNode n => HandleScope(BuildWithModel, n),
             DeconstructionNode n => HandleScope(BuildDeconstructionModel, n),
+            ThrowNode n => HandleScope(BuildThrowModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -380,5 +381,10 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var ids = defaultNode.ItemNodes.Select(Visit);
         var isNew = defaultNode.IsNew;
         return new DeconstructionModel(ids, isNew);
+    }
+
+    private ThrowModel BuildThrowModel(ThrowNode defaultNode) {
+        var thrown = Visit(defaultNode.Thrown);
+        return new ThrowModel(thrown);
     }
 }

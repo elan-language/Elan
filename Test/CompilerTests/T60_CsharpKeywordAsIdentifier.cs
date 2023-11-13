@@ -52,7 +52,6 @@ main
     var static = 1
     var struct = 1
     var this = 1
-    var throw = 1
     var typeof = 1
     var uint = 1
     var ulong = 1
@@ -103,7 +102,6 @@ main
     call print(static)
     call print(struct)
     call print(this)
-    call print(throw)
     call print(typeof)
     call print(uint)
     call print(ulong)
@@ -169,7 +167,6 @@ public static class Program {
     var @static = 1;
     var @struct = 1;
     var @this = 1;
-    var @throw = 1;
     var @typeof = 1;
     var @uint = 1;
     var @ulong = 1;
@@ -220,7 +217,6 @@ public static class Program {
     print(@static);
     print(@struct);
     print(@this);
-    print(@throw);
     print(@typeof);
     print(@uint);
     print(@ulong);
@@ -242,7 +238,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "111111111111111111111111111111111111111111111111111");
+        AssertObjectCodeExecutes(compileData, "11111111111111111111111111111111111111111111111111");
     }
 
     [TestMethod]

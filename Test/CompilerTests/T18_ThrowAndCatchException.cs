@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class T18_ThrowAndCatchException {
     #region Passes
 
@@ -28,7 +28,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    throw new ElanException(@$""Foo"");
+    throw new StandardLibrary.ElanException(@$""Foo"");
   }
 }";
 
@@ -65,8 +65,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var msg = ""Foo"";
-    throw new ElanException(msg);
+    var msg = @$""Foo"";
+    throw new StandardLibrary.ElanException(msg);
   }
 }";
 
@@ -104,7 +104,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var bar = 1;
-    throw new ElanException(@$""{bar}"");
+    throw new StandardLibrary.ElanException(@$""{bar}"");
   }
 }";
 
@@ -139,7 +139,7 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    throw new ElanException(@$""Foo"");
+    throw new StandardLibrary.ElanException(@$""Foo"");
   }
 }
 
@@ -185,7 +185,7 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    throw new ElanException(@$""Foo"");
+    throw new StandardLibrary.ElanException(@$""Foo"");
   }
 }
 
@@ -288,7 +288,7 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    throw new ElanException(@$""Foo"");
+    throw new StandardLibrary.ElanException(@$""Foo"");
   }
 }
 
@@ -335,7 +335,7 @@ end function
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertDoesNotCompile(compileData, "Cannot have system call in function");
+        AssertDoesNotCompile(compileData, "Cannot throw exception in function");
     }
 
     [TestMethod]
