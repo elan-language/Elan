@@ -4,8 +4,8 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass] [Ignore]
-public class TU103_SystemAccessors
+[TestClass][Ignore]
+public class U103_SystemAccessors
 {
     #region Passes
 
