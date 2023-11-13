@@ -756,7 +756,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DeconstructedTupleContext context) {
         var ids = context.IDENTIFIER().Select(visitor.Visit).ToImmutableArray();
-        var isNew = Enumerable.Range(0, ids.Length).Select(i => context.VAR(i) is not null);
+        var isNew = Enumerable.Range(0, ids.Length).Select(i => false);
 
         return new DeconstructionNode(ids, isNew.ToImmutableArray());
     }
