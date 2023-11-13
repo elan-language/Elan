@@ -203,7 +203,7 @@ main
     call printLine(""abc"" is ""abcd"")
     call printLine(""abc"" is ""Abc"")
     call printLine(""abc"" is ""abc"")
-    call printLine(""abc"" <> ""abcd"")
+    call printLine(""abc"" is not ""abcd"")
     call printLine(""abc"" is not ""abcd"")
     call printLine(""abc"" is not ""Abc"")
 end main

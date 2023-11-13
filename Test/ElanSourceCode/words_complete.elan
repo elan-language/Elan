@@ -146,7 +146,7 @@ procedure haveTurn(player Player, game Game)
          if not validWord then
               call print("Not a valid attempt, you lose your turn.")
          end if
-            if newTileChoice <> "4"  then
+            if newTileChoice is not "4"  then
                 call game.addEndOfTurnTiles(player, newTileChoice, choice)
             end if
             call printLine("Your word was {choice}")

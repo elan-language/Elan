@@ -165,45 +165,6 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_greaterOrLessThan() {
-        var code = @"
-main
-  call printLine(3 <> 4)
-  call printLine(3 <> 2)
-  call printLine(3 <> 3)
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static Globals;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    printLine(3 != 4);
-    printLine(3 != 2);
-    printLine(3 != 3);
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
-    }
-
-    [TestMethod]
     public void Pass_isNot() {
         var code = @"
 main
@@ -240,45 +201,6 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
-    }
-
-    [TestMethod]
-    public void Pass_equalTo() {
-        var code = @"
-main
-  call printLine(3 is 4)
-  call printLine(3 is 2)
-  call printLine(3 is 3)
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static Globals;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    printLine(3 == 4);
-    printLine(3 == 2);
-    printLine(3 == 3);
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\ntrue\r\n");
     }
 
     [TestMethod]
@@ -460,6 +382,31 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeDoesNotCompile(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_greaterOrLessThan()
+    {
+        var code = @"
+main
+  call printLine(3 <> 4)
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_doubleEquals()
+    {
+        var code = @"
+main
+  call printLine(3 == 4)
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
     }
 
     #endregion
