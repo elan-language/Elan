@@ -81,7 +81,7 @@ OP_AND:                   'and';
 OP_NOT:                   'not';
 OP_OR:                    'or';
 OP_XOR:                   'xor';
-OP_EQ:                    '==' | 'is';
+OP_EQ:                    'is';
 OP_NE:                    '<>' | ('is' (Whitespace)* 'not');
 OP_LE:                    '<=';
 OP_GE:                    '>=';

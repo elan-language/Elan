@@ -199,9 +199,9 @@ public static class Program {
     public void Pass_EqualityTesting() {
         var code = @"
 main
-    printLine(""abc"" == ""abc"")
-    printLine(""abc"" == ""abcd"")
-    printLine(""abc"" == ""Abc"")
+    printLine(""abc"" is ""abc"")
+    printLine(""abc"" is ""abcd"")
+    printLine(""abc"" is ""Abc"")
     printLine(""abc"" is ""abc"")
     printLine(""abc"" <> ""abcd"")
     printLine(""abc"" is not ""abcd"")

@@ -1,6 +1,6 @@
 main
     var li = {"apple","apricot","banana","lemon","lime","melon","orange","pear","plum","strawberry"}
-    printLine(binarySearch(li, "lemon"))
+    call printLine(binarySearch(li, "lemon"))
     printLine(binarySearch(li, "apple"))
     printLine(binarySearch(li, "strawberry"))
     printLine(binarySearch(li, "blueberry"))

@@ -104,9 +104,9 @@ public static class Program {
         var code = @"#
 main
   var a = 2
-  if a == 1 then
+  if a is 1 then
     printLine(""one"")
-  else if a == 2 then
+  else if a is 2 then
     printLine(""two"")
   else
     printLine(""neither"")
@@ -155,9 +155,9 @@ public static class Program {
         var code = @"#
 main
   var a = 3
-  if a == 1 then
+  if a is 1 then
     printLine(""one"")
-  else if a == 2 then
+  else if a is 2 then
     printLine(""two"")
   else
     printLine(""neither"")
@@ -247,11 +247,11 @@ public static class Program {
         var code = @"#
 main
   var a = 3
-  if a == 1 then
+  if a is 1 then
     printLine(""one"")
-  else if a == 2 then
+  else if a is 2 then
     printLine(""two"")
-  else if a == 3 then
+  else if a is 3 then
     printLine(""three"")
   else
     printLine(""neither"")
@@ -303,7 +303,7 @@ public static class Program {
         var code = @"#
 main
   var a = 3
-  if a == 1 then
+  if a is 1 then
     printLine(""one"")
 end main
 ";
@@ -332,11 +332,11 @@ end
         var code = @"#
 main
   var a = 3
-  if a == 1 then
+  if a is 1 then
     printLine(""one"")
   else
     printLine(""not one"")
-  else if a == 2 then
+  else if a is 2 then
     printLine(""two"")
   end if
 end main

@@ -61,7 +61,7 @@ class Game
     function hasHitEdge() -> Bool
         var x = snake.head.x
         var y = snake.head.y
-        return x < 0 or y < 0 or x == width or y == height
+        return x < 0 or y < 0 or x is width or y is height
     end function
 
     procedure setNewApplePosition()

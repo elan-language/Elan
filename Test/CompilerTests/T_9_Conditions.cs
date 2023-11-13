@@ -246,9 +246,9 @@ public static class Program {
     public void Pass_equalTo() {
         var code = @"
 main
-  printLine(3 == 4)
-  printLine(3 == 2)
-  printLine(3 == 3)
+  printLine(3 is 4)
+  printLine(3 is 2)
+  printLine(3 is 3)
 end main
 ";
 
@@ -325,7 +325,7 @@ public static class Program {
         var code = @"
 main
   printLine(3 < 3.1)
-  printLine(3 == 3.0)
+  printLine(3 is 3.0)
   printLine(3.1 < 3)
 end main
 ";
