@@ -16,7 +16,7 @@ main
     var a = 1
     var b = ""Apple""
     var c = {1,2,3}
-    call printLine(""{a} {b} {c}"")
+    print ""{a} {b} {c}""
 end main
 ";
 
@@ -35,7 +35,7 @@ public static class Program {
     var a = 1;
     var b = @$""Apple"";
     var c = new StandardLibrary.ElanList<int>(1, 2, 3);
-    printLine(@$""{a} {b} {c}"");
+    print(@$""{a} {b} {c}"");
   }
 }";
 
@@ -56,7 +56,7 @@ public static class Program {
         var code = @"
 main
     var new = 1
-    call printLine(""{new}"")
+    print ""{new}""
 end main
 ";
 
@@ -73,7 +73,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var @new = 1;
-    printLine(@$""{@new}"");
+    print(@$""{@new}"");
   }
 }";
 

@@ -21,13 +21,13 @@ public class T19_Procedures {
     public void Pass_BasicOperationIncludingSystemCall() {
         var code = @"
 main
-    call printLine(1)
+    print 1
     call foo()
-    call printLine(3)
+    print 3
 end main
 
 procedure foo()
-    call printLine(2)
+    print 2
 end procedure
 ";
 
@@ -39,15 +39,15 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    printLine(2);
+    print(2);
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(1);
+    print(1);
     foo();
-    printLine(3);
+    print(3);
   }
 }";
 
@@ -72,8 +72,8 @@ main
 end main
 
 procedure foo(a Int, b String)
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end procedure
 ";
 
@@ -85,8 +85,8 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo(ref int a, ref string b) {
-    printLine(a);
-    printLine(b);
+    print(a);
+    print(b);
   }
 }
 
@@ -118,8 +118,8 @@ main
 end main
 
 procedure foo(a Int, b String)
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end procedure
 ";
 
@@ -131,8 +131,8 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo(ref int a, ref string b) {
-    printLine(a);
-    printLine(b);
+    print(a);
+    print(b);
   }
 }
 
@@ -163,8 +163,8 @@ main
     var a = 1
     var b = ""hello""
     call foo(a, b)
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end main
 
 procedure foo (a Int, b String)
@@ -191,8 +191,8 @@ public static class Program {
     var a = 1;
     var b = @$""hello"";
     foo(ref a, ref b);
-    printLine(a);
-    printLine(b);
+    print(a);
+    print(b);
   }
 }";
 
@@ -212,16 +212,16 @@ public static class Program {
         var code = @"
 main
     call foo()
-    call printLine(3)
+    print 3
 end main
 
 procedure foo()
-    call printLine(1)
+    print 1
     call bar()
 end procedure
 
 procedure bar()
-    call printLine(2)
+    print 2
 end procedure
 ";
 
@@ -233,18 +233,18 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    printLine(1);
+    print(1);
     bar();
   }
   public static void bar() {
-    printLine(2);
+    print(2);
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
     foo();
-    printLine(3);
+    print(3);
   }
 }";
 
@@ -268,7 +268,7 @@ end main
 
 procedure foo(a Int)
     if a > 0 then
-        call printLine(a)
+        print a
         call foo(a-1)
     end if
 end procedure
@@ -283,7 +283,7 @@ using static StandardLibrary.Constants;
 public static partial class Globals {
   public static void foo(ref int a) {
     if (a > 0) {
-      printLine(a);
+      print(a);
       var _foo_1_0 = a - 1;
       foo(ref _foo_1_0);
     }
@@ -334,7 +334,7 @@ main
 end main
 
 procedure foo(Int a) 
-    call printLine(a)
+    print a
 end procedure
 ";
 
@@ -346,13 +346,13 @@ end procedure
     public void Fail_NoEnd() {
         var code = @"
 main
-    call printLine(1)
+    print 1
     call foo()
-    call printLine(3)
+    print 3
 end main
 
 procedure foo()
-    call printLine(2)
+    print 2
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -362,9 +362,9 @@ procedure foo()
     public void Fail_CannotCallMain() {
         var code = @"
 main
-    call printLine(1)
+    print 1
     call foo()
-    call printLine(3)
+    print 3
 end main
 
 procedure foo()
@@ -379,13 +379,13 @@ end procedure
     public void Fail_PassingUnnecessaryParameter() {
         var code = @"
 main
-    call printLine(1)
+    print 1
     call foo(3)
-    call printLine(3)
+    print 3
 end main
 
 procedure foo()
-    call printLine(2)
+    print 2
 end procedure
 ";
         var parseTree = @"*";
@@ -406,8 +406,8 @@ main
 end main
 
 procedure foo (a Int, b String)
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end procedure
 ";
 
@@ -428,8 +428,8 @@ main
 end main
 
 procedure foo (a Int, b String)
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end procedure
 ";
 
@@ -450,8 +450,8 @@ main
 end main
 
 procedure foo(a Int, b String)
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end procedure
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -466,8 +466,8 @@ main
 end main
 
 procedure foo(ref a Int, b String)
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end procedure
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

@@ -15,7 +15,7 @@ public class T83_PrintingCommonSymbols
     {
         var code = @"#
 main
-  call printLine(""¬!£$%^&*()@~#`|<>'€"")
+  print ""¬!£$%^&*()@~#`|<>'€""
 end main
 ";
 
@@ -31,7 +31,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(@$""¬!£$%^&*()@~#`|<>'€"");
+    print(@$""¬!£$%^&*()@~#`|<>'€"");
   }
 }";
 

@@ -13,9 +13,9 @@ public class T_7_IfStatement {
 main
   var a = true
   if a then
-    call printLine(""yes"")
+    print ""yes""
   else
-    call printLine(""no"")
+    print ""no""
   end if
 end main
 ";
@@ -34,10 +34,10 @@ public static class Program {
   private static void Main(string[] args) {
     var a = true;
     if (a) {
-      printLine(@$""yes"");
+      print(@$""yes"");
     }
     else {
-      printLine(@$""no"");
+      print(@$""no"");
     }
   }
 }";
@@ -59,9 +59,9 @@ public static class Program {
 main
   var a = false
   if a then
-    call printLine(""yes"")
+    print ""yes""
   else
-    call printLine(""no"")
+    print ""no""
   end if
 end main
 ";
@@ -80,10 +80,10 @@ public static class Program {
   private static void Main(string[] args) {
     var a = false;
     if (a) {
-      printLine(@$""yes"");
+      print(@$""yes"");
     }
     else {
-      printLine(@$""no"");
+      print(@$""no"");
     }
   }
 }";
@@ -105,11 +105,11 @@ public static class Program {
 main
   var a = 2
   if a is 1 then
-    call printLine(""one"")
+    print ""one""
   else if a is 2 then
-    call printLine(""two"")
+    print ""two""
   else
-    call printLine(""neither"")
+    print ""neither""
   end if
 end main
 ";
@@ -128,13 +128,13 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     if (a == 1) {
-      printLine(@$""one"");
+      print(@$""one"");
     }
     else if (a == 2) {
-      printLine(@$""two"");
+      print(@$""two"");
     }
     else {
-      printLine(@$""neither"");
+      print(@$""neither"");
     }
   }
 }";
@@ -156,11 +156,11 @@ public static class Program {
 main
   var a = 3
   if a is 1 then
-    call printLine(""one"")
+    print ""one""
   else if a is 2 then
-    call printLine(""two"")
+    print ""two""
   else
-    call printLine(""neither"")
+    print ""neither""
   end if
 end main
 ";
@@ -179,13 +179,13 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3;
     if (a == 1) {
-      printLine(@$""one"");
+      print(@$""one"");
     }
     else if (a == 2) {
-      printLine(@$""two"");
+      print(@$""two"");
     }
     else {
-      printLine(@$""neither"");
+      print(@$""neither"");
     }
   }
 }";
@@ -207,7 +207,7 @@ public static class Program {
 main
   var a = true
   if a then
-    call printLine(""yes"")
+    print ""yes""
   end if
 end main
 ";
@@ -226,7 +226,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = true;
     if (a) {
-      printLine(@$""yes"");
+      print(@$""yes"");
     }
   }
 }";
@@ -248,13 +248,13 @@ public static class Program {
 main
   var a = 3
   if a is 1 then
-    call printLine(""one"")
+    print ""one""
   else if a is 2 then
-    call printLine(""two"")
+    print ""two""
   else if a is 3 then
-    call printLine(""three"")
+    print ""three""
   else
-    call printLine(""neither"")
+    print ""neither""
   end if
 end main
 ";
@@ -273,16 +273,16 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3;
     if (a == 1) {
-      printLine(@$""one"");
+      print(@$""one"");
     }
     else if (a == 2) {
-      printLine(@$""two"");
+      print(@$""two"");
     }
     else if (a == 3) {
-      printLine(@$""three"");
+      print(@$""three"");
     }
     else {
-      printLine(@$""neither"");
+      print(@$""neither"");
     }
   }
 }";
@@ -304,7 +304,7 @@ public static class Program {
 main
   var a = 3
   if a is 1 then
-    call printLine(""one"")
+    print ""one""
 end main
 ";
 
@@ -318,7 +318,7 @@ end main
 main
   var a = true
   if a 
-    call printLine(@$""yes"")
+    print @$""yes""
   end if
 end
 ";
@@ -333,11 +333,11 @@ end
 main
   var a = 3
   if a is 1 then
-    call printLine(""one"")
+    print ""one""
   else
-    call printLine(""not one"")
+    print ""not one""
   else if a is 2 then
-    call printLine(""two"")
+    print ""two""
   end if
 end main
 ";

@@ -13,7 +13,7 @@ public class T12_Arrays {
         var code = @"
 main
     var a = Array<String>(3)
-    call printLine(a.length())
+    print a.length()
 end main
 ";
 
@@ -30,7 +30,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanArray<string>(3);
-    printLine(StandardLibrary.Functions.length(a));
+    print(StandardLibrary.Functions.length(a));
   }
 }";
 
@@ -50,8 +50,8 @@ public static class Program {
         var code = @"
 main
     var a = Array<String>(3)
-    call printLine(a[0].length())
-    call printLine(a)
+    print a[0].length()
+    print a
 end main
 ";
 
@@ -68,8 +68,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanArray<string>(3);
-    printLine(StandardLibrary.Functions.length(a[0]));
-    printLine(a);
+    print(StandardLibrary.Functions.length(a[0]));
+    print(a);
   }
 }";
 
@@ -91,8 +91,8 @@ main
     var a = Array<String>(3)
     set a[0] to ""foo""
     set a[2] to ""yon""
-    call printLine(a[0])
-    call printLine(a[2])
+    print a[0]
+    print a[2]
 end main
 ";
 
@@ -111,8 +111,8 @@ public static class Program {
     var a = new StandardLibrary.ElanArray<string>(3);
     a[0] = @$""foo"";
     a[2] = @$""yon"";
-    printLine(a[0]);
-    printLine(a[2]);
+    print(a[0]);
+    print(a[2]);
   }
 }";
 
@@ -132,7 +132,7 @@ public static class Program {
         var code = @"
 main
     var a = {""foo"",""bar"",""yon""}.asArray()
-    call printLine(a.length())
+    print a.length()
 end main
 ";
 
@@ -149,7 +149,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<string>(@$""foo"", @$""bar"", @$""yon""));
-    printLine(StandardLibrary.Functions.length(a));
+    print(StandardLibrary.Functions.length(a));
   }
 }";
 
@@ -171,8 +171,8 @@ main
     var a = Array<String>(3,4)
     set a[0,0] to ""foo""
     set a[2,3] to ""yon""
-    call printLine(a[0,0])
-    call printLine(a[2,3])
+    print a[0,0]
+    print a[2,3]
 end main
 ";
 
@@ -191,8 +191,8 @@ public static class Program {
     var a = new StandardLibrary.ElanArray<string>(3, 4);
     a[0,0] = @$""foo"";
     a[2,3] = @$""yon"";
-    printLine(a[0,0]);
-    printLine(a[2,3]);
+    print(a[0,0]);
+    print(a[2,3]);
   }
 }";
 
@@ -248,8 +248,8 @@ end main
         var code = @"
 main
     var a = Array<String>[3][4]
-    call printLine(a[0,0])
-    call printLine(a[2,3])
+    print a[0,0]
+    print a[2,3]
 end main
 ";
 

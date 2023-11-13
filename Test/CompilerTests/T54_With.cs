@@ -13,8 +13,8 @@ public class T54_With {
         var code = @"#
 main
     var x = Foo() with {p1 = 3, p3 = ""Apple"" }
-    call printLine(x.p1)
-    call printLine(x.p2)
+    print x.p1
+    print x.p2
 end main
 
 class Foo
@@ -49,8 +49,8 @@ end class
         var code = @"#
 main
     var x = Foo() with {p1 = 3, p2 = ""Apple"" }
-    call printLine(x.p1)
-    call printLine(x.p2)
+    print x.p1
+    print x.p2
 end main
 
 class Foo
@@ -100,8 +100,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo() with {p1 = 3, p2 = @$""Apple""};
-    printLine(x.p1);
-    printLine(x.p2);
+    print(x.p1);
+    print(x.p2);
   }
 }";
 
@@ -121,8 +121,8 @@ public static class Program {
         var code = @"#
 main
     var x = Foo(7) with {p1 = 3, p2 = ""Apple"" }
-    call printLine(x.p1)
-    call printLine(x.p2)
+    print x.p1
+    print x.p2
 end main
 
 class Foo
@@ -172,8 +172,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo(7) with {p1 = 3, p2 = @$""Apple""};
-    printLine(x.p1);
-    printLine(x.p2);
+    print(x.p1);
+    print(x.p2);
   }
 }";
 
@@ -194,9 +194,9 @@ public static class Program {
 main
     var x = Foo()
     var y = x with {p1 = 3, p2 = ""Apple"" }
-    call printLine(y.p1)
-    call printLine(y.p2)
-    call printLine(x.p1)
+    print y.p1
+    print y.p2
+    print x.p1
 end main
 
 class Foo
@@ -247,9 +247,9 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Foo();
     var y = x with {p1 = 3, p2 = @$""Apple""};
-    printLine(y.p1);
-    printLine(y.p2);
-    printLine(x.p1);
+    print(y.p1);
+    print(y.p2);
+    print(x.p1);
   }
 }";
 
@@ -270,9 +270,9 @@ public static class Program {
 main
     var x = Foo()
     var y = x with {p1 = 3, p2 = ""Apple"" }
-    call printLine(y.p1)
-    call printLine(y.p2)
-    call printLine(x.p1)
+    print y.p1
+    print y.p2
+    print x.p1
 end main
 
 immutable class Foo
@@ -323,9 +323,9 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Foo();
     var y = x with {p1 = 3, p2 = @$""Apple""};
-    printLine(y.p1);
-    printLine(y.p2);
-    printLine(x.p1);
+    print(y.p1);
+    print(y.p2);
+    print(x.p1);
   }
 }";
 

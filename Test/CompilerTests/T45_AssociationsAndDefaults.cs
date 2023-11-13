@@ -21,9 +21,9 @@ public class T45_AssociationsAndDefaults {
         var code = @"#
 main
     var g = Game()
-    call printLine(g.p2)
-    call printLine(g.p1)
-    call printLine(g.previousScores)
+    print g.p2
+    print g.p1
+    print g.previousScores
 end main
 
 class Game
@@ -111,9 +111,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    printLine(g.p2);
-    printLine(g.p1);
-    printLine(g.previousScores);
+    print(g.p2);
+    print(g.p1);
+    print(g.previousScores);
   }
 }";
 
@@ -132,14 +132,14 @@ public static class Program {
         var code = @"#
 main
     var g = Game()
-    call printLine(g.i)
-    call printLine(g.f)
-    call printLine(g.b)
-    call printLine(g.c)
-    call printLine(g.s)
-    call printLine(g.li)
-    call printLine(g.dsi)
-    call printLine(g.ai)
+    print g.i
+    print g.f
+    print g.b
+    print g.c
+    print g.s
+    print g.li
+    print g.dsi
+    print g.ai
 end main
 
 class Game
@@ -206,14 +206,14 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    printLine(g.i);
-    printLine(g.f);
-    printLine(g.b);
-    printLine(g.c);
-    printLine(g.s);
-    printLine(g.li);
-    printLine(g.dsi);
-    printLine(g.ai);
+    print(g.i);
+    print(g.f);
+    print(g.b);
+    print(g.c);
+    print(g.s);
+    print(g.li);
+    print(g.dsi);
+    print(g.ai);
   }
 }";
 
@@ -232,7 +232,7 @@ public static class Program {
         var code = @"#
 main
     var g = default Game
-    call printLine(g.i)
+    print g.i
 end main
 
 class Game
@@ -279,7 +279,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = Game.DefaultInstance;
-    printLine(g.i);
+    print(g.i);
   }
 }";
 
@@ -298,8 +298,8 @@ public static class Program {
         var code = @"#
 main
     var g = Game()
-    call printLine(g.p1)
-    call printLine(g.previousGame)
+    print g.p1
+    print g.previousGame
 end main
 
 class Game
@@ -378,8 +378,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    printLine(g.p1);
-    printLine(g.previousGame);
+    print(g.p1);
+    print(g.previousGame);
   }
 }";
 
@@ -398,12 +398,12 @@ public static class Program {
         var code = @"#
 main
     var g = Game()
-    call printLine(g.p1 is default Player)
-    call printLine(g.p2 is default Player)
-    call printLine(g.previousGame is default Game)
-    call printLine(g.previousScores is default List<Int>)
-    call printLine(g.score is default Int)
-    call printLine(g.best is default Int)
+    print g.p1 is default Player
+    print g.p2 is default Player
+    print g.previousGame is default Game
+    print g.previousScores is default List<Int>
+    print g.score is default Int
+    print g.best is default Int
 end main
 
 class Game
@@ -498,12 +498,12 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    printLine(g.p1 == Player.DefaultInstance);
-    printLine(g.p2 == Player.DefaultInstance);
-    printLine(g.previousGame == Game.DefaultInstance);
-    printLine(g.previousScores == StandardLibrary.ElanList<int>.DefaultInstance);
-    printLine(g.score == default(int));
-    printLine(g.best == default(int));
+    print(g.p1 == Player.DefaultInstance);
+    print(g.p2 == Player.DefaultInstance);
+    print(g.previousGame == Game.DefaultInstance);
+    print(g.previousScores == StandardLibrary.ElanList<int>.DefaultInstance);
+    print(g.score == default(int));
+    print(g.best == default(int));
   }
 }";
 
@@ -522,9 +522,9 @@ public static class Program {
         var code = @"#
 main
     var g = Game()
-    call printLine(g.score)
+    print g.score
     call g.setScore(default Int)
-    call printLine(g.score)
+    print g.score
 end main
 
 class Game
@@ -626,10 +626,10 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    printLine(g.score);
+    print(g.score);
     var _setScore_1_0 = default(int);
     g.setScore(ref _setScore_1_0);
-    printLine(g.score);
+    print(g.score);
   }
 }";
 
@@ -648,14 +648,14 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    call printLine(f.a)
-    call printLine(f.b)
-    call printLine(f.c)
-    call printLine(f.d)
-    call printLine(f.a is default List<Int>)
-    call printLine(f.b is default String)
-    call printLine(f.c is default Dictionary<String,Int>)
-    call printLine(f.d is default Array<Int>)
+    print f.a
+    print f.b
+    print f.c
+    print f.d
+    print f.a is default List<Int>
+    print f.b is default String
+    print f.c is default Dictionary<String,Int>
+    print f.d is default Array<Int>
 end main
 
 class Foo
@@ -709,14 +709,14 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f.a);
-    printLine(f.b);
-    printLine(f.c);
-    printLine(f.d);
-    printLine(f.a == StandardLibrary.ElanList<int>.DefaultInstance);
-    printLine(f.b == """");
-    printLine(f.c == StandardLibrary.ElanDictionary<string, int>.DefaultInstance);
-    printLine(f.d == StandardLibrary.ElanArray<int>.DefaultInstance);
+    print(f.a);
+    print(f.b);
+    print(f.c);
+    print(f.d);
+    print(f.a == StandardLibrary.ElanList<int>.DefaultInstance);
+    print(f.b == """");
+    print(f.c == StandardLibrary.ElanDictionary<string, int>.DefaultInstance);
+    print(f.d == StandardLibrary.ElanArray<int>.DefaultInstance);
   }
 }";
 

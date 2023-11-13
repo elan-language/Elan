@@ -12,7 +12,7 @@ public class T_6_ArithmeticOperators {
     public void Pass_IntAddition() {
         var code = @"
 main
-  call printLine(3 + 4)
+  print 3 + 4
 end main
 ";
 
@@ -28,7 +28,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 + 4);
+    print(3 + 4);
   }
 }";
 
@@ -47,7 +47,7 @@ public static class Program {
     public void Pass_IntSubtraction() {
         var code = @"
 main
-  call printLine(3 - 4)
+  print 3 - 4
 end main
 ";
 
@@ -63,7 +63,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 - 4);
+    print(3 - 4);
   }
 }";
 
@@ -82,7 +82,7 @@ public static class Program {
     public void Pass_IntMultiplication() {
         var code = @"
 main
-  call printLine(3 * 4)
+  print 3 * 4
 end main
 ";
 
@@ -98,7 +98,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 * 4);
+    print(3 * 4);
   }
 }";
 
@@ -118,7 +118,7 @@ public static class Program {
         var code = @"
 main
   var a = 3
-  call printLine(a + 4)
+  print a + 4
 end main
 ";
 
@@ -135,7 +135,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 3;
-    printLine(a + 4);
+    print(a + 4);
   }
 }";
 
@@ -154,7 +154,7 @@ public static class Program {
     public void Pass_DivideIntegersToFloat() {
         var code = @"
 main
-  call printLine(3/2)
+  print 3/2
 end main
 ";
 
@@ -170,7 +170,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(Compiler.WrapperFunctions.FloatDiv(3, 2));
+    print(Compiler.WrapperFunctions.FloatDiv(3, 2));
   }
 }";
 
@@ -189,7 +189,7 @@ public static class Program {
     public void Pass_IntegerDivision() {
         var code = @"
 main
-  call printLine(7 div 2)
+  print 7 div 2
 end main
 ";
 
@@ -205,7 +205,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(7 / 2);
+    print(7 / 2);
   }
 }";
 
@@ -224,7 +224,7 @@ public static class Program {
     public void Pass_Mod() {
         var code = @"
 main
-  call printLine(11 mod 3)
+  print 11 mod 3
 end main
 ";
 
@@ -240,7 +240,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(11 % 3);
+    print(11 % 3);
   }
 }";
 
@@ -259,7 +259,7 @@ public static class Program {
     public void Pass_Power() {
         var code = @"
 main
-  call printLine(3 ^ 3)
+  print 3 ^ 3
 end main
 ";
 
@@ -275,7 +275,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(System.Math.Pow(3, 3));
+    print(System.Math.Pow(3, 3));
   }
 }";
 
@@ -296,7 +296,7 @@ public static class Program {
 main
   var a = 3
   set a to a + 1
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -314,7 +314,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3;
     a = a + 1;
-    printLine(a);
+    print(a);
   }
 }";
 

@@ -22,9 +22,9 @@ main
     var x = Foo(7, ""Apple"")
     var y = Foo(7, ""Orange"")
     var z = Foo(7, ""Orange"")
-    call printLine(x is x)
-    call printLine(x is y)
-    call printLine(y is z)
+    print x is x
+    print x is y
+    print y is z
 end main
 
 class Foo
@@ -82,9 +82,9 @@ public static class Program {
     var x = new Foo(7, @$""Apple"");
     var y = new Foo(7, @$""Orange"");
     var z = new Foo(7, @$""Orange"");
-    printLine(x == x);
-    printLine(x == y);
-    printLine(y == z);
+    print(x == x);
+    print(x == y);
+    print(y == z);
   }
 }";
 
@@ -107,9 +107,9 @@ main
     var y = x
     call y.setP1(3)
     var z = Foo(8, ""Orange"")
-    call printLine(x is x)
-    call printLine(x is y)
-    call printLine(x is z)
+    print x is x
+    print x is y
+    print x is z
 end main
 
 class Foo
@@ -170,9 +170,9 @@ public static class Program {
     var _setP1_1_0 = 3;
     y.setP1(ref _setP1_1_0);
     var z = new Foo(8, @$""Orange"");
-    printLine(x == x);
-    printLine(x == y);
-    printLine(x == z);
+    print(x == x);
+    print(x == y);
+    print(x == z);
   }
 }";
 
@@ -194,8 +194,8 @@ main
     var x = ""Apple""
     var y = ""Apple""
     var z = ""apple""
-    call printLine(x is y)
-    call printLine(x is z)
+    print x is y
+    print x is z
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -213,8 +213,8 @@ public static class Program {
     var x = @$""Apple"";
     var y = @$""Apple"";
     var z = @$""apple"";
-    printLine(x == y);
-    printLine(x == z);
+    print(x == y);
+    print(x == z);
   }
 }";
 
@@ -236,8 +236,8 @@ main
     var x = {3,4,5}
     var y = {3,4,5}
     var z = {4,3,5}
-    call printLine(x is y)
-    call printLine(x is z)
+    print x is y
+    print x is z
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -255,8 +255,8 @@ public static class Program {
     var x = new StandardLibrary.ElanList<int>(3, 4, 5);
     var y = new StandardLibrary.ElanList<int>(3, 4, 5);
     var z = new StandardLibrary.ElanList<int>(4, 3, 5);
-    printLine(x == y);
-    printLine(x == z);
+    print(x == y);
+    print(x == z);
   }
 }";
 
@@ -279,9 +279,9 @@ main
     var y = {3,4,5}.asArray()
     var z = {4,3,5}.asArray()
     var w = {3,4,5}
-    call printLine(x is y)
-    call printLine(x is z)
-    call printLine(x is w)
+    print x is y
+    print x is z
+    print x is w
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -300,9 +300,9 @@ public static class Program {
     var y = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(3, 4, 5));
     var z = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(4, 3, 5));
     var w = new StandardLibrary.ElanList<int>(3, 4, 5);
-    printLine(x == y);
-    printLine(x == z);
-    printLine(x == w);
+    print(x == y);
+    print(x == z);
+    print(x == w);
   }
 }";
 
@@ -326,10 +326,10 @@ main
     var z = {'b':4,'c':5,'a':3}
     var w = {'a':3,'b':6,'c':5}
     var v = {""b"":4,""c"":5,""a"":3}
-    call printLine(x is y)
-    call printLine(x is z)
-    call printLine(x is w)
-    call printLine(x is v)
+    print x is y
+    print x is z
+    print x is w
+    print x is v
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -349,10 +349,10 @@ public static class Program {
     var z = new StandardLibrary.ElanDictionary<char,int>(('b', 4), ('c', 5), ('a', 3));
     var w = new StandardLibrary.ElanDictionary<char,int>(('a', 3), ('b', 6), ('c', 5));
     var v = new StandardLibrary.ElanDictionary<string,int>((@$""b"", 4), (@$""c"", 5), (@$""a"", 3));
-    printLine(x == y);
-    printLine(x == z);
-    printLine(x == w);
-    printLine(x == v);
+    print(x == y);
+    print(x == z);
+    print(x == w);
+    print(x == v);
   }
 }";
 

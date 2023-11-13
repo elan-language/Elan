@@ -13,7 +13,7 @@ public class T_5_Variables {
         var code = @"#
 main
   var a = 3
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -30,7 +30,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 3;
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -50,7 +50,7 @@ public static class Program {
         var code = @"#
 main
   var a = 3 + 4
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -67,7 +67,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 3 + 4;
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -88,7 +88,7 @@ public static class Program {
 main
   var a = 3
   set a to 4
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -106,7 +106,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3;
     a = 4;
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -127,7 +127,7 @@ public static class Program {
 main
   var a = 3.1
   set a to 4
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -145,7 +145,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3.1;
     a = 4;
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -166,7 +166,7 @@ public static class Program {
 constant a = 3
 main
   var a = 4
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -183,7 +183,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 4;
-    printLine(a);
+    print(a);
   }
 }";
 

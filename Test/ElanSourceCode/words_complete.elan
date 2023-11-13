@@ -36,7 +36,7 @@ MAIN MENU
 9. Quit"
 
 main
-    call print(welcome)
+    print welcome
     var player1 = Player("Player One")
     var player2 = Player("Player Two")
     var allowedWords = List<String>()
@@ -45,7 +45,7 @@ main
     var choice = ""
     var randomStart = false
     while choice is not "9"
-        call print(mainMenu)
+        print mainMenu
         set choice to input("Enter your choice:")
         set randomStart to choice is "1"
     end while
@@ -61,7 +61,7 @@ procedure play(g Game)
     while g.isPlayable()       
         call haveTurn(g.player1, g)
         call getKey("Press Enter to continue") 
-        call printLine()
+        print 
         call haveTurn(g.player2, g)
     end while
     call game.updateScoresWithPenalty()
@@ -83,15 +83,15 @@ end procedure
 
 procedure getChoice(choice String)
     var choice = ""
-    call print(menu3)
+    print menu3
     set choice to input("> ")
-    call printLine()
+    print 
     set choice to choice.asUpperCase()
 end procedure
 
 procedure getNewTileChoice(newTileChoice String)
     repeat
-        call print(tileChoiceMenu)
+        print tileChoiceMenu
         set newTileChoice to input("> ")
     until tileMenuChoices.contains(newTileChoice)
 end procedure
@@ -101,22 +101,22 @@ procedure displayWinner(game Game)
     var player2 = game.player2
     var score1 = player1.score
     var score2 = player2.score
-    call printLine("**** GAME OVER! ****")
-    call printLine("{player1} your score is {score1}")
-    call printLine("{player2} your score is {score2}")
+    print "**** GAME OVER! ****"
+    print "{player1} your score is {score1}"
+    print "{player2} your score is {score2}"
     if score1 > score2 then
-        call printLine("{player1} wins!")
+        print "{player1} wins!"
     else if score2 > score1 then
-        call printLine("{player2} wins!")
+        print "{player2} wins!"
     else
-        call printLine("It is a draw!")
+        print "It is a draw!"
     end if
 end procedure
 
 procedure haveTurn(player Player, game Game)
-    call print("{player.name} it is your turn.")
-    call print("Your current hand {player.tilesInHand}")
-    call print(game.listTileValues(player))
+    print "{player.name} it is your turn."
+    print "Your current hand {player.tilesInHand}"
+    print game.listTileValues(player)
     var newTileChoice = "2"
     var validChoice = false
     var validWord = false
@@ -124,11 +124,11 @@ procedure haveTurn(player Player, game Game)
     while not validChoice
         call getChoice(choice)
          if choice is "1" then
-             call print(game.tileValuesAsString())
+             print game.tileValuesAsString()
          else if choice is "4" then
-             call print(game.showTileQueue())
+             print game.showTileQueue()
          else if choice is "7" then
-             call print(game.listTileValues(player))
+             print game.listTileValues(player)
          else if choice is "0" then
              set validChoice to true
              call game.fillHandWithTiles(player)
@@ -138,20 +138,20 @@ procedure haveTurn(player Player, game Game)
          if validWord then
              set validWord to game.checkWordIsValid(choice)
              if validWord then
-                 call print(newline() + "Valid word")
+                 print newline() + "Valid word"
                  call game.updateAfterAllowedWord(player, choice)
                  set newTileChoice to getNewTileChoice()
              end if
          end if
          if not validWord then
-              call print("Not a valid attempt, you lose your turn.")
+              print "Not a valid attempt, you lose your turn."
          end if
             if newTileChoice is not "4"  then
                 call game.addEndOfTurnTiles(player, newTileChoice, choice)
             end if
-            call printLine("Your word was {choice}")
-            call printLine("Your new score is {player.score}")
-            call printLine("You have played {player.tilesPlayed} tiles so far in this game.")
+            print "Your word was {choice}"
+            print "Your new score is {player.score}"
+            print "You have played {player.tilesPlayed} tiles so far in this game."
   end while
 end procedure
 

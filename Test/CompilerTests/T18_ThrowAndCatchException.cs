@@ -166,9 +166,9 @@ public static class Program {
 main
   try
      call foo()
-     call printLine(""not caught"")
+     print ""not caught""
   catch e
-    call printLine(e)
+    print e
   end try
 end main
 
@@ -193,11 +193,11 @@ public static class Program {
   private static void Main(string[] args) {
     try {
       foo();
-      printLine(@$""not caught"");
+      print(@$""not caught"");
     }
     catch (Exception _e) {
       var e = new StandardLibrary.ElanException(_e);
-      printLine(e);
+      print(e);
     }
   }
 }";
@@ -220,9 +220,9 @@ main
     var x = 1
     var y = 0
     var z = x div y
-    call printLine(@$""not caught"");
+    print @$""not caught"";
   catch e
-    call printLine(e)
+    print e
   end try
 end main
 ";
@@ -243,11 +243,11 @@ public static class Program {
       var x = 1;
       var y = 0;
       var z = x / y;
-      printLine(@$""not caught"");
+      print(@$""not caught"");
     }
     catch (Exception _e) {
       var e = new StandardLibrary.ElanException(_e);
-      printLine(e);
+      print(e);
     }
   }
 }";
@@ -269,9 +269,9 @@ public static class Program {
 main
   try
      call foo()
-     call printLine(""not caught"")
+     print ""not caught""
   catch e
-    call printLine(e.message)
+    print e.message
   end try
 end main
 
@@ -296,11 +296,11 @@ public static class Program {
   private static void Main(string[] args) {
     try {
       foo();
-      printLine(@$""not caught"");
+      print(@$""not caught"");
     }
     catch (Exception _e) {
       var e = new StandardLibrary.ElanException(_e);
-      printLine(e.message);
+      print(e.message);
     }
   }
 }";
@@ -344,9 +344,9 @@ end function
 main
   try
      call foo()
-     call printLine(""not caught"")
+     print ""not caught""
   catch
-    call printLine(""caught"")
+    print ""caught""
   end try
 end main
 

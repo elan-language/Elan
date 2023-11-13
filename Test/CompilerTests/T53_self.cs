@@ -13,7 +13,7 @@ public class T53_self {
         var code = @"#
 main
     var x = Foo(7)
-    call printLine(x.p1)
+    print x.p1
 end main
 
 class Foo
@@ -59,7 +59,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo(7);
-    printLine(x.p1);
+    print(x.p1);
   }
 }";
 
@@ -79,7 +79,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    call printLine(f.bar())
+    print f.bar()
 end main
 
 function doubled(f Foo) -> Int
@@ -141,7 +141,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f.bar());
+    print(f.bar());
   }
 }";
 
@@ -164,7 +164,7 @@ public static class Program {
         var code = @"#
 main
     var x = Foo(7)
-    call printLine(x.p1)
+    print x.p1
 end main
 
 class Foo
@@ -194,7 +194,7 @@ end class
         var code = @"#
 main
     var x = Foo(7)
-    call printLine(x.p1)
+    print x.p1
 end main
 
 class Foo

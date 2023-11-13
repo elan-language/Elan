@@ -15,7 +15,7 @@ main
   var x = 0.7
   var y = sin(x) ^ 2 +
      cos(x) ^ 2
-  call printLine(y)
+  print y
 end main
 ";
 
@@ -33,7 +33,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
-    printLine(y);
+    print(y);
   }
 }";
 
@@ -55,7 +55,7 @@ main
   var x = 0.7
   var y = 
 sin(x) ^ 2 + cos(x) ^ 2
-  call printLine(y)
+  print y
 end main
 ";
 
@@ -73,7 +73,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
-    printLine(y);
+    print(y);
   }
 }";
 
@@ -95,7 +95,7 @@ main
   var x = 0.7
   var y = sin(
         x) ^ 2  + cos(x) ^ 2
-  call printLine(y)
+  print y
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -112,7 +112,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
-    printLine(y);
+    print(y);
   }
 }";
 
@@ -134,7 +134,7 @@ main
   var x = 0.7
   var y = 3 + 4 *
     1 + 2
-  call printLine(y)
+  print y
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -151,7 +151,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = 3 + 4 * 1 + 2;
-    printLine(y);
+    print(y);
   }
 }";
 
@@ -176,7 +176,7 @@ main
   var x = 0.7
   var y = sin(x) ^ 2 
      + cos(x) ^ 2
-  call printLine(y)
+  print y
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -190,7 +190,7 @@ main
   var x = 0.7
   set y 
      to sin(x) ^ 2  + cos(x) ^ 2
-  call printLine(y)
+  print y
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

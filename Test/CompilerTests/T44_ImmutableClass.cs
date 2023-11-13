@@ -13,8 +13,8 @@ public class T44_ImmutableClass {
         var code = @"#
 main
     var f = Foo(3)
-    call printLine(f.p1)
-    call printLine(f.square())
+    print f.p1
+    print f.square()
 end main
 
 immutable class Foo
@@ -65,8 +65,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo(3);
-    printLine(f.p1);
-    printLine(f.square());
+    print(f.p1);
+    print(f.square());
   }
 }";
 
@@ -85,8 +85,8 @@ public static class Program {
         var code = @"#
 main
     var f = Foo(3)
-    call printLine(f.p1)
-    call printLine(f.square())
+    print f.p1
+    print f.square()
 end main
 
 abstract immutable class Bar
@@ -146,8 +146,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo(3);
-    printLine(f.p1);
-    printLine(f.square());
+    print(f.p1);
+    print(f.square());
   }
 }";
 

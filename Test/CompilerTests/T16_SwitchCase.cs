@@ -15,11 +15,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            call printLine('a')
+            print 'a'
         case 2
-            call printLine('b')
+            print 'b'
         case 3
-            call printLine('c')
+            print 'c'
         default
       end switch
   end for
@@ -41,13 +41,13 @@ public static class Program {
     for (var i = 1; i <= 3; i = i + 1) {
       switch (i) {
         case 1:
-          printLine('a');
+          print('a');
           break;
         case 2:
-          printLine('b');
+          print('b');
           break;
         case 3:
-          printLine('c');
+          print('c');
           break;
         default:
           
@@ -74,11 +74,11 @@ main
   for i = 1 to 3
       switch (i)
         case 1
-            call printLine('a')
+            print 'a'
         case 2
-            call printLine('b')
+            print 'b'
         case 3
-            call printLine('c')
+            print 'c'
         default
       end switch
   end for
@@ -100,13 +100,13 @@ public static class Program {
     for (var i = 1; i <= 3; i = i + 1) {
       switch ((i)) {
         case 1:
-          printLine('a');
+          print('a');
           break;
         case 2:
-          printLine('b');
+          print('b');
           break;
         case 3:
-          printLine('c');
+          print('c');
           break;
         default:
           
@@ -134,9 +134,9 @@ main
   for i = 1 to 3
       switch i
         case 1
-            call printLine('a')
+            print 'a'
         default
-            call printLine('b')      
+            print 'b'      
       end switch
   end for
 end main
@@ -157,10 +157,10 @@ public static class Program {
     for (var i = 1; i <= 3; i = i + 1) {
       switch (i) {
         case 1:
-          printLine('a');
+          print('a');
           break;
         default:
-          printLine('b');
+          print('b');
           break;
       }
     }
@@ -185,11 +185,11 @@ main
   for i = 1 to 3
       switch i + 1
         case 1
-            call printLine('a')
+            print 'a'
         case 2
-            call printLine('b')
+            print 'b'
         default
-            call printLine('c')        
+            print 'c'        
       end switch
   end for
 end main
@@ -210,13 +210,13 @@ public static class Program {
     for (var i = 1; i <= 3; i = i + 1) {
       switch (i + 1) {
         case 1:
-          printLine('a');
+          print('a');
           break;
         case 2:
-          printLine('b');
+          print('b');
           break;
         default:
-          printLine('c');
+          print('c');
           break;
       }
     }
@@ -245,11 +245,11 @@ main
   for i = 1 to 4
       switch i
         case 1
-            call printLine('a')
+            print 'a'
         case 2
-            call printLine('b')
+            print 'b'
         case 3
-            call printLine('c')   
+            print 'c'   
       end switch
   end for
 end main
@@ -266,7 +266,7 @@ main
   for i = 1 to 4
       switch i
         default
-            call printLine('a') 
+            print 'a' 
       end switch
   end for
 end main
@@ -283,11 +283,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            call printLine('a')
+            print 'a'
         case 2
-            call printLine('b')
+            print 'b'
         case 3.1
-            call printLine('c') 
+            print 'c' 
         default
       end switch
   end for
@@ -311,11 +311,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            call printLine('a')
+            print 'a'
         case a
-            call printLine('b')
+            print 'b'
         case 3
-            call printLine('c')        
+            print 'c'        
       end switch
   end for
 end main
@@ -331,11 +331,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            call printLine('a')
+            print 'a'
         case 1 + 1
-            call printLine('b')
+            print 'b'
         case 3
-            call printLine('c')        
+            print 'c'        
       end switch
   end for
 end main
@@ -352,11 +352,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            call printLine('a')
+            print 'a'
         default
-            call printLine('b')
+            print 'b'
         case 3
-            call printLine('c')        
+            print 'c'        
       end switch
   end for
 end main
@@ -373,11 +373,11 @@ main
   for i = 1 to 4
       switch i
         case 1:
-            call printLine('a')
+            print 'a'
         case 2:
-            call printLine('b')
+            print 'b'
         case 3:
-            call printLine('c')        
+            print 'c'        
   end for
 end main
 ";
@@ -392,8 +392,8 @@ end main
 main
   for i = 1 to 3
       switch i
-        case 1 printLine('a')
-        case 2 printLine('b')       
+        case 1 print('a')
+        case 2 print('b')       
       end switch
   end for
 end main
@@ -409,9 +409,9 @@ main
   for i = 1 to 3
       switch
         case 1 
-            call printLine('a')
+            print 'a'
         case 2 
-            call printLine('b')       
+            print 'b'       
       end switch
   end for
 end main
@@ -427,9 +427,9 @@ main
   for i = 1 to 3
       switch
         case
-            call printLine('a')
+            print 'a'
         case 2 
-            call printLine('b')       
+            print 'b'       
       end switch
   end for
 end main

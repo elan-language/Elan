@@ -14,7 +14,7 @@ main
    repeat
      set x to x + 1
    until  x >= 10
-   call printLine(x)
+   print x
 end main
 ";
 
@@ -34,7 +34,7 @@ public static class Program {
     do {
       x = x + 1;
     } while (!(x >= 10));
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -63,7 +63,7 @@ main
        until  y > 4
      set x to x + 1
    until  x > 3
-   call printLine(t)
+   print t
 end main
 ";
 
@@ -89,7 +89,7 @@ public static class Program {
       } while (!(y > 4));
       x = x + 1;
     } while (!(x > 3));
-    printLine(t);
+    print(t);
   }
 }";
 

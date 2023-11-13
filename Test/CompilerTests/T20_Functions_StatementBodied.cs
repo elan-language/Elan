@@ -12,7 +12,7 @@ public class T20_Functions_StatementBodied {
     public void Pass_SimpleCase() {
         var code = @"
 main
-    call printLine(foo(3,4))
+    print foo(3,4)
 end main
 
 function foo(a Int, b Int) -> Int
@@ -35,7 +35,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(Globals.foo(3, 4));
+    print(Globals.foo(3, 4));
   }
 }";
 
@@ -54,7 +54,7 @@ public static class Program {
     public void Pass_Recursive() {
         var code = @"
 main
-    call printLine(factorial(5))
+    print factorial(5)
 end main
 
 function factorial(a Int) -> Int
@@ -89,7 +89,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(Globals.factorial(5));
+    print(Globals.factorial(5));
   }
 }";
 
@@ -110,10 +110,10 @@ public static class Program {
         var code = @"
 main
     var li = {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
-    call printLine(binarySearch(li, ""lemon""))
-    call printLine(binarySearch(li, ""apple""))
-    call printLine(binarySearch(li, ""strawberry""))
-    call printLine(binarySearch(li, ""blueberry""))
+    print binarySearch(li, ""lemon"")
+    print binarySearch(li, ""apple"")
+    print binarySearch(li, ""strawberry"")
+    print binarySearch(li, ""blueberry"")
 end main
 
 function binarySearch(li List<String>, item String) ->  Bool 
@@ -172,10 +172,10 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var li = new StandardLibrary.ElanList<string>(@$""apple"", @$""apricot"", @$""banana"", @$""lemon"", @$""lime"", @$""melon"", @$""orange"", @$""pear"", @$""plum"", @$""strawberry"");
-    printLine(Globals.binarySearch(li, @$""lemon""));
-    printLine(Globals.binarySearch(li, @$""apple""));
-    printLine(Globals.binarySearch(li, @$""strawberry""));
-    printLine(Globals.binarySearch(li, @$""blueberry""));
+    print(Globals.binarySearch(li, @$""lemon""));
+    print(Globals.binarySearch(li, @$""apple""));
+    print(Globals.binarySearch(li, @$""strawberry""));
+    print(Globals.binarySearch(li, @$""blueberry""));
   }
 }";
 
@@ -232,7 +232,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var li = new StandardLibrary.ElanList<string>(@$""plum"", @$""apricot"", @$""lime"", @$""lemon"", @$""melon"", @$""apple"", @$""orange"", @$""strawberry"", @$""pear"", @$""banana"");
-    printLine(Globals.mergeSort(li));
+    print(Globals.mergeSort(li));
   }
 }";
 
@@ -408,7 +408,7 @@ main
 end main
 
 function foo(a Int, b Int) -> Int
-    call print(a)
+    print a
     return a * b
 end function
 ";
@@ -425,7 +425,7 @@ end function
         var code = @"
 main
     var result = foo(3,4)
-    call printLine(result)
+    print result
 end main
 
 function foo(a Int, b Int) -> Int
@@ -442,7 +442,7 @@ end procedure
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot have system call in function");
+        AssertDoesNotCompile(compileData, "Cannot have system call in function\r\n");
     }
 
     [TestMethod]
@@ -450,7 +450,7 @@ end procedure
         var code = @"
 main
     var result = foo(3,4)
-    call printLine(result)
+    print result
 end main
 
 function foo(a Int, b Int) -> Int
@@ -471,7 +471,7 @@ end function
         var code = @"
 main
     var result = foo(3,4,5)
-    call printLine(result)
+    print result
 end main
 
 function foo(a Int, b Int) -> Int
@@ -492,7 +492,7 @@ end function
         var code = @"
 main
     var result = foo(3)
-    call printLine(result)
+    print result
 end main
 
 function foo(a Int, b Int) -> Int
@@ -513,7 +513,7 @@ end function
         var code = @"
 main
     var result = foo(3, ""b"")
-    call printLine(result)
+    print result
 end main
 
 function foo(a Int, b Int) -> Int

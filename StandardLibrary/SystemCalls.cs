@@ -29,13 +29,9 @@ public static class SystemCalls {
     #endregion
 
     #region Output to screen
+    public static void print(object obj) => Console.WriteLine(asString(obj));
 
-    //TODO once we can support Any type - replace all overloads with argument of type 'object'
-    public static void printLine(object obj) => Console.WriteLine(asString(obj));
-
-    public static void printLine() => Console.WriteLine();
-
-    public static void print(object obj) => Console.Write(asString(obj));
+    public static void print() => Console.WriteLine();
 
     #endregion
 

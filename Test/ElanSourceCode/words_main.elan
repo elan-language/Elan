@@ -1,6 +1,6 @@
 ﻿
 main
-    call print(welcome)
+    print welcome
     var player1 = Player("Player One")
     var player2 = Player("Player Two")
     var allowedWords = List<String>()
@@ -9,7 +9,7 @@ main
     var choice = ""
     var randomStart = false
     while choice is not "9"
-        call print(mainMenu)
+        print mainMenu
         set choice to input("Enter your choice:")
         set randomStart to choice is "1"
     end while

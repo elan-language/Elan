@@ -34,7 +34,7 @@ class Foo
     property p1 Int
 
     procedure display()
-        call printLine(p1)
+        print p1
     end procedure
 
     function asString() -> String
@@ -92,9 +92,9 @@ end class
         var code = @"#
 main
     var f = Foo()
-    call printLine(f.p1)
+    print f.p1
     call f.setP1(7)
-    call printLine(f.p1)
+    print f.p1
 end main
 
 class Foo
@@ -144,10 +144,10 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f.p1);
+    print(f.p1);
     var _setP1_1_0 = 7;
     f.setP1(ref _setP1_1_0);
-    printLine(f.p1);
+    print(f.p1);
   }
 }";
 
@@ -179,7 +179,7 @@ class Foo
     property p1 Int
 
     procedure display()
-        call printLine(p1)
+        print p1
     end procedure
 
     function asString() -> String
@@ -208,7 +208,7 @@ public static partial class Globals {
       return @$"""";
     }
     public virtual void display() {
-      printLine(p1);
+      print(p1);
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }

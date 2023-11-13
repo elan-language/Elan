@@ -13,9 +13,9 @@ public class T34_ConcreteClasses {
         var code = @"#
 main
     var x = Foo()
-    call printLine(x.p1)
-    call printLine(x.p2)
-    call printLine(x.asString())
+    print x.p1
+    print x.p2
+    print x.asString()
 end main
 
 class Foo
@@ -65,9 +65,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo();
-    printLine(x.p1);
-    printLine(x.p2);
-    printLine(x.asString());
+    print(x.p1);
+    print(x.p2);
+    print(x.asString());
   }
 }";
 
@@ -87,8 +87,8 @@ public static class Program {
         var code = @"#
 main
     var x = Foo(7, ""Apple"")
-    call printLine(x.p1)
-    call printLine(x.p2)
+    print x.p1
+    print x.p2
 end main
 
 class Foo
@@ -139,8 +139,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo(7, @$""Apple"");
-    printLine(x.p1);
-    printLine(x.p2);
+    print(x.p1);
+    print(x.p2);
   }
 }";
 

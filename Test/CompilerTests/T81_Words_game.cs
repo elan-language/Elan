@@ -20,10 +20,10 @@ public class T81_CompletePrograms
         var code = @"
 main
     var li = {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
-    call printLine(binarySearch(li, ""lemon""))
-    call printLine(binarySearch(li, ""apple""))
-    call printLine(binarySearch(li, ""strawberry""))
-    call printLine(binarySearch(li, ""blueberry""))
+    print binarySearch(li, ""lemon"")
+    print binarySearch(li, ""apple"")
+    print binarySearch(li, ""strawberry"")
+    print binarySearch(li, ""blueberry"")
 end main
 
 function binarySearch(li List<String>, item String) ->  Bool 
@@ -82,10 +82,10 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var li = new StandardLibrary.ElanList<string>(@$""apple"", @$""apricot"", @$""banana"", @$""lemon"", @$""lime"", @$""melon"", @$""orange"", @$""pear"", @$""plum"", @$""strawberry"");
-    printLine(Globals.binarySearch(li, @$""lemon""));
-    printLine(Globals.binarySearch(li, @$""apple""));
-    printLine(Globals.binarySearch(li, @$""strawberry""));
-    printLine(Globals.binarySearch(li, @$""blueberry""));
+    print(Globals.binarySearch(li, @$""lemon""));
+    print(Globals.binarySearch(li, @$""apple""));
+    print(Globals.binarySearch(li, @$""strawberry""));
+    print(Globals.binarySearch(li, @$""blueberry""));
   }
 }";
 
@@ -141,7 +141,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var li = new StandardLibrary.ElanList<string>(@$""plum"", @$""apricot"", @$""lime"", @$""lemon"", @$""melon"", @$""apple"", @$""orange"", @$""strawberry"", @$""pear"", @$""banana"");
-    printLine(Globals.mergeSort(li));
+    print(Globals.mergeSort(li));
   }
 }";
 

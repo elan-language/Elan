@@ -12,7 +12,7 @@ public class Template_TestClass {
     public void Pass_Template() {
         var code = @"
 main
- call printLine()
+ print 
 end main
 ";
 

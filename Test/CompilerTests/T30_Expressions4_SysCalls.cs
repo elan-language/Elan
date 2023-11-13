@@ -11,7 +11,7 @@ public class T30_Expressions4_SystemCalls {
         var code = @"#
 main
   var a = input()
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -28,7 +28,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = input();
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -48,7 +48,7 @@ public static class Program {
         var code = @"#
 main
   var a = input(""Your name"")
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -65,7 +65,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = input(@$""Your name"");
-    printLine(a);
+    print(a);
   }
 }";
 
