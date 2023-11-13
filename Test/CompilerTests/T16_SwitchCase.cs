@@ -15,11 +15,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            printLine('a')
+            call printLine('a')
         case 2
-            printLine('b')
+            call printLine('b')
         case 3
-            printLine('c')
+            call printLine('c')
         default
       end switch
   end for
@@ -74,11 +74,11 @@ main
   for i = 1 to 3
       switch (i)
         case 1
-            printLine('a')
+            call printLine('a')
         case 2
-            printLine('b')
+            call printLine('b')
         case 3
-            printLine('c')
+            call printLine('c')
         default
       end switch
   end for
@@ -134,9 +134,9 @@ main
   for i = 1 to 3
       switch i
         case 1
-            printLine('a')
+            call printLine('a')
         default
-            printLine('b')      
+            call printLine('b')      
       end switch
   end for
 end main
@@ -185,11 +185,11 @@ main
   for i = 1 to 3
       switch i + 1
         case 1
-            printLine('a')
+            call printLine('a')
         case 2
-            printLine('b')
+            call printLine('b')
         default
-            printLine('c')        
+            call printLine('c')        
       end switch
   end for
 end main
@@ -245,11 +245,11 @@ main
   for i = 1 to 4
       switch i
         case 1
-            printLine('a')
+            call printLine('a')
         case 2
-            printLine('b')
+            call printLine('b')
         case 3
-            printLine('c')   
+            call printLine('c')   
       end switch
   end for
 end main
@@ -266,7 +266,7 @@ main
   for i = 1 to 4
       switch i
         default
-            printLine('a') 
+            call printLine('a') 
       end switch
   end for
 end main
@@ -283,11 +283,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            printLine('a')
+            call printLine('a')
         case 2
-            printLine('b')
+            call printLine('b')
         case 3.1
-            printLine('c') 
+            call printLine('c') 
         default
       end switch
   end for
@@ -311,11 +311,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            printLine('a')
+            call printLine('a')
         case a
-            printLine('b')
+            call printLine('b')
         case 3
-            printLine('c')        
+            call printLine('c')        
       end switch
   end for
 end main
@@ -331,11 +331,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            printLine('a')
+            call printLine('a')
         case 1 + 1
-            printLine('b')
+            call printLine('b')
         case 3
-            printLine('c')        
+            call printLine('c')        
       end switch
   end for
 end main
@@ -352,11 +352,11 @@ main
   for i = 1 to 3
       switch i
         case 1
-            printLine('a')
+            call printLine('a')
         default
-            printLine('b')
+            call printLine('b')
         case 3
-            printLine('c')        
+            call printLine('c')        
       end switch
   end for
 end main
@@ -373,11 +373,11 @@ main
   for i = 1 to 4
       switch i
         case 1:
-            printLine('a')
+            call printLine('a')
         case 2:
-            printLine('b')
+            call printLine('b')
         case 3:
-            printLine('c')        
+            call printLine('c')        
   end for
 end main
 ";
@@ -409,9 +409,9 @@ main
   for i = 1 to 3
       switch
         case 1 
-            printLine('a')
+            call printLine('a')
         case 2 
-            printLine('b')       
+            call printLine('b')       
       end switch
   end for
 end main
@@ -427,9 +427,9 @@ main
   for i = 1 to 3
       switch
         case
-            printLine('a')
+            call printLine('a')
         case 2 
-            printLine('b')       
+            call printLine('b')       
       end switch
   end for
 end main

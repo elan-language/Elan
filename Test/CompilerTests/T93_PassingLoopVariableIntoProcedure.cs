@@ -17,7 +17,7 @@ public class T93_PassingLoopVariableIntoProcedure
 procedure removeLetters(wordAsPlayed String)
   foreach letter in wordAsPlayed
     var x = letter
-    removeLetter(x)
+    call removeLetter(x)
   end foreach
 end procedure
 
@@ -70,7 +70,7 @@ public static class Program {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)
   foreach letter in wordAsPlayed
-    removeLetter(letter)
+    call removeLetter(letter)
   end foreach
 end procedure
 

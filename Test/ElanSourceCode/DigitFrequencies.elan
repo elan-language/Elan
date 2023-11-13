@@ -1,6 +1,6 @@
 main
     var q = QueueOfTiles(10)
-    printLine(q.show())
+    call printLine(q.show())
 end main
 
 class QueueOfTiles
@@ -17,7 +17,7 @@ class QueueOfTiles
     procedure initialise()
         set rear to -1
         for count = 0 to maxSize - 2
-           add()
+           call add()
         end for
     end procedure
 

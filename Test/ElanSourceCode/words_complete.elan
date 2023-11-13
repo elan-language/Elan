@@ -36,36 +36,36 @@ MAIN MENU
 9. Quit"
 
 main
-    print(welcome)
+    call print(welcome)
     var player1 = Player("Player One")
     var player2 = Player("Player Two")
     var allowedWords = List<String>()
-    loadAllowedWords(allowedWords)
+    call loadAllowedWords(allowedWords)
     var game = Game(player1, player2, allowedWords)
     var choice = ""
     var randomStart = false
     while choice is not "9"
-        print(mainMenu)
+        call print(mainMenu)
         set choice to input("Enter your choice:")
         set randomStart to choice is "1"
     end while
     if randomStart then
-        game.initialiseForRandomStart()
+        call game.initialiseForRandomStart()
     else
-        game.initialiseStandard()
+        call game.initialiseStandard()
     end if
-    play(game)
+    call play(game)
 end main
 
 procedure play(g Game)    
     while g.isPlayable()       
-        haveTurn(g.player1, g)
-        getKey("Press Enter to continue") 
-        printLine()
-        haveTurn(g.player2, g)
+        call haveTurn(g.player1, g)
+        call getKey("Press Enter to continue") 
+        call printLine()
+        call haveTurn(g.player2, g)
     end while
-    game.updateScoresWithPenalty()
-    displayWinner(g)
+    call game.updateScoresWithPenalty()
+    call displayWinner(g)
 end procedure
 
 procedure loadAllowedWords(allowedWords List<String>)
@@ -75,23 +75,23 @@ procedure loadAllowedWords(allowedWords List<String>)
             var line = file.readLine()
             set allowedWords toallowedWords.add(line.trim().toUpper())
         end while
-        file.close()
+        call file.close()
     catch e
-        allowedWords.clear()
+        call allowedWords.clear()
     end try
 end procedure
 
 procedure getChoice(choice String)
     var choice = ""
-    print(menu3)
+    call print(menu3)
     set choice to input("> ")
-    printLine()
+    call printLine()
     set choice to choice.asUpperCase()
 end procedure
 
 procedure getNewTileChoice(newTileChoice String)
     repeat
-        print(tileChoiceMenu)
+        call print(tileChoiceMenu)
         set newTileChoice to input("> ")
     until tileMenuChoices.contains(newTileChoice)
 end procedure
@@ -101,57 +101,57 @@ procedure displayWinner(game Game)
     var player2 = game.player2
     var score1 = player1.score
     var score2 = player2.score
-    printLine("**** GAME OVER! ****")
-    printLine("{player1} your score is {score1}")
-    printLine("{player2} your score is {score2}")
+    call printLine("**** GAME OVER! ****")
+    call printLine("{player1} your score is {score1}")
+    call printLine("{player2} your score is {score2}")
     if score1 > score2 then
-        printLine("{player1} wins!")
+        call printLine("{player1} wins!")
     else if score2 > score1 then
-        printLine("{player2} wins!")
+        call printLine("{player2} wins!")
     else
-        printLine("It is a draw!")
+        call printLine("It is a draw!")
     end if
 end procedure
 
 procedure haveTurn(player Player, game Game)
-    print("{player.name} it is your turn.")
-    print("Your current hand {player.tilesInHand}")
-    print(game.listTileValues(player))
+    call print("{player.name} it is your turn.")
+    call print("Your current hand {player.tilesInHand}")
+    call print(game.listTileValues(player))
     var newTileChoice = "2"
     var validChoice = false
     var validWord = false
     var choice = ""
     while not validChoice
-        getChoice(choice)
+        call getChoice(choice)
          if choice is "1" then
-             print(game.tileValuesAsString())
+             call print(game.tileValuesAsString())
          else if choice is "4" then
-             print(game.showTileQueue())
+             call print(game.showTileQueue())
          else if choice is "7" then
-             print(game.listTileValues(player))
+             call print(game.listTileValues(player))
          else if choice is "0" then
              set validChoice to true
-             game.fillHandWithTiles(player)
+             call game.fillHandWithTiles(player)
          else
              set validWord to game.checkWordIsInTiles(choice, player)
          end if
          if validWord then
              set validWord to game.checkWordIsValid(choice)
              if validWord then
-                 print(newline() + "Valid word")
-                 game.updateAfterAllowedWord(player, choice)
+                 call print(newline() + "Valid word")
+                 call game.updateAfterAllowedWord(player, choice)
                  set newTileChoice to getNewTileChoice()
              end if
          end if
          if not validWord then
-              print("Not a valid attempt, you lose your turn.")
+              call print("Not a valid attempt, you lose your turn.")
          end if
-            if newTileChoice <> "4"  then
-                game.addEndOfTurnTiles(player, newTileChoice, choice)
+            if newTileChoice is not "4"  then
+                call game.addEndOfTurnTiles(player, newTileChoice, choice)
             end if
-            printLine("Your word was {choice}")
-            printLine("Your new score is {player.score}")
-            printLine("You have played {player.tilesPlayed} tiles so far in this game.")
+            call printLine("Your word was {choice}")
+            call printLine("Your new score is {player.score}")
+            call printLine("You have played {player.tilesPlayed} tiles so far in this game.")
   end while
 end procedure
 

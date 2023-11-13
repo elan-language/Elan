@@ -7,6 +7,7 @@ COMMENT_MARKER: '#';
 
 // Keywords
 ABSTRACT:      'abstract';
+CALL:		   'call';
 CASE: 		   'case';
 CATCH:         'catch';
 CLASS:         'class';
@@ -40,6 +41,7 @@ STEP:		   'step';
 SWITCH:        'switch';
 TEST:		   'test';
 THEN:		   'then';
+THROW:		   'throw';
 TO:			   'to';
 TRY:           'try';
 UNTIL:         'until';
@@ -83,7 +85,7 @@ OP_NOT:                   'not';
 OP_OR:                    'or';
 OP_XOR:                   'xor';
 OP_EQ:                    'is';
-OP_NE:                    '<>' | ('is' (Whitespace)* 'not');
+OP_NE:                    'is' (Whitespace)* 'not';
 OP_LE:                    '<=';
 OP_GE:                    '>=';
 

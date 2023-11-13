@@ -14,7 +14,7 @@ main
    while x < 10
      set x to x + 1
    end while
-   printLine(x)
+   call printLine(x)
 end main
 ";
 
@@ -63,7 +63,7 @@ main
         end while
         set x to x + 1
     end while
-   printLine(t)
+   call printLine(t)
 end main
 ";
 

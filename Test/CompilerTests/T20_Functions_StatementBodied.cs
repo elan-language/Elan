@@ -12,7 +12,7 @@ public class T20_Functions_StatementBodied {
     public void Pass_SimpleCase() {
         var code = @"
 main
-    printLine(foo(3,4))
+    call printLine(foo(3,4))
 end main
 
 function foo(a Int, b Int) -> Int
@@ -54,7 +54,7 @@ public static class Program {
     public void Pass_Recursive() {
         var code = @"
 main
-    printLine(factorial(5))
+    call printLine(factorial(5))
 end main
 
 function factorial(a Int) -> Int
@@ -110,10 +110,10 @@ public static class Program {
         var code = @"
 main
     var li = {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
-    printLine(binarySearch(li, ""lemon""))
-    printLine(binarySearch(li, ""apple""))
-    printLine(binarySearch(li, ""strawberry""))
-    printLine(binarySearch(li, ""blueberry""))
+    call printLine(binarySearch(li, ""lemon""))
+    call printLine(binarySearch(li, ""apple""))
+    call printLine(binarySearch(li, ""strawberry""))
+    call printLine(binarySearch(li, ""blueberry""))
 end main
 
 function binarySearch(li List<String>, item String) ->  Bool 
@@ -255,7 +255,7 @@ public static class Program {
     public void Fail_noEnd() {
         var code = @"
 main
-    foo(3,4)
+    call foo(3,4)
 end main
 
 function foo(a Int, b Int) -> Int
@@ -408,7 +408,7 @@ main
 end main
 
 function foo(a Int, b Int) -> Int
-    print(a)
+    call print(a)
     return a * b
 end function
 ";
@@ -425,11 +425,11 @@ end function
         var code = @"
 main
     var result = foo(3,4)
-    printLine(result)
+    call printLine(result)
 end main
 
 function foo(a Int, b Int) -> Int
-    bar()
+    call bar()
     return a * b
 end function
 
@@ -450,7 +450,7 @@ end procedure
         var code = @"
 main
     var result = foo(3,4)
-    printLine(result)
+    call printLine(result)
 end main
 
 function foo(a Int, b Int) -> Int
@@ -471,7 +471,7 @@ end function
         var code = @"
 main
     var result = foo(3,4,5)
-    printLine(result)
+    call printLine(result)
 end main
 
 function foo(a Int, b Int) -> Int
@@ -492,7 +492,7 @@ end function
         var code = @"
 main
     var result = foo(3)
-    printLine(result)
+    call printLine(result)
 end main
 
 function foo(a Int, b Int) -> Int
@@ -513,7 +513,7 @@ end function
         var code = @"
 main
     var result = foo(3, ""b"")
-    printLine(result)
+    call printLine(result)
 end main
 
 function foo(a Int, b Int) -> Int

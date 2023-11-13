@@ -1,12 +1,12 @@
 ﻿main
     var sq1 = Square(3,4)
-    printLine(sq1)
+    call printLine(sq1)
     var sq2 = Square(3,4)
-    printLine(sq1 is sq2)
-    printLine(sq1.getAdjacentSquare(Direction.up))
-    printLine(sq1.getAdjacentSquare(Direction.down))
-    printLine(sq1.getAdjacentSquare(Direction.left))
-    printLine(sq1.getAdjacentSquare(Direction.right))
+    call printLine(sq1 is sq2)
+    call printLine(sq1.getAdjacentSquare(Direction.up))
+    call printLine(sq1.getAdjacentSquare(Direction.down))
+    call printLine(sq1.getAdjacentSquare(Direction.left))
+    call printLine(sq1.getAdjacentSquare(Direction.right))
 end main
 
 class Square

@@ -17,7 +17,7 @@ main
     foreach x in a
         set n to n + x
     end foreach
-    printLine(n)
+    call printLine(n)
 end main
 ";
 
@@ -62,7 +62,7 @@ main
     foreach x in a
         set n to n + x
     end foreach
-    printLine(n)
+    call printLine(n)
 end main
 ";
 
@@ -104,7 +104,7 @@ public static class Program {
 main
     var a = ""hello""
     foreach x in a
-        printLine(x)
+        call printLine(x)
     end foreach
 end main
 ";
@@ -145,7 +145,7 @@ public static class Program {
 main
     foreach x in ""12""
         foreach y in ""34""
-            printLine(""{x}{y }"")
+            call printLine(""{x}{y }"")
         end foreach
     end foreach
 end main
@@ -193,9 +193,9 @@ main
     var a = {7,8,9}
     var x = ""hello"";
     foreach x in a
-       printLine(x)
+       call printLine(x)
     end foreach
-    printLine(x)
+    call printLine(x)
 end main
 ";
 
@@ -236,7 +236,7 @@ public static class Program {
 main
   var a = ""hello""
   foreach x in a
-   printLine(x)
+   call printLine(x)
   end for
 end main
 ";
@@ -251,7 +251,7 @@ end main
 main
     var y = 10
     foreach x in y
-       printLine(x)
+       call printLine(x)
     end foreach
 end main
 ";

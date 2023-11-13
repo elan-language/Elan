@@ -13,9 +13,9 @@ public class T_7_IfStatement {
 main
   var a = true
   if a then
-    printLine(""yes"")
+    call printLine(""yes"")
   else
-    printLine(""no"")
+    call printLine(""no"")
   end if
 end main
 ";
@@ -59,9 +59,9 @@ public static class Program {
 main
   var a = false
   if a then
-    printLine(""yes"")
+    call printLine(""yes"")
   else
-    printLine(""no"")
+    call printLine(""no"")
   end if
 end main
 ";
@@ -105,11 +105,11 @@ public static class Program {
 main
   var a = 2
   if a is 1 then
-    printLine(""one"")
+    call printLine(""one"")
   else if a is 2 then
-    printLine(""two"")
+    call printLine(""two"")
   else
-    printLine(""neither"")
+    call printLine(""neither"")
   end if
 end main
 ";
@@ -156,11 +156,11 @@ public static class Program {
 main
   var a = 3
   if a is 1 then
-    printLine(""one"")
+    call printLine(""one"")
   else if a is 2 then
-    printLine(""two"")
+    call printLine(""two"")
   else
-    printLine(""neither"")
+    call printLine(""neither"")
   end if
 end main
 ";
@@ -207,7 +207,7 @@ public static class Program {
 main
   var a = true
   if a then
-    printLine(""yes"")
+    call printLine(""yes"")
   end if
 end main
 ";
@@ -248,13 +248,13 @@ public static class Program {
 main
   var a = 3
   if a is 1 then
-    printLine(""one"")
+    call printLine(""one"")
   else if a is 2 then
-    printLine(""two"")
+    call printLine(""two"")
   else if a is 3 then
-    printLine(""three"")
+    call printLine(""three"")
   else
-    printLine(""neither"")
+    call printLine(""neither"")
   end if
 end main
 ";
@@ -304,7 +304,7 @@ public static class Program {
 main
   var a = 3
   if a is 1 then
-    printLine(""one"")
+    call printLine(""one"")
 end main
 ";
 
@@ -318,7 +318,7 @@ end main
 main
   var a = true
   if a 
-    printLine(@$""yes"")
+    call printLine(@$""yes"")
   end if
 end
 ";
@@ -333,11 +333,11 @@ end
 main
   var a = 3
   if a is 1 then
-    printLine(""one"")
+    call printLine(""one"")
   else
-    printLine(""not one"")
+    call printLine(""not one"")
   else if a is 2 then
-    printLine(""two"")
+    call printLine(""two"")
   end if
 end main
 ";

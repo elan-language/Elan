@@ -17,7 +17,7 @@ public class T_2_HelloWorld {
     public void Pass_StringLiteral() {
         var code = @"#
 main
-  printLine(""Hello World!"")
+  call printLine(""Hello World!"")
 end main
 ";
 
@@ -51,7 +51,7 @@ public static class Program {
     public void Pass_IntegerLiteral() {
         var code = @"#
 main
-  printLine(1)
+  call printLine(1)
 end main
 ";
 
@@ -86,7 +86,7 @@ public static class Program {
     public void Pass_FloatLiteral() {
         var code = @"#
 main
-  printLine(2.1)
+  call printLine(2.1)
 end main
 ";
 
@@ -122,7 +122,7 @@ public static class Program {
     {
         var code = @"#
 main
-  printLine(2.1E4)
+  call printLine(2.1E4)
 end main
 ";
 
@@ -157,7 +157,7 @@ public static class Program {
     {
         var code = @"#
 main
-  printLine(2.1E100)
+  call printLine(2.1E100)
 end main
 ";
 
@@ -192,7 +192,7 @@ public static class Program {
     {
         var code = @"#
 main
-  printLine(2.1e-4)
+  call printLine(2.1e-4)
 end main
 ";
 
@@ -226,7 +226,7 @@ public static class Program {
     public void Pass_CharLiteral() {
         var code = @"#
 main
-  printLine('%')
+  call printLine('%')
 end main
 ";
 
@@ -261,7 +261,7 @@ public static class Program {
     public void Pass_BoolLiteral() {
         var code = @"#
 main
-  printLine(true)
+  call printLine(true)
 end main
 ";
 
@@ -296,7 +296,7 @@ public static class Program {
     public void Pass_EmptyLine() {
         var code = @"#
 main
-  printLine()
+  call printLine()
 end main
 ";
 
@@ -333,7 +333,7 @@ public static class Program {
     [TestMethod]
     public void Fail_noMain() {
         var code = @"#
-printLine(""Hello World`)
+call printLine(""Hello World`)
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -343,7 +343,7 @@ printLine(""Hello World`)
     public void Fail_noEnd() {
         var code = @"#
 main
-  printLine(""Hello World!"")
+  call printLine(""Hello World!"")
 
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -354,7 +354,7 @@ main
     public void Fail_WrongCasing() {
         var code = @"#
 main
-  printline(""Hello World!"")
+  call printline(""Hello World!"")
 
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

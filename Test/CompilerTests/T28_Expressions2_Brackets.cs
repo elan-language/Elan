@@ -15,9 +15,9 @@ main
   var x = 2 + 3 * 5 + 1
   var y = (2 + 3) * 5 + 1
   var z = (2 + 3) * (5 + 1)
-  printLine(x)
-  printLine(y)
-  printLine(z)
+  call printLine(x)
+  call printLine(y)
+  call printLine(z)
 end main
 ";
 
@@ -60,9 +60,9 @@ main
   var x = 2 + (3 * 5) + 1
   var y = ((2 + 3)) * 5 + (1)
   var z = ((2 + 3) * (5 + 1))
-  printLine(x)
-  printLine(y)
-  printLine(z)
+  call printLine(x)
+  call printLine(y)
+  call printLine(z)
 end main
 ";
 
@@ -104,8 +104,8 @@ public static class Program {
 main
   var x = 2 + 3 ^ 2
   var y = (2 + 3) ^ 2
-  printLine(x)
-  printLine(y)
+  call printLine(x)
+  call printLine(y)
 end main
 ";
 
@@ -145,8 +145,8 @@ public static class Program {
 main
   var x = 16.0 / 2 ^ 3
   var y = (16.0/2) ^ 3
-  printLine(x)
-  printLine(y)
+  call printLine(x)
+  call printLine(y)
 end main
 ";
 
@@ -187,8 +187,8 @@ public static class Program {
 main
   var x = 16 / 2 ^ 3
   var y = (16/2) ^ 3
-  printLine(x)
-  printLine(y)
+  call printLine(x)
+  call printLine(y)
 end main
 ";
 
@@ -228,8 +228,8 @@ public static class Program {
 main
   var x = - 4.7
   var y = 5 * -3
-  printLine(x)
-  printLine(y)
+  call printLine(x)
+  call printLine(y)
 end main
 ";
 
@@ -269,8 +269,8 @@ public static class Program {
 main
     var x = 11 mod 3
     var y = 5 + 6 mod 3
-    printLine(x)
-    printLine(y)
+    call printLine(x)
+    call printLine(y)
 end main
 ";
 
@@ -309,8 +309,8 @@ public static class Program {
 main
     var x = 11 div 3
     var y = 5 + 6 div 3
-    printLine(x)
-    printLine(y)
+    call printLine(x)
+    call printLine(y)
 end main
 ";
 

@@ -13,7 +13,7 @@ public class T_4_Constants {
         var code = @"#
 constant a = 3
 main
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -49,7 +49,7 @@ public static class Program {
         var code = @"#
 constant a = 3.1
 main
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -85,7 +85,7 @@ public static class Program {
         var code = @"#
 constant a = ""hell0""
 main
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -121,7 +121,7 @@ public static class Program {
         var code = @"#
 constant a = 'a'
 main
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -157,7 +157,7 @@ public static class Program {
         var code = @"#
 constant a = true
 main
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -196,7 +196,7 @@ public static class Program {
         var code = @"#
 main
   constant a = 3
-  print(a)
+  call print(a)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

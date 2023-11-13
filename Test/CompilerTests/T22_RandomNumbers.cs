@@ -12,11 +12,11 @@ public class T22_RandomNumbers {
     public void Pass_Raw() {
         var code = @"#
 main
-     seedRandom(3)
+     call seedRandom(3)
      var x = random()
-     printLine(x)
+     call printLine(x)
      set x to random()
-     printLine(x)
+     call printLine(x)
 end main
 ";
 
@@ -54,11 +54,11 @@ public static class Program {
     public void Pass_MaxFloat() {
         var code = @"#
 main
-     seedRandom(3)
+     call seedRandom(3)
      var x = random(1000.0)
-     printLine(x)
+     call printLine(x)
      set x to random(1000.0)
-     printLine(x)
+     call printLine(x)
 end main
 ";
 
@@ -96,11 +96,11 @@ public static class Program {
     public void Pass_RangeFloat() {
         var code = @"#
 main
-     seedRandom(3)
+     call seedRandom(3)
      var x = random(100.0, 200.0)
-     printLine(x)
+     call printLine(x)
      set x to random(100.0, 200.0)
-     printLine(x)
+     call printLine(x)
 end main
 ";
 
@@ -138,11 +138,11 @@ public static class Program {
     public void Pass_MaxInt() {
         var code = @"#
 main
-     seedRandom(3)
+     call seedRandom(3)
      var x = random(6)
-     printLine(x)
+     call printLine(x)
      set x to random(6)
-     printLine(x)
+     call printLine(x)
 end main
 ";
 
@@ -180,11 +180,11 @@ public static class Program {
     public void Pass_RangeInt() {
         var code = @"#
 main
-     seedRandom(3)
+     call seedRandom(3)
      var x = random(5,10)
-     printLine(x)
+     call printLine(x)
      set x to random(5,10)
-     printLine(x)
+     call printLine(x)
 end main
 ";
 
@@ -227,8 +227,8 @@ public static class Program {
     {
         var code = @"#
 main
-     seedRandom(3)
-     printLine(random())
+     call seedRandom(3)
+     call printLine(random())
 end main
 ";
         var parseTree = @"*";

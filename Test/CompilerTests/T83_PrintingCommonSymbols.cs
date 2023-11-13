@@ -15,7 +15,7 @@ public class T83_PrintingCommonSymbols
     {
         var code = @"#
 main
-  printLine(""¬!£$%^&*()@~#`|<>'€"")
+  call printLine(""¬!£$%^&*()@~#`|<>'€"")
 end main
 ";
 

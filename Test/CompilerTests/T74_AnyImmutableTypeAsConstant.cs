@@ -14,7 +14,7 @@ public class T74_AnyImmutableTypeAsConstant {
 constant k = ""Apple""
 
 main 
-  printLine(k)
+  call printLine(k)
 end main
 ";
 
@@ -51,7 +51,7 @@ public static class Program {
 constant k = (3, ""Apple"")
 
 main 
-  printLine(k)
+  call printLine(k)
 end main
 ";
 
@@ -88,7 +88,7 @@ public static class Program {
 constant k = {1,2,3}
 
 main 
-  printLine(k)
+  call printLine(k)
 end main
 ";
 
@@ -125,7 +125,7 @@ public static class Program {
 constant k = {'a':1, 'b':3, 'c':3}
 
 main 
-  printLine(k)
+  call printLine(k)
 end main
 ";
 
@@ -162,7 +162,7 @@ public static class Program {
 constant k = Foo(3)
 
 main 
-  printLine(k)
+  call printLine(k)
 end main
 
 immutable class Foo

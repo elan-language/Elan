@@ -15,7 +15,7 @@ main
   var x = 0.7
   var y = sin(x) ^ 2 +
      cos(x) ^ 2
-  printLine(y)
+  call printLine(y)
 end main
 ";
 
@@ -55,7 +55,7 @@ main
   var x = 0.7
   var y = 
 sin(x) ^ 2 + cos(x) ^ 2
-  printLine(y)
+  call printLine(y)
 end main
 ";
 
@@ -95,7 +95,7 @@ main
   var x = 0.7
   var y = sin(
         x) ^ 2  + cos(x) ^ 2
-  printLine(y)
+  call printLine(y)
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -134,7 +134,7 @@ main
   var x = 0.7
   var y = 3 + 4 *
     1 + 2
-  printLine(y)
+  call printLine(y)
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -176,7 +176,7 @@ main
   var x = 0.7
   var y = sin(x) ^ 2 
      + cos(x) ^ 2
-  printLine(y)
+  call printLine(y)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -190,7 +190,7 @@ main
   var x = 0.7
   set y 
      to sin(x) ^ 2  + cos(x) ^ 2
-  printLine(y)
+  call printLine(y)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

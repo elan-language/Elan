@@ -12,9 +12,9 @@ public class T_9_Conditions {
     public void Pass_lessThan() {
         var code = @"
 main
-  printLine(3 < 4)
-  printLine(3 < 2)
-  printLine(3 < 3)
+  call printLine(3 < 4)
+  call printLine(3 < 2)
+  call printLine(3 < 3)
 end main
 ";
 
@@ -51,9 +51,9 @@ public static class Program {
     public void Pass_greaterThan() {
         var code = @"
 main
-  printLine(3 > 4)
-  printLine(3 > 2)
-  printLine(3 > 3)
+  call printLine(3 > 4)
+  call printLine(3 > 2)
+  call printLine(3 > 3)
 end main
 ";
 
@@ -90,9 +90,9 @@ public static class Program {
     public void Pass_lessThanOrEqual() {
         var code = @"
 main
-  printLine(3 <= 4)
-  printLine(3 <= 2)
-  printLine(3 <= 3)
+  call printLine(3 <= 4)
+  call printLine(3 <= 2)
+  call printLine(3 <= 3)
 end main
 ";
 
@@ -129,9 +129,9 @@ public static class Program {
     public void Pass_greaterThanOrEqual() {
         var code = @"
 main
-  printLine(3 >= 4)
-  printLine(3 >= 2)
-  printLine(3 >= 3)
+  call printLine(3 >= 4)
+  call printLine(3 >= 2)
+  call printLine(3 >= 3)
 end main
 ";
 
@@ -165,51 +165,12 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_greaterOrLessThan() {
-        var code = @"
-main
-  printLine(3 <> 4)
-  printLine(3 <> 2)
-  printLine(3 <> 3)
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static Globals;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    printLine(3 != 4);
-    printLine(3 != 2);
-    printLine(3 != 3);
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
-    }
-
-    [TestMethod]
     public void Pass_isNot() {
         var code = @"
 main
-  printLine(3 is not 4)
-  printLine(3 is not 2)
-  printLine(3 is not 3)
+  call printLine(3 is not 4)
+  call printLine(3 is not 2)
+  call printLine(3 is not 3)
 end main
 ";
 
@@ -240,54 +201,15 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
-    }
-
-    [TestMethod]
-    public void Pass_equalTo() {
-        var code = @"
-main
-  printLine(3 is 4)
-  printLine(3 is 2)
-  printLine(3 is 3)
-end main
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
-using static Globals;
-using static StandardLibrary.SystemCalls;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    printLine(3 == 4);
-    printLine(3 == 2);
-    printLine(3 == 3);
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "false\r\nfalse\r\ntrue\r\n");
     }
 
     [TestMethod]
     public void Pass_is() {
         var code = @"
 main
-  printLine(3 is 4)
-  printLine(3 is 2)
-  printLine(3 is 3)
+  call printLine(3 is 4)
+  call printLine(3 is 2)
+  call printLine(3 is 3)
 end main
 ";
 
@@ -324,9 +246,9 @@ public static class Program {
     public void Pass_canCompareCoerdableTypes() {
         var code = @"
 main
-  printLine(3 < 3.1)
-  printLine(3 is 3.0)
-  printLine(3.1 < 3)
+  call printLine(3 < 3.1)
+  call printLine(3 is 3.0)
+  call printLine(3.1 < 3)
 end main
 ";
 
@@ -366,7 +288,7 @@ public static class Program {
     public void Fail_not_is() {
         var code = @"
 main
-  printLine(3 not is 3)
+  call printLine(3 not is 3)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -377,7 +299,7 @@ end main
     public void Fail_not() {
         var code = @"
 main
-  printLine(3 not 3)
+  call printLine(3 not 3)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -388,7 +310,7 @@ end main
     public void Fail_notEqual() {
         var code = @"
 main
-  printLine(3 != 3)
+  call printLine(3 != 3)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -399,7 +321,7 @@ end main
     public void Fail_EqualToOrLessThan() {
         var code = @"
 main
-  printLine(3 =< 3)
+  call printLine(3 =< 3)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -410,7 +332,7 @@ end main
     public void Fail_Greater_Or_Equal() {
         var code = @"
 main
-  printLine(3 > or = 3)
+  call printLine(3 > or = 3)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -421,7 +343,7 @@ end main
     public void Fail_SingleEquals() {
         var code = @"
 main
-  printLine(3 = 4)
+  call printLine(3 = 4)
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -432,7 +354,7 @@ end main
     public void Fail_compareDifferentTypes() {
         var code = @"
 main
-  printLine(3 is ""3"")
+  call printLine(3 is ""3"")
 end main
 ";
 
@@ -460,6 +382,31 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeDoesNotCompile(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_greaterOrLessThan()
+    {
+        var code = @"
+main
+  call printLine(3 <> 4)
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_doubleEquals()
+    {
+        var code = @"
+main
+  call printLine(3 == 4)
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
     }
 
     #endregion

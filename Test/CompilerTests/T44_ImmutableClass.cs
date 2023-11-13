@@ -13,8 +13,8 @@ public class T44_ImmutableClass {
         var code = @"#
 main
     var f = Foo(3)
-    printLine(f.p1)
-    printLine(f.square())
+    call printLine(f.p1)
+    call printLine(f.square())
 end main
 
 immutable class Foo
@@ -85,8 +85,8 @@ public static class Program {
         var code = @"#
 main
     var f = Foo(3)
-    printLine(f.p1)
-    printLine(f.square())
+    call printLine(f.p1)
+    call printLine(f.square())
 end main
 
 abstract immutable class Bar

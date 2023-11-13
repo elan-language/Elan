@@ -13,7 +13,7 @@ public class T17_Dictionaries {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -49,7 +49,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  printLine(a['z'])
+  call printLine(a['z'])
 end main
 ";
 
@@ -85,7 +85,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  printLine(a.keys())
+  call printLine(a.keys())
 end main
 ";
 
@@ -121,8 +121,8 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  printLine(a.hasKey('b'))
-  printLine(a.hasKey('d'))
+  call printLine(a.hasKey('b'))
+  call printLine(a.hasKey('d'))
 end main
 ";
 
@@ -158,7 +158,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  printLine(a.values())
+  call printLine(a.values())
 end main
 ";
 
@@ -195,8 +195,8 @@ constant a = {'a':1, 'b':3, 'z':10}
 main
   var b = a.setItem('b', 4)
   var c = b.setItem('d', 2)
-  printLine(a)
-  printLine(c)
+  call printLine(a)
+  call printLine(c)
 end main
 ";
 
@@ -236,8 +236,8 @@ public static class Program {
 constant a = {'a':1, 'b':3, 'z':10}
 main
   var b = a.removeItem('b')
-  printLine(a)
-  printLine(b)
+  call printLine(a)
+  call printLine(b)
 end main
 ";
 
@@ -276,7 +276,7 @@ public static class Program {
 constant a = {'a':1, 'b':3, 'z':10}
 main
   var b = a.removeItem('c')
-  printLine(b)
+  call printLine(b)
 end main
 ";
 
@@ -315,9 +315,9 @@ main
   var a = Dictionary<String, Int>()
   var b = a.setItem(""Foo"",1)
   set b to b.setItem(""Bar"", 3)
-  print(b.length())
-  print(b[""Foo""])
-  print(b[""Bar""])
+  call print(b.length())
+  call print(b[""Foo""])
+  call print(b[""Bar""])
 end main
 ";
 
@@ -362,7 +362,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'a':10}
 main
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -381,7 +381,7 @@ end main
         var code = @"#
 constant a = {'a':1, 'b':3.1, 'z':10}
 main
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -398,7 +398,7 @@ end main
         var code = @"#
 constant a = {'a':1, 'b':3.1, ""Z"":10}
 main
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -415,7 +415,7 @@ end main
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  printLine(a['c'])
+  call printLine(a['c'])
 end main
 ";
 

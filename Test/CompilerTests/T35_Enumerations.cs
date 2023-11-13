@@ -12,9 +12,9 @@ public class T35_enums {
     public void Pass_PrintValues() {
         var code = @"
 main
- printLine(Fruit.apple)
- printLine(Fruit.orange)
- printLine(Fruit.pear)
+ call printLine(Fruit.apple)
+ call printLine(Fruit.orange)
+ call printLine(Fruit.pear)
 end main
 
 enum Fruit
@@ -61,7 +61,7 @@ public static class Program {
 main
  var x = Fruit.apple
  set x to Fruit.pear
- printLine(x)
+ call printLine(x)
 end main
 
 enum Fruit
@@ -107,8 +107,8 @@ public static class Program {
         var code = @"
 main
     var x = Fruit.apple
-    printLine(x is Fruit.apple)
-    printLine(x is Fruit.pear)
+    call printLine(x is Fruit.apple)
+    call printLine(x is Fruit.pear)
 end main
 
 enum Fruit
@@ -156,11 +156,11 @@ main
       var f = Fruit.orange
       switch f
         case Fruit.apple
-            printLine('a')
+            call printLine('a')
         case Fruit.orange
-            printLine('o')
+            call printLine('o')
         case Fruit.pear
-            printLine('p')
+            call printLine('p')
         default
       end switch
 end main
@@ -220,7 +220,7 @@ public static class Program {
         var code = @"
 main
   var a = ""Eat more "" + Fruit.apple + ""s!""
-  printLine(a)
+  call printLine(a)
 end main
 
 enum Fruit

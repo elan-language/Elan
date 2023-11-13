@@ -17,7 +17,7 @@ constant id = 1
 
 main
     var id = 2
-    printLine(id)
+    call printLine(id)
 end main
 ";
         var parseTree = @"*";
@@ -54,7 +54,7 @@ public static class Program {
         var code = @"#
 main
     var bReak = 1
-    printLine(bReak)
+    call printLine(bReak)
 end main
 ";
 
@@ -92,7 +92,7 @@ public static class Program {
         var code = @"#
 main
     var foo = Foo()
-    printLine(foo)
+    call printLine(foo)
 end main
 class Foo
     constructor()

@@ -13,7 +13,7 @@ public class T52_FunctionMethods {
         var code = @"#
 main
     var f = Foo()
-    printLine(f.times(2))
+    call printLine(f.times(2))
 end main
 
 class Foo
@@ -88,7 +88,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    printLine(f.length())
+    call printLine(f.length())
 end main
 
 class Foo
@@ -203,7 +203,7 @@ public static class Program {
 main
     var f = Foo()
     var b = Bar()
-    printLine(f.times(b))
+    call printLine(f.times(b))
 end main
 
 class Foo
@@ -326,7 +326,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    printLine(f)
+    call printLine(f)
 end main
 
 class Foo
@@ -397,7 +397,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    printLine(times(f,2))
+    call printLine(times(f,2))
 end main
 
 class Foo
@@ -465,7 +465,7 @@ class Foo
     property p1 Int
 
     function times(value Int) -> Int
-        setP1(p1 * value)
+        call setP1(p1 * value)
         return p1
     end function
 

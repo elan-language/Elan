@@ -13,7 +13,7 @@ public class T_5_Variables {
         var code = @"#
 main
   var a = 3
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -50,7 +50,7 @@ public static class Program {
         var code = @"#
 main
   var a = 3 + 4
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -88,7 +88,7 @@ public static class Program {
 main
   var a = 3
   set a to 4
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -127,7 +127,7 @@ public static class Program {
 main
   var a = 3.1
   set a to 4
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -166,7 +166,7 @@ public static class Program {
 constant a = 3
 main
   var a = 4
-  printLine(a)
+  call printLine(a)
 end main
 ";
 

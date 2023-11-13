@@ -1,20 +1,20 @@
 ﻿main
   var g = Game(10,10, Direction.right)
-  printLine(g.head())
-  printLine(g.tail())
-  g.clockTick(Direction.right, false)
-  printLine(g.head())
-  printLine(g.tail())
-  g.clockTick(Direction.right, false)
-  printLine(g.head())
-  printLine(g.tail())
-  g.clockTick(Direction.down, false)
+  call printLine(g.head())
+  call printLine(g.tail())
+  call g.clockTick(Direction.right, false)
+  call printLine(g.head())
+  call printLine(g.tail())
+  call g.clockTick(Direction.right, false)
+  call printLine(g.head())
+  call printLine(g.tail())
+  call g.clockTick(Direction.down, false)
   while not g.hasHitEdge()
-   g.clockTick(Direction.down, false)
+   call g.clockTick(Direction.down, false)
   end while
-  printLine(g.hasHitEdge())
-  printLine(g.head())
-  printLine(g.tail())
+  call printLine(g.hasHitEdge())
+  call printLine(g.head())
+  call printLine(g.tail())
 end main
 
 class Game    
@@ -32,7 +32,7 @@ class Game
           set centreH to halfH + 1
         end if
         set snake to Snake(centreW, centreH, startingDirection) 
-        setNewApplePosition()
+        call setNewApplePosition()
     end constructor
 
     private property width Int
@@ -49,11 +49,11 @@ class Game
     end function
 
     procedure clockTick(d Direction, continue Bool)
-        snake.advanceHeadOneSquare(d)
+        call snake.advanceHeadOneSquare(d)
         if snake.head is apple then
-            setNewApplePosition()
+            call setNewApplePosition()
         else
-            snake.advanceTailOneSquare()
+            call snake.advanceTailOneSquare()
         end if
         set continue to not hasHitEdge() and not snake.hasHitItself()
     end procedure

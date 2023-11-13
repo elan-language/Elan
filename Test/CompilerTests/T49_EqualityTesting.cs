@@ -22,9 +22,9 @@ main
     var x = Foo(7, ""Apple"")
     var y = Foo(7, ""Orange"")
     var z = Foo(7, ""Orange"")
-    printLine(x is x)
-    printLine(x is y)
-    printLine(y is z)
+    call printLine(x is x)
+    call printLine(x is y)
+    call printLine(y is z)
 end main
 
 class Foo
@@ -105,11 +105,11 @@ public static class Program {
 main
     var x = Foo(7, ""Apple"")
     var y = x
-    y.setP1(3)
+    call y.setP1(3)
     var z = Foo(8, ""Orange"")
-    printLine(x is x)
-    printLine(x is y)
-    printLine(x is z)
+    call printLine(x is x)
+    call printLine(x is y)
+    call printLine(x is z)
 end main
 
 class Foo
@@ -194,8 +194,8 @@ main
     var x = ""Apple""
     var y = ""Apple""
     var z = ""apple""
-    printLine(x is y)
-    printLine(x is z)
+    call printLine(x is y)
+    call printLine(x is z)
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -236,8 +236,8 @@ main
     var x = {3,4,5}
     var y = {3,4,5}
     var z = {4,3,5}
-    printLine(x is y)
-    printLine(x is z)
+    call printLine(x is y)
+    call printLine(x is z)
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -279,9 +279,9 @@ main
     var y = {3,4,5}.asArray()
     var z = {4,3,5}.asArray()
     var w = {3,4,5}
-    printLine(x is y)
-    printLine(x is z)
-    printLine(x is w)
+    call printLine(x is y)
+    call printLine(x is z)
+    call printLine(x is w)
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -326,10 +326,10 @@ main
     var z = {'b':4,'c':5,'a':3}
     var w = {'a':3,'b':6,'c':5}
     var v = {""b"":4,""c"":5,""a"":3}
-    printLine(x is y)
-    printLine(x is z)
-    printLine(x is w)
-    printLine(x is v)
+    call printLine(x is y)
+    call printLine(x is z)
+    call printLine(x is w)
+    call printLine(x is v)
 end main
 ";
         var objectCode = @"using System.Collections.Generic;

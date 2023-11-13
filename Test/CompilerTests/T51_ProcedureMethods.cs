@@ -23,7 +23,7 @@ public class T51_ProcedureMethods
         var code = @"#
 main
     var f = Foo()
-    display(f)
+    call display(f)
 end main
 
 class Foo
@@ -34,7 +34,7 @@ class Foo
     property p1 Int
 
     procedure display()
-        printLine(p1)
+        call printLine(p1)
     end procedure
 
     function asString() -> String
@@ -57,7 +57,7 @@ end class
         var code = @"#
 main
     var x = Foo()
-    x.calculate()
+    call x.calculate()
 end main
 
 class Foo
@@ -92,9 +92,9 @@ end class
         var code = @"#
 main
     var f = Foo()
-    printLine(f.p1)
-    f.setP1(7)
-    printLine(f.p1)
+    call printLine(f.p1)
+    call f.setP1(7)
+    call printLine(f.p1)
 end main
 
 class Foo
@@ -168,7 +168,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    f.display()
+    call f.display()
 end main
 
 class Foo
@@ -179,7 +179,7 @@ class Foo
     property p1 Int
 
     procedure display()
-        printLine(p1)
+        call printLine(p1)
     end procedure
 
     function asString() -> String

@@ -1,6 +1,6 @@
 main
   var li = {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
-  printLine(mergeSort(li))
+  call printLine(mergeSort(li))
 end main
 
 function mergeSort(list List<String>) -> List<String> 

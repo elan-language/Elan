@@ -12,7 +12,7 @@ public class T_6_ArithmeticOperators {
     public void Pass_IntAddition() {
         var code = @"
 main
-  printLine( 3 + 4)
+  call printLine(3 + 4)
 end main
 ";
 
@@ -47,7 +47,7 @@ public static class Program {
     public void Pass_IntSubtraction() {
         var code = @"
 main
-  printLine( 3 - 4)
+  call printLine(3 - 4)
 end main
 ";
 
@@ -82,7 +82,7 @@ public static class Program {
     public void Pass_IntMultiplication() {
         var code = @"
 main
-  printLine( 3 * 4)
+  call printLine(3 * 4)
 end main
 ";
 
@@ -118,7 +118,7 @@ public static class Program {
         var code = @"
 main
   var a = 3
-  printLine( a + 4)
+  call printLine(a + 4)
 end main
 ";
 
@@ -154,7 +154,7 @@ public static class Program {
     public void Pass_DivideIntegersToFloat() {
         var code = @"
 main
-  printLine(3/2)
+  call printLine(3/2)
 end main
 ";
 
@@ -189,7 +189,7 @@ public static class Program {
     public void Pass_IntegerDivision() {
         var code = @"
 main
-  printLine(7 div 2)
+  call printLine(7 div 2)
 end main
 ";
 
@@ -224,7 +224,7 @@ public static class Program {
     public void Pass_Mod() {
         var code = @"
 main
-  printLine(11 mod 3)
+  call printLine(11 mod 3)
 end main
 ";
 
@@ -259,7 +259,7 @@ public static class Program {
     public void Pass_Power() {
         var code = @"
 main
-  printLine(3 ^ 3)
+  call printLine(3 ^ 3)
 end main
 ";
 
@@ -296,7 +296,7 @@ public static class Program {
 main
   var a = 3
   set a to a + 1
-  printLine(a)
+  call printLine(a)
 end main
 ";
 

@@ -13,9 +13,9 @@ public class T34_ConcreteClasses {
         var code = @"#
 main
     var x = Foo()
-    printLine(x.p1)
-    printLine(x.p2)
-    printLine(x.asString())
+    call printLine(x.p1)
+    call printLine(x.p2)
+    call printLine(x.asString())
 end main
 
 class Foo
@@ -87,8 +87,8 @@ public static class Program {
         var code = @"#
 main
     var x = Foo(7, ""Apple"")
-    printLine(x.p1)
-    printLine(x.p2)
+    call printLine(x.p1)
+    call printLine(x.p2)
 end main
 
 class Foo

@@ -13,8 +13,8 @@ public class T54_With {
         var code = @"#
 main
     var x = Foo() with {p1 = 3, p3 = ""Apple"" }
-    printLine(x.p1)
-    printLine(x.p2)
+    call printLine(x.p1)
+    call printLine(x.p2)
 end main
 
 class Foo
@@ -49,8 +49,8 @@ end class
         var code = @"#
 main
     var x = Foo() with {p1 = 3, p2 = ""Apple"" }
-    printLine(x.p1)
-    printLine(x.p2)
+    call printLine(x.p1)
+    call printLine(x.p2)
 end main
 
 class Foo
@@ -121,8 +121,8 @@ public static class Program {
         var code = @"#
 main
     var x = Foo(7) with {p1 = 3, p2 = ""Apple"" }
-    printLine(x.p1)
-    printLine(x.p2)
+    call printLine(x.p1)
+    call printLine(x.p2)
 end main
 
 class Foo
@@ -194,9 +194,9 @@ public static class Program {
 main
     var x = Foo()
     var y = x with {p1 = 3, p2 = ""Apple"" }
-    printLine(y.p1)
-    printLine(y.p2)
-    printLine(x.p1)
+    call printLine(y.p1)
+    call printLine(y.p2)
+    call printLine(x.p1)
 end main
 
 class Foo
@@ -270,9 +270,9 @@ public static class Program {
 main
     var x = Foo()
     var y = x with {p1 = 3, p2 = ""Apple"" }
-    printLine(y.p1)
-    printLine(y.p2)
-    printLine(x.p1)
+    call printLine(y.p1)
+    call printLine(y.p2)
+    call printLine(x.p1)
 end main
 
 immutable class Foo

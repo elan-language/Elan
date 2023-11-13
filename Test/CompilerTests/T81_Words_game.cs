@@ -20,10 +20,10 @@ public class T81_CompletePrograms
         var code = @"
 main
     var li = {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
-    printLine(binarySearch(li, ""lemon""))
-    printLine(binarySearch(li, ""apple""))
-    printLine(binarySearch(li, ""strawberry""))
-    printLine(binarySearch(li, ""blueberry""))
+    call printLine(binarySearch(li, ""lemon""))
+    call printLine(binarySearch(li, ""apple""))
+    call printLine(binarySearch(li, ""strawberry""))
+    call printLine(binarySearch(li, ""blueberry""))
 end main
 
 function binarySearch(li List<String>, item String) ->  Bool 
