@@ -33,6 +33,10 @@ public static class CompilerRules {
                 return $"Cannot use a system call in an expression : {leafNode}";
             }
 
+            if (otherNodes.Any(n => n is  PrintNode)) {
+                return $"Cannot use a print in an expression : {leafNode}";
+            }
+
             if (!otherNodes.Any(n => n is ICanWrapExpression)) {
                 return $"System call generates a result that is neither assigned nor returned : {leafNode}";
             }
@@ -141,6 +145,13 @@ public static class CompilerRules {
             var otherNodes = nodes.SkipLast(1).ToArray();
             if (otherNodes.Any(n => n is FunctionDefNode)) {
                 return $"Cannot throw exception in function : {leafNode}";
+            }
+        }
+
+        if (leafNode is PrintNode) {
+            var otherNodes = nodes.SkipLast(1).ToArray();
+            if (otherNodes.Any(n => n is FunctionDefNode)) {
+                return $"Cannot print in function : {leafNode}";
             }
         }
 

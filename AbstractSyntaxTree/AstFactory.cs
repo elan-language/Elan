@@ -73,6 +73,7 @@ public static class AstFactory {
             NameQualifierContext c => visitor.Build(c),
             DeconstructedTupleContext c => visitor.Build(c),
             ThrowExceptionContext c => visitor.Build(c),
+            PrintStatementContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -764,6 +765,12 @@ public static class AstFactory {
         var i = context.IDENTIFIER() is { } id ? visitor.Visit(id) : null;
         var s = context.LITERAL_STRING() is { } ls ? new ValueNode(ls.Symbol.Text, new ValueTypeNode(ValueType.String)) : null;
 
-        return new ThrowNode(i ?? s ?? throw new NotImplementedException());
+        return new ThrowNode(i ?? s ?? throw new NullReferenceException());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, PrintStatementContext context) {
+        var expr = visitor.Visit(context.expression());
+
+        return new PrintNode(expr);
     }
 }

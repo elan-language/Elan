@@ -1,20 +1,20 @@
 ﻿main
   var g = Game(10,10, Direction.right)
-  call printLine(g.head())
-  call printLine(g.tail())
+  print g.head()
+  print g.tail()
   call g.clockTick(Direction.right, false)
-  call printLine(g.head())
-  call printLine(g.tail())
+  print g.head()
+  print g.tail()
   call g.clockTick(Direction.right, false)
-  call printLine(g.head())
-  call printLine(g.tail())
+  print g.head()
+  print g.tail()
   call g.clockTick(Direction.down, false)
   while not g.hasHitEdge()
    call g.clockTick(Direction.down, false)
   end while
-  call printLine(g.hasHitEdge())
-  call printLine(g.head())
-  call printLine(g.tail())
+  print g.hasHitEdge()
+  print g.head()
+  print g.tail()
 end main
 
 class Game    

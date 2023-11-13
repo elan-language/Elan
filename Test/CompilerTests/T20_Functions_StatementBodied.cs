@@ -417,7 +417,7 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot have system call in function");
+        AssertDoesNotCompile(compileData, "Cannot print in function");
     }
 
     [TestMethod]
@@ -442,7 +442,7 @@ end procedure
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot have system call in function\r\n");
+        AssertDoesNotCompile(compileData, "Cannot have system call in function");
     }
 
     [TestMethod]

@@ -296,7 +296,7 @@ public static class Program {
     public void Pass_EmptyLine() {
         var code = @"#
 main
-  print 
+  print """"
 end main
 ";
 
@@ -312,7 +312,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print();
+    print(@$"""");
   }
 }";
 
