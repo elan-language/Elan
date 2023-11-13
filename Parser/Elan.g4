@@ -248,7 +248,7 @@ tupleDefinition:  OPEN_BRACKET expression COMMA expression (COMMA expression)* C
 
 literalTuple:  OPEN_BRACKET literal COMMA literal (COMMA literal)* CLOSE_BRACKET; 
 
-deconstructedTuple: OPEN_BRACKET VAR? IDENTIFIER (COMMA VAR? IDENTIFIER)+  CLOSE_BRACKET;
+deconstructedTuple: OPEN_BRACKET IDENTIFIER (COMMA IDENTIFIER)+  CLOSE_BRACKET;
  
 listDefinition: OPEN_BRACE (expression (COMMA expression)*) CLOSE_BRACE;
 
