@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree;
+using AbstractSyntaxTree.Nodes;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
 
@@ -108,17 +109,53 @@ public class SymbolTableVisitor {
             "Bool" => BooleanSymbolType.Instance,
             "Char" => CharSymbolType.Instance,
             "Tuple" => new TupleSymbolType(),
-            _ => new ClassSymbolType(type)
+            "Array" => new ArraySymbolType(),
+            "List" => new ListSymbolType(),
+            "Dictionary" => new DictionarySymbolType(),
+            _ when type.StartsWith("Pending:") => new ReturnResultSymbolType(type.Split(":").Last()),
+            _ => new ClassSymbolType(type),
         };
+
+    private static bool OperatorEvaluatesToBoolean(Operator op) =>
+        op switch {
+            Operator.And => true,
+            Operator.Plus => false,
+            Operator.Minus => false,
+            Operator.Multiply => false,
+            Operator.Divide => false,
+            Operator.Power => false,
+            Operator.Modulus => false,
+            Operator.IntDivide => false,
+            Operator.Equal => true,
+            Operator.Or => true,
+            Operator.Not => true,
+            Operator.Xor => true,
+            Operator.LessThan => true,
+            Operator.GreaterThanEqual => true,
+            Operator.GreaterThan => true,
+            Operator.LessThanEqual => true,
+            Operator.NotEqual => true,
+            _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
+        };
+
+
 
     private static string GetTypeName(IAstNode node) {
         return node switch {
-            IdentifierNode idn => idn.Id,
+            IdentifierNode idn => $"Pending:{idn.Id}",
             TypeNode tn => GetTypeName(tn.TypeName),
             NewInstanceNode nin => GetTypeName(nin.Type),
             ValueNode vn => GetTypeName(vn.TypeNode),
             ValueTypeNode vtn => vtn.Type.ToString(),
             LiteralTupleNode => "Tuple",
+            LiteralListNode => "List",
+            LiteralDictionaryNode => "Dictionary",
+            DataStructureTypeNode {Type:DataStructure.Array} => "Array",
+            DataStructureTypeNode {Type:DataStructure.List} => "List",
+            DataStructureTypeNode {Type:DataStructure.Dictionary} => "Dictionary",
+            MethodCallNode mcn => $"Pending:{mcn.Name}",
+            BinaryNode { Operator: OperatorNode op } when OperatorEvaluatesToBoolean(op.Value)  => "Bool",
+            BinaryNode bn => GetTypeName(bn.Operand1),
             _ => ""
         };
     }

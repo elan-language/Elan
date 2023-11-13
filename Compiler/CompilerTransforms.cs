@@ -7,10 +7,25 @@ using ValueType = AbstractSyntaxTree.ValueType;
 namespace Compiler;
 
 public static class CompilerTransforms {
+
+    private static ISymbolType? ResolvePending(ISymbolType symbolType, IScope currentScope) {
+        if (symbolType is ReturnResultSymbolType rr) {
+            return currentScope.Resolve(rr.Name) switch {
+                VariableSymbol vs => ResolvePending(vs.ReturnType, currentScope),
+                ClassSymbol cs => new ClassSymbolType(cs.Name),
+                FunctionSymbol fs => ResolvePending(fs.ReturnType, currentScope),
+                _ => throw new NotImplementedException()
+            };
+        }
+
+        return symbolType;
+    }
+
+
     private static ISymbolType? GetExpressionType(IAstNode expression, IScope currentScope) {
         return expression switch {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
-                VariableSymbol vs => vs.ReturnType,
+                VariableSymbol vs => ResolvePending(vs.ReturnType, currentScope),
                 _ => null
             },
             _ => null
@@ -22,7 +37,7 @@ public static class CompilerTransforms {
 
         if (id != null) {
             var varSymbol = currentScope.Resolve(id);
-            var type = varSymbol is VariableSymbol vs ? vs.ReturnType : null;
+            var type = varSymbol is VariableSymbol vs ? ResolvePending(vs.ReturnType, currentScope) : null;
 
             if (type is ClassSymbolType cst) {
                 return GetNode(mcn, currentScope, cst);
@@ -41,7 +56,8 @@ public static class CompilerTransforms {
                 FunctionSymbol => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 _ => null
             },
-            VariableSymbol vs => GetNode(mcn, currentScope, (ClassSymbolType)vs.ReturnType),
+            VariableSymbol { ReturnType: ClassSymbolType } vs => GetNode(mcn, currentScope, (ClassSymbolType)vs.ReturnType),
+            VariableSymbol { ReturnType: FloatSymbolType } => new ValueTypeNode(ValueType.Float),
             _ => null
         };
     }
@@ -116,7 +132,7 @@ public static class CompilerTransforms {
         if (qualifiedId is not null) {
             var symbol = currentScope.Resolve(qualifiedId);
 
-            if (symbol is VariableSymbol { ReturnType: ClassSymbolType }) {
+            if (symbol is VariableSymbol vs &&  ResolvePending(vs.ReturnType, currentScope) is ClassSymbolType ) {
                 return (null, false);
             }
             if (symbol is VariableSymbol or null) {

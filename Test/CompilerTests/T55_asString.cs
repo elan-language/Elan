@@ -93,7 +93,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    var s = StandardLibrary.Functions.asString(f);
+    var s = f.asString();
     printLine(s);
   }
 }";

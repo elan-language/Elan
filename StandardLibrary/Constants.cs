@@ -4,7 +4,7 @@
 public static class Constants {
     public const double pi = 3.141592653589793;
 
-    public static string newline => @"
+    public static string newline = @"
 ";
 
     public enum Direction

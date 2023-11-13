@@ -84,26 +84,39 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_FunctionMethodMayCallOtherFunctionMethod() {
+    public void Pass_FunctionMethodMayCallOtherClassFunctionViaProperty() {
         var code = @"#
 main
     var f = Foo()
-    printLine(f.times(2))
+    printLine(f.length())
 end main
 
 class Foo
+    constructor()
+        p1 = Bar()
+    end constructor
+
+    property p1 Bar
+
+    function length() -> Int
+        return p1.length() + 2
+    end function
+
+    function asString() -> String
+         return """"
+    end function
+
+end class
+
+class Bar
     constructor()
         p1 = 5
     end constructor
 
     property p1 Int
 
-    function times(value Int) -> Int
-        return p1PlusOne() * value
-    end function
-
-    function p1PlusOne() -> Int
-        return p1 +1 
+    function length() -> Int
+        return p1
     end function
 
     function asString() -> String
@@ -124,16 +137,12 @@ public static partial class Globals {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
 
     public Foo() {
-      p1 = 5;
+      p1 = new Bar();
     }
-    public virtual int p1 { get; set; } = default;
-    public virtual int times(int value) {
+    public virtual Bar p1 { get; set; } = Bar.DefaultInstance;
+    public virtual int length() {
 
-      return p1PlusOne() * value;
-    }
-    public virtual int p1PlusOne() {
-
-      return p1 + 1;
+      return p1.length() + 2;
     }
     public virtual string asString() {
 
@@ -141,9 +150,31 @@ public static partial class Globals {
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
-      public override int p1 => default;
+      public override Bar p1 => Bar.DefaultInstance;
 
       public override string asString() { return ""default Foo"";  }
+    }
+  }
+  public record class Bar {
+    public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
+
+    public Bar() {
+      p1 = 5;
+    }
+    public virtual int p1 { get; set; } = default;
+    public virtual int length() {
+
+      return p1;
+    }
+    public virtual string asString() {
+
+      return @$"""";
+    }
+    private record class _DefaultBar : Bar {
+      public _DefaultBar() { }
+      public override int p1 => default;
+
+      public override string asString() { return ""default Bar"";  }
     }
   }
 }
@@ -151,7 +182,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f.times(2));
+    printLine(f.length());
   }
 }";
 
@@ -163,7 +194,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "12\r\n");
+        AssertObjectCodeExecutes(compileData, "7\r\n");
     }
 
     [TestMethod]

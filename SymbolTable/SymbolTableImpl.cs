@@ -17,7 +17,9 @@ public class SymbolTableImpl {
         var stdLib = allExportedMethods.Where(IsStdLib).ToArray();
         var systemCalls = allExportedMethods.Where(IsSystemCall).ToArray();
 
-        InitTypeSystem(stdLib, systemCalls);
+        var constants = sc.Single(t => t.Name == "Constants").GetFields().ToArray();
+
+        InitTypeSystem(stdLib, systemCalls, constants);
     }
 
     public GlobalScope GlobalScope { get; } = new();
@@ -43,13 +45,17 @@ public class SymbolTableImpl {
 
     private static bool IsSystemCall(MethodInfo m) => m.GetCustomAttribute<ElanSystemCallAttribute>() is not null || m.DeclaringType?.GetCustomAttribute<ElanSystemCallAttribute>() is not null;
 
-    private void InitTypeSystem(MethodInfo[] stdLib, MethodInfo[] systemCalls) {
+    private void InitTypeSystem(MethodInfo[] stdLib, MethodInfo[] systemCalls, FieldInfo[] constants) {
         foreach (var slf in stdLib.Select(sc => new FunctionSymbol(sc.Name, ConvertToBuiltInSymbol(sc.ReturnType), NameSpace.Library))) {
             GlobalScope.DefineSystem(slf);
         }
 
         foreach (var sc in systemCalls.Select(sc => new SystemCallSymbol(sc.Name, ConvertToBuiltInSymbol(sc.ReturnType)))) {
             GlobalScope.DefineSystem(sc);
+        }
+
+        foreach (var c in constants.Select(c => new VariableSymbol(c.Name, ConvertToBuiltInSymbol(c.FieldType), null!))) {
+            GlobalScope.Define(c);
         }
     }
 }
