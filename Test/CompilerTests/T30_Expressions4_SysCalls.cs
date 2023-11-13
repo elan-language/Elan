@@ -11,7 +11,7 @@ public class T30_Expressions4_SystemCalls {
         var code = @"#
 main
   var a = input()
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -48,7 +48,7 @@ public static class Program {
         var code = @"#
 main
   var a = input(""Your name"")
-  printLine(a)
+  call printLine(a)
 end main
 ";
 
@@ -84,7 +84,7 @@ public static class Program {
     public void Fail_UnconsumedResultFromSystemCall() {
         var code = @"#
 main
-  input(""Your name"")
+  call input(""Your name"")
 end main
 ";
 

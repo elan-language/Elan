@@ -16,7 +16,7 @@ main
     var a = 1
     var b = ""Apple""
     var c = {1,2,3}
-    printLine(""{a} {b} {c}"")
+    call printLine(""{a} {b} {c}"")
 end main
 ";
 
@@ -56,7 +56,7 @@ public static class Program {
         var code = @"
 main
     var new = 1
-    printLine(""{new}"")
+    call printLine(""{new}"")
 end main
 ";
 

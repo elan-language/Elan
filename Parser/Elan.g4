@@ -18,7 +18,7 @@ test:
 // STATEMENTS
 statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement )*;
 
-callStatement: NL (methodCall | (assignableValue DOT methodCall));
+callStatement: NL CALL (methodCall | (assignableValue DOT methodCall));
 
  //Intended for a freestanding procedure/system call as a statement, 
 // or expression terminated by a procedure or system call that consumes result'.

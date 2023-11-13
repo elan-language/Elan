@@ -13,9 +13,9 @@ public class T62_Tuples {
         var code = @"#
 main
     var x = (3,""Apple"")
-    printLine(x)
-    printLine(x[0])
-    printLine(x[1])
+    call printLine(x)
+    call printLine(x[0])
+    call printLine(x[1])
 end main
 ";
 
@@ -57,8 +57,8 @@ main
     var y = 0
     var z = """"
     set (y, z) to x
-    printLine(y)
-    printLine(z)
+    call printLine(y)
+    call printLine(z)
 end main
 ";
 
@@ -100,8 +100,8 @@ public static class Program {
 main
     var x = (3,""Apple"")
     (var y, var z) = x
-    printLine(y)
-    printLine(z)
+    call printLine(y)
+    call printLine(z)
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -140,7 +140,7 @@ public static class Program {
 main
     var x = (3,""Apple"")
     set x to (4,""Pear"")
-    printLine(x)
+    call printLine(x)
 end main
 ";
 
@@ -182,7 +182,7 @@ public static class Program {
         var code = @"#
 main
     var x = (3,""Apple"")
-    printLine(x[2])
+    call printLine(x[2])
 end main
 ";
 
@@ -255,8 +255,8 @@ main
     var y = 0
     var z = """"
     set (z, y) to x
-    printLine(y)
-    printLine(z)
+    call printLine(y)
+    call printLine(z)
 end main
 ";
         var parseTree = @"*";
@@ -274,7 +274,7 @@ end main
 main
     var x = (3,""Apple"")
     set x to (""4"",""Pear"")
-    printLine(x)
+    call printLine(x)
 end main
 ";
 

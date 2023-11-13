@@ -14,7 +14,7 @@ public class T59_Global {
 constant a = 4
 main
   var a = 3
-  printLine(global.a)
+  call printLine(global.a)
 end main
 ";
 
@@ -52,8 +52,8 @@ constant a = 4
 
 main
     var f = Foo()
-    printLine(f.prop())
-    printLine(f.cons())
+    call printLine(f.prop())
+    call printLine(f.cons())
 end main
 
 class Foo
@@ -137,8 +137,8 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    printLine(f.loc())
-    printLine(f.glob())
+    call printLine(f.loc())
+    call printLine(f.glob())
 end main
 
 function bar() -> Int
@@ -239,7 +239,7 @@ public static class Program {
 constant b = 4
 main
   var a = 3
-  printLine(global.a)
+  call printLine(global.a)
 end main
 ";
 
@@ -257,8 +257,8 @@ end main
         var code = @"#
 main
     var f = Foo()
-    printLine(f.prop())
-    printLine(f.cons())
+    call printLine(f.prop())
+    call printLine(f.cons())
 end main
 
 class Foo
@@ -295,8 +295,8 @@ end class
         var code = @"#
 main
     var f = Foo()
-    printLine(f.loc())
-    printLine(f.glob())
+    call printLine(f.loc())
+    call printLine(f.glob())
 end main
 
 class Foo

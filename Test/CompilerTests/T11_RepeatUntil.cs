@@ -14,7 +14,7 @@ main
    repeat
      set x to x + 1
    until  x >= 10
-   printLine(x)
+   call printLine(x)
 end main
 ";
 
@@ -63,7 +63,7 @@ main
        until  y > 4
      set x to x + 1
    until  x > 3
-   printLine(t)
+   call printLine(t)
 end main
 ";
 

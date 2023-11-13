@@ -9,7 +9,7 @@ public class T_3_NoStartingCommentSymbol {
     [TestMethod]
     public void Pass1() {
         var code = @"main
-  printLine(""Hello World!"")
+  call printLine(""Hello World!"")
 end main
 ";
 
@@ -44,7 +44,7 @@ public static class Program {
     public void Pass2() {
         var code = @"## a comment
 main
-  printLine(""Hello World!"")
+  call printLine(""Hello World!"")
 end main
 ";
 

@@ -7,6 +7,7 @@ COMMENT_MARKER: '#';
 
 // Keywords
 ABSTRACT:      'abstract';
+CALL:		   'call';
 CASE: 		   'case';
 CATCH:         'catch';
 CLASS:         'class';

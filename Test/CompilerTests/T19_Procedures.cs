@@ -21,13 +21,13 @@ public class T19_Procedures {
     public void Pass_BasicOperationIncludingSystemCall() {
         var code = @"
 main
-    printLine(1)
-    foo()
-    printLine(3)
+    call printLine(1)
+    call foo()
+    call printLine(3)
 end main
 
 procedure foo()
-    printLine(2)
+    call printLine(2)
 end procedure
 ";
 
@@ -68,12 +68,12 @@ public static class Program {
 main
     var a = 2
     var b = ""hello""
-    foo(a, b)
+    call foo(a, b)
 end main
 
 procedure foo(a Int, b String)
-    printLine(a)
-    printLine(b)
+    call printLine(a)
+    call printLine(b)
 end procedure
 ";
 
@@ -114,12 +114,12 @@ public static class Program {
         var code = @"
 main
     var a = 1
-    foo(a + 1, ""hello"")
+    call foo(a + 1, ""hello"")
 end main
 
 procedure foo(a Int, b String)
-    printLine(a)
-    printLine(b)
+    call printLine(a)
+    call printLine(b)
 end procedure
 ";
 
@@ -162,9 +162,9 @@ public static class Program {
 main
     var a = 1
     var b = ""hello""
-    foo(a, b)
-    printLine(a)
-    printLine(b)
+    call foo(a, b)
+    call printLine(a)
+    call printLine(b)
 end main
 
 procedure foo (a Int, b String)
@@ -211,17 +211,17 @@ public static class Program {
     public void Pass_NestedCalls() {
         var code = @"
 main
-    foo()
-    printLine(3)
+    call foo()
+    call printLine(3)
 end main
 
 procedure foo()
-    printLine(1)
-    bar()
+    call printLine(1)
+    call bar()
 end procedure
 
 procedure bar()
-    printLine(2)
+    call printLine(2)
 end procedure
 ";
 
@@ -263,13 +263,13 @@ public static class Program {
     public void Pass_Recursion() {
         var code = @"
 main
-    foo(3)
+    call foo(3)
 end main
 
 procedure foo(a Int)
     if a > 0 then
-        printLine(a)
-        foo(a-1)
+        call printLine(a)
+        call foo(a-1)
     end if
 end procedure
 ";
@@ -316,7 +316,7 @@ public static class Program {
     public void Fail_CallingUndeclaredProc() {
         var code = @"
 main
-    bar()
+    call bar()
 end main
 ";
         var parseTree = @"*";
@@ -334,7 +334,7 @@ main
 end main
 
 procedure foo(Int a) 
-    printLine(a)
+    call printLine(a)
 end procedure
 ";
 
@@ -346,13 +346,13 @@ end procedure
     public void Fail_NoEnd() {
         var code = @"
 main
-    printLine(1)
-    foo()
-    printLine(3)
+    call printLine(1)
+    call foo()
+    call printLine(3)
 end main
 
 procedure foo()
-    printLine(2)
+    call printLine(2)
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -362,13 +362,13 @@ procedure foo()
     public void Fail_CannotCallMain() {
         var code = @"
 main
-    printLine(1)
-    foo()
-    printLine(3)
+    call printLine(1)
+    call foo()
+    call printLine(3)
 end main
 
 procedure foo()
-    main()
+    call main()
 end procedure
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -379,13 +379,13 @@ end procedure
     public void Fail_PassingUnnecessaryParameter() {
         var code = @"
 main
-    printLine(1)
-    foo(3)
-    printLine(3)
+    call printLine(1)
+    call foo(3)
+    call printLine(3)
 end main
 
 procedure foo()
-    printLine(2)
+    call printLine(2)
 end procedure
 ";
         var parseTree = @"*";
@@ -402,12 +402,12 @@ end procedure
         var code = @"
 main
     var a = 1
-    foo(a + 1)
+    call foo(a + 1)
 end main
 
 procedure foo (a Int, b String)
-    printLine(a)
-    printLine(b)
+    call printLine(a)
+    call printLine(b)
 end procedure
 ";
 
@@ -424,12 +424,12 @@ end procedure
     public void Fail_PassingWrongType() {
         var code = @"
 main
-    foo(1,2)
+    call foo(1,2)
 end main
 
 procedure foo (a Int, b String)
-    printLine(a)
-    printLine(b)
+    call printLine(a)
+    call printLine(b)
 end procedure
 ";
 
@@ -446,12 +446,12 @@ end procedure
     public void Fail_InclusionOfRefInCall() {
         var code = @"
 main
-    foo(ref 1,2)
+    call foo(ref 1,2)
 end main
 
 procedure foo(a Int, b String)
-    printLine(a)
-    printLine(b)
+    call printLine(a)
+    call printLine(b)
 end procedure
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -462,12 +462,12 @@ end procedure
     public void Fail_InclusionOfRefInDefinition() {
         var code = @"
 main
-    foo(byref 1,2)
+    call foo(byref 1,2)
 end main
 
 procedure foo(ref a Int, b String)
-    printLine(a)
-    printLine(b)
+    call printLine(a)
+    call printLine(b)
 end procedure
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -478,11 +478,11 @@ end procedure
     public void Fail_UnterminatedRecursion() {
         var code = @"
 main
-    foo(3)
+    call foo(3)
 end main
 
 procedure foo(a Int)
-    foo(a)
+    call foo(a)
 end procedure
 ";
 

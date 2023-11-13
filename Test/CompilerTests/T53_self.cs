@@ -13,7 +13,7 @@ public class T53_self {
         var code = @"#
 main
     var x = Foo(7)
-    printLine(x.p1)
+    call printLine(x.p1)
 end main
 
 class Foo
@@ -79,7 +79,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    printLine(f.bar())
+    call printLine(f.bar())
 end main
 
 function doubled(f Foo) -> Int
@@ -164,7 +164,7 @@ public static class Program {
         var code = @"#
 main
     var x = Foo(7)
-    printLine(x.p1)
+    call printLine(x.p1)
 end main
 
 class Foo
@@ -194,7 +194,7 @@ end class
         var code = @"#
 main
     var x = Foo(7)
-    printLine(x.p1)
+    call printLine(x.p1)
 end main
 
 class Foo

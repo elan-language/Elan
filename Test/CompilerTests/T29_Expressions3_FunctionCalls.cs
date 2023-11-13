@@ -12,7 +12,7 @@ public class T29_Expressions3_FunctionCalls {
     public void Pass_LibraryConst() {
         var code = @"#
 main
-  printLine(pi)
+  call printLine(pi)
 end main
 ";
 
@@ -48,7 +48,7 @@ public static class Program {
         var code = @"#
 main
   var x = sin(pi/180*30)
-  printLine(x)
+  call printLine(x)
 end main
 ";
 
@@ -86,7 +86,7 @@ public static class Program {
 main
   var x =  pi/180*30
   var y = x.sin()
-  printLine(y)
+  call printLine(y)
 end main
 ";
 
@@ -125,7 +125,7 @@ public static class Program {
 main
   var x =  pi/180*30
   var y = 2 + x.sin()
-  printLine(y)
+  call printLine(y)
 end main
 ";
 
@@ -164,7 +164,7 @@ public static class Program {
 main
   var x = 0.7
   var y = sin(x) ^ 2 + cos(x) ^ 2
-  printLine(y)
+  call printLine(y)
 end main
 ";
 
@@ -202,7 +202,7 @@ public static class Program {
         var code = @"#
 main
   var x = min(3.1, 3)
-  printLine(x)
+  call printLine(x)
 end main
 ";
 
@@ -238,7 +238,7 @@ public static class Program {
         var code = @"#
 main
   var x = 3.max(3.1)
-  printLine(x)
+  call printLine(x)
 end main
 ";
 
@@ -293,7 +293,7 @@ end main
     public void Fail_UnconsumedExpressionResult1() {
         var code = @"#
     main
-      sin(1)
+      call sin(1)
     end main
     ";
 
@@ -320,7 +320,7 @@ end main
         var code = @"#
     main
       var a = 1
-      a.sin()
+      call a.sin()
     end main
     ";
 

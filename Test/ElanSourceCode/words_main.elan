@@ -1,24 +1,24 @@
 ﻿
 main
-    print(welcome)
+    call print(welcome)
     var player1 = Player("Player One")
     var player2 = Player("Player Two")
     var allowedWords = List<String>()
-    loadAllowedWords(allowedWords)
+    call loadAllowedWords(allowedWords)
     var game = Game(player1, player2, allowedWords)
     var choice = ""
     var randomStart = false
     while choice is not "9"
-        print(mainMenu)
+        call print(mainMenu)
         set choice to input("Enter your choice:")
         set randomStart to choice is "1"
     end while
     if randomStart then
-        game.initialiseForRandomStart()
+        call game.initialiseForRandomStart()
     else
-        game.initialiseStandard()
+        call game.initialiseStandard()
     end if
-    play(game)
+    call play(game)
 end main
 
 constant startHandSize = 15

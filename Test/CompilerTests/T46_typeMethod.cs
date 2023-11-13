@@ -12,15 +12,15 @@ public class T46_typeMethod {
     public void Pass_Template() {
         var code = @"
 main
-    printLine(1.type())
-    printLine(1.1.type())
-    printLine('a'.type())
-    printLine(false.type())
-    printLine(""a"".type())
-    printLine({1,2,3}.type())
-    printLine({'a': 3}.type())
-    printLine({1,2,3}.asArray().type())
-    printLine(Foo(3).type())
+    call printLine(1.type())
+    call printLine(1.1.type())
+    call printLine('a'.type())
+    call printLine(false.type())
+    call printLine(""a"".type())
+    call printLine({1,2,3}.type())
+    call printLine({'a': 3}.type())
+    call printLine({1,2,3}.asArray().type())
+    call printLine(Foo(3).type())
 end main
 
 class Foo

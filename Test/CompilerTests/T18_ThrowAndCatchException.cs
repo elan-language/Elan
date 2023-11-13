@@ -12,7 +12,7 @@ public class T18_ThrowAndCatchException {
     public void Pass_ThrowExceptionInMain() {
         var code = @"
 main
-    throwException(""Foo"")
+    call throwException(""Foo"")
 end main
 ";
 
@@ -47,11 +47,11 @@ public static class Program {
     public void Pass_ThrowExceptionInProcedure() {
         var code = @"
 main
-   foo()
+   call foo()
 end main
 
 procedure foo()
-  throwException(""Foo"")
+  call throwException(""Foo"")
 end procedure
 ";
 
@@ -89,15 +89,15 @@ public static class Program {
         var code = @"
 main
   try
-     foo()
-     printLine(""not caught"")
+     call foo()
+     call printLine(""not caught"")
   catch e
-    printLine(e)
+    call printLine(e)
   end try
 end main
 
 procedure foo()
-  throwException(""Foo"")
+  call throwException(""Foo"")
 end procedure
 ";
 
@@ -146,7 +146,7 @@ main
      var z = x div y
      printLine(@$""not caught"");
   catch e
-    printLine(e)
+    call printLine(e)
   end try
 end main
 ";
@@ -192,15 +192,15 @@ public static class Program {
         var code = @"
 main
   try
-     foo()
-     printLine(""not caught"")
+     call foo()
+     call printLine(""not caught"")
   catch e
-    printLine(e.message)
+    call printLine(e.message)
   end try
 end main
 
 procedure foo()
-  throwException(""Foo"")
+  call throwException(""Foo"")
 end procedure
 ";
 
@@ -252,7 +252,7 @@ main
 end main
 
 function foo(x String) -> String
-  throwException(x)
+  call throwException(x)
   return x
 end function
 ";
@@ -267,10 +267,10 @@ end function
         var code = @"
 main
   try
-     foo()
-     printLine(""not caught"")
+     call foo()
+     call printLine(""not caught"")
   catch
-    printLine(""caught"")
+    call printLine(""caught"")
   end try
 end main
 

@@ -46,7 +46,7 @@ class Player
     procedure removeLetters(wordAsPlayed String)
         foreach letter in wordAsPlayed
              var x = letter
-             removeLetter(x)
+             call removeLetter(x)
         end foreach
     end procedure
 

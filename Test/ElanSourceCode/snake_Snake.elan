@@ -1,16 +1,16 @@
 ﻿main
   var sn = Snake(3,4, Direction.right)
-  printLine(sn)
-  printLine(sn.head)
-  printLine(sn.tail())
-  sn.advanceHeadOneSquare(Direction.right)
-  printLine(sn.head)
-  printLine(sn.tail())
-  sn.advanceHeadOneSquare(Direction.down)
-  printLine(sn.head)
-  printLine(sn.tail())
-  printLine(sn.bodyCovers(Square(5,4)))
-  printLine(sn.hasHitItself())
+  call printLine(sn)
+  call printLine(sn.head)
+  call printLine(sn.tail())
+  call sn.advanceHeadOneSquare(Direction.right)
+  call printLine(sn.head)
+  call printLine(sn.tail())
+  call sn.advanceHeadOneSquare(Direction.down)
+  call printLine(sn.head)
+  call printLine(sn.tail())
+  call printLine(sn.bodyCovers(Square(5,4)))
+  call printLine(sn.hasHitItself())
 end main
 
 class Snake

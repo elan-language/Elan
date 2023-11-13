@@ -15,15 +15,15 @@ class Game
     property tileQueue QueueOfTiles
 
     procedure initialiseForRandomStart()
-        setStartingHand(player1)
-        setStartingHand(player2)
-        tileQueue.initialise()
+        call setStartingHand(player1)
+        call setStartingHand(player2)
+        call tileQueue.initialise()
     end procedure
 
     procedure initialiseStandard()
-        player1.setTilesInHand("EDKUQMCTIK")
-        player2.setTilesInHand("BSA* HT*EPR")
-        tileQueue.initialise()
+        call player1.setTilesInHand("EDKUQMCTIK")
+        call player2.setTilesInHand("BSA* HT*EPR")
+        call tileQueue.initialise()
     end procedure
 
     function checkWordIsValid(word String) -> String
@@ -34,23 +34,23 @@ class Game
         var hand = ""
         for count = 0 to startHandSize - 1
             var item = ""
-            tileQueue.remove(item)
+            call tileQueue.remove(item)
             set hand to hand + item
-            tileQueue.add()
+            call tileQueue.add()
         end for
-        player.setTilesInHand(hand)
+        call player.setTilesInHand(hand)
     end procedure
 
     function isPlayable() -> Boolean
         return player1.tilesPlayed <= maxTilesPlayed and
             player2.tilesPlayed <= maxTilesPlayed and
-            player1.tilesInHand.length() < maxHandSize and
-            player2.tilesInHand.length() < maxHandSize
+            call player1.tilesInHand.length() < maxHandSize and
+            call player2.tilesInHand.length() < maxHandSize
     end function
 
     procedure updateScoresWithPenalty()
-        player1.deductAnyPenalty()
-        player2.deductAnyPenalty()
+        call player1.deductAnyPenalty()
+        call player2.deductAnyPenalty()
     end procedure
 
     function checkWordIsInTiles(word String, player Player) -> Boolean
@@ -70,9 +70,9 @@ class Game
 
     procedure updateAfterAllowedWord(player Player, word String)
         var wordAsPlayed = ""
-        player.wordAsWouldBePlayed(word, wordAsPlayed)
-        player.removeLetters(wordAsPlayed)
-        player.addToScore(getScoreForWord(wordAsPlayed))
+        call player.wordAsWouldBePlayed(word, wordAsPlayed)
+        call player.removeLetters(wordAsPlayed)
+        call player.addToScore(getScoreForWord(wordAsPlayed))
     end procedure
 
     function getScoreForWord(word String) -> Int
@@ -111,9 +111,9 @@ class Game
         end if
         for count = 0 to noOfEndOfTurnTiles - 1
             var letter = ""
-            tileQueue.withdrawNextLetter(letter)
-            player.addToLetters(letter)
-            tileQueue.add()
+            call tileQueue.withdrawNextLetter(letter)
+            call player.addToLetters(letter)
+            call tileQueue.add()
         end for
     end procedure
 
@@ -132,9 +132,9 @@ TILE VALUES
     procedure fillHandWithTiles(player Player)
         while player.tilesInHand.length() <= maxHandSize
             var letter = ""
-            tileQueue.withdrawNextLetter(letter)
-            player.addToLetters(letter)
-            tileQueue.add()
+            call tileQueue.withdrawNextLetter(letter)
+            call player.addToLetters(letter)
+            call tileQueue.add()
         end while
     end procedure
 
@@ -186,7 +186,7 @@ class Player
     procedure removeLetters(wordAsPlayed String)
         foreach letter in wordAsPlayed
              var x = letter
-             removeLetter(x)
+             call removeLetter(x)
         end foreach
     end procedure
 
@@ -215,7 +215,7 @@ class QueueOfTiles
     procedure initialise()
         set rear to -1
         for count = 0 to maxSize - 1
-           add()
+           call add()
         end for
     end procedure
 

@@ -14,7 +14,7 @@ main
   for i = 1 to 10
     set tot to tot + i
   end for
-  printLine(tot)
+  call printLine(tot)
 end main
 ";
 
@@ -57,7 +57,7 @@ main
   for i = 1 to 10 step 2
     set tot to tot + i
   end for
-  printLine(tot)
+  call printLine(tot)
 end main
 ";
 
@@ -100,7 +100,7 @@ main
   for i = 10 to 3 step -1
     set tot to tot + i
   end for
-  printLine(tot)
+  call printLine(tot)
 end main
 ";
 
@@ -145,7 +145,7 @@ main
       set tot to tot + 1
     end for
   end for
-  printLine(tot)
+  call printLine(tot)
 end main
 ";
 
@@ -192,7 +192,7 @@ main
   for i = lower to upper step 2 
     set tot to tot + i
   end for
-  printLine(tot)
+  call printLine(tot)
 end main
 ";
 

@@ -13,7 +13,7 @@ public class T12_Arrays {
         var code = @"
 main
     var a = Array<String>(3)
-    printLine(a.length())
+    call printLine(a.length())
 end main
 ";
 
@@ -50,8 +50,8 @@ public static class Program {
         var code = @"
 main
     var a = Array<String>(3)
-    printLine(a[0].length())
-    printLine(a)
+    call printLine(a[0].length())
+    call printLine(a)
 end main
 ";
 
@@ -91,8 +91,8 @@ main
     var a = Array<String>(3)
     set a[0] to ""foo""
     set a[2] to ""yon""
-    printLine(a[0])
-    printLine(a[2])
+    call printLine(a[0])
+    call printLine(a[2])
 end main
 ";
 
@@ -132,7 +132,7 @@ public static class Program {
         var code = @"
 main
     var a = {""foo"",""bar"",""yon""}.asArray()
-    printLine(a.length())
+    call printLine(a.length())
 end main
 ";
 
@@ -171,8 +171,8 @@ main
     var a = Array<String>(3,4)
     set a[0,0] to ""foo""
     set a[2,3] to ""yon""
-    printLine(a[0,0])
-    printLine(a[2,3])
+    call printLine(a[0,0])
+    call printLine(a[2,3])
 end main
 ";
 
@@ -248,8 +248,8 @@ end main
         var code = @"
 main
     var a = Array<String>[3][4]
-    printLine(a[0,0])
-    printLine(a[2,3])
+    call printLine(a[0,0])
+    call printLine(a[2,3])
 end main
 ";
 

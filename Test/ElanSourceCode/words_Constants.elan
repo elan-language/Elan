@@ -1,5 +1,5 @@
 ﻿main
-  printLine(letters)
+  call printLine(letters)
 end main
 
 constant welcome = "

@@ -1,10 +1,10 @@
 ﻿main
-    printLine(welcome)
+    call printLine(welcome)
     var k = readKey()
     var newGame = true
     while newGame
-        playGame()
-        print("Do you want to play again (y/n)?")
+        call playGame()
+        call print("Do you want to play again (y/n)?")
         var answer = ' '
         repeat
             set ans to readKey()
@@ -29,34 +29,34 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
 
 procedure playGame()
     var charMap = CharMapLive()
-    charMap.fillBackground()
+    call charMap.fillBackground()
     var currentDirection = Direction.right
     var game = Game(charMap.width, charMap.height, currentDirection)
     var gameOn = true
-    game.setNewApplePosition()
+    call game.setNewApplePosition()
     while gameOn
         var head = game.head
-        charMap.putBlock(head.x, head.y, bodyColour)
-        charMap.putBlock(head.x + 1, head.y, bodyColour)
+        call charMap.putBlock(head.x, head.y, bodyColour)
+        call charMap.putBlock(head.x + 1, head.y, bodyColour)
         var apple = game.apple
-        charMap.putBlock(apple.x, apple.y, appleColour)
-        charMap.putBlock(apple.x + 1, apple.y, appleColour)
+        call charMap.putBlock(apple.x, apple.y, appleColour)
+        call charMap.putBlock(apple.x + 1, apple.y, appleColour)
         var priorTail = game.tail
-        pause(200)
+        call pause(200)
         if keyHasBeenPressed() then
             var k = readKey()
             set currentDirection to directionByKey[k]
         end if
-        game.clockTick(currentDirection, gameOn)
+        call game.clockTick(currentDirection, gameOn)
         if not game.tail is priorTail then
-            charMap.clear(priorTail.x, priorTail.y)
-            charMap.clear(priorTail.x + 1, priorTail.y) # Need to clear two blocks to cover one square
+            call charMap.clear(priorTail.x, priorTail.y)
+            call charMap.clear(priorTail.x + 1, priorTail.y) # Need to clear two blocks to cover one square
         end if
 #       charMap.display() # needed if using a CharacterMapBuffered
     end while
-    clearKeyBuffer()
-    charMap.setCursor(0, 0)
-    printLine("Game Over! Score: {game.GetScore()}")
+    call clearKeyBuffer()
+    call charMap.setCursor(0, 0)
+    call printLine("Game Over! Score: {game.GetScore()}")
 end procedure
 
 class Game    
@@ -74,7 +74,7 @@ class Game
           set centreH to halfH + 1
         end if
         set snake to Snake(centreW, centreH, startingDirection) 
-        setNewApplePosition()
+        call setNewApplePosition()
     end constructor
 
     private property width Int
@@ -91,11 +91,11 @@ class Game
     end function
 
     procedure clockTick(d Direction, continue Bool)
-        snake.advanceHeadOneSquare(d)
+        call snake.advanceHeadOneSquare(d)
         if snake.head is apple then
-            setNewApplePosition()
+            call setNewApplePosition()
         else
-            snake.advanceTailOneSquare()
+            call snake.advanceTailOneSquare()
         end if
         set continue to not hasHitEdge() and not snake.hasHitItself()
     end procedure

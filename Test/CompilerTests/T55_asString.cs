@@ -41,7 +41,7 @@ end class
 main
     var f = Foo()
     var s = f.asString()
-    printLine(s)
+    call printLine(s)
 end main
 class Foo
     constructor()
@@ -114,7 +114,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    printLine(f)
+    call printLine(f)
 end main
 class Foo
     constructor()
@@ -186,7 +186,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    printLine(f)
+    call printLine(f)
 end main
 
 class Foo
@@ -260,13 +260,13 @@ public static class Program {
 main
     var l = {1,2,3}
     var sl = l.asString()
-    printLine(sl)
+    call printLine(sl)
     var a = {1,2,3}.asArray()
     var sa = a.asString()
-    printLine(sa)
+    call printLine(sa)
     var d = {'a':1, 'b':3, 'z':10}
     var sd = d.asString()
-    printLine(sd)
+    call printLine(sd)
 end main
 
 ";

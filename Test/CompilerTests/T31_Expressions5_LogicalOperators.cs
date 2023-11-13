@@ -14,10 +14,10 @@ main
     var b = false and true
     var c = true and false
     var d = true and true
-    printLine(a)
-    printLine(b)
-    printLine(c)
-    printLine(d)
+    call printLine(a)
+    call printLine(b)
+    call printLine(c)
+    call printLine(d)
 end main
 ";
 
@@ -63,10 +63,10 @@ main
     var b = false or true
     var c = true or false
     var d = true or true
-    printLine(a)
-    printLine(b)
-    printLine(c)
-    printLine(d)
+    call printLine(a)
+    call printLine(b)
+    call printLine(c)
+    call printLine(d)
 end main
 ";
 
@@ -112,10 +112,10 @@ main
     var b = false xor true
     var c = true xor false
     var d = true xor true
-    printLine(a)
-    printLine(b)
-    printLine(c)
-    printLine(d)
+    call printLine(a)
+    call printLine(b)
+    call printLine(c)
+    call printLine(d)
 end main
 ";
 
@@ -161,10 +161,10 @@ main
     var b = not true
     var c = not not true
     var d = not not false
-    printLine(a)
-    printLine(b)
-    printLine(c)
-    printLine(d)
+    call printLine(a)
+    call printLine(b)
+    call printLine(c)
+    call printLine(d)
 end main
 ";
 
@@ -208,8 +208,8 @@ public static class Program {
 main
     var a = not false and true
     var b = not (false and true)
-    printLine(a)
-    printLine(b)
+    call printLine(a)
+    call printLine(b)
 end main
 ";
 

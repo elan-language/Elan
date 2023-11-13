@@ -13,7 +13,7 @@ public class T14_Lists {
         var code = @"
 main
     var a = {4,5,6,7,8}
-    printLine(a)
+    call printLine(a)
 end main
 ";
 
@@ -51,7 +51,7 @@ public static class Program {
 main
     var a = Foo()
     var b = {a}
-    printLine(b)
+    call printLine(b)
 end main
 
 class Foo
@@ -126,11 +126,11 @@ main
     var x = {c}
     var y = {d}
     var z = {e}
-    printLine(v)
-    printLine(w)
-    printLine(x)
-    printLine(y)
-    printLine(z)
+    call printLine(v)
+    call printLine(w)
+    call printLine(x)
+    call printLine(y)
+    call printLine(z)
 end main
 
 class Foo
@@ -208,7 +208,7 @@ public static class Program {
         var code = @"
 main
     var a = {""Foo"", ""Bar""}
-    printLine(a)
+    call printLine(a)
 end main
 ";
 
@@ -244,7 +244,7 @@ public static class Program {
         var code = @"
 main
     var a = {4.1,5,6,7,8}
-    printLine(a)
+    call printLine(a)
 end main
 ";
 
@@ -281,7 +281,7 @@ public static class Program {
         var code = @"
 main
     var a = {4,5,6,7,8}
-    printLine(a.length())
+    call printLine(a.length())
 end main
 ";
 
@@ -318,7 +318,7 @@ public static class Program {
         var code = @"
 main
     var a = List<Int>()
-    printLine(a.length())
+    call printLine(a.length())
 end main
 ";
 
@@ -355,7 +355,7 @@ public static class Program {
         var code = @"
 main
     var a = {4,5,6,7,8}
-    printLine(a[2])
+    call printLine(a[2])
 end main
 ";
 
@@ -391,9 +391,9 @@ public static class Program {
         var code = @"
 main
     var a = {4,5,6,7,8}
-    printLine(a[2..])
-    printLine(a[1..3])
-    printLine(a[..2])
+    call printLine(a[2..])
+    call printLine(a[1..3])
+    call printLine(a[..2])
 end main
 ";
 
@@ -432,8 +432,8 @@ public static class Program {
 main
     var a = {4,5,6,7,8}
     var b = a + 9
-    printLine(a)
-    printLine(b)
+    call printLine(a)
+    call printLine(b)
 end main
 ";
 
@@ -472,8 +472,8 @@ public static class Program {
 main
     var a = {4,5,6,7,8}
     var b = 9 + a
-    printLine(a)
-    printLine(b)
+    call printLine(a)
+    call printLine(b)
 end main
 ";
 
@@ -513,7 +513,7 @@ main
     var a = {4,5,6,7,8}
     var b = {1,2,3}
     var c = a + b
-    printLine(c)
+    call printLine(c)
 end main
 ";
 
@@ -552,7 +552,7 @@ public static class Program {
         var code = @"
 constant a = {4,5,6,7,8}
 main
-    printLine(a)
+    call printLine(a)
 end main
 ";
 
@@ -588,7 +588,7 @@ public static class Program {
         var code = @"
 main
     var a = List<Int>()
-    printLine(a)
+    call printLine(a)
 end main
 ";
 

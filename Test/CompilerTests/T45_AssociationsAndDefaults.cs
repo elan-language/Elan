@@ -21,9 +21,9 @@ public class T45_AssociationsAndDefaults {
         var code = @"#
 main
     var g = Game()
-    printLine(g.p2)
-    printLine(g.p1)
-    printLine(g.previousScores)
+    call printLine(g.p2)
+    call printLine(g.p1)
+    call printLine(g.previousScores)
 end main
 
 class Game
@@ -132,14 +132,14 @@ public static class Program {
         var code = @"#
 main
     var g = Game()
-    printLine(g.i)
-    printLine(g.f)
-    printLine(g.b)
-    printLine(g.c)
-    printLine(g.s)
-    printLine(g.li)
-    printLine(g.dsi)
-    printLine(g.ai)
+    call printLine(g.i)
+    call printLine(g.f)
+    call printLine(g.b)
+    call printLine(g.c)
+    call printLine(g.s)
+    call printLine(g.li)
+    call printLine(g.dsi)
+    call printLine(g.ai)
 end main
 
 class Game
@@ -232,7 +232,7 @@ public static class Program {
         var code = @"#
 main
     var g = default Game
-    printLine(g.i)
+    call printLine(g.i)
 end main
 
 class Game
@@ -298,8 +298,8 @@ public static class Program {
         var code = @"#
 main
     var g = Game()
-    printLine(g.p1)
-    printLine(g.previousGame)
+    call printLine(g.p1)
+    call printLine(g.previousGame)
 end main
 
 class Game
@@ -398,12 +398,12 @@ public static class Program {
         var code = @"#
 main
     var g = Game()
-    printLine(g.p1 is default Player)
-    printLine(g.p2 is default Player)
-    printLine(g.previousGame is default Game)
-    printLine(g.previousScores is default List<Int>)
-    printLine(g.score is default Int)
-    printLine(g.best is default Int)
+    call printLine(g.p1 is default Player)
+    call printLine(g.p2 is default Player)
+    call printLine(g.previousGame is default Game)
+    call printLine(g.previousScores is default List<Int>)
+    call printLine(g.score is default Int)
+    call printLine(g.best is default Int)
 end main
 
 class Game
@@ -522,9 +522,9 @@ public static class Program {
         var code = @"#
 main
     var g = Game()
-    printLine(g.score)
-    g.setScore(default Int)
-    printLine(g.score)
+    call printLine(g.score)
+    call g.setScore(default Int)
+    call printLine(g.score)
 end main
 
 class Game
@@ -648,14 +648,14 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    printLine(f.a)
-    printLine(f.b)
-    printLine(f.c)
-    printLine(f.d)
-    printLine(f.a is default List<Int>)
-    printLine(f.b is default String)
-    printLine(f.c is default Dictionary<String,Int>)
-    printLine(f.d is default Array<Int>)
+    call printLine(f.a)
+    call printLine(f.b)
+    call printLine(f.c)
+    call printLine(f.d)
+    call printLine(f.a is default List<Int>)
+    call printLine(f.b is default String)
+    call printLine(f.c is default Dictionary<String,Int>)
+    call printLine(f.d is default Array<Int>)
 end main
 
 class Foo

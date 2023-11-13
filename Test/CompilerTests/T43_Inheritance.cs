@@ -21,11 +21,11 @@ public class T43_Inheritance {
 main
     var x = Bar()
     var l = List<Foo>() + x
-    printLine(x.p1)
-    printLine(x.p2)
-    printLine(x.product())
-    x.setP1(4)
-    printLine(x.product())
+    call printLine(x.p1)
+    call printLine(x.p2)
+    call printLine(x.product())
+    call x.setP1(4)
+    call printLine(x.product())
 end main
 
 abstract class Foo
@@ -132,11 +132,11 @@ public static class Program {
 main
     var x = Bar()
     var l = List<Foo>() + x
-    printLine(x.p1)
-    printLine(x.p2)
-    printLine(x.product())
-    x.setP1(4)
-    printLine(x.product())
+    call printLine(x.p1)
+    call printLine(x.p2)
+    call printLine(x.product())
+    call x.setP1(4)
+    call printLine(x.product())
 end main
 
 abstract class Foo
@@ -248,11 +248,11 @@ public static class Program {
 main
     var x = Bar()
     var l = List<Foo>() + x
-    printLine(x.p1)
-    printLine(x.p2)
-    printLine(x.product())
-    x.setP1(4)
-    printLine(x.product())
+    call printLine(x.p1)
+    call printLine(x.p2)
+    call printLine(x.product())
+    call x.setP1(4)
+    call printLine(x.product())
 end main
 
 abstract class Foo

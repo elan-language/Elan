@@ -20,12 +20,12 @@ public class T95_RepeatedCallToProcedureWithLiteralArgument
     public void Pass_Template() {
         var code = @"
 main
-  square(3)
-  square(5)
+  call square(3)
+  call square(5)
 end main
 
 procedure square(x Int)
-  printLine(x * x)
+  call printLine(x * x)
 end procedure
 ";
 

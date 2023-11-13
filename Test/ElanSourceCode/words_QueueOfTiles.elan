@@ -15,7 +15,7 @@ class QueueOfTiles
     procedure initialise()
         set rear to -1
         for count = 0 to maxSize - 1
-           add()
+           call add()
         end for
     end procedure
 
