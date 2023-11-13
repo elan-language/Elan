@@ -7,7 +7,7 @@ main
    var marking = ""
    var attempt = "RAISE"
    while marking is not "*****"
-      call printLine(attempt)
+      print attempt
       set marking to input("Please mark the attempt")
       set possible to possibleAnswersAfterAttempt(possible, attempt, marking).asList()
       set attempt to bestAttempt(possible, validWords)

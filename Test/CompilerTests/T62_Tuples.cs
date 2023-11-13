@@ -13,9 +13,9 @@ public class T62_Tuples {
         var code = @"#
 main
     var x = (3,""Apple"")
-    call printLine(x)
-    call printLine(x[0])
-    call printLine(x[1])
+    print x
+    print x[0]
+    print x[1]
 end main
 ";
 
@@ -32,9 +32,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
-    printLine(x);
-    printLine(x.Item1);
-    printLine(x.Item2);
+    print(x);
+    print(x.Item1);
+    print(x.Item2);
   }
 }";
 
@@ -57,8 +57,8 @@ main
     var y = 0
     var z = """"
     set (y, z) to x
-    call printLine(y)
-    call printLine(z)
+    print y
+    print z
 end main
 ";
 
@@ -78,8 +78,8 @@ public static class Program {
     var y = 0;
     var z = @$"""";
     (y, z) = x;
-    printLine(y);
-    printLine(z);
+    print(y);
+    print(z);
   }
 }";
 
@@ -100,8 +100,8 @@ public static class Program {
 main
     var x = (3,""Apple"")
     (var y, var z) = x
-    call printLine(y)
-    call printLine(z)
+    print y
+    print z
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -118,8 +118,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
     (var y, var z) = x;
-    printLine(y);
-    printLine(z);
+    print(y);
+    print(z);
   }
 }";
 
@@ -140,7 +140,7 @@ public static class Program {
 main
     var x = (3,""Apple"")
     set x to (4,""Pear"")
-    call printLine(x)
+    print x
 end main
 ";
 
@@ -158,7 +158,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
     x = (4, @$""Pear"");
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -182,7 +182,7 @@ public static class Program {
         var code = @"#
 main
     var x = (3,""Apple"")
-    call printLine(x[2])
+    print x[2]
 end main
 ";
 
@@ -199,7 +199,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
-    printLine(x.Item3);
+    print(x.Item3);
   }
 }";
 
@@ -255,8 +255,8 @@ main
     var y = 0
     var z = """"
     set (z, y) to x
-    call printLine(y)
-    call printLine(z)
+    print y
+    print z
 end main
 ";
         var parseTree = @"*";
@@ -274,7 +274,7 @@ end main
 main
     var x = (3,""Apple"")
     set x to (""4"",""Pear"")
-    call printLine(x)
+    print x
 end main
 ";
 

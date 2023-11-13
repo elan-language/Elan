@@ -14,7 +14,7 @@ main
    while x < 10
      set x to x + 1
    end while
-   call printLine(x)
+   print x
 end main
 ";
 
@@ -34,7 +34,7 @@ public static class Program {
     while (x < 10) {
       x = x + 1;
     }
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -63,7 +63,7 @@ main
         end while
         set x to x + 1
     end while
-   call printLine(t)
+   print t
 end main
 ";
 
@@ -89,7 +89,7 @@ public static class Program {
       }
       x = x + 1;
     }
-    printLine(t);
+    print(t);
   }
 }";
 

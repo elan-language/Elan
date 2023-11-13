@@ -9,7 +9,7 @@ public class T_3_NoStartingCommentSymbol {
     [TestMethod]
     public void Pass1() {
         var code = @"main
-  call printLine(""Hello World!"")
+  print ""Hello World!""
 end main
 ";
 
@@ -25,7 +25,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(@$""Hello World!"");
+    print(@$""Hello World!"");
   }
 }";
 
@@ -44,7 +44,7 @@ public static class Program {
     public void Pass2() {
         var code = @"## a comment
 main
-  call printLine(""Hello World!"")
+  print ""Hello World!""
 end main
 ";
 
@@ -60,7 +60,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(@$""Hello World!"");
+    print(@$""Hello World!"");
   }
 }";
 

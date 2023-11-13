@@ -41,7 +41,7 @@ end class
 main
     var f = Foo()
     var s = f.asString()
-    call printLine(s)
+    print s
 end main
 class Foo
     constructor()
@@ -94,7 +94,7 @@ public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
     var s = f.asString();
-    printLine(s);
+    print(s);
   }
 }";
 
@@ -114,7 +114,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    call printLine(f)
+    print f
 end main
 class Foo
     constructor()
@@ -166,7 +166,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f);
+    print(f);
   }
 }";
 
@@ -186,7 +186,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    call printLine(f)
+    print f
 end main
 
 class Foo
@@ -239,7 +239,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f);
+    print(f);
   }
 }";
 
@@ -260,13 +260,13 @@ public static class Program {
 main
     var l = {1,2,3}
     var sl = l.asString()
-    call printLine(sl)
+    print sl
     var a = {1,2,3}.asArray()
     var sa = a.asString()
-    call printLine(sa)
+    print sa
     var d = {'a':1, 'b':3, 'z':10}
     var sd = d.asString()
-    call printLine(sd)
+    print sd
 end main
 
 ";
@@ -285,13 +285,13 @@ public static class Program {
   private static void Main(string[] args) {
     var l = new StandardLibrary.ElanList<int>(1, 2, 3);
     var sl = StandardLibrary.Functions.asString(l);
-    printLine(sl);
+    print(sl);
     var a = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(1, 2, 3));
     var sa = StandardLibrary.Functions.asString(a);
-    printLine(sa);
+    print(sa);
     var d = new StandardLibrary.ElanDictionary<char,int>(('a', 1), ('b', 3), ('z', 10));
     var sd = StandardLibrary.Functions.asString(d);
-    printLine(sd);
+    print(sd);
   }
 }";
 

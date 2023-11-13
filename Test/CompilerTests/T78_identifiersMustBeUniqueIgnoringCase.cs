@@ -17,7 +17,7 @@ constant id = 1
 
 main
     var id = 2
-    call printLine(id)
+    print id
 end main
 ";
         var parseTree = @"*";
@@ -35,7 +35,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var id = 2;
-    printLine(id);
+    print(id);
   }
 }";
 
@@ -54,7 +54,7 @@ public static class Program {
         var code = @"#
 main
     var bReak = 1
-    call printLine(bReak)
+    print bReak
 end main
 ";
 
@@ -71,7 +71,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var bReak = 1;
-    printLine(bReak);
+    print(bReak);
   }
 }";
 
@@ -92,7 +92,7 @@ public static class Program {
         var code = @"#
 main
     var foo = Foo()
-    call printLine(foo)
+    print foo
 end main
 class Foo
     constructor()
@@ -133,7 +133,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var foo = new Foo();
-    printLine(foo);
+    print(foo);
   }
 }";
 

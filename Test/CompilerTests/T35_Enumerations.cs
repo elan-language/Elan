@@ -12,9 +12,9 @@ public class T35_enums {
     public void Pass_PrintValues() {
         var code = @"
 main
- call printLine(Fruit.apple)
- call printLine(Fruit.orange)
- call printLine(Fruit.pear)
+ print Fruit.apple
+ print Fruit.orange
+ print Fruit.pear
 end main
 
 enum Fruit
@@ -38,9 +38,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(Fruit.apple);
-    printLine(Fruit.orange);
-    printLine(Fruit.pear);
+    print(Fruit.apple);
+    print(Fruit.orange);
+    print(Fruit.pear);
   }
 }";
 
@@ -61,7 +61,7 @@ public static class Program {
 main
  var x = Fruit.apple
  set x to Fruit.pear
- call printLine(x)
+ print x
 end main
 
 enum Fruit
@@ -87,7 +87,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Fruit.apple;
     x = Fruit.pear;
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -107,8 +107,8 @@ public static class Program {
         var code = @"
 main
     var x = Fruit.apple
-    call printLine(x is Fruit.apple)
-    call printLine(x is Fruit.pear)
+    print x is Fruit.apple
+    print x is Fruit.pear
 end main
 
 enum Fruit
@@ -133,8 +133,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = Fruit.apple;
-    printLine(x == Fruit.apple);
-    printLine(x == Fruit.pear);
+    print(x == Fruit.apple);
+    print(x == Fruit.pear);
   }
 }";
 
@@ -156,11 +156,11 @@ main
       var f = Fruit.orange
       switch f
         case Fruit.apple
-            call printLine('a')
+            print 'a'
         case Fruit.orange
-            call printLine('o')
+            print 'o'
         case Fruit.pear
-            call printLine('p')
+            print 'p'
         default
       end switch
 end main
@@ -189,13 +189,13 @@ public static class Program {
     var f = Fruit.orange;
     switch (f) {
       case Fruit.apple:
-        printLine('a');
+        print('a');
         break;
       case Fruit.orange:
-        printLine('o');
+        print('o');
         break;
       case Fruit.pear:
-        printLine('p');
+        print('p');
         break;
       default:
         
@@ -220,7 +220,7 @@ public static class Program {
         var code = @"
 main
   var a = ""Eat more "" + Fruit.apple + ""s!""
-  call printLine(a)
+  print a
 end main
 
 enum Fruit
@@ -245,7 +245,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""Eat more "" + Fruit.apple + @$""s!"";
-    printLine(a);
+    print(a);
   }
 }";
 

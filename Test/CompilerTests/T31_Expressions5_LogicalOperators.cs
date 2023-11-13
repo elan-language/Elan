@@ -14,10 +14,10 @@ main
     var b = false and true
     var c = true and false
     var d = true and true
-    call printLine(a)
-    call printLine(b)
-    call printLine(c)
-    call printLine(d)
+    print a
+    print b
+    print c
+    print d
 end main
 ";
 
@@ -37,10 +37,10 @@ public static class Program {
     var b = false && true;
     var c = true && false;
     var d = true && true;
-    printLine(a);
-    printLine(b);
-    printLine(c);
-    printLine(d);
+    print(a);
+    print(b);
+    print(c);
+    print(d);
   }
 }";
 
@@ -63,10 +63,10 @@ main
     var b = false or true
     var c = true or false
     var d = true or true
-    call printLine(a)
-    call printLine(b)
-    call printLine(c)
-    call printLine(d)
+    print a
+    print b
+    print c
+    print d
 end main
 ";
 
@@ -86,10 +86,10 @@ public static class Program {
     var b = false || true;
     var c = true || false;
     var d = true || true;
-    printLine(a);
-    printLine(b);
-    printLine(c);
-    printLine(d);
+    print(a);
+    print(b);
+    print(c);
+    print(d);
   }
 }";
 
@@ -112,10 +112,10 @@ main
     var b = false xor true
     var c = true xor false
     var d = true xor true
-    call printLine(a)
-    call printLine(b)
-    call printLine(c)
-    call printLine(d)
+    print a
+    print b
+    print c
+    print d
 end main
 ";
 
@@ -135,10 +135,10 @@ public static class Program {
     var b = false ^ true;
     var c = true ^ false;
     var d = true ^ true;
-    printLine(a);
-    printLine(b);
-    printLine(c);
-    printLine(d);
+    print(a);
+    print(b);
+    print(c);
+    print(d);
   }
 }";
 
@@ -161,10 +161,10 @@ main
     var b = not true
     var c = not not true
     var d = not not false
-    call printLine(a)
-    call printLine(b)
-    call printLine(c)
-    call printLine(d)
+    print a
+    print b
+    print c
+    print d
 end main
 ";
 
@@ -184,10 +184,10 @@ public static class Program {
     var b = !true;
     var c = !!true;
     var d = !!false;
-    printLine(a);
-    printLine(b);
-    printLine(c);
-    printLine(d);
+    print(a);
+    print(b);
+    print(c);
+    print(d);
   }
 }";
 
@@ -208,8 +208,8 @@ public static class Program {
 main
     var a = not false and true
     var b = not (false and true)
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end main
 ";
 
@@ -227,8 +227,8 @@ public static class Program {
   private static void Main(string[] args) {
     var a = !false && true;
     var b = !(false && true);
-    printLine(a);
-    printLine(b);
+    print(a);
+    print(b);
   }
 }";
 

@@ -21,11 +21,11 @@ public class T43_Inheritance {
 main
     var x = Bar()
     var l = List<Foo>() + x
-    call printLine(x.p1)
-    call printLine(x.p2)
-    call printLine(x.product())
+    print x.p1
+    print x.p2
+    print x.product()
     call x.setP1(4)
-    call printLine(x.product())
+    print x.product()
 end main
 
 abstract class Foo
@@ -106,12 +106,12 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Bar();
     var l = new StandardLibrary.ElanList<Foo>() + x;
-    printLine(x.p1);
-    printLine(x.p2);
-    printLine(x.product());
+    print(x.p1);
+    print(x.p2);
+    print(x.product());
     var _setP1_1_0 = 4;
     x.setP1(ref _setP1_1_0);
-    printLine(x.product());
+    print(x.product());
   }
 }";
 
@@ -132,11 +132,11 @@ public static class Program {
 main
     var x = Bar()
     var l = List<Foo>() + x
-    call printLine(x.p1)
-    call printLine(x.p2)
-    call printLine(x.product())
+    print x.p1
+    print x.p2
+    print x.product()
     call x.setP1(4)
-    call printLine(x.product())
+    print x.product()
 end main
 
 abstract class Foo
@@ -222,12 +222,12 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Bar();
     var l = new StandardLibrary.ElanList<Foo>() + x;
-    printLine(x.p1);
-    printLine(x.p2);
-    printLine(x.product());
+    print(x.p1);
+    print(x.p2);
+    print(x.product());
     var _setP1_1_0 = 4;
     x.setP1(ref _setP1_1_0);
-    printLine(x.product());
+    print(x.product());
   }
 }";
 
@@ -248,11 +248,11 @@ public static class Program {
 main
     var x = Bar()
     var l = List<Foo>() + x
-    call printLine(x.p1)
-    call printLine(x.p2)
-    call printLine(x.product())
+    print x.p1
+    print x.p2
+    print x.product()
     call x.setP1(4)
-    call printLine(x.product())
+    print x.product()
 end main
 
 abstract class Foo
@@ -339,12 +339,12 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Bar();
     var l = new StandardLibrary.ElanList<Foo>() + x;
-    printLine(x.p1);
-    printLine(x.p2);
-    printLine(x.product());
+    print(x.p1);
+    print(x.p2);
+    print(x.product());
     var _setP1_1_0 = 4;
     x.setP1(ref _setP1_1_0);
-    printLine(x.product());
+    print(x.product());
   }
 }";
 

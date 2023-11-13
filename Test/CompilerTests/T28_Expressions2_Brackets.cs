@@ -15,9 +15,9 @@ main
   var x = 2 + 3 * 5 + 1
   var y = (2 + 3) * 5 + 1
   var z = (2 + 3) * (5 + 1)
-  call printLine(x)
-  call printLine(y)
-  call printLine(z)
+  print x
+  print y
+  print z
 end main
 ";
 
@@ -36,9 +36,9 @@ public static class Program {
     var x = 2 + 3 * 5 + 1;
     var y = (2 + 3) * 5 + 1;
     var z = (2 + 3) * (5 + 1);
-    printLine(x);
-    printLine(y);
-    printLine(z);
+    print(x);
+    print(y);
+    print(z);
   }
 }";
 
@@ -60,9 +60,9 @@ main
   var x = 2 + (3 * 5) + 1
   var y = ((2 + 3)) * 5 + (1)
   var z = ((2 + 3) * (5 + 1))
-  call printLine(x)
-  call printLine(y)
-  call printLine(z)
+  print x
+  print y
+  print z
 end main
 ";
 
@@ -81,9 +81,9 @@ public static class Program {
     var x = 2 + (3 * 5) + 1;
     var y = ((2 + 3)) * 5 + (1);
     var z = ((2 + 3) * (5 + 1));
-    printLine(x);
-    printLine(y);
-    printLine(z);
+    print(x);
+    print(y);
+    print(z);
   }
 }";
 
@@ -104,8 +104,8 @@ public static class Program {
 main
   var x = 2 + 3 ^ 2
   var y = (2 + 3) ^ 2
-  call printLine(x)
-  call printLine(y)
+  print x
+  print y
 end main
 ";
 
@@ -123,8 +123,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 2 + System.Math.Pow(3, 2);
     var y = System.Math.Pow((2 + 3), 2);
-    printLine(x);
-    printLine(y);
+    print(x);
+    print(y);
   }
 }";
 
@@ -145,8 +145,8 @@ public static class Program {
 main
   var x = 16.0 / 2 ^ 3
   var y = (16.0/2) ^ 3
-  call printLine(x)
-  call printLine(y)
+  print x
+  print y
 end main
 ";
 
@@ -164,8 +164,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(16.0, System.Math.Pow(2, 3));
     var y = System.Math.Pow((Compiler.WrapperFunctions.FloatDiv(16.0, 2)), 3);
-    printLine(x);
-    printLine(y);
+    print(x);
+    print(y);
   }
 }";
 
@@ -187,8 +187,8 @@ public static class Program {
 main
   var x = 16 / 2 ^ 3
   var y = (16/2) ^ 3
-  call printLine(x)
-  call printLine(y)
+  print x
+  print y
 end main
 ";
 
@@ -206,8 +206,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(16, System.Math.Pow(2, 3));
     var y = System.Math.Pow((Compiler.WrapperFunctions.FloatDiv(16, 2)), 3);
-    printLine(x);
-    printLine(y);
+    print(x);
+    print(y);
   }
 }";
 
@@ -228,8 +228,8 @@ public static class Program {
 main
   var x = - 4.7
   var y = 5 * -3
-  call printLine(x)
-  call printLine(y)
+  print x
+  print y
 end main
 ";
 
@@ -247,8 +247,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = -4.7;
     var y = 5 * -3;
-    printLine(x);
-    printLine(y);
+    print(x);
+    print(y);
   }
 }";
 
@@ -269,8 +269,8 @@ public static class Program {
 main
     var x = 11 mod 3
     var y = 5 + 6 mod 3
-    call printLine(x)
-    call printLine(y)
+    print x
+    print y
 end main
 ";
 
@@ -288,8 +288,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 11 % 3;
     var y = 5 + 6 % 3;
-    printLine(x);
-    printLine(y);
+    print(x);
+    print(y);
   }
 }";
 
@@ -309,8 +309,8 @@ public static class Program {
 main
     var x = 11 div 3
     var y = 5 + 6 div 3
-    call printLine(x)
-    call printLine(y)
+    print x
+    print y
 end main
 ";
 
@@ -328,8 +328,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 11 / 3;
     var y = 5 + 6 / 3;
-    printLine(x);
-    printLine(y);
+    print(x);
+    print(y);
   }
 }";
 

@@ -25,7 +25,7 @@ main
 end main
 
 procedure square(x Int)
-  call printLine(x * x)
+  print x * x
 end procedure
 ";
 
@@ -37,7 +37,7 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void square(ref int x) {
-    printLine(x * x);
+    print(x * x);
   }
 }
 

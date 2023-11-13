@@ -14,7 +14,7 @@ public class T13_StringManipulation {
 main
     var a = ""Hello""
     var b = ""World!""
-    call printLine(a + "" ""+ b)
+    print a + "" ""+ b
 end main
 ";
 
@@ -32,7 +32,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = @$""Hello"";
     var b = @$""World!"";
-    printLine(a + @$"" "" + b);
+    print(a + @$"" "" + b);
   }
 }";
 
@@ -51,7 +51,7 @@ public static class Program {
     public void Pass_AppendOrPrependChar() {
         var code = @"
 main
-    call printLine('_'+""Hello""+'!')
+    print '_'+""Hello""+'!'
 end main
 ";
 
@@ -67,7 +67,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine('_' + @$""Hello"" + '!');
+    print('_' + @$""Hello"" + '!');
   }
 }";
 
@@ -86,7 +86,7 @@ public static class Program {
     public void Pass_AppendNumber() {
         var code = @"
 main
-    call printLine(""Hello""+3.1)
+    print ""Hello""+3.1
 end main
 ";
 
@@ -102,7 +102,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(@$""Hello"" + 3.1);
+    print(@$""Hello"" + 3.1);
   }
 }";
 
@@ -122,7 +122,7 @@ public static class Program {
         var code = @"
 main
     var a = ""abcde""
-    call printLine(a[2])
+    print a[2]
 end main
 ";
 
@@ -139,7 +139,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
-    printLine(a[2]);
+    print(a[2]);
   }
 }";
 
@@ -159,9 +159,9 @@ public static class Program {
         var code = @"
 main
     var a = ""abcde""
-    call printLine(a[1..3])
-    call printLine(a[2..])
-    call printLine(a[..2])
+    print a[1..3]
+    print a[2..]
+    print a[..2]
 end main
 ";
 
@@ -178,9 +178,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
-    printLine(a[(1)..(3)]);
-    printLine(a[(2)..]);
-    printLine(a[..(2)]);
+    print(a[(1)..(3)]);
+    print(a[(2)..]);
+    print(a[..(2)]);
   }
 }";
 
@@ -199,13 +199,13 @@ public static class Program {
     public void Pass_EqualityTesting() {
         var code = @"
 main
-    call printLine(""abc"" is ""abc"")
-    call printLine(""abc"" is ""abcd"")
-    call printLine(""abc"" is ""Abc"")
-    call printLine(""abc"" is ""abc"")
-    call printLine(""abc"" is not ""abcd"")
-    call printLine(""abc"" is not ""abcd"")
-    call printLine(""abc"" is not ""Abc"")
+    print ""abc"" is ""abc""
+    print ""abc"" is ""abcd""
+    print ""abc"" is ""Abc""
+    print ""abc"" is ""abc""
+    print ""abc"" is not ""abcd""
+    print ""abc"" is not ""abcd""
+    print ""abc"" is not ""Abc""
 end main
 ";
 
@@ -221,13 +221,13 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(@$""abc"" == @$""abc"");
-    printLine(@$""abc"" == @$""abcd"");
-    printLine(@$""abc"" == @$""Abc"");
-    printLine(@$""abc"" == @$""abc"");
-    printLine(@$""abc"" != @$""abcd"");
-    printLine(@$""abc"" != @$""abcd"");
-    printLine(@$""abc"" != @$""Abc"");
+    print(@$""abc"" == @$""abc"");
+    print(@$""abc"" == @$""abcd"");
+    print(@$""abc"" == @$""Abc"");
+    print(@$""abc"" == @$""abc"");
+    print(@$""abc"" != @$""abcd"");
+    print(@$""abc"" != @$""abcd"");
+    print(@$""abc"" != @$""Abc"");
   }
 }";
 
@@ -246,12 +246,12 @@ public static class Program {
     public void Pass_ComparisonMethods() {
         var code = @"
 main
-    call printLine(""abc"".isBefore(""abC""))
-    call printLine(""abcd"".isAfter(""abc""))
-    call printLine(""abc"".isAfterOrSameAs(""abc""))
-    call printLine(""abc"".isBeforeOrSameAs(""abc""))
-    call printLine(""abcd"".isAfterOrSameAs(""abc""))
-    call printLine(""abcd"".isBeforeOrSameAs(""abc""))
+    print ""abc"".isBefore(""abC"")
+    print ""abcd"".isAfter(""abc"")
+    print ""abc"".isAfterOrSameAs(""abc"")
+    print ""abc"".isBeforeOrSameAs(""abc"")
+    print ""abcd"".isAfterOrSameAs(""abc"")
+    print ""abcd"".isBeforeOrSameAs(""abc"")
 end main
 ";
 
@@ -267,12 +267,12 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(StandardLibrary.Functions.isBefore(@$""abc"", @$""abC""));
-    printLine(StandardLibrary.Functions.isAfter(@$""abcd"", @$""abc""));
-    printLine(StandardLibrary.Functions.isAfterOrSameAs(@$""abc"", @$""abc""));
-    printLine(StandardLibrary.Functions.isBeforeOrSameAs(@$""abc"", @$""abc""));
-    printLine(StandardLibrary.Functions.isAfterOrSameAs(@$""abcd"", @$""abc""));
-    printLine(StandardLibrary.Functions.isBeforeOrSameAs(@$""abcd"", @$""abc""));
+    print(StandardLibrary.Functions.isBefore(@$""abc"", @$""abC""));
+    print(StandardLibrary.Functions.isAfter(@$""abcd"", @$""abc""));
+    print(StandardLibrary.Functions.isAfterOrSameAs(@$""abc"", @$""abc""));
+    print(StandardLibrary.Functions.isBeforeOrSameAs(@$""abc"", @$""abc""));
+    print(StandardLibrary.Functions.isAfterOrSameAs(@$""abcd"", @$""abc""));
+    print(StandardLibrary.Functions.isBeforeOrSameAs(@$""abcd"", @$""abc""));
   }
 }";
 
@@ -293,7 +293,7 @@ public static class Program {
 main
     var a = ""abcde""
     set a to (2.1 + 3.4).asString()
-    call print(a)
+    print a
 end main
 ";
 
@@ -323,7 +323,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "5.5");
+        AssertObjectCodeExecutes(compileData, "5.5\r\n");
     }
 
     [TestMethod]
@@ -333,7 +333,7 @@ main
     var a = 3
     var b = 4
     var c = ""{a} x {b} = {a * b}""
-    call printLine(c)
+    print c
 end main
 ";
 
@@ -352,7 +352,7 @@ public static class Program {
     var a = 3;
     var b = 4;
     var c = @$""{a} x {b} = {a * b}"";
-    printLine(c);
+    print(c);
   }
 }";
 
@@ -374,7 +374,7 @@ main
     var a = 3
     var b = 4
     var c = ""{{{a} x {b}}} = {a * b}""
-    call printLine(c)
+    print c
 end main
 ";
 
@@ -393,7 +393,7 @@ public static class Program {
     var a = 3;
     var b = 4;
     var c = @$""{{{a} x {b}}} = {a * b}"";
-    printLine(c);
+    print(c);
   }
 }";
 
@@ -414,7 +414,7 @@ public static class Program {
 main
     var c = ""Hello
  World!""
-    call printLine(c)
+    print c
 end main
 ";
 
@@ -432,7 +432,7 @@ public static class Program {
   private static void Main(string[] args) {
     var c = @$""Hello
  World!"";
-    printLine(c);
+    print(c);
   }
 }";
 
@@ -452,7 +452,7 @@ public static class Program {
         var code = @"
 main
     var c = ""Hello ""+ newline + ""World!""
-    call printLine(c)
+    print c
 end main
 ";
 
@@ -469,7 +469,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var c = @$""Hello "" + newline + @$""World!"";
-    printLine(c);
+    print(c);
   }
 }";
 
@@ -489,7 +489,7 @@ public static class Program {
         var code = @"
 main
     var a = 3.1 + ""Hello""
-    call printLine(a)
+    print a
 end main
 ";
 
@@ -506,7 +506,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 3.1 + @$""Hello"";
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -530,7 +530,7 @@ public static class Program {
         var code = @"
 main
     var a = ""abcde""
-    call printLine(a[5])
+    print a[5]
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -546,7 +546,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
-    printLine(a[5]);
+    print(a[5]);
   }
 }";
         var parseTree = @"*";
@@ -564,12 +564,12 @@ public static class Program {
     public void Fail_ComparisonOperators() {
         var code = @"
 main
-    call printLine(""abc"" < ""abC"")
-    call printLine(""abcd"" > ""abc"")
-    call printLine(""abc"" >= ""abc"")
-    call printLine(""abc"" <= ""abc"")
-    call printLine(""abcd"" >= ""abc"")
-    call printLine(""abcd"" <= ""abc"")
+    print ""abc"" < ""abC""
+    print ""abcd"" > ""abc""
+    print ""abc"" >= ""abc""
+    print ""abc"" <= ""abc""
+    print ""abcd"" >= ""abc""
+    print ""abcd"" <= ""abc""
 end main
 ";
 
@@ -585,12 +585,12 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(@$""abc"" < @$""abC"");
-    printLine(@$""abcd"" > @$""abc"");
-    printLine(@$""abc"" >= @$""abc"");
-    printLine(@$""abc"" <= @$""abc"");
-    printLine(@$""abcd"" >= @$""abc"");
-    printLine(@$""abcd"" <= @$""abc"");
+    print(@$""abc"" < @$""abC"");
+    print(@$""abcd"" > @$""abc"");
+    print(@$""abc"" >= @$""abc"");
+    print(@$""abc"" <= @$""abc"");
+    print(@$""abcd"" >= @$""abc"");
+    print(@$""abcd"" <= @$""abc"");
   }
 }";
 
@@ -610,7 +610,7 @@ public static class Program {
 main
     var a = ""abcde""
     set a to 2.1 + 3.4
-    call print(a)
+    print a
 end main
 ";
 

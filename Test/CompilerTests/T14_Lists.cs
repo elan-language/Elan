@@ -13,7 +13,7 @@ public class T14_Lists {
         var code = @"
 main
     var a = {4,5,6,7,8}
-    call printLine(a)
+    print a
 end main
 ";
 
@@ -30,7 +30,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -51,7 +51,7 @@ public static class Program {
 main
     var a = Foo()
     var b = {a}
-    call printLine(b)
+    print b
 end main
 
 class Foo
@@ -97,7 +97,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = new Foo();
     var b = new StandardLibrary.ElanList<Foo>(a);
-    printLine(b);
+    print(b);
   }
 }";
 
@@ -126,11 +126,11 @@ main
     var x = {c}
     var y = {d}
     var z = {e}
-    call printLine(v)
-    call printLine(w)
-    call printLine(x)
-    call printLine(y)
-    call printLine(z)
+    print v
+    print w
+    print x
+    print y
+    print z
 end main
 
 class Foo
@@ -184,11 +184,11 @@ public static class Program {
     var x = new StandardLibrary.ElanList<char>(c);
     var y = new StandardLibrary.ElanList<string>(d);
     var z = new StandardLibrary.ElanList<bool>(e);
-    printLine(v);
-    printLine(w);
-    printLine(x);
-    printLine(y);
-    printLine(z);
+    print(v);
+    print(w);
+    print(x);
+    print(y);
+    print(z);
   }
 }";
 
@@ -208,7 +208,7 @@ public static class Program {
         var code = @"
 main
     var a = {""Foo"", ""Bar""}
-    call printLine(a)
+    print a
 end main
 ";
 
@@ -225,7 +225,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<string>(@$""Foo"", @$""Bar"");
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -244,7 +244,7 @@ public static class Program {
         var code = @"
 main
     var a = {4.1,5,6,7,8}
-    call printLine(a)
+    print a
 end main
 ";
 
@@ -261,7 +261,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<double>(4.1, 5, 6, 7, 8);
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -281,7 +281,7 @@ public static class Program {
         var code = @"
 main
     var a = {4,5,6,7,8}
-    call printLine(a.length())
+    print a.length()
 end main
 ";
 
@@ -298,7 +298,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
-    printLine(StandardLibrary.Functions.length(a));
+    print(StandardLibrary.Functions.length(a));
   }
 }";
 
@@ -318,7 +318,7 @@ public static class Program {
         var code = @"
 main
     var a = List<Int>()
-    call printLine(a.length())
+    print a.length()
 end main
 ";
 
@@ -335,7 +335,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>();
-    printLine(StandardLibrary.Functions.length(a));
+    print(StandardLibrary.Functions.length(a));
   }
 }";
 
@@ -355,7 +355,7 @@ public static class Program {
         var code = @"
 main
     var a = {4,5,6,7,8}
-    call printLine(a[2])
+    print a[2]
 end main
 ";
 
@@ -372,7 +372,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
-    printLine(a[2]);
+    print(a[2]);
   }
 }";
 
@@ -391,9 +391,9 @@ public static class Program {
         var code = @"
 main
     var a = {4,5,6,7,8}
-    call printLine(a[2..])
-    call printLine(a[1..3])
-    call printLine(a[..2])
+    print a[2..]
+    print a[1..3]
+    print a[..2]
 end main
 ";
 
@@ -410,9 +410,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
-    printLine(a[(2)..]);
-    printLine(a[(1)..(3)]);
-    printLine(a[..(2)]);
+    print(a[(2)..]);
+    print(a[(1)..(3)]);
+    print(a[..(2)]);
   }
 }";
 
@@ -432,8 +432,8 @@ public static class Program {
 main
     var a = {4,5,6,7,8}
     var b = a + 9
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end main
 ";
 
@@ -451,8 +451,8 @@ public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
     var b = a + 9;
-    printLine(a);
-    printLine(b);
+    print(a);
+    print(b);
   }
 }";
 
@@ -472,8 +472,8 @@ public static class Program {
 main
     var a = {4,5,6,7,8}
     var b = 9 + a
-    call printLine(a)
-    call printLine(b)
+    print a
+    print b
 end main
 ";
 
@@ -491,8 +491,8 @@ public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
     var b = 9 + a;
-    printLine(a);
-    printLine(b);
+    print(a);
+    print(b);
   }
 }";
 
@@ -513,7 +513,7 @@ main
     var a = {4,5,6,7,8}
     var b = {1,2,3}
     var c = a + b
-    call printLine(c)
+    print c
 end main
 ";
 
@@ -532,7 +532,7 @@ public static class Program {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
     var b = new StandardLibrary.ElanList<int>(1, 2, 3);
     var c = a + b;
-    printLine(c);
+    print(c);
   }
 }";
 
@@ -552,7 +552,7 @@ public static class Program {
         var code = @"
 constant a = {4,5,6,7,8}
 main
-    call printLine(a)
+    print a
 end main
 ";
 
@@ -568,7 +568,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -588,7 +588,7 @@ public static class Program {
         var code = @"
 main
     var a = List<Int>()
-    call printLine(a)
+    print a
 end main
 ";
 
@@ -605,7 +605,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>();
-    printLine(a);
+    print(a);
   }
 }";
 

@@ -13,7 +13,7 @@ public class T_4_Constants {
         var code = @"#
 constant a = 3
 main
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -29,7 +29,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -49,7 +49,7 @@ public static class Program {
         var code = @"#
 constant a = 3.1
 main
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -65,7 +65,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -85,7 +85,7 @@ public static class Program {
         var code = @"#
 constant a = ""hell0""
 main
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -101,7 +101,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -121,7 +121,7 @@ public static class Program {
         var code = @"#
 constant a = 'a'
 main
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -137,7 +137,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -157,7 +157,7 @@ public static class Program {
         var code = @"#
 constant a = true
 main
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -173,7 +173,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -196,7 +196,7 @@ public static class Program {
         var code = @"#
 main
   constant a = 3
-  call print(a)
+  print a
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

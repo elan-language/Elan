@@ -12,7 +12,7 @@ public class T29_Expressions3_FunctionCalls {
     public void Pass_LibraryConst() {
         var code = @"#
 main
-  call printLine(pi)
+  print pi
 end main
 ";
 
@@ -28,7 +28,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(pi);
+    print(pi);
   }
 }";
 
@@ -48,7 +48,7 @@ public static class Program {
         var code = @"#
 main
   var x = sin(pi/180*30)
-  call printLine(x)
+  print x
 end main
 ";
 
@@ -65,7 +65,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = StandardLibrary.Functions.sin(Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30);
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -86,7 +86,7 @@ public static class Program {
 main
   var x =  pi/180*30
   var y = x.sin()
-  call printLine(y)
+  print y
 end main
 ";
 
@@ -104,7 +104,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30;
     var y = StandardLibrary.Functions.sin(x);
-    printLine(y);
+    print(y);
   }
 }";
 
@@ -125,7 +125,7 @@ public static class Program {
 main
   var x =  pi/180*30
   var y = 2 + x.sin()
-  call printLine(y)
+  print y
 end main
 ";
 
@@ -143,7 +143,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30;
     var y = 2 + StandardLibrary.Functions.sin(x);
-    printLine(y);
+    print(y);
   }
 }";
 
@@ -164,7 +164,7 @@ public static class Program {
 main
   var x = 0.7
   var y = sin(x) ^ 2 + cos(x) ^ 2
-  call printLine(y)
+  print y
 end main
 ";
 
@@ -182,7 +182,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
-    printLine(y);
+    print(y);
   }
 }";
 
@@ -202,7 +202,7 @@ public static class Program {
         var code = @"#
 main
   var x = min(3.1, 3)
-  call printLine(x)
+  print x
 end main
 ";
 
@@ -219,7 +219,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = StandardLibrary.Functions.min(3.1, 3);
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -238,7 +238,7 @@ public static class Program {
         var code = @"#
 main
   var x = 3.max(3.1)
-  call printLine(x)
+  print x
 end main
 ";
 
@@ -255,7 +255,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = StandardLibrary.Functions.max(3, 3.1);
-    printLine(x);
+    print(x);
   }
 }";
 

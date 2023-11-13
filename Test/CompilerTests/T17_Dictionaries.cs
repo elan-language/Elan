@@ -13,7 +13,7 @@ public class T17_Dictionaries {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -29,7 +29,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(a);
+    print(a);
   }
 }";
 
@@ -49,7 +49,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  call printLine(a['z'])
+  print a['z']
 end main
 ";
 
@@ -65,7 +65,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(a['z']);
+    print(a['z']);
   }
 }";
 
@@ -85,7 +85,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  call printLine(a.keys())
+  print a.keys()
 end main
 ";
 
@@ -101,7 +101,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(StandardLibrary.Functions.keys(a));
+    print(StandardLibrary.Functions.keys(a));
   }
 }";
 
@@ -121,8 +121,8 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  call printLine(a.hasKey('b'))
-  call printLine(a.hasKey('d'))
+  print a.hasKey('b')
+  print a.hasKey('d')
 end main
 ";
 
@@ -138,8 +138,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(StandardLibrary.Functions.hasKey(a, 'b'));
-    printLine(StandardLibrary.Functions.hasKey(a, 'd'));
+    print(StandardLibrary.Functions.hasKey(a, 'b'));
+    print(StandardLibrary.Functions.hasKey(a, 'd'));
   }
 }";
 
@@ -158,7 +158,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  call printLine(a.values())
+  print a.values()
 end main
 ";
 
@@ -174,7 +174,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(StandardLibrary.Functions.values(a));
+    print(StandardLibrary.Functions.values(a));
   }
 }";
 
@@ -195,8 +195,8 @@ constant a = {'a':1, 'b':3, 'z':10}
 main
   var b = a.setItem('b', 4)
   var c = b.setItem('d', 2)
-  call printLine(a)
-  call printLine(c)
+  print a
+  print c
 end main
 ";
 
@@ -214,8 +214,8 @@ public static class Program {
   private static void Main(string[] args) {
     var b = StandardLibrary.Functions.setItem(a, 'b', 4);
     var c = StandardLibrary.Functions.setItem(b, 'd', 2);
-    printLine(a);
-    printLine(c);
+    print(a);
+    print(c);
   }
 }";
 
@@ -236,8 +236,8 @@ public static class Program {
 constant a = {'a':1, 'b':3, 'z':10}
 main
   var b = a.removeItem('b')
-  call printLine(a)
-  call printLine(b)
+  print a
+  print b
 end main
 ";
 
@@ -254,8 +254,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var b = StandardLibrary.Functions.removeItem(a, 'b');
-    printLine(a);
-    printLine(b);
+    print(a);
+    print(b);
   }
 }";
 
@@ -276,7 +276,7 @@ public static class Program {
 constant a = {'a':1, 'b':3, 'z':10}
 main
   var b = a.removeItem('c')
-  call printLine(b)
+  print b
 end main
 ";
 
@@ -293,7 +293,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var b = StandardLibrary.Functions.removeItem(a, 'c');
-    printLine(b);
+    print(b);
   }
 }";
 
@@ -315,9 +315,9 @@ main
   var a = Dictionary<String, Int>()
   var b = a.setItem(""Foo"",1)
   set b to b.setItem(""Bar"", 3)
-  call print(b.length())
-  call print(b[""Foo""])
-  call print(b[""Bar""])
+  print b.length()
+  print b[""Foo""]
+  print b[""Bar""]
 end main
 ";
 
@@ -350,7 +350,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "213");
+        AssertObjectCodeExecutes(compileData, "2\r\n1\r\n3\r\n");
     }
 
     #endregion
@@ -362,7 +362,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'a':10}
 main
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -381,7 +381,7 @@ end main
         var code = @"#
 constant a = {'a':1, 'b':3.1, 'z':10}
 main
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -398,7 +398,7 @@ end main
         var code = @"#
 constant a = {'a':1, 'b':3.1, ""Z"":10}
 main
-  call printLine(a)
+  print a
 end main
 ";
 
@@ -415,7 +415,7 @@ end main
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  call printLine(a['c'])
+  print a['c']
 end main
 ";
 
@@ -431,7 +431,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(a['c']);
+    print(a['c']);
   }
 }";
 

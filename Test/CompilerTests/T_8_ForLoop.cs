@@ -14,7 +14,7 @@ main
   for i = 1 to 10
     set tot to tot + i
   end for
-  call printLine(tot)
+  print tot
 end main
 ";
 
@@ -34,7 +34,7 @@ public static class Program {
     for (var i = 1; i <= 10; i = i + 1) {
       tot = tot + i;
     }
-    printLine(tot);
+    print(tot);
   }
 }"; // could be n++ when there is no step specified, whichever is easier
 
@@ -57,7 +57,7 @@ main
   for i = 1 to 10 step 2
     set tot to tot + i
   end for
-  call printLine(tot)
+  print tot
 end main
 ";
 
@@ -77,7 +77,7 @@ public static class Program {
     for (var i = 1; i <= 10; i = i + 2) {
       tot = tot + i;
     }
-    printLine(tot);
+    print(tot);
   }
 }";
 
@@ -100,7 +100,7 @@ main
   for i = 10 to 3 step -1
     set tot to tot + i
   end for
-  call printLine(tot)
+  print tot
 end main
 ";
 
@@ -120,7 +120,7 @@ public static class Program {
     for (var i = 10; i >= 3; i = i - 1) {
       tot = tot + i;
     }
-    printLine(tot);
+    print(tot);
   }
 }";
 
@@ -145,7 +145,7 @@ main
       set tot to tot + 1
     end for
   end for
-  call printLine(tot)
+  print tot
 end main
 ";
 
@@ -167,7 +167,7 @@ public static class Program {
         tot = tot + 1;
       }
     }
-    printLine(tot);
+    print(tot);
   }
 }";
 
@@ -192,7 +192,7 @@ main
   for i = lower to upper step 2 
     set tot to tot + i
   end for
-  call printLine(tot)
+  print tot
 end main
 ";
 
@@ -214,7 +214,7 @@ public static class Program {
     for (var i = lower; i <= upper; i = i + 2) {
       tot = tot + i;
     }
-    printLine(tot);
+    print(tot);
   }
 }";
 

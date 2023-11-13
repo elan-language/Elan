@@ -12,15 +12,15 @@ public class T46_typeMethod {
     public void Pass_Template() {
         var code = @"
 main
-    call printLine(1.type())
-    call printLine(1.1.type())
-    call printLine('a'.type())
-    call printLine(false.type())
-    call printLine(""a"".type())
-    call printLine({1,2,3}.type())
-    call printLine({'a': 3}.type())
-    call printLine({1,2,3}.asArray().type())
-    call printLine(Foo(3).type())
+    print 1.type()
+    print 1.1.type()
+    print 'a'.type()
+    print false.type()
+    print ""a"".type()
+    print {1,2,3}.type()
+    print {'a': 3}.type()
+    print {1,2,3}.asArray().type()
+    print Foo(3).type()
 end main
 
 class Foo
@@ -65,15 +65,15 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(StandardLibrary.Functions.type(1));
-    printLine(StandardLibrary.Functions.type(1.1));
-    printLine(StandardLibrary.Functions.type('a'));
-    printLine(StandardLibrary.Functions.type(false));
-    printLine(StandardLibrary.Functions.type(@$""a""));
-    printLine(StandardLibrary.Functions.type(new StandardLibrary.ElanList<int>(1, 2, 3)));
-    printLine(StandardLibrary.Functions.type(new StandardLibrary.ElanDictionary<char,int>(('a', 3))));
-    printLine(StandardLibrary.Functions.type(StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(1, 2, 3))));
-    printLine(StandardLibrary.Functions.type(new Foo(3)));
+    print(StandardLibrary.Functions.type(1));
+    print(StandardLibrary.Functions.type(1.1));
+    print(StandardLibrary.Functions.type('a'));
+    print(StandardLibrary.Functions.type(false));
+    print(StandardLibrary.Functions.type(@$""a""));
+    print(StandardLibrary.Functions.type(new StandardLibrary.ElanList<int>(1, 2, 3)));
+    print(StandardLibrary.Functions.type(new StandardLibrary.ElanDictionary<char,int>(('a', 3))));
+    print(StandardLibrary.Functions.type(StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(1, 2, 3))));
+    print(StandardLibrary.Functions.type(new Foo(3)));
   }
 }";
 
@@ -92,8 +92,8 @@ public static class Program {
     public void Pass_TypeTesting() {
         var code = @"
 main
-    call printLine(1.type() is 2.type());
-    call printLine(1.0.type() is 2.type());
+    print 1.type() is 2.type();
+    print 1.0.type() is 2.type();
 end main
 
 class Foo
@@ -138,8 +138,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(StandardLibrary.Functions.type(1) == StandardLibrary.Functions.type(2));
-    printLine(StandardLibrary.Functions.type(1.0) == StandardLibrary.Functions.type(2));
+    print(StandardLibrary.Functions.type(1) == StandardLibrary.Functions.type(2));
+    print(StandardLibrary.Functions.type(1.0) == StandardLibrary.Functions.type(2));
   }
 }";
 

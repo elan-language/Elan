@@ -17,7 +17,7 @@ main
     foreach x in a
         set n to n + x
     end foreach
-    call printLine(n)
+    print n
 end main
 ";
 
@@ -38,7 +38,7 @@ public static class Program {
     foreach (var x in a) {
       n = n + x;
     }
-    printLine(n);
+    print(n);
   }
 }";
 
@@ -62,7 +62,7 @@ main
     foreach x in a
         set n to n + x
     end foreach
-    call printLine(n)
+    print n
 end main
 ";
 
@@ -83,7 +83,7 @@ public static class Program {
     foreach (var x in a) {
       n = n + x;
     }
-    printLine(n);
+    print(n);
   }
 }";
 
@@ -104,7 +104,7 @@ public static class Program {
 main
     var a = ""hello""
     foreach x in a
-        call printLine(x)
+        print x
     end foreach
 end main
 ";
@@ -123,7 +123,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = @$""hello"";
     foreach (var x in a) {
-      printLine(x);
+      print(x);
     }
   }
 }";
@@ -145,7 +145,7 @@ public static class Program {
 main
     foreach x in ""12""
         foreach y in ""34""
-            call printLine(""{x}{y }"")
+            print ""{x}{y }""
         end foreach
     end foreach
 end main
@@ -165,7 +165,7 @@ public static class Program {
   private static void Main(string[] args) {
     foreach (var x in @$""12"") {
       foreach (var y in @$""34"") {
-        printLine(@$""{x}{y }"");
+        print(@$""{x}{y }"");
       }
     }
   }
@@ -193,9 +193,9 @@ main
     var a = {7,8,9}
     var x = ""hello"";
     foreach x in a
-       call printLine(x)
+       print x
     end foreach
-    call printLine(x)
+    print x
 end main
 ";
 
@@ -214,9 +214,9 @@ public static class Program {
     var a = new StandardLibrary.ElanList<int>(7, 8, 9);
     var x = @$""hello"";
     foreach (var x in a) {
-      printLine(x);
+      print(x);
     }
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -236,7 +236,7 @@ public static class Program {
 main
   var a = ""hello""
   foreach x in a
-   call printLine(x)
+   print x
   end for
 end main
 ";
@@ -251,7 +251,7 @@ end main
 main
     var y = 10
     foreach x in y
-       call printLine(x)
+       print x
     end foreach
 end main
 ";

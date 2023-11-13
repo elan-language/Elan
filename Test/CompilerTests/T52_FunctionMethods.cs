@@ -13,7 +13,7 @@ public class T52_FunctionMethods {
         var code = @"#
 main
     var f = Foo()
-    call printLine(f.times(2))
+    print f.times(2)
 end main
 
 class Foo
@@ -68,7 +68,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f.times(2));
+    print(f.times(2));
   }
 }";
 
@@ -88,7 +88,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    call printLine(f.length())
+    print f.length()
 end main
 
 class Foo
@@ -182,7 +182,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f.length());
+    print(f.length());
   }
 }";
 
@@ -203,7 +203,7 @@ public static class Program {
 main
     var f = Foo()
     var b = Bar()
-    call printLine(f.times(b))
+    print f.times(b)
 end main
 
 class Foo
@@ -306,7 +306,7 @@ public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
     var b = new Bar();
-    printLine(f.times(b));
+    print(f.times(b));
   }
 }";
 
@@ -326,7 +326,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    call printLine(f)
+    print f
 end main
 
 class Foo
@@ -373,7 +373,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f);
+    print(f);
   }
 }";
 
@@ -397,7 +397,7 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    call printLine(times(f,2))
+    print times(f,2)
 end main
 
 class Foo

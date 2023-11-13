@@ -12,9 +12,9 @@ public class T_9_Conditions {
     public void Pass_lessThan() {
         var code = @"
 main
-  call printLine(3 < 4)
-  call printLine(3 < 2)
-  call printLine(3 < 3)
+  print 3 < 4
+  print 3 < 2
+  print 3 < 3
 end main
 ";
 
@@ -30,9 +30,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 < 4);
-    printLine(3 < 2);
-    printLine(3 < 3);
+    print(3 < 4);
+    print(3 < 2);
+    print(3 < 3);
   }
 }";
 
@@ -51,9 +51,9 @@ public static class Program {
     public void Pass_greaterThan() {
         var code = @"
 main
-  call printLine(3 > 4)
-  call printLine(3 > 2)
-  call printLine(3 > 3)
+  print 3 > 4
+  print 3 > 2
+  print 3 > 3
 end main
 ";
 
@@ -69,9 +69,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 > 4);
-    printLine(3 > 2);
-    printLine(3 > 3);
+    print(3 > 4);
+    print(3 > 2);
+    print(3 > 3);
   }
 }";
 
@@ -90,9 +90,9 @@ public static class Program {
     public void Pass_lessThanOrEqual() {
         var code = @"
 main
-  call printLine(3 <= 4)
-  call printLine(3 <= 2)
-  call printLine(3 <= 3)
+  print 3 <= 4
+  print 3 <= 2
+  print 3 <= 3
 end main
 ";
 
@@ -108,9 +108,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 <= 4);
-    printLine(3 <= 2);
-    printLine(3 <= 3);
+    print(3 <= 4);
+    print(3 <= 2);
+    print(3 <= 3);
   }
 }";
 
@@ -129,9 +129,9 @@ public static class Program {
     public void Pass_greaterThanOrEqual() {
         var code = @"
 main
-  call printLine(3 >= 4)
-  call printLine(3 >= 2)
-  call printLine(3 >= 3)
+  print 3 >= 4
+  print 3 >= 2
+  print 3 >= 3
 end main
 ";
 
@@ -147,9 +147,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 >= 4);
-    printLine(3 >= 2);
-    printLine(3 >= 3);
+    print(3 >= 4);
+    print(3 >= 2);
+    print(3 >= 3);
   }
 }";
 
@@ -168,9 +168,9 @@ public static class Program {
     public void Pass_isNot() {
         var code = @"
 main
-  call printLine(3 is not 4)
-  call printLine(3 is not 2)
-  call printLine(3 is not 3)
+  print 3 is not 4
+  print 3 is not 2
+  print 3 is not 3
 end main
 ";
 
@@ -186,9 +186,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 != 4);
-    printLine(3 != 2);
-    printLine(3 != 3);
+    print(3 != 4);
+    print(3 != 2);
+    print(3 != 3);
   }
 }";
 
@@ -207,9 +207,9 @@ public static class Program {
     public void Pass_is() {
         var code = @"
 main
-  call printLine(3 is 4)
-  call printLine(3 is 2)
-  call printLine(3 is 3)
+  print 3 is 4
+  print 3 is 2
+  print 3 is 3
 end main
 ";
 
@@ -225,9 +225,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 == 4);
-    printLine(3 == 2);
-    printLine(3 == 3);
+    print(3 == 4);
+    print(3 == 2);
+    print(3 == 3);
   }
 }";
 
@@ -246,9 +246,9 @@ public static class Program {
     public void Pass_canCompareCoerdableTypes() {
         var code = @"
 main
-  call printLine(3 < 3.1)
-  call printLine(3 is 3.0)
-  call printLine(3.1 < 3)
+  print 3 < 3.1
+  print 3 is 3.0
+  print 3.1 < 3
 end main
 ";
 
@@ -264,9 +264,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 < 3.1);
-    printLine(3 == 3.0);
-    printLine(3.1 < 3);
+    print(3 < 3.1);
+    print(3 == 3.0);
+    print(3.1 < 3);
   }
 }";
 
@@ -288,7 +288,7 @@ public static class Program {
     public void Fail_not_is() {
         var code = @"
 main
-  call printLine(3 not is 3)
+  print 3 not is 3
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -299,7 +299,7 @@ end main
     public void Fail_not() {
         var code = @"
 main
-  call printLine(3 not 3)
+  print 3 not 3
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -310,7 +310,7 @@ end main
     public void Fail_notEqual() {
         var code = @"
 main
-  call printLine(3 != 3)
+  print 3 != 3
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -321,7 +321,7 @@ end main
     public void Fail_EqualToOrLessThan() {
         var code = @"
 main
-  call printLine(3 =< 3)
+  print 3 =< 3
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -332,7 +332,7 @@ end main
     public void Fail_Greater_Or_Equal() {
         var code = @"
 main
-  call printLine(3 > or = 3)
+  print 3 > or = 3
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -343,7 +343,7 @@ end main
     public void Fail_SingleEquals() {
         var code = @"
 main
-  call printLine(3 = 4)
+  print 3 = 4
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -354,7 +354,7 @@ end main
     public void Fail_compareDifferentTypes() {
         var code = @"
 main
-  call printLine(3 is ""3"")
+  print 3 is ""3""
 end main
 ";
 
@@ -370,7 +370,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(3 == @$""3"");
+    print(3 == @$""3"");
   }
 }";
 
@@ -389,7 +389,7 @@ public static class Program {
     {
         var code = @"
 main
-  call printLine(3 <> 4)
+  print 3 <> 4
 end main
 ";
 
@@ -402,7 +402,7 @@ end main
     {
         var code = @"
 main
-  call printLine(3 == 4)
+  print 3 == 4
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

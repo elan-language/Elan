@@ -14,7 +14,7 @@ public class T59_Global {
 constant a = 4
 main
   var a = 3
-  call printLine(global.a)
+  print global.a
 end main
 ";
 
@@ -31,7 +31,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 3;
-    printLine(Globals.a);
+    print(Globals.a);
   }
 }";
 
@@ -52,8 +52,8 @@ constant a = 4
 
 main
     var f = Foo()
-    call printLine(f.prop())
-    call printLine(f.cons())
+    print f.prop()
+    print f.cons()
 end main
 
 class Foo
@@ -117,8 +117,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f.prop());
-    printLine(f.cons());
+    print(f.prop());
+    print(f.cons());
   }
 }";
 
@@ -137,8 +137,8 @@ public static class Program {
         var code = @"#
 main
     var f = Foo()
-    call printLine(f.loc())
-    call printLine(f.glob())
+    print f.loc()
+    print f.glob()
 end main
 
 function bar() -> Int
@@ -214,8 +214,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    printLine(f.loc());
-    printLine(f.glob());
+    print(f.loc());
+    print(f.glob());
   }
 }";
 
@@ -239,7 +239,7 @@ public static class Program {
 constant b = 4
 main
   var a = 3
-  call printLine(global.a)
+  print global.a
 end main
 ";
 
@@ -257,8 +257,8 @@ end main
         var code = @"#
 main
     var f = Foo()
-    call printLine(f.prop())
-    call printLine(f.cons())
+    print f.prop()
+    print f.cons()
 end main
 
 class Foo
@@ -295,8 +295,8 @@ end class
         var code = @"#
 main
     var f = Foo()
-    call printLine(f.loc())
-    call printLine(f.glob())
+    print f.loc()
+    print f.glob()
 end main
 
 class Foo

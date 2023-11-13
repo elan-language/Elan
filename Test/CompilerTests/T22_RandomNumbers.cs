@@ -14,9 +14,9 @@ public class T22_RandomNumbers {
 main
      call seedRandom(3)
      var x = random()
-     call printLine(x)
+     print x
      set x to random()
-     call printLine(x)
+     print x
 end main
 ";
 
@@ -34,9 +34,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random();
-    printLine(x);
+    print(x);
     x = random();
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -56,9 +56,9 @@ public static class Program {
 main
      call seedRandom(3)
      var x = random(1000.0)
-     call printLine(x)
+     print x
      set x to random(1000.0)
-     call printLine(x)
+     print x
 end main
 ";
 
@@ -76,9 +76,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random(1000.0);
-    printLine(x);
+    print(x);
     x = random(1000.0);
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -98,9 +98,9 @@ public static class Program {
 main
      call seedRandom(3)
      var x = random(100.0, 200.0)
-     call printLine(x)
+     print x
      set x to random(100.0, 200.0)
-     call printLine(x)
+     print x
 end main
 ";
 
@@ -118,9 +118,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random(100.0, 200.0);
-    printLine(x);
+    print(x);
     x = random(100.0, 200.0);
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -140,9 +140,9 @@ public static class Program {
 main
      call seedRandom(3)
      var x = random(6)
-     call printLine(x)
+     print x
      set x to random(6)
-     call printLine(x)
+     print x
 end main
 ";
 
@@ -160,9 +160,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random(6);
-    printLine(x);
+    print(x);
     x = random(6);
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -182,9 +182,9 @@ public static class Program {
 main
      call seedRandom(3)
      var x = random(5,10)
-     call printLine(x)
+     print x
      set x to random(5,10)
-     call printLine(x)
+     print x
 end main
 ";
 
@@ -202,9 +202,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random(5, 10);
-    printLine(x);
+    print(x);
     x = random(5, 10);
-    printLine(x);
+    print(x);
   }
 }";
 
@@ -228,7 +228,7 @@ public static class Program {
         var code = @"#
 main
      call seedRandom(3)
-     call printLine(random())
+     print random()
 end main
 ";
         var parseTree = @"*";

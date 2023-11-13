@@ -17,7 +17,7 @@ public class T_2_HelloWorld {
     public void Pass_StringLiteral() {
         var code = @"#
 main
-  call printLine(""Hello World!"")
+  print ""Hello World!""
 end main
 ";
 
@@ -33,7 +33,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(@$""Hello World!"");
+    print(@$""Hello World!"");
   }
 }";
 
@@ -51,7 +51,7 @@ public static class Program {
     public void Pass_IntegerLiteral() {
         var code = @"#
 main
-  call printLine(1)
+  print 1
 end main
 ";
 
@@ -67,7 +67,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(1);
+    print(1);
   }
 }";
 
@@ -86,7 +86,7 @@ public static class Program {
     public void Pass_FloatLiteral() {
         var code = @"#
 main
-  call printLine(2.1)
+  print 2.1
 end main
 ";
 
@@ -102,7 +102,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(2.1);
+    print(2.1);
   }
 }";
 
@@ -122,7 +122,7 @@ public static class Program {
     {
         var code = @"#
 main
-  call printLine(2.1E4)
+  print 2.1E4
 end main
 ";
 
@@ -138,7 +138,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(2.1E4);
+    print(2.1E4);
   }
 }";
 
@@ -157,7 +157,7 @@ public static class Program {
     {
         var code = @"#
 main
-  call printLine(2.1E100)
+  print 2.1E100
 end main
 ";
 
@@ -173,7 +173,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(2.1E100);
+    print(2.1E100);
   }
 }";
 
@@ -192,7 +192,7 @@ public static class Program {
     {
         var code = @"#
 main
-  call printLine(2.1e-4)
+  print 2.1e-4
 end main
 ";
 
@@ -208,7 +208,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(2.1e-4);
+    print(2.1e-4);
   }
 }";
 
@@ -226,7 +226,7 @@ public static class Program {
     public void Pass_CharLiteral() {
         var code = @"#
 main
-  call printLine('%')
+  print '%'
 end main
 ";
 
@@ -242,7 +242,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine('%');
+    print('%');
   }
 }";
 
@@ -261,7 +261,7 @@ public static class Program {
     public void Pass_BoolLiteral() {
         var code = @"#
 main
-  call printLine(true)
+  print true
 end main
 ";
 
@@ -277,7 +277,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(true);
+    print(true);
   }
 }";
 
@@ -296,7 +296,7 @@ public static class Program {
     public void Pass_EmptyLine() {
         var code = @"#
 main
-  call printLine()
+  print 
 end main
 ";
 
@@ -312,7 +312,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine();
+    print();
   }
 }";
 
@@ -333,7 +333,7 @@ public static class Program {
     [TestMethod]
     public void Fail_noMain() {
         var code = @"#
-call printLine(""Hello World`)
+print ""Hello World`
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -343,7 +343,7 @@ call printLine(""Hello World`)
     public void Fail_noEnd() {
         var code = @"#
 main
-  call printLine(""Hello World!"")
+  print ""Hello World!""
 
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -354,7 +354,7 @@ main
     public void Fail_WrongCasing() {
         var code = @"#
 main
-  call printline(""Hello World!"")
+  print ""Hello World!""
 
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

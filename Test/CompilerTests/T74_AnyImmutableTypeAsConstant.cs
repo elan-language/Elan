@@ -14,7 +14,7 @@ public class T74_AnyImmutableTypeAsConstant {
 constant k = ""Apple""
 
 main 
-  call printLine(k)
+  print k
 end main
 ";
 
@@ -30,7 +30,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(k);
+    print(k);
   }
 }";
 
@@ -51,7 +51,7 @@ public static class Program {
 constant k = (3, ""Apple"")
 
 main 
-  call printLine(k)
+  print k
 end main
 ";
 
@@ -67,7 +67,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(k);
+    print(k);
   }
 }";
 
@@ -88,7 +88,7 @@ public static class Program {
 constant k = {1,2,3}
 
 main 
-  call printLine(k)
+  print k
 end main
 ";
 
@@ -104,7 +104,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(k);
+    print(k);
   }
 }";
 
@@ -125,7 +125,7 @@ public static class Program {
 constant k = {'a':1, 'b':3, 'c':3}
 
 main 
-  call printLine(k)
+  print k
 end main
 ";
 
@@ -141,7 +141,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(k);
+    print(k);
   }
 }";
 
@@ -162,7 +162,7 @@ public static class Program {
 constant k = Foo(3)
 
 main 
-  call printLine(k)
+  print k
 end main
 
 immutable class Foo
@@ -208,7 +208,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    printLine(k);
+    print(k);
   }
 }";
 
