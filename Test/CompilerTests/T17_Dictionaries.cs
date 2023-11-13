@@ -193,8 +193,8 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  var b = a.set('b', 4)
-  var c = b.set('d', 2)
+  var b = a.setItem('b', 4)
+  var c = b.setItem('d', 2)
   printLine(a)
   printLine(c)
 end main
@@ -212,8 +212,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var b = StandardLibrary.Functions.set(a, 'b', 4);
-    var c = StandardLibrary.Functions.set(b, 'd', 2);
+    var b = StandardLibrary.Functions.setItem(a, 'b', 4);
+    var c = StandardLibrary.Functions.setItem(b, 'd', 2);
     printLine(a);
     printLine(c);
   }
@@ -235,7 +235,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  var b = a.remove('b')
+  var b = a.removeItem('b')
   printLine(a)
   printLine(b)
 end main
@@ -253,7 +253,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var b = StandardLibrary.Functions.remove(a, 'b');
+    var b = StandardLibrary.Functions.removeItem(a, 'b');
     printLine(a);
     printLine(b);
   }
@@ -275,7 +275,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  var b = a.remove('c')
+  var b = a.removeItem('c')
   printLine(b)
 end main
 ";
@@ -292,7 +292,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var b = StandardLibrary.Functions.remove(a, 'c');
+    var b = StandardLibrary.Functions.removeItem(a, 'c');
     printLine(b);
   }
 }";
@@ -313,8 +313,8 @@ public static class Program {
         var code = @"#
 main
   var a = Dictionary<String, Int>()
-  var b = a.set(""Foo"",1)
-  set b to b.set(""Bar"", 3)
+  var b = a.setItem(""Foo"",1)
+  set b to b.setItem(""Bar"", 3)
   print(b.length())
   print(b[""Foo""])
   print(b[""Bar""])
@@ -334,8 +334,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanDictionary<string, int>();
-    var b = StandardLibrary.Functions.set(a, @$""Foo"", 1);
-    b = StandardLibrary.Functions.set(b, @$""Bar"", 3);
+    var b = StandardLibrary.Functions.setItem(a, @$""Foo"", 1);
+    b = StandardLibrary.Functions.setItem(b, @$""Bar"", 3);
     print(StandardLibrary.Functions.length(b));
     print(b[@$""Foo""]);
     print(b[@$""Bar""]);
@@ -450,7 +450,7 @@ public static class Program {
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  var b = a.remove(""b"")
+  var b = a.removeItem(""b"")
 end main
 ";
 
@@ -468,7 +468,7 @@ end main
         var code = @"#
 constant a = {'a':1, 'b':3, 'z':10}
 main
-  var b = a.set(""b"", 4)
+  var b = a.setItem(""b"", 4)
 end main
 ";
 
