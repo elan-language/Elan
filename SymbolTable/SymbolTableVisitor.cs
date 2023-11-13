@@ -112,7 +112,7 @@ public class SymbolTableVisitor {
             "Array" => new ArraySymbolType(),
             "List" => new ListSymbolType(),
             "Dictionary" => new DictionarySymbolType(),
-            _ when type.StartsWith("Pending:") => new ReturnResultSymbolType(type.Split(":").Last()),
+            _ when type.StartsWith("Pending:") => new PendingResolveSymbol(type.Split(":").Last()),
             _ => new ClassSymbolType(type),
         };
 

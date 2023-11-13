@@ -8,12 +8,12 @@ namespace Compiler;
 
 public static class CompilerTransforms {
 
-    private static ISymbolType? ResolvePending(ISymbolType symbolType, IScope currentScope) {
-        if (symbolType is ReturnResultSymbolType rr) {
+    private static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope) {
+        if (symbolType is PendingResolveSymbol rr) {
             return currentScope.Resolve(rr.Name) switch {
-                VariableSymbol vs => ResolvePending(vs.ReturnType, currentScope),
+                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 ClassSymbol cs => new ClassSymbolType(cs.Name),
-                FunctionSymbol fs => ResolvePending(fs.ReturnType, currentScope),
+                FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
                 _ => throw new NotImplementedException()
             };
         }
@@ -25,7 +25,7 @@ public static class CompilerTransforms {
     private static ISymbolType? GetExpressionType(IAstNode expression, IScope currentScope) {
         return expression switch {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
-                VariableSymbol vs => ResolvePending(vs.ReturnType, currentScope),
+                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 _ => null
             },
             _ => null
@@ -37,7 +37,7 @@ public static class CompilerTransforms {
 
         if (id != null) {
             var varSymbol = currentScope.Resolve(id);
-            var type = varSymbol is VariableSymbol vs ? ResolvePending(vs.ReturnType, currentScope) : null;
+            var type = varSymbol is VariableSymbol vs ? EnsureResolved(vs.ReturnType, currentScope) : null;
 
             if (type is ClassSymbolType cst) {
                 return GetNode(mcn, currentScope, cst);
@@ -70,7 +70,7 @@ public static class CompilerTransforms {
 
     public static IAstNode? TransformMethodCallNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {
-            MethodCallNode mcn => Resolve(currentScope, mcn) switch {
+            MethodCallNode mcn => ResolveMethodCall(currentScope, mcn) switch {
                 (SystemCallSymbol, _) => new SystemCallNode(mcn.Id, mcn.Parameters) { DotCalled = mcn.DotCalled },
                 (ProcedureSymbol, false) => new ProcedureCallNode(mcn),
                 (ProcedureSymbol, true) => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
@@ -125,14 +125,14 @@ public static class CompilerTransforms {
         _ => null
     };
 
-    private static (ISymbol?, bool) Resolve(IScope currentScope, MethodCallNode mcn) {
+    private static (ISymbol?, bool) ResolveMethodCall(IScope currentScope, MethodCallNode mcn) {
         var isGlobal = mcn.Qualifier is GlobalNode;
         var qualifiedId = GetId(mcn.Qualifier);
 
         if (qualifiedId is not null) {
             var symbol = currentScope.Resolve(qualifiedId);
 
-            if (symbol is VariableSymbol vs &&  ResolvePending(vs.ReturnType, currentScope) is ClassSymbolType ) {
+            if (symbol is VariableSymbol vs &&  EnsureResolved(vs.ReturnType, currentScope) is ClassSymbolType ) {
                 return (null, false);
             }
             if (symbol is VariableSymbol or null) {
