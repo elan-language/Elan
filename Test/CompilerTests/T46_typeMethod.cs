@@ -92,8 +92,8 @@ public static class Program {
     public void Pass_TypeTesting() {
         var code = @"
 main
-    printLine(1.type() is 2.type());
-    printLine(1.0.type() is 2.type());
+    call printLine(1.type() is 2.type());
+    call printLine(1.0.type() is 2.type());
 end main
 
 class Foo

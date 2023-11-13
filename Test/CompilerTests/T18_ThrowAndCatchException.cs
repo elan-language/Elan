@@ -141,10 +141,10 @@ public static class Program {
         var code = @"
 main
   try
-     var x = 1
-     var y = 0
-     var z = x div y
-     printLine(@$""not caught"");
+    var x = 1
+    var y = 0
+    var z = x div y
+    call printLine(@$""not caught"");
   catch e
     call printLine(e)
   end try
