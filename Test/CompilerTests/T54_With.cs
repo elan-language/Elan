@@ -72,6 +72,7 @@ end class
 using System.Collections.Immutable;
 using static Globals;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -144,6 +145,7 @@ end class
 using System.Collections.Immutable;
 using static Globals;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -218,6 +220,7 @@ end class
 using System.Collections.Immutable;
 using static Globals;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -294,6 +297,7 @@ end class
 using System.Collections.Immutable;
 using static Globals;
 using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {

@@ -1,4 +1,5 @@
 ﻿using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
 
 namespace Test.StandardLibraryTests;
 
