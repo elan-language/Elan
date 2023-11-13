@@ -2,29 +2,29 @@
     call seedRandom(1)
     var q = QueueOfTiles(10)
     call q.initialise()
-    call printLine(q.show())
-    call printLine(q.isNotEmpty()) 
+    print q.show()
+    print q.isNotEmpty() 
     var l = ""
     call q.withdrawNextLetter(l)
-    call printLine(l)
-    call printLine(q.show())
+    print l
+    print q.show()
 # Player
     var p = Player("Richard")
-    call printLine(p.name)
+    print p.name
     call p.setTilesInHand("ABCDEIOU")
-    call printLine(p.tilesInHand)
+    print p.tilesInHand
     call p.addToLetters('N')
-    call printLine(p.tilesInHand)
+    print p.tilesInHand
     call p.removeLetter('O')
-    call printLine(p.tilesInHand)
+    print p.tilesInHand
     call p.removeLetters("DU")
-    call printLine(p.tilesInHand)
+    print p.tilesInHand
     var asPlayed = ""
     call p.wordAsWouldBePlayed("CAB", asPlayed)
-    call printLine(asPlayed)
+    print asPlayed
     var can = "CAD"
     call p.wordAsWouldBePlayed(can, asPlayed)
-    call printLine(asPlayed)
-    call printLine(p.score)
+    print asPlayed
+    print p.score
     call p.deductAnyPenalty()
-    call printLine(p.score)
+    print p.score

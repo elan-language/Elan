@@ -70,6 +70,15 @@ letIn: LET assignableValue ASSIGN expression (COMMA assignableValue ASSIGN expre
    
 functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET ARROW type;
 
+// System Accessor
+systemAccessor: 
+	NL SYSTEM functionSignature
+	statementBlock
+	NL RETURN expression
+    NL END SYSTEM
+	;
+
+
 // CONSTANTS
 constantDef: NL CONSTANT IDENTIFIER ASSIGN (literal | newInstance);
 

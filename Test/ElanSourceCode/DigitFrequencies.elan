@@ -1,6 +1,6 @@
 main
     var q = QueueOfTiles(10)
-    call printLine(q.show())
+    print q.show()
 end main
 
 class QueueOfTiles
