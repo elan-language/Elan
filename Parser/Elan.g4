@@ -16,10 +16,12 @@ test:
     ;
 
 // STATEMENTS
-statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement )*;
+statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement | throwException)*;
 
 callStatement: NL CALL (methodCall | (assignableValue DOT methodCall));
 
+throwException: NL THROW (LITERAL_STRING | IDENTIFIER );
+ 
  //Intended for a freestanding procedure/system call as a statement, 
 // or expression terminated by a procedure or system call that consumes result'.
 // Not possible to specify this as a syntax distinct from an expression. Compile rules will enforce that you can't use a non-consumed expression

@@ -81,6 +81,16 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitCallStatement([NotNull] ElanParser.CallStatementContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.throwException"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterThrowException([NotNull] ElanParser.ThrowExceptionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.throwException"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitThrowException([NotNull] ElanParser.ThrowExceptionContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.varDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

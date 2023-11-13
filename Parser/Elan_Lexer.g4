@@ -41,6 +41,7 @@ STEP:		   'step';
 SWITCH:        'switch';
 TEST:		   'test';
 THEN:		   'then';
+THROW:		   'throw';
 TO:			   'to';
 TRY:           'try';
 UNTIL:         'until';

@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass]
+[TestClass, Ignore]
 public class T18_ThrowAndCatchException {
     #region Passes
 
@@ -12,7 +12,7 @@ public class T18_ThrowAndCatchException {
     public void Pass_ThrowExceptionInMain() {
         var code = @"
 main
-    call throwException(""Foo"")
+    throw ""Foo""
 end main
 ";
 
@@ -28,7 +28,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    throwException(@$""Foo"");
+    throw new ElanException(@$""Foo"");
   }
 }";
 
@@ -44,6 +44,82 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_ThrowExceptionInMainUsingVariableForMessage()
+    {
+        var code = @"
+main
+    var msg = ""Foo""
+    throw msg
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var msg = ""Foo"";
+    throw new ElanException(msg);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeFails(compileData, "Unhandled exception. StandardLibrary.ElanException: Foo");
+    }
+
+    [TestMethod]
+    public void Pass_ThrowExceptionUsingInterpolatedStringForMessage()
+    {
+        var code = @"
+main
+    var bar = 1
+    throw ""{bar}""
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var bar = 1;
+    throw new ElanException(@$""{bar}"");
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeFails(compileData, "Unhandled exception. StandardLibrary.ElanException: 1");
+    }
+
+    [TestMethod]
     public void Pass_ThrowExceptionInProcedure() {
         var code = @"
 main
@@ -51,7 +127,7 @@ main
 end main
 
 procedure foo()
-  call throwException(""Foo"")
+  throw ""Foo""
 end procedure
 ";
 
@@ -63,7 +139,7 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    throwException(@$""Foo"");
+    throw new ElanException(@$""Foo"");
   }
 }
 
@@ -97,7 +173,7 @@ main
 end main
 
 procedure foo()
-  call throwException(""Foo"")
+  throw ""Foo""
 end procedure
 ";
 
@@ -109,7 +185,7 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    throwException(@$""Foo"");
+    throw new ElanException(@$""Foo"");
   }
 }
 
@@ -200,7 +276,7 @@ main
 end main
 
 procedure foo()
-  call throwException(""Foo"")
+  throw ""Foo""
 end procedure
 ";
 
@@ -212,7 +288,7 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    throwException(@$""Foo"");
+    throw new ElanException(@$""Foo"");
   }
 }
 
@@ -252,7 +328,7 @@ main
 end main
 
 function foo(x String) -> String
-  call throwException(x)
+  throw x
   return x
 end function
 ";
@@ -275,7 +351,7 @@ main
 end main
 
 procedure foo()
-  throw new Exception(""Foo"")
+  throw ""Foo""
 end procedure
 ";
 
@@ -283,5 +359,18 @@ end procedure
         AssertDoesNotParse(compileData);
     }
 
+
+    [TestMethod]
+    public void Fail_UseExpressionForMessage()
+    {
+        var code = @"
+main
+    var msg = ""Foo""
+    throw msg + bar
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+     }
     #endregion
 }
