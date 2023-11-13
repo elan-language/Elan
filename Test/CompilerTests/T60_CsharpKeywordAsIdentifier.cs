@@ -21,7 +21,6 @@ main
     var delegate = 1
     var do = 1
     var double = 1
-    var enum = 1
     var event = 1
     var explicit = 1
     var extern = 1
@@ -73,7 +72,6 @@ main
     print(delegate)
     print(do)
     print(double)
-    print(enum)
     print(event)
     print(explicit)
     print(extern)
@@ -140,7 +138,6 @@ public static class Program {
     var @delegate = 1;
     var @do = 1;
     var @double = 1;
-    var @enum = 1;
     var @event = 1;
     var @explicit = 1;
     var @extern = 1;
@@ -192,7 +189,6 @@ public static class Program {
     print(@delegate);
     print(@do);
     print(@double);
-    print(@enum);
     print(@event);
     print(@explicit);
     print(@extern);
@@ -246,7 +242,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "1111111111111111111111111111111111111111111111111111");
+        AssertObjectCodeExecutes(compileData, "111111111111111111111111111111111111111111111111111");
     }
 
     [TestMethod]
