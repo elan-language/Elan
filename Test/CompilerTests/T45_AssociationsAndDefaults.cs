@@ -112,9 +112,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    print(g.p2);
-    print(g.p1);
-    print(g.previousScores);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.p2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.previousScores));
   }
 }";
 
@@ -208,14 +208,14 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    print(g.i);
-    print(g.f);
-    print(g.b);
-    print(g.c);
-    print(g.s);
-    print(g.li);
-    print(g.dsi);
-    print(g.ai);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.i));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.f));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.b));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.c));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.s));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.li));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.dsi));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.ai));
   }
 }";
 
@@ -282,7 +282,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = Game.DefaultInstance;
-    print(g.i);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.i));
   }
 }";
 
@@ -382,8 +382,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    print(g.p1);
-    print(g.previousGame);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.previousGame));
   }
 }";
 
@@ -503,12 +503,12 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    print(g.p1 == Player.DefaultInstance);
-    print(g.p2 == Player.DefaultInstance);
-    print(g.previousGame == Game.DefaultInstance);
-    print(g.previousScores == StandardLibrary.ElanList<int>.DefaultInstance);
-    print(g.score == default(int));
-    print(g.best == default(int));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.p1 == Player.DefaultInstance));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.p2 == Player.DefaultInstance));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.previousGame == Game.DefaultInstance));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.previousScores == StandardLibrary.ElanList<int>.DefaultInstance));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.score == default(int)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.best == default(int)));
   }
 }";
 
@@ -632,10 +632,10 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    print(g.score);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.score));
     var _setScore_1_0 = default(int);
     g.setScore(ref _setScore_1_0);
-    print(g.score);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.score));
   }
 }";
 
@@ -716,14 +716,14 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    print(f.a);
-    print(f.b);
-    print(f.c);
-    print(f.d);
-    print(f.a == StandardLibrary.ElanList<int>.DefaultInstance);
-    print(f.b == """");
-    print(f.c == StandardLibrary.ElanDictionary<string, int>.DefaultInstance);
-    print(f.d == StandardLibrary.ElanArray<int>.DefaultInstance);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.b));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.c));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.d));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.a == StandardLibrary.ElanList<int>.DefaultInstance));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.b == """"));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.c == StandardLibrary.ElanDictionary<string, int>.DefaultInstance));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.d == StandardLibrary.ElanArray<int>.DefaultInstance));
   }
 }";
 

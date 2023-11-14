@@ -66,9 +66,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo();
-    print(x.p1);
-    print(x.p2);
-    print(x.asString());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.asString()));
   }
 }";
 
@@ -141,8 +141,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo(7, @$""Apple"");
-    print(x.p1);
-    print(x.p2);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
   }
 }";
 

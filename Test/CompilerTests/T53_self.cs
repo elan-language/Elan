@@ -60,7 +60,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo(7);
-    print(x.p1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
   }
 }";
 
@@ -143,7 +143,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    print(f.bar());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.bar()));
   }
 }";
 

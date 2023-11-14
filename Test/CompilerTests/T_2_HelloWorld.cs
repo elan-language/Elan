@@ -34,7 +34,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(@$""Hello World!"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Hello World!""));
   }
 }";
 
@@ -69,7 +69,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(1));
   }
 }";
 
@@ -105,7 +105,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(2.1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(2.1));
   }
 }";
 
@@ -142,7 +142,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(2.1E4);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(2.1E4));
   }
 }";
 
@@ -178,7 +178,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(2.1E100);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(2.1E100));
   }
 }";
 
@@ -214,7 +214,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(2.1e-4);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(2.1e-4));
   }
 }";
 
@@ -249,7 +249,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print('%');
+    System.Console.WriteLine(StandardLibrary.Functions.asString('%'));
   }
 }";
 
@@ -285,7 +285,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(true);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(true));
   }
 }";
 
@@ -321,7 +321,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(@$"""");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""""));
   }
 }";
 

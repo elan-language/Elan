@@ -145,10 +145,10 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    print(f.p1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.p1));
     var _setP1_1_0 = 7;
     f.setP1(ref _setP1_1_0);
-    print(f.p1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.p1));
   }
 }";
 
@@ -210,7 +210,7 @@ public static partial class Globals {
       return @$"""";
     }
     public virtual void display() {
-      print(p1);
+      System.Console.WriteLine(StandardLibrary.Functions.asString(p1));
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }

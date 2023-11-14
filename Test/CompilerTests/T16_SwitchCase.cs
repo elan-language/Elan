@@ -42,13 +42,13 @@ public static class Program {
     for (var i = 1; i <= 3; i = i + 1) {
       switch (i) {
         case 1:
-          print('a');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('a'));
           break;
         case 2:
-          print('b');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('b'));
           break;
         case 3:
-          print('c');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('c'));
           break;
         default:
           
@@ -102,13 +102,13 @@ public static class Program {
     for (var i = 1; i <= 3; i = i + 1) {
       switch ((i)) {
         case 1:
-          print('a');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('a'));
           break;
         case 2:
-          print('b');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('b'));
           break;
         case 3:
-          print('c');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('c'));
           break;
         default:
           
@@ -160,10 +160,10 @@ public static class Program {
     for (var i = 1; i <= 3; i = i + 1) {
       switch (i) {
         case 1:
-          print('a');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('a'));
           break;
         default:
-          print('b');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('b'));
           break;
       }
     }
@@ -214,13 +214,13 @@ public static class Program {
     for (var i = 1; i <= 3; i = i + 1) {
       switch (i + 1) {
         case 1:
-          print('a');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('a'));
           break;
         case 2:
-          print('b');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('b'));
           break;
         default:
-          print('c');
+          System.Console.WriteLine(StandardLibrary.Functions.asString('c'));
           break;
       }
     }
@@ -396,8 +396,8 @@ end main
 main
   for i = 1 to 3
       switch i
-        case 1 print('a')
-        case 2 print('b')       
+        case 1 System.Console.WriteLine(StandardLibrary.Functions.asString('a'))
+        case 2 System.Console.WriteLine(StandardLibrary.Functions.asString('b'))       
       end switch
   end for
 end main

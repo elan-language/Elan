@@ -39,15 +39,15 @@ public static class Functions {
 
     #region dictionary
 
-    public static IEnumerable<TKey> keys<TKey, TValue>(IImmutableDictionary<TKey, TValue> d) where TKey : notnull => d.Keys;
+    public static IEnumerable<TKey> keys<TKey, TValue>(ElanDictionary<TKey, TValue> d) where TKey : notnull => d.Keys;
 
-    public static bool hasKey<TKey, TValue>(IImmutableDictionary<TKey, TValue> d, TKey key) where TKey : notnull => d.ContainsKey(key);
+    public static bool hasKey<TKey, TValue>(ElanDictionary<TKey, TValue> d, TKey key) where TKey : notnull => d.ContainsKey(key);
 
-    public static IEnumerable<TValue> values<TKey, TValue>(IImmutableDictionary<TKey, TValue> d) where TKey : notnull => d.Values;
+    public static IEnumerable<TValue> values<TKey, TValue>(ElanDictionary<TKey, TValue> d) where TKey : notnull => d.Values;
 
-    public static IImmutableDictionary<TKey, TValue> removeItem<TKey, TValue>(IImmutableDictionary<TKey, TValue> d, TKey key) where TKey : notnull => d.Remove(key);
+    public static ElanDictionary<TKey, TValue> removeItem<TKey, TValue>(ElanDictionary<TKey, TValue> d, TKey key) where TKey : notnull => d.Remove(key);
 
-    public static IImmutableDictionary<TKey, TValue> setItem<TKey, TValue>(IImmutableDictionary<TKey, TValue> d, TKey key, TValue value) where TKey : notnull => d.SetItem(key, value);
+    public static ElanDictionary<TKey, TValue> setItem<TKey, TValue>(ElanDictionary<TKey, TValue> d, TKey key, TValue value) where TKey : notnull => d.SetItem(key, value);
 
     #endregion
 

@@ -36,7 +36,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(Globals.foo(3, 4));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.foo(3, 4)));
   }
 }";
 
@@ -91,7 +91,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(Globals.factorial(5));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.factorial(5)));
   }
 }";
 
@@ -175,10 +175,10 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var li = new StandardLibrary.ElanList<string>(@$""apple"", @$""apricot"", @$""banana"", @$""lemon"", @$""lime"", @$""melon"", @$""orange"", @$""pear"", @$""plum"", @$""strawberry"");
-    print(Globals.binarySearch(li, @$""lemon""));
-    print(Globals.binarySearch(li, @$""apple""));
-    print(Globals.binarySearch(li, @$""strawberry""));
-    print(Globals.binarySearch(li, @$""blueberry""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li, @$""lemon"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li, @$""apple"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li, @$""strawberry"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li, @$""blueberry"")));
   }
 }";
 
@@ -236,7 +236,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var li = new StandardLibrary.ElanList<string>(@$""plum"", @$""apricot"", @$""lime"", @$""lemon"", @$""melon"", @$""apple"", @$""orange"", @$""strawberry"", @$""pear"", @$""banana"");
-    print(Globals.mergeSort(li));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.mergeSort(li)));
   }
 }";
 

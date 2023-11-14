@@ -101,8 +101,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo() with {p1 = 3, p2 = @$""Apple""};
-    print(x.p1);
-    print(x.p2);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
   }
 }";
 
@@ -174,8 +174,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = new Foo(7) with {p1 = 3, p2 = @$""Apple""};
-    print(x.p1);
-    print(x.p2);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
   }
 }";
 
@@ -250,9 +250,9 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Foo();
     var y = x with {p1 = 3, p2 = @$""Apple""};
-    print(y.p1);
-    print(y.p2);
-    print(x.p1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y.p2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
   }
 }";
 
@@ -327,9 +327,9 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Foo();
     var y = x with {p1 = 3, p2 = @$""Apple""};
-    print(y.p1);
-    print(y.p2);
-    print(x.p1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y.p2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
   }
 }";
 

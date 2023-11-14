@@ -14,13 +14,6 @@ public static class Procedures {
 
     #endregion
 
-    #region Output to screen
-    public static void print(object obj) => Console.WriteLine(asString(obj));
-
-    public static void print() => Console.WriteLine();
-
-    #endregion
-
 
     #region TODO - simple sounds
 

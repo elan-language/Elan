@@ -107,12 +107,12 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Bar();
     var l = new StandardLibrary.ElanList<Foo>() + x;
-    print(x.p1);
-    print(x.p2);
-    print(x.product());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
     var _setP1_1_0 = 4;
     x.setP1(ref _setP1_1_0);
-    print(x.product());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
   }
 }";
 
@@ -224,12 +224,12 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Bar();
     var l = new StandardLibrary.ElanList<Foo>() + x;
-    print(x.p1);
-    print(x.p2);
-    print(x.product());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
     var _setP1_1_0 = 4;
     x.setP1(ref _setP1_1_0);
-    print(x.product());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
   }
 }";
 
@@ -342,12 +342,12 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Bar();
     var l = new StandardLibrary.ElanList<Foo>() + x;
-    print(x.p1);
-    print(x.p2);
-    print(x.product());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
     var _setP1_1_0 = 4;
     x.setP1(ref _setP1_1_0);
-    print(x.product());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
   }
 }";
 

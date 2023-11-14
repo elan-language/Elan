@@ -29,7 +29,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(pi);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(pi));
   }
 }";
 
@@ -67,7 +67,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = StandardLibrary.Functions.sin(Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
@@ -107,7 +107,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30;
     var y = StandardLibrary.Functions.sin(x);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -147,7 +147,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(pi, 180) * 30;
     var y = 2 + StandardLibrary.Functions.sin(x);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -187,7 +187,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -225,7 +225,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = StandardLibrary.Functions.min(3.1, 3);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
@@ -262,7 +262,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = StandardLibrary.Functions.max(3, 3.1);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 

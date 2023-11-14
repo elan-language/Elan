@@ -39,7 +39,7 @@ public static class Program {
     foreach (var x in a) {
       n = n + x;
     }
-    print(n);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(n));
   }
 }";
 
@@ -85,7 +85,7 @@ public static class Program {
     foreach (var x in a) {
       n = n + x;
     }
-    print(n);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(n));
   }
 }";
 
@@ -126,7 +126,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = @$""hello"";
     foreach (var x in a) {
-      print(x);
+      System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     }
   }
 }";
@@ -169,7 +169,7 @@ public static class Program {
   private static void Main(string[] args) {
     foreach (var x in @$""12"") {
       foreach (var y in @$""34"") {
-        print(@$""{x}{y }"");
+        System.Console.WriteLine(StandardLibrary.Functions.asString(@$""{x}{y }""));
       }
     }
   }
@@ -219,9 +219,9 @@ public static class Program {
     var a = new StandardLibrary.ElanList<int>(7, 8, 9);
     var x = @$""hello"";
     foreach (var x in a) {
-      print(x);
+      System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     }
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 

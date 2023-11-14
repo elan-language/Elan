@@ -29,7 +29,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 + 4);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 + 4));
   }
 }";
 
@@ -65,7 +65,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 - 4);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 - 4));
   }
 }";
 
@@ -101,7 +101,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 * 4);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 * 4));
   }
 }";
 
@@ -139,7 +139,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 3;
-    print(a + 4);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a + 4));
   }
 }";
 
@@ -175,7 +175,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(Compiler.WrapperFunctions.FloatDiv(3, 2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Compiler.WrapperFunctions.FloatDiv(3, 2)));
   }
 }";
 
@@ -211,7 +211,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(7 / 2);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(7 / 2));
   }
 }";
 
@@ -247,7 +247,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(11 % 3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(11 % 3));
   }
 }";
 
@@ -283,7 +283,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(System.Math.Pow(3, 3));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(System.Math.Pow(3, 3)));
   }
 }";
 
@@ -323,7 +323,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3;
     a = a + 1;
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 

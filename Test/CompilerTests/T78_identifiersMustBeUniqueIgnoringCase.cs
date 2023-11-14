@@ -36,7 +36,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var id = 2;
-    print(id);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(id));
   }
 }";
 
@@ -73,7 +73,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var bReak = 1;
-    print(bReak);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(bReak));
   }
 }";
 
@@ -136,7 +136,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var foo = new Foo();
-    print(foo);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(foo));
   }
 }";
 

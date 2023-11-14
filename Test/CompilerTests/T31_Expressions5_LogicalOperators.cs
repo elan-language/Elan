@@ -38,10 +38,10 @@ public static class Program {
     var b = false && true;
     var c = true && false;
     var d = true && true;
-    print(a);
-    print(b);
-    print(c);
-    print(d);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(d));
   }
 }";
 
@@ -88,10 +88,10 @@ public static class Program {
     var b = false || true;
     var c = true || false;
     var d = true || true;
-    print(a);
-    print(b);
-    print(c);
-    print(d);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(d));
   }
 }";
 
@@ -138,10 +138,10 @@ public static class Program {
     var b = false ^ true;
     var c = true ^ false;
     var d = true ^ true;
-    print(a);
-    print(b);
-    print(c);
-    print(d);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(d));
   }
 }";
 
@@ -188,10 +188,10 @@ public static class Program {
     var b = !true;
     var c = !!true;
     var d = !!false;
-    print(a);
-    print(b);
-    print(c);
-    print(d);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(d));
   }
 }";
 
@@ -232,8 +232,8 @@ public static class Program {
   private static void Main(string[] args) {
     var a = !false && true;
     var b = !(false && true);
-    print(a);
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }";
 

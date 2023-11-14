@@ -35,7 +35,7 @@ public static class Program {
     while (x < 10) {
       x = x + 1;
     }
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
@@ -91,7 +91,7 @@ public static class Program {
       }
       x = x + 1;
     }
-    print(t);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(t));
   }
 }";
 

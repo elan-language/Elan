@@ -38,7 +38,7 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void square(ref int x) {
-    print(x * x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x * x));
   }
 }
 

@@ -31,9 +31,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 < 4);
-    print(3 < 2);
-    print(3 < 3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 < 4));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 < 2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 < 3));
   }
 }";
 
@@ -71,9 +71,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 > 4);
-    print(3 > 2);
-    print(3 > 3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 > 4));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 > 2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 > 3));
   }
 }";
 
@@ -111,9 +111,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 <= 4);
-    print(3 <= 2);
-    print(3 <= 3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 <= 4));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 <= 2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 <= 3));
   }
 }";
 
@@ -151,9 +151,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 >= 4);
-    print(3 >= 2);
-    print(3 >= 3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 >= 4));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 >= 2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 >= 3));
   }
 }";
 
@@ -191,9 +191,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 != 4);
-    print(3 != 2);
-    print(3 != 3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 != 4));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 != 2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 != 3));
   }
 }";
 
@@ -231,9 +231,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 == 4);
-    print(3 == 2);
-    print(3 == 3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 == 4));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 == 2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 == 3));
   }
 }";
 
@@ -271,9 +271,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 < 3.1);
-    print(3 == 3.0);
-    print(3.1 < 3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 < 3.1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 == 3.0));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3.1 < 3));
   }
 }";
 
@@ -378,7 +378,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(3 == @$""3"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3 == @$""3""));
   }
 }";
 
