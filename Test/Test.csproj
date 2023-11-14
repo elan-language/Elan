@@ -32,9 +32,6 @@
 		<None Update="ElanSourceCode\binarySearch.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\DigitFrequencies.elan">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
 		<None Update="ElanSourceCode\mergeSort.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
@@ -51,24 +48,6 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ElanSourceCode\Wordle.elan">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="ElanSourceCode\words_Constants.elan">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="ElanSourceCode\words_Game.elan">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="ElanSourceCode\words_main.elan">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="ElanSourceCode\words_Player.elan">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="ElanSourceCode\words_complete.elan">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="ElanSourceCode\words_QueueOfTiles.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
