@@ -40,15 +40,15 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    print(2);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(2));
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    print(1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(1));
     foo();
-    print(3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3));
   }
 }";
 
@@ -87,8 +87,8 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo(ref int a, ref string b) {
-    print(a);
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }
 
@@ -184,8 +184,8 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo(ref int a, ref string b) {
-    print(a);
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }
 
@@ -245,8 +245,8 @@ public static class Program {
     var a = 1;
     var b = @$""hello"";
     foo(ref a, ref b);
-    print(a);
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }";
 
@@ -288,18 +288,18 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo() {
-    print(1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(1));
     bar();
   }
   public static void bar() {
-    print(2);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(2));
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
     foo();
-    print(3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(3));
   }
 }";
 
@@ -339,7 +339,7 @@ using static StandardLibrary.Constants;
 public static partial class Globals {
   public static void foo(ref int a) {
     if (a > 0) {
-      print(a);
+      System.Console.WriteLine(StandardLibrary.Functions.asString(a));
       var _foo_1_0 = a - 1;
       foo(ref _foo_1_0);
     }

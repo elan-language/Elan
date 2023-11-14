@@ -9,7 +9,7 @@ public interface IElanDictionary : IEnumerable {
     public IEnumerable<object> ObjectValues { get; }
 }
 
-public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, IElanDictionary where TKey : notnull {
+public class ElanDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>, IElanDictionary where TKey : notnull {
     private readonly ImmutableDictionary<TKey, TValue> wrappedDictionary;
 
     public ElanDictionary() => wrappedDictionary = ImmutableDictionary.Create<TKey, TValue>();
@@ -39,27 +39,27 @@ public class ElanDictionary<TKey, TValue> : IImmutableDictionary<TKey, TValue>, 
     public IEnumerable<TKey> Keys => wrappedDictionary.Keys;
     public IEnumerable<TValue> Values => wrappedDictionary.Values;
 
-    public IImmutableDictionary<TKey, TValue> Add(TKey key, TValue value) =>
+    public ElanDictionary<TKey, TValue> Add(TKey key, TValue value) =>
         Wrap(wrappedDictionary.Add(key, value));
 
-    public IImmutableDictionary<TKey, TValue> AddRange(IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
+    public ElanDictionary<TKey, TValue> AddRange(IEnumerable<KeyValuePair<TKey, TValue>> pairs) =>
         Wrap(wrappedDictionary.AddRange(pairs));
 
-    public IImmutableDictionary<TKey, TValue> Clear() =>
+    public ElanDictionary<TKey, TValue> Clear() =>
         Wrap(wrappedDictionary.Clear());
 
     public bool Contains(KeyValuePair<TKey, TValue> pair) => wrappedDictionary.Contains(pair);
 
-    public IImmutableDictionary<TKey, TValue> Remove(TKey key) =>
+    public ElanDictionary<TKey, TValue> Remove(TKey key) =>
         Wrap(wrappedDictionary.Remove(key));
 
-    public IImmutableDictionary<TKey, TValue> RemoveRange(IEnumerable<TKey> keys) =>
+    public ElanDictionary<TKey, TValue> RemoveRange(IEnumerable<TKey> keys) =>
         Wrap(wrappedDictionary.RemoveRange(keys));
 
-    public IImmutableDictionary<TKey, TValue> SetItem(TKey key, TValue value) =>
+    public ElanDictionary<TKey, TValue> SetItem(TKey key, TValue value) =>
         Wrap(wrappedDictionary.SetItem(key, value));
 
-    public IImmutableDictionary<TKey, TValue> SetItems(IEnumerable<KeyValuePair<TKey, TValue>> items) =>
+    public ElanDictionary<TKey, TValue> SetItems(IEnumerable<KeyValuePair<TKey, TValue>> items) =>
         Wrap(wrappedDictionary.SetItems(items));
 
     public bool TryGetKey(TKey equalKey, out TKey actualKey) => wrappedDictionary.TryGetKey(equalKey, out actualKey);

@@ -30,7 +30,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 
@@ -67,7 +67,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(a['z']);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a['z']));
   }
 }";
 
@@ -104,7 +104,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(StandardLibrary.Functions.keys(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.keys(a)));
   }
 }";
 
@@ -142,8 +142,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(StandardLibrary.Functions.hasKey(a, 'b'));
-    print(StandardLibrary.Functions.hasKey(a, 'd'));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.hasKey(a, 'b')));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.hasKey(a, 'd')));
   }
 }";
 
@@ -179,7 +179,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(StandardLibrary.Functions.values(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.values(a)));
   }
 }";
 
@@ -220,8 +220,8 @@ public static class Program {
   private static void Main(string[] args) {
     var b = StandardLibrary.Functions.setItem(a, 'b', 4);
     var c = StandardLibrary.Functions.setItem(b, 'd', 2);
-    print(a);
-    print(c);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
   }
 }";
 
@@ -261,8 +261,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var b = StandardLibrary.Functions.removeItem(a, 'b');
-    print(a);
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }";
 
@@ -301,7 +301,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var b = StandardLibrary.Functions.removeItem(a, 'c');
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }";
 
@@ -345,9 +345,9 @@ public static class Program {
     var a = new StandardLibrary.ElanDictionary<string, int>();
     var b = StandardLibrary.Functions.setItem(a, @$""Foo"", 1);
     b = StandardLibrary.Functions.setItem(b, @$""Bar"", 3);
-    print(StandardLibrary.Functions.length(b));
-    print(b[@$""Foo""]);
-    print(b[@$""Bar""]);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.length(b)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b[@$""Foo""]));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b[@$""Bar""]));
   }
 }";
 
@@ -441,7 +441,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(a['c']);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a['c']));
   }
 }";
 

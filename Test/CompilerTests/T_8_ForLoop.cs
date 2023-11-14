@@ -35,7 +35,7 @@ public static class Program {
     for (var i = 1; i <= 10; i = i + 1) {
       tot = tot + i;
     }
-    print(tot);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(tot));
   }
 }"; // could be n++ when there is no step specified, whichever is easier
 
@@ -79,7 +79,7 @@ public static class Program {
     for (var i = 1; i <= 10; i = i + 2) {
       tot = tot + i;
     }
-    print(tot);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(tot));
   }
 }";
 
@@ -123,7 +123,7 @@ public static class Program {
     for (var i = 10; i >= 3; i = i - 1) {
       tot = tot + i;
     }
-    print(tot);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(tot));
   }
 }";
 
@@ -171,7 +171,7 @@ public static class Program {
         tot = tot + 1;
       }
     }
-    print(tot);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(tot));
   }
 }";
 
@@ -219,7 +219,7 @@ public static class Program {
     for (var i = lower; i <= upper; i = i + 2) {
       tot = tot + i;
     }
-    print(tot);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(tot));
   }
 }";
 

@@ -31,7 +31,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 
@@ -99,7 +99,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = new Foo();
     var b = new StandardLibrary.ElanList<Foo>(a);
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }";
 
@@ -187,11 +187,11 @@ public static class Program {
     var x = new StandardLibrary.ElanList<char>(c);
     var y = new StandardLibrary.ElanList<string>(d);
     var z = new StandardLibrary.ElanList<bool>(e);
-    print(v);
-    print(w);
-    print(x);
-    print(y);
-    print(z);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(v));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(w));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(z));
   }
 }";
 
@@ -229,7 +229,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<string>(@$""Foo"", @$""Bar"");
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 
@@ -266,7 +266,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<double>(4.1, 5, 6, 7, 8);
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 
@@ -304,7 +304,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
-    print(StandardLibrary.Functions.length(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.length(a)));
   }
 }";
 
@@ -342,7 +342,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>();
-    print(StandardLibrary.Functions.length(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.length(a)));
   }
 }";
 
@@ -380,7 +380,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
-    print(a[2]);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a[2]));
   }
 }";
 
@@ -419,9 +419,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
-    print(a[(2)..]);
-    print(a[(1)..(3)]);
-    print(a[..(2)]);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a[(2)..]));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a[(1)..(3)]));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a[..(2)]));
   }
 }";
 
@@ -461,8 +461,8 @@ public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
     var b = a + 9;
-    print(a);
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }";
 
@@ -502,8 +502,8 @@ public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
     var b = 9 + a;
-    print(a);
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }";
 
@@ -544,7 +544,7 @@ public static class Program {
     var a = new StandardLibrary.ElanList<int>(4, 5, 6, 7, 8);
     var b = new StandardLibrary.ElanList<int>(1, 2, 3);
     var c = a + b;
-    print(c);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
   }
 }";
 
@@ -581,7 +581,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 
@@ -619,7 +619,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = new StandardLibrary.ElanList<int>();
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 

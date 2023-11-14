@@ -83,9 +83,9 @@ public static class Program {
     var x = new Foo(7, @$""Apple"");
     var y = new Foo(7, @$""Orange"");
     var z = new Foo(7, @$""Orange"");
-    print(x == x);
-    print(x == y);
-    print(y == z);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y == z));
   }
 }";
 
@@ -172,9 +172,9 @@ public static class Program {
     var _setP1_1_0 = 3;
     y.setP1(ref _setP1_1_0);
     var z = new Foo(8, @$""Orange"");
-    print(x == x);
-    print(x == y);
-    print(x == z);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == z));
   }
 }";
 
@@ -216,8 +216,8 @@ public static class Program {
     var x = @$""Apple"";
     var y = @$""Apple"";
     var z = @$""apple"";
-    print(x == y);
-    print(x == z);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == z));
   }
 }";
 
@@ -259,8 +259,8 @@ public static class Program {
     var x = new StandardLibrary.ElanList<int>(3, 4, 5);
     var y = new StandardLibrary.ElanList<int>(3, 4, 5);
     var z = new StandardLibrary.ElanList<int>(4, 3, 5);
-    print(x == y);
-    print(x == z);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == z));
   }
 }";
 
@@ -305,9 +305,9 @@ public static class Program {
     var y = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(3, 4, 5));
     var z = StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(4, 3, 5));
     var w = new StandardLibrary.ElanList<int>(3, 4, 5);
-    print(x == y);
-    print(x == z);
-    print(x == w);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == z));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == w));
   }
 }";
 
@@ -355,10 +355,10 @@ public static class Program {
     var z = new StandardLibrary.ElanDictionary<char,int>(('b', 4), ('c', 5), ('a', 3));
     var w = new StandardLibrary.ElanDictionary<char,int>(('a', 3), ('b', 6), ('c', 5));
     var v = new StandardLibrary.ElanDictionary<string,int>((@$""b"", 4), (@$""c"", 5), (@$""a"", 3));
-    print(x == y);
-    print(x == z);
-    print(x == w);
-    print(x == v);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == z));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == w));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == v));
   }
 }";
 

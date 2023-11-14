@@ -69,7 +69,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    print(f.times(2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.times(2)));
   }
 }";
 
@@ -184,7 +184,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    print(f.length());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.length()));
   }
 }";
 
@@ -309,7 +309,7 @@ public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
     var b = new Bar();
-    print(f.times(b));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.times(b)));
   }
 }";
 
@@ -377,7 +377,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
-    print(f);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f));
   }
 }";
 

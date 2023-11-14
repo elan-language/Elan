@@ -17,7 +17,7 @@ public static class CSharpImportHelpers {
             "Char" => CharSymbolType.Instance,
             "Boolean" => BoolSymbolType.Instance,
             "IEnumerable`1" => new IterableSymbolType(),
-            "IImmutableDictionary`2" => new DictionarySymbolType(),
+            "ElanDictionary`2" => new DictionarySymbolType(),
             "ElanArray`1" => new ArraySymbolType(),
             "ElanList`1" => new ListSymbolType(),
             _ when type.IsGenericParameter => new GenericSymbolType(),

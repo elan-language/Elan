@@ -33,7 +33,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = @$""Hello"";
     var b = @$""World!"";
-    print(a + @$"" "" + b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a + @$"" "" + b));
   }
 }";
 
@@ -69,7 +69,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print('_' + @$""Hello"" + '!');
+    System.Console.WriteLine(StandardLibrary.Functions.asString('_' + @$""Hello"" + '!'));
   }
 }";
 
@@ -105,7 +105,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(@$""Hello"" + 3.1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Hello"" + 3.1));
   }
 }";
 
@@ -143,7 +143,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
-    print(a[2]);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a[2]));
   }
 }";
 
@@ -183,9 +183,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
-    print(a[(1)..(3)]);
-    print(a[(2)..]);
-    print(a[..(2)]);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a[(1)..(3)]));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a[(2)..]));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a[..(2)]));
   }
 }";
 
@@ -227,13 +227,13 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(@$""abc"" == @$""abc"");
-    print(@$""abc"" == @$""abcd"");
-    print(@$""abc"" == @$""Abc"");
-    print(@$""abc"" == @$""abc"");
-    print(@$""abc"" != @$""abcd"");
-    print(@$""abc"" != @$""abcd"");
-    print(@$""abc"" != @$""Abc"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" == @$""abc""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" == @$""abcd""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" == @$""Abc""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" == @$""abc""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" != @$""abcd""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" != @$""abcd""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" != @$""Abc""));
   }
 }";
 
@@ -274,12 +274,12 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(StandardLibrary.Functions.isBefore(@$""abc"", @$""abC""));
-    print(StandardLibrary.Functions.isAfter(@$""abcd"", @$""abc""));
-    print(StandardLibrary.Functions.isAfterOrSameAs(@$""abc"", @$""abc""));
-    print(StandardLibrary.Functions.isBeforeOrSameAs(@$""abc"", @$""abc""));
-    print(StandardLibrary.Functions.isAfterOrSameAs(@$""abcd"", @$""abc""));
-    print(StandardLibrary.Functions.isBeforeOrSameAs(@$""abcd"", @$""abc""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.isBefore(@$""abc"", @$""abC"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.isAfter(@$""abcd"", @$""abc"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.isAfterOrSameAs(@$""abc"", @$""abc"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.isBeforeOrSameAs(@$""abc"", @$""abc"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.isAfterOrSameAs(@$""abcd"", @$""abc"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.isBeforeOrSameAs(@$""abcd"", @$""abc"")));
   }
 }";
 
@@ -319,7 +319,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
     a = StandardLibrary.Functions.asString((2.1 + 3.4));
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 
@@ -361,7 +361,7 @@ public static class Program {
     var a = 3;
     var b = 4;
     var c = @$""{a} x {b} = {a * b}"";
-    print(c);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
   }
 }";
 
@@ -403,7 +403,7 @@ public static class Program {
     var a = 3;
     var b = 4;
     var c = @$""{{{a} x {b}}} = {a * b}"";
-    print(c);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
   }
 }";
 
@@ -443,7 +443,7 @@ public static class Program {
   private static void Main(string[] args) {
     var c = @$""Hello
  World!"";
-    print(c);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
   }
 }";
 
@@ -481,7 +481,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var c = @$""Hello "" + newline + @$""World!"";
-    print(c);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
   }
 }";
 
@@ -519,7 +519,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 3.1 + @$""Hello"";
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 
@@ -560,7 +560,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
-    print(a[5]);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a[5]));
   }
 }";
         var parseTree = @"*";
@@ -600,12 +600,12 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(@$""abc"" < @$""abC"");
-    print(@$""abcd"" > @$""abc"");
-    print(@$""abc"" >= @$""abc"");
-    print(@$""abc"" <= @$""abc"");
-    print(@$""abcd"" >= @$""abc"");
-    print(@$""abcd"" <= @$""abc"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" < @$""abC""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abcd"" > @$""abc""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" >= @$""abc""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abc"" <= @$""abc""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abcd"" >= @$""abc""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""abcd"" <= @$""abc""));
   }
 }";
 
@@ -644,7 +644,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = @$""abcde"";
     a = 2.1 + 3.4;
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 

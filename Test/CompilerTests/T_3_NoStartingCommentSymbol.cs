@@ -26,7 +26,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(@$""Hello World!"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Hello World!""));
   }
 }";
 
@@ -62,7 +62,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(@$""Hello World!"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Hello World!""));
   }
 }";
 

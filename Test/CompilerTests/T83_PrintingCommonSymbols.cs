@@ -32,7 +32,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(@$""¬!£$%^&*()@~#`|<>'€"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""¬!£$%^&*()@~#`|<>'€""));
   }
 }";
 

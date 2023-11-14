@@ -35,10 +35,10 @@ public static class Program {
   private static void Main(string[] args) {
     var a = true;
     if (a) {
-      print(@$""yes"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""yes""));
     }
     else {
-      print(@$""no"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""no""));
     }
   }
 }";
@@ -82,10 +82,10 @@ public static class Program {
   private static void Main(string[] args) {
     var a = false;
     if (a) {
-      print(@$""yes"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""yes""));
     }
     else {
-      print(@$""no"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""no""));
     }
   }
 }";
@@ -131,13 +131,13 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     if (a == 1) {
-      print(@$""one"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""one""));
     }
     else if (a == 2) {
-      print(@$""two"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""two""));
     }
     else {
-      print(@$""neither"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""neither""));
     }
   }
 }";
@@ -183,13 +183,13 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3;
     if (a == 1) {
-      print(@$""one"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""one""));
     }
     else if (a == 2) {
-      print(@$""two"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""two""));
     }
     else {
-      print(@$""neither"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""neither""));
     }
   }
 }";
@@ -231,7 +231,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = true;
     if (a) {
-      print(@$""yes"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""yes""));
     }
   }
 }";
@@ -279,16 +279,16 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 3;
     if (a == 1) {
-      print(@$""one"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""one""));
     }
     else if (a == 2) {
-      print(@$""two"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""two""));
     }
     else if (a == 3) {
-      print(@$""three"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""three""));
     }
     else {
-      print(@$""neither"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""neither""));
     }
   }
 }";

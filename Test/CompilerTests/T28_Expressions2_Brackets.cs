@@ -37,9 +37,9 @@ public static class Program {
     var x = 2 + 3 * 5 + 1;
     var y = (2 + 3) * 5 + 1;
     var z = (2 + 3) * (5 + 1);
-    print(x);
-    print(y);
-    print(z);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(z));
   }
 }";
 
@@ -83,9 +83,9 @@ public static class Program {
     var x = 2 + (3 * 5) + 1;
     var y = ((2 + 3)) * 5 + (1);
     var z = ((2 + 3) * (5 + 1));
-    print(x);
-    print(y);
-    print(z);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(z));
   }
 }";
 
@@ -126,8 +126,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 2 + System.Math.Pow(3, 2);
     var y = System.Math.Pow((2 + 3), 2);
-    print(x);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -168,8 +168,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(16.0, System.Math.Pow(2, 3));
     var y = System.Math.Pow((Compiler.WrapperFunctions.FloatDiv(16.0, 2)), 3);
-    print(x);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -211,8 +211,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Compiler.WrapperFunctions.FloatDiv(16, System.Math.Pow(2, 3));
     var y = System.Math.Pow((Compiler.WrapperFunctions.FloatDiv(16, 2)), 3);
-    print(x);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -253,8 +253,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = -4.7;
     var y = 5 * -3;
-    print(x);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -295,8 +295,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 11 % 3;
     var y = 5 + 6 % 3;
-    print(x);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -336,8 +336,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 11 / 3;
     var y = 5 + 6 / 3;
-    print(x);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 

@@ -35,9 +35,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random();
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = random();
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
@@ -78,9 +78,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random(1000.0);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = random(1000.0);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
@@ -121,9 +121,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random(100.0, 200.0);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = random(100.0, 200.0);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
@@ -164,9 +164,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random(6);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = random(6);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
@@ -207,9 +207,9 @@ public static class Program {
   private static void Main(string[] args) {
     seedRandom(3);
     var x = random(5, 10);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = random(5, 10);
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 

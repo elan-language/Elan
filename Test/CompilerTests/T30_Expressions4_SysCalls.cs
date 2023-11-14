@@ -29,7 +29,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = input();
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 
@@ -67,7 +67,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = input(@$""Your name"");
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 

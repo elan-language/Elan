@@ -33,9 +33,9 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
-    print(x);
-    print(x.Item1);
-    print(x.Item2);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item2));
   }
 }";
 
@@ -80,8 +80,8 @@ public static class Program {
     var y = 0;
     var z = @$"""";
     (y, z) = x;
-    print(y);
-    print(z);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(z));
   }
 }";
 
@@ -121,8 +121,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
     var (y, z) = x;
-    print(y);
-    print(z);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(z));
   }
 }";
 
@@ -162,7 +162,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
     x = (4, @$""Pear"");
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
@@ -204,7 +204,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
-    print(x.Item3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item3));
   }
 }";
 

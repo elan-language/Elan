@@ -39,9 +39,9 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(Fruit.apple);
-    print(Fruit.orange);
-    print(Fruit.pear);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Fruit.apple));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Fruit.orange));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Fruit.pear));
   }
 }";
 
@@ -89,7 +89,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Fruit.apple;
     x = Fruit.pear;
-    print(x);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
 
@@ -136,8 +136,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = Fruit.apple;
-    print(x == Fruit.apple);
-    print(x == Fruit.pear);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == Fruit.apple));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == Fruit.pear));
   }
 }";
 
@@ -193,13 +193,13 @@ public static class Program {
     var f = Fruit.orange;
     switch (f) {
       case Fruit.apple:
-        print('a');
+        System.Console.WriteLine(StandardLibrary.Functions.asString('a'));
         break;
       case Fruit.orange:
-        print('o');
+        System.Console.WriteLine(StandardLibrary.Functions.asString('o'));
         break;
       case Fruit.pear:
-        print('p');
+        System.Console.WriteLine(StandardLibrary.Functions.asString('p'));
         break;
       default:
         
@@ -250,7 +250,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = @$""Eat more "" + Fruit.apple + @$""s!"";
-    print(a);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
 

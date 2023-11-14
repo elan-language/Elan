@@ -36,7 +36,7 @@ public static class Program {
     var a = 1;
     var b = @$""Apple"";
     var c = new StandardLibrary.ElanList<int>(1, 2, 3);
-    print(@$""{a} {b} {c}"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""{a} {b} {c}""));
   }
 }";
 
@@ -75,7 +75,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var @new = 1;
-    print(@$""{@new}"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""{@new}""));
   }
 }";
 

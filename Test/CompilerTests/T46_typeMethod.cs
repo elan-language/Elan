@@ -66,15 +66,15 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(StandardLibrary.Functions.type(1));
-    print(StandardLibrary.Functions.type(1.1));
-    print(StandardLibrary.Functions.type('a'));
-    print(StandardLibrary.Functions.type(false));
-    print(StandardLibrary.Functions.type(@$""a""));
-    print(StandardLibrary.Functions.type(new StandardLibrary.ElanList<int>(1, 2, 3)));
-    print(StandardLibrary.Functions.type(new StandardLibrary.ElanDictionary<char,int>(('a', 3))));
-    print(StandardLibrary.Functions.type(StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(1, 2, 3))));
-    print(StandardLibrary.Functions.type(new Foo(3)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(1)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(1.1)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type('a')));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(false)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(@$""a"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(new StandardLibrary.ElanList<int>(1, 2, 3))));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(new StandardLibrary.ElanDictionary<char,int>(('a', 3)))));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(1, 2, 3)))));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(new Foo(3))));
   }
 }";
 
@@ -140,8 +140,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    print(StandardLibrary.Functions.type(1) == StandardLibrary.Functions.type(2));
-    print(StandardLibrary.Functions.type(1.0) == StandardLibrary.Functions.type(2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(1) == StandardLibrary.Functions.type(2)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(1.0) == StandardLibrary.Functions.type(2)));
   }
 }";
 

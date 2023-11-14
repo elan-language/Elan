@@ -34,7 +34,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -75,7 +75,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -115,7 +115,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = System.Math.Pow(StandardLibrary.Functions.sin(x), 2) + System.Math.Pow(StandardLibrary.Functions.cos(x), 2);
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 
@@ -155,7 +155,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = 0.7;
     var y = 3 + 4 * 1 + 2;
-    print(y);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(y));
   }
 }";
 

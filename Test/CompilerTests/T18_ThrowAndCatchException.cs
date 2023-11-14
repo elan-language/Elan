@@ -198,11 +198,11 @@ public static class Program {
   private static void Main(string[] args) {
     try {
       foo();
-      print(@$""not caught"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""not caught""));
     }
     catch (Exception _e) {
       var e = new StandardLibrary.ElanException(_e);
-      print(e);
+      System.Console.WriteLine(StandardLibrary.Functions.asString(e));
     }
   }
 }";
@@ -249,11 +249,11 @@ public static class Program {
       var x = 1;
       var y = 0;
       var z = x / y;
-      print(@$""not caught"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""not caught""));
     }
     catch (Exception _e) {
       var e = new StandardLibrary.ElanException(_e);
-      print(e);
+      System.Console.WriteLine(StandardLibrary.Functions.asString(e));
     }
   }
 }";
@@ -303,11 +303,11 @@ public static class Program {
   private static void Main(string[] args) {
     try {
       foo();
-      print(@$""not caught"");
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$""not caught""));
     }
     catch (Exception _e) {
       var e = new StandardLibrary.ElanException(_e);
-      print(e.message);
+      System.Console.WriteLine(StandardLibrary.Functions.asString(e.message));
     }
   }
 }";

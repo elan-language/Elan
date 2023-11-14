@@ -66,8 +66,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo(3);
-    print(f.p1);
-    print(f.square());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.square()));
   }
 }";
 
@@ -148,8 +148,8 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var f = new Foo(3);
-    print(f.p1);
-    print(f.square());
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.p1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.square()));
   }
 }";
 
