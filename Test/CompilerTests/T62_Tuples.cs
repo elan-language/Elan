@@ -96,7 +96,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DeconstructIntoNewVariables() {
         var code = @"#
 main
@@ -120,7 +120,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
-    (var y, var z) = x;
+    var (y, z) = x;
     print(y);
     print(z);
   }

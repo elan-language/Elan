@@ -158,11 +158,24 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitVarDefNode(VarDefNode varDefNode) {
-        var name = varDefNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(varDefNode.Id.GetType().ToString());
-        var type = MapNodeToSymbolType(varDefNode.Expression);
+        if (varDefNode.Id is IdentifierNode idn) {
+            var name =  idn.Id;
+            var type = MapNodeToSymbolType(varDefNode.Expression);
+            var ms = new VariableSymbol(name, type, currentScope);
+            currentScope.Define(ms);
+        }
 
-        var ms = new VariableSymbol(name, type, currentScope);
-        currentScope.Define(ms);
+        if (varDefNode.Id is DeconstructionNode dn) {
+            var names = dn.ItemNodes.OfType<IdentifierNode>().Select(i => i.Id).ToArray();
+            var types = names.Select((n, i) => new PendingTupleResolveSymbol(n, i + 1));
+            var zip = names.Zip(types);
+
+            foreach (var (name, type) in zip) {
+                var ms = new VariableSymbol(name, type, currentScope);
+                currentScope.Define(ms);
+            }
+        }
+
         VisitChildren(varDefNode);
         return varDefNode;
     }
