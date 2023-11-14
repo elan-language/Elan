@@ -5,16 +5,56 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T_2_HelloWorld {
+public class T_2_HelloWorld
+{
 
     [AssemblyInitialize]
-    public static void ClassInit(TestContext context) {
+    public static void ClassInit(TestContext context)
+    {
         Helpers.CleanUpArtifacts();
     }
 
     #region Passes
+    [TestMethod, Ignore]
+    public void Pass_PrintWithNoExpression()
+    {
+        var code = @"#
+main
+  print
+  print
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Hello World!""));
+  }
+}";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "\r\n\r\n");
+    }
+
     [TestMethod]
-    public void Pass_StringLiteral() {
+    public void Pass_StringLiteral()
+    {
         var code = @"#
 main
   print ""Hello World!""
@@ -49,7 +89,8 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_IntegerLiteral() {
+    public void Pass_IntegerLiteral()
+    {
         var code = @"#
 main
   print 1
@@ -85,7 +126,8 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_FloatLiteral() {
+    public void Pass_FloatLiteral()
+    {
         var code = @"#
 main
   print 2.1
@@ -229,7 +271,8 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CharLiteral() {
+    public void Pass_CharLiteral()
+    {
         var code = @"#
 main
   print '%'
@@ -265,7 +308,8 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_BoolLiteral() {
+    public void Pass_BoolLiteral()
+    {
         var code = @"#
 main
   print true
@@ -301,7 +345,8 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_EmptyLine() {
+    public void Pass_EmptyLine()
+    {
         var code = @"#
 main
   print """"
@@ -340,7 +385,8 @@ public static class Program {
 
     #region Fails
     [TestMethod]
-    public void Fail_noMain() {
+    public void Fail_noMain()
+    {
         var code = @"#
 print ""Hello World`
 ";
@@ -349,7 +395,8 @@ print ""Hello World`
     }
 
     [TestMethod]
-    public void Fail_noEnd() {
+    public void Fail_noEnd()
+    {
         var code = @"#
 main
   print ""Hello World!""
@@ -360,7 +407,8 @@ main
     }
 
     [TestMethod]
-    public void Fail_WrongCasing() {
+    public void Fail_WrongCasing()
+    {
         var code = @"#
 main
   print ""Hello World!""
