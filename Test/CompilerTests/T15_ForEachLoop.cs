@@ -186,7 +186,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "13\r\n14\r\n23\r\n24\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_functionProvidingList()
     {
         var code = @"
@@ -201,7 +201,27 @@ function fruit() as List<String>
 end function
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.SystemAccessors;
+using static StandardLibrary.Procedures;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static StandardLibrary.ElanList<string> fruit() {
+
+    return new StandardLibrary.ElanList<string>(@$""apple"", @$""orange"", @$""pear"");
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    foreach (var x in Globals.fruit()) {
+      System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    }
+  }
+}";
 
         var parseTree = @"*";
 

@@ -1,6 +1,8 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Roles;
 
-public record ForInStatementNode(IAstNode Id, IAstNode Expression, IAstNode StatementBlock) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record ForInStatementNode(IAstNode Id, IAstNode Expression, IAstNode StatementBlock) : IAstNode, ICanWrapExpression {
     public IEnumerable<IAstNode> Children => new[] { Id, Expression, StatementBlock };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
