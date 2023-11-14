@@ -158,7 +158,7 @@ procedure printModified(i Int, f (Int -> Int))
   print f(i)
 end procedure
 
-ffunction power(x Int, y Int) as Int
+function power(x Int, y Int) as Int
   return x ^ y
 end function
 ";
