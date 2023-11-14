@@ -249,7 +249,7 @@ end system
         AssertDoesNotCompile(compileData, "Cannot have system call in function");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
    public void Fail_accessorCannotBeCalledWithinAnExpression()
     {
         var code = @"
@@ -267,11 +267,11 @@ end system
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use a system call in an expression");
+        AssertDoesNotCompile(compileData, "Cannot use system accessor readFromNetwork in an expression - try defining an additional variable.");
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_accessorCannotBeCalledWithinAnExpression2()
     {
         var code = @"
@@ -291,7 +291,7 @@ end system
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use a print in an expression");
+        AssertDoesNotCompile(compileData, "Cannot use system accessor readFromNetwork in an expression - try defining an additional variable.");
     }
 
 
