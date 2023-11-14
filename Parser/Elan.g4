@@ -22,7 +22,7 @@ callStatement: NL CALL (methodCall | (assignableValue DOT methodCall));
 
 throwException: NL THROW (LITERAL_STRING | IDENTIFIER );
 
-printStatement: NL PRINT expression;
+printStatement: NL PRINT expression?;
  
  //Intended for a freestanding procedure/system call as a statement, 
 // or expression terminated by a procedure or system call that consumes result'.
