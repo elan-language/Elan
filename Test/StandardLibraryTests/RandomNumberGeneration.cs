@@ -1,4 +1,4 @@
-﻿using static StandardLibrary.SystemCalls;
+﻿using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
 
 namespace Test.StandardLibraryTests;

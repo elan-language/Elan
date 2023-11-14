@@ -24,7 +24,7 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static Globals;
-using static StandardLibrary.SystemCalls;
+using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
@@ -70,7 +70,7 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static Globals;
-using static StandardLibrary.SystemCalls;
+using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
@@ -114,7 +114,7 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static Globals;
-using static StandardLibrary.SystemCalls;
+using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
@@ -157,7 +157,7 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static Globals;
-using static StandardLibrary.SystemCalls;
+using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
@@ -234,7 +234,7 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using System.Collections.Immutable;
 using static Globals;
-using static StandardLibrary.SystemCalls;
+using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 

@@ -22,7 +22,7 @@ public static class CompilerRules {
 
     public static string? SystemCallMustBeAssignedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is SystemCallNode scn && currentScope.Resolve(scn.Name) is SystemCallSymbol scs && scs.ReturnType != VoidSymbolType.Instance) {
+        if (leafNode is SystemAccessorCallNode scn && currentScope.Resolve(scn.Name) is SystemAccessorSymbol scs && scs.ReturnType != VoidSymbolType.Instance) {
             var otherNodes = nodes.SkipLast(1).ToArray();
 
             if (scn.DotCalled) {
@@ -171,7 +171,7 @@ public static class CompilerRules {
 
 
         return leafNode switch {
-            SystemCallNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot have system call in function : {leafNode}" : null,
+            SystemAccessorCallNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot have system call in function : {leafNode}" : null,
             ProcedureCallNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot call a procedure within a function : {leafNode}" : null,
             ThrowNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot throw exception in function : {leafNode}" : null,
             PrintNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot print in function : {leafNode}" : null,

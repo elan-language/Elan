@@ -79,7 +79,7 @@ public class SymbolTableVisitor {
 
         var rt = MapNodeToSymbolType(systemAccessorDefNode.Return);
 
-        var ms = new SystemCallSymbol(name, rt,  currentScope,  NameSpace.UserGlobal);
+        var ms = new SystemAccessorSymbol(name, rt,  currentScope,  NameSpace.UserGlobal);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(systemAccessorDefNode);

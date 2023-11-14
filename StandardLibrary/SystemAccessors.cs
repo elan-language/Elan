@@ -6,8 +6,8 @@ using static StandardLibrary.Functions;
 
 namespace StandardLibrary;
 
-[ElanSystemCall]
-public static class SystemCalls {
+[ElanSystemAccessor]
+public static class SystemAccessors {
     #region Clock
 
     //public static DateTime now() => DateTime.Now;
