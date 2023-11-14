@@ -274,6 +274,47 @@ end main
     }
 
     [TestMethod]
+    public void Fail_DeconstructIntoMixed1()
+    {
+        var code = @"#
+main
+    var x = (3,""Apple"")
+    var z = """"
+    set (z, y) to x
+    print y
+    print z
+end main
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_DeconstructIntoMixed2()
+    {
+        var code = @"#
+main
+    var x = (3,""Apple"")
+    var z = """"
+    var (z, y) = x
+    print y
+    print z
+end main
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Duplicate id 'z' in scope 'main'");
+    }
+
+    [TestMethod]
     public void Pass_AssignANewTupleOfWrongType() {
         var code = @"#
 main
