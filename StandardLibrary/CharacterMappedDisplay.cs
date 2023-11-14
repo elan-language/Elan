@@ -5,8 +5,9 @@ using static StandardLibrary.Constants;
 namespace StandardLibrary;
 
 //TODO: Rename  so we have several subclasses of e.g. Display
+[ElanStandardLibrary]
 public class CharMapLive : CharMap {
-    public override void putChar(int col, int row, char c, Colour foreground, Colour background) {
+    public override void putCharWithColours(int col, int row, char c, Colour foreground, Colour background) {
         var currentForeground = Console.ForegroundColor;
         var currentBackground = Console.BackgroundColor;
         var (currentX, currentY) = Console.GetCursorPosition();
@@ -21,14 +22,14 @@ public class CharMapLive : CharMap {
         Console.BackgroundColor = currentBackground;
     }
 }
-
+[ElanStandardLibrary]
 public class CharMapBuffered : CharMap {
     private readonly Character[,] buffer;
 
     public CharMapBuffered() => buffer = new Character[width, height];
 
     //Overload all versions without colours
-    public override void putChar(int col, int row, char c, Colour foreground, Colour background) {
+    public override void putCharWithColours(int col, int row, char c, Colour foreground, Colour background) {
         buffer[col, row] = new Character(c, foreground, background);
     }
 
@@ -84,7 +85,7 @@ public class CharMapBuffered : CharMap {
         }
     }
 }
-
+[ElanStandardLibrary]
 public abstract class CharMap {
     public const char empty = ' ';
     public readonly int height;
@@ -123,22 +124,22 @@ public abstract class CharMap {
     }
 
     public void putBlock(int col, int row) {
-        putChar(col, row, Symbol.block, foregroundColour);
+        putCharWithColour(col, row, Symbol.block, foregroundColour);
     }
 
-    public void putBlock(int col, int row, Colour colour) {
-        putChar(col, row, Symbol.block, colour);
+    public void putBlockWithColour(int col, int row, Colour colour) {
+        putCharWithColour(col, row, Symbol.block, colour);
     }
 
     public void putChar(int col, int row, char c) {
-        putChar(col, row, c, foregroundColour);
+        putCharWithColour(col, row, c, foregroundColour);
     }
 
-    public void putChar(int col, int row, char c, Colour foreground) {
-        putChar(col, row, c, foreground, backgroundColour);
+    public void putCharWithColour(int col, int row, char c, Colour foreground) {
+        putCharWithColours(col, row, c, foreground, backgroundColour);
     }
 
-    public abstract void putChar(int col, int row, char c, Colour foreground, Colour background);
+    public abstract void putCharWithColours(int col, int row, char c, Colour foreground, Colour background);
 
     public void clear(int col, int row) {
         putChar(col, row, empty);
@@ -161,11 +162,12 @@ public abstract class CharMap {
 
 //TODO: This should be turned into another subclass of characterMappedDisplay
 
+[ElanStandardLibrary]
 public class XYGraph {
     //Character values for different combinations of quarter-blocks, corresponding to binary values 0000 to 1111:
     private static readonly ImmutableList<char> quarterChars = ImmutableList.Create(' ', '\u2596', '\u2597', '\u2584', '\u2598', '\u258c', '\u259a', '\u2599', '\u259D', '\u259e', '\u2590', '\u259f', '\u2580', '\u259b', '\u259c', '\u2588');
 
-    private ImmutableList<(int, int)> points = ImmutableList.Create<(int, int)>();
+    private ElanList<(int, int)> points = new();
     private double yIncrementPerPoint;
 
     private double yMax;
@@ -216,7 +218,7 @@ public class XYGraph {
         }
     }
 
-    public Dictionary<(int, int), char> getCharsRepresentingPoints() {
+    public ElanDictionary<(int, int), char> getCharsRepresentingPoints() {
         var chars = new Dictionary<(int, int), char>();
         foreach (var pixel in points) {
             var x = pixel.Item1 + 1;
@@ -231,7 +233,7 @@ public class XYGraph {
             }
         }
 
-        return chars;
+        return new ElanDictionary<(int, int), char>(chars.Select(i => (i.Key, i.Value)).ToArray());
     }
 
     private char charWithNewBitAdded(char existing, int newBit) => quarterChars[quarterChars.IndexOf(existing) | newBit];

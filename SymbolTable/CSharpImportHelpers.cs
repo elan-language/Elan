@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.InteropServices;
 using StandardLibrary;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
@@ -26,18 +27,26 @@ public static class CSharpImportHelpers {
 
     private static bool IsStdLib(MethodInfo m) => m.GetCustomAttribute<ElanStandardLibraryAttribute>() is not null || m.DeclaringType?.GetCustomAttribute<ElanStandardLibraryAttribute>() is not null;
 
+    private static bool IsStdLib(Type m) => m.GetCustomAttribute<ElanStandardLibraryAttribute>() is not null;
+
+
     private static bool IsSystemAccessor(MethodInfo m) => m.GetCustomAttribute<ElanSystemAccessorAttribute>() is not null || m.DeclaringType?.GetCustomAttribute<ElanSystemAccessorAttribute>() is not null;
+
+    private static bool IsStatic(this Type t) => t is { IsAbstract: true, IsSealed: true };
 
     public static void InitTypeSystem(GlobalScope globalScope) {
         var lib = Assembly.GetAssembly(typeof(SystemAccessors));
 
         var exportedTypes = lib?.ExportedTypes.ToArray() ?? throw new ArgumentException("no lib");
 
-        var allExportedMethods = exportedTypes.SelectMany(t => t.GetMethods()).ToList();
-
+        var allExportedMethods = exportedTypes.Where(t => t.IsStatic()).SelectMany(t => t.GetMethods()).ToList();
         var stdLib = allExportedMethods.Where(IsStdLib).ToArray();
+
         var systemAccessors = allExportedMethods.Where(IsSystemAccessor).ToArray();
         var constants = exportedTypes.Single(t => t.Name == "Constants").GetFields().ToArray();
+
+        var allExportedClasses = exportedTypes.Where(t => !t.IsStatic()).Where(IsStdLib);
+
 
         foreach (var fs in stdLib.Select(methodInfo => new FunctionSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), NameSpace.Library))) {
             globalScope.DefineSystem(fs);
@@ -50,5 +59,32 @@ public static class CSharpImportHelpers {
         foreach (var vs in constants.Select(fieldInfo => new VariableSymbol(fieldInfo.Name, ConvertCSharpTypesToBuiltInSymbol(fieldInfo.FieldType), null!))) {
             globalScope.Define(vs);
         }
+
+        foreach (var vs in allExportedClasses.Select(ImportClass)) {
+            globalScope.Define(vs);
+        }
+    }
+
+    private static ISymbol ImportClass(Type type) {
+
+        var cls = new ClassSymbol(type.Name, ClassSymbolTypeType.Mutable, null!);
+
+        var properties = type.GetProperties();
+
+        var methods = type.GetMethods().Where(t => t.DeclaringType == type).Except(properties.SelectMany(p => new[] {p.GetMethod, p.SetMethod})).ToArray();
+
+        var procedures = methods.Where(m => m.ReturnType == typeof(void)).ToArray();
+        var functions = methods.Except(procedures).ToArray();
+
+        foreach (var fs in functions.Select(methodInfo => new FunctionSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), NameSpace.UserLocal))) {
+            cls.Define(fs);
+        }
+
+        foreach (var fs in procedures.Select(methodInfo => new ProcedureSymbol(methodInfo.Name, NameSpace.UserLocal))) {
+            cls.Define(fs);
+        }
+
+
+        return cls;
     }
 }
