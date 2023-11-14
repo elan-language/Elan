@@ -68,6 +68,80 @@ end function
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
+    [TestMethod]
+    public void Pass_FuncAsProperty()
+    {
+        var code = @"
+main
+  var foo = Foo(twice)
+  print foo.f(7)
+end main
+
+class Foo
+  constructor(f (Int -> Int))
+    self.f = f
+  end constructor
+
+  property f (Int -> Int)
+
+  function asString() as String
+    return ""a Foo""
+  end function
+end class
+
+function twice(x Int) as Int
+  return x * 2
+end function
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "14\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_DefaultValue()
+    {
+        var code = @"
+main
+  var foo = Foo(twice)
+  print foo.f
+  print foo.f(7)
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property f (Int -> Int)
+
+  function asString() as String
+    return ""a Foo""
+  end function
+end class
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Default (Int -> Int)\r\n0\r\n");
+    }
+
     #endregion
 
     #region Fails
