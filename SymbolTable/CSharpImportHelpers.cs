@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using StandardLibrary;
 using SymbolTable.Symbols;
@@ -22,6 +23,7 @@ public static class CSharpImportHelpers {
             "ElanArray`1" => new ArraySymbolType(),
             "ElanList`1" => new ListSymbolType(),
             _ when type.IsGenericParameter => new GenericSymbolType(),
+            _ when type.IsEnum => new EnumSymbolType(type.Name),
             _ => throw new NotImplementedException(type.Name)
         };
 
@@ -45,6 +47,7 @@ public static class CSharpImportHelpers {
         var systemAccessors = allExportedMethods.Where(IsSystemAccessor).ToArray();
         var constants = exportedTypes.Single(t => t.Name == "Constants").GetFields().ToArray();
 
+
         var allExportedClasses = exportedTypes.Where(t => !t.IsStatic()).Where(IsStdLib);
 
 
@@ -65,25 +68,39 @@ public static class CSharpImportHelpers {
         }
     }
 
-    private static ISymbol ImportClass(Type type) {
+    private static ISymbol ImportType(Type type) {
+        if (type.IsClass) {
+            return ImportClass(type);
+        }
 
+        return ImportEnum(type);
+    }
+
+    private static ISymbol ImportEnum(Type type) {
+        return new EnumSymbol(type.Name, null!);
+    }
+
+    private static ISymbol ImportClass(Type type) {
         var cls = new ClassSymbol(type.Name, ClassSymbolTypeType.Mutable, null!);
 
         var properties = type.GetProperties();
 
-        var methods = type.GetMethods().Where(t => t.DeclaringType == type).Except(properties.SelectMany(p => new[] {p.GetMethod, p.SetMethod})).ToArray();
+        var methods = type.GetMethods().Where(t => t.DeclaringType == type).Except(properties.SelectMany(p => new[] { p.GetMethod, p.SetMethod })).ToArray();
 
         var procedures = methods.Where(m => m.ReturnType == typeof(void)).ToArray();
         var functions = methods.Except(procedures).ToArray();
 
-        foreach (var fs in functions.Select(methodInfo => new FunctionSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), NameSpace.UserLocal))) {
+        foreach (var fs in functions.Select(methodInfo => new FunctionSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), cls, NameSpace.UserLocal))) {
             cls.Define(fs);
         }
 
-        foreach (var fs in procedures.Select(methodInfo => new ProcedureSymbol(methodInfo.Name, NameSpace.UserLocal))) {
-            cls.Define(fs);
+        foreach (var ps in procedures.Select(methodInfo => new ProcedureSymbol(methodInfo.Name, cls, NameSpace.UserLocal))) {
+            cls.Define(ps);
         }
 
+        foreach (var fs in properties.Select(propertyInfo => new VariableSymbol(propertyInfo.Name, ConvertCSharpTypesToBuiltInSymbol(propertyInfo.PropertyType), cls))) {
+            cls.Define(fs);
+        }
 
         return cls;
     }
