@@ -675,7 +675,7 @@ public static class AstFactory {
         return new EnumValueNode(id.GetText(), type);
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumTypeContext context) => visitor.Visit(context.TYPENAME());
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumTypeContext context) => new TypeNode(visitor.Visit(context.TYPENAME()));
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());
 

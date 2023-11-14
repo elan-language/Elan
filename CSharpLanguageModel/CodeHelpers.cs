@@ -126,6 +126,7 @@ public static class CodeHelpers {
             PairNode kn => $"{NodeToCSharpType(kn.Key)},{NodeToCSharpType(kn.Value)}",
             IdentifierWithTypeNode idtn => NodeToCSharpType(idtn.Type),
             ValueTypeNode vtn => ValueTypeToCSharpType(vtn.Type),
+            EnumValueNode evn => NodeToCSharpType(evn.TypeNode),
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }
@@ -137,6 +138,7 @@ public static class CodeHelpers {
             LiteralDictionaryNode => $"static readonly {NodeToCSharpType(node)}",
             LiteralTupleNode => $"static readonly {NodeToCSharpType(node)}",
             NewInstanceNode => $"static readonly {NodeToCSharpType(node)}",
+            EnumValueNode => $"static readonly {NodeToCSharpType(node)}",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }
