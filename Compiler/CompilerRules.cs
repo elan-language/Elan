@@ -46,8 +46,6 @@ public static class CompilerRules {
     }
 
     private static bool Match(IAstNode n1, IAstNode n2) {
-        //return n1 is IdentifierNode idn1 && n2 is IdentifierNode idn2 && idn1.Id == idn2.Id;
-
         return n2 switch {
             IdentifierNode idn2 when n1 is IdentifierNode idn1 => idn1.Id == idn2.Id,
             IndexedExpressionNode ien when n1 is IdentifierNode idn1 => Match(idn1, ien.Expression) || ien.Expression.Children.Any(c => Match(idn1, c)),
@@ -76,7 +74,6 @@ public static class CompilerRules {
 
     public static string? NoMutableConstantsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-
         var otherNodes = nodes.SkipLast(1).ToArray();
 
         if (otherNodes.Any(n => n is ConstantDefNode)) {
@@ -134,39 +131,28 @@ public static class CompilerRules {
 
     public static string? FunctionConstraintsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is SystemCallNode or ProcedureCallNode) {
-            var otherNodes = nodes.SkipLast(1).ToArray();
-            if (otherNodes.Any(n => n is FunctionDefNode)) {
-                return $"Cannot have system call in function : {leafNode}";
-            }
-        }
+        var otherNodes = nodes.SkipLast(1).ToArray();
 
-        if (leafNode is ThrowNode) {
-            var otherNodes = nodes.SkipLast(1).ToArray();
-            if (otherNodes.Any(n => n is FunctionDefNode)) {
-                return $"Cannot throw exception in function : {leafNode}";
-            }
-        }
-
-        if (leafNode is PrintNode) {
-            var otherNodes = nodes.SkipLast(1).ToArray();
-            if (otherNodes.Any(n => n is FunctionDefNode)) {
-                return $"Cannot print in function : {leafNode}";
-            }
-        }
-
-        if (leafNode is AssignmentNode an) {
-            var otherNodes = nodes.SkipLast(1).Expand().ToArray();
+        string? CheckParams(AssignmentNode an, IAstNode[] otherNodes) {
             if (otherNodes.Any(n => n is FunctionDefNode)) {
                 var varNodes = otherNodes.OfType<VarDefNode>();
-
                 if (!varNodes.Any(vn => Match(vn.Id, an.Id))) {
                     return $"Cannot modify param in function : {leafNode}";
                 }
             }
+
+            return null;
         }
 
-        return null;
+
+        return leafNode switch {
+            SystemCallNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot have system call in function : {leafNode}" : null,
+            ProcedureCallNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot call a procedure within a function : {leafNode}" : null,
+            ThrowNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot throw exception in function : {leafNode}" : null,
+            PrintNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot print in function : {leafNode}" : null,
+            AssignmentNode an => CheckParams(an, otherNodes.Expand().ToArray()),
+            _ => null
+        };
     }
 
     public static string? ConstructorConstraintsRule(IAstNode[] nodes, IScope currentScope) {

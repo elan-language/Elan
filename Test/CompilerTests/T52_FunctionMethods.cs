@@ -458,7 +458,7 @@ end class
         AssertDoesNotCompile(compileData, "Cannot modify param in function");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_FunctionMethodCannotCallProcedureMethod() {
         var code = @"#
 class Foo
