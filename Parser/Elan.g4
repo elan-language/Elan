@@ -64,11 +64,11 @@ functionWithBody:
 	;
 
 expressionFunction: 
-	NL FUNCTION functionSignature ASSIGN expression; 
+	NL FUNCTION functionSignature ARROW expression; 
 
 letIn: LET assignableValue ASSIGN expression (COMMA assignableValue ASSIGN expression)* NL IN; 
    
-functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET ARROW type;
+functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
 
 // System Accessor
 systemAccessor: 

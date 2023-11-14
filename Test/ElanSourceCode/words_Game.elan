@@ -26,7 +26,7 @@ class Game
         call tileQueue.initialise()
     end procedure
 
-    function checkWordIsValid(word String) -> String
+    function checkWordIsValid(word String) as String
         return allowedWords.contains(word)
     end function
 
@@ -41,7 +41,7 @@ class Game
         call player.setTilesInHand(hand)
     end procedure
 
-    function isPlayable() -> Boolean
+    function isPlayable() as Boolean
         return player1.tilesPlayed <= maxTilesPlayed and
             player2.tilesPlayed <= maxTilesPlayed and
             call player1.tilesInHand.length() < maxHandSize and
@@ -53,7 +53,7 @@ class Game
         call player2.deductAnyPenalty()
     end procedure
 
-    function checkWordIsInTiles(word String, player Player) -> Boolean
+    function checkWordIsInTiles(word String, player Player) as Boolean
         var inTiles = true
         var copyOfTiles = player.tilesInHand
         for count = 0 to word.length() - 1
@@ -75,7 +75,7 @@ class Game
         call player.addToScore(getScoreForWord(wordAsPlayed))
     end procedure
 
-    function getScoreForWord(word String) -> Int
+    function getScoreForWord(word String) as Int
         var score = 0
         for count = 0 to word.length() - 1
             set score to score + tileDictionary[word[count]]
@@ -88,7 +88,7 @@ class Game
         return score
     end function
 
-    function listTileValues(player Player) -> String
+    function listTileValues(player Player) as String
         var values = "                  "
         foreach c in player.tilesInHand
             set values to values + tileDictionary[c]
@@ -96,7 +96,7 @@ class Game
         return values
     end function
 
-    function showTileQueue() -> String
+    function showTileQueue() as String
         return tileQueue.show()
     end function
 
@@ -117,7 +117,7 @@ class Game
         end for
     end procedure
 
-    function tileValuesAsString() -> String
+    function tileValuesAsString() as String
         var s = "
 TILE VALUES
 "
@@ -138,7 +138,7 @@ TILE VALUES
         end while
     end procedure
 
-    function asString() -> String 
+    function asString() as String 
         return "A Game"
     end function
 end class
@@ -196,7 +196,7 @@ class Player
       end foreach
     end procedure
 
-    function asString() -> String 
+    function asString() as String 
         return name
     end function
 end class
@@ -219,7 +219,7 @@ class QueueOfTiles
         end for
     end procedure
 
-    function isNotEmpty() -> Boolean
+    function isNotEmpty() as Boolean
          return rear is not -1
     end function
 
@@ -242,7 +242,7 @@ class QueueOfTiles
         end if
     end procedure
 
-    function show() -> String
+    function show() as String
        var result = ""
        foreach letter in contents
          set result to result + letter       
@@ -250,7 +250,7 @@ class QueueOfTiles
        return result + newline
     end function
 
-    function asString() -> String 
+    function asString() as String 
         return show()
     end function
 end class

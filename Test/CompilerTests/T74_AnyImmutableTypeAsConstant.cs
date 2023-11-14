@@ -176,7 +176,7 @@ immutable class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return ""{p1}""
     end function
 end class
@@ -257,7 +257,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return ""{p1}""
     end function
 end class

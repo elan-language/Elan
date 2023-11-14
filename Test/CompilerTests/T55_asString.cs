@@ -53,7 +53,7 @@ class Foo
 
     private property p2 String
 
-    function asString() -> String
+    function asString() as String
          return p2
     end function
 
@@ -127,7 +127,7 @@ class Foo
 
     private property p2 String
 
-    function asString() -> String
+    function asString() as String
          return p2
     end function
 
@@ -201,7 +201,7 @@ class Foo
 
     private property p2 String
 
-    function asString() -> String
+    function asString() as String
          return self.typeAndProperties()
     end function
 

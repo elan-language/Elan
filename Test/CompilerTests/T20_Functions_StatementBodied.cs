@@ -15,7 +15,7 @@ main
     print foo(3,4)
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     return a * b
 end function
 ";
@@ -58,7 +58,7 @@ main
     print factorial(5)
 end main
 
-function factorial(a Int) -> Int
+function factorial(a Int) as Int
     var result = 0;
     if a > 2 then
         set result to a * factorial(a-1)
@@ -118,7 +118,7 @@ main
     print binarySearch(li, ""blueberry"")
 end main
 
-function binarySearch(li List<String>, item String) ->  Bool 
+function binarySearch(li List<String>, item String) as  Bool 
   var result = false
   if li.length() is 0 then  
     set result to false
@@ -262,7 +262,7 @@ main
     call foo(3,4)
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     return a * b
 ";
 
@@ -306,7 +306,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     var c = a * b
 end function
 ";
@@ -323,7 +323,7 @@ main
    set a to foo(3,4)
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     var c = a * b
     return c
 end function
@@ -343,7 +343,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     var c = a * b
     return
 end function
@@ -358,7 +358,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) -> Bool
+function foo(a Int, b Int) as Bool
     if 2 > 1 then
         return true
     else
@@ -376,7 +376,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     return a / b
 end function
 ";
@@ -395,7 +395,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     return a * b
     var c = a + b
 end function
@@ -411,7 +411,7 @@ end function
 main
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     print a
     return a * b
 end function
@@ -432,7 +432,7 @@ main
     print result
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     call bar()
     return a * b
 end function
@@ -457,7 +457,7 @@ main
     print result
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     set a to a + 1
     return a * b
 end function
@@ -478,7 +478,7 @@ main
     print result
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     return a * b
 end function
 ";
@@ -499,7 +499,7 @@ main
     print result
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     return a * b
 end function
 ";
@@ -520,7 +520,7 @@ main
     print result
 end main
 
-function foo(a Int, b Int) -> Int
+function foo(a Int, b Int) as Int
     return a * b
 end function
 ";

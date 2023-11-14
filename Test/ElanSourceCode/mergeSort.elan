@@ -3,7 +3,7 @@ main
   print mergeSort(li)
 end main
 
-function mergeSort(list List<String>) -> List<String> 
+function mergeSort(list List<String>) as List<String> 
     var result = list
     if list.length() > 1 then
       var mid = list.length() div 2 
@@ -12,7 +12,7 @@ function mergeSort(list List<String>) -> List<String>
     return result
 end function
 
-function merge(a List<String>, b List<String>) -> List<String>
+function merge(a List<String>, b List<String>) as List<String>
     var result = List<String>()
     if a.isEmpty() then 
       set result to b 

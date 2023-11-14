@@ -18,7 +18,7 @@ class Square
     property x Int
     property y Int
 
-    function getAdjacentSquare(d Direction) -> Square
+    function getAdjacentSquare(d Direction) as Square
         var newX = x
         var newY = y
         switch d
@@ -35,7 +35,7 @@ class Square
         return Square(newX, newY)
     end function
 
-    function asString() -> String 
+    function asString() as String 
       return "{x},{y}"
     end function
 end class

@@ -34,7 +34,7 @@ abstract class Foo
 
     procedure setP1(v Int)
 
-    function product() -> Int
+    function product() as Int
 end class
 
 class Bar inherits Foo
@@ -49,11 +49,11 @@ class Bar inherits Foo
         set self.p1 to p1
     end procedure
 
-    function product() -> Int
+    function product() as Int
         return p1 * p2
     end function
 
-    function asString() -> String 
+    function asString() as String 
         return """"
     end function
 end class
@@ -147,7 +147,7 @@ end class
 
 abstract class Yon
     procedure setP1(v Int)
-    function product() -> Int
+    function product() as Int
 end class
 
 class Bar inherits Foo, Yon
@@ -162,11 +162,11 @@ class Bar inherits Foo, Yon
         set self.p1 to p1
     end procedure
 
-    function product() -> Int
+    function product() as Int
         return p1 * p2
     end function
 
-    function asString() -> String 
+    function asString() as String 
         return """"
     end function
 end class
@@ -265,7 +265,7 @@ end class
 abstract class Yon
     property p1 Int
     procedure setP1(v Int)
-    function product() -> Int
+    function product() as Int
 end class
 
 class Bar inherits Foo, Yon
@@ -280,11 +280,11 @@ class Bar inherits Foo, Yon
         set self.p1 to p1
     end procedure
 
-    function product() -> Int
+    function product() as Int
         return p1 * p2
     end function
 
-    function asString() -> String 
+    function asString() as String 
         return """"
     end function
 end class
@@ -379,7 +379,7 @@ class Foo
     end constructor
     property p1 Int
     property p2 Int
-    function asString() -> String 
+    function asString() as String 
         return """"
     end function
 end class
@@ -396,11 +396,11 @@ class Bar inherits Foo
         set self.p1 to p1
     end procedure
 
-    function product() -> Int
+    function product() as Int
         return p1 * p2
     end function
 
-    function asString() -> String 
+    function asString() as String 
         return """"
     end function
 end class
@@ -427,7 +427,7 @@ class Foo
     end constructor
     property p1 Int
     property p2 Int
-    function asString() -> String 
+    function asString() as String 
         return """"
     end function
 end class
@@ -460,7 +460,7 @@ abstract class Foo
 
     procedure setP1(v Int)
 
-    function product() -> Int
+    function product() as Int
 end class
 
 class Bar inherits Foo
@@ -475,7 +475,7 @@ class Bar inherits Foo
         set self.p1 to p1
     end procedure
 
-    function asString() -> String 
+    function asString() as String 
         return """"
     end function
 end class
@@ -504,7 +504,7 @@ abstract class Foo
 
     procedure setP1(v Int)
 
-    function product() -> Int
+    function product() as Int
 end class
 
 class Bar inherits Foo
@@ -519,11 +519,11 @@ class Bar inherits Foo
         set self.p1 to p1
     end procedure
 
-    function product() -> Float
+    function product() as Float
         return p1 * p2
     end function
 
-    function asString() -> String 
+    function asString() as String 
         return """"
     end function
 end class
@@ -554,7 +554,7 @@ abstract class Foo
         set self.p1 to p1
     end procedure
 
-    function product() -> Int
+    function product() as Int
 end class
 ";
 

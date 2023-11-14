@@ -90,7 +90,7 @@ class Base
     set self.p1 to p1
   end constructor
   property p1 Int
-  function asString() -> String
+  function asString() as String
     return """"
   end function
 end class

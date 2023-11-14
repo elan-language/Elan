@@ -38,7 +38,7 @@ class Game
 
     property previousScores List<Int>
 
-    function asString() -> String
+    function asString() as String
         return ""A game""
     end function
 
@@ -51,7 +51,7 @@ class Player
 
     property name String
 
-    function asString() -> String
+    function asString() as String
         return name
     end function
 
@@ -156,7 +156,7 @@ class Game
     property dsi Dictionary<String, Int>
     property ai Array<Int>
 
-    function asString() -> String
+    function asString() as String
         return ""A game""
     end function
 
@@ -244,7 +244,7 @@ class Game
 
     property i Int
 
-    function asString() -> String
+    function asString() as String
         return ""A game""
     end function
 
@@ -312,7 +312,7 @@ class Game
     property p1 Player
     property previousGame Game
 
-    function asString() -> String
+    function asString() as String
         return ""A game""
     end function
 
@@ -325,7 +325,7 @@ class Player
 
     property name String
 
-    function asString() -> String
+    function asString() as String
         return name
     end function
 
@@ -425,7 +425,7 @@ class Game
 
     property previousScores List<Int>
 
-    function asString() -> String
+    function asString() as String
         return ""A game""
     end function
 
@@ -438,7 +438,7 @@ class Player
 
     property name String
 
-    function asString() -> String
+    function asString() as String
         return name
     end function
 
@@ -551,7 +551,7 @@ class Game
 
     property previousScores List<Int>
 
-    function asString() -> String
+    function asString() as String
         return ""A game""
     end function
 
@@ -564,7 +564,7 @@ class Player
 
     property name String
 
-    function asString() -> String
+    function asString() as String
         return name
     end function
 
@@ -673,7 +673,7 @@ class Foo
     property c Dictionary<String, Int>
     property d Array<Int>
 
-    function asString() -> String
+    function asString() as String
         return ""A Foo""
     end function
 

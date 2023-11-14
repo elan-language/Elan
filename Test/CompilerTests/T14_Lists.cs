@@ -59,7 +59,7 @@ class Foo
   constructor()
   end constructor
 
-  function asString() -> String
+  function asString() as String
     return ""foo""
   end function
 
@@ -139,7 +139,7 @@ class Foo
   constructor()
   end constructor
 
-  function asString() -> String
+  function asString() as String
     return ""foo""
   end function
 

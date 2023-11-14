@@ -99,7 +99,7 @@ end main
 class Foo
     constructor()
     end constructor
-    function asString() -> String
+    function asString() as String
         return ""Hello World!""
     end function
 end class
@@ -199,7 +199,7 @@ class Main
     constructor()
     end constructor
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 end class

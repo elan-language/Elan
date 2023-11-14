@@ -26,7 +26,7 @@ class Foo
 
     property p2 String
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -100,7 +100,7 @@ class Foo
 
     property p1 Int
     property p2 String
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -169,7 +169,7 @@ class Foo
     property p1 Int
     property p2 String
    
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -187,7 +187,7 @@ class Foo
     property p1 Int = 3
     property p2 String
    
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -211,7 +211,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 end class
@@ -235,7 +235,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -259,7 +259,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -288,7 +288,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -316,7 +316,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 

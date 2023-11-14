@@ -25,7 +25,7 @@ class Foo
 
     property p2 String
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -61,7 +61,7 @@ class Foo
 
     property p2 String
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -134,7 +134,7 @@ class Foo
 
     property p2 String
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -209,7 +209,7 @@ class Foo
 
     property p2 String
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -286,7 +286,7 @@ immutable class Foo
 
     property p2 String
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 

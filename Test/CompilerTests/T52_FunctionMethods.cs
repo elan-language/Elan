@@ -23,11 +23,11 @@ class Foo
 
     property p1 Int
 
-    function times(value Int) -> Int
+    function times(value Int) as Int
         return p1 * value
     end function
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -99,11 +99,11 @@ class Foo
 
     property p1 Bar
 
-    function length() -> Int
+    function length() as Int
         return p1.length() + 2
     end function
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -116,11 +116,11 @@ class Bar
 
     property p1 Int
 
-    function length() -> Int
+    function length() as Int
         return p1
     end function
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -215,15 +215,15 @@ class Foo
 
     property p1 Int
 
-    function times(b Bar) -> Int
+    function times(b Bar) as Int
         return p1PlusOne() * b.p1PlusOne()
     end function
 
-    function p1PlusOne() -> Int
+    function p1PlusOne() as Int
         return p1 +1 
     end function
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -236,11 +236,11 @@ class Bar
 
     property p1 Int
 
-    function p1PlusOne() -> Int
+    function p1PlusOne() as Int
         return p1 +1 
     end function
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -339,7 +339,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
          return p1.asString()
     end function
 
@@ -411,11 +411,11 @@ class Foo
 
     property p1 Int
 
-    function times(value Int) -> Int
+    function times(value Int) as Int
         return p1 * value
     end function
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -439,12 +439,12 @@ class Foo
 
     property p1 Int
 
-    function times(value Int) -> Int
+    function times(value Int) as Int
         set p1 to p1 * value
         return p1
     end function
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -468,7 +468,7 @@ class Foo
 
     property p1 Int
 
-    function times(value Int) -> Int
+    function times(value Int) as Int
         call setP1(p1 * value)
         return p1
     end function
@@ -477,7 +477,7 @@ class Foo
         set p1 to value
     end procedure
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 

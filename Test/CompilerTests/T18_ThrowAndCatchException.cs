@@ -334,7 +334,7 @@ main
    var s = foo()
 end main
 
-function foo(x String) -> String
+function foo(x String) as String
   throw x
   return x
 end function
