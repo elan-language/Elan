@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass][Ignore]
+[TestClass]
 public class U103_SystemAccessors
 {
     #region Passes
@@ -17,12 +17,31 @@ main
  print d
 end main
 
-system readFromNetwork(url String) -> String
+system readFromNetwork(url String) as String
   return ""data""
 end system
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static string readFromNetwork(string url) {
+
+    return @$""data"";
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var d = readFromNetwork(@$""www.foo.com"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(d));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -35,7 +54,7 @@ end system
         AssertObjectCodeExecutes(compileData, "data\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_accessorCanBeCalledWithinAProcedure()
     {
         var code = @"
@@ -49,7 +68,7 @@ procedure myProc()
   print d
 end procedure
 
-system readFromNetwork(url String) -> String
+system readFromNetwork(url String) as String
   return ""data""
 end system
 ";
@@ -67,7 +86,7 @@ end system
         AssertObjectCodeExecutes(compileData, "data\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_accessorCanCallSystemCallsAndProcedures()
     {
         var code = @"
@@ -76,7 +95,7 @@ main
   print d
 end main
 
-system readFromNetwork(url String) -> String
+system readFromNetwork(url String) as String
   var r = random()
   print ""checking""
   return ""data""
@@ -97,7 +116,7 @@ end system
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_accessorCanCallOtherAccessor()
     {
         var code = @"
@@ -106,7 +125,7 @@ main
   print d
 end main
 
-system readFromNetwork(url String) -> String
+system readFromNetwork(url String) as String
   var result = """"
   if check(url)
     result = ""OK data""
@@ -114,7 +133,7 @@ system readFromNetwork(url String) -> String
   return result
 end system
 
-system check(url String) -> Bool
+system check(url String) as Bool
   return true
 end system
 ";
@@ -136,7 +155,7 @@ end system
     #endregion
 
     #region Fails
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_accessorCannotBeCalledWithinAFunction()
     {
         var code = @"
@@ -147,7 +166,7 @@ function myFunc()
   return readFromNetWork(""url"")
 end function
 
-system readFromNetwork(url String) -> String
+system readFromNetwork(url String) as String
   return ""data""
 end system
 ";
@@ -160,7 +179,7 @@ end system
         AssertDoesNotCompile(compileData, "?");
     }
 
-    [TestMethod]
+    [TestMethod,Ignore]
    public void Fail_accessorCannotBeCalledWithinAnExpression()
     {
         var code = @"
@@ -168,8 +187,7 @@ main
  var d =  readFromNetwork(""www.foo.com"") 
  print d + "".""
 end main
-
-system readFromNetwork(url String) -> String
+system readFromNetwork(url String) as String
   return ""data""
 end system
 ";
@@ -185,7 +203,7 @@ end system
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_accessorCannotBeCalledWithinAnExpression2()
     {
         var code = @"
@@ -193,7 +211,7 @@ main
  print readFromNetwork(""www.foo.com"") 
 end main
 
-system readFromNetwork(url String) -> String
+system readFromNetwork(url String) as String
   return ""data""
 end system
 ";

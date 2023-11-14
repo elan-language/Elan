@@ -1,7 +1,7 @@
 grammar Elan;
 import Elan_Lexer;
 
-file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test )* NL* EOF;
+file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test | systemAccessor)* NL* EOF;
 
 main: 
 	NL MAIN 

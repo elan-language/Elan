@@ -136,8 +136,8 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo(ref int a, ref string b) {
-    print(a);
-    print(b);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
 }
 

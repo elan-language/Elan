@@ -53,6 +53,7 @@ public static class AstFactory {
             GenericSpecifierContext c => visitor.Build(c),
             ProcedureDefContext c => visitor.Build(c),
             FunctionDefContext c => visitor.Build(c),
+            SystemAccessorContext c => visitor.Build(c),
             FunctionWithBodyContext c => visitor.Build(c),
             ProcedureSignatureContext c => visitor.Build(c),
             FunctionSignatureContext c => visitor.Build(c),
@@ -84,9 +85,10 @@ public static class AstFactory {
         var constants = context.constantDef().Select(visitor.Visit);
         var procedures = context.procedureDef().Select(visitor.Visit);
         var functions = context.functionDef().Select(visitor.Visit);
+        var systemAccessors = context.systemAccessor().Select(visitor.Visit);
         var enums = context.enumDef().Select(visitor.Visit);
         var classes = context.classDef().Select(visitor.Visit);
-        var globals = constants.Concat(procedures).Concat(functions).Concat(enums).Concat(classes).ToImmutableArray();
+        var globals = constants.Concat(procedures).Concat(functions).Concat(systemAccessors).Concat(enums).Concat(classes).ToImmutableArray();
         var mainNode = context.main().Select(visitor.Visit<MainNode>).SingleOrDefault();
 
         return new FileNode(globals, mainNode);
@@ -605,6 +607,16 @@ public static class AstFactory {
         var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
 
         return new FunctionDefNode(signature, statementBlock, ret);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SystemAccessorContext context) {
+        var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var id = visitor.Visit(context.IDENTIFIER());
+        var type = visitor.Visit(context.type());
+        var statementBlock = visitor.Visit(context.statementBlock());
+        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
+
+        return new SystemAccessorDefNode(new MethodSignatureNode(id, parameters.ToImmutableArray(), type), statementBlock, ret);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureSignatureContext context) {

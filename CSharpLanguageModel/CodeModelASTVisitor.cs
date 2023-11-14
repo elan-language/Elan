@@ -54,6 +54,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             TwoDIndexExpressionNode n => HandleScope(Build2DIndexModel, n),
             ProcedureDefNode n => HandleScope(BuildProcedureDefModel, n),
             FunctionDefNode n => HandleScope(BuildFunctionDefModel, n),
+            SystemAccessorDefNode n => HandleScope(BuildSystemAccessorDefModel, n),
             MethodSignatureNode n => HandleScope(BuildMethodSignatureModel, n),
             ParameterNode n => HandleScope(BuildParameterModel, n),
             SwitchStatementNode n => HandleScope(BuildSwitchStatementModel, n),
@@ -236,6 +237,14 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private FunctionDefModel BuildFunctionDefModel(FunctionDefNode functionDefNode) {
+        var signature = Visit(functionDefNode.Signature);
+        var statementBlock = Visit(functionDefNode.StatementBlock);
+        var ret = Visit(functionDefNode.Return);
+
+        return new FunctionDefModel(signature, statementBlock, ret, functionDefNode.Standalone);
+    }
+
+    private FunctionDefModel BuildSystemAccessorDefModel(SystemAccessorDefNode functionDefNode) {
         var signature = Visit(functionDefNode.Signature);
         var statementBlock = Visit(functionDefNode.StatementBlock);
         var ret = Visit(functionDefNode.Return);

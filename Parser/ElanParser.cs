@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c://Elan//Repository//Parser//Elan.g4 by ANTLR 4.13.1
+// Generated from c:/GitHub/Elan/Parser/Elan.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -198,6 +198,12 @@ public partial class ElanParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public TestContext test(int i) {
 			return GetRuleContext<TestContext>(i);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public SystemAccessorContext[] systemAccessor() {
+			return GetRuleContexts<SystemAccessorContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public SystemAccessorContext systemAccessor(int i) {
+			return GetRuleContext<SystemAccessorContext>(i);
+		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] NL() { return GetTokens(ElanParser.NL); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NL(int i) {
 			return GetToken(ElanParser.NL, i);
@@ -208,14 +214,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_file; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterFile(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitFile(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFile(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -228,13 +230,13 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 169;
+			State = 170;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,1,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 167;
+					State = 168;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,0,Context) ) {
 					case 1:
@@ -279,28 +281,34 @@ public partial class ElanParser : Parser {
 						test();
 						}
 						break;
+					case 8:
+						{
+						State = 167;
+						systemAccessor();
+						}
+						break;
 					}
 					} 
 				}
-				State = 171;
+				State = 172;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,1,Context);
 			}
-			State = 175;
+			State = 176;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==NL) {
 				{
 				{
-				State = 172;
+				State = 173;
 				Match(NL);
 				}
 				}
-				State = 177;
+				State = 178;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 178;
+			State = 179;
 			Match(Eof);
 			}
 		}
@@ -334,14 +342,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_main; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterMain(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitMain(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitMain(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -352,17 +356,17 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 180;
-			Match(NL);
 			State = 181;
-			Match(MAIN);
-			State = 182;
-			statementBlock();
-			State = 183;
 			Match(NL);
+			State = 182;
+			Match(MAIN);
+			State = 183;
+			statementBlock();
 			State = 184;
-			Match(END);
+			Match(NL);
 			State = 185;
+			Match(END);
+			State = 186;
 			Match(MAIN);
 			}
 		}
@@ -397,14 +401,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_test; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterTest(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitTest(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitTest(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -415,19 +415,19 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 187;
-			Match(NL);
 			State = 188;
-			Match(TEST);
-			State = 189;
-			Match(IDENTIFIER);
-			State = 190;
-			statementBlock();
-			State = 191;
 			Match(NL);
+			State = 189;
+			Match(TEST);
+			State = 190;
+			Match(IDENTIFIER);
+			State = 191;
+			statementBlock();
 			State = 192;
-			Match(END);
+			Match(NL);
 			State = 193;
+			Match(END);
+			State = 194;
 			Match(TEST);
 			}
 		}
@@ -485,14 +485,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_statementBlock; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterStatementBlock(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitStatementBlock(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitStatementBlock(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -504,55 +500,55 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 203;
+			State = 204;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 201;
+					State = 202;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
 					case 1:
 						{
-						State = 195;
+						State = 196;
 						varDef();
 						}
 						break;
 					case 2:
 						{
-						State = 196;
+						State = 197;
 						assignment();
 						}
 						break;
 					case 3:
 						{
-						State = 197;
+						State = 198;
 						proceduralControlFlow();
 						}
 						break;
 					case 4:
 						{
-						State = 198;
+						State = 199;
 						callStatement();
 						}
 						break;
 					case 5:
 						{
-						State = 199;
+						State = 200;
 						throwException();
 						}
 						break;
 					case 6:
 						{
-						State = 200;
+						State = 201;
 						printStatement();
 						}
 						break;
 					}
 					} 
 				}
-				State = 205;
+				State = 206;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,4,Context);
 			}
@@ -585,14 +581,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_callStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterCallStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitCallStatement(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCallStatement(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -603,27 +595,27 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 206;
-			Match(NL);
 			State = 207;
+			Match(NL);
+			State = 208;
 			Match(CALL);
-			State = 213;
+			State = 214;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,5,Context) ) {
 			case 1:
 				{
-				State = 208;
+				State = 209;
 				methodCall();
 				}
 				break;
 			case 2:
 				{
 				{
-				State = 209;
-				assignableValue();
 				State = 210;
-				Match(DOT);
+				assignableValue();
 				State = 211;
+				Match(DOT);
+				State = 212;
 				methodCall();
 				}
 				}
@@ -653,14 +645,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_throwException; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterThrowException(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitThrowException(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitThrowException(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -672,11 +660,11 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 215;
-			Match(NL);
 			State = 216;
-			Match(THROW);
+			Match(NL);
 			State = 217;
+			Match(THROW);
+			State = 218;
 			_la = TokenStream.LA(1);
 			if ( !(_la==IDENTIFIER || _la==LITERAL_STRING) ) {
 			ErrorHandler.RecoverInline(this);
@@ -710,14 +698,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_printStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterPrintStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitPrintStatement(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPrintStatement(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -728,11 +712,11 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 219;
-			Match(NL);
 			State = 220;
-			Match(PRINT);
+			Match(NL);
 			State = 221;
+			Match(PRINT);
+			State = 222;
 			expression(0);
 			}
 		}
@@ -763,14 +747,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_varDef; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterVarDef(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitVarDef(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitVarDef(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -781,15 +761,15 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 223;
-			Match(NL);
 			State = 224;
-			Match(VAR);
+			Match(NL);
 			State = 225;
-			assignableValue();
+			Match(VAR);
 			State = 226;
-			Match(ASSIGN);
+			assignableValue();
 			State = 227;
+			Match(ASSIGN);
+			State = 228;
 			expression(0);
 			}
 		}
@@ -820,14 +800,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_assignment; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterAssignment(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitAssignment(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAssignment(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -838,15 +814,15 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 229;
-			Match(NL);
 			State = 230;
-			Match(SET);
+			Match(NL);
 			State = 231;
-			assignableValue();
+			Match(SET);
 			State = 232;
-			Match(TO);
+			assignableValue();
 			State = 233;
+			Match(TO);
+			State = 234;
 			expression(0);
 			}
 		}
@@ -875,14 +851,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_inlineAsignment; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterInlineAsignment(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitInlineAsignment(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitInlineAsignment(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -893,11 +865,11 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 235;
-			assignableValue();
 			State = 236;
-			Match(ASSIGN);
+			assignableValue();
 			State = 237;
+			Match(ASSIGN);
+			State = 238;
 			expression(0);
 			}
 		}
@@ -932,14 +904,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_assignableValue; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterAssignableValue(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitAssignableValue(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAssignableValue(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -949,7 +917,7 @@ public partial class ElanParser : Parser {
 		EnterRule(_localctx, 20, RULE_assignableValue);
 		int _la;
 		try {
-			State = 248;
+			State = 249;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case GLOBAL:
@@ -958,24 +926,24 @@ public partial class ElanParser : Parser {
 				EnterOuterAlt(_localctx, 1);
 				{
 				{
-				State = 240;
+				State = 241;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==GLOBAL || _la==SELF) {
 					{
-					State = 239;
+					State = 240;
 					nameQualifier();
 					}
 				}
 
-				State = 242;
+				State = 243;
 				Match(IDENTIFIER);
-				State = 244;
+				State = 245;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==OPEN_SQ_BRACKET) {
 					{
-					State = 243;
+					State = 244;
 					index();
 					}
 				}
@@ -986,14 +954,14 @@ public partial class ElanParser : Parser {
 			case OPEN_BRACKET:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 246;
+				State = 247;
 				deconstructedTuple();
 				}
 				break;
 			case OPEN_BRACE:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 247;
+				State = 248;
 				listDecomp();
 				}
 				break;
@@ -1030,14 +998,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_methodCall; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterMethodCall(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitMethodCall(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitMethodCall(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1049,22 +1013,22 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 251;
+			State = 252;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==GLOBAL || _la==SELF) {
 				{
-				State = 250;
+				State = 251;
 				nameQualifier();
 				}
 			}
 
-			State = 254;
+			State = 255;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==CURRY || _la==PARTIAL) {
 				{
-				State = 253;
+				State = 254;
 				_la = TokenStream.LA(1);
 				if ( !(_la==CURRY || _la==PARTIAL) ) {
 				ErrorHandler.RecoverInline(this);
@@ -1076,21 +1040,21 @@ public partial class ElanParser : Parser {
 				}
 			}
 
-			State = 256;
-			Match(IDENTIFIER);
 			State = 257;
+			Match(IDENTIFIER);
+			State = 258;
 			Match(OPEN_BRACKET);
-			State = 259;
+			State = 260;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2485424079087087618L) != 0) || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & 4129281L) != 0)) {
 				{
-				State = 258;
+				State = 259;
 				argumentList();
 				}
 			}
 
-			State = 261;
+			State = 262;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -1122,14 +1086,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_argumentList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterArgumentList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitArgumentList(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitArgumentList(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1141,21 +1101,21 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 263;
+			State = 264;
 			expression(0);
-			State = 268;
+			State = 269;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 264;
-				Match(COMMA);
 				State = 265;
+				Match(COMMA);
+				State = 266;
 				expression(0);
 				}
 				}
-				State = 270;
+				State = 271;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -1194,14 +1154,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_procedureDef; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterProcedureDef(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitProcedureDef(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitProcedureDef(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1212,19 +1168,19 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 271;
-			Match(NL);
 			State = 272;
-			Match(PROCEDURE);
-			State = 273;
-			procedureSignature();
-			State = 274;
-			statementBlock();
-			State = 275;
 			Match(NL);
+			State = 273;
+			Match(PROCEDURE);
+			State = 274;
+			procedureSignature();
+			State = 275;
+			statementBlock();
 			State = 276;
-			Match(END);
+			Match(NL);
 			State = 277;
+			Match(END);
+			State = 278;
 			Match(PROCEDURE);
 			}
 		}
@@ -1252,14 +1208,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_procedureSignature; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterProcedureSignature(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitProcedureSignature(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitProcedureSignature(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1271,21 +1223,21 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 279;
-			Match(IDENTIFIER);
 			State = 280;
+			Match(IDENTIFIER);
+			State = 281;
 			Match(OPEN_BRACKET);
-			State = 282;
+			State = 283;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==IDENTIFIER) {
 				{
-				State = 281;
+				State = 282;
 				parameterList();
 				}
 			}
 
-			State = 284;
+			State = 285;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -1317,14 +1269,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_parameterList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterParameterList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitParameterList(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitParameterList(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1336,21 +1284,21 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 286;
+			State = 287;
 			parameter();
-			State = 291;
+			State = 292;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 287;
-				Match(COMMA);
 				State = 288;
+				Match(COMMA);
+				State = 289;
 				parameter();
 				}
 				}
-				State = 293;
+				State = 294;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -1378,14 +1326,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_parameter; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterParameter(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitParameter(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitParameter(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1396,9 +1340,9 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 294;
-			Match(IDENTIFIER);
 			State = 295;
+			Match(IDENTIFIER);
+			State = 296;
 			type();
 			}
 		}
@@ -1426,14 +1370,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_functionDef; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterFunctionDef(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitFunctionDef(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFunctionDef(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1442,20 +1382,20 @@ public partial class ElanParser : Parser {
 		FunctionDefContext _localctx = new FunctionDefContext(Context, State);
 		EnterRule(_localctx, 34, RULE_functionDef);
 		try {
-			State = 299;
+			State = 300;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,15,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 297;
+				State = 298;
 				functionWithBody();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 298;
+				State = 299;
 				expressionFunction();
 				}
 				break;
@@ -1498,14 +1438,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_functionWithBody; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterFunctionWithBody(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitFunctionWithBody(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFunctionWithBody(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1516,25 +1452,25 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 301;
-			Match(NL);
 			State = 302;
-			Match(FUNCTION);
+			Match(NL);
 			State = 303;
-			functionSignature();
+			Match(FUNCTION);
 			State = 304;
-			statementBlock();
+			functionSignature();
 			State = 305;
-			Match(NL);
+			statementBlock();
 			State = 306;
-			Match(RETURN);
-			State = 307;
-			expression(0);
-			State = 308;
 			Match(NL);
+			State = 307;
+			Match(RETURN);
+			State = 308;
+			expression(0);
 			State = 309;
-			Match(END);
+			Match(NL);
 			State = 310;
+			Match(END);
+			State = 311;
 			Match(FUNCTION);
 			}
 		}
@@ -1565,14 +1501,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_expressionFunction; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterExpressionFunction(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitExpressionFunction(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitExpressionFunction(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1583,15 +1515,15 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 312;
-			Match(NL);
 			State = 313;
-			Match(FUNCTION);
+			Match(NL);
 			State = 314;
-			functionSignature();
+			Match(FUNCTION);
 			State = 315;
-			Match(ARROW);
+			functionSignature();
 			State = 316;
+			Match(ARROW);
+			State = 317;
 			expression(0);
 			}
 		}
@@ -1636,14 +1568,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_letIn; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLetIn(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLetIn(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLetIn(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1655,37 +1583,37 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 318;
-			Match(LET);
 			State = 319;
-			assignableValue();
+			Match(LET);
 			State = 320;
-			Match(ASSIGN);
+			assignableValue();
 			State = 321;
+			Match(ASSIGN);
+			State = 322;
 			expression(0);
-			State = 329;
+			State = 330;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 322;
-				Match(COMMA);
 				State = 323;
-				assignableValue();
+				Match(COMMA);
 				State = 324;
-				Match(ASSIGN);
+				assignableValue();
 				State = 325;
+				Match(ASSIGN);
+				State = 326;
 				expression(0);
 				}
 				}
-				State = 331;
+				State = 332;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 332;
-			Match(NL);
 			State = 333;
+			Match(NL);
+			State = 334;
 			Match(IN);
 			}
 		}
@@ -1717,14 +1645,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_functionSignature; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterFunctionSignature(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitFunctionSignature(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFunctionSignature(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1736,25 +1660,25 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 335;
-			Match(IDENTIFIER);
 			State = 336;
+			Match(IDENTIFIER);
+			State = 337;
 			Match(OPEN_BRACKET);
-			State = 338;
+			State = 339;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==IDENTIFIER) {
 				{
-				State = 337;
+				State = 338;
 				parameterList();
 				}
 			}
 
-			State = 340;
-			Match(CLOSE_BRACKET);
 			State = 341;
-			Match(AS);
+			Match(CLOSE_BRACKET);
 			State = 342;
+			Match(AS);
+			State = 343;
 			type();
 			}
 		}
@@ -1802,14 +1726,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_systemAccessor; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterSystemAccessor(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitSystemAccessor(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitSystemAccessor(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1821,43 +1741,43 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 344;
-			Match(NL);
 			State = 345;
-			Match(SYSTEM);
+			Match(NL);
 			State = 346;
-			Match(IDENTIFIER);
+			Match(SYSTEM);
 			State = 347;
+			Match(IDENTIFIER);
+			State = 348;
 			Match(OPEN_BRACKET);
-			State = 349;
+			State = 350;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==IDENTIFIER) {
 				{
-				State = 348;
+				State = 349;
 				parameterList();
 				}
 			}
 
-			State = 351;
-			Match(CLOSE_BRACKET);
 			State = 352;
-			Match(AS);
+			Match(CLOSE_BRACKET);
 			State = 353;
-			type();
+			Match(AS);
 			State = 354;
-			statementBlock();
+			type();
 			State = 355;
-			Match(NL);
+			statementBlock();
 			State = 356;
-			Match(RETURN);
-			State = 357;
-			expression(0);
-			State = 358;
 			Match(NL);
+			State = 357;
+			Match(RETURN);
+			State = 358;
+			expression(0);
 			State = 359;
-			Match(END);
+			Match(NL);
 			State = 360;
+			Match(END);
+			State = 361;
 			Match(SYSTEM);
 			}
 		}
@@ -1889,14 +1809,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_constantDef; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterConstantDef(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitConstantDef(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitConstantDef(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1907,26 +1823,26 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 362;
-			Match(NL);
 			State = 363;
-			Match(CONSTANT);
+			Match(NL);
 			State = 364;
-			Match(IDENTIFIER);
+			Match(CONSTANT);
 			State = 365;
+			Match(IDENTIFIER);
+			State = 366;
 			Match(ASSIGN);
-			State = 368;
+			State = 369;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,19,Context) ) {
 			case 1:
 				{
-				State = 366;
+				State = 367;
 				literal();
 				}
 				break;
 			case 2:
 				{
-				State = 367;
+				State = 368;
 				newInstance();
 				}
 				break;
@@ -1971,14 +1887,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_enumDef; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterEnumDef(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitEnumDef(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitEnumDef(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1990,37 +1902,37 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 370;
-			Match(NL);
 			State = 371;
-			Match(ENUM);
-			State = 372;
-			enumType();
-			State = 373;
 			Match(NL);
+			State = 372;
+			Match(ENUM);
+			State = 373;
+			enumType();
 			State = 374;
+			Match(NL);
+			State = 375;
 			Match(IDENTIFIER);
-			State = 379;
+			State = 380;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 375;
-				Match(COMMA);
 				State = 376;
+				Match(COMMA);
+				State = 377;
 				Match(IDENTIFIER);
 				}
 				}
-				State = 381;
+				State = 382;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 382;
-			Match(NL);
 			State = 383;
-			Match(END);
+			Match(NL);
 			State = 384;
+			Match(END);
+			State = 385;
 			Match(ENUM);
 			}
 		}
@@ -2043,14 +1955,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_enumType; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterEnumType(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitEnumType(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitEnumType(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2061,7 +1969,7 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 386;
+			State = 387;
 			Match(TYPENAME);
 			}
 		}
@@ -2088,14 +1996,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_enumValue; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterEnumValue(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitEnumValue(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitEnumValue(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2106,11 +2010,11 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 388;
-			enumType();
 			State = 389;
-			Match(DOT);
+			enumType();
 			State = 390;
+			Match(DOT);
+			State = 391;
 			Match(IDENTIFIER);
 			}
 		}
@@ -2144,14 +2048,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_classDef; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterClassDef(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitClassDef(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitClassDef(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2160,34 +2060,34 @@ public partial class ElanParser : Parser {
 		ClassDefContext _localctx = new ClassDefContext(Context, State);
 		EnterRule(_localctx, 54, RULE_classDef);
 		try {
-			State = 396;
+			State = 397;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,21,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 392;
+				State = 393;
 				mutableClass();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 393;
+				State = 394;
 				abstractClass();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 394;
+				State = 395;
 				immutableClass();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 395;
+				State = 396;
 				abstractImmutableClass();
 				}
 				break;
@@ -2245,14 +2145,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_mutableClass; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterMutableClass(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitMutableClass(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitMutableClass(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2265,63 +2161,63 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 398;
-			Match(NL);
 			State = 399;
-			Match(CLASS);
+			Match(NL);
 			State = 400;
+			Match(CLASS);
+			State = 401;
 			Match(TYPENAME);
-			State = 402;
+			State = 403;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==INHERITS) {
 				{
-				State = 401;
+				State = 402;
 				inherits();
 				}
 			}
 
-			State = 404;
+			State = 405;
 			constructor();
-			State = 410;
+			State = 411;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,24,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 408;
+					State = 409;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,23,Context) ) {
 					case 1:
 						{
-						State = 405;
+						State = 406;
 						property();
 						}
 						break;
 					case 2:
 						{
-						State = 406;
+						State = 407;
 						functionDef();
 						}
 						break;
 					case 3:
 						{
-						State = 407;
+						State = 408;
 						procedureDef();
 						}
 						break;
 					}
 					} 
 				}
-				State = 412;
+				State = 413;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,24,Context);
 			}
-			State = 413;
-			Match(NL);
 			State = 414;
-			Match(END);
+			Match(NL);
 			State = 415;
+			Match(END);
+			State = 416;
 			Match(CLASS);
 			}
 		}
@@ -2383,14 +2279,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_abstractClass; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterAbstractClass(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitAbstractClass(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAbstractClass(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2403,71 +2295,71 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 417;
-			Match(NL);
 			State = 418;
-			Match(ABSTRACT);
+			Match(NL);
 			State = 419;
-			Match(CLASS);
+			Match(ABSTRACT);
 			State = 420;
+			Match(CLASS);
+			State = 421;
 			Match(TYPENAME);
-			State = 422;
+			State = 423;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==INHERITS) {
 				{
-				State = 421;
+				State = 422;
 				inherits();
 				}
 			}
 
-			State = 433;
+			State = 434;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,27,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 431;
+					State = 432;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,26,Context) ) {
 					case 1:
 						{
-						State = 424;
+						State = 425;
 						property();
 						}
 						break;
 					case 2:
 						{
-						State = 425;
-						Match(NL);
 						State = 426;
-						Match(FUNCTION);
+						Match(NL);
 						State = 427;
+						Match(FUNCTION);
+						State = 428;
 						functionSignature();
 						}
 						break;
 					case 3:
 						{
-						State = 428;
-						Match(NL);
 						State = 429;
-						Match(PROCEDURE);
+						Match(NL);
 						State = 430;
+						Match(PROCEDURE);
+						State = 431;
 						procedureSignature();
 						}
 						break;
 					}
 					} 
 				}
-				State = 435;
+				State = 436;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,27,Context);
 			}
-			State = 436;
-			Match(NL);
 			State = 437;
-			Match(END);
+			Match(NL);
 			State = 438;
+			Match(END);
+			State = 439;
 			Match(CLASS);
 			}
 		}
@@ -2518,14 +2410,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_immutableClass; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterImmutableClass(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitImmutableClass(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitImmutableClass(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2538,59 +2426,59 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 440;
-			Match(NL);
 			State = 441;
-			Match(IMMUTABLE);
+			Match(NL);
 			State = 442;
-			Match(CLASS);
+			Match(IMMUTABLE);
 			State = 443;
+			Match(CLASS);
+			State = 444;
 			Match(TYPENAME);
-			State = 445;
+			State = 446;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==INHERITS) {
 				{
-				State = 444;
+				State = 445;
 				inherits();
 				}
 			}
 
-			State = 447;
+			State = 448;
 			constructor();
-			State = 452;
+			State = 453;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,30,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 450;
+					State = 451;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,29,Context) ) {
 					case 1:
 						{
-						State = 448;
+						State = 449;
 						property();
 						}
 						break;
 					case 2:
 						{
-						State = 449;
+						State = 450;
 						functionDef();
 						}
 						break;
 					}
 					} 
 				}
-				State = 454;
+				State = 455;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,30,Context);
 			}
-			State = 455;
-			Match(NL);
 			State = 456;
-			Match(END);
+			Match(NL);
 			State = 457;
+			Match(END);
+			State = 458;
 			Match(CLASS);
 			}
 		}
@@ -2643,14 +2531,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_abstractImmutableClass; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterAbstractImmutableClass(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitAbstractImmutableClass(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAbstractImmutableClass(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2663,63 +2547,63 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 459;
-			Match(NL);
 			State = 460;
-			Match(ABSTRACT);
+			Match(NL);
 			State = 461;
-			Match(IMMUTABLE);
+			Match(ABSTRACT);
 			State = 462;
-			Match(CLASS);
+			Match(IMMUTABLE);
 			State = 463;
+			Match(CLASS);
+			State = 464;
 			Match(TYPENAME);
-			State = 465;
+			State = 466;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==INHERITS) {
 				{
-				State = 464;
+				State = 465;
 				inherits();
 				}
 			}
 
-			State = 473;
+			State = 474;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,33,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					State = 471;
+					State = 472;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,32,Context) ) {
 					case 1:
 						{
-						State = 467;
+						State = 468;
 						property();
 						}
 						break;
 					case 2:
 						{
-						State = 468;
-						Match(NL);
 						State = 469;
-						Match(FUNCTION);
+						Match(NL);
 						State = 470;
+						Match(FUNCTION);
+						State = 471;
 						functionSignature();
 						}
 						break;
 					}
 					} 
 				}
-				State = 475;
+				State = 476;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,33,Context);
 			}
-			State = 476;
-			Match(NL);
 			State = 477;
-			Match(END);
+			Match(NL);
 			State = 478;
+			Match(END);
+			State = 479;
 			Match(CLASS);
 			}
 		}
@@ -2752,14 +2636,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_inherits; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterInherits(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitInherits(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitInherits(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2771,23 +2651,23 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 480;
-			Match(INHERITS);
 			State = 481;
+			Match(INHERITS);
+			State = 482;
 			type();
-			State = 486;
+			State = 487;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 482;
-				Match(COMMA);
 				State = 483;
+				Match(COMMA);
+				State = 484;
 				type();
 				}
 				}
-				State = 488;
+				State = 489;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -2818,14 +2698,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_property; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterProperty(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitProperty(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitProperty(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2837,23 +2713,23 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 489;
+			State = 490;
 			Match(NL);
-			State = 491;
+			State = 492;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==PRIVATE) {
 				{
-				State = 490;
+				State = 491;
 				Match(PRIVATE);
 				}
 			}
 
-			State = 493;
-			Match(PROPERTY);
 			State = 494;
-			Match(IDENTIFIER);
+			Match(PROPERTY);
 			State = 495;
+			Match(IDENTIFIER);
+			State = 496;
 			type();
 			}
 		}
@@ -2892,14 +2768,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_constructor; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterConstructor(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitConstructor(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitConstructor(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2911,31 +2783,31 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 497;
-			Match(NL);
 			State = 498;
-			Match(CONSTRUCTOR);
+			Match(NL);
 			State = 499;
+			Match(CONSTRUCTOR);
+			State = 500;
 			Match(OPEN_BRACKET);
-			State = 501;
+			State = 502;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==IDENTIFIER) {
 				{
-				State = 500;
+				State = 501;
 				parameterList();
 				}
 			}
 
-			State = 503;
-			Match(CLOSE_BRACKET);
 			State = 504;
-			statementBlock();
+			Match(CLOSE_BRACKET);
 			State = 505;
-			Match(NL);
+			statementBlock();
 			State = 506;
-			Match(END);
+			Match(NL);
 			State = 507;
+			Match(END);
+			State = 508;
 			Match(CONSTRUCTOR);
 			}
 		}
@@ -2969,14 +2841,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_newInstance; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterNewInstance(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitNewInstance(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitNewInstance(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2986,7 +2854,7 @@ public partial class ElanParser : Parser {
 		EnterRule(_localctx, 70, RULE_newInstance);
 		int _la;
 		try {
-			State = 520;
+			State = 521;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case VALUE_TYPE:
@@ -2998,28 +2866,28 @@ public partial class ElanParser : Parser {
 			case TYPENAME:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 509;
-				type();
 				State = 510;
+				type();
+				State = 511;
 				Match(OPEN_BRACKET);
-				State = 512;
+				State = 513;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2485424079087087618L) != 0) || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & 4129281L) != 0)) {
 					{
-					State = 511;
+					State = 512;
 					argumentList();
 					}
 				}
 
-				State = 514;
+				State = 515;
 				Match(CLOSE_BRACKET);
-				State = 516;
+				State = 517;
 				ErrorHandler.Sync(this);
 				switch ( Interpreter.AdaptivePredict(TokenStream,38,Context) ) {
 				case 1:
 					{
-					State = 515;
+					State = 516;
 					withClause();
 					}
 					break;
@@ -3029,9 +2897,9 @@ public partial class ElanParser : Parser {
 			case IDENTIFIER:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 518;
-				Match(IDENTIFIER);
 				State = 519;
+				Match(IDENTIFIER);
+				State = 520;
 				withClause();
 				}
 				break;
@@ -3070,14 +2938,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_withClause; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterWithClause(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitWithClause(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitWithClause(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3089,29 +2953,29 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 522;
-			Match(WITH);
 			State = 523;
-			Match(OPEN_BRACE);
+			Match(WITH);
 			State = 524;
+			Match(OPEN_BRACE);
+			State = 525;
 			inlineAsignment();
-			State = 529;
+			State = 530;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 525;
-				Match(COMMA);
 				State = 526;
+				Match(COMMA);
+				State = 527;
 				inlineAsignment();
 				}
 				}
-				State = 531;
+				State = 532;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 532;
+			State = 533;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -3154,14 +3018,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_proceduralControlFlow; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterProceduralControlFlow(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitProceduralControlFlow(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitProceduralControlFlow(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3170,55 +3030,55 @@ public partial class ElanParser : Parser {
 		ProceduralControlFlowContext _localctx = new ProceduralControlFlowContext(Context, State);
 		EnterRule(_localctx, 74, RULE_proceduralControlFlow);
 		try {
-			State = 541;
+			State = 542;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,41,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 534;
+				State = 535;
 				@if();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 535;
+				State = 536;
 				@for();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 536;
+				State = 537;
 				@foreach();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 537;
+				State = 538;
 				@while();
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 538;
+				State = 539;
 				repeat();
 				}
 				break;
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 539;
+				State = 540;
 				@try();
 				}
 				break;
 			case 7:
 				EnterOuterAlt(_localctx, 7);
 				{
-				State = 540;
+				State = 541;
 				@switch();
 				}
 				break;
@@ -3271,14 +3131,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_if; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterIf(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitIf(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitIf(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3290,61 +3146,61 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 543;
-			Match(NL);
 			State = 544;
-			Match(IF);
+			Match(NL);
 			State = 545;
-			expression(0);
+			Match(IF);
 			State = 546;
-			Match(THEN);
+			expression(0);
 			State = 547;
+			Match(THEN);
+			State = 548;
 			statementBlock();
-			State = 557;
+			State = 558;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,42,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					State = 548;
-					Match(NL);
 					State = 549;
-					Match(ELSE);
+					Match(NL);
 					State = 550;
-					Match(IF);
+					Match(ELSE);
 					State = 551;
-					expression(0);
+					Match(IF);
 					State = 552;
-					Match(THEN);
+					expression(0);
 					State = 553;
+					Match(THEN);
+					State = 554;
 					statementBlock();
 					}
 					} 
 				}
-				State = 559;
+				State = 560;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,42,Context);
 			}
-			State = 563;
+			State = 564;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,43,Context) ) {
 			case 1:
 				{
-				State = 560;
-				Match(NL);
 				State = 561;
-				Match(ELSE);
+				Match(NL);
 				State = 562;
+				Match(ELSE);
+				State = 563;
 				statementBlock();
 				}
 				break;
 			}
-			State = 565;
-			Match(NL);
 			State = 566;
-			Match(END);
+			Match(NL);
 			State = 567;
+			Match(END);
+			State = 568;
 			Match(IF);
 			}
 		}
@@ -3390,14 +3246,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_for; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterFor(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitFor(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFor(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3409,49 +3261,49 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 569;
-			Match(NL);
 			State = 570;
-			Match(FOR);
+			Match(NL);
 			State = 571;
-			Match(IDENTIFIER);
+			Match(FOR);
 			State = 572;
-			Match(ASSIGN);
+			Match(IDENTIFIER);
 			State = 573;
-			expression(0);
+			Match(ASSIGN);
 			State = 574;
-			Match(TO);
-			State = 575;
 			expression(0);
-			State = 581;
+			State = 575;
+			Match(TO);
+			State = 576;
+			expression(0);
+			State = 582;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==STEP) {
 				{
-				State = 576;
+				State = 577;
 				Match(STEP);
-				State = 578;
+				State = 579;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==MINUS) {
 					{
-					State = 577;
+					State = 578;
 					Match(MINUS);
 					}
 				}
 
-				State = 580;
+				State = 581;
 				Match(LITERAL_INTEGER);
 				}
 			}
 
-			State = 583;
-			statementBlock();
 			State = 584;
-			Match(NL);
+			statementBlock();
 			State = 585;
-			Match(END);
+			Match(NL);
 			State = 586;
+			Match(END);
+			State = 587;
 			Match(FOR);
 			}
 		}
@@ -3490,14 +3342,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_foreach; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterForeach(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitForeach(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitForeach(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3508,23 +3356,23 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 588;
-			Match(NL);
 			State = 589;
-			Match(FOREACH);
-			State = 590;
-			Match(IDENTIFIER);
-			State = 591;
-			Match(IN);
-			State = 592;
-			expression(0);
-			State = 593;
-			statementBlock();
-			State = 594;
 			Match(NL);
+			State = 590;
+			Match(FOREACH);
+			State = 591;
+			Match(IDENTIFIER);
+			State = 592;
+			Match(IN);
+			State = 593;
+			expression(0);
+			State = 594;
+			statementBlock();
 			State = 595;
-			Match(END);
+			Match(NL);
 			State = 596;
+			Match(END);
+			State = 597;
 			Match(FOREACH);
 			}
 		}
@@ -3561,14 +3409,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_while; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterWhile(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitWhile(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitWhile(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3579,19 +3423,19 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 598;
-			Match(NL);
 			State = 599;
-			Match(WHILE);
-			State = 600;
-			expression(0);
-			State = 601;
-			statementBlock();
-			State = 602;
 			Match(NL);
+			State = 600;
+			Match(WHILE);
+			State = 601;
+			expression(0);
+			State = 602;
+			statementBlock();
 			State = 603;
-			Match(END);
+			Match(NL);
 			State = 604;
+			Match(END);
+			State = 605;
 			Match(WHILE);
 			}
 		}
@@ -3625,14 +3469,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_repeat; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterRepeat(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitRepeat(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitRepeat(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3643,19 +3483,19 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 606;
+			State = 607;
 			Match(NL);
 			{
-			State = 607;
+			State = 608;
 			Match(REPEAT);
 			}
-			State = 608;
-			statementBlock();
 			State = 609;
-			Match(NL);
+			statementBlock();
 			State = 610;
-			Match(UNTIL);
+			Match(NL);
 			State = 611;
+			Match(UNTIL);
+			State = 612;
 			expression(0);
 			}
 		}
@@ -3694,14 +3534,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_try; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterTry(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitTry(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitTry(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3712,25 +3548,25 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 613;
-			Match(NL);
 			State = 614;
-			Match(TRY);
+			Match(NL);
 			State = 615;
-			statementBlock();
+			Match(TRY);
 			State = 616;
-			Match(NL);
-			State = 617;
-			Match(CATCH);
-			State = 618;
-			Match(IDENTIFIER);
-			State = 619;
 			statementBlock();
-			State = 620;
+			State = 617;
 			Match(NL);
+			State = 618;
+			Match(CATCH);
+			State = 619;
+			Match(IDENTIFIER);
+			State = 620;
+			statementBlock();
 			State = 621;
-			Match(END);
+			Match(NL);
 			State = 622;
+			Match(END);
+			State = 623;
 			Match(TRY);
 			}
 		}
@@ -3773,14 +3609,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_switch; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterSwitch(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitSwitch(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitSwitch(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3792,13 +3624,13 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 624;
-			Match(NL);
 			State = 625;
-			Match(SWITCH);
+			Match(NL);
 			State = 626;
+			Match(SWITCH);
+			State = 627;
 			expression(0);
-			State = 628;
+			State = 629;
 			ErrorHandler.Sync(this);
 			_alt = 1;
 			do {
@@ -3806,7 +3638,7 @@ public partial class ElanParser : Parser {
 				case 1:
 					{
 					{
-					State = 627;
+					State = 628;
 					@case();
 					}
 					}
@@ -3814,17 +3646,17 @@ public partial class ElanParser : Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				State = 630;
+				State = 631;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,46,Context);
 			} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER );
-			State = 632;
-			caseDefault();
 			State = 633;
-			Match(NL);
+			caseDefault();
 			State = 634;
-			Match(END);
+			Match(NL);
 			State = 635;
+			Match(END);
+			State = 636;
 			Match(SWITCH);
 			}
 		}
@@ -3855,14 +3687,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_case; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterCase(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitCase(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCase(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3874,23 +3702,23 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 637;
-			Match(NL);
 			State = 638;
+			Match(NL);
+			State = 639;
 			Match(CASE);
-			State = 640;
+			State = 641;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==MINUS) {
 				{
-				State = 639;
+				State = 640;
 				Match(MINUS);
 				}
 			}
 
-			State = 642;
-			literalValue();
 			State = 643;
+			literalValue();
+			State = 644;
 			statementBlock();
 			}
 		}
@@ -3917,14 +3745,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_caseDefault; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterCaseDefault(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitCaseDefault(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCaseDefault(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3935,11 +3759,11 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 645;
-			Match(NL);
 			State = 646;
-			Match(DEFAULT);
+			Match(NL);
 			State = 647;
+			Match(DEFAULT);
+			State = 648;
 			statementBlock();
 			}
 		}
@@ -4004,14 +3828,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_expression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitExpression(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4031,72 +3851,72 @@ public partial class ElanParser : Parser {
 			int _alt;
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 664;
+			State = 665;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,48,Context) ) {
 			case 1:
 				{
-				State = 650;
+				State = 651;
 				bracketedExpression();
 				}
 				break;
 			case 2:
 				{
-				State = 651;
+				State = 652;
 				methodCall();
 				}
 				break;
 			case 3:
 				{
-				State = 652;
+				State = 653;
 				value();
 				}
 				break;
 			case 4:
 				{
-				State = 653;
-				unaryOp();
 				State = 654;
+				unaryOp();
+				State = 655;
 				expression(9);
 				}
 				break;
 			case 5:
 				{
-				State = 656;
+				State = 657;
 				newInstance();
 				}
 				break;
 			case 6:
 				{
-				State = 657;
+				State = 658;
 				ifExpression();
 				}
 				break;
 			case 7:
 				{
-				State = 658;
+				State = 659;
 				lambda();
 				}
 				break;
 			case 8:
 				{
-				State = 659;
-				letIn();
 				State = 660;
+				letIn();
+				State = 661;
 				expression(3);
 				}
 				break;
 			case 9:
 				{
-				State = 662;
-				Match(NL);
 				State = 663;
+				Match(NL);
+				State = 664;
 				expression(1);
 				}
 				break;
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 685;
+			State = 686;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,50,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -4105,18 +3925,18 @@ public partial class ElanParser : Parser {
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 683;
+					State = 684;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,49,Context) ) {
 					case 1:
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 666;
-						if (!(Precpred(Context, 8))) throw new FailedPredicateException(this, "Precpred(Context, 8)");
 						State = 667;
-						Match(POWER);
+						if (!(Precpred(Context, 8))) throw new FailedPredicateException(this, "Precpred(Context, 8)");
 						State = 668;
+						Match(POWER);
+						State = 669;
 						expression(9);
 						}
 						break;
@@ -4124,11 +3944,11 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 669;
-						if (!(Precpred(Context, 7))) throw new FailedPredicateException(this, "Precpred(Context, 7)");
 						State = 670;
-						binaryOp();
+						if (!(Precpred(Context, 7))) throw new FailedPredicateException(this, "Precpred(Context, 7)");
 						State = 671;
+						binaryOp();
+						State = 672;
 						expression(8);
 						}
 						break;
@@ -4136,9 +3956,9 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 673;
-						if (!(Precpred(Context, 12))) throw new FailedPredicateException(this, "Precpred(Context, 12)");
 						State = 674;
+						if (!(Precpred(Context, 12))) throw new FailedPredicateException(this, "Precpred(Context, 12)");
+						State = 675;
 						index();
 						}
 						break;
@@ -4146,11 +3966,11 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 675;
-						if (!(Precpred(Context, 11))) throw new FailedPredicateException(this, "Precpred(Context, 11)");
 						State = 676;
-						Match(DOT);
+						if (!(Precpred(Context, 11))) throw new FailedPredicateException(this, "Precpred(Context, 11)");
 						State = 677;
+						Match(DOT);
+						State = 678;
 						methodCall();
 						}
 						break;
@@ -4158,11 +3978,11 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 678;
-						if (!(Precpred(Context, 10))) throw new FailedPredicateException(this, "Precpred(Context, 10)");
 						State = 679;
-						Match(DOT);
+						if (!(Precpred(Context, 10))) throw new FailedPredicateException(this, "Precpred(Context, 10)");
 						State = 680;
+						Match(DOT);
+						State = 681;
 						Match(IDENTIFIER);
 						}
 						break;
@@ -4170,16 +3990,16 @@ public partial class ElanParser : Parser {
 						{
 						_localctx = new ExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_expression);
-						State = 681;
-						if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
 						State = 682;
+						if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
+						State = 683;
 						withClause();
 						}
 						break;
 					}
 					} 
 				}
-				State = 687;
+				State = 688;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,50,Context);
 			}
@@ -4208,14 +4028,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_bracketedExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterBracketedExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitBracketedExpression(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitBracketedExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4226,11 +4042,11 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 688;
-			Match(OPEN_BRACKET);
 			State = 689;
-			expression(0);
+			Match(OPEN_BRACKET);
 			State = 690;
+			expression(0);
+			State = 691;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -4265,14 +4081,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_ifExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterIfExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitIfExpression(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitIfExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4283,21 +4095,21 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 692;
-			Match(IF);
 			State = 693;
-			expression(0);
+			Match(IF);
 			State = 694;
-			Match(NL);
-			State = 695;
-			Match(THEN);
-			State = 696;
 			expression(0);
-			State = 697;
+			State = 695;
 			Match(NL);
+			State = 696;
+			Match(THEN);
+			State = 697;
+			expression(0);
 			State = 698;
-			Match(ELSE);
+			Match(NL);
 			State = 699;
+			Match(ELSE);
+			State = 700;
 			expression(0);
 			}
 		}
@@ -4327,14 +4139,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_lambda; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLambda(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLambda(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLambda(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4345,13 +4153,13 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 701;
-			Match(LAMBDA);
 			State = 702;
-			argumentList();
+			Match(LAMBDA);
 			State = 703;
-			Match(ARROW);
+			argumentList();
 			State = 704;
+			Match(ARROW);
+			State = 705;
 			expression(0);
 			}
 		}
@@ -4385,14 +4193,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_index; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterIndex(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitIndex(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitIndex(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4403,35 +4207,35 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 706;
+			State = 707;
 			Match(OPEN_SQ_BRACKET);
-			State = 713;
+			State = 714;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,51,Context) ) {
 			case 1:
 				{
-				State = 707;
+				State = 708;
 				expression(0);
 				}
 				break;
 			case 2:
 				{
-				State = 708;
-				expression(0);
 				State = 709;
-				Match(COMMA);
+				expression(0);
 				State = 710;
+				Match(COMMA);
+				State = 711;
 				expression(0);
 				}
 				break;
 			case 3:
 				{
-				State = 712;
+				State = 713;
 				range();
 				}
 				break;
 			}
-			State = 715;
+			State = 716;
 			Match(CLOSE_SQ_BRACKET);
 			}
 		}
@@ -4460,14 +4264,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_range; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterRange(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitRange(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitRange(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4476,35 +4276,35 @@ public partial class ElanParser : Parser {
 		RangeContext _localctx = new RangeContext(Context, State);
 		EnterRule(_localctx, 104, RULE_range);
 		try {
-			State = 726;
+			State = 727;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,52,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 717;
-				expression(0);
 				State = 718;
-				Match(DOUBLE_DOT);
+				expression(0);
 				State = 719;
+				Match(DOUBLE_DOT);
+				State = 720;
 				expression(0);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 721;
-				expression(0);
 				State = 722;
+				expression(0);
+				State = 723;
 				Match(DOUBLE_DOT);
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 724;
-				Match(DOUBLE_DOT);
 				State = 725;
+				Match(DOUBLE_DOT);
+				State = 726;
 				expression(0);
 				}
 				break;
@@ -4543,14 +4343,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_value; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterValue(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitValue(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitValue(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4560,53 +4356,53 @@ public partial class ElanParser : Parser {
 		EnterRule(_localctx, 106, RULE_value);
 		int _la;
 		try {
-			State = 737;
+			State = 738;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,54,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 728;
+				State = 729;
 				literal();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 730;
+				State = 731;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==GLOBAL || _la==SELF) {
 					{
-					State = 729;
+					State = 730;
 					nameQualifier();
 					}
 				}
 
-				State = 732;
+				State = 733;
 				Match(IDENTIFIER);
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 733;
+				State = 734;
 				dataStructureDefinition();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 734;
+				State = 735;
 				Match(SELF);
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 735;
-				Match(DEFAULT);
 				State = 736;
+				Match(DEFAULT);
+				State = 737;
 				type();
 				}
 				break;
@@ -4633,14 +4429,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_nameQualifier; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterNameQualifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitNameQualifier(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitNameQualifier(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4652,7 +4444,7 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 739;
+			State = 740;
 			_la = TokenStream.LA(1);
 			if ( !(_la==GLOBAL || _la==SELF) ) {
 			ErrorHandler.RecoverInline(this);
@@ -4661,7 +4453,7 @@ public partial class ElanParser : Parser {
 				ErrorHandler.ReportMatch(this);
 			    Consume();
 			}
-			State = 740;
+			State = 741;
 			Match(DOT);
 			}
 		}
@@ -4689,14 +4481,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_literal; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLiteral(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLiteral(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLiteral(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4705,7 +4493,7 @@ public partial class ElanParser : Parser {
 		LiteralContext _localctx = new LiteralContext(Context, State);
 		EnterRule(_localctx, 110, RULE_literal);
 		try {
-			State = 744;
+			State = 745;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case BOOL_VALUE:
@@ -4715,7 +4503,7 @@ public partial class ElanParser : Parser {
 			case LITERAL_CHAR:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 742;
+				State = 743;
 				literalValue();
 				}
 				break;
@@ -4724,7 +4512,7 @@ public partial class ElanParser : Parser {
 			case LITERAL_STRING:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 743;
+				State = 744;
 				literalDataStructure();
 				}
 				break;
@@ -4757,14 +4545,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_literalValue; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLiteralValue(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLiteralValue(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLiteralValue(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4773,41 +4557,41 @@ public partial class ElanParser : Parser {
 		LiteralValueContext _localctx = new LiteralValueContext(Context, State);
 		EnterRule(_localctx, 112, RULE_literalValue);
 		try {
-			State = 751;
+			State = 752;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case BOOL_VALUE:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 746;
+				State = 747;
 				Match(BOOL_VALUE);
 				}
 				break;
 			case LITERAL_INTEGER:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 747;
+				State = 748;
 				Match(LITERAL_INTEGER);
 				}
 				break;
 			case LITERAL_FLOAT:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 748;
+				State = 749;
 				Match(LITERAL_FLOAT);
 				}
 				break;
 			case LITERAL_CHAR:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 749;
+				State = 750;
 				Match(LITERAL_CHAR);
 				}
 				break;
 			case TYPENAME:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 750;
+				State = 751;
 				enumValue();
 				}
 				break;
@@ -4845,14 +4629,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_dataStructureDefinition; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterDataStructureDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitDataStructureDefinition(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitDataStructureDefinition(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4861,34 +4641,34 @@ public partial class ElanParser : Parser {
 		DataStructureDefinitionContext _localctx = new DataStructureDefinitionContext(Context, State);
 		EnterRule(_localctx, 114, RULE_dataStructureDefinition);
 		try {
-			State = 757;
+			State = 758;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,57,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 753;
+				State = 754;
 				listDefinition();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 754;
+				State = 755;
 				arrayDefinition();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 755;
+				State = 756;
 				tupleDefinition();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 756;
+				State = 757;
 				dictionaryDefinition();
 				}
 				break;
@@ -4922,14 +4702,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_literalDataStructure; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLiteralDataStructure(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLiteralDataStructure(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLiteralDataStructure(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -4938,34 +4714,34 @@ public partial class ElanParser : Parser {
 		LiteralDataStructureContext _localctx = new LiteralDataStructureContext(Context, State);
 		EnterRule(_localctx, 116, RULE_literalDataStructure);
 		try {
-			State = 763;
+			State = 764;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,58,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 759;
+				State = 760;
 				Match(LITERAL_STRING);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 760;
+				State = 761;
 				literalTuple();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 761;
+				State = 762;
 				literalList();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 762;
+				State = 763;
 				literalDictionary();
 				}
 				break;
@@ -5001,14 +4777,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_tupleDefinition; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterTupleDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitTupleDefinition(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitTupleDefinition(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5020,31 +4792,31 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 765;
-			Match(OPEN_BRACKET);
 			State = 766;
-			expression(0);
+			Match(OPEN_BRACKET);
 			State = 767;
-			Match(COMMA);
-			State = 768;
 			expression(0);
-			State = 773;
+			State = 768;
+			Match(COMMA);
+			State = 769;
+			expression(0);
+			State = 774;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 769;
-				Match(COMMA);
 				State = 770;
+				Match(COMMA);
+				State = 771;
 				expression(0);
 				}
 				}
-				State = 775;
+				State = 776;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 776;
+			State = 777;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -5078,14 +4850,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_literalTuple; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLiteralTuple(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLiteralTuple(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLiteralTuple(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5097,31 +4865,31 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 778;
-			Match(OPEN_BRACKET);
 			State = 779;
-			literal();
+			Match(OPEN_BRACKET);
 			State = 780;
-			Match(COMMA);
-			State = 781;
 			literal();
-			State = 786;
+			State = 781;
+			Match(COMMA);
+			State = 782;
+			literal();
+			State = 787;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 782;
-				Match(COMMA);
 				State = 783;
+				Match(COMMA);
+				State = 784;
 				literal();
 				}
 				}
-				State = 788;
+				State = 789;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 789;
+			State = 790;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -5153,14 +4921,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_deconstructedTuple; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterDeconstructedTuple(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitDeconstructedTuple(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitDeconstructedTuple(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5172,27 +4936,27 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 791;
-			Match(OPEN_BRACKET);
 			State = 792;
+			Match(OPEN_BRACKET);
+			State = 793;
 			Match(IDENTIFIER);
-			State = 795;
+			State = 796;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 793;
-				Match(COMMA);
 				State = 794;
+				Match(COMMA);
+				State = 795;
 				Match(IDENTIFIER);
 				}
 				}
-				State = 797;
+				State = 798;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==COMMA );
-			State = 799;
+			State = 800;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -5226,14 +4990,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_listDefinition; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterListDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitListDefinition(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitListDefinition(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5245,29 +5005,29 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 801;
+			State = 802;
 			Match(OPEN_BRACE);
 			{
-			State = 802;
+			State = 803;
 			expression(0);
-			State = 807;
+			State = 808;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 803;
-				Match(COMMA);
 				State = 804;
+				Match(COMMA);
+				State = 805;
 				expression(0);
 				}
 				}
-				State = 809;
+				State = 810;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
 			}
-			State = 810;
+			State = 811;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5301,14 +5061,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_literalList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLiteralList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLiteralList(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLiteralList(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5320,29 +5076,29 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 812;
+			State = 813;
 			Match(OPEN_BRACE);
 			{
-			State = 813;
+			State = 814;
 			literal();
-			State = 818;
+			State = 819;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 814;
-				Match(COMMA);
 				State = 815;
+				Match(COMMA);
+				State = 816;
 				literal();
 				}
 				}
-				State = 820;
+				State = 821;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
 			}
-			State = 821;
+			State = 822;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5371,14 +5127,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_listDecomp; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterListDecomp(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitListDecomp(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitListDecomp(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5389,15 +5141,15 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 823;
-			Match(OPEN_BRACE);
 			State = 824;
-			Match(IDENTIFIER);
+			Match(OPEN_BRACE);
 			State = 825;
-			Match(COLON);
-			State = 826;
 			Match(IDENTIFIER);
+			State = 826;
+			Match(COLON);
 			State = 827;
+			Match(IDENTIFIER);
+			State = 828;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5426,14 +5178,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_arrayDefinition; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterArrayDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitArrayDefinition(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitArrayDefinition(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5445,23 +5193,23 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 829;
-			Match(ARRAY);
 			State = 830;
-			genericSpecifier();
+			Match(ARRAY);
 			State = 831;
+			genericSpecifier();
+			State = 832;
 			Match(OPEN_BRACKET);
-			State = 833;
+			State = 834;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==LITERAL_INTEGER) {
 				{
-				State = 832;
+				State = 833;
 				Match(LITERAL_INTEGER);
 				}
 			}
 
-			State = 835;
+			State = 836;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -5495,14 +5243,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_dictionaryDefinition; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterDictionaryDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitDictionaryDefinition(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitDictionaryDefinition(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5514,29 +5258,29 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 837;
+			State = 838;
 			Match(OPEN_BRACE);
 			{
-			State = 838;
+			State = 839;
 			kvp();
-			State = 843;
+			State = 844;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 839;
-				Match(COMMA);
 				State = 840;
+				Match(COMMA);
+				State = 841;
 				kvp();
 				}
 				}
-				State = 845;
+				State = 846;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
 			}
-			State = 846;
+			State = 847;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5570,14 +5314,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_literalDictionary; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLiteralDictionary(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLiteralDictionary(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLiteralDictionary(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5589,29 +5329,29 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 848;
+			State = 849;
 			Match(OPEN_BRACE);
 			{
-			State = 849;
+			State = 850;
 			literalKvp();
-			State = 854;
+			State = 855;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 850;
-				Match(COMMA);
 				State = 851;
+				Match(COMMA);
+				State = 852;
 				literalKvp();
 				}
 				}
-				State = 856;
+				State = 857;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
 			}
-			State = 857;
+			State = 858;
 			Match(CLOSE_BRACE);
 			}
 		}
@@ -5640,14 +5380,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_kvp; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterKvp(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitKvp(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitKvp(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5658,11 +5394,11 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 859;
-			expression(0);
 			State = 860;
-			Match(COLON);
+			expression(0);
 			State = 861;
+			Match(COLON);
+			State = 862;
 			expression(0);
 			}
 		}
@@ -5691,14 +5427,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_literalKvp; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLiteralKvp(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLiteralKvp(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLiteralKvp(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5709,11 +5441,11 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 863;
-			literal();
 			State = 864;
-			Match(COLON);
+			literal();
 			State = 865;
+			Match(COLON);
+			State = 866;
 			literal();
 			}
 		}
@@ -5737,14 +5469,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_unaryOp; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterUnaryOp(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitUnaryOp(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitUnaryOp(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5756,7 +5484,7 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 867;
+			State = 868;
 			_la = TokenStream.LA(1);
 			if ( !(_la==MINUS || _la==OP_NOT) ) {
 			ErrorHandler.RecoverInline(this);
@@ -5794,14 +5522,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_binaryOp; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterBinaryOp(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitBinaryOp(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitBinaryOp(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5810,7 +5534,7 @@ public partial class ElanParser : Parser {
 		BinaryOpContext _localctx = new BinaryOpContext(Context, State);
 		EnterRule(_localctx, 142, RULE_binaryOp);
 		try {
-			State = 872;
+			State = 873;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case PLUS:
@@ -5822,7 +5546,7 @@ public partial class ElanParser : Parser {
 			case INT_DIV:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 869;
+				State = 870;
 				arithmeticOp();
 				}
 				break;
@@ -5831,7 +5555,7 @@ public partial class ElanParser : Parser {
 			case OP_XOR:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 870;
+				State = 871;
 				logicalOp();
 				}
 				break;
@@ -5843,7 +5567,7 @@ public partial class ElanParser : Parser {
 			case OP_GE:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 871;
+				State = 872;
 				conditionalOp();
 				}
 				break;
@@ -5876,14 +5600,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_arithmeticOp; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterArithmeticOp(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitArithmeticOp(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitArithmeticOp(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5895,7 +5615,7 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 874;
+			State = 875;
 			_la = TokenStream.LA(1);
 			if ( !(((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & 127L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -5927,14 +5647,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_logicalOp; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterLogicalOp(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitLogicalOp(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLogicalOp(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -5946,7 +5662,7 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 876;
+			State = 877;
 			_la = TokenStream.LA(1);
 			if ( !(((((_la - 76)) & ~0x3f) == 0 && ((1L << (_la - 76)) & 13L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -5981,14 +5697,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_conditionalOp; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterConditionalOp(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitConditionalOp(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitConditionalOp(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -6000,7 +5712,7 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 878;
+			State = 879;
 			_la = TokenStream.LA(1);
 			if ( !(((((_la - 74)) & ~0x3f) == 0 && ((1L << (_la - 74)) & 963L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -6043,14 +5755,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_type; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterType(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitType(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitType(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -6059,50 +5767,50 @@ public partial class ElanParser : Parser {
 		TypeContext _localctx = new TypeContext(Context, State);
 		EnterRule(_localctx, 150, RULE_type);
 		try {
-			State = 887;
+			State = 888;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,68,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 880;
+				State = 881;
 				Match(VALUE_TYPE);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 881;
+				State = 882;
 				dataStructureType();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 882;
+				State = 883;
 				Match(TYPENAME);
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 883;
-				Match(TYPENAME);
 				State = 884;
+				Match(TYPENAME);
+				State = 885;
 				genericSpecifier();
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 885;
+				State = 886;
 				tupleType();
 				}
 				break;
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 886;
+				State = 887;
 				funcType();
 				}
 				break;
@@ -6133,14 +5841,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_dataStructureType; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterDataStructureType(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitDataStructureType(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitDataStructureType(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -6152,7 +5856,7 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 889;
+			State = 890;
 			_la = TokenStream.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 33776997205278720L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -6161,7 +5865,7 @@ public partial class ElanParser : Parser {
 				ErrorHandler.ReportMatch(this);
 			    Consume();
 			}
-			State = 890;
+			State = 891;
 			genericSpecifier();
 			}
 		}
@@ -6195,14 +5899,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_genericSpecifier; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterGenericSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitGenericSpecifier(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitGenericSpecifier(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -6214,27 +5914,27 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 892;
-			Match(LT);
 			State = 893;
+			Match(LT);
+			State = 894;
 			type();
-			State = 898;
+			State = 899;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 894;
-				Match(COMMA);
 				State = 895;
+				Match(COMMA);
+				State = 896;
 				type();
 				}
 				}
-				State = 900;
+				State = 901;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 901;
+			State = 902;
 			Match(GT);
 			}
 		}
@@ -6268,14 +5968,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_tupleType; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterTupleType(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitTupleType(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitTupleType(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -6287,27 +5983,27 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 903;
-			Match(OPEN_BRACKET);
 			State = 904;
+			Match(OPEN_BRACKET);
+			State = 905;
 			type();
-			State = 907;
+			State = 908;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 905;
-				Match(COMMA);
 				State = 906;
+				Match(COMMA);
+				State = 907;
 				type();
 				}
 				}
-				State = 909;
+				State = 910;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			} while ( _la==COMMA );
-			State = 911;
+			State = 912;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -6342,14 +6038,10 @@ public partial class ElanParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_funcType; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterFuncType(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitFuncType(this);
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IElanVisitor<TResult> typedVisitor = visitor as IElanVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFuncType(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -6361,31 +6053,31 @@ public partial class ElanParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 913;
-			Match(OPEN_BRACKET);
 			State = 914;
+			Match(OPEN_BRACKET);
+			State = 915;
 			type();
-			State = 919;
+			State = 920;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while (_la==COMMA) {
 				{
 				{
-				State = 915;
-				Match(COMMA);
 				State = 916;
+				Match(COMMA);
+				State = 917;
 				type();
 				}
 				}
-				State = 921;
+				State = 922;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 922;
-			Match(ARROW);
 			State = 923;
-			type();
+			Match(ARROW);
 			State = 924;
+			type();
+			State = 925;
 			Match(CLOSE_BRACKET);
 			}
 		}
@@ -6419,7 +6111,7 @@ public partial class ElanParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,92,927,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,92,928,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
 		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,
 		2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,2,27,7,27,2,28,7,28,
@@ -6430,300 +6122,301 @@ public partial class ElanParser : Parser {
 		2,57,7,57,2,58,7,58,2,59,7,59,2,60,7,60,2,61,7,61,2,62,7,62,2,63,7,63,
 		2,64,7,64,2,65,7,65,2,66,7,66,2,67,7,67,2,68,7,68,2,69,7,69,2,70,7,70,
 		2,71,7,71,2,72,7,72,2,73,7,73,2,74,7,74,2,75,7,75,2,76,7,76,2,77,7,77,
-		2,78,7,78,2,79,7,79,1,0,1,0,1,0,1,0,1,0,1,0,1,0,5,0,168,8,0,10,0,12,0,
-		171,9,0,1,0,5,0,174,8,0,10,0,12,0,177,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,
-		1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,1,3,5,3,202,
-		8,3,10,3,12,3,205,9,3,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,4,214,8,4,1,5,1,5,
-		1,5,1,5,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,
-		8,1,9,1,9,1,9,1,9,1,10,3,10,241,8,10,1,10,1,10,3,10,245,8,10,1,10,1,10,
-		3,10,249,8,10,1,11,3,11,252,8,11,1,11,3,11,255,8,11,1,11,1,11,1,11,3,11,
-		260,8,11,1,11,1,11,1,12,1,12,1,12,5,12,267,8,12,10,12,12,12,270,9,12,1,
-		13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,14,1,14,1,14,3,14,283,8,14,1,14,
-		1,14,1,15,1,15,1,15,5,15,290,8,15,10,15,12,15,293,9,15,1,16,1,16,1,16,
-		1,17,1,17,3,17,300,8,17,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,
-		18,1,18,1,19,1,19,1,19,1,19,1,19,1,19,1,20,1,20,1,20,1,20,1,20,1,20,1,
-		20,1,20,1,20,5,20,328,8,20,10,20,12,20,331,9,20,1,20,1,20,1,20,1,21,1,
-		21,1,21,3,21,339,8,21,1,21,1,21,1,21,1,21,1,22,1,22,1,22,1,22,1,22,3,22,
-		350,8,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,23,1,
-		23,1,23,1,23,1,23,1,23,3,23,369,8,23,1,24,1,24,1,24,1,24,1,24,1,24,1,24,
-		5,24,378,8,24,10,24,12,24,381,9,24,1,24,1,24,1,24,1,24,1,25,1,25,1,26,
-		1,26,1,26,1,26,1,27,1,27,1,27,1,27,3,27,397,8,27,1,28,1,28,1,28,1,28,3,
-		28,403,8,28,1,28,1,28,1,28,1,28,5,28,409,8,28,10,28,12,28,412,9,28,1,28,
-		1,28,1,28,1,28,1,29,1,29,1,29,1,29,1,29,3,29,423,8,29,1,29,1,29,1,29,1,
-		29,1,29,1,29,1,29,5,29,432,8,29,10,29,12,29,435,9,29,1,29,1,29,1,29,1,
-		29,1,30,1,30,1,30,1,30,1,30,3,30,446,8,30,1,30,1,30,1,30,5,30,451,8,30,
-		10,30,12,30,454,9,30,1,30,1,30,1,30,1,30,1,31,1,31,1,31,1,31,1,31,1,31,
-		3,31,466,8,31,1,31,1,31,1,31,1,31,5,31,472,8,31,10,31,12,31,475,9,31,1,
-		31,1,31,1,31,1,31,1,32,1,32,1,32,1,32,5,32,485,8,32,10,32,12,32,488,9,
-		32,1,33,1,33,3,33,492,8,33,1,33,1,33,1,33,1,33,1,34,1,34,1,34,1,34,3,34,
-		502,8,34,1,34,1,34,1,34,1,34,1,34,1,34,1,35,1,35,1,35,3,35,513,8,35,1,
-		35,1,35,3,35,517,8,35,1,35,1,35,3,35,521,8,35,1,36,1,36,1,36,1,36,1,36,
-		5,36,528,8,36,10,36,12,36,531,9,36,1,36,1,36,1,37,1,37,1,37,1,37,1,37,
-		1,37,1,37,3,37,542,8,37,1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,
-		38,1,38,1,38,5,38,556,8,38,10,38,12,38,559,9,38,1,38,1,38,1,38,3,38,564,
-		8,38,1,38,1,38,1,38,1,38,1,39,1,39,1,39,1,39,1,39,1,39,1,39,1,39,1,39,
-		3,39,579,8,39,1,39,3,39,582,8,39,1,39,1,39,1,39,1,39,1,39,1,40,1,40,1,
-		40,1,40,1,40,1,40,1,40,1,40,1,40,1,40,1,41,1,41,1,41,1,41,1,41,1,41,1,
-		41,1,41,1,42,1,42,1,42,1,42,1,42,1,42,1,42,1,43,1,43,1,43,1,43,1,43,1,
-		43,1,43,1,43,1,43,1,43,1,43,1,44,1,44,1,44,1,44,4,44,629,8,44,11,44,12,
-		44,630,1,44,1,44,1,44,1,44,1,44,1,45,1,45,1,45,3,45,641,8,45,1,45,1,45,
-		1,45,1,46,1,46,1,46,1,46,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,
-		1,47,1,47,1,47,1,47,1,47,1,47,3,47,665,8,47,1,47,1,47,1,47,1,47,1,47,1,
-		47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,5,47,684,8,47,
-		10,47,12,47,687,9,47,1,48,1,48,1,48,1,48,1,49,1,49,1,49,1,49,1,49,1,49,
-		1,49,1,49,1,49,1,50,1,50,1,50,1,50,1,50,1,51,1,51,1,51,1,51,1,51,1,51,
-		1,51,3,51,714,8,51,1,51,1,51,1,52,1,52,1,52,1,52,1,52,1,52,1,52,1,52,1,
-		52,3,52,727,8,52,1,53,1,53,3,53,731,8,53,1,53,1,53,1,53,1,53,1,53,3,53,
-		738,8,53,1,54,1,54,1,54,1,55,1,55,3,55,745,8,55,1,56,1,56,1,56,1,56,1,
-		56,3,56,752,8,56,1,57,1,57,1,57,1,57,3,57,758,8,57,1,58,1,58,1,58,1,58,
-		3,58,764,8,58,1,59,1,59,1,59,1,59,1,59,1,59,5,59,772,8,59,10,59,12,59,
-		775,9,59,1,59,1,59,1,60,1,60,1,60,1,60,1,60,1,60,5,60,785,8,60,10,60,12,
-		60,788,9,60,1,60,1,60,1,61,1,61,1,61,1,61,4,61,796,8,61,11,61,12,61,797,
-		1,61,1,61,1,62,1,62,1,62,1,62,5,62,806,8,62,10,62,12,62,809,9,62,1,62,
-		1,62,1,63,1,63,1,63,1,63,5,63,817,8,63,10,63,12,63,820,9,63,1,63,1,63,
-		1,64,1,64,1,64,1,64,1,64,1,64,1,65,1,65,1,65,1,65,3,65,834,8,65,1,65,1,
-		65,1,66,1,66,1,66,1,66,5,66,842,8,66,10,66,12,66,845,9,66,1,66,1,66,1,
-		67,1,67,1,67,1,67,5,67,853,8,67,10,67,12,67,856,9,67,1,67,1,67,1,68,1,
-		68,1,68,1,68,1,69,1,69,1,69,1,69,1,70,1,70,1,71,1,71,1,71,3,71,873,8,71,
-		1,72,1,72,1,73,1,73,1,74,1,74,1,75,1,75,1,75,1,75,1,75,1,75,1,75,3,75,
-		888,8,75,1,76,1,76,1,76,1,77,1,77,1,77,1,77,5,77,897,8,77,10,77,12,77,
-		900,9,77,1,77,1,77,1,78,1,78,1,78,1,78,4,78,908,8,78,11,78,12,78,909,1,
-		78,1,78,1,79,1,79,1,79,1,79,5,79,918,8,79,10,79,12,79,921,9,79,1,79,1,
-		79,1,79,1,79,1,79,0,1,94,80,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,
-		32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,
-		80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,
+		2,78,7,78,2,79,7,79,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,5,0,169,8,0,10,0,12,
+		0,172,9,0,1,0,5,0,175,8,0,10,0,12,0,178,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,
+		1,1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,1,3,5,3,
+		203,8,3,10,3,12,3,206,9,3,1,4,1,4,1,4,1,4,1,4,1,4,1,4,3,4,215,8,4,1,5,
+		1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,
+		8,1,8,1,9,1,9,1,9,1,9,1,10,3,10,242,8,10,1,10,1,10,3,10,246,8,10,1,10,
+		1,10,3,10,250,8,10,1,11,3,11,253,8,11,1,11,3,11,256,8,11,1,11,1,11,1,11,
+		3,11,261,8,11,1,11,1,11,1,12,1,12,1,12,5,12,268,8,12,10,12,12,12,271,9,
+		12,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,14,1,14,1,14,3,14,284,8,14,
+		1,14,1,14,1,15,1,15,1,15,5,15,291,8,15,10,15,12,15,294,9,15,1,16,1,16,
+		1,16,1,17,1,17,3,17,301,8,17,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,18,1,
+		18,1,18,1,18,1,19,1,19,1,19,1,19,1,19,1,19,1,20,1,20,1,20,1,20,1,20,1,
+		20,1,20,1,20,1,20,5,20,329,8,20,10,20,12,20,332,9,20,1,20,1,20,1,20,1,
+		21,1,21,1,21,3,21,340,8,21,1,21,1,21,1,21,1,21,1,22,1,22,1,22,1,22,1,22,
+		3,22,351,8,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,
+		23,1,23,1,23,1,23,1,23,1,23,3,23,370,8,23,1,24,1,24,1,24,1,24,1,24,1,24,
+		1,24,5,24,379,8,24,10,24,12,24,382,9,24,1,24,1,24,1,24,1,24,1,25,1,25,
+		1,26,1,26,1,26,1,26,1,27,1,27,1,27,1,27,3,27,398,8,27,1,28,1,28,1,28,1,
+		28,3,28,404,8,28,1,28,1,28,1,28,1,28,5,28,410,8,28,10,28,12,28,413,9,28,
+		1,28,1,28,1,28,1,28,1,29,1,29,1,29,1,29,1,29,3,29,424,8,29,1,29,1,29,1,
+		29,1,29,1,29,1,29,1,29,5,29,433,8,29,10,29,12,29,436,9,29,1,29,1,29,1,
+		29,1,29,1,30,1,30,1,30,1,30,1,30,3,30,447,8,30,1,30,1,30,1,30,5,30,452,
+		8,30,10,30,12,30,455,9,30,1,30,1,30,1,30,1,30,1,31,1,31,1,31,1,31,1,31,
+		1,31,3,31,467,8,31,1,31,1,31,1,31,1,31,5,31,473,8,31,10,31,12,31,476,9,
+		31,1,31,1,31,1,31,1,31,1,32,1,32,1,32,1,32,5,32,486,8,32,10,32,12,32,489,
+		9,32,1,33,1,33,3,33,493,8,33,1,33,1,33,1,33,1,33,1,34,1,34,1,34,1,34,3,
+		34,503,8,34,1,34,1,34,1,34,1,34,1,34,1,34,1,35,1,35,1,35,3,35,514,8,35,
+		1,35,1,35,3,35,518,8,35,1,35,1,35,3,35,522,8,35,1,36,1,36,1,36,1,36,1,
+		36,5,36,529,8,36,10,36,12,36,532,9,36,1,36,1,36,1,37,1,37,1,37,1,37,1,
+		37,1,37,1,37,3,37,543,8,37,1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,38,1,38,
+		1,38,1,38,1,38,5,38,557,8,38,10,38,12,38,560,9,38,1,38,1,38,1,38,3,38,
+		565,8,38,1,38,1,38,1,38,1,38,1,39,1,39,1,39,1,39,1,39,1,39,1,39,1,39,1,
+		39,3,39,580,8,39,1,39,3,39,583,8,39,1,39,1,39,1,39,1,39,1,39,1,40,1,40,
+		1,40,1,40,1,40,1,40,1,40,1,40,1,40,1,40,1,41,1,41,1,41,1,41,1,41,1,41,
+		1,41,1,41,1,42,1,42,1,42,1,42,1,42,1,42,1,42,1,43,1,43,1,43,1,43,1,43,
+		1,43,1,43,1,43,1,43,1,43,1,43,1,44,1,44,1,44,1,44,4,44,630,8,44,11,44,
+		12,44,631,1,44,1,44,1,44,1,44,1,44,1,45,1,45,1,45,3,45,642,8,45,1,45,1,
+		45,1,45,1,46,1,46,1,46,1,46,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,
+		47,1,47,1,47,1,47,1,47,1,47,1,47,3,47,666,8,47,1,47,1,47,1,47,1,47,1,47,
+		1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,1,47,5,47,685,8,
+		47,10,47,12,47,688,9,47,1,48,1,48,1,48,1,48,1,49,1,49,1,49,1,49,1,49,1,
+		49,1,49,1,49,1,49,1,50,1,50,1,50,1,50,1,50,1,51,1,51,1,51,1,51,1,51,1,
+		51,1,51,3,51,715,8,51,1,51,1,51,1,52,1,52,1,52,1,52,1,52,1,52,1,52,1,52,
+		1,52,3,52,728,8,52,1,53,1,53,3,53,732,8,53,1,53,1,53,1,53,1,53,1,53,3,
+		53,739,8,53,1,54,1,54,1,54,1,55,1,55,3,55,746,8,55,1,56,1,56,1,56,1,56,
+		1,56,3,56,753,8,56,1,57,1,57,1,57,1,57,3,57,759,8,57,1,58,1,58,1,58,1,
+		58,3,58,765,8,58,1,59,1,59,1,59,1,59,1,59,1,59,5,59,773,8,59,10,59,12,
+		59,776,9,59,1,59,1,59,1,60,1,60,1,60,1,60,1,60,1,60,5,60,786,8,60,10,60,
+		12,60,789,9,60,1,60,1,60,1,61,1,61,1,61,1,61,4,61,797,8,61,11,61,12,61,
+		798,1,61,1,61,1,62,1,62,1,62,1,62,5,62,807,8,62,10,62,12,62,810,9,62,1,
+		62,1,62,1,63,1,63,1,63,1,63,5,63,818,8,63,10,63,12,63,821,9,63,1,63,1,
+		63,1,64,1,64,1,64,1,64,1,64,1,64,1,65,1,65,1,65,1,65,3,65,835,8,65,1,65,
+		1,65,1,66,1,66,1,66,1,66,5,66,843,8,66,10,66,12,66,846,9,66,1,66,1,66,
+		1,67,1,67,1,67,1,67,5,67,854,8,67,10,67,12,67,857,9,67,1,67,1,67,1,68,
+		1,68,1,68,1,68,1,69,1,69,1,69,1,69,1,70,1,70,1,71,1,71,1,71,3,71,874,8,
+		71,1,72,1,72,1,73,1,73,1,74,1,74,1,75,1,75,1,75,1,75,1,75,1,75,1,75,3,
+		75,889,8,75,1,76,1,76,1,76,1,77,1,77,1,77,1,77,5,77,898,8,77,10,77,12,
+		77,901,9,77,1,77,1,77,1,78,1,78,1,78,1,78,4,78,909,8,78,11,78,12,78,910,
+		1,78,1,78,1,79,1,79,1,79,1,79,5,79,919,8,79,10,79,12,79,922,9,79,1,79,
+		1,79,1,79,1,79,1,79,0,1,94,80,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,
+		30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,
+		78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,
 		120,122,124,126,128,130,132,134,136,138,140,142,144,146,148,150,152,154,
 		156,158,0,8,2,0,85,85,89,89,2,0,12,12,28,28,2,0,20,20,35,35,2,0,68,68,
-		77,77,1,0,67,73,2,0,76,76,78,79,2,0,74,75,80,83,1,0,51,54,965,0,169,1,
-		0,0,0,2,180,1,0,0,0,4,187,1,0,0,0,6,203,1,0,0,0,8,206,1,0,0,0,10,215,1,
-		0,0,0,12,219,1,0,0,0,14,223,1,0,0,0,16,229,1,0,0,0,18,235,1,0,0,0,20,248,
-		1,0,0,0,22,251,1,0,0,0,24,263,1,0,0,0,26,271,1,0,0,0,28,279,1,0,0,0,30,
-		286,1,0,0,0,32,294,1,0,0,0,34,299,1,0,0,0,36,301,1,0,0,0,38,312,1,0,0,
-		0,40,318,1,0,0,0,42,335,1,0,0,0,44,344,1,0,0,0,46,362,1,0,0,0,48,370,1,
-		0,0,0,50,386,1,0,0,0,52,388,1,0,0,0,54,396,1,0,0,0,56,398,1,0,0,0,58,417,
-		1,0,0,0,60,440,1,0,0,0,62,459,1,0,0,0,64,480,1,0,0,0,66,489,1,0,0,0,68,
-		497,1,0,0,0,70,520,1,0,0,0,72,522,1,0,0,0,74,541,1,0,0,0,76,543,1,0,0,
-		0,78,569,1,0,0,0,80,588,1,0,0,0,82,598,1,0,0,0,84,606,1,0,0,0,86,613,1,
-		0,0,0,88,624,1,0,0,0,90,637,1,0,0,0,92,645,1,0,0,0,94,664,1,0,0,0,96,688,
-		1,0,0,0,98,692,1,0,0,0,100,701,1,0,0,0,102,706,1,0,0,0,104,726,1,0,0,0,
-		106,737,1,0,0,0,108,739,1,0,0,0,110,744,1,0,0,0,112,751,1,0,0,0,114,757,
-		1,0,0,0,116,763,1,0,0,0,118,765,1,0,0,0,120,778,1,0,0,0,122,791,1,0,0,
-		0,124,801,1,0,0,0,126,812,1,0,0,0,128,823,1,0,0,0,130,829,1,0,0,0,132,
-		837,1,0,0,0,134,848,1,0,0,0,136,859,1,0,0,0,138,863,1,0,0,0,140,867,1,
-		0,0,0,142,872,1,0,0,0,144,874,1,0,0,0,146,876,1,0,0,0,148,878,1,0,0,0,
-		150,887,1,0,0,0,152,889,1,0,0,0,154,892,1,0,0,0,156,903,1,0,0,0,158,913,
-		1,0,0,0,160,168,3,2,1,0,161,168,3,26,13,0,162,168,3,34,17,0,163,168,3,
-		46,23,0,164,168,3,48,24,0,165,168,3,54,27,0,166,168,3,4,2,0,167,160,1,
-		0,0,0,167,161,1,0,0,0,167,162,1,0,0,0,167,163,1,0,0,0,167,164,1,0,0,0,
-		167,165,1,0,0,0,167,166,1,0,0,0,168,171,1,0,0,0,169,167,1,0,0,0,169,170,
-		1,0,0,0,170,175,1,0,0,0,171,169,1,0,0,0,172,174,5,1,0,0,173,172,1,0,0,
-		0,174,177,1,0,0,0,175,173,1,0,0,0,175,176,1,0,0,0,176,178,1,0,0,0,177,
-		175,1,0,0,0,178,179,5,0,0,1,179,1,1,0,0,0,180,181,5,1,0,0,181,182,5,27,
-		0,0,182,183,3,6,3,0,183,184,5,1,0,0,184,185,5,15,0,0,185,186,5,27,0,0,
-		186,3,1,0,0,0,187,188,5,1,0,0,188,189,5,40,0,0,189,190,5,85,0,0,190,191,
-		3,6,3,0,191,192,5,1,0,0,192,193,5,15,0,0,193,194,5,40,0,0,194,5,1,0,0,
-		0,195,202,3,14,7,0,196,202,3,16,8,0,197,202,3,74,37,0,198,202,3,8,4,0,
-		199,202,3,10,5,0,200,202,3,12,6,0,201,195,1,0,0,0,201,196,1,0,0,0,201,
-		197,1,0,0,0,201,198,1,0,0,0,201,199,1,0,0,0,201,200,1,0,0,0,202,205,1,
-		0,0,0,203,201,1,0,0,0,203,204,1,0,0,0,204,7,1,0,0,0,205,203,1,0,0,0,206,
-		207,5,1,0,0,207,213,5,6,0,0,208,214,3,22,11,0,209,210,3,20,10,0,210,211,
-		5,64,0,0,211,212,3,22,11,0,212,214,1,0,0,0,213,208,1,0,0,0,213,209,1,0,
-		0,0,214,9,1,0,0,0,215,216,5,1,0,0,216,217,5,42,0,0,217,218,7,0,0,0,218,
-		11,1,0,0,0,219,220,5,1,0,0,220,221,5,29,0,0,221,222,3,94,47,0,222,13,1,
-		0,0,0,223,224,5,1,0,0,224,225,5,46,0,0,225,226,3,20,10,0,226,227,5,55,
-		0,0,227,228,3,94,47,0,228,15,1,0,0,0,229,230,5,1,0,0,230,231,5,36,0,0,
-		231,232,3,20,10,0,232,233,5,43,0,0,233,234,3,94,47,0,234,17,1,0,0,0,235,
-		236,3,20,10,0,236,237,5,55,0,0,237,238,3,94,47,0,238,19,1,0,0,0,239,241,
-		3,108,54,0,240,239,1,0,0,0,240,241,1,0,0,0,241,242,1,0,0,0,242,244,5,85,
-		0,0,243,245,3,102,51,0,244,243,1,0,0,0,244,245,1,0,0,0,245,249,1,0,0,0,
-		246,249,3,122,61,0,247,249,3,128,64,0,248,240,1,0,0,0,248,246,1,0,0,0,
-		248,247,1,0,0,0,249,21,1,0,0,0,250,252,3,108,54,0,251,250,1,0,0,0,251,
-		252,1,0,0,0,252,254,1,0,0,0,253,255,7,1,0,0,254,253,1,0,0,0,254,255,1,
-		0,0,0,255,256,1,0,0,0,256,257,5,85,0,0,257,259,5,61,0,0,258,260,3,24,12,
-		0,259,258,1,0,0,0,259,260,1,0,0,0,260,261,1,0,0,0,261,262,5,62,0,0,262,
-		23,1,0,0,0,263,268,3,94,47,0,264,265,5,65,0,0,265,267,3,94,47,0,266,264,
-		1,0,0,0,267,270,1,0,0,0,268,266,1,0,0,0,268,269,1,0,0,0,269,25,1,0,0,0,
-		270,268,1,0,0,0,271,272,5,1,0,0,272,273,5,31,0,0,273,274,3,28,14,0,274,
-		275,3,6,3,0,275,276,5,1,0,0,276,277,5,15,0,0,277,278,5,31,0,0,278,27,1,
-		0,0,0,279,280,5,85,0,0,280,282,5,61,0,0,281,283,3,30,15,0,282,281,1,0,
-		0,0,282,283,1,0,0,0,283,284,1,0,0,0,284,285,5,62,0,0,285,29,1,0,0,0,286,
-		291,3,32,16,0,287,288,5,65,0,0,288,290,3,32,16,0,289,287,1,0,0,0,290,293,
-		1,0,0,0,291,289,1,0,0,0,291,292,1,0,0,0,292,31,1,0,0,0,293,291,1,0,0,0,
-		294,295,5,85,0,0,295,296,3,150,75,0,296,33,1,0,0,0,297,300,3,36,18,0,298,
-		300,3,38,19,0,299,297,1,0,0,0,299,298,1,0,0,0,300,35,1,0,0,0,301,302,5,
-		1,0,0,302,303,5,19,0,0,303,304,3,42,21,0,304,305,3,6,3,0,305,306,5,1,0,
-		0,306,307,5,34,0,0,307,308,3,94,47,0,308,309,5,1,0,0,309,310,5,15,0,0,
-		310,311,5,19,0,0,311,37,1,0,0,0,312,313,5,1,0,0,313,314,5,19,0,0,314,315,
-		3,42,21,0,315,316,5,56,0,0,316,317,3,94,47,0,317,39,1,0,0,0,318,319,5,
-		26,0,0,319,320,3,20,10,0,320,321,5,55,0,0,321,329,3,94,47,0,322,323,5,
-		65,0,0,323,324,3,20,10,0,324,325,5,55,0,0,325,326,3,94,47,0,326,328,1,
-		0,0,0,327,322,1,0,0,0,328,331,1,0,0,0,329,327,1,0,0,0,329,330,1,0,0,0,
-		330,332,1,0,0,0,331,329,1,0,0,0,332,333,5,1,0,0,333,334,5,23,0,0,334,41,
-		1,0,0,0,335,336,5,85,0,0,336,338,5,61,0,0,337,339,3,30,15,0,338,337,1,
-		0,0,0,338,339,1,0,0,0,339,340,1,0,0,0,340,341,5,62,0,0,341,342,5,4,0,0,
-		342,343,3,150,75,0,343,43,1,0,0,0,344,345,5,1,0,0,345,346,5,39,0,0,346,
-		347,5,85,0,0,347,349,5,61,0,0,348,350,3,30,15,0,349,348,1,0,0,0,349,350,
-		1,0,0,0,350,351,1,0,0,0,351,352,5,62,0,0,352,353,5,4,0,0,353,354,3,150,
-		75,0,354,355,3,6,3,0,355,356,5,1,0,0,356,357,5,34,0,0,357,358,3,94,47,
-		0,358,359,5,1,0,0,359,360,5,15,0,0,360,361,5,39,0,0,361,45,1,0,0,0,362,
-		363,5,1,0,0,363,364,5,10,0,0,364,365,5,85,0,0,365,368,5,55,0,0,366,369,
-		3,110,55,0,367,369,3,70,35,0,368,366,1,0,0,0,368,367,1,0,0,0,369,47,1,
-		0,0,0,370,371,5,1,0,0,371,372,5,16,0,0,372,373,3,50,25,0,373,374,5,1,0,
-		0,374,379,5,85,0,0,375,376,5,65,0,0,376,378,5,85,0,0,377,375,1,0,0,0,378,
-		381,1,0,0,0,379,377,1,0,0,0,379,380,1,0,0,0,380,382,1,0,0,0,381,379,1,
-		0,0,0,382,383,5,1,0,0,383,384,5,15,0,0,384,385,5,16,0,0,385,49,1,0,0,0,
-		386,387,5,84,0,0,387,51,1,0,0,0,388,389,3,50,25,0,389,390,5,64,0,0,390,
-		391,5,85,0,0,391,53,1,0,0,0,392,397,3,56,28,0,393,397,3,58,29,0,394,397,
-		3,60,30,0,395,397,3,62,31,0,396,392,1,0,0,0,396,393,1,0,0,0,396,394,1,
-		0,0,0,396,395,1,0,0,0,397,55,1,0,0,0,398,399,5,1,0,0,399,400,5,9,0,0,400,
-		402,5,84,0,0,401,403,3,64,32,0,402,401,1,0,0,0,402,403,1,0,0,0,403,404,
-		1,0,0,0,404,410,3,68,34,0,405,409,3,66,33,0,406,409,3,34,17,0,407,409,
-		3,26,13,0,408,405,1,0,0,0,408,406,1,0,0,0,408,407,1,0,0,0,409,412,1,0,
-		0,0,410,408,1,0,0,0,410,411,1,0,0,0,411,413,1,0,0,0,412,410,1,0,0,0,413,
-		414,5,1,0,0,414,415,5,15,0,0,415,416,5,9,0,0,416,57,1,0,0,0,417,418,5,
-		1,0,0,418,419,5,5,0,0,419,420,5,9,0,0,420,422,5,84,0,0,421,423,3,64,32,
-		0,422,421,1,0,0,0,422,423,1,0,0,0,423,433,1,0,0,0,424,432,3,66,33,0,425,
-		426,5,1,0,0,426,427,5,19,0,0,427,432,3,42,21,0,428,429,5,1,0,0,429,430,
-		5,31,0,0,430,432,3,28,14,0,431,424,1,0,0,0,431,425,1,0,0,0,431,428,1,0,
-		0,0,432,435,1,0,0,0,433,431,1,0,0,0,433,434,1,0,0,0,434,436,1,0,0,0,435,
-		433,1,0,0,0,436,437,5,1,0,0,437,438,5,15,0,0,438,439,5,9,0,0,439,59,1,
-		0,0,0,440,441,5,1,0,0,441,442,5,22,0,0,442,443,5,9,0,0,443,445,5,84,0,
-		0,444,446,3,64,32,0,445,444,1,0,0,0,445,446,1,0,0,0,446,447,1,0,0,0,447,
-		452,3,68,34,0,448,451,3,66,33,0,449,451,3,34,17,0,450,448,1,0,0,0,450,
-		449,1,0,0,0,451,454,1,0,0,0,452,450,1,0,0,0,452,453,1,0,0,0,453,455,1,
-		0,0,0,454,452,1,0,0,0,455,456,5,1,0,0,456,457,5,15,0,0,457,458,5,9,0,0,
-		458,61,1,0,0,0,459,460,5,1,0,0,460,461,5,5,0,0,461,462,5,22,0,0,462,463,
-		5,9,0,0,463,465,5,84,0,0,464,466,3,64,32,0,465,464,1,0,0,0,465,466,1,0,
-		0,0,466,473,1,0,0,0,467,472,3,66,33,0,468,469,5,1,0,0,469,470,5,19,0,0,
-		470,472,3,42,21,0,471,467,1,0,0,0,471,468,1,0,0,0,472,475,1,0,0,0,473,
-		471,1,0,0,0,473,474,1,0,0,0,474,476,1,0,0,0,475,473,1,0,0,0,476,477,5,
-		1,0,0,477,478,5,15,0,0,478,479,5,9,0,0,479,63,1,0,0,0,480,481,5,24,0,0,
-		481,486,3,150,75,0,482,483,5,65,0,0,483,485,3,150,75,0,484,482,1,0,0,0,
-		485,488,1,0,0,0,486,484,1,0,0,0,486,487,1,0,0,0,487,65,1,0,0,0,488,486,
-		1,0,0,0,489,491,5,1,0,0,490,492,5,30,0,0,491,490,1,0,0,0,491,492,1,0,0,
-		0,492,493,1,0,0,0,493,494,5,32,0,0,494,495,5,85,0,0,495,496,3,150,75,0,
-		496,67,1,0,0,0,497,498,5,1,0,0,498,499,5,11,0,0,499,501,5,61,0,0,500,502,
-		3,30,15,0,501,500,1,0,0,0,501,502,1,0,0,0,502,503,1,0,0,0,503,504,5,62,
-		0,0,504,505,3,6,3,0,505,506,5,1,0,0,506,507,5,15,0,0,507,508,5,11,0,0,
-		508,69,1,0,0,0,509,510,3,150,75,0,510,512,5,61,0,0,511,513,3,24,12,0,512,
-		511,1,0,0,0,512,513,1,0,0,0,513,514,1,0,0,0,514,516,5,62,0,0,515,517,3,
-		72,36,0,516,515,1,0,0,0,516,517,1,0,0,0,517,521,1,0,0,0,518,519,5,85,0,
-		0,519,521,3,72,36,0,520,509,1,0,0,0,520,518,1,0,0,0,521,71,1,0,0,0,522,
-		523,5,48,0,0,523,524,5,57,0,0,524,529,3,18,9,0,525,526,5,65,0,0,526,528,
-		3,18,9,0,527,525,1,0,0,0,528,531,1,0,0,0,529,527,1,0,0,0,529,530,1,0,0,
-		0,530,532,1,0,0,0,531,529,1,0,0,0,532,533,5,58,0,0,533,73,1,0,0,0,534,
-		542,3,76,38,0,535,542,3,78,39,0,536,542,3,80,40,0,537,542,3,82,41,0,538,
-		542,3,84,42,0,539,542,3,86,43,0,540,542,3,88,44,0,541,534,1,0,0,0,541,
-		535,1,0,0,0,541,536,1,0,0,0,541,537,1,0,0,0,541,538,1,0,0,0,541,539,1,
-		0,0,0,541,540,1,0,0,0,542,75,1,0,0,0,543,544,5,1,0,0,544,545,5,21,0,0,
-		545,546,3,94,47,0,546,547,5,41,0,0,547,557,3,6,3,0,548,549,5,1,0,0,549,
-		550,5,14,0,0,550,551,5,21,0,0,551,552,3,94,47,0,552,553,5,41,0,0,553,554,
-		3,6,3,0,554,556,1,0,0,0,555,548,1,0,0,0,556,559,1,0,0,0,557,555,1,0,0,
-		0,557,558,1,0,0,0,558,563,1,0,0,0,559,557,1,0,0,0,560,561,5,1,0,0,561,
-		562,5,14,0,0,562,564,3,6,3,0,563,560,1,0,0,0,563,564,1,0,0,0,564,565,1,
-		0,0,0,565,566,5,1,0,0,566,567,5,15,0,0,567,568,5,21,0,0,568,77,1,0,0,0,
-		569,570,5,1,0,0,570,571,5,17,0,0,571,572,5,85,0,0,572,573,5,55,0,0,573,
-		574,3,94,47,0,574,575,5,43,0,0,575,581,3,94,47,0,576,578,5,37,0,0,577,
-		579,5,68,0,0,578,577,1,0,0,0,578,579,1,0,0,0,579,580,1,0,0,0,580,582,5,
-		86,0,0,581,576,1,0,0,0,581,582,1,0,0,0,582,583,1,0,0,0,583,584,3,6,3,0,
-		584,585,5,1,0,0,585,586,5,15,0,0,586,587,5,17,0,0,587,79,1,0,0,0,588,589,
-		5,1,0,0,589,590,5,18,0,0,590,591,5,85,0,0,591,592,5,23,0,0,592,593,3,94,
-		47,0,593,594,3,6,3,0,594,595,5,1,0,0,595,596,5,15,0,0,596,597,5,18,0,0,
-		597,81,1,0,0,0,598,599,5,1,0,0,599,600,5,47,0,0,600,601,3,94,47,0,601,
-		602,3,6,3,0,602,603,5,1,0,0,603,604,5,15,0,0,604,605,5,47,0,0,605,83,1,
-		0,0,0,606,607,5,1,0,0,607,608,5,33,0,0,608,609,3,6,3,0,609,610,5,1,0,0,
-		610,611,5,45,0,0,611,612,3,94,47,0,612,85,1,0,0,0,613,614,5,1,0,0,614,
-		615,5,44,0,0,615,616,3,6,3,0,616,617,5,1,0,0,617,618,5,8,0,0,618,619,5,
-		85,0,0,619,620,3,6,3,0,620,621,5,1,0,0,621,622,5,15,0,0,622,623,5,44,0,
-		0,623,87,1,0,0,0,624,625,5,1,0,0,625,626,5,38,0,0,626,628,3,94,47,0,627,
-		629,3,90,45,0,628,627,1,0,0,0,629,630,1,0,0,0,630,628,1,0,0,0,630,631,
-		1,0,0,0,631,632,1,0,0,0,632,633,3,92,46,0,633,634,5,1,0,0,634,635,5,15,
-		0,0,635,636,5,38,0,0,636,89,1,0,0,0,637,638,5,1,0,0,638,640,5,7,0,0,639,
-		641,5,68,0,0,640,639,1,0,0,0,640,641,1,0,0,0,641,642,1,0,0,0,642,643,3,
-		112,56,0,643,644,3,6,3,0,644,91,1,0,0,0,645,646,5,1,0,0,646,647,5,13,0,
-		0,647,648,3,6,3,0,648,93,1,0,0,0,649,650,6,47,-1,0,650,665,3,96,48,0,651,
-		665,3,22,11,0,652,665,3,106,53,0,653,654,3,140,70,0,654,655,3,94,47,9,
-		655,665,1,0,0,0,656,665,3,70,35,0,657,665,3,98,49,0,658,665,3,100,50,0,
-		659,660,3,40,20,0,660,661,3,94,47,3,661,665,1,0,0,0,662,663,5,1,0,0,663,
-		665,3,94,47,1,664,649,1,0,0,0,664,651,1,0,0,0,664,652,1,0,0,0,664,653,
-		1,0,0,0,664,656,1,0,0,0,664,657,1,0,0,0,664,658,1,0,0,0,664,659,1,0,0,
-		0,664,662,1,0,0,0,665,685,1,0,0,0,666,667,10,8,0,0,667,668,5,71,0,0,668,
-		684,3,94,47,9,669,670,10,7,0,0,670,671,3,142,71,0,671,672,3,94,47,8,672,
-		684,1,0,0,0,673,674,10,12,0,0,674,684,3,102,51,0,675,676,10,11,0,0,676,
-		677,5,64,0,0,677,684,3,22,11,0,678,679,10,10,0,0,679,680,5,64,0,0,680,
-		684,5,85,0,0,681,682,10,2,0,0,682,684,3,72,36,0,683,666,1,0,0,0,683,669,
-		1,0,0,0,683,673,1,0,0,0,683,675,1,0,0,0,683,678,1,0,0,0,683,681,1,0,0,
-		0,684,687,1,0,0,0,685,683,1,0,0,0,685,686,1,0,0,0,686,95,1,0,0,0,687,685,
-		1,0,0,0,688,689,5,61,0,0,689,690,3,94,47,0,690,691,5,62,0,0,691,97,1,0,
-		0,0,692,693,5,21,0,0,693,694,3,94,47,0,694,695,5,1,0,0,695,696,5,41,0,
-		0,696,697,3,94,47,0,697,698,5,1,0,0,698,699,5,14,0,0,699,700,3,94,47,0,
-		700,99,1,0,0,0,701,702,5,25,0,0,702,703,3,24,12,0,703,704,5,56,0,0,704,
-		705,3,94,47,0,705,101,1,0,0,0,706,713,5,59,0,0,707,714,3,94,47,0,708,709,
-		3,94,47,0,709,710,5,65,0,0,710,711,3,94,47,0,711,714,1,0,0,0,712,714,3,
-		104,52,0,713,707,1,0,0,0,713,708,1,0,0,0,713,712,1,0,0,0,714,715,1,0,0,
-		0,715,716,5,60,0,0,716,103,1,0,0,0,717,718,3,94,47,0,718,719,5,63,0,0,
-		719,720,3,94,47,0,720,727,1,0,0,0,721,722,3,94,47,0,722,723,5,63,0,0,723,
-		727,1,0,0,0,724,725,5,63,0,0,725,727,3,94,47,0,726,717,1,0,0,0,726,721,
-		1,0,0,0,726,724,1,0,0,0,727,105,1,0,0,0,728,738,3,110,55,0,729,731,3,108,
-		54,0,730,729,1,0,0,0,730,731,1,0,0,0,731,732,1,0,0,0,732,738,5,85,0,0,
-		733,738,3,114,57,0,734,738,5,35,0,0,735,736,5,13,0,0,736,738,3,150,75,
-		0,737,728,1,0,0,0,737,730,1,0,0,0,737,733,1,0,0,0,737,734,1,0,0,0,737,
-		735,1,0,0,0,738,107,1,0,0,0,739,740,7,2,0,0,740,741,5,64,0,0,741,109,1,
-		0,0,0,742,745,3,112,56,0,743,745,3,116,58,0,744,742,1,0,0,0,744,743,1,
-		0,0,0,745,111,1,0,0,0,746,752,5,49,0,0,747,752,5,86,0,0,748,752,5,87,0,
-		0,749,752,5,88,0,0,750,752,3,52,26,0,751,746,1,0,0,0,751,747,1,0,0,0,751,
-		748,1,0,0,0,751,749,1,0,0,0,751,750,1,0,0,0,752,113,1,0,0,0,753,758,3,
-		124,62,0,754,758,3,130,65,0,755,758,3,118,59,0,756,758,3,132,66,0,757,
-		753,1,0,0,0,757,754,1,0,0,0,757,755,1,0,0,0,757,756,1,0,0,0,758,115,1,
-		0,0,0,759,764,5,89,0,0,760,764,3,120,60,0,761,764,3,126,63,0,762,764,3,
-		134,67,0,763,759,1,0,0,0,763,760,1,0,0,0,763,761,1,0,0,0,763,762,1,0,0,
-		0,764,117,1,0,0,0,765,766,5,61,0,0,766,767,3,94,47,0,767,768,5,65,0,0,
-		768,773,3,94,47,0,769,770,5,65,0,0,770,772,3,94,47,0,771,769,1,0,0,0,772,
-		775,1,0,0,0,773,771,1,0,0,0,773,774,1,0,0,0,774,776,1,0,0,0,775,773,1,
-		0,0,0,776,777,5,62,0,0,777,119,1,0,0,0,778,779,5,61,0,0,779,780,3,110,
-		55,0,780,781,5,65,0,0,781,786,3,110,55,0,782,783,5,65,0,0,783,785,3,110,
-		55,0,784,782,1,0,0,0,785,788,1,0,0,0,786,784,1,0,0,0,786,787,1,0,0,0,787,
-		789,1,0,0,0,788,786,1,0,0,0,789,790,5,62,0,0,790,121,1,0,0,0,791,792,5,
-		61,0,0,792,795,5,85,0,0,793,794,5,65,0,0,794,796,5,85,0,0,795,793,1,0,
-		0,0,796,797,1,0,0,0,797,795,1,0,0,0,797,798,1,0,0,0,798,799,1,0,0,0,799,
-		800,5,62,0,0,800,123,1,0,0,0,801,802,5,57,0,0,802,807,3,94,47,0,803,804,
-		5,65,0,0,804,806,3,94,47,0,805,803,1,0,0,0,806,809,1,0,0,0,807,805,1,0,
-		0,0,807,808,1,0,0,0,808,810,1,0,0,0,809,807,1,0,0,0,810,811,5,58,0,0,811,
-		125,1,0,0,0,812,813,5,57,0,0,813,818,3,110,55,0,814,815,5,65,0,0,815,817,
-		3,110,55,0,816,814,1,0,0,0,817,820,1,0,0,0,818,816,1,0,0,0,818,819,1,0,
-		0,0,819,821,1,0,0,0,820,818,1,0,0,0,821,822,5,58,0,0,822,127,1,0,0,0,823,
-		824,5,57,0,0,824,825,5,85,0,0,825,826,5,66,0,0,826,827,5,85,0,0,827,828,
-		5,58,0,0,828,129,1,0,0,0,829,830,5,51,0,0,830,831,3,154,77,0,831,833,5,
-		61,0,0,832,834,5,86,0,0,833,832,1,0,0,0,833,834,1,0,0,0,834,835,1,0,0,
-		0,835,836,5,62,0,0,836,131,1,0,0,0,837,838,5,57,0,0,838,843,3,136,68,0,
-		839,840,5,65,0,0,840,842,3,136,68,0,841,839,1,0,0,0,842,845,1,0,0,0,843,
-		841,1,0,0,0,843,844,1,0,0,0,844,846,1,0,0,0,845,843,1,0,0,0,846,847,5,
-		58,0,0,847,133,1,0,0,0,848,849,5,57,0,0,849,854,3,138,69,0,850,851,5,65,
-		0,0,851,853,3,138,69,0,852,850,1,0,0,0,853,856,1,0,0,0,854,852,1,0,0,0,
-		854,855,1,0,0,0,855,857,1,0,0,0,856,854,1,0,0,0,857,858,5,58,0,0,858,135,
-		1,0,0,0,859,860,3,94,47,0,860,861,5,66,0,0,861,862,3,94,47,0,862,137,1,
-		0,0,0,863,864,3,110,55,0,864,865,5,66,0,0,865,866,3,110,55,0,866,139,1,
-		0,0,0,867,868,7,3,0,0,868,141,1,0,0,0,869,873,3,144,72,0,870,873,3,146,
-		73,0,871,873,3,148,74,0,872,869,1,0,0,0,872,870,1,0,0,0,872,871,1,0,0,
-		0,873,143,1,0,0,0,874,875,7,4,0,0,875,145,1,0,0,0,876,877,7,5,0,0,877,
-		147,1,0,0,0,878,879,7,6,0,0,879,149,1,0,0,0,880,888,5,50,0,0,881,888,3,
-		152,76,0,882,888,5,84,0,0,883,884,5,84,0,0,884,888,3,154,77,0,885,888,
-		3,156,78,0,886,888,3,158,79,0,887,880,1,0,0,0,887,881,1,0,0,0,887,882,
-		1,0,0,0,887,883,1,0,0,0,887,885,1,0,0,0,887,886,1,0,0,0,888,151,1,0,0,
-		0,889,890,7,7,0,0,890,891,3,154,77,0,891,153,1,0,0,0,892,893,5,74,0,0,
-		893,898,3,150,75,0,894,895,5,65,0,0,895,897,3,150,75,0,896,894,1,0,0,0,
-		897,900,1,0,0,0,898,896,1,0,0,0,898,899,1,0,0,0,899,901,1,0,0,0,900,898,
-		1,0,0,0,901,902,5,75,0,0,902,155,1,0,0,0,903,904,5,61,0,0,904,907,3,150,
-		75,0,905,906,5,65,0,0,906,908,3,150,75,0,907,905,1,0,0,0,908,909,1,0,0,
-		0,909,907,1,0,0,0,909,910,1,0,0,0,910,911,1,0,0,0,911,912,5,62,0,0,912,
-		157,1,0,0,0,913,914,5,61,0,0,914,919,3,150,75,0,915,916,5,65,0,0,916,918,
-		3,150,75,0,917,915,1,0,0,0,918,921,1,0,0,0,919,917,1,0,0,0,919,920,1,0,
-		0,0,920,922,1,0,0,0,921,919,1,0,0,0,922,923,5,56,0,0,923,924,3,150,75,
-		0,924,925,5,62,0,0,925,159,1,0,0,0,72,167,169,175,201,203,213,240,244,
-		248,251,254,259,268,282,291,299,329,338,349,368,379,396,402,408,410,422,
-		431,433,445,450,452,465,471,473,486,491,501,512,516,520,529,541,557,563,
-		578,581,630,640,664,683,685,713,726,730,737,744,751,757,763,773,786,797,
-		807,818,833,843,854,872,887,898,909,919
+		77,77,1,0,67,73,2,0,76,76,78,79,2,0,74,75,80,83,1,0,51,54,967,0,170,1,
+		0,0,0,2,181,1,0,0,0,4,188,1,0,0,0,6,204,1,0,0,0,8,207,1,0,0,0,10,216,1,
+		0,0,0,12,220,1,0,0,0,14,224,1,0,0,0,16,230,1,0,0,0,18,236,1,0,0,0,20,249,
+		1,0,0,0,22,252,1,0,0,0,24,264,1,0,0,0,26,272,1,0,0,0,28,280,1,0,0,0,30,
+		287,1,0,0,0,32,295,1,0,0,0,34,300,1,0,0,0,36,302,1,0,0,0,38,313,1,0,0,
+		0,40,319,1,0,0,0,42,336,1,0,0,0,44,345,1,0,0,0,46,363,1,0,0,0,48,371,1,
+		0,0,0,50,387,1,0,0,0,52,389,1,0,0,0,54,397,1,0,0,0,56,399,1,0,0,0,58,418,
+		1,0,0,0,60,441,1,0,0,0,62,460,1,0,0,0,64,481,1,0,0,0,66,490,1,0,0,0,68,
+		498,1,0,0,0,70,521,1,0,0,0,72,523,1,0,0,0,74,542,1,0,0,0,76,544,1,0,0,
+		0,78,570,1,0,0,0,80,589,1,0,0,0,82,599,1,0,0,0,84,607,1,0,0,0,86,614,1,
+		0,0,0,88,625,1,0,0,0,90,638,1,0,0,0,92,646,1,0,0,0,94,665,1,0,0,0,96,689,
+		1,0,0,0,98,693,1,0,0,0,100,702,1,0,0,0,102,707,1,0,0,0,104,727,1,0,0,0,
+		106,738,1,0,0,0,108,740,1,0,0,0,110,745,1,0,0,0,112,752,1,0,0,0,114,758,
+		1,0,0,0,116,764,1,0,0,0,118,766,1,0,0,0,120,779,1,0,0,0,122,792,1,0,0,
+		0,124,802,1,0,0,0,126,813,1,0,0,0,128,824,1,0,0,0,130,830,1,0,0,0,132,
+		838,1,0,0,0,134,849,1,0,0,0,136,860,1,0,0,0,138,864,1,0,0,0,140,868,1,
+		0,0,0,142,873,1,0,0,0,144,875,1,0,0,0,146,877,1,0,0,0,148,879,1,0,0,0,
+		150,888,1,0,0,0,152,890,1,0,0,0,154,893,1,0,0,0,156,904,1,0,0,0,158,914,
+		1,0,0,0,160,169,3,2,1,0,161,169,3,26,13,0,162,169,3,34,17,0,163,169,3,
+		46,23,0,164,169,3,48,24,0,165,169,3,54,27,0,166,169,3,4,2,0,167,169,3,
+		44,22,0,168,160,1,0,0,0,168,161,1,0,0,0,168,162,1,0,0,0,168,163,1,0,0,
+		0,168,164,1,0,0,0,168,165,1,0,0,0,168,166,1,0,0,0,168,167,1,0,0,0,169,
+		172,1,0,0,0,170,168,1,0,0,0,170,171,1,0,0,0,171,176,1,0,0,0,172,170,1,
+		0,0,0,173,175,5,1,0,0,174,173,1,0,0,0,175,178,1,0,0,0,176,174,1,0,0,0,
+		176,177,1,0,0,0,177,179,1,0,0,0,178,176,1,0,0,0,179,180,5,0,0,1,180,1,
+		1,0,0,0,181,182,5,1,0,0,182,183,5,27,0,0,183,184,3,6,3,0,184,185,5,1,0,
+		0,185,186,5,15,0,0,186,187,5,27,0,0,187,3,1,0,0,0,188,189,5,1,0,0,189,
+		190,5,40,0,0,190,191,5,85,0,0,191,192,3,6,3,0,192,193,5,1,0,0,193,194,
+		5,15,0,0,194,195,5,40,0,0,195,5,1,0,0,0,196,203,3,14,7,0,197,203,3,16,
+		8,0,198,203,3,74,37,0,199,203,3,8,4,0,200,203,3,10,5,0,201,203,3,12,6,
+		0,202,196,1,0,0,0,202,197,1,0,0,0,202,198,1,0,0,0,202,199,1,0,0,0,202,
+		200,1,0,0,0,202,201,1,0,0,0,203,206,1,0,0,0,204,202,1,0,0,0,204,205,1,
+		0,0,0,205,7,1,0,0,0,206,204,1,0,0,0,207,208,5,1,0,0,208,214,5,6,0,0,209,
+		215,3,22,11,0,210,211,3,20,10,0,211,212,5,64,0,0,212,213,3,22,11,0,213,
+		215,1,0,0,0,214,209,1,0,0,0,214,210,1,0,0,0,215,9,1,0,0,0,216,217,5,1,
+		0,0,217,218,5,42,0,0,218,219,7,0,0,0,219,11,1,0,0,0,220,221,5,1,0,0,221,
+		222,5,29,0,0,222,223,3,94,47,0,223,13,1,0,0,0,224,225,5,1,0,0,225,226,
+		5,46,0,0,226,227,3,20,10,0,227,228,5,55,0,0,228,229,3,94,47,0,229,15,1,
+		0,0,0,230,231,5,1,0,0,231,232,5,36,0,0,232,233,3,20,10,0,233,234,5,43,
+		0,0,234,235,3,94,47,0,235,17,1,0,0,0,236,237,3,20,10,0,237,238,5,55,0,
+		0,238,239,3,94,47,0,239,19,1,0,0,0,240,242,3,108,54,0,241,240,1,0,0,0,
+		241,242,1,0,0,0,242,243,1,0,0,0,243,245,5,85,0,0,244,246,3,102,51,0,245,
+		244,1,0,0,0,245,246,1,0,0,0,246,250,1,0,0,0,247,250,3,122,61,0,248,250,
+		3,128,64,0,249,241,1,0,0,0,249,247,1,0,0,0,249,248,1,0,0,0,250,21,1,0,
+		0,0,251,253,3,108,54,0,252,251,1,0,0,0,252,253,1,0,0,0,253,255,1,0,0,0,
+		254,256,7,1,0,0,255,254,1,0,0,0,255,256,1,0,0,0,256,257,1,0,0,0,257,258,
+		5,85,0,0,258,260,5,61,0,0,259,261,3,24,12,0,260,259,1,0,0,0,260,261,1,
+		0,0,0,261,262,1,0,0,0,262,263,5,62,0,0,263,23,1,0,0,0,264,269,3,94,47,
+		0,265,266,5,65,0,0,266,268,3,94,47,0,267,265,1,0,0,0,268,271,1,0,0,0,269,
+		267,1,0,0,0,269,270,1,0,0,0,270,25,1,0,0,0,271,269,1,0,0,0,272,273,5,1,
+		0,0,273,274,5,31,0,0,274,275,3,28,14,0,275,276,3,6,3,0,276,277,5,1,0,0,
+		277,278,5,15,0,0,278,279,5,31,0,0,279,27,1,0,0,0,280,281,5,85,0,0,281,
+		283,5,61,0,0,282,284,3,30,15,0,283,282,1,0,0,0,283,284,1,0,0,0,284,285,
+		1,0,0,0,285,286,5,62,0,0,286,29,1,0,0,0,287,292,3,32,16,0,288,289,5,65,
+		0,0,289,291,3,32,16,0,290,288,1,0,0,0,291,294,1,0,0,0,292,290,1,0,0,0,
+		292,293,1,0,0,0,293,31,1,0,0,0,294,292,1,0,0,0,295,296,5,85,0,0,296,297,
+		3,150,75,0,297,33,1,0,0,0,298,301,3,36,18,0,299,301,3,38,19,0,300,298,
+		1,0,0,0,300,299,1,0,0,0,301,35,1,0,0,0,302,303,5,1,0,0,303,304,5,19,0,
+		0,304,305,3,42,21,0,305,306,3,6,3,0,306,307,5,1,0,0,307,308,5,34,0,0,308,
+		309,3,94,47,0,309,310,5,1,0,0,310,311,5,15,0,0,311,312,5,19,0,0,312,37,
+		1,0,0,0,313,314,5,1,0,0,314,315,5,19,0,0,315,316,3,42,21,0,316,317,5,56,
+		0,0,317,318,3,94,47,0,318,39,1,0,0,0,319,320,5,26,0,0,320,321,3,20,10,
+		0,321,322,5,55,0,0,322,330,3,94,47,0,323,324,5,65,0,0,324,325,3,20,10,
+		0,325,326,5,55,0,0,326,327,3,94,47,0,327,329,1,0,0,0,328,323,1,0,0,0,329,
+		332,1,0,0,0,330,328,1,0,0,0,330,331,1,0,0,0,331,333,1,0,0,0,332,330,1,
+		0,0,0,333,334,5,1,0,0,334,335,5,23,0,0,335,41,1,0,0,0,336,337,5,85,0,0,
+		337,339,5,61,0,0,338,340,3,30,15,0,339,338,1,0,0,0,339,340,1,0,0,0,340,
+		341,1,0,0,0,341,342,5,62,0,0,342,343,5,4,0,0,343,344,3,150,75,0,344,43,
+		1,0,0,0,345,346,5,1,0,0,346,347,5,39,0,0,347,348,5,85,0,0,348,350,5,61,
+		0,0,349,351,3,30,15,0,350,349,1,0,0,0,350,351,1,0,0,0,351,352,1,0,0,0,
+		352,353,5,62,0,0,353,354,5,4,0,0,354,355,3,150,75,0,355,356,3,6,3,0,356,
+		357,5,1,0,0,357,358,5,34,0,0,358,359,3,94,47,0,359,360,5,1,0,0,360,361,
+		5,15,0,0,361,362,5,39,0,0,362,45,1,0,0,0,363,364,5,1,0,0,364,365,5,10,
+		0,0,365,366,5,85,0,0,366,369,5,55,0,0,367,370,3,110,55,0,368,370,3,70,
+		35,0,369,367,1,0,0,0,369,368,1,0,0,0,370,47,1,0,0,0,371,372,5,1,0,0,372,
+		373,5,16,0,0,373,374,3,50,25,0,374,375,5,1,0,0,375,380,5,85,0,0,376,377,
+		5,65,0,0,377,379,5,85,0,0,378,376,1,0,0,0,379,382,1,0,0,0,380,378,1,0,
+		0,0,380,381,1,0,0,0,381,383,1,0,0,0,382,380,1,0,0,0,383,384,5,1,0,0,384,
+		385,5,15,0,0,385,386,5,16,0,0,386,49,1,0,0,0,387,388,5,84,0,0,388,51,1,
+		0,0,0,389,390,3,50,25,0,390,391,5,64,0,0,391,392,5,85,0,0,392,53,1,0,0,
+		0,393,398,3,56,28,0,394,398,3,58,29,0,395,398,3,60,30,0,396,398,3,62,31,
+		0,397,393,1,0,0,0,397,394,1,0,0,0,397,395,1,0,0,0,397,396,1,0,0,0,398,
+		55,1,0,0,0,399,400,5,1,0,0,400,401,5,9,0,0,401,403,5,84,0,0,402,404,3,
+		64,32,0,403,402,1,0,0,0,403,404,1,0,0,0,404,405,1,0,0,0,405,411,3,68,34,
+		0,406,410,3,66,33,0,407,410,3,34,17,0,408,410,3,26,13,0,409,406,1,0,0,
+		0,409,407,1,0,0,0,409,408,1,0,0,0,410,413,1,0,0,0,411,409,1,0,0,0,411,
+		412,1,0,0,0,412,414,1,0,0,0,413,411,1,0,0,0,414,415,5,1,0,0,415,416,5,
+		15,0,0,416,417,5,9,0,0,417,57,1,0,0,0,418,419,5,1,0,0,419,420,5,5,0,0,
+		420,421,5,9,0,0,421,423,5,84,0,0,422,424,3,64,32,0,423,422,1,0,0,0,423,
+		424,1,0,0,0,424,434,1,0,0,0,425,433,3,66,33,0,426,427,5,1,0,0,427,428,
+		5,19,0,0,428,433,3,42,21,0,429,430,5,1,0,0,430,431,5,31,0,0,431,433,3,
+		28,14,0,432,425,1,0,0,0,432,426,1,0,0,0,432,429,1,0,0,0,433,436,1,0,0,
+		0,434,432,1,0,0,0,434,435,1,0,0,0,435,437,1,0,0,0,436,434,1,0,0,0,437,
+		438,5,1,0,0,438,439,5,15,0,0,439,440,5,9,0,0,440,59,1,0,0,0,441,442,5,
+		1,0,0,442,443,5,22,0,0,443,444,5,9,0,0,444,446,5,84,0,0,445,447,3,64,32,
+		0,446,445,1,0,0,0,446,447,1,0,0,0,447,448,1,0,0,0,448,453,3,68,34,0,449,
+		452,3,66,33,0,450,452,3,34,17,0,451,449,1,0,0,0,451,450,1,0,0,0,452,455,
+		1,0,0,0,453,451,1,0,0,0,453,454,1,0,0,0,454,456,1,0,0,0,455,453,1,0,0,
+		0,456,457,5,1,0,0,457,458,5,15,0,0,458,459,5,9,0,0,459,61,1,0,0,0,460,
+		461,5,1,0,0,461,462,5,5,0,0,462,463,5,22,0,0,463,464,5,9,0,0,464,466,5,
+		84,0,0,465,467,3,64,32,0,466,465,1,0,0,0,466,467,1,0,0,0,467,474,1,0,0,
+		0,468,473,3,66,33,0,469,470,5,1,0,0,470,471,5,19,0,0,471,473,3,42,21,0,
+		472,468,1,0,0,0,472,469,1,0,0,0,473,476,1,0,0,0,474,472,1,0,0,0,474,475,
+		1,0,0,0,475,477,1,0,0,0,476,474,1,0,0,0,477,478,5,1,0,0,478,479,5,15,0,
+		0,479,480,5,9,0,0,480,63,1,0,0,0,481,482,5,24,0,0,482,487,3,150,75,0,483,
+		484,5,65,0,0,484,486,3,150,75,0,485,483,1,0,0,0,486,489,1,0,0,0,487,485,
+		1,0,0,0,487,488,1,0,0,0,488,65,1,0,0,0,489,487,1,0,0,0,490,492,5,1,0,0,
+		491,493,5,30,0,0,492,491,1,0,0,0,492,493,1,0,0,0,493,494,1,0,0,0,494,495,
+		5,32,0,0,495,496,5,85,0,0,496,497,3,150,75,0,497,67,1,0,0,0,498,499,5,
+		1,0,0,499,500,5,11,0,0,500,502,5,61,0,0,501,503,3,30,15,0,502,501,1,0,
+		0,0,502,503,1,0,0,0,503,504,1,0,0,0,504,505,5,62,0,0,505,506,3,6,3,0,506,
+		507,5,1,0,0,507,508,5,15,0,0,508,509,5,11,0,0,509,69,1,0,0,0,510,511,3,
+		150,75,0,511,513,5,61,0,0,512,514,3,24,12,0,513,512,1,0,0,0,513,514,1,
+		0,0,0,514,515,1,0,0,0,515,517,5,62,0,0,516,518,3,72,36,0,517,516,1,0,0,
+		0,517,518,1,0,0,0,518,522,1,0,0,0,519,520,5,85,0,0,520,522,3,72,36,0,521,
+		510,1,0,0,0,521,519,1,0,0,0,522,71,1,0,0,0,523,524,5,48,0,0,524,525,5,
+		57,0,0,525,530,3,18,9,0,526,527,5,65,0,0,527,529,3,18,9,0,528,526,1,0,
+		0,0,529,532,1,0,0,0,530,528,1,0,0,0,530,531,1,0,0,0,531,533,1,0,0,0,532,
+		530,1,0,0,0,533,534,5,58,0,0,534,73,1,0,0,0,535,543,3,76,38,0,536,543,
+		3,78,39,0,537,543,3,80,40,0,538,543,3,82,41,0,539,543,3,84,42,0,540,543,
+		3,86,43,0,541,543,3,88,44,0,542,535,1,0,0,0,542,536,1,0,0,0,542,537,1,
+		0,0,0,542,538,1,0,0,0,542,539,1,0,0,0,542,540,1,0,0,0,542,541,1,0,0,0,
+		543,75,1,0,0,0,544,545,5,1,0,0,545,546,5,21,0,0,546,547,3,94,47,0,547,
+		548,5,41,0,0,548,558,3,6,3,0,549,550,5,1,0,0,550,551,5,14,0,0,551,552,
+		5,21,0,0,552,553,3,94,47,0,553,554,5,41,0,0,554,555,3,6,3,0,555,557,1,
+		0,0,0,556,549,1,0,0,0,557,560,1,0,0,0,558,556,1,0,0,0,558,559,1,0,0,0,
+		559,564,1,0,0,0,560,558,1,0,0,0,561,562,5,1,0,0,562,563,5,14,0,0,563,565,
+		3,6,3,0,564,561,1,0,0,0,564,565,1,0,0,0,565,566,1,0,0,0,566,567,5,1,0,
+		0,567,568,5,15,0,0,568,569,5,21,0,0,569,77,1,0,0,0,570,571,5,1,0,0,571,
+		572,5,17,0,0,572,573,5,85,0,0,573,574,5,55,0,0,574,575,3,94,47,0,575,576,
+		5,43,0,0,576,582,3,94,47,0,577,579,5,37,0,0,578,580,5,68,0,0,579,578,1,
+		0,0,0,579,580,1,0,0,0,580,581,1,0,0,0,581,583,5,86,0,0,582,577,1,0,0,0,
+		582,583,1,0,0,0,583,584,1,0,0,0,584,585,3,6,3,0,585,586,5,1,0,0,586,587,
+		5,15,0,0,587,588,5,17,0,0,588,79,1,0,0,0,589,590,5,1,0,0,590,591,5,18,
+		0,0,591,592,5,85,0,0,592,593,5,23,0,0,593,594,3,94,47,0,594,595,3,6,3,
+		0,595,596,5,1,0,0,596,597,5,15,0,0,597,598,5,18,0,0,598,81,1,0,0,0,599,
+		600,5,1,0,0,600,601,5,47,0,0,601,602,3,94,47,0,602,603,3,6,3,0,603,604,
+		5,1,0,0,604,605,5,15,0,0,605,606,5,47,0,0,606,83,1,0,0,0,607,608,5,1,0,
+		0,608,609,5,33,0,0,609,610,3,6,3,0,610,611,5,1,0,0,611,612,5,45,0,0,612,
+		613,3,94,47,0,613,85,1,0,0,0,614,615,5,1,0,0,615,616,5,44,0,0,616,617,
+		3,6,3,0,617,618,5,1,0,0,618,619,5,8,0,0,619,620,5,85,0,0,620,621,3,6,3,
+		0,621,622,5,1,0,0,622,623,5,15,0,0,623,624,5,44,0,0,624,87,1,0,0,0,625,
+		626,5,1,0,0,626,627,5,38,0,0,627,629,3,94,47,0,628,630,3,90,45,0,629,628,
+		1,0,0,0,630,631,1,0,0,0,631,629,1,0,0,0,631,632,1,0,0,0,632,633,1,0,0,
+		0,633,634,3,92,46,0,634,635,5,1,0,0,635,636,5,15,0,0,636,637,5,38,0,0,
+		637,89,1,0,0,0,638,639,5,1,0,0,639,641,5,7,0,0,640,642,5,68,0,0,641,640,
+		1,0,0,0,641,642,1,0,0,0,642,643,1,0,0,0,643,644,3,112,56,0,644,645,3,6,
+		3,0,645,91,1,0,0,0,646,647,5,1,0,0,647,648,5,13,0,0,648,649,3,6,3,0,649,
+		93,1,0,0,0,650,651,6,47,-1,0,651,666,3,96,48,0,652,666,3,22,11,0,653,666,
+		3,106,53,0,654,655,3,140,70,0,655,656,3,94,47,9,656,666,1,0,0,0,657,666,
+		3,70,35,0,658,666,3,98,49,0,659,666,3,100,50,0,660,661,3,40,20,0,661,662,
+		3,94,47,3,662,666,1,0,0,0,663,664,5,1,0,0,664,666,3,94,47,1,665,650,1,
+		0,0,0,665,652,1,0,0,0,665,653,1,0,0,0,665,654,1,0,0,0,665,657,1,0,0,0,
+		665,658,1,0,0,0,665,659,1,0,0,0,665,660,1,0,0,0,665,663,1,0,0,0,666,686,
+		1,0,0,0,667,668,10,8,0,0,668,669,5,71,0,0,669,685,3,94,47,9,670,671,10,
+		7,0,0,671,672,3,142,71,0,672,673,3,94,47,8,673,685,1,0,0,0,674,675,10,
+		12,0,0,675,685,3,102,51,0,676,677,10,11,0,0,677,678,5,64,0,0,678,685,3,
+		22,11,0,679,680,10,10,0,0,680,681,5,64,0,0,681,685,5,85,0,0,682,683,10,
+		2,0,0,683,685,3,72,36,0,684,667,1,0,0,0,684,670,1,0,0,0,684,674,1,0,0,
+		0,684,676,1,0,0,0,684,679,1,0,0,0,684,682,1,0,0,0,685,688,1,0,0,0,686,
+		684,1,0,0,0,686,687,1,0,0,0,687,95,1,0,0,0,688,686,1,0,0,0,689,690,5,61,
+		0,0,690,691,3,94,47,0,691,692,5,62,0,0,692,97,1,0,0,0,693,694,5,21,0,0,
+		694,695,3,94,47,0,695,696,5,1,0,0,696,697,5,41,0,0,697,698,3,94,47,0,698,
+		699,5,1,0,0,699,700,5,14,0,0,700,701,3,94,47,0,701,99,1,0,0,0,702,703,
+		5,25,0,0,703,704,3,24,12,0,704,705,5,56,0,0,705,706,3,94,47,0,706,101,
+		1,0,0,0,707,714,5,59,0,0,708,715,3,94,47,0,709,710,3,94,47,0,710,711,5,
+		65,0,0,711,712,3,94,47,0,712,715,1,0,0,0,713,715,3,104,52,0,714,708,1,
+		0,0,0,714,709,1,0,0,0,714,713,1,0,0,0,715,716,1,0,0,0,716,717,5,60,0,0,
+		717,103,1,0,0,0,718,719,3,94,47,0,719,720,5,63,0,0,720,721,3,94,47,0,721,
+		728,1,0,0,0,722,723,3,94,47,0,723,724,5,63,0,0,724,728,1,0,0,0,725,726,
+		5,63,0,0,726,728,3,94,47,0,727,718,1,0,0,0,727,722,1,0,0,0,727,725,1,0,
+		0,0,728,105,1,0,0,0,729,739,3,110,55,0,730,732,3,108,54,0,731,730,1,0,
+		0,0,731,732,1,0,0,0,732,733,1,0,0,0,733,739,5,85,0,0,734,739,3,114,57,
+		0,735,739,5,35,0,0,736,737,5,13,0,0,737,739,3,150,75,0,738,729,1,0,0,0,
+		738,731,1,0,0,0,738,734,1,0,0,0,738,735,1,0,0,0,738,736,1,0,0,0,739,107,
+		1,0,0,0,740,741,7,2,0,0,741,742,5,64,0,0,742,109,1,0,0,0,743,746,3,112,
+		56,0,744,746,3,116,58,0,745,743,1,0,0,0,745,744,1,0,0,0,746,111,1,0,0,
+		0,747,753,5,49,0,0,748,753,5,86,0,0,749,753,5,87,0,0,750,753,5,88,0,0,
+		751,753,3,52,26,0,752,747,1,0,0,0,752,748,1,0,0,0,752,749,1,0,0,0,752,
+		750,1,0,0,0,752,751,1,0,0,0,753,113,1,0,0,0,754,759,3,124,62,0,755,759,
+		3,130,65,0,756,759,3,118,59,0,757,759,3,132,66,0,758,754,1,0,0,0,758,755,
+		1,0,0,0,758,756,1,0,0,0,758,757,1,0,0,0,759,115,1,0,0,0,760,765,5,89,0,
+		0,761,765,3,120,60,0,762,765,3,126,63,0,763,765,3,134,67,0,764,760,1,0,
+		0,0,764,761,1,0,0,0,764,762,1,0,0,0,764,763,1,0,0,0,765,117,1,0,0,0,766,
+		767,5,61,0,0,767,768,3,94,47,0,768,769,5,65,0,0,769,774,3,94,47,0,770,
+		771,5,65,0,0,771,773,3,94,47,0,772,770,1,0,0,0,773,776,1,0,0,0,774,772,
+		1,0,0,0,774,775,1,0,0,0,775,777,1,0,0,0,776,774,1,0,0,0,777,778,5,62,0,
+		0,778,119,1,0,0,0,779,780,5,61,0,0,780,781,3,110,55,0,781,782,5,65,0,0,
+		782,787,3,110,55,0,783,784,5,65,0,0,784,786,3,110,55,0,785,783,1,0,0,0,
+		786,789,1,0,0,0,787,785,1,0,0,0,787,788,1,0,0,0,788,790,1,0,0,0,789,787,
+		1,0,0,0,790,791,5,62,0,0,791,121,1,0,0,0,792,793,5,61,0,0,793,796,5,85,
+		0,0,794,795,5,65,0,0,795,797,5,85,0,0,796,794,1,0,0,0,797,798,1,0,0,0,
+		798,796,1,0,0,0,798,799,1,0,0,0,799,800,1,0,0,0,800,801,5,62,0,0,801,123,
+		1,0,0,0,802,803,5,57,0,0,803,808,3,94,47,0,804,805,5,65,0,0,805,807,3,
+		94,47,0,806,804,1,0,0,0,807,810,1,0,0,0,808,806,1,0,0,0,808,809,1,0,0,
+		0,809,811,1,0,0,0,810,808,1,0,0,0,811,812,5,58,0,0,812,125,1,0,0,0,813,
+		814,5,57,0,0,814,819,3,110,55,0,815,816,5,65,0,0,816,818,3,110,55,0,817,
+		815,1,0,0,0,818,821,1,0,0,0,819,817,1,0,0,0,819,820,1,0,0,0,820,822,1,
+		0,0,0,821,819,1,0,0,0,822,823,5,58,0,0,823,127,1,0,0,0,824,825,5,57,0,
+		0,825,826,5,85,0,0,826,827,5,66,0,0,827,828,5,85,0,0,828,829,5,58,0,0,
+		829,129,1,0,0,0,830,831,5,51,0,0,831,832,3,154,77,0,832,834,5,61,0,0,833,
+		835,5,86,0,0,834,833,1,0,0,0,834,835,1,0,0,0,835,836,1,0,0,0,836,837,5,
+		62,0,0,837,131,1,0,0,0,838,839,5,57,0,0,839,844,3,136,68,0,840,841,5,65,
+		0,0,841,843,3,136,68,0,842,840,1,0,0,0,843,846,1,0,0,0,844,842,1,0,0,0,
+		844,845,1,0,0,0,845,847,1,0,0,0,846,844,1,0,0,0,847,848,5,58,0,0,848,133,
+		1,0,0,0,849,850,5,57,0,0,850,855,3,138,69,0,851,852,5,65,0,0,852,854,3,
+		138,69,0,853,851,1,0,0,0,854,857,1,0,0,0,855,853,1,0,0,0,855,856,1,0,0,
+		0,856,858,1,0,0,0,857,855,1,0,0,0,858,859,5,58,0,0,859,135,1,0,0,0,860,
+		861,3,94,47,0,861,862,5,66,0,0,862,863,3,94,47,0,863,137,1,0,0,0,864,865,
+		3,110,55,0,865,866,5,66,0,0,866,867,3,110,55,0,867,139,1,0,0,0,868,869,
+		7,3,0,0,869,141,1,0,0,0,870,874,3,144,72,0,871,874,3,146,73,0,872,874,
+		3,148,74,0,873,870,1,0,0,0,873,871,1,0,0,0,873,872,1,0,0,0,874,143,1,0,
+		0,0,875,876,7,4,0,0,876,145,1,0,0,0,877,878,7,5,0,0,878,147,1,0,0,0,879,
+		880,7,6,0,0,880,149,1,0,0,0,881,889,5,50,0,0,882,889,3,152,76,0,883,889,
+		5,84,0,0,884,885,5,84,0,0,885,889,3,154,77,0,886,889,3,156,78,0,887,889,
+		3,158,79,0,888,881,1,0,0,0,888,882,1,0,0,0,888,883,1,0,0,0,888,884,1,0,
+		0,0,888,886,1,0,0,0,888,887,1,0,0,0,889,151,1,0,0,0,890,891,7,7,0,0,891,
+		892,3,154,77,0,892,153,1,0,0,0,893,894,5,74,0,0,894,899,3,150,75,0,895,
+		896,5,65,0,0,896,898,3,150,75,0,897,895,1,0,0,0,898,901,1,0,0,0,899,897,
+		1,0,0,0,899,900,1,0,0,0,900,902,1,0,0,0,901,899,1,0,0,0,902,903,5,75,0,
+		0,903,155,1,0,0,0,904,905,5,61,0,0,905,908,3,150,75,0,906,907,5,65,0,0,
+		907,909,3,150,75,0,908,906,1,0,0,0,909,910,1,0,0,0,910,908,1,0,0,0,910,
+		911,1,0,0,0,911,912,1,0,0,0,912,913,5,62,0,0,913,157,1,0,0,0,914,915,5,
+		61,0,0,915,920,3,150,75,0,916,917,5,65,0,0,917,919,3,150,75,0,918,916,
+		1,0,0,0,919,922,1,0,0,0,920,918,1,0,0,0,920,921,1,0,0,0,921,923,1,0,0,
+		0,922,920,1,0,0,0,923,924,5,56,0,0,924,925,3,150,75,0,925,926,5,62,0,0,
+		926,159,1,0,0,0,72,168,170,176,202,204,214,241,245,249,252,255,260,269,
+		283,292,300,330,339,350,369,380,397,403,409,411,423,432,434,446,451,453,
+		466,472,474,487,492,502,513,517,521,530,542,558,564,579,582,631,641,665,
+		684,686,714,727,731,738,745,752,758,764,774,787,798,808,819,834,844,855,
+		873,888,899,910,920
 	};
 
 	public static readonly ATN _ATN =

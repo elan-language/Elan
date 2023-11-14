@@ -20,6 +20,7 @@ public class SymbolTableVisitor {
             MainNode n => VisitMainNode(n),
             ProcedureDefNode n => VisitProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
+            SystemAccessorDefNode n => VisitSystemAccessorNode(n),
             ConstructorNode n => VisitConstructorNode(n),
             ClassDefNode n => VisitClassDefNode(n),
             AbstractClassDefNode n => VisitAbstractClassDefNode(n),
@@ -60,7 +61,7 @@ public class SymbolTableVisitor {
             _ => throw new NotImplementedException("null")
         };
 
-        ISymbolType rt = null; // todo
+        var rt = MapNodeToSymbolType(functionDefNode.Return);
 
         var ms = new FunctionSymbol(name, rt, currentScope, currentScope is GlobalScope ? NameSpace.UserGlobal : NameSpace.UserLocal);
         currentScope.Define(ms);
@@ -68,6 +69,22 @@ public class SymbolTableVisitor {
         VisitChildren(functionDefNode);
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return functionDefNode;
+    }
+
+    private IAstNode VisitSystemAccessorNode(SystemAccessorDefNode systemAccessorDefNode) {
+        var name = systemAccessorDefNode.Signature switch {
+            MethodSignatureNode { Id: IdentifierNode idn } => idn.Id,
+            _ => throw new NotImplementedException("null")
+        };
+
+        var rt = MapNodeToSymbolType(systemAccessorDefNode.Return);
+
+        var ms = new SystemCallSymbol(name, rt,  currentScope,  NameSpace.UserGlobal);
+        currentScope.Define(ms);
+        currentScope = ms;
+        VisitChildren(systemAccessorDefNode);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return systemAccessorDefNode;
     }
 
     private IAstNode VisitMainNode(MainNode mainNode) {
@@ -153,6 +170,8 @@ public class SymbolTableVisitor {
             DefaultNode dn => MapNodeToSymbolType(dn.Type),
             WithNode wn => MapNodeToSymbolType(wn.Expression),
             PropertyNode pn => MapNodeToSymbolType(pn.Expression),
+            ReturnExpressionNode ren => MapNodeToSymbolType(ren.Expression),
+            QualifiedNode qn => MapNodeToSymbolType(qn.Qualified),
             _ => throw new NotImplementedException()
         };
     }

@@ -43,7 +43,7 @@ public static class CSharpImportHelpers {
             globalScope.DefineSystem(fs);
         }
 
-        foreach (var scs in systemCalls.Select(methodInfo => new SystemCallSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType)))) {
+        foreach (var scs in systemCalls.Select(methodInfo => new SystemCallSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), NameSpace.System))) {
             globalScope.DefineSystem(scs);
         }
 
