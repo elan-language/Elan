@@ -64,15 +64,15 @@ class Foo
 
     property a Int
 
-    function prop() -> Int
+    function prop() as Int
         return a
     end function
 
-    function cons() -> Int
+    function cons() as Int
         return global.a
     end function
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -143,7 +143,7 @@ main
     print f.glob()
 end main
 
-function bar() -> Int
+function bar() as Int
     return 4
 end function
 
@@ -151,19 +151,19 @@ class Foo
     constructor()
     end constructor
 
-    function loc() -> Int
+    function loc() as Int
         return bar()
     end function
 
-    function glob() -> Int
+    function glob() as Int
         return global.bar()
     end function
 
-    function bar() -> Int
+    function bar() as Int
         return 3
     end function
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -271,15 +271,15 @@ class Foo
 
     property a Int
 
-    function prop() -> Int
+    function prop() as Int
         return a
     end function
 
-    function cons() -> Int
+    function cons() as Int
         return global.a
     end function
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -306,19 +306,19 @@ class Foo
     constructor()
     end constructor
 
-    function loc() -> Int
+    function loc() as Int
         return bar()
     end function
 
-    function glob() -> Int
+    function glob() as Int
         return global.bar()
     end function
 
-    function bar() -> Int
+    function bar() as Int
         return 3
     end function
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 

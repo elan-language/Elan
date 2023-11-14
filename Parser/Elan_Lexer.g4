@@ -6,6 +6,7 @@ SINGLE_LINE_COMMENT: NL? COMMENT_MARKER InputCharacter*    -> skip;
 COMMENT_MARKER: '#';
 
 // Keywords
+AS:			   'as';
 ABSTRACT:      'abstract';
 CALL:		   'call';
 CASE: 		   'case';

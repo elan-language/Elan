@@ -22,7 +22,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -44,7 +44,7 @@ class Foo
         set a[0] to 4
     end constructor
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 end class

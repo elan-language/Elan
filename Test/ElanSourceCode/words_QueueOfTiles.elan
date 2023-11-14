@@ -19,7 +19,7 @@ class QueueOfTiles
         end for
     end procedure
 
-    function isNotEmpty() -> Boolean
+    function isNotEmpty() as Boolean
          return rear is not -1
     end function
 
@@ -42,7 +42,7 @@ class QueueOfTiles
         end if
     end procedure
 
-    function show() -> String
+    function show() as String
        var result = ""
        foreach letter in contents
          set result to result + letter       
@@ -50,7 +50,7 @@ class QueueOfTiles
        return result + newline
     end function
 
-    function asString() -> String 
+    function asString() as String 
         return show()
     end function
 end class

@@ -37,7 +37,7 @@ class Foo
         print p1
     end procedure
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -68,7 +68,7 @@ class Foo
 
     property p2 String
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -105,7 +105,7 @@ class Foo
     procedure setP1(value Int)
         set p1 to value
     end procedure
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 end class
@@ -183,7 +183,7 @@ class Foo
         print p1
     end procedure
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 

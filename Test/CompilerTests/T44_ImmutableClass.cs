@@ -22,10 +22,10 @@ immutable class Foo
         set self.p1 to p1
     end constructor
     property p1 Int
-    function square() -> Int
+    function square() as Int
         return p1 * p1
     end function
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 end class
@@ -92,7 +92,7 @@ end main
 
 abstract immutable class Bar
     property p1 Int
-    function square() -> Int
+    function square() as Int
 end class
 
 immutable class Foo inherits Bar
@@ -100,10 +100,10 @@ immutable class Foo inherits Bar
         set self.p1 to p1
     end constructor
     property p1 Int
-    function square() -> Int
+    function square() as Int
         return p1 * p1
     end function 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 end class
@@ -182,7 +182,7 @@ immutable class Foo
         set self.p1 to p1
     end procedure
     
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 end class

@@ -23,15 +23,15 @@ class Snake
     private property body List<Square>
     property head Square
 
-    function tail() -> Square 
+    function tail() as Square 
       return body[body.length() -1]
     end function
 
-    function hasHitItself() -> Bool 
+    function hasHitItself() as Bool 
       return bodyCovers(head)
     end function
 
-    function bodyCovers(sq Square) -> Bool
+    function bodyCovers(sq Square) as Bool
       var result = false
       foreach seg in body
         if (seg is sq) then
@@ -50,11 +50,11 @@ class Snake
         set body to body[1..]
     end procedure
 
-    function length() -> Int 
+    function length() as Int 
       return body.length()
     end function
 
-    function asString() -> String
+    function asString() as String
       return "Snake"
     end function
 end class
@@ -68,7 +68,7 @@ class Square
     property x Int
     property y Int
 
-    function getAdjacentSquare(d Direction) -> Square
+    function getAdjacentSquare(d Direction) as Square
         var newX = x
         var newY = y
         switch d
@@ -85,7 +85,7 @@ class Square
         return Square(newX, newY)
     end function
 
-    function asString() -> String 
+    function asString() as String 
       return "{x},{y}"
     end function
 end class

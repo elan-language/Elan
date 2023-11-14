@@ -39,7 +39,7 @@ class Foo
         set p1 to v
     end procedure
 
-    function asString() -> String
+    function asString() as String
       return ""{p1} {p2}""
     end function
 end class
@@ -126,7 +126,7 @@ class Foo
         set p1 to v
     end procedure
 
-    function asString() -> String
+    function asString() as String
       return ""{p1} {p2}""
     end function
 end class

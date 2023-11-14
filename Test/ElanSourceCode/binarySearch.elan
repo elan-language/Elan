@@ -6,7 +6,7 @@ main
     print binarySearch(li, "blueberry")
 end main
 
-function binarySearch(li List<String>, item String) ->  Bool 
+function binarySearch(li List<String>, item String) as  Bool 
   var result = false
   if li.length() is 0 then  
     set result to false

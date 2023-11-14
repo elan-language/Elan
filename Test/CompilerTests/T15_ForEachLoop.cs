@@ -186,6 +186,34 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "13\r\n14\r\n23\r\n24\r\n");
     }
 
+    [TestMethod, Ignore]
+    public void Pass_functionProvidingList()
+    {
+        var code = @"
+main
+    foreach x in fruit()
+        print x
+    end foreach
+end main
+
+function fruit() as List<String>
+  return {""apple"",""orange"", ""pear""}
+end function
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "apple\r\norange\r\npear\r\n");
+    }
+
     #endregion
 
     #region Fails

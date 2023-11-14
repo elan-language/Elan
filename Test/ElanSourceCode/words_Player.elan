@@ -56,7 +56,7 @@ class Player
       end foreach
     end procedure
 
-    function asString() -> String 
+    function asString() as String 
         return name
     end function
 end class

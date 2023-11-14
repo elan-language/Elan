@@ -14,53 +14,53 @@ main
    end while
 end main
 
-function isGreen(attempt String, target String, n Int) as Bool -> target[n] is attempt[n]
+function isGreen(attempt String, target String, n Int) as Bool as target[n] is attempt[n]
 
-function setChar(word String, n Int, newChar Char) as String ->
+function setChar(word String, n Int, newChar Char) as String as
     word[..n] + newChar + word[n+1..]
 
-function setAttemptIfGreen(attempt String, target String, n Int) as String ->
+function setAttemptIfGreen(attempt String, target String, n Int) as String as
     if attempt.isGreen(target, n) then attempt.setChar(n, '*') else attempt
 
-function setTargetIfGreen(attempt String, target String, n Int) as String ->
+function setTargetIfGreen(attempt String, target String, n Int) as String as
     if attempt.isGreen(target, n) then target.setChar(n, '.') else target
 
-function isYellow(attempt String, target String, n Int) as Bool -> target.contains(attempt[n])
+function isYellow(attempt String, target String, n Int) as Bool as target.contains(attempt[n])
 
-function setAttemptIfYellow(attempt String, target String, n Int) as String ->
+function setAttemptIfYellow(attempt String, target String, n Int) as String as
     if attempt[n] is '*' then attempt
     else if attempt.isYellow(target, n) then attempt.setChar(n, '+')
     else attempt.setChar(n, '_')
 
-function setTargetIfYellow(attempt String, target String, n Int) as String  ->
+function setTargetIfYellow(attempt String, target String, n Int) as String  as
     if attempt.isAlreadyMarkedGreen(n) then target
     else if attempt.isYellow(target, n) then target.setChar(target.indexOf(attempt[n]), '.')
     else target
 
-function evaluateGreens(attempt String, target String) as (String, String) ->
+function evaluateGreens(attempt String, target String) as (String, String) as
     range(5).reduce((attempt, target),
     lambda a, x->
     (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x)))
 
-function evaluateYellows(attempt String, target String) as (String, String) ->
+function evaluateYellows(attempt String, target String) as (String, String) as
     range(5).reduce((attempt, target),
     lambda a, x -> (setAttemptIfYellow(a.attempt, a.target, x), setTargetIfYellow(a.attempt, a.target, x)))
 
-function markAttempt(attempt String, target String) as String ->
+function markAttempt(attempt String, target String) as String as
     let (attemptAfterGreens, targetAfterGreens) = evaluateGreens(attempt, target) in
     attemptAfterGreens.evaluateYellows(targetAfterGreens)[0]
 
-function possibleAnswersAfterAttempt(prior Iter<String>, attempt String, mark String) as Iter<String> ->
+function possibleAnswersAfterAttempt(prior Iter<String>, attempt String, mark String) as Iter<String> as
     prior.filter(lambda w -> markAttempt(attempt, w) is mark)
 
-function wordCountRemainingAfterAttempt(possibleAnswers Iter<String>, attempt String) as Int ->
+function wordCountRemainingAfterAttempt(possibleAnswers Iter<String>, attempt String) as Int as
     let groups = possibleAnswers.groupBy(lambda w -> markAttempt(attempt, w)) in
     groups.max(lambda g -> g.count())
 
-function allRemainingWordCounts(possAnswers List<String>, possAttempts Iter<String>) as Iter<(String, Int)> ->
+function allRemainingWordCounts(possAnswers List<String>, possAttempts Iter<String>) as Iter<(String, Int)> as
     possAttempts.asParallel().map(lambda w-> (w, wordCountRemainingAfterAttempt(possAnswers, w)))
 
-function betterOf(word1 (String, Int), word2 (String, Int), possAnswers Iter<String>) as (String, Int)  ->
+function betterOf(word1 (String, Int), word2 (String, Int), possAnswers Iter<String>) as (String, Int)  as
     let
         (w1, w1Count) = word1,
         (w2, w2Count) = word2,  
@@ -69,6 +69,6 @@ function betterOf(word1 (String, Int), word2 (String, Int), possAnswers Iter<Str
     in
     if isBetter or isEqualAndPossAnswer then word2 else word1
 
-function bestAttempt(possAnswers List<String>, possAttempts List<String>) as String ->
+function bestAttempt(possAnswers List<String>, possAttempts List<String>) as String as
    let wordCounts = allRemainingWordCounts(possAnswers, possAttempts) in
    wordCounts.reduce(lambda bestSoFar, newWord -> betterOf(bestSoFar, newWord, possAnswers))[0]

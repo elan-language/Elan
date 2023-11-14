@@ -26,7 +26,7 @@ class Foo
 
     private property p2 String
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 
@@ -102,7 +102,7 @@ class Foo
 
     private property p2 String
 
-    function asString() -> String
+    function asString() as String
          return """"
     end function
 

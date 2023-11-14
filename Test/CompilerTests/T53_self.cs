@@ -23,7 +23,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -83,7 +83,7 @@ main
     print f.bar()
 end main
 
-function doubled(f Foo) -> Int
+function doubled(f Foo) as Int
     return 2 * f.p1
 end function
 
@@ -94,11 +94,11 @@ class Foo
 
     property p1 Int
 
-    function bar() -> Int
+    function bar() as Int
         return doubled(self)
     end function
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -176,7 +176,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
@@ -206,7 +206,7 @@ class Foo
 
     property p1 Int
 
-    function asString() -> String
+    function asString() as String
         return """"
     end function
 
