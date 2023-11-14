@@ -6,9 +6,11 @@ using static StandardLibrary.Functions;
 
 namespace StandardLibrary;
 
+[ElanStandardLibrary]
 public static class Procedures {
     #region Clock
-    public static void pause(int milliseconds) {
+    public static void pause(int milliseconds)
+    {
         Thread.Sleep(milliseconds);
     }
 

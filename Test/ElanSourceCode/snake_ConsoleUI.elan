@@ -43,7 +43,8 @@ procedure playGame()
         call charMap.putBlock(apple.x + 1, apple.y, appleColour)
         var priorTail = game.tail
         call pause(200)
-        if keyHasBeenPressed() then
+        var pressed = keyHasBeenPressed()
+        if pressed then
             var k = readKey()
             set currentDirection to directionByKey[k]
         end if
@@ -111,7 +112,8 @@ class Game
         var collision = false
         repeat
             var ranW = random((width-2) div 2)
-            var ranH = random((height-2) div 2) * 2-2
+            var rh = random((height-2) div 2)
+            var ranH = rh * 2-2
             set sq to Square(ranW * 2, ranH) 
         until not snake.bodyCovers(sq)
         set apple to sq
