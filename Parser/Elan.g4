@@ -72,12 +72,11 @@ functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
 
 // System Accessor
 systemAccessor: 
-	NL SYSTEM functionSignature
+	NL SYSTEM IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type
 	statementBlock
 	NL RETURN expression
     NL END SYSTEM
 	;
-
 
 // CONSTANTS
 constantDef: NL CONSTANT IDENTIFIER ASSIGN (literal | newInstance);
