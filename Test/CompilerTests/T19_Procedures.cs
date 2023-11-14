@@ -112,6 +112,56 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_CallingWithDotSyntax()
+    {
+        var code = @"
+main
+    var a = 2
+    var b = ""hello""
+    call a.foo(b)
+end main
+
+procedure foo(a Int, b String)
+    print a
+    print b
+end procedure
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static void foo(ref int a, ref string b) {
+    print(a);
+    print(b);
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 2;
+    var b = @$""hello"";
+    foo(ref a, ref b);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2\r\nhello\r\n");
+    }
+
+
+    [TestMethod]
     public void Pass_WithParamsPassingLiteralsOrExpressions() {
         var code = @"
 main
