@@ -26,24 +26,24 @@ public static class CSharpImportHelpers {
 
     private static bool IsStdLib(MethodInfo m) => m.GetCustomAttribute<ElanStandardLibraryAttribute>() is not null || m.DeclaringType?.GetCustomAttribute<ElanStandardLibraryAttribute>() is not null;
 
-    private static bool IsSystemCall(MethodInfo m) => m.GetCustomAttribute<ElanSystemCallAttribute>() is not null || m.DeclaringType?.GetCustomAttribute<ElanSystemCallAttribute>() is not null;
+    private static bool IsSystemAccessor(MethodInfo m) => m.GetCustomAttribute<ElanSystemAccessorAttribute>() is not null || m.DeclaringType?.GetCustomAttribute<ElanSystemAccessorAttribute>() is not null;
 
     public static void InitTypeSystem(GlobalScope globalScope) {
-        var lib = Assembly.GetAssembly(typeof(SystemCalls));
+        var lib = Assembly.GetAssembly(typeof(SystemAccessors));
 
         var exportedTypes = lib?.ExportedTypes.ToArray() ?? throw new ArgumentException("no lib");
 
         var allExportedMethods = exportedTypes.SelectMany(t => t.GetMethods()).ToList();
 
         var stdLib = allExportedMethods.Where(IsStdLib).ToArray();
-        var systemCalls = allExportedMethods.Where(IsSystemCall).ToArray();
+        var systemAccessors = allExportedMethods.Where(IsSystemAccessor).ToArray();
         var constants = exportedTypes.Single(t => t.Name == "Constants").GetFields().ToArray();
 
         foreach (var fs in stdLib.Select(methodInfo => new FunctionSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), NameSpace.Library))) {
             globalScope.DefineSystem(fs);
         }
 
-        foreach (var scs in systemCalls.Select(methodInfo => new SystemCallSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), NameSpace.System))) {
+        foreach (var scs in systemAccessors.Select(methodInfo => new SystemAccessorSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), NameSpace.System))) {
             globalScope.DefineSystem(scs);
         }
 
