@@ -399,7 +399,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private PrintModel BuildPrintModel(PrintNode defaultNode) {
-        var thrown = Visit(defaultNode.Expression);
+        var thrown = defaultNode.Expression is { } e ? Visit(e) : null;
         return new PrintModel(thrown);
     }
 }

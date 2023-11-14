@@ -781,7 +781,7 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, PrintStatementContext context) {
-        var expr = visitor.Visit(context.expression());
+        var expr = context.expression() is { } e ? visitor.Visit(e) : null;
 
         return new PrintNode(expr);
     }

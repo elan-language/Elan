@@ -15,7 +15,7 @@ public class T_2_HelloWorld
     }
 
     #region Passes
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_PrintWithNoExpression()
     {
         var code = @"#
@@ -38,7 +38,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Hello World!""));
+    System.Console.WriteLine();
+    System.Console.WriteLine();
   }
 }";
 
