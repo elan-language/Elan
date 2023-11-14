@@ -65,7 +65,7 @@ public static class Program {
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_InvalidPattern()
     {
         var code = @"#

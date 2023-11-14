@@ -10,8 +10,8 @@ public class ThirdPassVisitor {
     static ThirdPassVisitor() {
         Rules.Add(CompilerRules.ExpressionMustBeAssignedRule);
         Rules.Add(CompilerRules.SystemCallMustBeAssignedRule);
-        Rules.Add(CompilerRules.CannotMutateControlVariableRule);
         Rules.Add(CompilerRules.CannotMutateTupleRule);
+        Rules.Add(CompilerRules.CannotMutateControlVariableRule);
         Rules.Add(CompilerRules.NoMutableConstantsRule);
         Rules.Add(CompilerRules.ArrayInitialization);
         Rules.Add(CompilerRules.FunctionConstraintsRule);

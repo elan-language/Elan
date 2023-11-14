@@ -57,7 +57,7 @@ public static class CompilerRules {
         return nodes.SelectMany(n => n is StatementBlockNode ? n.Children : new[] { n });
     }
 
-    public static string? CannotMutateControlVariableRule(IAstNode[] nodes, IScope currentScope) {
+    public static string? CannotMutateTupleRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is ItemizedExpressionNode ien) {
             var parent = nodes.SkipLast(1).Last();
@@ -95,7 +95,7 @@ public static class CompilerRules {
         return null;
     }
 
-    public static string? CannotMutateTupleRule(IAstNode[] nodes, IScope currentScope) {
+    public static string? CannotMutateControlVariableRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is AssignmentNode an) {
             var otherNodes = nodes.SkipLast(1).ToArray();
@@ -110,6 +110,27 @@ public static class CompilerRules {
                 if (forInNode.Expression is IdentifierNode idn) {
                     if (Match(idn, an.Id)) {
                         return $"Cannot modify control variable : {leafNode}";
+                    }
+                }
+            }
+        }
+
+        if (leafNode is ProcedureCallNode pcn) {
+            var otherNodes = nodes.SkipLast(1).ToArray();
+            var parameters = pcn.Parameters;
+
+            foreach (var pp in parameters) {
+                foreach (var forNode in otherNodes.OfType<ForStatementNode>()) {
+                    if (Match(forNode.Id, pp)) {
+                        return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
+                    }
+                }
+
+                foreach (var forInNode in otherNodes.OfType<ForInStatementNode>()) {
+                    if (forInNode.Id is IdentifierNode idn) {
+                        if (Match(idn, pp)) {
+                            return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
+                        }
                     }
                 }
             }
@@ -133,9 +154,9 @@ public static class CompilerRules {
         var leafNode = nodes.Last();
         var otherNodes = nodes.SkipLast(1).ToArray();
 
-        string? CheckParams(AssignmentNode an, IAstNode[] otherNodes) {
-            if (otherNodes.Any(n => n is FunctionDefNode)) {
-                var varNodes = otherNodes.OfType<VarDefNode>();
+        string? CheckParams(AssignmentNode an, IAstNode[] expandedOtherNodes) {
+            if (expandedOtherNodes.Any(n => n is FunctionDefNode)) {
+                var varNodes = expandedOtherNodes.OfType<VarDefNode>();
                 if (!varNodes.Any(vn => Match(vn.Id, an.Id))) {
                     return $"Cannot modify param in function : {leafNode}";
                 }
