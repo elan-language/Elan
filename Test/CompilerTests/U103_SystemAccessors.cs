@@ -54,13 +54,13 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "data\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_accessorCanBeCalledWithinAProcedure()
     {
         var code = @"
 
 main
- call myProc
+ call myProc()
 end main
 
 procedure myProc()
@@ -73,7 +73,29 @@ system readFromNetwork(url String) as String
 end system
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static void myProc() {
+    var d = readFromNetwork(@$""www.foo.com"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(d));
+  }
+  public static string readFromNetwork(string url) {
+
+    return @$""data"";
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    myProc();
+  }
+}";
 
         var parseTree = @"*";
 
@@ -86,7 +108,7 @@ end system
         AssertObjectCodeExecutes(compileData, "data\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_accessorCanCallSystemCallsAndProcedures()
     {
         var code = @"
@@ -102,7 +124,27 @@ system readFromNetwork(url String) as String
 end system
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static string readFromNetwork(string url) {
+    var r = random();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""checking""));
+    return @$""data"";
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var d = readFromNetwork(@$""www.foo.com"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(d));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -116,7 +158,7 @@ end system
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_accessorCanCallOtherAccessor()
     {
         var code = @"
@@ -127,9 +169,10 @@ end main
 
 system readFromNetwork(url String) as String
   var result = """"
-  if check(url)
-    result = ""OK data""
-  end if
+  var b = check(url)
+  if  b then
+    set result to ""OK data""
+  end if 
   return result
 end system
 
@@ -138,7 +181,34 @@ system check(url String) as Bool
 end system
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using System.Collections.Immutable;
+using static Globals;
+using static StandardLibrary.SystemCalls;
+using static StandardLibrary.Procedures;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static string readFromNetwork(string url) {
+    var result = @$"""";
+    var b = check(url);
+    if (b) {
+      result = @$""OK data"";
+    }
+    return result;
+  }
+  public static bool check(string url) {
+
+    return true;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var d = readFromNetwork(@$""www.foo.com"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(d));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -155,15 +225,15 @@ end system
     #endregion
 
     #region Fails
-    [TestMethod, Ignore]
-    public void Pass_accessorCannotBeCalledWithinAFunction()
+    [TestMethod]
+    public void Fail_accessorCannotBeCalledWithinAFunction()
     {
         var code = @"
 main
 end main
 
-function myFunc()
-  return readFromNetWork(""url"")
+function myFunc() as String
+  return readFromNetwork(""url"")
 end function
 
 system readFromNetwork(url String) as String
@@ -176,34 +246,32 @@ end system
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
+        AssertDoesNotCompile(compileData, "Cannot have system call in function");
     }
 
-    [TestMethod,Ignore]
+    [TestMethod]
    public void Fail_accessorCannotBeCalledWithinAnExpression()
     {
         var code = @"
 main
- var d =  readFromNetwork(""www.foo.com"") 
- print d + "".""
+  var d =  readFromNetwork(""www.foo.com"") + ""."" 
+  print d 
 end main
 system readFromNetwork(url String) as String
   return ""data""
 end system
 ";
 
-        var objectCode = @"";
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
+        AssertDoesNotCompile(compileData, "Cannot use a system call in an expression");
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_accessorCannotBeCalledWithinAnExpression2()
     {
         var code = @"
@@ -223,7 +291,7 @@ end system
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
+        AssertDoesNotCompile(compileData, "Cannot use a print in an expression");
     }
 
 
