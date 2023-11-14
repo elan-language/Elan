@@ -29,12 +29,16 @@ public static class CompilerRules {
                 return $"Cannot use a system call in an expression {leafNode}";
             }
 
-            if (otherNodes.Any(n => n is SystemCallNode or FunctionCallNode or ProcedureCallNode)) {
-                return $"Cannot use a system call in an expression : {leafNode}";
+            if (otherNodes.Any(n => n is FunctionDefNode)) {
+                return $"Cannot have system call in function : {leafNode}";
             }
 
             if (otherNodes.Any(n => n is  PrintNode)) {
                 return $"Cannot use a print in an expression : {leafNode}";
+            }
+            
+            if (!(otherNodes.Last() is VarDefNode or AssignmentNode)) {
+                return $"Cannot use a system call in an expression : {leafNode}";
             }
 
             if (!otherNodes.Any(n => n is ICanWrapExpression)) {

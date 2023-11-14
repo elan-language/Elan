@@ -69,7 +69,8 @@ class Game
         var collision = false
         repeat
             var ranW = random((width-2) div 2)
-            var ranH = random((height-2) div 2) * 2-2
+            var ranTemp = random((height-2) div 2)
+            var ranH = ranTemp * 2-2
             set sq to Square(ranW * 2, ranH) 
         until not snake.bodyCovers(sq)
         set apple to sq
