@@ -21,7 +21,7 @@ end function
 ";
 
         var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
+using StandardLibrary;
 using static Globals;
 using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
@@ -70,7 +70,7 @@ end function
 ";
 
         var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
+using StandardLibrary;
 using static Globals;
 using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
@@ -140,7 +140,7 @@ end function
 ";
 
         var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
+using StandardLibrary;
 using static Globals;
 using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
@@ -200,7 +200,7 @@ public static class Program {
         var code = ReadElanSourceCodeFile("mergeSort.Elan");
 
         var objectCode = @"using System.Collections.Generic;
-using System.Collections.Immutable;
+using StandardLibrary;
 using static Globals;
 using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;

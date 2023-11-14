@@ -3,7 +3,7 @@
 public record FileCodeModel(IEnumerable<ICodeModel> Globals, ICodeModel? Main) : ICodeModel {
     public string ToString(int indent) =>
         $@"using System.Collections.Generic;
-using System.Collections.Immutable;
+using StandardLibrary;
 using static Globals;
 using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Procedures;
