@@ -578,14 +578,14 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_NonRefParamsCannotBeUpdated()
     {
         var code = @"
 main
     var a = 1
     var b = ""hello""
-    foo(a, b)
+    call foo(a, b)
     print a
     print b
 end main
@@ -600,7 +600,7 @@ end procedure
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Parameter b may not be updated."); //Or similar message if shared with function rule
+        AssertDoesNotCompile(compileData, "Parameter b may not be updated"); //Or similar message if shared with function rule
     }
 
     [TestMethod]

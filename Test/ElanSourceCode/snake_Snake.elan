@@ -20,7 +20,7 @@ class Snake
         set head to tail.getAdjacentSquare(startingDirection)
     end constructor
 
-    private property body List<Square>
+    private property body List<of Square>
     property head Square
 
     function tail() as Square 

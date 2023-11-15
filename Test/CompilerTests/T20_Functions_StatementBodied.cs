@@ -147,7 +147,7 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static bool binarySearch(StandardLibrary.ElanList<of string> li, string item) {
+  public static bool binarySearch(StandardLibrary.ElanList<string> li, string item) {
     var result = false;
     if (StandardLibrary.Functions.length(li) == 0) {
       result = false;
@@ -207,7 +207,7 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static StandardLibrary.ElanList<of string> mergeSort(StandardLibrary.ElanList<string> list) {
+  public static StandardLibrary.ElanList<string> mergeSort(StandardLibrary.ElanList<string> list) {
     var result = list;
     if (StandardLibrary.Functions.length(list) > 1) {
       var mid = StandardLibrary.Functions.length(list) / 2;
@@ -215,7 +215,7 @@ public static partial class Globals {
     }
     return result;
   }
-  public static StandardLibrary.ElanList<of string> merge(StandardLibrary.ElanList<string> a, StandardLibrary.ElanList<string> b) {
+  public static StandardLibrary.ElanList<string> merge(StandardLibrary.ElanList<string> a, StandardLibrary.ElanList<string> b) {
     var result = new StandardLibrary.ElanList<string>();
     if (StandardLibrary.Functions.isEmpty(a)) {
       result = b;

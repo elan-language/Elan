@@ -48,7 +48,7 @@ class Game
       return snake.tail()
     end function
 
-    procedure clockTick(d Direction, continue Bool)
+    procedure clockTick(d Direction, ref continue Bool)
         call snake.advanceHeadOneSquare(d)
         if snake.head is apple then
             call setNewApplePosition()
@@ -93,7 +93,7 @@ class Snake
         set head to tail.getAdjacentSquare(startingDirection)
     end constructor
 
-    private property body List<Square>
+    private property body List<of Square>
     property head Square
 
     function tail() as Square 

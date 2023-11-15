@@ -209,7 +209,7 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static StandardLibrary.ElanList<of string> fruit() {
+  public static StandardLibrary.ElanList<string> fruit() {
 
     return new StandardLibrary.ElanList<string>(@$""apple"", @$""orange"", @$""pear"");
   }

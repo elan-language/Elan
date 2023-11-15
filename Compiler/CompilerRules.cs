@@ -155,6 +155,12 @@ public static class CompilerRules {
         return null;
     }
 
+    private static string? GetId(IAstNode? node) => node switch {
+        IdentifierNode idn => idn.Id,
+        IndexedExpressionNode ien => GetId(ien.Expression),
+        _ => null
+    };
+
     public static string? FunctionConstraintsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         var otherNodes = nodes.SkipLast(1).ToArray();
@@ -164,6 +170,16 @@ public static class CompilerRules {
                 var varNodes = expandedOtherNodes.OfType<VarDefNode>();
                 if (!varNodes.Any(vn => Match(vn.Id, an.Id))) {
                     return $"Cannot modify param in function : {leafNode}";
+                }
+            }
+
+            if (expandedOtherNodes.Any(n => n is ProcedureDefNode)) {
+                var pdn = expandedOtherNodes.OfType<ProcedureDefNode>().Last();
+
+                var nonRefParameters = pdn.Signature.Children.OfType<ParameterNode>().Where(p => !p.IsRef);
+
+                if (nonRefParameters.Any(vn => Match(vn.Id, an.Id))) {
+                    return $"Parameter {GetId(an.Id)} may not be updated : {leafNode}";
                 }
             }
 
