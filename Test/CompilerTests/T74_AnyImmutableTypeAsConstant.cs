@@ -235,7 +235,7 @@ public static class Program {
     [TestMethod]
     public void Fail_Array() {
         var code = @"
-constant k = Array<Int>(3)
+constant k = Array<of Int>(3)
 ";
         var parseTree = @"*";
 

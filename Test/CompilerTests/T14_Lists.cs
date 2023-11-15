@@ -323,7 +323,7 @@ public static class Program {
     public void Pass_emptyList() {
         var code = @"
 main
-    var a = List<Int>()
+    var a = List<of Int>()
     print a.length()
 end main
 ";
@@ -600,7 +600,7 @@ public static class Program {
     public void Pass_createEmptyListUsingConstructor() {
         var code = @"
 main
-    var a = List<Int>()
+    var a = List<of Int>()
     print a
 end main
 ";

@@ -30,6 +30,7 @@ INHERITS:      'inherits';
 LAMBDA:		   'lambda';
 LET:           'let';
 MAIN:		   'main';
+OF:			   'of';
 PARTIAL: 	   'partial';
 PRINT:		   'print';
 PRIVATE:       'private';

@@ -17,7 +17,7 @@ main
   printEach(it)
 end main
 
-procedure printEach(target Iter<Int>)
+procedure printEach(target Iter<of Int>)
   foreach x in target
     print x
   end foreach
@@ -46,7 +46,7 @@ main
   printEach(it)
 end main
 
-procedure printEach(target Iter<Int>)
+procedure printEach(target Iter<of Int>)
   foreach x in target
     print x
   end foreach
@@ -75,7 +75,7 @@ main
   printEach(s)
 end main
 
-procedure printEach(target Iter<Char>)
+procedure printEach(target Iter<of Char>)
   foreach x in target
     print x
   end foreach
@@ -104,7 +104,7 @@ main
   printEach(it[2..4])
 end main
 
-procedure printEach(target Iter<Int>)
+procedure printEach(target Iter<of Int>)
   foreach x in target
     print x
   end foreach
@@ -133,12 +133,12 @@ main
   printAsList(it)
 end main
 
-procedure printAsIter(target Iter<Int>)
+procedure printAsIter(target Iter<of Int>)
   var some = target[1..3]
   print some
 end procedure
 
-procedure printAsList(target Iter<Int>)
+procedure printAsList(target Iter<of Int>)
   var some = target[3..].asList()
   print some
 end procedure
@@ -169,7 +169,7 @@ class Foo
   constructor()
   end constructor
 
-  property it Iter<Int>
+  property it Iter<of Int>
 
   function asString() as String
     return ""A Foo""
@@ -222,7 +222,7 @@ main
   printEach(it)
 end main
 
-procedure printEach(target Iter<Int>)
+procedure printEach(target Iter<of Int>)
   foreach x in target
     print x
   end foreach

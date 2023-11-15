@@ -20,7 +20,7 @@ public class T43_Inheritance {
         var code = @"#
 main
     var x = Bar()
-    var l = List<Foo>() + x
+    var l = List<of Foo>() + x
     print x.p1
     print x.p2
     print x.product()
@@ -131,7 +131,7 @@ public static class Program {
         var code = @"#
 main
     var x = Bar()
-    var l = List<Foo>() + x
+    var l = List<of Foo>() + x
     print x.p1
     print x.p2
     print x.product()
@@ -247,7 +247,7 @@ public static class Program {
         var code = @"#
 main
     var x = Bar()
-    var l = List<Foo>() + x
+    var l = List<of Foo>() + x
     print x.p1
     print x.p2
     print x.product()
@@ -368,7 +368,7 @@ public static class Program {
         var code = @"#
 main
     var x = Bar()
-    var l = List<Foo>() + x
+    var l = List<of Foo>() + x
 end main
 
 class Foo
@@ -416,7 +416,7 @@ end class
         var code = @"#
 main
     var x = Bar()
-    var l = List<Foo>() + x
+    var l = List<of Foo>() + x
 end main
 
 class Foo
@@ -448,7 +448,7 @@ end class
         var code = @"#
 main
     var x = Bar()
-    var l = List<Foo>() + x
+    var l = List<of Foo>() + x
 end main
 
 abstract class Foo
@@ -492,7 +492,7 @@ end class
         var code = @"#
 main
     var x = Bar()
-    var l = List<Foo>() + x
+    var l = List<of Foo>() + x
 end main
 
 abstract class Foo
@@ -540,7 +540,7 @@ end class
         var code = @"#
 main
     var x = Bar()
-    var l = List<Foo>() + x
+    var l = List<of Foo>() + x
 end main
 
 abstract class Foo
