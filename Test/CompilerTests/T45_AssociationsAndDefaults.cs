@@ -36,7 +36,7 @@ class Game
     property p1 Player
     property p2 Player
 
-    property previousScores List<Int>
+    property previousScores List<of Int>
 
     function asString() as String
         return ""A game""
@@ -152,9 +152,9 @@ class Game
     property b Bool
     property c Char
     property s String
-    property li List<Int>
-    property dsi Dictionary<String, Int>
-    property ai Array<Int>
+    property li List<of Int>
+    property dsi Dictionary<of String, Int>
+    property ai Array<of Int>
 
     function asString() as String
         return ""A game""
@@ -405,7 +405,7 @@ main
     print g.p1 is default Player
     print g.p2 is default Player
     print g.previousGame is default Game
-    print g.previousScores is default List<Int>
+    print g.previousScores is default List<of Int>
     print g.score is default Int
     print g.best is default Int
 end main
@@ -423,7 +423,7 @@ class Game
 
     property previousGame Game
 
-    property previousScores List<Int>
+    property previousScores List<of Int>
 
     function asString() as String
         return ""A game""
@@ -549,7 +549,7 @@ class Game
 
     property previousGame Game
 
-    property previousScores List<Int>
+    property previousScores List<of Int>
 
     function asString() as String
         return ""A game""
@@ -657,20 +657,20 @@ main
     print f.b
     print f.c
     print f.d
-    print f.a is default List<Int>
+    print f.a is default List<of Int>
     print f.b is default String
-    print f.c is default Dictionary<String,Int>
-    print f.d is default Array<Int>
+    print f.c is default Dictionary<of String,Int>
+    print f.d is default Array<of Int>
 end main
 
 class Foo
     constructor()
     end constructor
 
-    property a List<Int>
+    property a List<of Int>
     property b String
-    property c Dictionary<String, Int>
-    property d Array<Int>
+    property c Dictionary<of String, Int>
+    property d Array<of Int>
 
     function asString() as String
         return ""A Foo""

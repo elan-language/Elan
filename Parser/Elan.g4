@@ -284,7 +284,7 @@ type:  VALUE_TYPE | dataStructureType | TYPENAME | TYPENAME genericSpecifier | t
 
 dataStructureType: (ARRAY | LIST | DICTIONARY | ITERABLE ) genericSpecifier;
 
-genericSpecifier: LT type (COMMA type)* GT;
+genericSpecifier: LT OF type (COMMA type)* GT;
 
 tupleType: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET; 
     

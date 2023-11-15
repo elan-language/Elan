@@ -40,7 +40,7 @@ end class
     public void Fail_MutatingArrayParam() {
         var code = @"#
 class Foo
-    constructor(a Array<Int>)
+    constructor(a Array<of Int>)
         set a[0] to 4
     end constructor
 

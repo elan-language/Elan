@@ -196,7 +196,7 @@ main
     end foreach
 end main
 
-function fruit() as List<String>
+function fruit() as List<of String>
   return {""apple"",""orange"", ""pear""}
 end function
 ";
@@ -209,7 +209,7 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static StandardLibrary.ElanList<string> fruit() {
+  public static StandardLibrary.ElanList<of string> fruit() {
 
     return new StandardLibrary.ElanList<string>(@$""apple"", @$""orange"", @$""pear"");
   }
