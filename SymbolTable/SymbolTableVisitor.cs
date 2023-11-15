@@ -204,7 +204,7 @@ public class SymbolTableVisitor {
         var name = parameterNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(parameterNode.Id.GetType().ToString());
         var type = MapNodeToSymbolType(parameterNode.TypeNode);
 
-        var ms = new VariableSymbol(name, type, currentScope);
+        var ms = new ParameterSymbol(name, type, parameterNode.IsRef, currentScope);
         currentScope.Define(ms);
         VisitChildren(parameterNode);
         return parameterNode;

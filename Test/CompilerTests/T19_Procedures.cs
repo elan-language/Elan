@@ -84,7 +84,7 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void foo(ref int a, ref string b) {
+  public static void foo(int a, string b) {
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
     System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
@@ -94,7 +94,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     var b = @$""hello"";
-    foo(ref a, ref b);
+    foo(a, b);
   }
 }";
 
@@ -207,7 +207,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\nhello\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_RefParamsCanBeUpdated() {
         var code = @"
 main

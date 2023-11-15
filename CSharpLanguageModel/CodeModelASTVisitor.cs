@@ -79,6 +79,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             DeconstructionNode n => HandleScope(BuildDeconstructionModel, n),
             ThrowNode n => HandleScope(BuildThrowModel, n),
             PrintNode n => HandleScope(BuildPrintModel, n),
+            ParameterCallNode n => HandleScope(BuildParameterCallModel, n), 
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -92,12 +93,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private ProcedureCallModel BuildProcedureCallModel(ProcedureCallNode procedureCallNode) {
         var parameters = procedureCallNode.Parameters.Select(Visit);
-        var passByRef = procedureCallNode.Parameters.Select(p => p is IdentifierNode);
-        var qual = procedureCallNode.Qualifier is { } q ? Visit(q) : null;
+        var qualifier = procedureCallNode.Qualifier is { } q ? Visit(q) : null;
 
-        var zip = parameters.Zip(passByRef);
-
-        return new ProcedureCallModel(Visit(procedureCallNode.Id), qual, zip);
+        return new ProcedureCallModel(Visit(procedureCallNode.Id), qualifier, parameters);
     }
 
     private MethodCallModel BuildSystemCallModel(SystemAccessorCallNode systemAccessorCallNode) => new(CodeHelpers.MethodType.SystemCall, Visit(systemAccessorCallNode.Id), null, systemAccessorCallNode.Parameters.Select(Visit));
@@ -262,8 +260,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private ParameterModel BuildParameterModel(ParameterNode parameterNode) {
         var id = Visit(parameterNode.Id);
         var type = Visit(parameterNode.TypeNode);
+        var isRef = parameterNode.IsRef;
 
-        return new ParameterModel(id, type);
+        return new ParameterModel(id, type, isRef);
     }
 
     private CaseModel BuildCaseModel(CaseNode caseNode) {
@@ -401,5 +400,10 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private PrintModel BuildPrintModel(PrintNode defaultNode) {
         var thrown = defaultNode.Expression is { } e ? Visit(e) : null;
         return new PrintModel(thrown);
+    }
+
+    private ParameterCallModel BuildParameterCallModel(ParameterCallNode defaultNode) {
+      
+        return new ParameterCallModel(defaultNode.Id, defaultNode.IsRef);
     }
 }

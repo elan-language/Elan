@@ -2,11 +2,11 @@
 
 namespace CSharpLanguageModel.Models;
 
-public record ParameterModel(ICodeModel Id, ICodeModel Type, bool IsRef = false) : ICodeModel {
+public record ParameterCallModel(string Id, bool IsRef = false) : ICodeModel {
 
     private string IsRefStr => IsRef ? "ref " : ""; 
     
-    public string ToString(int indent) => $@"{IsRefStr}{Type} {Id}";
+    public string ToString(int indent) => $@"{IsRefStr}{Id}";
 
     public override string ToString() => ToString(0);
 }

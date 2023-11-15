@@ -9,6 +9,7 @@ public class SecondPassVisitor {
         Transforms.Add(CompilerTransforms.TransformMethodCallNodes);
         Transforms.Add(CompilerTransforms.TransformIndexNodes);
         Transforms.Add(CompilerTransforms.TransformLiteralListNodes);
+        Transforms.Add(CompilerTransforms.TransformProcedureParameterNodes);
     }
 
     public SecondPassVisitor(SymbolTableImpl symbolTable) => SymbolTable = symbolTable;

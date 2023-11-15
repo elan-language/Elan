@@ -620,9 +620,14 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureSignatureContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
-        var parameters = context.procedureParameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
 
-        return new MethodSignatureNode(id, parameters.ToImmutableArray());
+        if (context.procedureParameterList() is { } pl) {
+            var parameters = pl.parameter().Select(visitor.Visit).OfType<ParameterNode>().Select((p, i) => p with { IsRef = pl.REF(i) is not null }).Cast<IAstNode>();
+
+            return new MethodSignatureNode(id, parameters.ToImmutableArray());
+        }
+
+        return new MethodSignatureNode(id, ImmutableArray<IAstNode>.Empty);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionSignatureContext context) {
