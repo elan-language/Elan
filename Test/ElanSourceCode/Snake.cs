@@ -23,25 +23,13 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
         var charMap = new CharMapLive();
         charMap.fillBackground();
         var currentDirection = Direction.right;
-        var game = new Game(charMap.width, charMap.height, currentDirection);
+        var game = new Game(charMap.width / 2, charMap.height, currentDirection);
         var gameOn = true;
         game.setNewApplePosition();
         while (gameOn)
         {
-            var head = game.head();
-            var _putBlockWithColour_3_0 = head.x;
-            var _putBlockWithColour_3_1 = head.y;
-            charMap.putBlockWithColour( _putBlockWithColour_3_0,  _putBlockWithColour_3_1,  bodyColour);
-            var _putBlockWithColour_4_0 = head.x + 1;
-            var _putBlockWithColour_4_1 = head.y;
-            charMap.putBlockWithColour( _putBlockWithColour_4_0,  _putBlockWithColour_4_1,  bodyColour);
-            var apple = game.apple;
-            var _putBlockWithColour_5_0 = apple.x;
-            var _putBlockWithColour_5_1 = apple.y;
-            charMap.putBlockWithColour( _putBlockWithColour_5_0,  _putBlockWithColour_5_1,  appleColour);
-            var _putBlockWithColour_6_0 = apple.x + 1;
-            var _putBlockWithColour_6_1 = apple.y;
-            charMap.putBlockWithColour( _putBlockWithColour_6_0,  _putBlockWithColour_6_1,  appleColour);
+            draw(charMap, game.head(), bodyColour);
+            draw(charMap, game.apple, appleColour);
             var priorTail = game.tail();
             StandardLibrary.Functions.pause(200);
             var pressed = keyHasBeenPressed();
@@ -50,44 +38,34 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
                 var k = readKey();
                 currentDirection = directionByKey[k];
             }
-            game.clockTick( currentDirection,  gameOn);
+            game.clockTick(currentDirection, ref gameOn);
             if (game.tail() != priorTail)
             {
-                var _clear_8_0 = priorTail.x;
-                var _clear_8_1 = priorTail.y;
-                charMap.clear( _clear_8_0,  _clear_8_1);
-                var _clear_9_0 = priorTail.x + 1;
-                var _clear_9_1 = priorTail.y;
-                charMap.clear( _clear_9_0,  _clear_9_1);
+                draw(charMap, priorTail, charMap.backgroundColour); //To erase the old tail
             }
         }
         clearKeyBuffer();
-        var _setCursor_10_0 = 0;
-        var _setCursor_10_1 = 0;
-        charMap.setCursor( _setCursor_10_0,  _setCursor_10_1);
+        charMap.setCursor(0, 0);
         System.Console.WriteLine(StandardLibrary.Functions.asString(@$"Game Over! Score: {game.getScore()}"));
+    }
+
+    public static void draw(CharMapLive cm, Square sq, Colour colour)
+    {
+        var col = sq.x * 2;
+        var row = sq.y;
+        cm.putBlockWithColour(col, row, colour);
+        cm.putBlockWithColour(col + 1, row, colour);
     }
     public record class Game
     {
         public static Game DefaultInstance { get; } = new Game._DefaultGame();
         private Game() { }
+        //Dimensions are now number of Squares, not no of chars
         public Game(int width, int height, Direction startingDirection)
         {
             this.width = width;
             this.height = height;
-            var halfW = width / 2;
-            var halfH = height / 2;
-            var centreW = halfW;
-            if ((halfW % 2) != 0)
-            {
-                centreW = halfW + 1;
-            }
-            var centreH = halfH;
-            if ((halfH % 2) != 0)
-            {
-                centreH = halfH + 1;
-            }
-            snake = new Snake(centreW, centreH, startingDirection);
+            snake = new Snake(width / 2, height / 2, startingDirection);
             setNewApplePosition();
         }
         protected virtual int width { get; set; } = default;
@@ -120,9 +98,9 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
 
             return @$"Game";
         }
-        public virtual void clockTick( Direction d,  bool @continue)
+        public virtual void clockTick(Direction d, ref bool @continue)
         {
-            snake.advanceHeadOneSquare( d);
+            snake.advanceHeadOneSquare(d);
             if (snake.head == apple)
             {
                 setNewApplePosition();
@@ -139,10 +117,9 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
             var collision = false;
             do
             {
-                var ranW = random((width - 2) / 2);
-                var rh = random((height - 2) / 2);
-                var ranH = rh * 2 - 2;
-                sq = new Square(ranW * 2, ranH);
+                var ranW = random(width - 1);
+                var ranH = random(height - 1);
+                sq = new Square(ranW, ranH);
             } while (!(!snake.bodyCovers(sq)));
             apple = sq;
         }
@@ -153,7 +130,7 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
             protected override int height => default;
             protected override Snake snake => Snake.DefaultInstance;
             public override Square apple => Square.DefaultInstance;
-            public override void clockTick( Direction d,  bool @continue) { }
+            public override void clockTick(Direction d, ref bool @continue) { }
             public override void setNewApplePosition() { }
             public override string asString() { return "default Game"; }
         }
@@ -173,7 +150,7 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
         public virtual Square tail()
         {
 
-            return body[StandardLibrary.Functions.length(body) - 1];
+            return body[0];
         }
         public virtual bool hasHitItself()
         {
@@ -202,21 +179,21 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
 
             return @$"Snake";
         }
-        public virtual void advanceHeadOneSquare( Direction d)
+        public virtual void advanceHeadOneSquare(Direction d)
         {
             body = body + head;
             head = head.getAdjacentSquare(d);
         }
         public virtual void advanceTailOneSquare()
         {
-            body = body[(1)..];
+            body = body[1..];
         }
         private record class _DefaultSnake : Snake
         {
             public _DefaultSnake() { }
             protected override StandardLibrary.ElanList<Square> body => StandardLibrary.ElanList<Square>.DefaultInstance;
             public override Square head => Square.DefaultInstance;
-            public override void advanceHeadOneSquare( Direction d) { }
+            public override void advanceHeadOneSquare(Direction d) { }
             public override void advanceTailOneSquare() { }
             public override string asString() { return "default Snake"; }
         }
@@ -239,10 +216,10 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
             switch (d)
             {
                 case Direction.left:
-                    newX = newX - 2;
+                    newX = newX - 1;
                     break;
                 case Direction.right:
-                    newX = newX + 2;
+                    newX = newX + 1;
                     break;
                 case Direction.up:
                     newY = newY - 1;

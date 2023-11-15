@@ -31,16 +31,12 @@ procedure playGame()
     var charMap = CharMapLive()
     call charMap.fillBackground()
     var currentDirection = Direction.right
-    var game = Game(charMap.width, charMap.height, currentDirection)
+    var game = Game(charMap.width/2, charMap.height, currentDirection)
     var gameOn = true
     call game.setNewApplePosition()
     while gameOn
-        var head = game.head()
-        call charMap.putBlockWithColour(head.x, head.y, bodyColour)
-        call charMap.putBlockWithColour(head.x + 1, head.y, bodyColour)
-        var apple = game.apple
-        call charMap.putBlockWithColour(apple.x, apple.y, appleColour)
-        call charMap.putBlockWithColour(apple.x + 1, apple.y, appleColour)
+        call draw(charMap, game.head(), bodyColour)
+        call draw(charMap, game.apple, appleColour)
         var priorTail = game.tail()
         call pause(200)
         var pressed = keyHasBeenPressed()
@@ -50,8 +46,7 @@ procedure playGame()
         end if
         call game.clockTick(currentDirection, gameOn)
         if game.tail() is not priorTail then
-            call charMap.clear(priorTail.x, priorTail.y)
-            call charMap.clear(priorTail.x + 1, priorTail.y) # Need to clear two blocks to cover one square
+            call draw(charMap, priorTail, charMap.backgroundColour)
         end if
 #       charMap.display() # needed if using a CharacterMapBuffered
     end while
@@ -60,21 +55,19 @@ procedure playGame()
     print "Game Over! Score: {game.getScore()}"
 end procedure
 
+procedure draw(cm CharMapLive, sq Square, colour Colour)
+    var col = sq.x * 2
+    var row = sq.y
+    call cm.putBlockWithColour(col, row, colour)
+    call cm.putBlockWithColour(col + 1, row, colour)
+end procedure
+
 class Game    
+# Dimensions are number of squares, not characters
     constructor (width Int, height Int, startingDirection Direction)
         set self.width to width
         set self.height to height
-        var halfW = width div 2
-        var halfH = height div 2
-        var centreW = halfW
-        if (halfW mod 2) is not 0 then
-          set centreW to halfW + 1
-        end if
-        var centreH = halfH
-        if (halfH mod 2) is not 0 then
-          set centreH to halfH + 1
-        end if
-        set snake to Snake(centreW, centreH, startingDirection) 
+        set snake to Snake(width div 2, height div 2, startingDirection) 
         call setNewApplePosition()
     end constructor
 
@@ -91,7 +84,7 @@ class Game
       return snake.tail()
     end function
 
-    procedure clockTick(d Direction, continue Bool)
+    procedure clockTick(d Direction, ref continue Bool)
         call snake.advanceHeadOneSquare(d)
         if snake.head is apple then
             call setNewApplePosition()
@@ -111,10 +104,9 @@ class Game
         var sq = Square(0,0)
         var collision = false
         repeat
-            var ranW = random((width-2) div 2)
-            var rh = random((height-2) div 2)
-            var ranH = rh * 2-2
-            set sq to Square(ranW * 2, ranH) 
+            var ranW = random(width-1)
+            var ranH = random(height-1)
+            set sq to Square(ranW, ranH) 
         until not snake.bodyCovers(sq)
         set apple to sq
     end procedure
@@ -135,11 +127,11 @@ class Snake
         set head to tail.getAdjacentSquare(startingDirection)
     end constructor
 
-    private property body List<Square>
+    private property body List<of Square>
     property head Square
 
     function tail() as Square 
-      return body[body.length() -1]
+      return body[0]
     end function
 
     function hasHitItself() as Bool 
@@ -188,9 +180,9 @@ class Square
         var newY = y
         switch d
             case Direction.left
-                set newX to newX - 2     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
+                set newX to newX - 1     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
             case Direction.right
-                set newX to newX + 2
+                set newX to newX + 1
             case Direction.up
                 set newY to newY - 1 
             case Direction.down
