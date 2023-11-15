@@ -27,8 +27,8 @@ public static partial class Helpers
             RedirectStandardInput = true,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
-            StandardInputEncoding = Encoding.Default,
-            StandardOutputEncoding = Encoding.Default,
+            StandardInputEncoding = null,
+            StandardOutputEncoding = null,
             WorkingDirectory = workingDir,
             CreateNoWindow = false,
             WindowStyle = ProcessWindowStyle.Hidden
