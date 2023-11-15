@@ -47,7 +47,9 @@ procedureDef:
     NL END PROCEDURE
 	;
 
-procedureSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET;
+procedureSignature: IDENTIFIER OPEN_BRACKET procedureParameterList? CLOSE_BRACKET;
+
+procedureParameterList: REF? parameter (COMMA REF? parameter)*;
 
 parameterList: parameter (COMMA parameter)*;
 
@@ -72,12 +74,13 @@ functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
 
 // System Accessor
 systemAccessor: 
-	NL SYSTEM IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type
+	NL SYSTEM accessorSignature
 	statementBlock
 	NL RETURN expression
     NL END SYSTEM
 	;
 
+accessorSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
 // CONSTANTS
 constantDef: NL CONSTANT IDENTIFIER ASSIGN (literal | newInstance);
 

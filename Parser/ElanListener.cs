@@ -181,6 +181,16 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitProcedureSignature([NotNull] ElanParser.ProcedureSignatureContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.procedureParameterList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterProcedureParameterList([NotNull] ElanParser.ProcedureParameterListContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.procedureParameterList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitProcedureParameterList([NotNull] ElanParser.ProcedureParameterListContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.parameterList"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -260,6 +270,16 @@ public interface IElanListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitSystemAccessor([NotNull] ElanParser.SystemAccessorContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.accessorSignature"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAccessorSignature([NotNull] ElanParser.AccessorSignatureContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.accessorSignature"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAccessorSignature([NotNull] ElanParser.AccessorSignatureContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.constantDef"/>.
 	/// </summary>

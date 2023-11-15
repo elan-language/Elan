@@ -216,6 +216,18 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitProcedureSignature([NotNull] ElanParser.ProcedureSignatureContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.procedureParameterList"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterProcedureParameterList([NotNull] ElanParser.ProcedureParameterListContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.procedureParameterList"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitProcedureParameterList([NotNull] ElanParser.ProcedureParameterListContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.parameterList"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -311,6 +323,18 @@ public partial class ElanBaseListener : IElanListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitSystemAccessor([NotNull] ElanParser.SystemAccessorContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.accessorSignature"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAccessorSignature([NotNull] ElanParser.AccessorSignatureContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.accessorSignature"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAccessorSignature([NotNull] ElanParser.AccessorSignatureContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.constantDef"/>.
 	/// <para>The default implementation does nothing.</para>

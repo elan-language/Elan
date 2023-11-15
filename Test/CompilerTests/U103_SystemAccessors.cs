@@ -294,6 +294,41 @@ end system
         AssertDoesNotCompile(compileData, "Cannot use system accessor readFromNetwork in an expression - try defining an additional variable.");
     }
 
+    [TestMethod]
+    public void Fail_cannotDefineParameterAsReference()
+    {
+        var code = @"
+main
+end main
+
+system readFromNetwork(ref url String) as String
+  return ""data""
+end system
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_cannotModifyParameter()
+    {
+        var code = @"
+main
+end main
+
+system readFromNetwork(url String) as String
+  set url to ""
+  return ""data""
+end system
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "?");
+    }
 
     #endregion
 }

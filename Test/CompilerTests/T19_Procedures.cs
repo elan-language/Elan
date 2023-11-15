@@ -13,12 +13,10 @@ public class T19_Procedures {
         CodeHelpers.ResetUniqueId();
     }
 
-
-
     #region Passes
 
     [TestMethod]
-    public void Pass_BasicOperationIncludingSystemCall() {
+    public void Pass_BasicOperationIncludingPrint() {
         var code = @"
 main
     print 1
@@ -209,8 +207,8 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\nhello\r\n");
     }
 
-    [TestMethod]
-    public void Pass_paramsCanBeUpdated() {
+    [TestMethod, Ignore]
+    public void Pass_RefParamsCanBeUpdated() {
         var code = @"
 main
     var a = 1
@@ -220,7 +218,7 @@ main
     print b
 end main
 
-procedure foo (a Int, b String)
+procedure foo (ref a Int, ref b String)
     set a to a + 1
     set b to b + ""!""
 end procedure
@@ -571,6 +569,55 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeFails(compileData, "Stack overflow.");
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_NonRefParamsCannotBeUpdated()
+    {
+        var code = @"
+main
+    var a = 1
+    var b = ""hello""
+    call foo(a, b)
+    print a
+    print b
+end main
+
+procedure foo (ref a Int, b String)
+    set a to a + 1
+    set b to b + ""!""
+end procedure
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Parameter b may not be updated."); //Or similar message if shared with function rule
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_RefKeywordMayNotBeAddedToArgument()
+    {
+        var code = @"
+main
+    var a = 1
+    var b = ""hello""
+    call foo(ref a, b)
+    print a
+    print b
+end main
+
+procedure foo (ref a Int, b String)
+    set a to a + 1
+    set b to b + ""!""
+end procedure
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
     }
 
     #endregion

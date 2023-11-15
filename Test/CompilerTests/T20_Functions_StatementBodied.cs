@@ -406,7 +406,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_CanNotContainSystemCalls() {
+    public void Fail_CanNotContainPrint() {
         var code = @"
 main
 end main
@@ -422,6 +422,26 @@ end function
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Cannot print in function");
+    }
+
+    [TestMethod, Ignore]
+    public void Fail_CanNotContainSystemAccessors()
+    {
+        var code = @"
+main
+end main
+
+function foo(a Int, b Int) as Int
+    var r = random()
+    return a * b
+end function
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "?");
     }
 
     [TestMethod]
@@ -531,6 +551,23 @@ end function
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_CannotSpecifyParamByRef()
+    {
+        var code = @"
+main
+end main
+
+function foo(ref a Int, b Int) as Int
+    return a * b
+end function
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
     }
 
     #endregion
