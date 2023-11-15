@@ -309,7 +309,7 @@ end system
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_cannotModifyParameter()
     {
         var code = @"

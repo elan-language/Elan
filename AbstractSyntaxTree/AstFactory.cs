@@ -57,6 +57,7 @@ public static class AstFactory {
             FunctionWithBodyContext c => visitor.Build(c),
             ProcedureSignatureContext c => visitor.Build(c),
             FunctionSignatureContext c => visitor.Build(c),
+            AccessorSignatureContext c => visitor.Build(c),
             ParameterContext c => visitor.Build(c),
             CaseContext c => visitor.Build(c),
             CaseDefaultContext c => visitor.Build(c),
@@ -610,23 +611,29 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SystemAccessorContext context) {
-        var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
-        var id = visitor.Visit(context.IDENTIFIER());
-        var type = visitor.Visit(context.type());
+        var signature = visitor.Visit(context.accessorSignature());
         var statementBlock = visitor.Visit(context.statementBlock());
         var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
 
-        return new SystemAccessorDefNode(new MethodSignatureNode(id, parameters.ToImmutableArray(), type), statementBlock, ret);
+        return new SystemAccessorDefNode(signature, statementBlock, ret);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureSignatureContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
-        var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var parameters = context.procedureParameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
 
         return new MethodSignatureNode(id, parameters.ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionSignatureContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var ret = visitor.Visit(context.type());
+
+        return new MethodSignatureNode(id, parameters.ToImmutableArray(), ret);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AccessorSignatureContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var ret = visitor.Visit(context.type());

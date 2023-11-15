@@ -43,7 +43,6 @@ main
   var protected = 1
   var public = 1
   var readonly = 1
-  var ref = 1
   var sbyte = 1
   var sealed = 1
   var short = 1
@@ -62,7 +61,7 @@ main
   var virtual = 1
   var void = 1
   var volatile = 1
-  var total = base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+new+null+object+operator+out+override+params+protected+public+readonly+ref+sbyte+sealed+short+sizeof+stackalloc+static+struct+this+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
+  var total = base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+new+null+object+operator+out+override+params+protected+public+readonly+sbyte+sealed+short+sizeof+stackalloc+static+struct+this+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
   print total
 end main
 ";
@@ -74,7 +73,7 @@ end main
     AssertParseTreeIs(compileData, parseTree);
     AssertCompiles(compileData);
     AssertObjectCodeCompiles(compileData);
-    AssertObjectCodeExecutes(compileData, "50\r\n");
+    AssertObjectCodeExecutes(compileData, "49\r\n");
   }
 
   [TestMethod]
