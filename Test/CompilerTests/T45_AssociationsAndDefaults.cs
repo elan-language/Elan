@@ -594,7 +594,7 @@ public static partial class Globals {
 
       return @$""A game"";
     }
-    public virtual void setScore(ref int newScore) {
+    public virtual void setScore(int newScore) {
       score = newScore;
     }
     private record class _DefaultGame : Game {
@@ -605,7 +605,7 @@ public static partial class Globals {
       public override Player p2 => Player.DefaultInstance;
       public override Game previousGame => Game.DefaultInstance;
       public override StandardLibrary.ElanList<int> previousScores => StandardLibrary.ElanList<int>.DefaultInstance;
-      public override void setScore(ref int newScore) { }
+      public override void setScore(int newScore) { }
       public override string asString() { return ""default Game"";  }
     }
   }
@@ -633,8 +633,7 @@ public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
     System.Console.WriteLine(StandardLibrary.Functions.asString(g.score));
-    var _setScore_1_0 = default(int);
-    g.setScore(ref _setScore_1_0);
+    g.setScore(default(int));
     System.Console.WriteLine(StandardLibrary.Functions.asString(g.score));
   }
 }";

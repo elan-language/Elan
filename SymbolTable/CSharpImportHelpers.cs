@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-using System.Runtime.InteropServices;
+﻿using System.Reflection;
 using StandardLibrary;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
@@ -8,8 +6,6 @@ using SymbolTable.SymbolTypes;
 namespace SymbolTable;
 
 public static class CSharpImportHelpers {
-
-
     private static ISymbolType ConvertCSharpTypesToBuiltInSymbol(Type type) =>
         type.Name switch {
             "Void" => VoidSymbolType.Instance,
@@ -31,7 +27,6 @@ public static class CSharpImportHelpers {
 
     private static bool IsStdLib(Type m) => m.GetCustomAttribute<ElanStandardLibraryAttribute>() is not null;
 
-
     private static bool IsSystemAccessor(MethodInfo m) => m.GetCustomAttribute<ElanSystemAccessorAttribute>() is not null || m.DeclaringType?.GetCustomAttribute<ElanSystemAccessorAttribute>() is not null;
 
     private static bool IsStatic(this Type t) => t is { IsAbstract: true, IsSealed: true };
@@ -47,15 +42,13 @@ public static class CSharpImportHelpers {
         var systemAccessors = allExportedMethods.Where(IsSystemAccessor).ToArray();
         var constants = exportedTypes.Single(t => t.Name == "Constants").GetFields().ToArray();
 
-
         var allExportedClasses = exportedTypes.Where(t => !t.IsStatic()).Where(IsStdLib);
 
-
-        foreach (var fs in stdLib.Select(methodInfo => new FunctionSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), NameSpace.Library))) {
+        foreach (var fs in stdLib.Select(mi => new FunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), NameSpace.Library, ParameterIds(mi)))) {
             globalScope.DefineSystem(fs);
         }
 
-        foreach (var scs in systemAccessors.Select(methodInfo => new SystemAccessorSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), NameSpace.System))) {
+        foreach (var scs in systemAccessors.Select(mi => new SystemAccessorSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), NameSpace.System, ParameterIds(mi)))) {
             globalScope.DefineSystem(scs);
         }
 
@@ -76,9 +69,10 @@ public static class CSharpImportHelpers {
         return ImportEnum(type);
     }
 
-    private static ISymbol ImportEnum(Type type) {
-        return new EnumSymbol(type.Name, null!);
-    }
+    private static ISymbol ImportEnum(Type type) => new EnumSymbol(type.Name, null!);
+
+    private static string[] ParameterIds(MethodInfo mi) => mi.GetParameters().Select(p => p.Name!).ToArray();
+
 
     private static ISymbol ImportClass(Type type) {
         var cls = new ClassSymbol(type.Name, ClassSymbolTypeType.Mutable, null!);
@@ -90,11 +84,11 @@ public static class CSharpImportHelpers {
         var procedures = methods.Where(m => m.ReturnType == typeof(void)).ToArray();
         var functions = methods.Except(procedures).ToArray();
 
-        foreach (var fs in functions.Select(methodInfo => new FunctionSymbol(methodInfo.Name, ConvertCSharpTypesToBuiltInSymbol(methodInfo.ReturnType), cls, NameSpace.UserLocal))) {
+        foreach (var fs in functions.Select(mi => new FunctionSymbol(mi!.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), NameSpace.UserLocal, ParameterIds(mi),  cls))) {
             cls.Define(fs);
         }
 
-        foreach (var ps in procedures.Select(methodInfo => new ProcedureSymbol(methodInfo.Name, cls, NameSpace.UserLocal))) {
+        foreach (var ps in procedures.Select(mi => new ProcedureSymbol(mi!.Name, NameSpace.UserLocal, ParameterIds(mi), cls))) {
             cls.Define(ps);
         }
 

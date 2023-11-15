@@ -6,7 +6,6 @@ using SymbolTable.SymbolTypes;
 namespace SymbolTable;
 
 public class SymbolTableVisitor {
-
     public readonly IList<string> SymbolErrors = new List<string>();
 
     private IScope currentScope;
@@ -33,12 +32,9 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitProcedureDefNode(ProcedureDefNode procedureDefNode) {
-        var name = procedureDefNode.Signature switch {
-            MethodSignatureNode { Id: IdentifierNode idn } => idn.Id,
-            _ => throw new NotImplementedException("null")
-        };
+        var (name, parameterIds) = NameAndParameterIds(procedureDefNode.Signature);
 
-        var ms = new ProcedureSymbol(name, currentScope, currentScope is GlobalScope ? NameSpace.UserGlobal : NameSpace.UserLocal);
+        var ms = new ProcedureSymbol(name, currentScope is GlobalScope ? NameSpace.UserGlobal : NameSpace.UserLocal, parameterIds, currentScope);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(procedureDefNode);
@@ -47,7 +43,7 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitConstructorNode(ConstructorNode constructorNode) {
-        var ms = new ProcedureSymbol(Constants.WellKnownConstructorId, currentScope, NameSpace.UserLocal);
+        var ms = new ProcedureSymbol(Constants.WellKnownConstructorId, NameSpace.UserLocal, Array.Empty<string>(), currentScope);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(constructorNode);
@@ -55,15 +51,24 @@ public class SymbolTableVisitor {
         return constructorNode;
     }
 
-    private IAstNode VisitFunctionDefNode(FunctionDefNode functionDefNode) {
-        var name = functionDefNode.Signature switch {
-            MethodSignatureNode { Id: IdentifierNode idn } => idn.Id,
+    private static string[] ParameterIds(MethodSignatureNode node) {
+        return node.Parameters.OfType<ParameterNode>().Select(pn => Id(pn.Id)).ToArray();
+    }
+
+    private static string Id(IAstNode node) => node is IdentifierNode idn ? idn.Id : throw new NotImplementedException($"{node}");
+
+    private static (string, string[]) NameAndParameterIds(IAstNode node) {
+        return node switch {
+            MethodSignatureNode msn => (Id(msn.Id), ParameterIds(msn)),
             _ => throw new NotImplementedException("null")
         };
+    }
 
+    private IAstNode VisitFunctionDefNode(FunctionDefNode functionDefNode) {
+        var (name, parameterIds) = NameAndParameterIds(functionDefNode.Signature);
         var rt = MapNodeToSymbolType(functionDefNode.Return);
 
-        var ms = new FunctionSymbol(name, rt, currentScope, currentScope is GlobalScope ? NameSpace.UserGlobal : NameSpace.UserLocal);
+        var ms = new FunctionSymbol(name, rt, currentScope is GlobalScope ? NameSpace.UserGlobal : NameSpace.UserLocal, parameterIds, currentScope);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(functionDefNode);
@@ -72,14 +77,11 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitSystemAccessorNode(SystemAccessorDefNode systemAccessorDefNode) {
-        var name = systemAccessorDefNode.Signature switch {
-            MethodSignatureNode { Id: IdentifierNode idn } => idn.Id,
-            _ => throw new NotImplementedException("null")
-        };
+        var (name, parameterIds) = NameAndParameterIds(systemAccessorDefNode.Signature);
 
         var rt = MapNodeToSymbolType(systemAccessorDefNode.Return);
 
-        var ms = new SystemAccessorSymbol(name, rt,  currentScope,  NameSpace.UserGlobal);
+        var ms = new SystemAccessorSymbol(name, rt, NameSpace.UserGlobal, parameterIds, currentScope);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(systemAccessorDefNode);
@@ -88,7 +90,7 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitMainNode(MainNode mainNode) {
-        var ms = new ProcedureSymbol(Constants.WellKnownMainId, currentScope, NameSpace.System);
+        var ms = new ProcedureSymbol(Constants.WellKnownMainId, NameSpace.System, Array.Empty<string>(), currentScope);
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(mainNode);
@@ -113,7 +115,6 @@ public class SymbolTableVisitor {
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return abstractClassDefNode;
     }
-
 
     private static bool OperatorEvaluatesToBoolean(Operator op) =>
         op switch {
@@ -149,7 +150,7 @@ public class SymbolTableVisitor {
 
     private static ISymbolType MapNodeToSymbolType(IAstNode node) {
         return node switch {
-            IdentifierNode idn =>  new PendingResolveSymbol(idn.Id),
+            IdentifierNode idn => new PendingResolveSymbol(idn.Id),
             TypeNode tn => MapNodeToSymbolType(tn.TypeName),
             NewInstanceNode nin => MapNodeToSymbolType(nin.Type),
             ValueNode vn => MapNodeToSymbolType(vn.TypeNode),
@@ -157,13 +158,13 @@ public class SymbolTableVisitor {
             LiteralTupleNode => new TupleSymbolType(),
             LiteralListNode => new ListSymbolType(),
             LiteralDictionaryNode => new DictionarySymbolType(),
-            DataStructureTypeNode {Type:DataStructure.Array} => new ArraySymbolType(),
-            DataStructureTypeNode {Type:DataStructure.List} => new ListSymbolType(),
-            DataStructureTypeNode {Type:DataStructure.Dictionary} => new DictionarySymbolType(),
+            DataStructureTypeNode { Type: DataStructure.Array } => new ArraySymbolType(),
+            DataStructureTypeNode { Type: DataStructure.List } => new ListSymbolType(),
+            DataStructureTypeNode { Type: DataStructure.Dictionary } => new DictionarySymbolType(),
             MethodCallNode mcn => new PendingResolveSymbol(mcn.Name),
-            BinaryNode { Operator: OperatorNode op } when OperatorEvaluatesToBoolean(op.Value)  => BoolSymbolType.Instance,
+            BinaryNode { Operator: OperatorNode op } when OperatorEvaluatesToBoolean(op.Value) => BoolSymbolType.Instance,
             BinaryNode bn => MapNodeToSymbolType(bn.Operand1),
-            IndexedExpressionNode ien =>  MapNodeToSymbolType(ien.Expression),
+            IndexedExpressionNode ien => MapNodeToSymbolType(ien.Expression),
             BracketNode bn => MapNodeToSymbolType(bn.BracketedNode),
             UnaryNode un => MapNodeToSymbolType(un.Operand),
             EnumValueNode en => MapNodeToSymbolType(en.TypeNode),
@@ -178,7 +179,7 @@ public class SymbolTableVisitor {
 
     private IAstNode VisitVarDefNode(VarDefNode varDefNode) {
         if (varDefNode.Id is IdentifierNode idn) {
-            var name =  idn.Id;
+            var name = idn.Id;
             var type = MapNodeToSymbolType(varDefNode.Expression);
             var ms = new VariableSymbol(name, type, currentScope);
             currentScope.Define(ms);
@@ -198,7 +199,6 @@ public class SymbolTableVisitor {
         VisitChildren(varDefNode);
         return varDefNode;
     }
-
 
     private IAstNode VisitParameterNode(ParameterNode parameterNode) {
         var name = parameterNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(parameterNode.Id.GetType().ToString());

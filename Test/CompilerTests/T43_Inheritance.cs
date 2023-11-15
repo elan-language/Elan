@@ -71,7 +71,7 @@ public static partial class Globals {
     public int p1 { get; }
     public int p2 { get; }
     public int product();
-    public void setP1(ref int v);
+    public void setP1(int v);
   }
   public record class Bar : Foo {
     public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
@@ -90,14 +90,14 @@ public static partial class Globals {
 
       return @$"""";
     }
-    public virtual void setP1(ref int p1) {
+    public virtual void setP1(int p1) {
       this.p1 = p1;
     }
     private record class _DefaultBar : Bar {
       public _DefaultBar() { }
       public override int p1 => default;
       public override int p2 => default;
-      public override void setP1(ref int p1) { }
+      public override void setP1(int p1) { }
       public override string asString() { return ""default Bar"";  }
     }
   }
@@ -110,8 +110,7 @@ public static class Program {
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
-    var _setP1_1_0 = 4;
-    x.setP1(ref _setP1_1_0);
+    x.setP1(4);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
   }
 }";
@@ -188,7 +187,7 @@ public static partial class Globals {
   public interface Yon {
 
     public int product();
-    public void setP1(ref int v);
+    public void setP1(int v);
   }
   public record class Bar : Foo, Yon {
     public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
@@ -207,14 +206,14 @@ public static partial class Globals {
 
       return @$"""";
     }
-    public virtual void setP1(ref int p1) {
+    public virtual void setP1(int p1) {
       this.p1 = p1;
     }
     private record class _DefaultBar : Bar {
       public _DefaultBar() { }
       public override int p1 => default;
       public override int p2 => default;
-      public override void setP1(ref int p1) { }
+      public override void setP1(int p1) { }
       public override string asString() { return ""default Bar"";  }
     }
   }
@@ -227,8 +226,7 @@ public static class Program {
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
-    var _setP1_1_0 = 4;
-    x.setP1(ref _setP1_1_0);
+    x.setP1(4);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
   }
 }";
@@ -306,7 +304,7 @@ public static partial class Globals {
   public interface Yon {
     public int p1 { get; }
     public int product();
-    public void setP1(ref int v);
+    public void setP1(int v);
   }
   public record class Bar : Foo, Yon {
     public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
@@ -325,14 +323,14 @@ public static partial class Globals {
 
       return @$"""";
     }
-    public virtual void setP1(ref int p1) {
+    public virtual void setP1(int p1) {
       this.p1 = p1;
     }
     private record class _DefaultBar : Bar {
       public _DefaultBar() { }
       public override int p1 => default;
       public override int p2 => default;
-      public override void setP1(ref int p1) { }
+      public override void setP1(int p1) { }
       public override string asString() { return ""default Bar"";  }
     }
   }
@@ -345,8 +343,7 @@ public static class Program {
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.p1));
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.p2));
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
-    var _setP1_1_0 = 4;
-    x.setP1(ref _setP1_1_0);
+    x.setP1(4);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x.product()));
   }
 }";

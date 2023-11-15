@@ -130,13 +130,13 @@ public static partial class Globals {
 
       return @$"""";
     }
-    public virtual void setP1(ref int value) {
+    public virtual void setP1(int value) {
       p1 = value;
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override int p1 => default;
-      public override void setP1(ref int value) { }
+      public override void setP1(int value) { }
       public override string asString() { return ""default Foo"";  }
     }
   }
@@ -146,8 +146,7 @@ public static class Program {
   private static void Main(string[] args) {
     var f = new Foo();
     System.Console.WriteLine(StandardLibrary.Functions.asString(f.p1));
-    var _setP1_1_0 = 7;
-    f.setP1(ref _setP1_1_0);
+    f.setP1(7);
     System.Console.WriteLine(StandardLibrary.Functions.asString(f.p1));
   }
 }";

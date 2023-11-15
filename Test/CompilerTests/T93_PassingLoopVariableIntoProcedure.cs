@@ -36,13 +36,13 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void removeLetters(ref string wordAsPlayed) {
+  public static void removeLetters(string wordAsPlayed) {
     foreach (var letter in wordAsPlayed) {
       var x = letter;
-      removeLetter(ref x);
+      removeLetter(x);
     }
   }
-  public static void removeLetter(ref char l) {
+  public static void removeLetter(char l) {
 
   }
 }
@@ -81,30 +81,6 @@ end procedure
 main
 end main
 ";
-
-        var objectCode = @"using System.Collections.Generic;
-using StandardLibrary;
-using static Globals;
-using static StandardLibrary.SystemAccessors;
-using static StandardLibrary.Procedures;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-  public static void removeLetters(ref string wordAsPlayed) {
-    foreach (var letter in wordAsPlayed) {
-      removeLetter(ref letter);
-    }
-  }
-  public static void removeLetter(ref char l) {
-
-  }
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-
-  }
-}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

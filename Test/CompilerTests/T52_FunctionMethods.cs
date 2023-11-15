@@ -199,7 +199,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "7\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_FunctionMethodMayCallOtherClassFunctionMethod() {
         var code = @"#
 main

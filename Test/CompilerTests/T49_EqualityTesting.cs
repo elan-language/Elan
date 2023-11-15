@@ -65,14 +65,14 @@ public static partial class Globals {
 
       return @$""{p1} {p2}"";
     }
-    public virtual void setP1(ref int v) {
+    public virtual void setP1(int v) {
       p1 = v;
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override int p1 => default;
       public override string p2 => """";
-      public override void setP1(ref int v) { }
+      public override void setP1(int v) { }
       public override string asString() { return ""default Foo"";  }
     }
   }
@@ -152,14 +152,14 @@ public static partial class Globals {
 
       return @$""{p1} {p2}"";
     }
-    public virtual void setP1(ref int v) {
+    public virtual void setP1(int v) {
       p1 = v;
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
       public override int p1 => default;
       public override string p2 => """";
-      public override void setP1(ref int v) { }
+      public override void setP1(int v) { }
       public override string asString() { return ""default Foo"";  }
     }
   }
@@ -169,8 +169,7 @@ public static class Program {
   private static void Main(string[] args) {
     var x = new Foo(7, @$""Apple"");
     var y = x;
-    var _setP1_1_0 = 3;
-    y.setP1(ref _setP1_1_0);
+    y.setP1(3);
     var z = new Foo(8, @$""Orange"");
     System.Console.WriteLine(StandardLibrary.Functions.asString(x == x));
     System.Console.WriteLine(StandardLibrary.Functions.asString(x == y));

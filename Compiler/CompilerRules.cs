@@ -53,6 +53,7 @@ public static class CompilerRules {
         return n2 switch {
             IdentifierNode idn2 when n1 is IdentifierNode idn1 => idn1.Id == idn2.Id,
             IndexedExpressionNode ien when n1 is IdentifierNode idn1 => Match(idn1, ien.Expression) || ien.Expression.Children.Any(c => Match(idn1, c)),
+            ParameterCallNode pn when n1 is IdentifierNode idn1 => idn1.Id == pn.Id,
             _ => false
         };
     }

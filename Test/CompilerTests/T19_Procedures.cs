@@ -133,7 +133,7 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void foo(ref int a, ref string b) {
+  public static void foo(int a, string b) {
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
     System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
@@ -143,7 +143,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     var b = @$""hello"";
-    foo(ref a, ref b);
+    foo(a, b);
   }
 }";
 
@@ -181,7 +181,7 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void foo(ref int a, ref string b) {
+  public static void foo(int a, string b) {
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
     System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
@@ -190,9 +190,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 1;
-    var _foo_1_0 = a + 1;
-    var _foo_1_1 = @$""hello"";
-    foo(ref _foo_1_0, ref _foo_1_1);
+    foo(a + 1, @$""hello"");
   }
 }";
 
@@ -335,19 +333,17 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void foo(ref int a) {
+  public static void foo(int a) {
     if (a > 0) {
       System.Console.WriteLine(StandardLibrary.Functions.asString(a));
-      var _foo_1_0 = a - 1;
-      foo(ref _foo_1_0);
+      foo(a - 1);
     }
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    var _foo_2_0 = 3;
-    foo(ref _foo_2_0);
+    foo(3);
   }
 }";
 
@@ -548,15 +544,14 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void foo(ref int a) {
-    foo(ref a);
+  public static void foo(int a) {
+    foo(a);
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    var _foo_2_0 = 3;
-    foo(ref _foo_2_0);
+    foo(3);
   }
 }";
 

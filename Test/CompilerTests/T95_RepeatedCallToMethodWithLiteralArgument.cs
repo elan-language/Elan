@@ -37,17 +37,15 @@ using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void square(ref int x) {
+  public static void square(int x) {
     System.Console.WriteLine(StandardLibrary.Functions.asString(x * x));
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    var _square_1_0 = 3;
-    square(ref _square_1_0);
-    var _square_2_0 = 5;
-    square(ref _square_2_0);
+    square(3);
+    square(5);
   }
 }";
 

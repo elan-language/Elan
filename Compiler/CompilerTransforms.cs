@@ -41,20 +41,22 @@ public static class CompilerTransforms {
     // must come after TransformMethodCallNodes
     public static IAstNode? TransformProcedureParameterNodes(IAstNode[] nodes, IScope currentScope) {
 
-        static IAstNode TransformParameter(IdentifierNode p, IScope scope) {
-            var symbol = scope.Resolve(p.Id) as ParameterSymbol ?? throw new NullReferenceException();
+        static IAstNode TransformParameter(IdentifierNode p, int i, ProcedureSymbol scope) {
+            var matchingParm = scope.ParameterNames[i];
+
+            var symbol = scope.Resolve(matchingParm) as ParameterSymbol ?? throw new NullReferenceException();
             return new ParameterCallNode(p.Id, symbol.ByRef);
         }
 
         switch (nodes.Last()) {
             case ProcedureCallNode pcn:
 
-                var procedureScope = currentScope.Resolve(pcn.Name) as ProcedureSymbol ?? throw new NullReferenceException();
+                var procedureScope =  ResolveMethodCall(currentScope, pcn).Item1 as ProcedureSymbol ?? GetProcedure(pcn, currentScope) ?? throw new NullReferenceException();
 
                 var parameterNodes = pcn.Parameters.OfType<IdentifierNode>().ToArray();
 
                 if (parameterNodes.Any()) {
-                    var transformedParameters = pcn.Parameters.OfType<IdentifierNode>().Select(p => TransformParameter(p, procedureScope));
+                    var transformedParameters = pcn.Parameters.OfType<IdentifierNode>().Select((p, i) => TransformParameter(p, i, procedureScope));
                     return pcn with { Parameters = transformedParameters.ToImmutableArray() };
                 }
 
@@ -83,6 +85,21 @@ public static class CompilerTransforms {
         return null;
     }
 
+    private static ProcedureSymbol? GetProcedure(ICallNode mcn, IScope currentScope) {
+        var id = mcn.Qualifier is IdentifierNode idn ? idn.Id : null;
+
+        if (id != null) {
+            var varSymbol = currentScope.Resolve(id);
+            var type = varSymbol is VariableSymbol vs ? EnsureResolved(vs.ReturnType, currentScope) : null;
+
+            if (type is ClassSymbolType cst) {
+                return (currentScope.Resolve(cst.Name) as ClassSymbol)?.Resolve(mcn.Name) as ProcedureSymbol;
+            }
+        }
+
+        return null;
+    }
+
 
     private static string? GetId(IAstNode? node) => node switch {
         IdentifierNode idn => idn.Id,
@@ -90,7 +107,7 @@ public static class CompilerTransforms {
         _ => null
     };
 
-    private static (ISymbol?, bool) ResolveMethodCall(IScope currentScope, MethodCallNode mcn) {
+    private static (ISymbol?, bool) ResolveMethodCall(IScope currentScope, ICallNode mcn) {
         var isGlobal = mcn.Qualifier is GlobalNode;
         var qualifiedId = GetId(mcn.Qualifier);
 
