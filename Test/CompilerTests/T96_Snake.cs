@@ -47,7 +47,7 @@ public class T96_Snake
     [TestMethod, Ignore]
     public void Pass_ConsoleUI()
     {
-        var code = ReadElanSourceCodeFile("snake_COnsoleUI.elan");
+        var code = ReadElanSourceCodeFile("snake_ConsoleUI.elan");
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

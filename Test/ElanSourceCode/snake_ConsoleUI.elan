@@ -36,11 +36,11 @@ procedure playGame()
     call game.setNewApplePosition()
     while gameOn
         var head = game.head()
-        call charMap.putBlock(head.x, head.y, bodyColour)
-        call charMap.putBlock(head.x + 1, head.y, bodyColour)
+        call charMap.putBlockWithColour(head.x, head.y, bodyColour)
+        call charMap.putBlockWithColour(head.x + 1, head.y, bodyColour)
         var apple = game.apple
-        call charMap.putBlock(apple.x, apple.y, appleColour)
-        call charMap.putBlock(apple.x + 1, apple.y, appleColour)
+        call charMap.putBlockWithColour(apple.x, apple.y, appleColour)
+        call charMap.putBlockWithColour(apple.x + 1, apple.y, appleColour)
         var priorTail = game.tail()
         call pause(200)
         var pressed = keyHasBeenPressed()
@@ -49,7 +49,7 @@ procedure playGame()
             set currentDirection to directionByKey[k]
         end if
         call game.clockTick(currentDirection, gameOn)
-        if not game.tail() is priorTail then
+        if game.tail() is not priorTail then
             call charMap.clear(priorTail.x, priorTail.y)
             call charMap.clear(priorTail.x + 1, priorTail.y) # Need to clear two blocks to cover one square
         end if
