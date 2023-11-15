@@ -75,7 +75,11 @@ public static class CompilerTransforms {
 
         if (id != null) {
             var varSymbol = currentScope.Resolve(id);
-            var type = varSymbol is VariableSymbol vs ? EnsureResolved(vs.ReturnType, currentScope) : null;
+            var type = varSymbol switch {
+                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
+                ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
+                _ => null
+            };
 
             if (type is ClassSymbolType cst) {
                 return GetNode(mcn, currentScope, cst);
@@ -117,10 +121,14 @@ public static class CompilerTransforms {
             if (symbol is VariableSymbol vs &&  EnsureResolved(vs.ReturnType, currentScope) is ClassSymbolType ) {
                 return (null, false);
             }
-            if (symbol is VariableSymbol or null) {
+            
+            if (symbol is ParameterSymbol ps &&  EnsureResolved(ps.ReturnType, currentScope) is ClassSymbolType ) {
+                return (null, false);
+            }
+
+            if (symbol is VariableSymbol or ParameterSymbol or null) {
                 return (GetGlobalScope(currentScope).Resolve(mcn.Name), isGlobal);
             }
-            
         }
 
         var scope = isGlobal ? GetGlobalScope(currentScope) : currentScope;
