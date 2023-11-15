@@ -7,7 +7,7 @@
         print "Do you want to play again (y/n)?"
         var answer = ' '
         repeat
-            set ans to readKey()
+            set answer to readKey()
         until answer is 'y' or answer is 'n'
         if answer is 'n' then
             set newGame to false
@@ -35,13 +35,13 @@ procedure playGame()
     var gameOn = true
     call game.setNewApplePosition()
     while gameOn
-        var head = game.head
+        var head = game.head()
         call charMap.putBlock(head.x, head.y, bodyColour)
         call charMap.putBlock(head.x + 1, head.y, bodyColour)
         var apple = game.apple
         call charMap.putBlock(apple.x, apple.y, appleColour)
         call charMap.putBlock(apple.x + 1, apple.y, appleColour)
-        var priorTail = game.tail
+        var priorTail = game.tail()
         call pause(200)
         var pressed = keyHasBeenPressed()
         if pressed then
@@ -49,7 +49,7 @@ procedure playGame()
             set currentDirection to directionByKey[k]
         end if
         call game.clockTick(currentDirection, gameOn)
-        if not game.tail is priorTail then
+        if not game.tail() is priorTail then
             call charMap.clear(priorTail.x, priorTail.y)
             call charMap.clear(priorTail.x + 1, priorTail.y) # Need to clear two blocks to cover one square
         end if
@@ -57,7 +57,7 @@ procedure playGame()
     end while
     call clearKeyBuffer()
     call charMap.setCursor(0, 0)
-    print "Game Over! Score: {game.GetScore()}"
+    print "Game Over! Score: {game.getScore()}"
 end procedure
 
 class Game    
