@@ -566,14 +566,26 @@ public static class Program {
         AssertObjectCodeFails(compileData, "Stack overflow.");
     }
 
+    [TestMethod]
+    public void Fail_CannotCallPrintAsAProcedure()
+    {
+        var code = @"#
+main
+  call print(""Hello World!"")
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
     [TestMethod, Ignore]
-    public void Pass_NonRefParamsCannotBeUpdated()
+    public void Fail_NonRefParamsCannotBeUpdated()
     {
         var code = @"
 main
     var a = 1
     var b = ""hello""
-    call foo(a, b)
+    foo(a, b)
     print a
     print b
 end main
@@ -591,8 +603,8 @@ end procedure
         AssertDoesNotCompile(compileData, "Parameter b may not be updated."); //Or similar message if shared with function rule
     }
 
-    [TestMethod, Ignore]
-    public void Pass_RefKeywordMayNotBeAddedToArgument()
+    [TestMethod]
+    public void Fail_RefKeywordMayNotBeAddedToArgument()
     {
         var code = @"
 main

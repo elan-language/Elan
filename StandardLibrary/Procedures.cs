@@ -9,10 +9,11 @@ namespace StandardLibrary;
 [ElanStandardLibrary]
 public static class Procedures {
     #region Clock
-    public static void pause(int milliseconds)
-    {
-        Thread.Sleep(milliseconds);
-    }
+    //Temporarily moved into Functions, but belongs here
+    //public static void pause(int milliseconds)
+    //{
+    //    Thread.Sleep(milliseconds);
+    //}
 
     #endregion
 
