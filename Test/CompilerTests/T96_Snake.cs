@@ -35,6 +35,11 @@ public class T96_Snake
     [TestMethod, Ignore]
     public void Pass_Game()
     {
+        // not yet working
+        // TODO need to fix parameters - not necessarily of type identifiernode - so need to wrap actual value and set id 
+        // also need to keep track of whether it's been transformed 
+
+
         var code = ReadElanSourceCodeFile("snake_Game.elan");
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
