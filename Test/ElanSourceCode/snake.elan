@@ -1,4 +1,10 @@
-﻿main
+﻿# TODO. Move responsibilities
+# Clock tick to Snake
+# Set new position to Apple
+# Eating, and re-location to Apple
+# Edge detection to Snake - Snake is initialised with board size.
+# Top level playGame deals only with Snake, having passed it the field dimensions and initial Apple
+main
     print welcome
     var k = readKey()
     var newGame = true
@@ -28,7 +34,7 @@ If you want to re-size the window, please do so now, before starting the game.
 Click on this window to get 'focus' (and see a flashing cursor). Then press any key to start.."
 
 procedure playGame()
-    var charMap = CharMapLive()
+    var charMap = CharMap()
     call charMap.fillBackground()
     var currentDirection = Direction.right
     var game = Game(charMap.width/2, charMap.height, currentDirection)
@@ -59,11 +65,11 @@ procedure draw(cm CharMapLive, sq Square, colour Colour)
     var col = sq.x * 2
     var row = sq.y
     call cm.putBlockWithColour(col, row, colour)
-    call cm.putBlockWithColour(col + 1, row, colour)
+    call cm.putBlockWithColour(col + 1, row, colour) # because block is 2 chars wide
 end procedure
 
 class Game    
-# Dimensions are number of squares, not characters
+# Dimensions are number of Squares
     constructor (width Int, height Int, startingDirection Direction)
         set self.width to width
         set self.height to height
@@ -180,7 +186,7 @@ class Square
         var newY = y
         switch d
             case Direction.left
-                set newX to newX - 1     # Horizontal adjacent is +/- 2 because a square is 2 display chars wide
+                set newX to newX - 1     
             case Direction.right
                 set newX to newX + 1
             case Direction.up

@@ -1,70 +1,6 @@
 ﻿namespace StandardLibrary;
 
-//TODO: Rename  so we have several subclasses of e.g. Display
-[ElanStandardLibrary]
-public class CharMapLive : CharMap
-{
-    public override void putCharWithColours(int col, int row, char c, Colour foreground, Colour background)
-    {
-        var currentForeground = Console.ForegroundColor;
-        var currentBackground = Console.BackgroundColor;
-        var (currentX, currentY) = Console.GetCursorPosition();
-        var bufx = Console.BufferWidth;
-        var bufy = Console.BufferWidth;
-        Console.SetCursorPosition(col, row);
-        Console.ForegroundColor = (ConsoleColor)(int)foreground;
-        Console.BackgroundColor = (ConsoleColor)(int)background;
-        Console.Write(c);
-        Console.SetCursorPosition(currentX, currentY);
-        Console.ForegroundColor = currentForeground;
-        Console.BackgroundColor = currentBackground;
-    }
-}
-
-[ElanStandardLibrary]
-public class CharMapBuffered : CharMap
-{
-    private readonly Character[,] buffer;
-
-    public CharMapBuffered() => buffer = new Character[width, height];
-
-    public override void putCharWithColours(int col, int row, char c, Colour foreground, Colour background)
-    {
-        buffer[col, row] = new Character(c, foreground, background);
-    }
-
-    /// <summary>
-    ///     Clears the console screen and displays the current contents of this buffer
-    /// </summary>
-    public void display()
-    {
-        Console.Clear();
-        for (var row = 0; row < buffer.GetLength(1); row++)
-        {
-            for (var col = 0; col < buffer.GetLength(0); col++)
-            {
-                var c = buffer[col, row];
-                if (c.foreground != foregroundColour)
-                {
-                    foregroundColour = c.foreground;
-                    Console.ForegroundColor = (ConsoleColor)foregroundColour;
-                }
-
-                if (c.background != backgroundColour)
-                {
-                    backgroundColour = c.background;
-                    Console.BackgroundColor = (ConsoleColor)backgroundColour;
-                }
-
-                if (c.ch != empty) { }
-
-                Console.Write(c.ch);
-            }
-        }
-    }
-}
-
-public abstract class CharMap {
+public class CharMap {
     public const char empty = ' ';
     public readonly int height;
     public readonly int width;
@@ -115,8 +51,21 @@ public abstract class CharMap {
         putCharWithColours(col, row, c, foreground, backgroundColour);
     }
 
-    public abstract void putCharWithColours(int col, int row, char c, Colour foreground, Colour background);
-
+    public virtual void putCharWithColours(int col, int row, char c, Colour foreground, Colour background)
+    {
+        var currentForeground = Console.ForegroundColor;
+        var currentBackground = Console.BackgroundColor;
+        var (currentX, currentY) = Console.GetCursorPosition();
+        var bufx = Console.BufferWidth;
+        var bufy = Console.BufferWidth;
+        Console.SetCursorPosition(col, row);
+        Console.ForegroundColor = (ConsoleColor)(int)foreground;
+        Console.BackgroundColor = (ConsoleColor)(int)background;
+        Console.Write(c);
+        Console.SetCursorPosition(currentX, currentY);
+        Console.ForegroundColor = currentForeground;
+        Console.BackgroundColor = currentBackground;
+    }
     public void clear(int col, int row) {
         putChar(col, row, empty);
     }
@@ -134,6 +83,50 @@ public abstract class CharMap {
 
         public override string ToString() => $"{ch} + ({foreground}, {background})";
     }
+
+    [ElanStandardLibrary]
+    public class CharMapBuffered : CharMap
+    {
+        private readonly Character[,] buffer;
+
+        public CharMapBuffered() => buffer = new Character[width, height];
+
+        public override void putCharWithColours(int col, int row, char c, Colour foreground, Colour background)
+        {
+            buffer[col, row] = new Character(c, foreground, background);
+        }
+
+        /// <summary>
+        ///     Clears the console screen and displays the current contents of this buffer
+        /// </summary>
+        public void display()
+        {
+            Console.Clear();
+            for (var row = 0; row < buffer.GetLength(1); row++)
+            {
+                for (var col = 0; col < buffer.GetLength(0); col++)
+                {
+                    var c = buffer[col, row];
+                    if (c.foreground != foregroundColour)
+                    {
+                        foregroundColour = c.foreground;
+                        Console.ForegroundColor = (ConsoleColor)foregroundColour;
+                    }
+
+                    if (c.background != backgroundColour)
+                    {
+                        backgroundColour = c.background;
+                        Console.BackgroundColor = (ConsoleColor)backgroundColour;
+                    }
+
+                    if (c.ch != empty) { }
+
+                    Console.Write(c.ch);
+                }
+            }
+        }
+    }
+
 
     #region QuarterCharacter
     //public void setQuarterBlock(double col, double row, Colour foreground, Colour background)
