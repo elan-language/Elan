@@ -100,13 +100,13 @@ classDef: mutableClass | abstractClass| immutableClass | abstractImmutableClass;
 mutableClass: 
 	NL CLASS TYPENAME inherits?
 	constructor
-    (property | functionDef | procedureDef )*	
+    (property | functionDef | procedureDef | systemAccessor )*	
     NL END CLASS
 	;
 
 abstractClass:
 	NL ABSTRACT CLASS TYPENAME inherits?
-    (property | NL FUNCTION functionSignature | NL PROCEDURE procedureSignature)*
+    (property | NL FUNCTION functionSignature | NL PROCEDURE procedureSignature | NL SYSTEM accessorSignature)*
     NL END CLASS
 	;
 

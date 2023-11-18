@@ -157,7 +157,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "checking\r\ndata\r\n");
     }
 
-
     [TestMethod]
     public void Pass_accessorCanCallOtherAccessor()
     {
@@ -221,7 +220,58 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "OK data\r\n");
     }
 
+    [TestMethod, Ignore]
+    public void Pass_accessorDefinedOnAClass()
+    {
+        var code = @"
+main
+ var f = Foo()
+ var d =  f.readFromNetwork(""www.foo.com"") 
+ print d
+end main
 
+class Foo
+    constructor()
+    end constructor
+
+    system readFromNetwork(url String) as String
+      return ""data""
+    end system
+
+    function asString() as String
+        return """"
+    end function
+end class
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "data\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_accessorDefinedOnAbstractClass()
+    {
+        var code = @"
+main
+end main
+
+abstract class Foo
+    system readFromNetwork(url String) as String
+end class
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+    }
     #endregion
 
     #region Fails
@@ -328,6 +378,31 @@ end system
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "?");
+    }
+
+    [TestMethod]
+    public void Fail_accessorCannotBeDefinedOnImmutableClass()
+    {
+        var code = @"
+main
+ var f = Foo()
+ var d =  f.readFromNetwork(""www.foo.com"") 
+ print d
+end main
+
+immutable class Foo
+    constructor()
+    end constructor
+
+    system readFromNetwork(url String) as String
+      return ""data""
+    end system
+
+    function asString() as String -> """"
+end class
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
     }
 
     #endregion
