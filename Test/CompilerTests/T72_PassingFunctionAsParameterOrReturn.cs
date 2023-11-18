@@ -39,6 +39,36 @@ end function
     }
 
     [TestMethod]
+    public void Pass_PassAsParam2()
+    {
+        var code = @"
+main
+  printIt(""Hello"", 'e', find)
+end main
+
+procedure printIt(s String, c Char, f (String, Char -> Int))
+  print f(s,c)
+end procedure
+
+function find(x String, y Char ) as Int
+  return x.indexOf(y)
+end function
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "1\r\n");
+    }
+
+    [TestMethod]
     public void Pass_ReturnAFunction()
     {
         var code = @"

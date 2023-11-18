@@ -92,6 +92,44 @@ end function
     #endregion
 
     #region Fails
+    [TestMethod]
+    public void Fail_PassLambdaWithWrongTypes()
+    {
+        var code = @"
+main
+  printModified(4, lambda x -> x.asString())
+end main
 
+procedure printModified(i Int, f (Int -> Int))
+  print f(i)
+end procedure
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "?");
+    }
+
+    [TestMethod]
+    public void Fail_InvokeLambdaWithWrongType()
+    {
+        var code = @"
+main
+  printModified('4', lambda x -> x * 3)
+end main
+
+procedure printModified(i Int, f (Int -> Int))
+  print f(i)
+end procedure
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "?");
+    }
     #endregion
 }

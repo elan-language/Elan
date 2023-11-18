@@ -5,23 +5,18 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass] [Ignore]
-public class T26_Iter
-{
+public class T70_StandardHofs {
     #region Passes
 
     [TestMethod]
-    public void Pass_List() {
+    public void Pass_Filter() {
         var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
-  var it = { 1,5,6}
-  printEach(it)
+ print source.filter(lambda x -> x > 20))
+ print source.filter(lambda x -> x > 20)).asList()
+ print source.filter(lambda x -> x < 3 or x > 35.asList()
 end main
-
-procedure printEach(target Iter<of Int>)
-  foreach x in target
-    print x
-  end foreach
-end procedure
 ";
 
         var objectCode = @"";
@@ -34,23 +29,18 @@ end procedure
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "1\r\n5\r\n6\r\n");
+        AssertObjectCodeExecutes(compileData, "Iter\r\nList {23,27,31,37}\r\nList {2,37}");
     }
 
     [TestMethod]
-    public void Pass_Array()
+    public void Pass_Map()
     {
         var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
-  var it = { 1,3,6}.asArray()
-  printEach(it)
+ print source.map(lambda x -> x + 1)).asList()
+ print source.map(lambda x -> x.asString()+'*')).asList()
 end main
-
-procedure printEach(target Iter<of Int>)
-  foreach x in target
-    print x
-  end foreach
-end procedure
 ";
 
         var objectCode = @"";
@@ -63,23 +53,19 @@ end procedure
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "1\r\n3\r\n6\r\n");
+        AssertObjectCodeExecutes(compileData, "List {3,4,6,8,12,14,18,20,24,28,32,38}\r\nList {2*,3*,5*,7*,11*,13*,17*,19*,23*,27*,31*,37*}");
     }
 
     [TestMethod]
-    public void Pass_String()
+    public void Pass_Reduce()
     {
         var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
-  var s = ""Foo""
-  printEach(s)
+ print source.reduce(lambda s,x -> s+x))
+ print source.reduce(100, lambda s,x -> s+x))
+ print source.reduce(""Concat:"",lambda s,x -> s+x.asString()))
 end main
-
-procedure printEach(target Iter<of Char>)
-  foreach x in target
-    print x
-  end foreach
-end procedure
 ";
 
         var objectCode = @"";
@@ -92,23 +78,16 @@ end procedure
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "F\r\no\r\no\r\n");
+        AssertObjectCodeExecutes(compileData, "195\r\n295\r\nresult:23571113171923273137");
     }
-
-    public void Pass_Indexing()
+    public void Pass_Max()
     {
         var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
-  var it = { 1,2,3,4,5,6,7}
-  printEach(it[2..4])
+ print source.max()
+ print source.max(lambda x -> x mod 5)).asList()
 end main
-
-procedure printEach(target Iter<of Int>)
-  foreach x in target
-    print x
-  end foreach
-  print target[0]
-end procedure
 ";
 
         var objectCode = @"";
@@ -121,28 +100,18 @@ end procedure
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "6\r\n3\r\n4\r\n5\r\n1\r\n");
+        AssertObjectCodeExecutes(compileData, "37\r\n19\r\n");
     }
-
-    public void Pass_Printing()
+    public void Pass_Min()
     {
         var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
-  var it = { 1,2,3,4,5,6,7}
-  printAsIter(it)
-  printAsList(it)
+ print source.min()
+ print source.min(lambda x -> x mod 5)).asList()
 end main
-
-procedure printAsIter(target Iter<of Int>)
-  var some = target[1..3]
-  print some
-end procedure
-
-procedure printAsList(target Iter<of Int>)
-  var some = target[3..].asList()
-  print some
-end procedure
 ";
+
         var objectCode = @"";
 
         var parseTree = @"*";
@@ -153,30 +122,46 @@ end procedure
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Iter\r\nList {1,2}");
+        AssertObjectCodeExecutes(compileData, "2\r\n13\r\n");
     }
 
     [TestMethod]
-    public void Pass_Default()
+    public void Pass_Any()
     {
         var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
-  var f = Foo()
-  print f.it
+  print source.any(lambda x -> x > 20))
+  print source.any(lambda x -> x mod 2 is 0))
+  print source.any(lambda x -> x > 40))
+
 end main
-
-class Foo
-  constructor()
-  end constructor
-
-  property it Iter<of Int>
-
-  function asString() as String
-    return ""A Foo""
-  end function
-end class
 ";
 
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\ntrye\r\nfalse");
+    }
+
+    [TestMethod]
+    public void Pass_GroupBy()
+    {
+        var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+main
+  var gs = source.groupBy(lambda x -> x mod 5)) # {5} {11,31} {2,7,17,27,37} {13,23,19}
+  print gs
+  print gs[2]
+end main
+";
         var objectCode = @"";
         var parseTree = @"*";
 
@@ -186,57 +171,11 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "default Iter<Int>");
+        AssertObjectCodeExecutes(compileData, "Iter<Group<Int,Int>>\r\nGroup 1 {11,31}"); //Not sure quite what output is reasonable?
     }
     #endregion
 
     #region Fails
-    [TestMethod]
-    public void Fail_NoGenericTypeSpecified()
-    {
-        var code = @"
-main
-end main
 
-procedure printEach(target Iter)
-  foreach x in target
-    print x
-  end foreach
-end procedure
-";
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
-    }
-
-
-    [TestMethod]
-    public void Fail_PassArgumentWithWrongGenericType()
-    {
-        var code = @"
-main
-  var s = ""Hello""
-  printEach(it)
-end main
-
-procedure printEach(target Iter<of Int>)
-  foreach x in target
-    print x
-  end foreach
-end procedure
-";
-
-        var objectCode = @"";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
-    }
     #endregion
 }
