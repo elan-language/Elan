@@ -54,14 +54,14 @@ procedure playGame()
         if game.tail() is not priorTail then
             call draw(charMap, priorTail, charMap.backgroundColour)
         end if
-#       charMap.display() # needed if using a CharacterMapBuffered
     end while
     call clearKeyBuffer()
     call charMap.setCursor(0, 0)
     print "Game Over! Score: {game.getScore()}"
 end procedure
 
-procedure draw(cm CharMapLive, sq Square, colour Colour)
+# maps from the Square coordinates & size, to characters
+procedure draw(cm CharMap, sq Square, colour Colour)
     var col = sq.x * 2
     var row = sq.y
     call cm.putBlockWithColour(col, row, colour)
