@@ -67,8 +67,6 @@ functionWithBody:
 
 expressionFunction: 
 	NL FUNCTION functionSignature ARROW expression; 
-
-letIn: LET assignableValue ASSIGN expression (COMMA assignableValue ASSIGN expression)* NL IN; 
    
 functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
 
@@ -216,7 +214,6 @@ expression:
 	| expression binaryOp expression
 	| newInstance
 	| ifExpression
-	| letIn expression
 	| expression withClause
 	| NL expression // so that any expression may be broken over multiple lines at its 'natural joints' i.e. before any sub-expression
 	;

@@ -288,18 +288,6 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitExpressionFunction([NotNull] ElanParser.ExpressionFunctionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.letIn"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterLetIn([NotNull] ElanParser.LetInContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.letIn"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitLetIn([NotNull] ElanParser.LetInContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.functionSignature"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
