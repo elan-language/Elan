@@ -356,11 +356,11 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitValue([NotNull] ElanParser.ValueContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.nameQualifier"/>.
+	/// Visit a parse tree produced by <see cref="ElanParser.scopeQualifier"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitNameQualifier([NotNull] ElanParser.NameQualifierContext context);
+	Result VisitScopeQualifier([NotNull] ElanParser.ScopeQualifierContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.literal"/>.
 	/// </summary>

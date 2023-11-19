@@ -575,7 +575,7 @@ public partial class ElanBaseVisitor<Result> : AbstractParseTreeVisitor<Result>,
 	/// <return>The visitor result.</return>
 	public virtual Result VisitValue([NotNull] ElanParser.ValueContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.nameQualifier"/>.
+	/// Visit a parse tree produced by <see cref="ElanParser.scopeQualifier"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -583,7 +583,7 @@ public partial class ElanBaseVisitor<Result> : AbstractParseTreeVisitor<Result>,
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitNameQualifier([NotNull] ElanParser.NameQualifierContext context) { return VisitChildren(context); }
+	public virtual Result VisitScopeQualifier([NotNull] ElanParser.ScopeQualifierContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.literal"/>.
 	/// <para>

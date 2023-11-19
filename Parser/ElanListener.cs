@@ -591,15 +591,15 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitValue([NotNull] ElanParser.ValueContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.nameQualifier"/>.
+	/// Enter a parse tree produced by <see cref="ElanParser.scopeQualifier"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterNameQualifier([NotNull] ElanParser.NameQualifierContext context);
+	void EnterScopeQualifier([NotNull] ElanParser.ScopeQualifierContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.nameQualifier"/>.
+	/// Exit a parse tree produced by <see cref="ElanParser.scopeQualifier"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitNameQualifier([NotNull] ElanParser.NameQualifierContext context);
+	void ExitScopeQualifier([NotNull] ElanParser.ScopeQualifierContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.literal"/>.
 	/// </summary>

@@ -72,7 +72,7 @@ public static class AstFactory {
             AbstractImmutableClassContext c => visitor.Build(c),
             ConstructorContext c => visitor.Build(c),
             PropertyContext c => visitor.Build(c),
-            NameQualifierContext c => visitor.Build(c),
+            ScopeQualifierContext c => visitor.Build(c),
             DeconstructedTupleContext c => visitor.Build(c),
             ThrowExceptionContext c => visitor.Build(c),
             PrintStatementContext c => visitor.Build(c),
@@ -188,13 +188,13 @@ public static class AstFactory {
         var id = visitor.Visit(context.IDENTIFIER());
         var pps = (context.argumentList()?.expression().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
 
-        var nqr = context.nameQualifier() is { } nq ? visitor.Visit(nq) : null;
+        var nqr = context.scopeQualifier() is { } nq ? visitor.Visit(nq) : null;
 
         return new MethodCallNode(id, nqr, pps);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {
-        if (context.nameQualifier() is { } nq) {
+        if (context.scopeQualifier() is { } nq) {
             var nqn = visitor.Visit(nq);
             var idn = visitor.Visit(context.IDENTIFIER());
             return new QualifiedNode(nqn, idn);
@@ -260,7 +260,7 @@ public static class AstFactory {
             return new IndexedExpressionNode(expr, index);
         }
 
-        if (context.nameQualifier() is { } nq) {
+        if (context.scopeQualifier() is { } nq) {
             var qual = visitor.Visit(nq);
             var expr = visitor.Visit(context.IDENTIFIER());
 
@@ -766,7 +766,7 @@ public static class AstFactory {
         return new PropertyDefNode(id, type, isPrivate);
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, NameQualifierContext context) {
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ScopeQualifierContext context) {
         if (context.GLOBAL() is not null) {
             return new GlobalNode();
         }

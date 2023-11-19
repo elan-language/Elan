@@ -66,7 +66,7 @@ public partial class ElanParser : Parser {
 		RULE_if = 40, RULE_for = 41, RULE_foreach = 42, RULE_while = 43, RULE_repeat = 44, 
 		RULE_try = 45, RULE_switch = 46, RULE_case = 47, RULE_caseDefault = 48, 
 		RULE_expression = 49, RULE_bracketedExpression = 50, RULE_ifExpression = 51, 
-		RULE_lambda = 52, RULE_index = 53, RULE_range = 54, RULE_value = 55, RULE_nameQualifier = 56, 
+		RULE_lambda = 52, RULE_index = 53, RULE_range = 54, RULE_value = 55, RULE_scopeQualifier = 56, 
 		RULE_literal = 57, RULE_literalValue = 58, RULE_dataStructureDefinition = 59, 
 		RULE_literalDataStructure = 60, RULE_tupleDefinition = 61, RULE_literalTuple = 62, 
 		RULE_deconstructedTuple = 63, RULE_listDefinition = 64, RULE_literalList = 65, 
@@ -86,7 +86,7 @@ public partial class ElanParser : Parser {
 		"newInstance", "withClause", "proceduralControlFlow", "if", "for", "foreach", 
 		"while", "repeat", "try", "switch", "case", "caseDefault", "expression", 
 		"bracketedExpression", "ifExpression", "lambda", "index", "range", "value", 
-		"nameQualifier", "literal", "literalValue", "dataStructureDefinition", 
+		"scopeQualifier", "literal", "literalValue", "dataStructureDefinition", 
 		"literalDataStructure", "tupleDefinition", "literalTuple", "deconstructedTuple", 
 		"listDefinition", "literalList", "listDecomp", "arrayDefinition", "dictionaryDefinition", 
 		"literalDictionary", "kvp", "literalKvp", "unaryOp", "binaryOp", "arithmeticOp", 
@@ -935,8 +935,8 @@ public partial class ElanParser : Parser {
 
 	public partial class AssignableValueContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(ElanParser.IDENTIFIER, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public NameQualifierContext nameQualifier() {
-			return GetRuleContext<NameQualifierContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public ScopeQualifierContext scopeQualifier() {
+			return GetRuleContext<ScopeQualifierContext>(0);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public IndexContext index() {
 			return GetRuleContext<IndexContext>(0);
@@ -985,7 +985,7 @@ public partial class ElanParser : Parser {
 				if (_la==GLOBAL || _la==SELF) {
 					{
 					State = 245;
-					nameQualifier();
+					scopeQualifier();
 					}
 				}
 
@@ -1037,8 +1037,8 @@ public partial class ElanParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(ElanParser.IDENTIFIER, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode OPEN_BRACKET() { return GetToken(ElanParser.OPEN_BRACKET, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode CLOSE_BRACKET() { return GetToken(ElanParser.CLOSE_BRACKET, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public NameQualifierContext nameQualifier() {
-			return GetRuleContext<NameQualifierContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public ScopeQualifierContext scopeQualifier() {
+			return GetRuleContext<ScopeQualifierContext>(0);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public ArgumentListContext argumentList() {
 			return GetRuleContext<ArgumentListContext>(0);
@@ -1076,7 +1076,7 @@ public partial class ElanParser : Parser {
 			if (_la==GLOBAL || _la==SELF) {
 				{
 				State = 256;
-				nameQualifier();
+				scopeQualifier();
 				}
 			}
 
@@ -4713,8 +4713,8 @@ public partial class ElanParser : Parser {
 			return GetRuleContext<LiteralContext>(0);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(ElanParser.IDENTIFIER, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public NameQualifierContext nameQualifier() {
-			return GetRuleContext<NameQualifierContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public ScopeQualifierContext scopeQualifier() {
+			return GetRuleContext<ScopeQualifierContext>(0);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public DataStructureDefinitionContext dataStructureDefinition() {
 			return GetRuleContext<DataStructureDefinitionContext>(0);
@@ -4766,7 +4766,7 @@ public partial class ElanParser : Parser {
 				if (_la==GLOBAL || _la==SELF) {
 					{
 					State = 755;
-					nameQualifier();
+					scopeQualifier();
 					}
 				}
 
@@ -4810,31 +4810,31 @@ public partial class ElanParser : Parser {
 		return _localctx;
 	}
 
-	public partial class NameQualifierContext : ParserRuleContext {
+	public partial class ScopeQualifierContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DOT() { return GetToken(ElanParser.DOT, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SELF() { return GetToken(ElanParser.SELF, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode GLOBAL() { return GetToken(ElanParser.GLOBAL, 0); }
-		public NameQualifierContext(ParserRuleContext parent, int invokingState)
+		public ScopeQualifierContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_nameQualifier; } }
+		public override int RuleIndex { get { return RULE_scopeQualifier; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.EnterNameQualifier(this);
+			if (typedListener != null) typedListener.EnterScopeQualifier(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IElanListener typedListener = listener as IElanListener;
-			if (typedListener != null) typedListener.ExitNameQualifier(this);
+			if (typedListener != null) typedListener.ExitScopeQualifier(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public NameQualifierContext nameQualifier() {
-		NameQualifierContext _localctx = new NameQualifierContext(Context, State);
-		EnterRule(_localctx, 112, RULE_nameQualifier);
+	public ScopeQualifierContext scopeQualifier() {
+		ScopeQualifierContext _localctx = new ScopeQualifierContext(Context, State);
+		EnterRule(_localctx, 112, RULE_scopeQualifier);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
