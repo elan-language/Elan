@@ -36,9 +36,9 @@ inlineAsignment: assignableValue ASSIGN expression;
 
 assignableValue: (scopeQualifier?  IDENTIFIER index?) | deconstructedTuple | listDecomp;
 
-methodCall: scopeQualifier? (CURRY|PARTIAL)? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
+methodCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
-argumentList: expression (COMMA expression)*;
+argumentList: (expression |lambda) (COMMA (expression | lambda))*;
 
 // PROCEDURES
 procedureDef:
@@ -216,7 +216,6 @@ expression:
 	| expression binaryOp expression
 	| newInstance
 	| ifExpression
-	| lambda
 	| letIn expression
 	| expression withClause
 	| NL expression // so that any expression may be broken over multiple lines at its 'natural joints' i.e. before any sub-expression
