@@ -18,7 +18,7 @@ test:
 // STATEMENTS
 statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement | throwException | printStatement)*;
 
-callStatement: NL CALL (methodCall | (assignableValue DOT methodCall));
+callStatement: NL CALL (procedureCall | (assignableValue DOT procedureCall));
 
 throwException: NL THROW (LITERAL_STRING | IDENTIFIER );
 
@@ -36,7 +36,9 @@ inlineAsignment: assignableValue ASSIGN expression;
 
 assignableValue: (scopeQualifier?  IDENTIFIER index?) | deconstructedTuple | listDecomp;
 
-methodCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
+procedureCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
+
+functionCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
 argumentList: (expression |lambda) (COMMA (expression | lambda))*;
 
@@ -206,10 +208,10 @@ caseDefault :
 // EXPRESSIONS
 expression: 
 	  bracketedExpression
-	| methodCall
+	| functionCall
 	| value 
 	| expression index
-	| expression DOT methodCall
+	| expression DOT functionCall
 	| expression DOT IDENTIFIER 
 	| unaryOp expression
 	| expression POWER expression // so that ^ has higher priority (because implemented with function in CSharp)

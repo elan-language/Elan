@@ -16,7 +16,8 @@ public static class AstFactory {
             StatementBlockContext c => visitor.Build(c),
             CallStatementContext c => visitor.Build(c),
             ExpressionContext c => visitor.Build(c),
-            MethodCallContext c => visitor.Build(c),
+            FunctionCallContext c => visitor.Build(c),
+            ProcedureCallContext c => visitor.Build(c),
             ValueContext c => visitor.Build(c),
             LiteralValueContext c => visitor.Build(c),
             LiteralKvpContext c => visitor.Build(c),
@@ -109,18 +110,18 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CallStatementContext context) {
         if (context.DOT() is not null) {
-            var ms = visitor.Visit<MethodCallNode>(context.methodCall());
+            var ms = visitor.Visit<MethodCallNode>(context.procedureCall());
             var exp = visitor.Visit(context.assignableValue());
 
             return  new CallStatementNode(ms with { DotCalled = true, Qualifier = exp });
         }
 
-        return  new CallStatementNode(visitor.Visit(context.methodCall()));
+        return  new CallStatementNode(visitor.Visit(context.procedureCall()));
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionContext context) {
         if (context.DOT() is not null) {
-            if (context.methodCall() is { } dmc) {
+            if (context.functionCall() is { } dmc) {
                 var ms = visitor.Visit<MethodCallNode>(dmc);
                 var exp = visitor.Visit(context.expression().First());
                 //return new MethodCallNode(ms, exp) { DotCalled = true };
@@ -135,7 +136,7 @@ public static class AstFactory {
             }
         }
 
-        if (context.methodCall() is { } mc) {
+        if (context.functionCall() is { } mc) {
             return visitor.Visit(mc);
         }
 
@@ -185,7 +186,7 @@ public static class AstFactory {
         throw new NotImplementedException(context.children.First().GetText());
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, MethodCallContext context) {
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureCallContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var pps = (context.argumentList()?.expression().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
 
@@ -193,6 +194,16 @@ public static class AstFactory {
 
         return new MethodCallNode(id, nqr, pps);
     }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionCallContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var pps = (context.argumentList()?.expression().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
+
+        var nqr = context.scopeQualifier() is { } nq ? visitor.Visit(nq) : null;
+
+        return new MethodCallNode(id, nqr, pps);
+    }
+
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {
         if (context.scopeQualifier() is { } nq) {

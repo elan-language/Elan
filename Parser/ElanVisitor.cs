@@ -98,11 +98,17 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitAssignableValue([NotNull] ElanParser.AssignableValueContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.methodCall"/>.
+	/// Visit a parse tree produced by <see cref="ElanParser.procedureCall"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitMethodCall([NotNull] ElanParser.MethodCallContext context);
+	Result VisitProcedureCall([NotNull] ElanParser.ProcedureCallContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.functionCall"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFunctionCall([NotNull] ElanParser.FunctionCallContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.argumentList"/>.
 	/// </summary>
