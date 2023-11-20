@@ -93,7 +93,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    myProc();
+    Globals.myProc();
   }
 }";
 

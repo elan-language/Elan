@@ -44,8 +44,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    square(3);
-    square(5);
+    Globals.square(3);
+    Globals.square(5);
   }
 }";
 

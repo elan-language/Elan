@@ -45,7 +45,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     System.Console.WriteLine(StandardLibrary.Functions.asString(1));
-    foo();
+    Globals.foo();
     System.Console.WriteLine(StandardLibrary.Functions.asString(3));
   }
 }";
@@ -59,6 +59,44 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "1\r\n2\r\n3\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_SystemProcedure() {
+        var code = @"
+main
+    call pause(1)
+    print 1
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.SystemAccessors;
+using static StandardLibrary.Procedures;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    StandardLibrary.Procedures.pause(1);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(1));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
     [TestMethod]
@@ -94,7 +132,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     var b = @$""hello"";
-    foo(a, b);
+    Globals.foo(a, b);
   }
 }";
 
@@ -142,7 +180,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     var b = @$""hello"";
-    foo(ref a, ref b);
+    Globals.foo(ref a, ref b);
   }
 }";
 
@@ -190,7 +228,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     var b = true;
-    foo(a, ref b);
+    Globals.foo(a, ref b);
   }
 }";
 
@@ -239,7 +277,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     var b = @$""hello"";
-    foo(a, b);
+    Globals.foo(a, b);
   }
 }";
 
@@ -286,7 +324,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var a = 1;
-    foo(a + 1, @$""hello"");
+    Globals.foo(a + 1, @$""hello"");
   }
 }";
 
@@ -336,7 +374,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 1;
     var b = @$""hello"";
-    foo(ref a, ref b);
+    Globals.foo(ref a, ref b);
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
     System.Console.WriteLine(StandardLibrary.Functions.asString(b));
   }
@@ -381,7 +419,7 @@ using static StandardLibrary.Constants;
 public static partial class Globals {
   public static void foo() {
     System.Console.WriteLine(StandardLibrary.Functions.asString(1));
-    bar();
+    Globals.bar();
   }
   public static void bar() {
     System.Console.WriteLine(StandardLibrary.Functions.asString(2));
@@ -390,7 +428,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    foo();
+    Globals.foo();
     System.Console.WriteLine(StandardLibrary.Functions.asString(3));
   }
 }";
@@ -432,14 +470,14 @@ public static partial class Globals {
   public static void foo(int a) {
     if (a > 0) {
       System.Console.WriteLine(StandardLibrary.Functions.asString(a));
-      foo(a - 1);
+      Globals.foo(a - 1);
     }
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    foo(3);
+    Globals.foo(3);
   }
 }";
 
@@ -641,13 +679,13 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void foo(int a) {
-    foo(a);
+    Globals.foo(a);
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
-    foo(3);
+    Globals.foo(3);
   }
 }";
 
@@ -756,7 +794,7 @@ public static class Program {
   private static void Main(string[] args) {
     var a = 2;
     var b = @$""hello"";
-    foo(ref a, ref @$""hello"");
+    Globals.foo(ref a, ref @$""hello"");
   }
 }";
 

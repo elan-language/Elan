@@ -46,7 +46,11 @@ public static class CSharpImportHelpers {
 
         var allExportedClasses = exportedTypes.Where(t => !t.IsStatic()).Where(IsStdLib);
 
-        foreach (var fs in stdLib.Select(mi => CreateFunctionSymbol(mi))) {
+        foreach (var fs in stdLib.Where(mi => mi.DeclaringType == typeof(Functions)).Select(mi => CreateFunctionSymbol(mi))) {
+            globalScope.DefineSystem(fs);
+        }
+
+        foreach (var fs in stdLib.Where(mi => mi.DeclaringType == typeof(Procedures)).Select(mi => CreateProcedureSymbol(mi))) {
             globalScope.DefineSystem(fs);
         }
 
@@ -109,8 +113,8 @@ public static class CSharpImportHelpers {
         return cls;
     }
 
-    private static ProcedureSymbol CreateProcedureSymbol(MethodInfo mi, ClassSymbol cls) {
-        var ps = new ProcedureSymbol(mi!.Name, NameSpace.UserLocal, ParameterIds(mi), cls);
+    private static ProcedureSymbol CreateProcedureSymbol(MethodInfo mi, IScope? scope = null) {
+        var ps = new ProcedureSymbol(mi!.Name, scope == null ? NameSpace.LibraryProcedure : NameSpace.UserLocal, ParameterIds(mi), scope);
         ImportParameters(ps, mi);
         return ps;
     }
@@ -126,7 +130,7 @@ public static class CSharpImportHelpers {
     }
 
     private static FunctionSymbol CreateFunctionSymbol(MethodInfo mi, IScope? scope = null) {
-        var fs = new FunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), NameSpace.LibraryFunction, ParameterIds(mi), scope);
+        var fs = new FunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), scope == null ? NameSpace.LibraryFunction : NameSpace.UserLocal, ParameterIds(mi), scope);
         ImportParameters(fs, mi);
         return fs;
     }

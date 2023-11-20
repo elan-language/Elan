@@ -12,11 +12,6 @@ namespace StandardLibrary;
 [ElanStandardLibrary]
 public static class Functions {
 
-    //TODO: Temporarily moved here, but belongs in Procedures
-    public static void pause(int milliseconds)
-    {
-        Thread.Sleep(milliseconds);
-    }
 
     public static string typeAndProperties(object o) {
         var type = o.GetType();

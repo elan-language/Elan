@@ -3,9 +3,10 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record ProcedureCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters) : IAstNode, ICanWrapExpression , ICallNode{
+public record ProcedureCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters) : IAstNode, ICanWrapExpression, ICallNode {
     public ProcedureCallNode(MethodCallNode node) : this(node.Id, null, node.Parameters.SafePrepend(node.Qualifier).ToImmutableArray()) { }
-    public string Name => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
+
+    public ProcedureCallNode(MethodCallNode node, IAstNode? nsNode) : this(node.Id, nsNode, node.Parameters.SafePrepend(node.Qualifier).ToImmutableArray()) { }
 
     public IEnumerable<IAstNode> Children => Parameters.SafePrepend(Qualifier).Prepend(Id);
 
@@ -16,4 +17,6 @@ public record ProcedureCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray
             _ => this with { Parameters = Parameters.SafeReplace(from, to) }
         };
     }
+
+    public string Name => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
 }

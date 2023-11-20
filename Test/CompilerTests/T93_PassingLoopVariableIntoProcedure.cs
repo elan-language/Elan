@@ -39,7 +39,7 @@ public static partial class Globals {
   public static void removeLetters(string wordAsPlayed) {
     foreach (var letter in wordAsPlayed) {
       var x = letter;
-      removeLetter(x);
+      Globals.removeLetter(x);
     }
   }
   public static void removeLetter(char l) {

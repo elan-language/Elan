@@ -149,7 +149,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    foo();
+    Globals.foo();
   }
 }";
 
@@ -197,7 +197,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     try {
-      foo();
+      Globals.foo();
       System.Console.WriteLine(StandardLibrary.Functions.asString(@$""not caught""));
     }
     catch (Exception _e) {
@@ -302,7 +302,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     try {
-      foo();
+      Globals.foo();
       System.Console.WriteLine(StandardLibrary.Functions.asString(@$""not caught""));
     }
     catch (Exception _e) {
