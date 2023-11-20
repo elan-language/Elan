@@ -118,7 +118,7 @@ main
     call foo(a, b)
 end main
 
-procedure foo(ref a Int, ref b String)
+procedure foo(out a Int, out b String)
     print a
     print b
 end procedure
@@ -166,7 +166,7 @@ main
     call foo(a, b)
 end main
 
-procedure foo(a Int, ref b Bool)
+procedure foo(a Int, out b Bool)
     print a
     print b
 end procedure
@@ -732,7 +732,7 @@ main
     call foo(a, ""hello"")
 end main
 
-procedure foo(ref a Int, ref b String)
+procedure foo(out a Int, out b String)
     print a
     print b
 end procedure

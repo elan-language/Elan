@@ -49,13 +49,13 @@ procedureDef:
 
 procedureSignature: IDENTIFIER OPEN_BRACKET procedureParameterList? CLOSE_BRACKET;
 
-procedureParameterList: OUT? parameter (COMMA OUT? parameter)*;
+procedureParameterList: procedureParameter (COMMA procedureParameter)*;
 
 parameterList: parameter (COMMA parameter)*;
 
 parameter: IDENTIFIER type;
 
-procedureParameter: REF? IDENTIFIER type;
+procedureParameter: OUT? IDENTIFIER type;
 
 // FUNCTIONS
 functionDef: functionWithBody | expressionFunction;

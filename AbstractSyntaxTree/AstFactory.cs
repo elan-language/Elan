@@ -657,7 +657,7 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureParameterContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var type = visitor.Visit(context.type());
-        var byRef = context.REF() is not null;
+        var byRef = context.OUT() is not null;
 
         return new ParameterNode(id, type, byRef);
     }
