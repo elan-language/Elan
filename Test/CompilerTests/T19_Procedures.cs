@@ -32,7 +32,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -72,7 +71,6 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -115,7 +113,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -162,7 +159,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -209,7 +205,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -257,7 +252,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -304,7 +298,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -352,7 +345,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -404,7 +396,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -453,7 +444,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -663,7 +653,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -744,7 +733,6 @@ procedure foo (ref a Int, b String)
 end procedure
 ";
 
-        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -768,7 +756,6 @@ end procedure
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {

@@ -62,7 +62,6 @@ end class
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -173,7 +172,6 @@ end class
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -289,7 +287,6 @@ end class
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {

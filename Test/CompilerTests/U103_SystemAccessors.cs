@@ -25,7 +25,6 @@ end system
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -37,7 +36,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var d = readFromNetwork(@$""www.foo.com"");
+    var d = Globals.readFromNetwork(@$""www.foo.com"");
     System.Console.WriteLine(StandardLibrary.Functions.asString(d));
   }
 }";
@@ -75,12 +74,11 @@ end system
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static void myProc() {
-    var d = readFromNetwork(@$""www.foo.com"");
+    var d = Globals.readFromNetwork(@$""www.foo.com"");
     System.Console.WriteLine(StandardLibrary.Functions.asString(d));
   }
   public static string readFromNetwork(string url) {
@@ -125,12 +123,11 @@ end system
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static string readFromNetwork(string url) {
-    var r = random();
+    var r = StandardLibrary.SystemAccessors.random();
     System.Console.WriteLine(StandardLibrary.Functions.asString(@$""checking""));
     return @$""data"";
   }
@@ -138,7 +135,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var d = readFromNetwork(@$""www.foo.com"");
+    var d = Globals.readFromNetwork(@$""www.foo.com"");
     System.Console.WriteLine(StandardLibrary.Functions.asString(d));
   }
 }";
@@ -180,13 +177,12 @@ end system
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public static string readFromNetwork(string url) {
     var result = @$"""";
-    var b = check(url);
+    var b = Globals.check(url);
     if (b) {
       result = @$""OK data"";
     }
@@ -200,7 +196,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var d = readFromNetwork(@$""www.foo.com"");
+    var d = Globals.readFromNetwork(@$""www.foo.com"");
     System.Console.WriteLine(StandardLibrary.Functions.asString(d));
   }
 }";
@@ -278,7 +274,7 @@ system readFromNetwork(url String) as String
 end system
 ";
 
-        var objectCode = @"";
+      
 
         var parseTree = @"*";
 

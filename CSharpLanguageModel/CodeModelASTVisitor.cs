@@ -23,7 +23,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return astNode switch {
             FileNode n => HandleScope(BuildFileModel, n),
             MainNode n => HandleScope(BuildMainModel, n),
-            SystemAccessorCallNode n => HandleScope(BuildSystemCallModel, n),
+            SystemAccessorCallNode n => HandleScope(BuildSystemAccessorModel, n),
             ProcedureCallNode n => HandleScope(BuildProcedureCallModel, n),
             FunctionCallNode n => HandleScope(BuildFunctionCallModel, n),
             IScalarValueNode n => HandleScope(BuildScalarValueModel, n),
@@ -98,7 +98,10 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new ProcedureCallModel(Visit(procedureCallNode.Id), qualifier, parameters);
     }
 
-    private MethodCallModel BuildSystemCallModel(SystemAccessorCallNode systemAccessorCallNode) => new(CodeHelpers.MethodType.SystemCall, Visit(systemAccessorCallNode.Id), null, systemAccessorCallNode.Parameters.Select(Visit));
+    private MethodCallModel BuildSystemAccessorModel(SystemAccessorCallNode systemAccessorCallNode) {
+        var qual = systemAccessorCallNode.Qualifier is { } q ? Visit(q) : null;
+        return new MethodCallModel(CodeHelpers.MethodType.SystemCall, Visit(systemAccessorCallNode.Id), qual, systemAccessorCallNode.Parameters.Select(Visit));
+    }
 
     private MethodCallModel BuildFunctionCallModel(FunctionCallNode functionCallNode) {
         var qual = functionCallNode.Qualifier is { } q ? Visit(q) : null;

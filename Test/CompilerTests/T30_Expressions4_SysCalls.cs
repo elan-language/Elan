@@ -18,7 +18,6 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -27,7 +26,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = input();
+    var a = StandardLibrary.SystemAccessors.input();
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
@@ -55,7 +54,6 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -64,7 +62,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = input(@$""Your name"");
+    var a = StandardLibrary.SystemAccessors.input(@$""Your name"");
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";

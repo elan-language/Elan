@@ -15,7 +15,7 @@ public static class CompilerTransforms {
     public static IAstNode? TransformMethodCallNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {
             MethodCallNode mcn => ResolveMethodCall(currentScope, mcn) switch {
-                (SystemAccessorSymbol, _) => new SystemAccessorCallNode(mcn.Id, mcn.Parameters) { DotCalled = mcn.DotCalled },
+                (SystemAccessorSymbol sas, _) => new SystemAccessorCallNode(mcn.Id, NameSpaceToNode(sas.NameSpace), mcn.Parameters) { DotCalled = mcn.DotCalled },
                 (ProcedureSymbol ps, false) => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
                 (ProcedureSymbol, true) => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 (FunctionSymbol fs, false) => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
@@ -186,7 +186,7 @@ public static class CompilerTransforms {
     }
 
     private static IAstNode? NameSpaceToNode(NameSpace ns) => ns switch {
-        NameSpace.System => new LibraryNode("StandardLibrary.SystemAccessor"),
+        NameSpace.System => new LibraryNode("StandardLibrary.SystemAccessors"),
         NameSpace.LibraryFunction => new LibraryNode("StandardLibrary.Functions"),
         NameSpace.LibraryProcedure => new LibraryNode("StandardLibrary.Procedures"),
         NameSpace.UserGlobal => new GlobalNode(),

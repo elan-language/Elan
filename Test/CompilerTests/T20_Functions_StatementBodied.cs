@@ -23,7 +23,6 @@ end function
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -71,7 +70,6 @@ end function
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -140,7 +138,6 @@ end function
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -199,7 +196,6 @@ public static class Program {
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -560,7 +556,6 @@ function foo(ref a Int, b Int) as Int
     return a * b
 end function
 ";
-        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);

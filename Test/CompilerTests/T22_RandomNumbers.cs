@@ -23,7 +23,6 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -32,10 +31,10 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    seedRandom(3);
-    var x = random();
+    StandardLibrary.SystemAccessors.seedRandom(3);
+    var x = StandardLibrary.SystemAccessors.random();
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
-    x = random();
+    x = StandardLibrary.SystemAccessors.random();
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
@@ -65,7 +64,6 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -74,10 +72,10 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    seedRandom(3);
-    var x = random(1000.0);
+    StandardLibrary.SystemAccessors.seedRandom(3);
+    var x = StandardLibrary.SystemAccessors.random(1000.0);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
-    x = random(1000.0);
+    x = StandardLibrary.SystemAccessors.random(1000.0);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
@@ -107,7 +105,6 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -116,10 +113,10 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    seedRandom(3);
-    var x = random(100.0, 200.0);
+    StandardLibrary.SystemAccessors.seedRandom(3);
+    var x = StandardLibrary.SystemAccessors.random(100.0, 200.0);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
-    x = random(100.0, 200.0);
+    x = StandardLibrary.SystemAccessors.random(100.0, 200.0);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
@@ -149,7 +146,6 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -158,10 +154,10 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    seedRandom(3);
-    var x = random(6);
+    StandardLibrary.SystemAccessors.seedRandom(3);
+    var x = StandardLibrary.SystemAccessors.random(6);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
-    x = random(6);
+    x = StandardLibrary.SystemAccessors.random(6);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
@@ -191,7 +187,6 @@ end main
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
 using static Globals;
-using static StandardLibrary.SystemAccessors;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -200,10 +195,10 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    seedRandom(3);
-    var x = random(5, 10);
+    StandardLibrary.SystemAccessors.seedRandom(3);
+    var x = StandardLibrary.SystemAccessors.random(5, 10);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
-    x = random(5, 10);
+    x = StandardLibrary.SystemAccessors.random(5, 10);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
   }
 }";
