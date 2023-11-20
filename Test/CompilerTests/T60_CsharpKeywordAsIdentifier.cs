@@ -37,7 +37,6 @@ main
   var null = 1
   var object = 1
   var operator = 1
-  var out = 1
   var override = 1
   var params = 1
   var protected = 1
@@ -61,7 +60,7 @@ main
   var virtual = 1
   var void = 1
   var volatile = 1
-  var total = base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+new+null+object+operator+out+override+params+protected+public+readonly+sbyte+sealed+short+sizeof+stackalloc+static+struct+this+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
+  var total = base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+new+null+object+operator+override+params+protected+public+readonly+sbyte+sealed+short+sizeof+stackalloc+static+struct+this+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
   print total
 end main
 ";
@@ -73,7 +72,7 @@ end main
     AssertParseTreeIs(compileData, parseTree);
     AssertCompiles(compileData);
     AssertObjectCodeCompiles(compileData);
-    AssertObjectCodeExecutes(compileData, "49\r\n");
+    AssertObjectCodeExecutes(compileData, "48\r\n");
   }
 
   [TestMethod]
@@ -121,5 +120,17 @@ end main
     var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
     AssertDoesNotParse(compileData);
   }
-  #endregion
+
+    [TestMethod]
+    public void Fail_RefAsIdentifier()
+    {
+        var code = @"
+main
+  var ref = 1
+end main
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+    #endregion
 }
