@@ -126,7 +126,7 @@ end main
     {
         var code = @"
 main
-  var ref = 1
+  var out = 1
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
