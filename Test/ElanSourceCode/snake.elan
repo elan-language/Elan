@@ -37,7 +37,7 @@ procedure playGame()
     var charMap = CharMap()
     call charMap.fillBackground()
     var currentDirection = Direction.right
-    var game = Game(charMap.width/2, charMap.height, currentDirection)
+    var game = Game((charMap.width/2).asInt(), charMap.height, currentDirection)
     var gameOn = true
     call game.setNewApplePosition()
     while gameOn
@@ -90,7 +90,7 @@ class Game
       return snake.tail()
     end function
 
-    procedure clockTick(d Direction, ref continue Bool)
+    procedure clockTick(d Direction, out continue Bool)
         call snake.advanceHeadOneSquare(d)
         if snake.head is apple then
             call setNewApplePosition()

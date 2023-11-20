@@ -1,4 +1,5 @@
 ﻿using Compiler;
+using StandardLibrary;
 
 namespace Test.CompilerTests;
 
@@ -10,7 +11,7 @@ public class T96_Snake
     #region Passes
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ConsoleUI()
     {
         var code = ReadElanSourceCodeFile("snake.elan");
