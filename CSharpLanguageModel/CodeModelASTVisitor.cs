@@ -71,7 +71,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             TypeNode n => HandleScope(BuildTypeModel, n),
             SelfNode n => HandleScope(BuildSelfModel, n),
             GlobalNode n => HandleScope(BuildGlobalModel, n),
-            FunctionsNode n => HandleScope(BuildFunctionsModel, n),
+            LibraryNode n => HandleScope(BuildNamespaceModel, n),
             ReturnExpressionNode n => Visit(n.Expression),
             QualifiedNode n => HandleScope(BuildQualifiedModel, n),
             DefaultNode n => HandleScope(BuildDefaultModel, n),
@@ -369,7 +369,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private ScalarValueModel BuildGlobalModel(GlobalNode globalNode) => new("Globals");
 
-    private ScalarValueModel BuildFunctionsModel(FunctionsNode globalNode) => new("StandardLibrary.Functions");
+    private ScalarValueModel BuildNamespaceModel(LibraryNode l) => new(l.Type);
 
     private QualifiedValueModel BuildQualifiedModel(QualifiedNode qualifiedNode) => new(Visit(qualifiedNode.Qualifier), Visit(qualifiedNode.Qualified));
 

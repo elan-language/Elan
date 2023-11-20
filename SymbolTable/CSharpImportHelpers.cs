@@ -126,7 +126,7 @@ public static class CSharpImportHelpers {
     }
 
     private static FunctionSymbol CreateFunctionSymbol(MethodInfo mi, IScope? scope = null) {
-        var fs = new FunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), NameSpace.Library, ParameterIds(mi), scope);
+        var fs = new FunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), NameSpace.LibraryFunction, ParameterIds(mi), scope);
         ImportParameters(fs, mi);
         return fs;
     }

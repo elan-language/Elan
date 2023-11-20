@@ -4,7 +4,8 @@ namespace SymbolTable.Symbols;
 
 public enum NameSpace {
     System,
-    Library,
+    LibraryFunction,
+    LibraryProcedure,
     UserGlobal,
     UserLocal
 }
