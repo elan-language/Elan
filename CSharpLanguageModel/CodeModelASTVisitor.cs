@@ -79,7 +79,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             DeconstructionNode n => HandleScope(BuildDeconstructionModel, n),
             ThrowNode n => HandleScope(BuildThrowModel, n),
             PrintNode n => HandleScope(BuildPrintModel, n),
-            ParameterCallNode n => HandleScope(BuildParameterCallModel, n), 
+            ParameterCallNode n => HandleScope(BuildParameterCallModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -402,8 +402,5 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new PrintModel(thrown);
     }
 
-    private ParameterCallModel BuildParameterCallModel(ParameterCallNode defaultNode) {
-      
-        return new ParameterCallModel(defaultNode.Id, defaultNode.IsRef);
-    }
+    private ParameterCallModel BuildParameterCallModel(ParameterCallNode defaultNode) => new(Visit(defaultNode.Expression), defaultNode.IsRef);
 }

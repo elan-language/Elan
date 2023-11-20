@@ -41,11 +41,16 @@ public static class CompilerTransforms {
     // must come after TransformMethodCallNodes
     public static IAstNode? TransformProcedureParameterNodes(IAstNode[] nodes, IScope currentScope) {
 
-        static IAstNode TransformParameter(IdentifierNode p, int i, ProcedureSymbol scope) {
+        static IAstNode TransformParameter(IAstNode p, int i, ProcedureSymbol scope) {
+            // avoid failed with mismatched parameter counts
+            if (i >= scope.ParameterNames.Length) {
+                return new ParameterCallNode(p, false);
+            }
+
             var matchingParm = scope.ParameterNames[i];
 
             var symbol = scope.Resolve(matchingParm) as ParameterSymbol ?? throw new NullReferenceException();
-            return new ParameterCallNode(p.Id, symbol.ByRef);
+            return new ParameterCallNode(p, symbol.ByRef);
         }
 
         switch (nodes.Last()) {
@@ -53,10 +58,10 @@ public static class CompilerTransforms {
 
                 var procedureScope =  ResolveMethodCall(currentScope, pcn).Item1 as ProcedureSymbol ?? GetProcedure(pcn, currentScope) ?? throw new NullReferenceException();
 
-                var parameterNodes = pcn.Parameters.OfType<IdentifierNode>().ToArray();
+                var parameterNodes = pcn.Parameters.Where(p => p is not ParameterCallNode).ToArray();
 
                 if (parameterNodes.Any()) {
-                    var transformedParameters = pcn.Parameters.OfType<IdentifierNode>().Select((p, i) => TransformParameter(p, i, procedureScope));
+                    var transformedParameters = pcn.Parameters.Select((p, i) => TransformParameter(p, i, procedureScope));
                     return pcn with { Parameters = transformedParameters.ToImmutableArray() };
                 }
 
@@ -94,7 +99,11 @@ public static class CompilerTransforms {
 
         if (id != null) {
             var varSymbol = currentScope.Resolve(id);
-            var type = varSymbol is VariableSymbol vs ? EnsureResolved(vs.ReturnType, currentScope) : null;
+            var type = varSymbol switch {
+                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
+                ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
+                _ => null
+            };
 
             if (type is ClassSymbolType cst) {
                 return (currentScope.Resolve(cst.Name) as ClassSymbol)?.Resolve(mcn.Name) as ProcedureSymbol;

@@ -122,6 +122,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitProcedureSignature([NotNull] ElanParser.ProcedureSignatureContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.procedureParameterList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitProcedureParameterList([NotNull] ElanParser.ProcedureParameterListContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.parameterList"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -133,6 +139,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitParameter([NotNull] ElanParser.ParameterContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.procedureParameter"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitProcedureParameter([NotNull] ElanParser.ProcedureParameterContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.functionDef"/>.
 	/// </summary>
@@ -163,6 +175,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitSystemAccessor([NotNull] ElanParser.SystemAccessorContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.accessorSignature"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAccessorSignature([NotNull] ElanParser.AccessorSignatureContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.constantDef"/>.
 	/// </summary>

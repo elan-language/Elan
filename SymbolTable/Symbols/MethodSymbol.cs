@@ -10,13 +10,13 @@ public enum NameSpace {
 }
 
 public abstract class MethodSymbol : BaseScope, ISymbol {
-    protected MethodSymbol(string name, ISymbolType returnType, NameSpace nameSpace, string[] parameterNames, IScope enclosingScope) : this(name, returnType, nameSpace, parameterNames) => EnclosingScope = enclosingScope;
-
-    protected MethodSymbol(string name, ISymbolType returnType, NameSpace nameSpace, string[] parameterNames) {
+  
+    protected MethodSymbol(string name, ISymbolType returnType, NameSpace nameSpace, string[] parameterNames, IScope? enclosingScope) {
         NameSpace = nameSpace;
         ParameterNames = parameterNames;
         Name = name;
         ReturnType = returnType;
+        EnclosingScope = enclosingScope;
     }
 
     public NameSpace NameSpace { get; }

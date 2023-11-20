@@ -76,6 +76,7 @@ public static class AstFactory {
             DeconstructedTupleContext c => visitor.Build(c),
             ThrowExceptionContext c => visitor.Build(c),
             PrintStatementContext c => visitor.Build(c),
+            ProcedureParameterContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -622,7 +623,7 @@ public static class AstFactory {
         var id = visitor.Visit(context.IDENTIFIER());
 
         if (context.procedureParameterList() is { } pl) {
-            var parameters = pl.parameter().Select(visitor.Visit).OfType<ParameterNode>().Select((p, i) => p with { IsRef = pl.REF(i) is not null }).Cast<IAstNode>();
+            var parameters = pl.procedureParameter().Select(visitor.Visit);
 
             return new MethodSignatureNode(id, parameters.ToImmutableArray());
         }
@@ -651,6 +652,14 @@ public static class AstFactory {
         var type = visitor.Visit(context.type());
 
         return new ParameterNode(id, type);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureParameterContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var type = visitor.Visit(context.type());
+        var byRef = context.REF() is not null;
+
+        return new ParameterNode(id, type, byRef);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CaseContext context) {

@@ -1,5 +1,6 @@
 ﻿namespace StandardLibrary;
 
+[ElanStandardLibrary]
 public class CharMap {
     public const char empty = ' ';
     public readonly int height;

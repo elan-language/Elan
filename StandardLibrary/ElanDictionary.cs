@@ -92,5 +92,5 @@ public class ElanDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValu
         return GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + KvpHashCode(i));
     }
 
-    public override string ToString() => Functions.asString(this);
+    public override string ToString() => Functions.asString((IElanDictionary)this);
 }
