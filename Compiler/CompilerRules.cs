@@ -30,7 +30,7 @@ public static class CompilerRules {
             }
 
             if (otherNodes.Any(n => n is FunctionDefNode)) {
-                return $"Cannot have system call in function : {leafNode}";
+                return $"Cannot use system accessor in function : {leafNode}";
             }
 
             if (otherNodes.Any(n => n is  PrintNode)) {
@@ -38,7 +38,7 @@ public static class CompilerRules {
             }
             
             if (!(otherNodes.Last() is VarDefNode or AssignmentNode)) {
-                return $"Cannot use a system call in an expression : {leafNode}";
+                return $"Cannot use system accessor {scn.Name} in an expression - try defining an additional variable : {leafNode}";
             }
 
             if (!otherNodes.Any(n => n is ICanWrapExpression)) {
@@ -180,6 +180,13 @@ public static class CompilerRules {
 
                 if (nonRefParameters.Any(vn => Match(vn.Id, an.Id))) {
                     return $"Parameter {GetId(an.Id)} may not be updated : {leafNode}";
+                }
+            }
+
+            if (expandedOtherNodes.Any(n => n is SystemAccessorDefNode)) {
+                var varNodes = expandedOtherNodes.OfType<VarDefNode>();
+                if (!varNodes.Any(vn => Match(vn.Id, an.Id))) {
+                    return $"Cannot modify param in system accessor : {leafNode}";
                 }
             }
 

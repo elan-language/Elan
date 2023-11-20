@@ -186,6 +186,7 @@ public static class CompilerTransforms {
     }
 
     private static IAstNode? NameSpaceToNode(NameSpace ns) => ns switch {
+        NameSpace.System => new LibraryNode("StandardLibrary.SystemAccessor"),
         NameSpace.LibraryFunction => new LibraryNode("StandardLibrary.Functions"),
         NameSpace.LibraryProcedure => new LibraryNode("StandardLibrary.Procedures"),
         NameSpace.UserGlobal => new GlobalNode(),

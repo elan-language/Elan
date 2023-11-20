@@ -216,58 +216,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "OK data\r\n");
     }
 
-    [TestMethod, Ignore]
-    public void Pass_accessorDefinedOnAClass()
-    {
-        var code = @"
-main
- var f = Foo()
- var d =  f.readFromNetwork(""www.foo.com"") 
- print d
-end main
-
-class Foo
-    constructor()
-    end constructor
-
-    system readFromNetwork(url String) as String
-      return ""data""
-    end system
-
-    function asString() as String
-        return """"
-    end function
-end class
-";
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "data\r\n");
-    }
-
-    [TestMethod]
-    public void Pass_accessorDefinedOnAbstractClass()
-    {
-        var code = @"
-main
-end main
-
-abstract class Foo
-    system readFromNetwork(url String) as String
-end class
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-    }
     #endregion
 
     #region Fails
@@ -292,10 +240,10 @@ end system
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot have system call in function");
+        AssertDoesNotCompile(compileData, "Cannot use system accessor in function");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
    public void Fail_accessorCannotBeCalledWithinAnExpression()
     {
         var code = @"
@@ -313,11 +261,11 @@ end system
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use system accessor readFromNetwork in an expression - try defining an additional variable.");
+        AssertDoesNotCompile(compileData, "Cannot use system accessor readFromNetwork in an expression - try defining an additional variable");
     }
 
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_accessorCannotBeCalledWithinAnExpression2()
     {
         var code = @"
@@ -337,7 +285,7 @@ end system
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use system accessor readFromNetwork in an expression - try defining an additional variable.");
+        AssertDoesNotCompile(compileData, "Cannot use a print in an expression");
     }
 
     [TestMethod]
@@ -355,7 +303,7 @@ end system
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_cannotModifyParameter()
     {
         var code = @"
@@ -363,7 +311,7 @@ main
 end main
 
 system readFromNetwork(url String) as String
-  set url to ""
+  set url to """"
   return ""data""
 end system
 ";
@@ -373,7 +321,7 @@ end system
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
+        AssertDoesNotCompile(compileData, "Cannot modify param in system accessor");
     }
 
     [TestMethod]

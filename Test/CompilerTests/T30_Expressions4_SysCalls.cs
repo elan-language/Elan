@@ -93,7 +93,7 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use a system call in an expression");
+        AssertDoesNotCompile(compileData, "Cannot use system accessor input in an expression - try defining an additional variable");
     }
 
     [TestMethod]
@@ -109,7 +109,7 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use a system call in an expression");
+        AssertDoesNotCompile(compileData, "Cannot use system accessor input in an expression - try defining an additional variable");
     }
 
     [TestMethod]
