@@ -312,7 +312,7 @@ main
     print b
 end main
 
-procedure foo (ref a Int, ref b String)
+procedure foo (out a Int, out b String)
     set a to a + 1
     set b to b + ""!""
 end procedure
@@ -589,10 +589,10 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_InclusionOfRefInCall() {
+    public void Fail_InclusionOfOutInCall() {
         var code = @"
 main
-    call foo(ref 1,2)
+    call foo(out 1,2)
 end main
 
 procedure foo(a Int, b String)
@@ -686,7 +686,7 @@ main
     print b
 end main
 
-procedure foo (ref a Int, b String)
+procedure foo (out a Int, b String)
     set a to a + 1
     set b to b + ""!""
 end procedure
