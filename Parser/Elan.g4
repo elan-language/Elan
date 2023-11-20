@@ -49,7 +49,7 @@ procedureDef:
 
 procedureSignature: IDENTIFIER OPEN_BRACKET procedureParameterList? CLOSE_BRACKET;
 
-procedureParameterList: REF? parameter (COMMA REF? parameter)*;
+procedureParameterList: OUT? parameter (COMMA OUT? parameter)*;
 
 parameterList: parameter (COMMA parameter)*;
 

@@ -622,7 +622,7 @@ public static class AstFactory {
         var id = visitor.Visit(context.IDENTIFIER());
 
         if (context.procedureParameterList() is { } pl) {
-            var parameters = pl.parameter().Select(visitor.Visit).OfType<ParameterNode>().Select((p, i) => p with { IsRef = pl.REF(i) is not null }).Cast<IAstNode>();
+            var parameters = pl.parameter().Select(visitor.Visit).OfType<ParameterNode>().Select((p, i) => p with { IsRef = pl.OUT(i) is not null }).Cast<IAstNode>();
 
             return new MethodSignatureNode(id, parameters.ToImmutableArray());
         }
