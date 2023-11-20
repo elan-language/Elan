@@ -229,8 +229,6 @@ procedure printEach(target Iter<of Int>)
 end procedure
 ";
 
-        var objectCode = @"";
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

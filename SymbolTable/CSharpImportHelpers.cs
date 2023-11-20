@@ -95,7 +95,7 @@ public static class CSharpImportHelpers {
 
         var methods = type.GetMethods().Where(t => t.DeclaringType == type).Except(properties.SelectMany(p => new[] { p.GetMethod, p.SetMethod })).ToArray();
 
-        var procedures = methods.Where(m => m.ReturnType == typeof(void)).ToArray();
+        var procedures = methods.Where(m => m?.ReturnType == typeof(void)).ToArray();
         var functions = methods.Except(procedures).ToArray();
 
         foreach (var fs in functions.Select(mi => CreateFunctionSymbol(mi!, cls))) {

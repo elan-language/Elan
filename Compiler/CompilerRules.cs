@@ -68,7 +68,7 @@ public static class CompilerRules {
             var parent = nodes.SkipLast(1).Last();
 
             if (parent is AssignmentNode an) {
-                if (an.Id == ien) {
+                if (object.ReferenceEquals(an.Id, ien)) {
                     return $"Cannot modify an element within a tuple : {leafNode}";
                 }
             }
