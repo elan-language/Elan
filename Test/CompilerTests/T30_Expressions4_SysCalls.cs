@@ -19,7 +19,6 @@ end main
 using StandardLibrary;
 using static Globals;
 using static StandardLibrary.SystemAccessors;
-using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
@@ -57,7 +56,6 @@ end main
 using StandardLibrary;
 using static Globals;
 using static StandardLibrary.SystemAccessors;
-using static StandardLibrary.Procedures;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
