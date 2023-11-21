@@ -33,8 +33,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_Map()
-    {
+    public void Pass_Map() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -57,8 +56,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_Reduce()
-    {
+    public void Pass_Reduce() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -80,8 +78,8 @@ end main
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "195\r\n295\r\nresult:23571113171923273137");
     }
-    public void Pass_Max()
-    {
+
+    public void Pass_Max() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -102,8 +100,8 @@ end main
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "37\r\n19\r\n");
     }
-    public void Pass_Min()
-    {
+
+    public void Pass_Min() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -126,8 +124,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_Any()
-    {
+    public void Pass_Any() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -152,8 +149,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_GroupBy()
-    {
+    public void Pass_GroupBy() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -173,6 +169,7 @@ end main
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Iter<Group<Int,Int>>\r\nGroup 1 {11,31}"); //Not sure quite what output is reasonable?
     }
+
     #endregion
 
     #region Fails

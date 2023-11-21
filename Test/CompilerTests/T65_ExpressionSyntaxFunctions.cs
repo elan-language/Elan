@@ -5,8 +5,26 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass] [Ignore]
-public class T65_ExpressionSyntaxFunctions
-{
+public class T65_ExpressionSyntaxFunctions {
+    #region Fails
+
+    [TestMethod]
+    public void Fail_endFunction() {
+        var code = @"
+main
+ print square(source[3])
+end main
+
+function square(x Int) as Int -> x * x
+end function
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
+    #endregion
+
     #region Passes
 
     [TestMethod]
@@ -33,8 +51,7 @@ function square(x Int) as Int -> x * x
     }
 
     [TestMethod]
-    public void Pass_NoParams()
-    {
+    public void Pass_NoParams() {
         var code = @"
 main
  print phi()
@@ -56,25 +73,5 @@ function phi() as Float -> (1 + sqrt(5))/2
         AssertObjectCodeExecutes(compileData, "1.618...\r\n");
     }
 
-
-
-    #endregion
-
-    #region Fails
-    [TestMethod]
-    public void Fail_endFunction()
-    {
-        var code = @"
-main
- print square(source[3])
-end main
-
-function square(x Int) as Int -> x * x
-end function
-";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
     #endregion
 }

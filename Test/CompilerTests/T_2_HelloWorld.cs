@@ -5,19 +5,16 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T_2_HelloWorld
-{
-
+public class T_2_HelloWorld {
     [AssemblyInitialize]
-    public static void ClassInit(TestContext context)
-    {
-        Helpers.CleanUpArtifacts();
+    public static void ClassInit(TestContext context) {
+        CleanUpArtifacts();
     }
 
     #region Passes
+
     [TestMethod]
-    public void Pass_PrintWithNoExpression()
-    {
+    public void Pass_PrintWithNoExpression() {
         var code = @"#
 main
   print
@@ -52,8 +49,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_StringLiteral()
-    {
+    public void Pass_StringLiteral() {
         var code = @"#
 main
   print ""Hello World!""
@@ -86,8 +82,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_BracketsMakeNoDifference()
-    {
+    public void Pass_BracketsMakeNoDifference() {
         var code = @"#
 main
   print(""Hello World!"")
@@ -120,8 +115,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_IntegerLiteral()
-    {
+    public void Pass_IntegerLiteral() {
         var code = @"#
 main
   print 1
@@ -155,8 +149,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_FloatLiteral()
-    {
+    public void Pass_FloatLiteral() {
         var code = @"#
 main
   print 2.1
@@ -190,8 +183,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_FloatWithExponent()
-    {
+    public void Pass_FloatWithExponent() {
         var code = @"#
 main
   print 2.1E4
@@ -224,8 +216,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_FloatWithExponent2()
-    {
+    public void Pass_FloatWithExponent2() {
         var code = @"#
 main
   print 2.1E100
@@ -258,8 +249,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_FloatWithExponent3()
-    {
+    public void Pass_FloatWithExponent3() {
         var code = @"#
 main
   print 2.1e-4
@@ -292,8 +282,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CharLiteral()
-    {
+    public void Pass_CharLiteral() {
         var code = @"#
 main
   print '%'
@@ -327,8 +316,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_BoolLiteral()
-    {
+    public void Pass_BoolLiteral() {
         var code = @"#
 main
   print true
@@ -362,8 +350,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_EmptyLine()
-    {
+    public void Pass_EmptyLine() {
         var code = @"#
 main
   print """"
@@ -399,9 +386,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_noMain()
-    {
+    public void Fail_noMain() {
         var code = @"#
 print ""Hello World`
 ";
@@ -410,8 +397,7 @@ print ""Hello World`
     }
 
     [TestMethod]
-    public void Fail_noEnd()
-    {
+    public void Fail_noEnd() {
         var code = @"#
 main
   print ""Hello World!""
@@ -422,8 +408,7 @@ main
     }
 
     [TestMethod]
-    public void Fail_WrongCasing()
-    {
+    public void Fail_WrongCasing() {
         var code = @"#
 main
   print ""Hello World!""
@@ -432,5 +417,6 @@ main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 }

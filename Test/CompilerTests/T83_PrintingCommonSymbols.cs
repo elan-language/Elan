@@ -5,15 +5,13 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T83_PrintingCommonSymbols
-{
+public class T83_PrintingCommonSymbols {
     #region Passes
 
     // This test is actually just testing the test code runner. On my machine € doesn't work - but it also doesn't display 
     // in a cmd prompt - so may be just locale issue. 
     [TestMethod]
-    public void Pass_CommonSymbolsAccessibleFromUKKeyboard()
-    {
+    public void Pass_CommonSymbolsAccessibleFromUKKeyboard() {
         var code = @"#
 main
   print ""¬!£$%^&*()@~#`|<>'""

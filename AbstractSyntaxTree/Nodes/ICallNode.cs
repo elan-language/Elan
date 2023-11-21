@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace AbstractSyntaxTree.Nodes; 
+namespace AbstractSyntaxTree.Nodes;
 
 public interface ICallNode {
     public IAstNode Id { get; }

@@ -6,13 +6,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T95_RepeatedCallToProcedureWithLiteralArgument
-{
+public class T95_RepeatedCallToProcedureWithLiteralArgument {
     [TestInitialize]
     public void TestInit() {
         CodeHelpers.ResetUniqueId();
     }
-
 
     #region Passes
 

@@ -113,10 +113,10 @@ public static class AstFactory {
             var ms = visitor.Visit<MethodCallNode>(context.procedureCall());
             var exp = visitor.Visit(context.assignableValue());
 
-            return  new CallStatementNode(ms with { DotCalled = true, Qualifier = exp });
+            return new CallStatementNode(ms with { DotCalled = true, Qualifier = exp });
         }
 
-        return  new CallStatementNode(visitor.Visit(context.procedureCall()));
+        return new CallStatementNode(visitor.Visit(context.procedureCall()));
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionContext context) {
@@ -203,7 +203,6 @@ public static class AstFactory {
 
         return new MethodCallNode(id, nqr, pps);
     }
-
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {
         if (context.scopeQualifier() is { } nq) {

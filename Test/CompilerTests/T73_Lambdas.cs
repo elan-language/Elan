@@ -9,8 +9,7 @@ public class T73_Lambdas {
     #region Passes
 
     [TestMethod]
-    public void Pass_PassAsParam()
-    {
+    public void Pass_PassAsParam() {
         var code = @"
 main
   printModified(4, lambda x -> x * 3)
@@ -34,13 +33,12 @@ end procedure
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_PassLambdaWithWrongTypes()
-    {
+    public void Fail_PassLambdaWithWrongTypes() {
         var code = @"
 main
   printModified(4, lambda x -> x.asString())
@@ -59,8 +57,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_InvokeLambdaWithWrongType()
-    {
+    public void Fail_InvokeLambdaWithWrongType() {
         var code = @"
 main
   printModified('4', lambda x -> x * 3)
@@ -79,8 +76,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_AssignALambdaToAVariable()
-    {
+    public void Fail_AssignALambdaToAVariable() {
         var code = @"
 main
   var l = lambda x -> x * 5
@@ -90,10 +86,8 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-
     [TestMethod]
-    public void Fail_ReturnALambda()
-    {
+    public void Fail_ReturnALambda() {
         var code = @"
 main
 end main
@@ -106,5 +100,6 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 }

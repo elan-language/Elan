@@ -52,8 +52,7 @@ public class CharMap {
         putCharWithColours(col, row, c, foreground, backgroundColour);
     }
 
-    public virtual void putCharWithColours(int col, int row, char c, Colour foreground, Colour background)
-    {
+    public virtual void putCharWithColours(int col, int row, char c, Colour foreground, Colour background) {
         var currentForeground = Console.ForegroundColor;
         var currentBackground = Console.BackgroundColor;
         var (currentX, currentY) = Console.GetCursorPosition();
@@ -67,6 +66,7 @@ public class CharMap {
         Console.ForegroundColor = currentForeground;
         Console.BackgroundColor = currentBackground;
     }
+
     public void clear(int col, int row) {
         putChar(col, row, empty);
     }
@@ -86,36 +86,29 @@ public class CharMap {
     }
 
     [ElanStandardLibrary]
-    public class CharMapBuffered : CharMap
-    {
+    public class CharMapBuffered : CharMap {
         private readonly Character[,] buffer;
 
         public CharMapBuffered() => buffer = new Character[width, height];
 
-        public override void putCharWithColours(int col, int row, char c, Colour foreground, Colour background)
-        {
+        public override void putCharWithColours(int col, int row, char c, Colour foreground, Colour background) {
             buffer[col, row] = new Character(c, foreground, background);
         }
 
         /// <summary>
         ///     Clears the console screen and displays the current contents of this buffer
         /// </summary>
-        public void display()
-        {
+        public void display() {
             Console.Clear();
-            for (var row = 0; row < buffer.GetLength(1); row++)
-            {
-                for (var col = 0; col < buffer.GetLength(0); col++)
-                {
+            for (var row = 0; row < buffer.GetLength(1); row++) {
+                for (var col = 0; col < buffer.GetLength(0); col++) {
                     var c = buffer[col, row];
-                    if (c.foreground != foregroundColour)
-                    {
+                    if (c.foreground != foregroundColour) {
                         foregroundColour = c.foreground;
                         Console.ForegroundColor = (ConsoleColor)foregroundColour;
                     }
 
-                    if (c.background != backgroundColour)
-                    {
+                    if (c.background != backgroundColour) {
                         backgroundColour = c.background;
                         Console.BackgroundColor = (ConsoleColor)backgroundColour;
                     }
@@ -128,8 +121,8 @@ public class CharMap {
         }
     }
 
-
     #region QuarterCharacter
+
     //public void setQuarterBlock(double col, double row, Colour foreground, Colour background)
     //{
     //    throw new NotImplementedException();
@@ -164,4 +157,3 @@ public class CharMap {
 
     #endregion
 }
-

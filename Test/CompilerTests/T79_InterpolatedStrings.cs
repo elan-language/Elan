@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T79_InterpolatedStrings
-{
+public class T79_InterpolatedStrings {
     #region Passes
 
     [TestMethod]
@@ -50,8 +49,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_UseCSharpKeywordAsVariable()
-    {
+    public void Pass_UseCSharpKeywordAsVariable() {
         var code = @"
 main
     var new = 1
@@ -87,6 +85,4 @@ public static class Program {
     }
 
     #endregion
-
-    
 }

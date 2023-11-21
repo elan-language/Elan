@@ -6,20 +6,16 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T51_ProcedureMethods
-{
-
+public class T51_ProcedureMethods {
     [TestInitialize]
-    public void TestInit()
-    {
+    public void TestInit() {
         CodeHelpers.ResetUniqueId();
     }
 
     #region Fails
 
     [TestMethod]
-    public void Fail_ProcedureMethodCannotBeCalledDirectly()
-    {
+    public void Fail_ProcedureMethodCannotBeCalledDirectly() {
         var code = @"#
 main
     var f = Foo()
@@ -52,8 +48,7 @@ end class
     }
 
     [TestMethod]
-    public void Fail_CallUnknownMethodOnInstance()
-    {
+    public void Fail_CallUnknownMethodOnInstance() {
         var code = @"#
 main
     var x = Foo()
@@ -82,13 +77,13 @@ end class
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Calling unknown method");
     }
+
     #endregion
 
     #region Passes
 
     [TestMethod]
-    public void Pass_HappyCase()
-    {
+    public void Pass_HappyCase() {
         var code = @"#
 main
     var f = Foo()
@@ -161,8 +156,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ProcedureCanContainSystemCall()
-    {
+    public void Pass_ProcedureCanContainSystemCall() {
         var code = @"#
 main
     var f = Foo()

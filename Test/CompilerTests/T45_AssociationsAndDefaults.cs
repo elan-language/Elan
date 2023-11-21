@@ -7,12 +7,10 @@ using static Helpers;
 
 [TestClass]
 public class T45_AssociationsAndDefaults {
-
     [TestInitialize]
     public void TestInit() {
         CodeHelpers.ResetUniqueId();
     }
-
 
     #region Passes
 

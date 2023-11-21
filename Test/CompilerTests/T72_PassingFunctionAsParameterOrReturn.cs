@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass] [Ignore]
-public class T72_PassingFunctionAsParameterOrReturn
-{
+public class T72_PassingFunctionAsParameterOrReturn {
     #region Passes
 
     [TestMethod]
@@ -39,8 +38,7 @@ end function
     }
 
     [TestMethod]
-    public void Pass_PassAsParam2()
-    {
+    public void Pass_PassAsParam2() {
         var code = @"
 main
   printIt(""Hello"", 'e', find)
@@ -69,8 +67,7 @@ end function
     }
 
     [TestMethod]
-    public void Pass_ReturnAFunction()
-    {
+    public void Pass_ReturnAFunction() {
         var code = @"
 main
   print getFunc()(5)
@@ -99,8 +96,7 @@ end function
     }
 
     [TestMethod]
-    public void Pass_FuncAsProperty()
-    {
+    public void Pass_FuncAsProperty() {
         var code = @"
 main
   var foo = Foo(twice)
@@ -138,8 +134,7 @@ end function
     }
 
     [TestMethod]
-    public void Pass_DefaultValue()
-    {
+    public void Pass_DefaultValue() {
         var code = @"
 main
   var foo = Foo(twice)
@@ -177,8 +172,7 @@ end class
     #region Fails
 
     [TestMethod]
-    public void Fail_FunctionSignatureDoesntMatch()
-    {
+    public void Fail_FunctionSignatureDoesntMatch() {
         var code = @"
 main
   printModified(3, power)
@@ -202,8 +196,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_UsingReturnedFuncWithoutArgs()
-    {
+    public void Fail_UsingReturnedFuncWithoutArgs() {
         var code = @"
 main
   print getFunc()()
@@ -226,8 +219,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_PrintingAFunction()
-    {
+    public void Fail_PrintingAFunction() {
         var code = @"
 main
   print twice

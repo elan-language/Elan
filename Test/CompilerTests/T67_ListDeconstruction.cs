@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass] [Ignore]
-public class T67_ListDeconstruction
-{
+public class T67_ListDeconstruction {
     #region Passes
 
     [TestMethod]
@@ -34,8 +33,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_IntoExistingVars()
-    {
+    public void Pass_IntoExistingVars() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -61,8 +59,7 @@ end main
     }
 
     [TestMethod]
-    public void Pass_InParam()
-    {
+    public void Pass_InParam() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -87,6 +84,7 @@ function reverse({x:xs} as List<Int>) as List<Int> -> if xs.length() is 0 then {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "List {37,31,27,23,19,17,13,11,7,5,3,2}\r\n");
     }
+
     #endregion
 
     #region Fails

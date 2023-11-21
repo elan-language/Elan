@@ -43,8 +43,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ThrowExceptionInMainUsingVariableForMessage()
-    {
+    public void Pass_ThrowExceptionInMainUsingVariableForMessage() {
         var code = @"
 main
     var msg = ""Foo""
@@ -80,8 +79,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ThrowExceptionUsingInterpolatedStringForMessage()
-    {
+    public void Pass_ThrowExceptionUsingInterpolatedStringForMessage() {
         var code = @"
 main
     var bar = 1
@@ -352,10 +350,8 @@ end procedure
         AssertDoesNotParse(compileData);
     }
 
-
     [TestMethod]
-    public void Fail_UseExpressionForMessage()
-    {
+    public void Fail_UseExpressionForMessage() {
         var code = @"
 main
     var msg = ""Foo""
@@ -364,6 +360,7 @@ end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
-     }
+    }
+
     #endregion
 }

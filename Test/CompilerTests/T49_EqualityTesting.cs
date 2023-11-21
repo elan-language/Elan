@@ -7,7 +7,6 @@ using static Helpers;
 
 [TestClass]
 public class T49_EqualityTesting {
-
     [TestInitialize]
     public void TestInit() {
         CodeHelpers.ResetUniqueId();

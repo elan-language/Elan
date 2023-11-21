@@ -11,7 +11,6 @@ public enum NameSpace {
 }
 
 public abstract class MethodSymbol : BaseScope, ISymbol {
-  
     protected MethodSymbol(string name, ISymbolType returnType, NameSpace nameSpace, string[] parameterNames, IScope? enclosingScope) {
         NameSpace = nameSpace;
         ParameterNames = parameterNames;

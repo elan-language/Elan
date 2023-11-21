@@ -1,5 +1,4 @@
-﻿using System.Data;
-using AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 
 namespace Compiler;
@@ -31,7 +30,7 @@ public class SecondPassVisitor {
             SystemAccessorDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
             ProcedureDefNode pdn => currentScope.Resolve(SignatureId(pdn.Signature)) as IScope ?? throw new ArgumentNullException(),
             ConstructorNode cn => currentScope.Resolve(Constants.WellKnownConstructorId) as IScope ?? throw new ArgumentNullException(),
-            _ => currentScope,
+            _ => currentScope
         };
     }
 

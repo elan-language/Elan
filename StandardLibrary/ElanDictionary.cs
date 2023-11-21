@@ -23,21 +23,21 @@ public class ElanDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValu
     private ElanDictionary(ImmutableDictionary<TKey, TValue> dictionary) => wrappedDictionary = dictionary;
 
     public static ElanDictionary<TKey, TValue> DefaultInstance { get; } = new();
+    public int Count => wrappedDictionary.Count;
+
+    public TValue this[TKey key] => wrappedDictionary[key];
+
+    public IEnumerable<TKey> Keys => wrappedDictionary.Keys;
+    public IEnumerable<TValue> Values => wrappedDictionary.Values;
     public IEnumerable<object> ObjectKeys => Keys.Cast<object>();
     public IEnumerable<object> ObjectValues => Values.Cast<object>();
 
     IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() => wrappedDictionary.GetEnumerator();
 
     public IEnumerator GetEnumerator() => wrappedDictionary.GetEnumerator();
-    public int Count => wrappedDictionary.Count;
     public bool ContainsKey(TKey key) => wrappedDictionary.ContainsKey(key);
 
     public bool TryGetValue(TKey key, out TValue value) => wrappedDictionary.TryGetValue(key, out value!);
-
-    public TValue this[TKey key] => wrappedDictionary[key];
-
-    public IEnumerable<TKey> Keys => wrappedDictionary.Keys;
-    public IEnumerable<TValue> Values => wrappedDictionary.Values;
 
     public ElanDictionary<TKey, TValue> Add(TKey key, TValue value) =>
         Wrap(wrappedDictionary.Add(key, value));
@@ -92,5 +92,5 @@ public class ElanDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValu
         return GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + KvpHashCode(i));
     }
 
-    public override string ToString() => Functions.asString((IElanDictionary)this);
+    public override string ToString() => Functions.asString(this);
 }

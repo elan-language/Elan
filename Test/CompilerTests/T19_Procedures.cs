@@ -7,7 +7,6 @@ using static Helpers;
 
 [TestClass]
 public class T19_Procedures {
-
     [TestInitialize]
     public void TestInit() {
         CodeHelpers.ResetUniqueId();
@@ -234,8 +233,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CallingWithDotSyntax()
-    {
+    public void Pass_CallingWithDotSyntax() {
         var code = @"
 main
     var a = 2
@@ -279,7 +277,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "2\r\nhello\r\n");
     }
-
 
     [TestMethod]
     public void Pass_WithParamsPassingLiteralsOrExpressions() {
@@ -679,8 +676,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_CannotCallPrintAsAProcedure()
-    {
+    public void Fail_CannotCallPrintAsAProcedure() {
         var code = @"#
 main
   call print(""Hello World!"")
@@ -691,8 +687,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_NonRefParamsCannotBeUpdated()
-    {
+    public void Fail_NonRefParamsCannotBeUpdated() {
         var code = @"
 main
     var a = 1
@@ -716,8 +711,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Fail_RefKeywordMayNotBeAddedToArgument()
-    {
+    public void Fail_RefKeywordMayNotBeAddedToArgument() {
         var code = @"
 main
     var a = 1
@@ -732,7 +726,6 @@ procedure foo (ref a Int, b String)
     set b to b + ""!""
 end procedure
 ";
-
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -782,7 +775,6 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeDoesNotCompile(compileData);
     }
-
 
     #endregion
 }

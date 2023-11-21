@@ -1,8 +1,7 @@
 ﻿namespace StandardLibrary;
 
 [ElanStandardLibrary]
-public enum Direction
-{
+public enum Direction {
     left,
     right,
     up,
@@ -10,8 +9,7 @@ public enum Direction
 }
 
 [ElanStandardLibrary]
-public enum Colour
-{
+public enum Colour {
     black = 0,
     darkBlue = 1,
     darkGreen = 2,
@@ -29,8 +27,6 @@ public enum Colour
     yellow = 14,
     white = 15
 }
-
-
 
 public class StopWatch { }
 
@@ -56,4 +52,3 @@ public class BinaryFileWriter { }
 //    // flush
 //    // close
 //}
-

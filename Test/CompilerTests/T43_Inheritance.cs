@@ -7,7 +7,6 @@ using static Helpers;
 
 [TestClass]
 public class T43_Inheritance {
-
     [TestInitialize]
     public void TestInit() {
         CodeHelpers.ResetUniqueId();

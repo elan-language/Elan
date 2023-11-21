@@ -33,10 +33,10 @@ public static class CompilerRules {
                 return $"Cannot use system accessor in function : {leafNode}";
             }
 
-            if (otherNodes.Any(n => n is  PrintNode)) {
+            if (otherNodes.Any(n => n is PrintNode)) {
                 return $"Cannot use a print in an expression : {leafNode}";
             }
-            
+
             if (!(otherNodes.Last() is VarDefNode or AssignmentNode)) {
                 return $"Cannot use system accessor {scn.Name} in an expression - try defining an additional variable : {leafNode}";
             }
@@ -53,7 +53,7 @@ public static class CompilerRules {
         return n2 switch {
             IdentifierNode idn2 when n1 is IdentifierNode idn1 => idn1.Id == idn2.Id,
             IndexedExpressionNode ien when n1 is IdentifierNode idn1 => Match(idn1, ien.Expression) || ien.Expression.Children.Any(c => Match(idn1, c)),
-            ParameterCallNode pn when n1 is IdentifierNode idn1 && pn.Expression is IdentifierNode idn2  => idn1.Id == idn2.Id,
+            ParameterCallNode pn when n1 is IdentifierNode idn1 && pn.Expression is IdentifierNode idn2 => idn1.Id == idn2.Id,
             _ => false
         };
     }
@@ -68,7 +68,7 @@ public static class CompilerRules {
             var parent = nodes.SkipLast(1).Last();
 
             if (parent is AssignmentNode an) {
-                if (object.ReferenceEquals(an.Id, ien)) {
+                if (ReferenceEquals(an.Id, ien)) {
                     return $"Cannot modify an element within a tuple : {leafNode}";
                 }
             }
@@ -192,7 +192,6 @@ public static class CompilerRules {
 
             return null;
         }
-
 
         return leafNode switch {
             SystemAccessorCallNode => otherNodes.Any(n => n is FunctionDefNode) ? $"Cannot have system call in function : {leafNode}" : null,

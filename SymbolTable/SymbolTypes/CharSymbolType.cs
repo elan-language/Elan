@@ -1,9 +1,8 @@
 ﻿namespace SymbolTable.SymbolTypes;
 
 public class CharSymbolType : ISymbolType {
-    private CharSymbolType() { }
-
     public const string Name = "Char";
+    private CharSymbolType() { }
 
     public static CharSymbolType Instance { get; } = new();
 }

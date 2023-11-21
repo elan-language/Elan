@@ -1,3 +1,3 @@
-﻿namespace AbstractSyntaxTree.Roles; 
+﻿namespace AbstractSyntaxTree.Roles;
 
 public interface ICanWrapExpression { }

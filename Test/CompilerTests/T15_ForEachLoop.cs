@@ -179,8 +179,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_functionProvidingList()
-    {
+    public void Pass_functionProvidingList() {
         var code = @"
 main
     foreach x in fruit()

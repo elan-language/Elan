@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace CSharpLanguageModel.Models;
+﻿namespace CSharpLanguageModel.Models;
 
 public record ScalarValueModel(string Value) : ICodeModel {
     public string ToString(int indent) => MakeLiteralStringsInterpolated(Value);

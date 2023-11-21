@@ -3,10 +3,7 @@
 namespace AbstractSyntaxTree.Nodes;
 
 public record MethodCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters) : IAstNode, ICallNode {
-    
     public bool DotCalled { get; init; } = false;
-
-    public string Name => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
 
     public IEnumerable<IAstNode> Children => Parameters.SafePrepend(Qualifier).Prepend(Id);
 
@@ -17,4 +14,6 @@ public record MethodCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IA
             _ => this with { Parameters = Parameters.SafeReplace(from, to) }
         };
     }
+
+    public string Name => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
 }

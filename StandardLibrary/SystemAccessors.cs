@@ -2,7 +2,6 @@
 // ReSharper disable InconsistentNaming
 
 using System.Text;
-using static StandardLibrary.Functions;
 
 namespace StandardLibrary;
 
@@ -13,6 +12,7 @@ public static class SystemAccessors {
     //public static DateTime now() => DateTime.Now;
 
     //public static DateOnly today() => DateOnly.FromDateTime(DateTime.Today);
+
     #endregion
 
     #region Input from keyboard
@@ -57,7 +57,6 @@ public static class SystemAccessors {
     }
 
     #endregion
-
 
     #region random numbers
 

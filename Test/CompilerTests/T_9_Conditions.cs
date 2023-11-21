@@ -377,8 +377,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_greaterOrLessThan()
-    {
+    public void Fail_greaterOrLessThan() {
         var code = @"
 main
   print 3 <> 4
@@ -390,8 +389,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_doubleEquals()
-    {
+    public void Fail_doubleEquals() {
         var code = @"
 main
   print 3 == 4

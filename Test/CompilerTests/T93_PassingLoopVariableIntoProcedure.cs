@@ -5,14 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T93_PassingLoopVariableIntoProcedure
-{
+public class T93_PassingLoopVariableIntoProcedure {
     #region Passes
 
-
     [TestMethod]
-    public void Pass_CorrectedPattern()
-    {
+    public void Pass_CorrectedPattern() {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)
   foreach letter in wordAsPlayed
@@ -63,9 +60,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_InvalidPattern()
-    {
+    public void Fail_InvalidPattern() {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)
   foreach letter in wordAsPlayed
@@ -86,5 +83,6 @@ end main
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Cannot pass control variable into a procedure (consider declaring a new variable copying the value)");
     }
+
     #endregion
 }

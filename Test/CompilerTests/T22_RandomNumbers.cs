@@ -6,6 +6,25 @@ using static Helpers;
 
 [TestClass]
 public class T22_RandomNumbers {
+    #region Fails
+
+    [TestMethod]
+    public void Fail_CalledWithinExpression() {
+        var code = @"#
+main
+     call seedRandom(3)
+     print random()
+end main
+";
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Cannot use a print in an expression");
+    }
+
+    #endregion
+
     #region Passes
 
     [TestMethod]
@@ -211,26 +230,6 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "7\r\n9\r\n");
-    }
-
-    #endregion
-
-    #region Fails
-
-    [TestMethod]
-    public void Fail_CalledWithinExpression()
-    {
-        var code = @"#
-main
-     call seedRandom(3)
-     print random()
-end main
-";
-        var parseTree = @"*";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use a print in an expression");
     }
 
     #endregion

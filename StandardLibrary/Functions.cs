@@ -2,7 +2,6 @@
 // ReSharper disable InconsistentNaming
 
 using System.Collections;
-using System.Collections.Immutable;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using static StandardLibrary.Constants;
@@ -11,8 +10,6 @@ namespace StandardLibrary;
 
 [ElanStandardLibrary]
 public static class Functions {
-
-
     public static string typeAndProperties(object o) {
         var type = o.GetType();
         var name = type.Name;
@@ -101,9 +98,6 @@ public static class Functions {
 
     #region Type inspection
 
-
-
-
     private static string MapTypeNames(Type? t) {
         return t?.Name switch {
             "Int32" => "Int",
@@ -117,9 +111,6 @@ public static class Functions {
             _ => t?.Name ?? throw new NotImplementedException()
         };
     }
-
-
-
 
     public static string type(object o) => MapTypeNames(o.GetType());
 

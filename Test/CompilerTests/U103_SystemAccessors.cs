@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class U103_SystemAccessors
-{
+public class U103_SystemAccessors {
     #region Passes
 
     [TestMethod]
@@ -53,8 +52,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_accessorCanBeCalledWithinAProcedure()
-    {
+    public void Pass_accessorCanBeCalledWithinAProcedure() {
         var code = @"
 
 main
@@ -105,8 +103,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_accessorCanCallSystemCallsAndProcedures()
-    {
+    public void Pass_accessorCanCallSystemCallsAndProcedures() {
         var code = @"
 main
   var d = readFromNetwork(""www.foo.com"")
@@ -152,8 +149,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_accessorCanCallOtherAccessor()
-    {
+    public void Pass_accessorCanCallOtherAccessor() {
         var code = @"
 main
   var d = readFromNetwork(""www.foo.com"") 
@@ -215,9 +211,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_accessorCannotBeCalledWithinAFunction()
-    {
+    public void Fail_accessorCannotBeCalledWithinAFunction() {
         var code = @"
 main
 end main
@@ -240,8 +236,7 @@ end system
     }
 
     [TestMethod]
-   public void Fail_accessorCannotBeCalledWithinAnExpression()
-    {
+    public void Fail_accessorCannotBeCalledWithinAnExpression() {
         var code = @"
 main
   var d =  readFromNetwork(""www.foo.com"") + ""."" 
@@ -260,10 +255,8 @@ end system
         AssertDoesNotCompile(compileData, "Cannot use system accessor readFromNetwork in an expression - try defining an additional variable");
     }
 
-
     [TestMethod]
-    public void Fail_accessorCannotBeCalledWithinAnExpression2()
-    {
+    public void Fail_accessorCannotBeCalledWithinAnExpression2() {
         var code = @"
 main
  print readFromNetwork(""www.foo.com"") 
@@ -274,8 +267,6 @@ system readFromNetwork(url String) as String
 end system
 ";
 
-      
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -285,8 +276,7 @@ end system
     }
 
     [TestMethod]
-    public void Fail_cannotDefineParameterAsReference()
-    {
+    public void Fail_cannotDefineParameterAsReference() {
         var code = @"
 main
 end main
@@ -300,8 +290,7 @@ end system
     }
 
     [TestMethod]
-    public void Fail_cannotModifyParameter()
-    {
+    public void Fail_cannotModifyParameter() {
         var code = @"
 main
 end main
@@ -321,8 +310,7 @@ end system
     }
 
     [TestMethod]
-    public void Fail_accessorCannotBeDefinedOnImmutableClass()
-    {
+    public void Fail_accessorCannotBeDefinedOnImmutableClass() {
         var code = @"
 main
  var f = Foo()

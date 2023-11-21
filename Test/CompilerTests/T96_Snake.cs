@@ -1,19 +1,15 @@
 ﻿using Compiler;
-using StandardLibrary;
 
 namespace Test.CompilerTests;
 
 using static Helpers;
 
 [TestClass]
-public class T96_Snake
-{
+public class T96_Snake {
     #region Passes
 
-
     [TestMethod]
-    public void Pass_ConsoleUI()
-    {
+    public void Pass_ConsoleUI() {
         var code = ReadElanSourceCodeFile("snake.elan");
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

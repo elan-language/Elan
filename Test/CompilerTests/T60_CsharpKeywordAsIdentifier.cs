@@ -6,11 +6,11 @@ using static Helpers;
 
 [TestClass]
 public class T60_CsharpKeywordAsIdentifier {
-  #region Passes
+    #region Passes
 
-  [TestMethod]
-  public void Pass_CSkeywordAsIdentifier() {
-    var code = @"
+    [TestMethod]
+    public void Pass_CSkeywordAsIdentifier() {
+        var code = @"
 main
   var base = 1
   var break = 1
@@ -65,19 +65,19 @@ main
 end main
 ";
 
-   var parseTree = @"*";
+        var parseTree = @"*";
 
-    var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-    AssertParses(compileData);
-    AssertParseTreeIs(compileData, parseTree);
-    AssertCompiles(compileData);
-    AssertObjectCodeCompiles(compileData);
-    AssertObjectCodeExecutes(compileData, "48\r\n");
-  }
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "48\r\n");
+    }
 
-  [TestMethod]
-  public void Pass_CSKeywordAsType() {
-    var code = @"
+    [TestMethod]
+    public void Pass_CSKeywordAsType() {
+        var code = @"
 main
   var m = Base(3)
   print m.p1
@@ -94,36 +94,33 @@ class Base
 end class
 ";
 
- 
+        var parseTree = @"*";
 
-    var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "3\r\n");
+    }
 
-    var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-    AssertParses(compileData);
-    AssertParseTreeIs(compileData, parseTree);
-    AssertCompiles(compileData);
-    AssertObjectCodeCompiles(compileData);
-    AssertObjectCodeExecutes(compileData, "3\r\n");
-  }
+    #endregion
 
-  #endregion
+    #region Fails
 
-  #region Fails
-
-  [TestMethod]
-  public void Fail_ElanKeywordAsIdentifier() {
-    var code = @"
+    [TestMethod]
+    public void Fail_ElanKeywordAsIdentifier() {
+        var code = @"
 main
   var procedure = 1
 end main
 ";
-    var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-    AssertDoesNotParse(compileData);
-  }
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
 
     [TestMethod]
-    public void Fail_RefAsIdentifier()
-    {
+    public void Fail_RefAsIdentifier() {
         var code = @"
 main
   var out = 1
@@ -132,5 +129,6 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 }

@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass] [Ignore]
-public class T26_Iter
-{
+public class T26_Iter {
     #region Passes
 
     [TestMethod]
@@ -38,8 +37,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Pass_Array()
-    {
+    public void Pass_Array() {
         var code = @"
 main
   var it = { 1,3,6}.asArray()
@@ -67,8 +65,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Pass_String()
-    {
+    public void Pass_String() {
         var code = @"
 main
   var s = ""Foo""
@@ -95,8 +92,7 @@ end procedure
         AssertObjectCodeExecutes(compileData, "F\r\no\r\no\r\n");
     }
 
-    public void Pass_Indexing()
-    {
+    public void Pass_Indexing() {
         var code = @"
 main
   var it = { 1,2,3,4,5,6,7}
@@ -124,8 +120,7 @@ end procedure
         AssertObjectCodeExecutes(compileData, "6\r\n3\r\n4\r\n5\r\n1\r\n");
     }
 
-    public void Pass_Printing()
-    {
+    public void Pass_Printing() {
         var code = @"
 main
   var it = { 1,2,3,4,5,6,7}
@@ -157,8 +152,7 @@ end procedure
     }
 
     [TestMethod]
-    public void Pass_Default()
-    {
+    public void Pass_Default() {
         var code = @"
 main
   var f = Foo()
@@ -188,12 +182,13 @@ end class
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "default Iter<Int>");
     }
+
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_NoGenericTypeSpecified()
-    {
+    public void Fail_NoGenericTypeSpecified() {
         var code = @"
 main
 end main
@@ -212,10 +207,8 @@ end procedure
         AssertDoesNotCompile(compileData, "?");
     }
 
-
     [TestMethod]
-    public void Fail_PassArgumentWithWrongGenericType()
-    {
+    public void Fail_PassArgumentWithWrongGenericType() {
         var code = @"
 main
   var s = ""Hello""
@@ -236,5 +229,6 @@ end procedure
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "?");
     }
+
     #endregion
 }

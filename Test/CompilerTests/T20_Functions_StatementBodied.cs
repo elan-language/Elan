@@ -103,8 +103,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_BinarySearch_Recursive()
-    {
+    public void Pass_BinarySearch_Recursive() {
         var code = @"
 main
     var li = {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
@@ -185,12 +184,10 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\ntrue\r\nfalse\r\n");
-
     }
 
     [TestMethod]
-    public void Pass_MergeSort_Recursive()
-    {
+    public void Pass_MergeSort_Recursive() {
         var code = ReadElanSourceCodeFile("mergeSort.Elan");
 
         var objectCode = @"using System.Collections.Generic;
@@ -240,7 +237,6 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-
     }
 
     #endregion
@@ -416,9 +412,8 @@ end function
         AssertDoesNotCompile(compileData, "Cannot print in function");
     }
 
-    [TestMethod, Ignore]
-    public void Fail_CanNotContainSystemAccessors()
-    {
+    [TestMethod] [Ignore]
+    public void Fail_CanNotContainSystemAccessors() {
         var code = @"
 main
 end main
@@ -546,8 +541,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_CannotSpecifyParamByRef()
-    {
+    public void Fail_CannotSpecifyParamByRef() {
         var code = @"
 main
 end main

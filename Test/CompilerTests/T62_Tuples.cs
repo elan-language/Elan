@@ -264,8 +264,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_DeconstructIntoMixed1()
-    {
+    public void Fail_DeconstructIntoMixed1() {
         var code = @"#
 main
     var x = (3,""Apple"")
@@ -285,8 +284,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_DeconstructIntoMixed2()
-    {
+    public void Fail_DeconstructIntoMixed2() {
         var code = @"#
 main
     var x = (3,""Apple"")

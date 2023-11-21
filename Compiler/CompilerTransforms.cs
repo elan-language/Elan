@@ -3,13 +3,11 @@ using AbstractSyntaxTree.Nodes;
 using SymbolTable;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
-using System.Reflection.Metadata;
 using ValueType = AbstractSyntaxTree.ValueType;
 
 namespace Compiler;
 
 public static class CompilerTransforms {
-
     #region rules
 
     public static IAstNode? TransformMethodCallNodes(IAstNode[] nodes, IScope currentScope) =>
@@ -25,7 +23,6 @@ public static class CompilerTransforms {
             _ => null
         };
 
-    
     public static IAstNode? TransformLiteralListNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {
             LiteralListNode lln when lln.ItemNodes.First() is IdentifierNode idn and not IdentifierWithTypeNode => lln.Replace(idn, TypeIdentifier(idn, currentScope)),
@@ -40,7 +37,6 @@ public static class CompilerTransforms {
 
     // must come after TransformMethodCallNodes
     public static IAstNode? TransformProcedureParameterNodes(IAstNode[] nodes, IScope currentScope) {
-
         static IAstNode TransformParameter(IAstNode p, int i, ProcedureSymbol scope) {
             // avoid failed with mismatched parameter counts
             if (i >= scope.ParameterNames.Length) {
@@ -56,7 +52,7 @@ public static class CompilerTransforms {
         switch (nodes.Last()) {
             case ProcedureCallNode pcn:
 
-                var procedureScope =  ResolveMethodCall(currentScope, pcn).Item1 as ProcedureSymbol ?? GetProcedure(pcn, currentScope) ?? throw new NullReferenceException();
+                var procedureScope = ResolveMethodCall(currentScope, pcn).Item1 as ProcedureSymbol ?? GetProcedure(pcn, currentScope) ?? throw new NullReferenceException();
 
                 var parameterNodes = pcn.Parameters.Where(p => p is not ParameterCallNode).ToArray();
 
@@ -113,7 +109,6 @@ public static class CompilerTransforms {
         return null;
     }
 
-
     private static string? GetId(IAstNode? node) => node switch {
         IdentifierNode idn => idn.Id,
         IndexedExpressionNode ien => GetId(ien.Expression),
@@ -127,11 +122,11 @@ public static class CompilerTransforms {
         if (qualifiedId is not null) {
             var symbol = currentScope.Resolve(qualifiedId);
 
-            if (symbol is VariableSymbol vs &&  EnsureResolved(vs.ReturnType, currentScope) is ClassSymbolType ) {
+            if (symbol is VariableSymbol vs && EnsureResolved(vs.ReturnType, currentScope) is ClassSymbolType) {
                 return (null, false);
             }
-            
-            if (symbol is ParameterSymbol ps &&  EnsureResolved(ps.ReturnType, currentScope) is ClassSymbolType ) {
+
+            if (symbol is ParameterSymbol ps && EnsureResolved(ps.ReturnType, currentScope) is ClassSymbolType) {
                 return (null, false);
             }
 
@@ -206,7 +201,6 @@ public static class CompilerTransforms {
         return symbolType;
     }
 
-
     private static ISymbolType? GetExpressionType(IAstNode expression, IScope currentScope) {
         return expression switch {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
@@ -216,7 +210,6 @@ public static class CompilerTransforms {
             _ => null
         };
     }
-
 
     #endregion
 }

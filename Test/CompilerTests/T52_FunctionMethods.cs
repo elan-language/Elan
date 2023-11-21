@@ -374,7 +374,7 @@ public static class Program {
 }";
 
         var parseTree = @"*";
-        
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);

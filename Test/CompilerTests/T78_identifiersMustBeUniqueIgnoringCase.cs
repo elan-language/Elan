@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T78_identifiersMustBeUniqueIgnoringCase
-{
+public class T78_identifiersMustBeUniqueIgnoringCase {
     #region Passes
 
-    [TestMethod]        
-    public void Pass_SameVariableNameInDifferentScope()
-    {
+    [TestMethod]
+    public void Pass_SameVariableNameInDifferentScope() {
         var code = @"
 constant id = 1
 
@@ -48,8 +46,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CanUseCSharpKeywordWithDifferentCase()
-    {
+    public void Pass_CanUseCSharpKeywordWithDifferentCase() {
         var code = @"#
 main
     var bReak = 1
@@ -74,7 +71,7 @@ public static class Program {
 }";
 
         var parseTree = @"*";
-        
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
@@ -85,8 +82,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CanHaveIdentiferSameAsTypeExceptCase()
-    {
+    public void Pass_CanHaveIdentiferSameAsTypeExceptCase() {
         var code = @"#
 main
     var foo = Foo()
@@ -145,15 +141,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
 
-
-
     #endregion
 
     #region Fails
 
     [TestMethod]
-    public void Fail_DeclareSameVarNameWithDifferentCase()
-    {
+    public void Fail_DeclareSameVarNameWithDifferentCase() {
         var code = @"
 main
     var fOO = 1
@@ -168,16 +161,14 @@ end main
         AssertDoesNotCompile(compileData, "Duplicate id 'foo' in scope 'main'");
     }
 
-
     [TestMethod]
-    public void Fail_ElanKeywordWithChangedCase()
-    {
+    public void Fail_ElanKeywordWithChangedCase() {
         var code = @"
 main
     var pRocedure = 1
 end main
 ";
-       var parseTree = @"*";
+        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
@@ -186,8 +177,7 @@ end main
     }
 
     [TestMethod]
-    public void Fail_ElanKeywordTypeEvenWithChangedCase()
-    {
+    public void Fail_ElanKeywordTypeEvenWithChangedCase() {
         var code = @"
 class Main 
     constructor()
@@ -206,10 +196,8 @@ end class
         AssertDoesNotCompile(compileData, "Elan Keyword clash 'Main' in scope GlobalScope");
     }
 
-
     [TestMethod]
-    public void Fail_CSharpKeywordWithCorrectCaseIfAlteredCaseAlreadyUsed()
-    {
+    public void Fail_CSharpKeywordWithCorrectCaseIfAlteredCaseAlreadyUsed() {
         var code = @"
 main
     var bReak = 1
@@ -224,9 +212,8 @@ end main
         AssertDoesNotCompile(compileData, "Duplicate id 'break' in scope 'main'");
     }
 
-    [TestMethod]        
-    public void Fail_SameVariableNameInScope()
-    {
+    [TestMethod]
+    public void Fail_SameVariableNameInScope() {
         var code = @"
 main
     var id = 1
@@ -241,7 +228,5 @@ end main
         AssertDoesNotCompile(compileData, "Duplicate id 'id' in scope 'main'");
     }
 
-
     #endregion
 }
-

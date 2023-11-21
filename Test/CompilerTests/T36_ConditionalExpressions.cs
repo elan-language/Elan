@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass] [Ignore]
-public class T36_ConditionalExpressions
-{
+public class T36_ConditionalExpressions {
     #region Passes
 
     [TestMethod]
@@ -37,12 +36,13 @@ function grade(score Int) as String -> if score > 80 then ""Distinction""
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Distinction\r\nMerit\r\nPass\r\nFail");
     }
+
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Pass_FailEndIf()
-    {
+    public void Pass_FailEndIf() {
         var code = @"
 main
  print grade(90)
@@ -62,8 +62,7 @@ function grade(score Int) as String -> if score > 80 then ""Distinction""
     }
 
     [TestMethod]
-    public void Pass_IfSubClause()
-    {
+    public void Pass_IfSubClause() {
         var code = @"
 main
  print grade(90)
@@ -81,8 +80,7 @@ function grade(score Int) as String -> if score > 80 then ""Distinction""
     }
 
     [TestMethod]
-    public void Pass_NoThen()
-    {
+    public void Pass_NoThen() {
         var code = @"
 main
  print grade(90)
@@ -98,5 +96,6 @@ function grade(score Int) as String -> if score > 80  ""Distinction""
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
+
     #endregion
 }

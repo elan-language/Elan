@@ -118,7 +118,7 @@ public class FunctionsTests {
     [TestMethod]
     public void AsStringDictionary() {
         var t = new ElanDictionary<char, int>(('a', 1), ('b', 2));
-        Assert.AreEqual("Dictionary {a:1,b:2}", asString((IElanDictionary)t));
+        Assert.AreEqual("Dictionary {a:1,b:2}", asString(t));
     }
 
     [TestMethod]
