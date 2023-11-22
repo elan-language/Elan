@@ -412,7 +412,7 @@ end function
         AssertDoesNotCompile(compileData, "Cannot print in function");
     }
 
-    [TestMethod] [Ignore]
+    [TestMethod]
     public void Fail_CanNotContainSystemAccessors() {
         var code = @"
 main
@@ -428,7 +428,7 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
+        AssertDoesNotCompile(compileData, "Cannot use system accessor in function");
     }
 
     [TestMethod]
