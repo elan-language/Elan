@@ -3,13 +3,7 @@ using System.Collections.Immutable;
 
 namespace StandardLibrary;
 
-public interface IElanDictionary : IEnumerable {
-    public IEnumerable<object> ObjectKeys { get; }
-
-    public IEnumerable<object> ObjectValues { get; }
-}
-
-public class ElanDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>, IElanDictionary where TKey : notnull {
+public class ElanDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>> where TKey : notnull {
     private readonly ImmutableDictionary<TKey, TValue> wrappedDictionary;
 
     public ElanDictionary() => wrappedDictionary = ImmutableDictionary.Create<TKey, TValue>();
@@ -29,12 +23,19 @@ public class ElanDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValu
 
     public IEnumerable<TKey> Keys => wrappedDictionary.Keys;
     public IEnumerable<TValue> Values => wrappedDictionary.Values;
-    public IEnumerable<object> ObjectKeys => Keys.Cast<object>();
-    public IEnumerable<object> ObjectValues => Values.Cast<object>();
 
     IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() => wrappedDictionary.GetEnumerator();
 
     public IEnumerator GetEnumerator() => wrappedDictionary.GetEnumerator();
+
+    public string asString() {
+        var keys = Keys.Cast<object>().Select(Functions.asString).ToArray();
+        var values = Values.Cast<object>().Select(Functions.asString).ToArray();
+        var ss = keys.Zip(values).Select(i => $"{i.First}:{i.Second}").ToArray();
+
+        return ss.Any() ? $"Dictionary {{{string.Join(',', ss)}}}" : "empty dictionary";
+    }
+
     public bool ContainsKey(TKey key) => wrappedDictionary.ContainsKey(key);
 
     public bool TryGetValue(TKey key, out TValue value) => wrappedDictionary.TryGetValue(key, out value!);
@@ -92,5 +93,5 @@ public class ElanDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValu
         return GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + KvpHashCode(i));
     }
 
-    public override string ToString() => Functions.asString(this);
+    public override string ToString() => asString();
 }

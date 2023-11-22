@@ -3,9 +3,7 @@ using System.Collections.Immutable;
 
 namespace StandardLibrary;
 
-public interface IElanList { }
-
-public class ElanList<T> : IElanList, IEnumerable<T> {
+public class ElanList<T> : IEnumerable<T> {
     private readonly ImmutableList<T> wrappedList;
 
     public ElanList() => wrappedList = ImmutableList.Create<T>();
@@ -27,6 +25,8 @@ public class ElanList<T> : IElanList, IEnumerable<T> {
     public IEnumerator<T> GetEnumerator() => wrappedList.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public string asString() => this.Any() ? $"List {{{string.Join(',', this.Select(i => Functions.asString(i)))}}}" : "empty list";
 
     public ElanList<T> Add(T value) => Wrap(wrappedList.Add(value));
 
@@ -84,5 +84,5 @@ public class ElanList<T> : IElanList, IEnumerable<T> {
 
     public override int GetHashCode() => GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + i?.GetHashCode() ?? 0);
 
-    public override string ToString() => Functions.asString(this);
+    public override string ToString() => asString();
 }
