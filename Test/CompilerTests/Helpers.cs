@@ -6,11 +6,12 @@ namespace Test.CompilerTests;
 
 public static partial class Helpers {
 
-    public const bool LightweightTest = true;
-
+    public static bool LightweightTest { get; } = !IsAppveyor;
 
     // because now windows newlines on appveyor
-    public static readonly string NL = Environment.GetEnvironmentVariable("APPVEYOR") is "True" ? @"\n" : @"\r\n";
+    public static readonly string NL = IsAppveyor ? @"\n" : @"\r\n";
+
+    private static bool IsAppveyor => Environment.GetEnvironmentVariable("APPVEYOR") is "True";
 
     [GeneratedRegex("\\s+")]
     private static partial Regex WsRegex();
