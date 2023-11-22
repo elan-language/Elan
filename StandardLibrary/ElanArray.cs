@@ -2,9 +2,7 @@
 
 namespace StandardLibrary;
 
-public interface IElanArray { }
-
-public class ElanArray<T> : IElanArray, IEnumerable<T> {
+public class ElanArray<T> : IEnumerable<T> {
     private readonly bool twoD;
     private readonly T[][] wrappedArray;
 
@@ -65,6 +63,8 @@ public class ElanArray<T> : IElanArray, IEnumerable<T> {
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+    public string asString() => this.Any() ? $"Array {{{string.Join(',', this.Select(i => Functions.asString(i)))}}}" : "empty array";
+
     public void Add(T item) {
         wrappedArray[0] = wrappedArray[0].Append(item).ToArray();
     }
@@ -89,5 +89,5 @@ public class ElanArray<T> : IElanArray, IEnumerable<T> {
 
     public override int GetHashCode() => GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + i?.GetHashCode() ?? 0);
 
-    public override string ToString() => Functions.asString(this);
+    public override string ToString() => asString();
 }

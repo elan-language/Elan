@@ -141,13 +141,12 @@ public static class Functions {
 
     #region AsString
 
-    public static string? asString(object obj) {
+    public static string? asString(object? obj) {
         return obj switch {
             bool b => b ? "true" : "false",
             string s => s,
-            IElanDictionary d => asString(d),
-            IEnumerable l => asString(l),
             ElanException e => e.message,
+            null => throw new NotImplementedException(),
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
             _ when obj.GetType().GetMethod("asString") is { } mi => mi.Invoke(obj, null) as string,
             _ => obj.ToString()
@@ -156,24 +155,7 @@ public static class Functions {
 
     public static string asString(string s) => s;
 
-    private static string EmptyMessage(IEnumerable e) => e is IElanArray ? "empty array" : e is IElanDictionary ? "empty dictionary" : "empty list";
-
-    private static string Type(IEnumerable e) => e is IElanArray ? "Array" : e is IElanDictionary ? "Dictionary" : "List";
-
-    public static string asString(IEnumerable e) {
-        var a = e.Cast<object>().Select(asString).ToArray();
-        return a.Any() ? $"{Type(e)} {{{string.Join(',', a)}}}" : EmptyMessage(e);
-    }
-
-    public static string asString(IElanDictionary d) {
-        var keys = d.ObjectKeys.Select(asString).ToArray();
-        var values = d.ObjectValues.Select(asString).ToArray();
-        var ss = keys.Zip(values).Select(i => $"{i.First}:{i.Second}").ToArray();
-
-        return ss.Any() ? $"{Type(d)} {{{string.Join(',', ss)}}}" : EmptyMessage(d);
-    }
-
-    public static string asString<T>(ITuple t) =>
+    private static string asString<T>(ITuple t) =>
         Enumerable.Range(1, t.Length - 1).Aggregate($"({asString(t[0]!)}", (s, x) => s + $", {asString(t[x]!)}") + ")";
 
     #endregion
