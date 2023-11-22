@@ -28,11 +28,11 @@ public static class Functions {
 
     #region lists
 
-    public static int length(IEnumerable l) => l.Cast<object>().ToArray().Length;
+    public static int length<T>(ElanList<T> l) => l.Count;
 
-    public static bool isEmpty(IEnumerable l) => !l.Cast<object>().Any();
+    public static bool isEmpty<T>(ElanList<T> l) => !l.Any();
 
-    public static ElanArray<T> asArray<T>(IEnumerable<T> l) => new(l);
+    public static ElanArray<T> asArray<T>(ElanList<T> l) => new(l);
 
     #endregion
 

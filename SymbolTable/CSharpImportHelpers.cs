@@ -16,7 +16,6 @@ public static class CSharpImportHelpers {
             "Boolean" => BoolSymbolType.Instance,
             "Object" => new ClassSymbolType(type.Name),
             "ITuple" => new TupleSymbolType(),
-            "IEnumerable`1" => new IterableSymbolType(),
             "ElanDictionary`2" => new DictionarySymbolType(),
             "ElanArray`1" => new ArraySymbolType(),
             "ElanList`1" => new ListSymbolType(),
