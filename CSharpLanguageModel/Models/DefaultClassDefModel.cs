@@ -12,6 +12,4 @@ public record DefaultClassDefModel(ICodeModel Type, IEnumerable<ICodeModel> Prop
 {Indent(indent)}}}";
 
     private string DefaultConstructor(int indent) => $"{Indent(indent + 1)}public _Default{Type}() {{ }}";
-
-    public override string ToString() => ToString(0);
 }

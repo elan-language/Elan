@@ -7,6 +7,4 @@ public record ConstructorModel(IEnumerable<ICodeModel> Parameters, ICodeModel St
         $@"({Parameters.AsCommaSeparatedString()}) {{
 {Indent(Statements, indent + 1)}
 {Indent(indent)}}}";
-
-    public override string ToString() => ToString(0);
 }

@@ -7,6 +7,4 @@ public record EnumDefModel(ICodeModel Type, IEnumerable<ICodeModel> Values) : IC
         $@"{Indent(indent)}public enum {Type} {{
 {Values.AsLineSeparatedString(",", indent + 1)}
 {Indent(indent)}}}";
-
-    public override string ToString() => ToString(0);
 }

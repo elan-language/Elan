@@ -49,6 +49,4 @@ public record PropertyDefModel(ICodeModel Id, ICodeModel Type, PropertyType Prop
         };
 
     public string ToString(int indent) => $@"{Indent(indent)}{Access} {Modifier}{Type} {Id} {Property}";
-
-    public override string ToString() => ToString(0);
 }

@@ -20,6 +20,4 @@ public record ClassDefModel(ICodeModel Type, IEnumerable<ICodeModel> Inherits, I
     private string DefaultInstance(int indent) => $"{Indent(indent + 1)}public static {Type} DefaultInstance {{ get; }} = new {Type}._Default{Type}();";
 
     private string InheritsAsString() => Inherits.Any() ? $" : {Inherits.AsCommaSeparatedString()}" : "";
-
-    public override string ToString() => ToString(0);
 }

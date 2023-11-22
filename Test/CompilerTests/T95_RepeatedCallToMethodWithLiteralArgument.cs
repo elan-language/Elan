@@ -9,7 +9,7 @@ using static Helpers;
 public class T95_RepeatedCallToProcedureWithLiteralArgument {
     [TestInitialize]
     public void TestInit() {
-        CodeHelpers.ResetUniqueId();
+       
     }
 
     #region Passes

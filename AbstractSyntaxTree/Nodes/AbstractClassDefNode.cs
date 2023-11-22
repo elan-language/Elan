@@ -1,8 +1,9 @@
 ﻿using System.Collections.Immutable;
+using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record AbstractClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inherits, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods) : IAstNode {
+public record AbstractClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inherits, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods) : IAstNode, INamed {
     public string Name => ((IdentifierNode)Type).Id;
     public IEnumerable<IAstNode> Children => Inherits.Prepend(Type).Concat(Properties).Concat(Methods);
 

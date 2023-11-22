@@ -209,7 +209,7 @@ public static class AstFactory {
         var id = visitor.Visit(context.IDENTIFIER());
         var pps = (context.argumentList()?.expression().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
 
-        return new MethodCallNode(id, new SystemAccessorNode(), pps);
+        return new MethodCallNode(id, new SystemAccessorPrefixNode(), pps);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {
@@ -232,7 +232,7 @@ public static class AstFactory {
         }
 
         if (context.SELF() is { } s) {
-            return new SelfNode();
+            return new SelfPrefixNode();
         }
 
         if (context.DEFAULT() is not null) {
@@ -795,11 +795,11 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ScopeQualifierContext context) {
         if (context.GLOBAL() is not null) {
-            return new GlobalNode();
+            return new GlobalPrefixNode();
         }
 
         if (context.SELF() is not null) {
-            return new SelfNode();
+            return new SelfPrefixNode();
         }
 
         throw new NotImplementedException(context.children.First().GetText());

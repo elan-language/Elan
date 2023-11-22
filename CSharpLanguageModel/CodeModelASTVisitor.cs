@@ -69,8 +69,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             ConstructorNode n => HandleScope(BuildConstructorModel, n),
             PropertyDefNode n => HandleScope(BuildPropertyDefModel, n),
             TypeNode n => HandleScope(BuildTypeModel, n),
-            SelfNode n => HandleScope(BuildSelfModel, n),
-            GlobalNode n => HandleScope(BuildGlobalModel, n),
+            SelfPrefixNode n => HandleScope(BuildSelfModel, n),
+            GlobalPrefixNode n => HandleScope(BuildGlobalModel, n),
             LibraryNode n => HandleScope(BuildNamespaceModel, n),
             ReturnExpressionNode n => Visit(n.Expression),
             QualifiedNode n => HandleScope(BuildQualifiedModel, n),
@@ -311,14 +311,6 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new PairModel(key, value);
     }
 
-    private static IAstNode GetSignatures(IAstNode node) {
-        return node switch {
-            ProcedureDefNode pdn => pdn.Signature,
-            FunctionDefNode fdn => fdn.Signature,
-            _ => throw new NotImplementedException(node.GetType().ToString())
-        };
-    }
-
     private ClassDefModel BuildClassDefModel(ClassDefNode classDefNode) {
         var type = Visit(classDefNode.Type);
         var inherits = classDefNode.Inherits.Select(Visit);
@@ -368,9 +360,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new TypeModel(id);
     }
 
-    private ScalarValueModel BuildSelfModel(SelfNode selfNode) => new("this");
+    private ScalarValueModel BuildSelfModel(SelfPrefixNode selfPrefixNode) => new("this");
 
-    private ScalarValueModel BuildGlobalModel(GlobalNode globalNode) => new("Globals");
+    private ScalarValueModel BuildGlobalModel(GlobalPrefixNode globalPrefixNode) => new("Globals");
 
     private ScalarValueModel BuildNamespaceModel(LibraryNode l) => new(l.Type);
 

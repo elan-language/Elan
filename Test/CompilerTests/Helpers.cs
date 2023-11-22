@@ -6,7 +6,7 @@ namespace Test.CompilerTests;
 
 public static partial class Helpers {
 
-    public const bool LightweightTest = false;
+    public const bool LightweightTest = true;
 
 
     // because now windows newlines on appveyor

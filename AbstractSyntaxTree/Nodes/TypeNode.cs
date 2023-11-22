@@ -1,12 +1,11 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Roles;
 
-public record TypeNode(IAstNode TypeName) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record TypeNode(IAstNode TypeName) : IAstNode, INamed {
     public IEnumerable<IAstNode> Children => new[] { TypeName };
 
-    public IAstNode Replace(IAstNode from, IAstNode to) {
-        return from switch {
-            _ when from == TypeName => this with { TypeName = to },
-            _ => throw new NotImplementedException()
-        };
-    }
+    public IAstNode Replace(IAstNode from, IAstNode to) => new TypeNode(to);
+
+    public string Name => ((IdentifierNode)TypeName).Id;
 }

@@ -10,6 +10,4 @@ public record AbstractClassDefModel(ICodeModel Type, IEnumerable<ICodeModel> Inh
 {Indent(indent)}}}";
 
     private string InheritsAsString() => Inherits.Any() ? $" : {Inherits.AsCommaSeparatedString()}" : "";
-
-    public override string ToString() => ToString(0);
 }

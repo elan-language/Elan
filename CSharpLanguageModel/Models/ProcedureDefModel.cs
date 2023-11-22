@@ -9,6 +9,4 @@ public record ProcedureDefModel(ICodeModel Signature, ICodeModel Statements, boo
         $@"{Indent(indent)}public {Qual}{Signature} {{
 {Indent(Statements, indent + 1)}
 {Indent(indent)}}}";
-
-    public override string ToString() => ToString(0);
 }

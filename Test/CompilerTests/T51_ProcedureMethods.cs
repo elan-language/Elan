@@ -9,7 +9,7 @@ using static Helpers;
 public class T51_ProcedureMethods {
     [TestInitialize]
     public void TestInit() {
-        CodeHelpers.ResetUniqueId();
+       
     }
 
     #region Passes

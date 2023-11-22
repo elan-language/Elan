@@ -7,6 +7,4 @@ public record ForInStatementModel(ICodeModel Id, ICodeModel Expression, ICodeMod
         $@"{Indent(indent)}foreach (var {Id} in {Expression}) {{
 {StatementBlock.ToString(indent + 1)}
 {Indent(indent)}}}";
-
-    public override string ToString() => ToString(0);
 }

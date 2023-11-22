@@ -12,6 +12,4 @@ public record ForStatementModel(ICodeModel Id, IEnumerable<ICodeModel> Expressio
         $@"{Indent(indent)}for (var {Id} = {Expressions.First()}; {Id} {GteOrLte} {Expressions.Last()}; {Id} = {Id} {UpOrDown} {StepStr}) {{
 {StatementBlock.ToString(indent + 1)}
 {Indent(indent)}}}";
-
-    public override string ToString() => ToString(0);
 }

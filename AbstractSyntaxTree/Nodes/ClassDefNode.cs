@@ -1,8 +1,9 @@
 ﻿using System.Collections.Immutable;
+using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record ClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inherits, IAstNode Constructor, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods, bool Immutable) : IAstNode {
+public record ClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inherits, IAstNode Constructor, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods, bool Immutable) : IAstNode, INamed {
     public string Name => ((IdentifierNode)Type).Id;
 
     public bool HasDefaultConstructor => Constructor is ConstructorNode cn && !cn.Parameters.Any();

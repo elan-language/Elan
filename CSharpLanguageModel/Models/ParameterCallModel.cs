@@ -4,6 +4,4 @@ public record ParameterCallModel(ICodeModel Expression, bool IsRef = false) : IC
     private string IsRefStr => IsRef ? "ref " : "";
 
     public string ToString(int indent) => $@"{IsRefStr}{Expression}";
-
-    public override string ToString() => ToString(0);
 }

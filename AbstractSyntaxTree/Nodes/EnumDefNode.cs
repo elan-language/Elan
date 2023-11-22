@@ -1,8 +1,9 @@
 ﻿using System.Collections.Immutable;
+using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record EnumDefNode(IAstNode Type, ImmutableArray<IAstNode> Values) : IAstNode {
+public record EnumDefNode(IAstNode Type, ImmutableArray<IAstNode> Values) : IAstNode, INamed {
     public IEnumerable<IAstNode> Children => Values.Prepend(Type);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
@@ -11,4 +12,5 @@ public record EnumDefNode(IAstNode Type, ImmutableArray<IAstNode> Values) : IAst
             _ => this with { Values = Values.SafeReplace(from, to) }
         };
     }
+    public string Name => ((IdentifierNode)Type).Id;
 }

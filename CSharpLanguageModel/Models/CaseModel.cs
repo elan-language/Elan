@@ -8,6 +8,4 @@ public record CaseModel(ICodeModel? Value, ICodeModel StatementBlock) : ICodeMod
     public string ToString(int indent) => $@"{Indent(indent)}{Case}:
 {Indent(indent + 1)}{StatementBlock}
 {Indent(indent + 1)}break;";
-
-    public override string ToString() => ToString(0);
 }

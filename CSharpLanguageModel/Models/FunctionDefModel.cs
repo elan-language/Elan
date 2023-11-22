@@ -10,6 +10,4 @@ public record FunctionDefModel(ICodeModel Signature, ICodeModel Statements, ICod
 {Indent(Statements, indent + 1)}
 {Indent(indent + 1)}return {Return};
 {Indent(indent)}}}";
-
-    public override string ToString() => ToString(0);
 }

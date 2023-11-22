@@ -95,8 +95,6 @@ public static class CodeHelpers {
 
     public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0)));
 
-    public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm, string prefix) => string.Join(", ", mm.Select(v => $"{prefix}{v}"));
-
     public static string ValueTypeToCSharpType(ValueType type) =>
         type switch {
             ValueType.Int => "int",
@@ -122,7 +120,7 @@ public static class CodeHelpers {
             LiteralDictionaryNode ldn => $"StandardLibrary.ElanDictionary<{NodeToCSharpType(ldn.ItemNodes.First())}>",
             LiteralTupleNode ltn => $"({string.Join(", ", ltn.ItemNodes.Select(NodeToCSharpType))})",
             NewInstanceNode nin => $"{NodeToCSharpType(nin.Type)}",
-            TypeNode tn => tn is { TypeName: IdentifierNode idn } ? idn.Id : throw new NotImplementedException(),
+            TypeNode tn => tn.Name,
             PairNode kn => $"{NodeToCSharpType(kn.Key)},{NodeToCSharpType(kn.Value)}",
             IdentifierWithTypeNode idtn => NodeToCSharpType(idtn.Type),
             ValueTypeNode vtn => ValueTypeToCSharpType(vtn.Type),
@@ -167,7 +165,5 @@ public static class CodeHelpers {
     }
 
     public static string Prefix(string id) => CSharpKeywordsExceptElanKeywords.Contains(id) ? $"@{id}" : id;
-    public static int UniqueId() => Interlocked.Increment(ref uniqueId);
 
-    public static void ResetUniqueId() => Interlocked.Exchange(ref uniqueId, 0); // for testing
 }
