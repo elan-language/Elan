@@ -6,41 +6,6 @@ using static Helpers;
 
 [TestClass]
 public class T54_With {
-    #region Fails
-
-    [TestMethod]
-    public void Fail_NonMatchingProperty() {
-        var code = @"#
-main
-    var x = Foo() with {p1 = 3, p3 = ""Apple"" }
-    print x.p1
-    print x.p2
-end main
-
-class Foo
-    constructor()
-        set p1 to 5
-    end constructor
-    property p1 Int
-
-    property p2 String
-
-    function asString() as String
-         return """"
-    end function
-
-end class
-";
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
-    }
-
-    #endregion
 
     #region Passes
 
@@ -48,7 +13,7 @@ end class
     public void Pass_InstantiatingClassWithZeroParamConstructor() {
         var code = @"#
 main
-    var x = Foo() with {p1 = 3, p2 = ""Apple"" }
+    var x = new Foo() with {p1 = 3, p2 = ""Apple"" }
     print x.p1
     print x.p2
 end main
@@ -119,7 +84,7 @@ public static class Program {
     public void Pass_ConstructorWithParm() {
         var code = @"#
 main
-    var x = Foo(7) with {p1 = 3, p2 = ""Apple"" }
+    var x = new Foo(7) with {p1 = 3, p2 = ""Apple"" }
     print x.p1
     print x.p2
 end main
@@ -190,7 +155,7 @@ public static class Program {
     public void Pass_AppliedToInstanceButReturnedOneIsNewInstance() {
         var code = @"#
 main
-    var x = Foo()
+    var x = new Foo()
     var y = x with {p1 = 3, p2 = ""Apple"" }
     print y.p1
     print y.p2
@@ -265,7 +230,7 @@ public static class Program {
     public void Pass_WorksWithImmutableClass() {
         var code = @"#
 main
-    var x = Foo()
+    var x = new Foo()
     var y = x with {p1 = 3, p2 = ""Apple"" }
     print y.p1
     print y.p2
@@ -334,6 +299,43 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n5\r\n");
+    }
+
+    #endregion
+
+    #region Fails
+
+    [TestMethod]
+    public void Fail_NonMatchingProperty()
+    {
+        var code = @"#
+main
+    var x = new Foo() with {p1 = 3, p3 = ""Apple"" }
+    print x.p1
+    print x.p2
+end main
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+    property p1 Int
+
+    property p2 String
+
+    function asString() as String
+         return """"
+    end function
+
+end class
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     #endregion

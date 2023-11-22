@@ -33,7 +33,6 @@ main
   var lock = 1
   var long = 1
   var namespace = 1
-  var new = 1
   var null = 1
   var object = 1
   var operator = 1
@@ -60,7 +59,7 @@ main
   var virtual = 1
   var void = 1
   var volatile = 1
-  var total = base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+new+null+object+operator+override+params+protected+public+readonly+sbyte+sealed+short+sizeof+stackalloc+static+struct+this+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
+  var total = base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+null+object+operator+override+params+protected+public+readonly+sbyte+sealed+short+sizeof+stackalloc+static+struct+this+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
   print total
 end main
 ";
@@ -72,14 +71,14 @@ end main
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "48\r\n");
+        AssertObjectCodeExecutes(compileData, "47\r\n");
     }
 
     [TestMethod]
     public void Pass_CSKeywordAsType() {
         var code = @"
 main
-  var m = Base(3)
+  var m = new Base(3)
   print m.p1
 end main
 

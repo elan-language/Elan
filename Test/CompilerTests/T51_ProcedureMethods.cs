@@ -12,81 +12,13 @@ public class T51_ProcedureMethods {
         CodeHelpers.ResetUniqueId();
     }
 
-    #region Fails
-
-    [TestMethod]
-    public void Fail_ProcedureMethodCannotBeCalledDirectly() {
-        var code = @"#
-main
-    var f = Foo()
-    call display(f)
-end main
-
-class Foo
-    constructor()
-        set p1 to 5
-    end constructor
-
-    property p1 Int
-
-    procedure display()
-        print p1
-    end procedure
-
-    function asString() as String
-         return """"
-    end function
-
-end class
-";
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Calling unknown method");
-    }
-
-    [TestMethod]
-    public void Fail_CallUnknownMethodOnInstance() {
-        var code = @"#
-main
-    var x = Foo()
-    call x.calculate()
-end main
-
-class Foo
-    constructor()
-        set p1 to 5
-    end constructor
-    property p1 Int
-
-    property p2 String
-
-    function asString() as String
-         return """"
-    end function
-
-end class
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Calling unknown method");
-    }
-
-    #endregion
-
     #region Passes
-
     [TestMethod]
-    public void Pass_HappyCase() {
+    public void Pass_HappyCase()
+    {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     print f.p1
     call f.setP1(7)
     print f.p1
@@ -156,10 +88,11 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ProcedureCanContainSystemCall() {
+    public void Pass_ProcedureCanContainSystemCall()
+    {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     call f.display()
 end main
 
@@ -228,12 +161,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "5\r\n");
     }
 
-
     [TestMethod]
-    public void Pass_CallGlobalProcedure() {
+    public void Pass_CallGlobalProcedure()
+    {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     call f.setP1(7)
 end main
 
@@ -306,9 +239,75 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "7\r\n");
     }
+    #endregion
 
+    #region Fails
 
+    [TestMethod]
+    public void Fail_ProcedureMethodCannotBeCalledDirectly() {
+        var code = @"#
+main
+    var f = new Foo()
+    call display(f)
+end main
 
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+
+    property p1 Int
+
+    procedure display()
+        print p1
+    end procedure
+
+    function asString() as String
+         return """"
+    end function
+
+end class
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Calling unknown method");
+    }
+
+    [TestMethod]
+    public void Fail_CallUnknownMethodOnInstance() {
+        var code = @"#
+main
+    var x = new Foo()
+    call x.calculate()
+end main
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+    property p1 Int
+
+    property p2 String
+
+    function asString() as String
+         return """"
+    end function
+
+end class
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Calling unknown method");
+    }
 
     #endregion
+
+
 }

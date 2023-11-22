@@ -12,7 +12,7 @@ public class T34_ConcreteClasses {
     public void Pass_Class_SimpleInstantiation_PropertyAccess_Methods() {
         var code = @"#
 main
-    var x = Foo()
+    var x = new Foo()
     print x.p1
     print x.p2
     print x.asString()
@@ -85,7 +85,7 @@ public static class Program {
     public void Pass_ConstructorWithParm() {
         var code = @"#
 main
-    var x = Foo(7, ""Apple"")
+    var x = new Foo(7, ""Apple"")
     print x.p1
     print x.p2
 end main
@@ -197,7 +197,7 @@ end class
     public void Fail_AttemptToModifyAPropertyDirectly() {
         var code = @"#
 main
-    var x = Foo()
+    var x = new Foo()
     set x.p1 to 3
 end main
 
@@ -245,7 +245,7 @@ end class
     public void Fail_InstantiateWithoutRequiredArgs() {
         var code = @"#
 main
-    var x = Foo()
+    var x = new Foo()
 end main
 
 class Foo
@@ -274,7 +274,7 @@ end class
     public void Fail_InstantiateWithWrongArgType() {
         var code = @"#
 main
-    var x = Foo(7.1)
+    var x = new Foo(7.1)
 end main
 
 class Foo
@@ -303,7 +303,7 @@ end class
     public void Fail_SupplyingArgumentNotSpecified() {
         var code = @"#
 main
-    var x = Foo(7)
+    var x = new Foo(7)
 end main
 
 class Foo
@@ -327,6 +327,37 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
+
+
+    [TestMethod]
+    public void Fail_MissingNewOnInstantiation()
+    {
+        var code = @"#
+main
+    var x = Foo()
+    print x.p1
+    print x.p2
+    print x.asString()
+end main
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+    property p1 Int
+
+    property p2 String
+
+    function asString() as String
+         return """"
+    end function
+
+end class
+";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+    }
+
 
     #endregion
 }

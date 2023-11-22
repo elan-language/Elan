@@ -50,7 +50,7 @@ public static class Program {
 constant a = 4
 
 main
-    var f = Foo()
+    var f = new Foo()
     print f.prop()
     print f.cons()
 end main
@@ -134,7 +134,7 @@ public static class Program {
     public void Pass_DisambiguateGlobalFunctionFromInstanceFunction() {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     print f.loc()
     print f.glob()
 end main
@@ -253,7 +253,7 @@ end main
     public void Fail_NoSuchGlobalConstant() {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     print f.prop()
     print f.cons()
 end main
@@ -291,7 +291,7 @@ end class
     public void Fail_NoSuchGlobalSubroutine() {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     print f.loc()
     print f.glob()
 end main

@@ -18,7 +18,7 @@ public class T45_AssociationsAndDefaults {
     public void Pass_CanHavePropertiesThatAreDataStructuresOrObjects() {
         var code = @"#
 main
-    var g = Game()
+    var g = new Game()
     print g.p2
     print g.p1
     print g.previousScores
@@ -26,8 +26,8 @@ end main
 
 class Game
     constructor()
-       set p2 to Player(""Chloe"")
-       set p1 to Player(""Joe"")
+       set p2 to new Player(""Chloe"")
+       set p1 to new Player(""Joe"")
        set previousScores to {5,2,4}
     end constructor
 
@@ -128,7 +128,7 @@ public static class Program {
     public void Pass_PropertiesOfAllStandardTypesHaveDefaultValues() {
         var code = @"#
 main
-    var g = Game()
+    var g = new Game()
     print g.i
     print g.f
     print g.b
@@ -292,7 +292,7 @@ public static class Program {
     public void Pass_PropertiesOfClassTypesHaveDefaultValues() {
         var code = @"#
 main
-    var g = Game()
+    var g = new Game()
     print g.p1
     print g.previousGame
 end main
@@ -391,7 +391,7 @@ public static class Program {
     public void Pass_defaultKeywordToTestValue() {
         var code = @"#
 main
-    var g = Game()
+    var g = new Game()
     print g.p1 is default Player
     print g.p2 is default Player
     print g.previousGame is default Game
@@ -514,7 +514,7 @@ public static class Program {
     public void Pass_defaultValueCanBeAssigned() {
         var code = @"#
 main
-    var g = Game()
+    var g = new Game()
     print g.score
     call g.setScore(default Int)
     print g.score
@@ -638,7 +638,7 @@ public static class Program {
     public void Pass_defaultForStandardDataStructures() {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     print f.a
     print f.b
     print f.c

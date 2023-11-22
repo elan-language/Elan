@@ -24,10 +24,6 @@ throwException: NL THROW (LITERAL_STRING | IDENTIFIER );
 
 printStatement: NL PRINT expression?;
  
- //Intended for a freestanding procedure/system call as a statement, 
-// or expression terminated by a procedure or system call that consumes result'.
-// Not possible to specify this as a syntax distinct from an expression. Compile rules will enforce that you can't use a non-consumed expression
-
 varDef: NL VAR assignableValue ASSIGN expression;
 
 assignment: NL SET assignableValue TO expression;
@@ -137,7 +133,7 @@ constructor:
 
 // INSTANTIATION
 newInstance:
-	type OPEN_BRACKET argumentList? CLOSE_BRACKET withClause?
+	NEW type OPEN_BRACKET argumentList? CLOSE_BRACKET withClause?
 	| IDENTIFIER withClause
 	;
 
@@ -207,17 +203,17 @@ caseDefault :
 
 // EXPRESSIONS
 expression: 
-	  bracketedExpression
-	| functionCall
-	| value 
+	  bracketedExpression 
+	| functionCall 
+	| value
+	| unaryOp expression 
+	| newInstance
+	| ifExpression 
 	| expression index
 	| expression DOT functionCall
 	| expression DOT IDENTIFIER 
-	| unaryOp expression
 	| expression POWER expression // so that ^ has higher priority (because implemented with function in CSharp)
 	| expression binaryOp expression
-	| newInstance
-	| ifExpression
 	| expression withClause
 	| NL expression // so that any expression may be broken over multiple lines at its 'natural joints' i.e. before any sub-expression
 	;

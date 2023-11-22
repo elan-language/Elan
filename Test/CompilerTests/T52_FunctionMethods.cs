@@ -12,7 +12,7 @@ public class T52_FunctionMethods {
     public void Pass_HappyCase() {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     print f.times(2)
 end main
 
@@ -86,13 +86,13 @@ public static class Program {
     public void Pass_FunctionMethodMayCallOtherClassFunctionViaProperty() {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     print f.length()
 end main
 
 class Foo
     constructor()
-        set p1 to Bar()
+        set p1 to new Bar()
     end constructor
 
     property p1 Bar
@@ -199,8 +199,8 @@ public static class Program {
     public void Pass_FunctionMethodMayCallOtherClassFunctionMethod() {
         var code = @"#
 main
-    var f = Foo()
-    var b = Bar()
+    var f = new Foo()
+    var b = new Bar()
     print f.times(b)
 end main
 
@@ -322,7 +322,7 @@ public static class Program {
     public void Pass_FunctionMethodNameHidesGlobalFunction() {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     print f
 end main
 
@@ -392,7 +392,7 @@ public static class Program {
     public void Fail_FunctionCannotBeCalledDirectly() {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     print times(f,2)
 end main
 

@@ -30,6 +30,7 @@ INHERITS:      'inherits';
 LAMBDA:		   'lambda';
 LET:           'let';
 MAIN:		   'main';
+NEW:		   'new';
 OF:			   'of';
 OUT:		   'out';
 PARTIAL: 	   'partial';
