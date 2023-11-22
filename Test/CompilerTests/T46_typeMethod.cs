@@ -20,7 +20,7 @@ main
     print {1,2,3}.type()
     print {'a': 3}.type()
     print {1,2,3}.asArray().type()
-    print Foo(3).type()
+    print new Foo(3).type()
 end main
 
 class Foo

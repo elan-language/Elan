@@ -52,8 +52,8 @@ public static class Program {
     public void Pass_UseCSharpKeywordAsVariable() {
         var code = @"
 main
-    var new = 1
-    print ""{new}""
+    var static = 1
+    print ""{static}""
 end main
 ";
 
@@ -68,8 +68,8 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var @new = 1;
-    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""{@new}""));
+    var @static = 1;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""{@static}""));
   }
 }";
 

@@ -48,7 +48,7 @@ public static class Program {
     public void Pass_literalListOfClass() {
         var code = @"
 main
-    var a = Foo()
+    var a = new Foo()
     var b = {a}
     print b
 end main
@@ -311,7 +311,7 @@ public static class Program {
     public void Pass_emptyList() {
         var code = @"
 main
-    var a = List<of Int>()
+    var a = new List<of Int>()
     print a.length()
 end main
 ";
@@ -574,7 +574,7 @@ public static class Program {
     public void Pass_createEmptyListUsingConstructor() {
         var code = @"
 main
-    var a = List<of Int>()
+    var a = new List<of Int>()
     print a
 end main
 ";

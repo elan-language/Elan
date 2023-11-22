@@ -164,7 +164,7 @@ public static class Program {
     public void Pass_2DArray() {
         var code = @"
 main
-    var a = Array<of String>(3,4)
+    var a = new Array<of String>(3,4)
     set a[0,0] to ""foo""
     set a[2,3] to ""yon""
     print a[0,0]
