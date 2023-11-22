@@ -178,26 +178,37 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitVarDefNode(VarDefNode varDefNode) {
-        if (varDefNode.Id is IdentifierNode idn) {
-            var name = idn.Id;
-            var type = MapNodeToSymbolType(varDefNode.Rhs);
-            var ms = new VariableSymbol(name, type, currentScope);
-            currentScope.Define(ms);
-        }
-
-        if (varDefNode.Id is DeconstructionNode dn) {
-            var names = dn.ItemNodes.OfType<IdentifierNode>().Select(i => i.Id).ToArray();
-            var types = names.Select((n, i) => new PendingTupleResolveSymbol(n, i + 1));
-            var zip = names.Zip(types);
-
-            foreach (var (name, type) in zip) {
-                var ms = new VariableSymbol(name, type, currentScope);
-                currentScope.Define(ms);
+        switch (varDefNode.Id) {
+            case IdentifierNode idn: {
+                VisitIdentifierNode(varDefNode, idn);
+                break;
+            }
+            case DeconstructionNode dn: {
+                VisitDeconstructionNode(dn);
+                break;
             }
         }
 
         VisitChildren(varDefNode);
         return varDefNode;
+    }
+
+    private void VisitDeconstructionNode(DeconstructionNode dn) {
+        var names = dn.ItemNodes.OfType<IdentifierNode>().Select(i => i.Id).ToArray();
+        var types = names.Select((n, i) => new PendingTupleResolveSymbol(n, i + 1));
+        var zip = names.Zip(types);
+
+        foreach (var (name, type) in zip) {
+            var ms = new VariableSymbol(name, type, currentScope);
+            currentScope.Define(ms);
+        }
+    }
+
+    private void VisitIdentifierNode(VarDefNode varDefNode, IdentifierNode idn) {
+        var name = idn.Id;
+        var type = MapNodeToSymbolType(varDefNode.Rhs);
+        var ms = new VariableSymbol(name, type, currentScope);
+        currentScope.Define(ms);
     }
 
     private IAstNode VisitParameterNode(ParameterNode parameterNode) {

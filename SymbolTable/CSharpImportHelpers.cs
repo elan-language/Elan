@@ -62,17 +62,13 @@ public static class CSharpImportHelpers {
             globalScope.Define(vs);
         }
 
-        foreach (var vs in allExportedClasses.Select(ImportClass)) {
+        foreach (var vs in allExportedClasses.Select(ImportType)) {
             globalScope.Define(vs);
         }
     }
 
     private static ISymbol ImportType(Type type) {
-        if (type.IsClass) {
-            return ImportClass(type);
-        }
-
-        return ImportEnum(type);
+        return type.IsClass ? ImportClass(type) : ImportEnum(type);
     }
 
     private static ISymbol ImportEnum(Type type) => new EnumSymbol(type.Name, null!);
@@ -114,7 +110,7 @@ public static class CSharpImportHelpers {
     }
 
     private static ProcedureSymbol CreateProcedureSymbol(MethodInfo mi, IScope? scope = null) {
-        var ps = new ProcedureSymbol(mi!.Name, scope == null ? NameSpace.LibraryProcedure : NameSpace.UserLocal, ParameterIds(mi), scope);
+        var ps = new ProcedureSymbol(mi.Name, scope == null ? NameSpace.LibraryProcedure : NameSpace.UserLocal, ParameterIds(mi), scope);
         ImportParameters(ps, mi);
         return ps;
     }

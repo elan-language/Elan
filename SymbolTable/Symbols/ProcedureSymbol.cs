@@ -5,7 +5,7 @@ namespace SymbolTable.Symbols;
 public class ProcedureSymbol : MethodSymbol {
     public ProcedureSymbol(string name, NameSpace nameSpace, string[] parameterNames, IScope? enclosingScope) : base(name, VoidSymbolType.Instance, nameSpace, parameterNames, enclosingScope) { }
 
-    public override string ScopeName => Name switch {
+    protected override string ScopeName => Name switch {
         Constants.WellKnownMainId => "'main'",
         Constants.WellKnownConstructorId => "'constructor'",
         _ => $"Procedure: '{Name}'"
