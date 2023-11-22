@@ -5,6 +5,10 @@ using Compiler;
 namespace Test.CompilerTests;
 
 public static partial class Helpers {
+
+    public const bool LightweightTest = false;
+
+
     // because now windows newlines on appveyor
     public static readonly string NL = Environment.GetEnvironmentVariable("APPVEYOR") is "True" ? @"\n" : @"\r\n";
 
@@ -71,7 +75,7 @@ public static partial class Helpers {
     }
 
     public static void AssertObjectCodeCompiles(CompileData compileData) {
-        Assert.IsTrue(compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), CollapseWs(compileData.ObjectCodeCompileStdOut));
+        Assert.IsTrue(LightweightTest || compileData.ObjectCodeCompileStdOut.Contains("Build succeeded."), CollapseWs(compileData.ObjectCodeCompileStdOut));
     }
 
     public static void AssertObjectCodeDoesNotCompile(CompileData compileData) {
@@ -79,21 +83,25 @@ public static partial class Helpers {
     }
 
     public static void AssertObjectCodeExecutes(CompileData compileData, string expectedOutput, string? optionalInput = null) {
-        var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
-        var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
+        if (!LightweightTest) {
+            var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
+            var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
 
-        var (stdOut, stdErr) = Execute(exe, wd, optionalInput);
+            var (stdOut, stdErr) = Execute(exe, wd, optionalInput);
 
-        Assert.AreEqual(NormalizeNewLines(expectedOutput), NormalizeNewLines(stdOut));
+            Assert.AreEqual(NormalizeNewLines(expectedOutput), NormalizeNewLines(stdOut));
+        }
     }
 
     public static void AssertObjectCodeFails(CompileData compileData, string expectedError, string? optionalInput = null) {
-        var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
-        var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
+        if (!LightweightTest) {
+            var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
+            var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
 
-        var (stdOut, stdErr) = Execute(exe, wd, optionalInput);
+            var (stdOut, stdErr) = Execute(exe, wd, optionalInput);
 
-        Assert.IsTrue(stdErr.Contains(expectedError));
+            Assert.IsTrue(stdErr.Contains(expectedError));
+        }
     }
 
     public static void AssertDoesNotParse(CompileData compileData, string[]? expected = null) {

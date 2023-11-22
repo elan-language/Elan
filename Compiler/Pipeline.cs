@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree;
+﻿using System.Data.SqlTypes;
+using AbstractSyntaxTree;
 using Antlr4.Runtime;
 using CSharpLanguageModel;
 using SymbolTable;
@@ -6,6 +7,11 @@ using SymbolTable;
 namespace Compiler;
 
 public static class Pipeline {
+
+
+    public static bool RunCompileObjectCode = true; 
+
+
     public static CompileData Compile(string fileName) {
         var compileData = new CompileData { FileName = fileName };
         compileData = ReadCode(compileData);
@@ -93,7 +99,7 @@ public static class Pipeline {
     }
 
     private static CompileData CompileObjectCode(CompileData compileData) {
-        if (string.IsNullOrWhiteSpace(compileData.ObjectCode)) {
+        if (!RunCompileObjectCode || string.IsNullOrWhiteSpace(compileData.ObjectCode)) {
             return compileData;
         }
 

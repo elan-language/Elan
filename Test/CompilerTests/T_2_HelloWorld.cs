@@ -9,6 +9,7 @@ public class T_2_HelloWorld {
     [AssemblyInitialize]
     public static void ClassInit(TestContext context) {
         CleanUpArtifacts();
+        Pipeline.RunCompileObjectCode = !LightweightTest;
     }
 
     #region Passes
