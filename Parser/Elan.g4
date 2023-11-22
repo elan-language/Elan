@@ -24,9 +24,9 @@ throwException: NL THROW (LITERAL_STRING | IDENTIFIER );
 
 printStatement: NL PRINT expression?;
  
-varDef: NL VAR assignableValue ASSIGN expression;
+varDef: NL VAR assignableValue ASSIGN (expression | systemCall);
 
-assignment: NL SET assignableValue TO expression;
+assignment: NL SET assignableValue TO (expression | systemCall);
 
 inlineAsignment: assignableValue ASSIGN expression;
 
@@ -35,6 +35,8 @@ assignableValue: (scopeQualifier?  IDENTIFIER index?) | deconstructedTuple | lis
 procedureCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
 functionCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
+
+systemCall: SYSTEM DOT IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
 argumentList: (expression |lambda) (COMMA (expression | lambda))*;
 
@@ -98,13 +100,13 @@ classDef: mutableClass | abstractClass| immutableClass | abstractImmutableClass;
 mutableClass: 
 	NL CLASS TYPENAME inherits?
 	constructor
-    (property | functionDef | procedureDef | systemAccessor )*	
+    (property | functionDef | procedureDef )*	
     NL END CLASS
 	;
 
 abstractClass:
 	NL ABSTRACT CLASS TYPENAME inherits?
-    (property | NL FUNCTION functionSignature | NL PROCEDURE procedureSignature | NL SYSTEM accessorSignature)*
+    (property | NL FUNCTION functionSignature | NL PROCEDURE procedureSignature)*
     NL END CLASS
 	;
 

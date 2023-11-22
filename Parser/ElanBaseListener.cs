@@ -192,6 +192,18 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitFunctionCall([NotNull] ElanParser.FunctionCallContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.systemCall"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSystemCall([NotNull] ElanParser.SystemCallContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.systemCall"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSystemCall([NotNull] ElanParser.SystemCallContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.argumentList"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

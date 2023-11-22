@@ -161,6 +161,16 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitFunctionCall([NotNull] ElanParser.FunctionCallContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.systemCall"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSystemCall([NotNull] ElanParser.SystemCallContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.systemCall"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSystemCall([NotNull] ElanParser.SystemCallContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.argumentList"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
