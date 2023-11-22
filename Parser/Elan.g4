@@ -206,14 +206,14 @@ expression:
 	  bracketedExpression 
 	| functionCall 
 	| value
-	| unaryOp expression 
-	| newInstance
-	| ifExpression 
 	| expression index
 	| expression DOT functionCall
 	| expression DOT IDENTIFIER 
+	| unaryOp expression
 	| expression POWER expression // so that ^ has higher priority (because implemented with function in CSharp)
 	| expression binaryOp expression
+	| newInstance
+	| ifExpression
 	| expression withClause
 	| NL expression // so that any expression may be broken over multiple lines at its 'natural joints' i.e. before any sub-expression
 	;
