@@ -7,8 +7,8 @@ public record BinaryModel(ICodeModel Operator, ICodeModel Operand1, ICodeModel O
 
     public override string ToString() => ToString(0);
 
-    private string ToOperatorString() => $@"{Operand1} {Operator} {Operand2}";
+    private string ToOperatorString() => $"{Operand1} {Operator} {Operand2}";
 
     // To handle case where C# doesn't support power operator 
-    private string ToFunctionString() => $@"{Operator}({Operand1}, {Operand2})";
+    private string ToFunctionString() => $"{Operator}({Operand1}, {Operand2})";
 }

@@ -7,8 +7,8 @@ public record MethodCallModel(MethodType MethodType, ICodeModel Id, ICodeModel? 
 
     public string ToString(int indent) =>
         MethodType switch {
-            MethodType.Function => $@"{Indent(indent)}{Qual}{Id}({Parameters.AsCommaSeparatedString()})",
-            MethodType.SystemCall => $@"{Indent(indent)}{Qual}{Id}({Parameters.AsCommaSeparatedString()})",
+            MethodType.Function => $"{Indent(indent)}{Qual}{Id}({Parameters.AsCommaSeparatedString()})",
+            MethodType.SystemCall => $"{Indent(indent)}{Qual}{Id}({Parameters.AsCommaSeparatedString()})",
             _ => throw new NotImplementedException()
         };
 

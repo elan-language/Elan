@@ -29,7 +29,7 @@ public record PropertyDefModel(ICodeModel Id, ICodeModel Type, PropertyType Prop
     };
 
     private string Access => PropertyType switch {
-        _ when IsPrivate => @"protected",
+        _ when IsPrivate => "protected",
         _ => "public"
     };
 
@@ -48,5 +48,5 @@ public record PropertyDefModel(ICodeModel Id, ICodeModel Type, PropertyType Prop
             _ => $"{Body} = {Init}"
         };
 
-    public string ToString(int indent) => $@"{Indent(indent)}{Access} {Modifier}{Type} {Id} {Property}";
+    public string ToString(int indent) => $"{Indent(indent)}{Access} {Modifier}{Type} {Id} {Property}";
 }

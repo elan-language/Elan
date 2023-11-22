@@ -6,7 +6,7 @@ namespace CSharpLanguageModel;
 public static class CSharpCompiler {
     private const int CompileTimeout = 60000;
 
-    public static string GetCsProjForFile(string baseName) =>
+    private static string GetCsProjForFile(string baseName) =>
         @$"
 <Project Sdk=""Microsoft.NET.Sdk"">
 	<PropertyGroup>

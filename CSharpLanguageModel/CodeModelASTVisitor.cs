@@ -108,9 +108,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new MethodCallModel(CodeHelpers.MethodType.Function, Visit(functionCallNode.Id), qual, functionCallNode.Parameters.Select(Visit));
     }
 
-    private ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
+    private static ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
 
-    private IdentifierModel BuildIdentifierModel(IdentifierNode identifierNode) => new(identifierNode.Id);
+    private static IdentifierModel BuildIdentifierModel(IdentifierNode identifierNode) => new(identifierNode.Id);
 
     private IfStatementModel BuildIfStatementModel(IfStatementNode ifStatementNode) {
         var expressions = ifStatementNode.Expressions.Select(Visit);
@@ -179,7 +179,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new LiteralDictionaryModel(items, type);
     }
 
-    private ICodeModel BuildOperatorModel(OperatorNode operatorNode) {
+    private static ICodeModel BuildOperatorModel(OperatorNode operatorNode) {
         var (value, isFunc) = CodeHelpers.OperatorToCSharpOperator(operatorNode.Value);
         return isFunc ? new IdentifierModel(value) : new ScalarValueModel(value);
     }
@@ -226,7 +226,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new DataStructureTypeModel(types, CodeHelpers.DataStructureTypeToCSharpType(dataStructureTypeNode.Type));
     }
 
-    private ScalarValueModel BuildValueTypeModel(ValueTypeNode valueTypeNode) => new(CodeHelpers.ValueTypeToCSharpType(valueTypeNode.Type));
+    private static ScalarValueModel BuildValueTypeModel(ValueTypeNode valueTypeNode) => new(CodeHelpers.ValueTypeToCSharpType(valueTypeNode.Type));
 
     private TwoDIndexModel Build2DIndexModel(TwoDIndexExpressionNode twoDIndexExpressionNode) => new(Visit(twoDIndexExpressionNode.Expression1), Visit(twoDIndexExpressionNode.Expression2));
 
@@ -360,11 +360,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new TypeModel(id);
     }
 
-    private ScalarValueModel BuildSelfModel(SelfPrefixNode selfPrefixNode) => new("this");
+    private static ScalarValueModel BuildSelfModel(SelfPrefixNode selfPrefixNode) => new("this");
 
-    private ScalarValueModel BuildGlobalModel(GlobalPrefixNode globalPrefixNode) => new("Globals");
+    private static ScalarValueModel BuildGlobalModel(GlobalPrefixNode globalPrefixNode) => new("Globals");
 
-    private ScalarValueModel BuildNamespaceModel(LibraryNode l) => new(l.Type);
+    private static ScalarValueModel BuildNamespaceModel(LibraryNode l) => new(l.Type);
 
     private QualifiedValueModel BuildQualifiedModel(QualifiedNode qualifiedNode) => new(Visit(qualifiedNode.Qualifier), Visit(qualifiedNode.Qualified));
 

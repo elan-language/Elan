@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree;
+﻿using System.ComponentModel.Design;
+using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using AbstractSyntaxTree.Roles;
 using SymbolTable;
@@ -8,6 +9,7 @@ using SymbolTable.SymbolTypes;
 namespace Compiler;
 
 public static class CompilerRules {
+    private static bool AnyOtherNodeIs(this IAstNode[] nodes, Func<IAstNode, bool> check) => nodes.SkipLast(1).ToArray().Any(check);
 
     public static string? ExpressionMustBeAssignedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
@@ -23,10 +25,8 @@ public static class CompilerRules {
 
     public static string? SystemCallMustBeAssignedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is SystemAccessorCallNode scn && currentScope.Resolve(scn.Name) is SystemAccessorSymbol scs && scs.ReturnType != VoidSymbolType.Instance) {
-            var otherNodes = nodes.SkipLast(1).ToArray();
-
-            if (otherNodes.Any(n => n is FunctionDefNode)) {
+        if (leafNode is SystemAccessorCallNode scn && currentScope.Resolve(scn.Name) is SystemAccessorSymbol scs) {
+            if (nodes.AnyOtherNodeIs(n => n is FunctionDefNode)) {
                 return $"Cannot use system accessor in function : {leafNode}";
             }
         }
@@ -64,9 +64,7 @@ public static class CompilerRules {
 
     public static string? NoMutableConstantsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        var otherNodes = nodes.SkipLast(1).ToArray();
-
-        if (otherNodes.Any(n => n is ConstantDefNode)) {
+        if (nodes.AnyOtherNodeIs(n => n is ConstantDefNode)) {
             return leafNode switch {
                 TypeNode tn => currentScope.Resolve(tn.Name) is ClassSymbol { ClassType: ClassSymbolTypeType.Mutable } ? $"A class cannot be constant unless it is immutable {leafNode}" : null,
                 DataStructureTypeNode => $"An array may not be a constant : {leafNode}",
@@ -204,7 +202,7 @@ public static class CompilerRules {
 
         var typeNodes = leafNode switch {
             ClassDefNode cdn => cdn.Inherits.OfType<TypeNode>(),
-            AbstractClassDefNode acdn => acdn.Inherits.OfType<TypeNode>(),
+            AbstractClassDefNode ac => ac.Inherits.OfType<TypeNode>(),
             _ => Array.Empty<TypeNode>()
         };
 
@@ -215,10 +213,6 @@ public static class CompilerRules {
 
     public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is MethodCallNode) {
-            return $"Calling unknown method : {leafNode}";
-        }
-
-        return null;
+        return leafNode is MethodCallNode ? $"Calling unknown method : {leafNode}" : null;
     }
 }

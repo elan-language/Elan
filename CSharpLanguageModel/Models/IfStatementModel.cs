@@ -6,7 +6,7 @@ public record IfStatementModel(IEnumerable<ICodeModel> Expressions, IEnumerable<
     public string ToString(int indent) {
         // check data 
         if (Expressions.Count() == StatementBlocks.Count() || StatementBlocks.Count() == Expressions.Count() + 1) {
-            return $@"{If(indent)}{ElseIfs(indent)}{Else(indent)}";
+            return $"{If(indent)}{ElseIfs(indent)}{Else(indent)}";
         }
 
         throw new CodeGenerationException("Mismatched count if expressions/blocks in If");
@@ -19,17 +19,13 @@ public record IfStatementModel(IEnumerable<ICodeModel> Expressions, IEnumerable<
 {Indent(indent)}}}";
 
     private string Else(int indent) {
-        if (Expressions.Count() < StatementBlocks.Count()) {
-            return $@"
+        return Expressions.Count() < StatementBlocks.Count() ? $@"
 {Indent(indent)}else {{
 {StatementBlocks.Last().ToString(indent + 1)}
-{Indent(indent)}}}";
-        }
-
-        return "";
+{Indent(indent)}}}" : "";
     }
 
-    private string ElseIf(ICodeModel expression, ICodeModel statementBlock, int indent) =>
+    private static string ElseIf(ICodeModel expression, ICodeModel statementBlock, int indent) =>
         $@"{Indent(indent)}else if ({expression}) {{
 {statementBlock.ToString(indent + 1)}
 {Indent(indent)}}}";

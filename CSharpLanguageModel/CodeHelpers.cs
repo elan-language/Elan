@@ -71,8 +71,6 @@ public static class CodeHelpers {
         "volatile"
     };
 
-    private static int uniqueId;
-
     public static string Indent1 => Indent(1);
 
     public static Regex CSharpKeywordRegex { get; } = new($@"{{\s*({string.Join("|", CSharpKeywordsExceptElanKeywords)})\s*}}");
@@ -102,7 +100,7 @@ public static class CodeHelpers {
             ValueType.Float => "double",
             ValueType.Char => "char",
             ValueType.Bool => "bool",
-            _ => throw new NotImplementedException(type.ToString() ?? "null")
+            _ => throw new NotImplementedException(type.ToString())
         };
 
     public static string DataStructureTypeToCSharpType(DataStructure type) =>
@@ -110,7 +108,7 @@ public static class CodeHelpers {
             DataStructure.List => "ElanList",
             DataStructure.Array => "ElanArray",
             DataStructure.Dictionary => "ElanDictionary",
-            _ => throw new NotImplementedException(type.ToString() ?? "null")
+            _ => throw new NotImplementedException(type.ToString())
         };
 
     public static string NodeToCSharpType(IAstNode node) {
@@ -122,7 +120,7 @@ public static class CodeHelpers {
             NewInstanceNode nin => $"{NodeToCSharpType(nin.Type)}",
             TypeNode tn => tn.Name,
             PairNode kn => $"{NodeToCSharpType(kn.Key)},{NodeToCSharpType(kn.Value)}",
-            IdentifierWithTypeNode idtn => NodeToCSharpType(idtn.Type),
+            IdentifierWithTypeNode idt => NodeToCSharpType(idt.Type),
             ValueTypeNode vtn => ValueTypeToCSharpType(vtn.Type),
             EnumValueNode evn => NodeToCSharpType(evn.TypeNode),
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
