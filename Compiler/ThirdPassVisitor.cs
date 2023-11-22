@@ -30,11 +30,10 @@ public class ThirdPassVisitor {
     private static IList<Func<IAstNode[], IScope, string?>> Rules { get; } = new List<Func<IAstNode[], IScope, string?>>();
 
     private void Enter(IAstNode node) {
-        switch (node) {
-            case MainNode:
-                currentScope = currentScope.Resolve(Constants.WellKnownMainId) as IScope ?? throw new ArgumentNullException();
-                break;
-        }
+        currentScope = node switch {
+            MainNode => currentScope.Resolve(Constants.WellKnownMainId) as IScope ?? throw new ArgumentNullException(),
+            _ => currentScope
+        };
     }
 
     private void Exit(IAstNode node) {

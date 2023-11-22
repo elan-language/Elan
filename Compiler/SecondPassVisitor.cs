@@ -22,8 +22,8 @@ public class SecondPassVisitor {
             _ => throw new NotImplementedException()
         };
 
-    private IScope Enter(IAstNode node, IScope currentScope) {
-        return node switch {
+    private static IScope Enter(IAstNode node, IScope currentScope) =>
+        node switch {
             MainNode => currentScope.Resolve(Constants.WellKnownMainId) as IScope ?? throw new ArgumentNullException(),
             ClassDefNode cdn => currentScope.Resolve(cdn.Name) as IScope ?? throw new ArgumentNullException(),
             FunctionDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
@@ -32,10 +32,9 @@ public class SecondPassVisitor {
             ConstructorNode cn => currentScope.Resolve(Constants.WellKnownConstructorId) as IScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
-    }
 
-    private IScope Exit(IAstNode node, IScope currentScope) {
-        return node switch {
+    private static IScope Exit(IAstNode node, IScope currentScope) =>
+        node switch {
             MainNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             ClassDefNode cdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             FunctionDefNode fdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
@@ -44,9 +43,8 @@ public class SecondPassVisitor {
             ConstructorNode cn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
-    }
 
-    private IAstNode InsertIntoTree(IAstNode oldNode, IAstNode newNode, IAstNode[] parentNodes) {
+    private static IAstNode InsertIntoTree(IAstNode oldNode, IAstNode newNode, IAstNode[] parentNodes) {
         if (parentNodes.Any()) {
             var parent = parentNodes.Last();
             var newParent = parent.Replace(oldNode, newNode);
@@ -56,27 +54,15 @@ public class SecondPassVisitor {
         return newNode;
     }
 
-    private IAstNode? ApplyTransform(IAstNode[] nodes, IScope scope, Func<IAstNode[], IScope, IAstNode?> transform) {
+    private static IAstNode? ApplyTransform(IAstNode[] nodes, IScope scope, Func<IAstNode[], IScope, IAstNode?> transform) {
         var transformed = transform(nodes, scope);
-        if (transformed is not null) {
-            return InsertIntoTree(nodes.Last(), transformed, nodes.SkipLast(1).ToArray());
-        }
-
-        return null;
+        return transformed is not null ? InsertIntoTree(nodes.Last(), transformed, nodes.SkipLast(1).ToArray()) : null;
     }
 
-    private IAstNode? ApplyTransforms(IAstNode[] nodes, IScope scope) {
-        foreach (var transform in Transforms) {
-            var newRoot = ApplyTransform(nodes, scope, transform);
-            if (newRoot is not null) {
-                return newRoot;
-            }
-        }
+    private static IAstNode? ApplyTransforms(IAstNode[] nodes, IScope scope) =>
+        Transforms.Select(transform => ApplyTransform(nodes, scope, transform)).FirstOrDefault(newRoot => newRoot is not null);
 
-        return null;
-    }
-
-    private IAstNode? Visit(IAstNode[] nodeHierarchy, IScope currentScope) {
+    private static IAstNode? Visit(IAstNode[] nodeHierarchy, IScope currentScope) {
         var currentNode = nodeHierarchy.Last();
 
         currentScope = Enter(currentNode, currentScope);

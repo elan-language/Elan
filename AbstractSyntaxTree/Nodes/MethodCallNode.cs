@@ -3,7 +3,7 @@
 namespace AbstractSyntaxTree.Nodes;
 
 public record MethodCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters) : IAstNode, ICallNode {
-    public bool DotCalled { get; init; } = false;
+    public bool DotCalled { get; init; }
 
     public IEnumerable<IAstNode> Children => Parameters.SafePrepend(Qualifier).Prepend(Id);
 

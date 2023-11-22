@@ -80,7 +80,7 @@ public static class AstFactory {
             ProcedureParameterContext c => visitor.Build(c),
             SystemCallContext c => visitor.Build(c),
 
-            _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
+            _ => throw new NotImplementedException(context.GetType().FullName ?? null)
         };
 
     public static IAstNode BuildTerminal(this ElanBaseVisitor<IAstNode> visitor, ITerminalNode node) => new IdentifierNode(node.Symbol.Text);
@@ -220,7 +220,7 @@ public static class AstFactory {
         }
 
         if (context.literal() is { } lv) {
-            return visitor.Visit(context.literal());
+            return visitor.Visit(lv);
         }
 
         if (context.IDENTIFIER() is { } id) {
@@ -231,7 +231,7 @@ public static class AstFactory {
             return visitor.Visit(ds);
         }
 
-        if (context.SELF() is { } s) {
+        if (context.SELF() is not null) {
             return new SelfPrefixNode();
         }
 
@@ -807,7 +807,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DeconstructedTupleContext context) {
         var ids = context.IDENTIFIER().Select(visitor.Visit).ToImmutableArray();
-        var isNew = Enumerable.Range(0, ids.Length).Select(i => false);
+        var isNew = Enumerable.Range(0, ids.Length).Select(_ => false);
 
         return new DeconstructionNode(ids, isNew.ToImmutableArray());
     }

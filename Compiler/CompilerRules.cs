@@ -66,19 +66,11 @@ public static class CompilerRules {
         var otherNodes = nodes.SkipLast(1).ToArray();
 
         if (otherNodes.Any(n => n is ConstantDefNode)) {
-            if (leafNode is TypeNode tn) {
-                var id = tn is { TypeName: IdentifierNode idn } ? idn.Id : "";
-
-                var type = currentScope.Resolve(id);
-
-                if (type is ClassSymbol { ClassType: ClassSymbolTypeType.Mutable }) {
-                    return $"A class cannot be constant unless it is immutable {leafNode}";
-                }
-            }
-
-            if (leafNode is DataStructureTypeNode) {
-                return $"An array may not be a constant : {leafNode}";
-            }
+            return leafNode switch {
+                TypeNode tn => currentScope.Resolve(tn.Name) is ClassSymbol { ClassType: ClassSymbolTypeType.Mutable } ? $"A class cannot be constant unless it is immutable {leafNode}" : null,
+                DataStructureTypeNode => $"An array may not be a constant : {leafNode}",
+                _ => null
+            };
         }
 
         return null;
@@ -89,10 +81,8 @@ public static class CompilerRules {
         if (leafNode is AssignmentNode an) {
             var otherNodes = nodes.SkipLast(1).ToArray();
 
-            foreach (var forNode in otherNodes.OfType<ForStatementNode>()) {
-                if (Match(forNode.Id, an.Id)) {
-                    return $"Cannot modify control variable : {leafNode}";
-                }
+            if (otherNodes.OfType<ForStatementNode>().Any(forNode => Match(forNode.Id, an.Id))) {
+                return $"Cannot modify control variable : {leafNode}";
             }
 
             foreach (var forInNode in otherNodes.OfType<ForInStatementNode>()) {
@@ -109,10 +99,8 @@ public static class CompilerRules {
             var parameters = pcn.Parameters;
 
             foreach (var pp in parameters) {
-                foreach (var forNode in otherNodes.OfType<ForStatementNode>()) {
-                    if (Match(forNode.Id, pp)) {
-                        return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
-                    }
+                if (otherNodes.OfType<ForStatementNode>().Any(forNode => Match(forNode.Id, pp))) {
+                    return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
                 }
 
                 foreach (var forInNode in otherNodes.OfType<ForInStatementNode>()) {

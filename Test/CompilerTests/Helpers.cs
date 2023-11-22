@@ -8,17 +8,14 @@ public static partial class Helpers {
 
     public static bool LightweightTest { get; } = !IsAppveyor;
 
-    // because now windows newlines on appveyor
-    public static readonly string NL = IsAppveyor ? @"\n" : @"\r\n";
-
     private static bool IsAppveyor => Environment.GetEnvironmentVariable("APPVEYOR") is "True";
 
     [GeneratedRegex("\\s+")]
     private static partial Regex WsRegex();
 
-    public static string CollapseWs(string inp) => WsRegex().Replace(inp.Replace("\\r", "").Replace("\\n", ""), " ");
+    private static string CollapseWs(string inp) => WsRegex().Replace(inp.Replace("\\r", "").Replace("\\n", ""), " ");
 
-    public static string NormalizeNewLines(string inp) => inp.Replace("\r", "");
+    private static string NormalizeNewLines(string inp) => inp.Replace("\r", "");
 
     private static Process CreateProcess(string exe, string workingDir) {
         var start = new ProcessStartInfo {
