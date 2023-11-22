@@ -40,10 +40,6 @@ public static class CompilerRules {
             if (!(otherNodes.Last() is VarDefNode or AssignmentNode)) {
                 return $"Cannot use system accessor {scn.Name} in an expression - try defining an additional variable : {leafNode}";
             }
-
-            if (!otherNodes.Any(n => n is ICanWrapExpression)) {
-                return $"System call generates a result that is neither assigned nor returned : {leafNode}";
-            }
         }
 
         return null;
