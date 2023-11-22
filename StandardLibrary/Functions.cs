@@ -26,6 +26,14 @@ public static class Functions {
         return $"{name} {{{pString}}}";
     }
 
+    #region arrays
+
+    public static int length<T>(ElanArray<T> l) => l.Count;
+
+    public static bool isEmpty<T>(ElanArray<T> l) => !l.Any();
+
+    #endregion
+
     #region lists
 
     public static int length<T>(ElanList<T> l) => l.Count;
@@ -37,6 +45,10 @@ public static class Functions {
     #endregion
 
     #region dictionary
+
+    public static int length<TKey, TValue>(ElanDictionary<TKey, TValue> l) where TKey : notnull => l.Count;
+
+    public static bool isEmpty<TKey, TValue>(ElanDictionary<TKey, TValue> l) where TKey : notnull=> !l.Any();
 
     public static ElanList<TKey> keys<TKey, TValue>(ElanDictionary<TKey, TValue> d) where TKey : notnull => new(d.Keys.ToArray());
 

@@ -1,6 +1,6 @@
 ﻿namespace SymbolTable.SymbolTypes;
 
-public class PendingTupleResolveSymbol : ISymbolType {
+public record PendingTupleResolveSymbol : ISymbolType {
     public PendingTupleResolveSymbol(string name, int index) {
         Name = name;
         Index = index;

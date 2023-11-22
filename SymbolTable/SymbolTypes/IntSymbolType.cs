@@ -1,6 +1,6 @@
 ﻿namespace SymbolTable.SymbolTypes;
 
-public class IntSymbolType : ISymbolType {
+public record IntSymbolType : ISymbolType {
     public const string Name = "Int";
     private IntSymbolType() { }
 

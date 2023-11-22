@@ -1,6 +1,6 @@
 ﻿namespace SymbolTable.SymbolTypes;
 
-public class FloatSymbolType : ISymbolType {
+public record FloatSymbolType : ISymbolType {
     public const string Name = "Float";
     private FloatSymbolType() { }
 
