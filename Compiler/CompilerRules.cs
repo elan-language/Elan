@@ -25,20 +25,8 @@ public static class CompilerRules {
         if (leafNode is SystemAccessorCallNode scn && currentScope.Resolve(scn.Name) is SystemAccessorSymbol scs && scs.ReturnType != VoidSymbolType.Instance) {
             var otherNodes = nodes.SkipLast(1).ToArray();
 
-            if (scn.DotCalled) {
-                return $"Cannot use a system call in an expression {leafNode}";
-            }
-
             if (otherNodes.Any(n => n is FunctionDefNode)) {
                 return $"Cannot use system accessor in function : {leafNode}";
-            }
-
-            if (otherNodes.Any(n => n is PrintNode)) {
-                return $"Cannot use a print in an expression : {leafNode}";
-            }
-
-            if (!(otherNodes.Last() is VarDefNode or AssignmentNode)) {
-                return $"Cannot use system accessor {scn.Name} in an expression - try defining an additional variable : {leafNode}";
             }
         }
 
