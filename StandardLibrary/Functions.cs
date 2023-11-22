@@ -2,6 +2,7 @@
 // ReSharper disable InconsistentNaming
 
 using System.Collections;
+using System.Collections.Immutable;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using static StandardLibrary.Constants;
@@ -37,11 +38,11 @@ public static class Functions {
 
     #region dictionary
 
-    public static IEnumerable<TKey> keys<TKey, TValue>(ElanDictionary<TKey, TValue> d) where TKey : notnull => d.Keys;
+    public static ElanList<TKey> keys<TKey, TValue>(ElanDictionary<TKey, TValue> d) where TKey : notnull => new(d.Keys.ToArray());
 
     public static bool hasKey<TKey, TValue>(ElanDictionary<TKey, TValue> d, TKey key) where TKey : notnull => d.ContainsKey(key);
 
-    public static IEnumerable<TValue> values<TKey, TValue>(ElanDictionary<TKey, TValue> d) where TKey : notnull => d.Values;
+    public static ElanList<TValue> values<TKey, TValue>(ElanDictionary<TKey, TValue> d) where TKey : notnull => new(d.Values.ToArray());
 
     public static ElanDictionary<TKey, TValue> removeItem<TKey, TValue>(ElanDictionary<TKey, TValue> d, TKey key) where TKey : notnull => d.Remove(key);
 
