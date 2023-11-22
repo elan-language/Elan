@@ -1,5 +1,4 @@
-﻿using System.Data.SqlTypes;
-using AbstractSyntaxTree;
+﻿using AbstractSyntaxTree;
 using Antlr4.Runtime;
 using CSharpLanguageModel;
 using SymbolTable;

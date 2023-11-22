@@ -29,18 +29,18 @@ public class SecondPassVisitor {
             FunctionDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
             SystemAccessorDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
             ProcedureDefNode pdn => currentScope.Resolve(SignatureId(pdn.Signature)) as IScope ?? throw new ArgumentNullException(),
-            ConstructorNode cn => currentScope.Resolve(Constants.WellKnownConstructorId) as IScope ?? throw new ArgumentNullException(),
+            ConstructorNode => currentScope.Resolve(Constants.WellKnownConstructorId) as IScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
 
     private static IScope Exit(IAstNode node, IScope currentScope) =>
         node switch {
             MainNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            ClassDefNode cdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            FunctionDefNode fdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            SystemAccessorDefNode fdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            ProcedureDefNode pdn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            ConstructorNode cn => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            ClassDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            FunctionDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            SystemAccessorDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            ProcedureDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            ConstructorNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
 
