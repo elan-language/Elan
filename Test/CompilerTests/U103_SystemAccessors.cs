@@ -227,7 +227,6 @@ system readFromNetwork(url String) as String
 end system
 ";
 
-        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -245,7 +244,6 @@ system readFromNetwork(url String) as String
 end system
 ";
 
-        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -263,7 +261,6 @@ system readFromNetwork(url String) as String
 end system
 ";
 
-        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);

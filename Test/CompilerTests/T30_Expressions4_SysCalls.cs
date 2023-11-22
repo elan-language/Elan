@@ -120,11 +120,8 @@ main
 end main
 ";
 
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
-      
     }
 
     [TestMethod]
@@ -135,11 +132,8 @@ main
 end main
 ";
 
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
-      
     }
 
     [TestMethod]
@@ -151,10 +145,7 @@ main
 end main
 ";
 
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
-   
     }
 }
