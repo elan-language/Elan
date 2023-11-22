@@ -12,7 +12,7 @@ public class T44_ImmutableClass {
     public void Pass_BasicImmutableClass() {
         var code = @"#
 main
-    var f = Foo(3)
+    var f = new Foo(3)
     print f.p1
     print f.square()
 end main
@@ -83,7 +83,7 @@ public static class Program {
     public void Pass_AbstractImmutableClass() {
         var code = @"#
 main
-    var f = Foo(3)
+    var f = new Foo(3)
     print f.p1
     print f.square()
 end main

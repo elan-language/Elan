@@ -18,9 +18,9 @@ public class T49_EqualityTesting {
     public void Pass_DifferentInstancesWithSameValuesAreEqual() {
         var code = @"#
 main
-    var x = Foo(7, ""Apple"")
-    var y = Foo(7, ""Orange"")
-    var z = Foo(7, ""Orange"")
+    var x = new Foo(7, ""Apple"")
+    var y = new Foo(7, ""Orange"")
+    var z = new Foo(7, ""Orange"")
     print x is x
     print x is y
     print y is z
@@ -101,10 +101,10 @@ public static class Program {
     public void Pass_ActuallyTheSameReference() {
         var code = @"#
 main
-    var x = Foo(7, ""Apple"")
+    var x = new Foo(7, ""Apple"")
     var y = x
     call y.setP1(3)
-    var z = Foo(8, ""Orange"")
+    var z = new Foo(8, ""Orange"")
     print x is x
     print x is y
     print x is z

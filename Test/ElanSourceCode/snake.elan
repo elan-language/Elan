@@ -34,10 +34,10 @@ If you want to re-size the window, please do so now, before starting the game.
 Click on this window to get 'focus' (and see a flashing cursor). Then press any key to start.."
 
 procedure playGame()
-    var charMap = CharMap()
+    var charMap = new CharMap()
     call charMap.fillBackground()
     var currentDirection = Direction.right
-    var game = Game((charMap.width/2).asInt(), charMap.height, currentDirection)
+    var game = new Game((charMap.width/2).asInt(), charMap.height, currentDirection)
     var gameOn = true
     call game.setNewApplePosition()
     while gameOn
@@ -73,7 +73,7 @@ class Game
     constructor (width Int, height Int, startingDirection Direction)
         set self.width to width
         set self.height to height
-        set snake to Snake(width div 2, height div 2, startingDirection) 
+        set snake to new Snake(width div 2, height div 2, startingDirection) 
         call setNewApplePosition()
     end constructor
 
@@ -107,12 +107,12 @@ class Game
     end function
 
     procedure setNewApplePosition()
-        var sq = Square(0,0)
+        var sq = new Square(0,0)
         var collision = false
         repeat
             var ranW = random(width-1)
             var ranH = random(height-1)
-            set sq to Square(ranW, ranH) 
+            set sq to new Square(ranW, ranH) 
         until not snake.bodyCovers(sq)
         set apple to sq
     end procedure
@@ -128,7 +128,7 @@ end class
 
 class Snake
     constructor(x Int, y Int, startingDirection Direction)
-        var tail = Square(x, y)
+        var tail = new Square(x, y)
         set body to {tail}
         set head to tail.getAdjacentSquare(startingDirection)
     end constructor
@@ -195,7 +195,7 @@ class Square
                 set newY to newY + 1
             default
         end switch
-        return Square(newX, newY)
+        return new Square(newX, newY)
     end function
 
     function asString() as String 

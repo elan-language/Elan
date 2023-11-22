@@ -12,7 +12,7 @@ public class T56_PrivateProperties {
     public void Pass_PrivatePropertyCanBeDeclared() {
         var code = @"#
 main
-    var x = Foo()
+    var x = new Foo()
 end main
 
 
@@ -86,7 +86,7 @@ public static class Program {
     public void Fail_PrivatePropertyCannotBeAccessed() {
         var code = @"#
 main
-    var f = Foo()
+    var f = new Foo()
     var s = f.p2
 end main
 
