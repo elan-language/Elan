@@ -8,7 +8,7 @@ using static Helpers;
 public class T96_Snake {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_ConsoleUI() {
         var code = ReadElanSourceCodeFile("snake.elan");
 

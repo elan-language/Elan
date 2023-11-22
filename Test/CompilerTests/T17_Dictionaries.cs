@@ -304,7 +304,7 @@ public static class Program {
     public void Pass_CreateEmptyDictionary() {
         var code = @"#
 main
-  var a = Dictionary<of String, Int>()
+  var a = new Dictionary<of String, Int>()
   var b = a.setItem(""Foo"",1)
   set b to b.setItem(""Bar"", 3)
   print b.length()

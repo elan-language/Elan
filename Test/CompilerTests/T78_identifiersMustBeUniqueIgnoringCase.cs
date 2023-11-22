@@ -85,7 +85,7 @@ public static class Program {
     public void Pass_CanHaveIdentiferSameAsTypeExceptCase() {
         var code = @"#
 main
-    var foo = Foo()
+    var foo = new Foo()
     print foo
 end main
 class Foo

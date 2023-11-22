@@ -155,7 +155,7 @@ public static class Program {
     [TestMethod]
     public void Pass_ImmutableClass() {
         var code = @"
-constant k = Foo(3)
+constant k = new Foo(3)
 
 main 
   print k
@@ -225,7 +225,7 @@ public static class Program {
     [TestMethod]
     public void Fail_Array() {
         var code = @"
-constant k = Array<of Int>(3)
+constant k = new Array<of Int>(3)
 ";
         var parseTree = @"*";
 
@@ -238,7 +238,7 @@ constant k = Array<of Int>(3)
     [TestMethod]
     public void Fail_MutableClass() {
         var code = @"
-constant k = Foo(3)
+constant k = new Foo(3)
 
 class Foo
     constructor(p1 Int)
