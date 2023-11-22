@@ -182,6 +182,49 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\n");
     }
 
+    [TestMethod]
+    public void Pass_Enum() {
+        var code = @"#
+constant a = Fruit.apple
+main
+  print a
+end main
+enum Fruit
+    apple, orange, pear
+end enum
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly Fruit a = Fruit.apple;
+  public enum Fruit {
+    apple,
+    orange,
+    pear,
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "apple\r\n");
+    }
+
     #endregion
 
     #region Fails

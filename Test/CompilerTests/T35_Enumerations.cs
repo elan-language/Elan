@@ -101,6 +101,52 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_useAsType() {
+        var code = @"
+main
+ var x = Fruit.apple
+ var y = x
+ print x
+end main
+
+enum Fruit
+    apple, orange, pear
+end enum
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public enum Fruit {
+    apple,
+    orange,
+    pear,
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = Fruit.apple;
+    var y = x;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "apple\r\n");
+    }
+
+    [TestMethod]
     public void Pass_equality() {
         var code = @"
 main

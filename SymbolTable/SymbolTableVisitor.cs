@@ -128,7 +128,6 @@ public class SymbolTableVisitor {
             Operator.IntDivide => false,
             Operator.Equal => true,
             Operator.Or => true,
-            Operator.Not => true,
             Operator.Xor => true,
             Operator.LessThan => true,
             Operator.GreaterThanEqual => true,

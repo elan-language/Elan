@@ -193,6 +193,74 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "4\r\n");
     }
 
+  
+
+    [TestMethod]
+    public void Pass_OperatorCoverage() {
+        var code = @"#
+main
+  var a = 3 - 4
+  var b = 3 < 4
+  var c = 3 <= 4
+  var d = 3 > 4
+  var e = 3 >= 4
+  var f = 3 is 4
+  var g = 3 is not 4
+  var h = not false
+  print a
+  print b
+  print c
+  print d
+  print e
+  print f
+  print g
+  print h
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = 3 - 4;
+    var b = 3 < 4;
+    var c = 3 <= 4;
+    var d = 3 > 4;
+    var e = 3 >= 4;
+    var f = 3 == 4;
+    var g = 3 != 4;
+    var h = !false;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(b));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(c));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(d));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(e));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(h));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "-1\r\ntrue\r\ntrue\r\nfalse\r\nfalse\r\nfalse\r\ntrue\r\ntrue\r\n");
+    }
+
+   
+
     #endregion
 
     #region Fails
