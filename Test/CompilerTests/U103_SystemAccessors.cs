@@ -12,7 +12,7 @@ public class U103_SystemAccessors {
     public void Pass_accessorAsOrdinaryFunction() {
         var code = @"
 main
- var d =  readFromNetwork(""www.foo.com"") 
+ var d =  system.readFromNetwork(""www.foo.com"") 
  print d
 end main
 
@@ -60,7 +60,7 @@ main
 end main
 
 procedure myProc()
-  var d = readFromNetwork(""www.foo.com"") 
+  var d = system.readFromNetwork(""www.foo.com"") 
   print d
 end procedure
 
@@ -106,12 +106,12 @@ public static class Program {
     public void Pass_accessorCanCallSystemCallsAndProcedures() {
         var code = @"
 main
-  var d = readFromNetwork(""www.foo.com"")
+  var d = system.readFromNetwork(""www.foo.com"")
   print d
 end main
 
 system readFromNetwork(url String) as String
-  var r = random()
+  var r = system.random()
   print ""checking""
   return ""data""
 end system
@@ -152,13 +152,13 @@ public static class Program {
     public void Pass_accessorCanCallOtherAccessor() {
         var code = @"
 main
-  var d = readFromNetwork(""www.foo.com"") 
+  var d = system.readFromNetwork(""www.foo.com"") 
   print d
 end main
 
 system readFromNetwork(url String) as String
   var result = """"
-  var b = check(url)
+  var b = system.check(url)
   if  b then
     set result to ""OK data""
   end if 
@@ -219,7 +219,7 @@ main
 end main
 
 function myFunc() as String
-  return readFromNetwork(""url"")
+  return system.readFromNetwork(""url"")
 end function
 
 system readFromNetwork(url String) as String
@@ -230,16 +230,14 @@ end system
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use system accessor in function");
+        AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
     public void Fail_accessorCannotBeCalledWithinAnExpression() {
         var code = @"
 main
-  var d =  readFromNetwork(""www.foo.com"") + ""."" 
+  var d =  system.readFromNetwork(""www.foo.com"") + ""."" 
   print d 
 end main
 system readFromNetwork(url String) as String
@@ -250,16 +248,14 @@ end system
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use system accessor readFromNetwork in an expression - try defining an additional variable");
+        AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
     public void Fail_accessorCannotBeCalledWithinAnExpression2() {
         var code = @"
 main
- print readFromNetwork(""www.foo.com"") 
+ print system.readFromNetwork(""www.foo.com"") 
 end main
 
 system readFromNetwork(url String) as String
@@ -270,9 +266,7 @@ end system
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use a print in an expression");
+        AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
@@ -331,6 +325,27 @@ end class
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void NoQualifier() {
+        var code = @"
+main
+ var d =  readFromNetwork(""www.foo.com"") 
+ print d
+end main
+
+system readFromNetwork(url String) as String
+  return ""data""
+end system
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Calling unknown method");
     }
 
     #endregion

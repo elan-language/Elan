@@ -12,6 +12,16 @@ public static class Procedures {
     }
 
     #endregion
+    
+    public static void seedRandom(int seed) {
+        SystemAccessors.seedRandom(seed);
+    }
+
+    public static void resetRandom() {
+        SystemAccessors.resetRandom();
+    }
+
+
 
     #region TODO - simple sounds
 

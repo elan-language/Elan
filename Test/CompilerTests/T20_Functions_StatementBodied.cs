@@ -419,7 +419,7 @@ main
 end main
 
 function foo(a Int, b Int) as Int
-    var r = random()
+    var r = system.random()
     return a * b
 end function
 ";

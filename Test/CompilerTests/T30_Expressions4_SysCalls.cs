@@ -10,7 +10,7 @@ public class T30_Expressions4_SystemCalls {
     public void Pass_Input1() {
         var code = @"#
 main
-  var a = input()
+  var a = system.input()
   print a
 end main
 ";
@@ -46,7 +46,7 @@ public static class Program {
     public void Pass_Input2() {
         var code = @"#
 main
-  var a = input(""Your name"")
+  var a = system.input(""Your name"")
   print a
 end main
 ";
@@ -79,10 +79,11 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_UnconsumedResultFromSystemCall() {
+    public void Fail_NoQualifier1() {
         var code = @"#
 main
-  call input(""Your name"")
+  var a = input()
+  print a
 end main
 ";
 
@@ -91,23 +92,54 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use system accessor input in an expression - try defining an additional variable");
+        AssertDoesNotCompile(compileData, "");
+    }
+
+    [TestMethod]
+    public void Fail_NoQualifier2() {
+        var code = @"#
+main
+  var a = input(""Your name"")
+  print a
+end main
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "");
+    }
+
+    [TestMethod]
+    public void Fail_UnconsumedResultFromSystemCall() {
+        var code = @"#
+main
+  call system.input(""Your name"")
+end main
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertDoesNotParse(compileData);
+      
     }
 
     [TestMethod]
     public void Fail_SystemCallWithinExpression() {
         var code = @"#
 main
-  var a = input(""Your name"").length()
+  var a = system.input(""Your name"").length()
 end main
 ";
 
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use system accessor input in an expression - try defining an additional variable");
+        AssertDoesNotParse(compileData);
+      
     }
 
     [TestMethod]
@@ -115,15 +147,14 @@ end main
         var code = @"#
 main
   var prompt = ""Your name""
-  var a = prompt.input()
+  var a = system.prompt.input()
 end main
 ";
 
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use a system call in an expression ");
+        AssertDoesNotParse(compileData);
+   
     }
 }

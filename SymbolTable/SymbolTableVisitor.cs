@@ -180,7 +180,7 @@ public class SymbolTableVisitor {
     private IAstNode VisitVarDefNode(VarDefNode varDefNode) {
         if (varDefNode.Id is IdentifierNode idn) {
             var name = idn.Id;
-            var type = MapNodeToSymbolType(varDefNode.Expression);
+            var type = MapNodeToSymbolType(varDefNode.Rhs);
             var ms = new VariableSymbol(name, type, currentScope);
             currentScope.Define(ms);
         }

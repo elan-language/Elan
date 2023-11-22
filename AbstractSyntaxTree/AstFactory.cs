@@ -78,6 +78,7 @@ public static class AstFactory {
             ThrowExceptionContext c => visitor.Build(c),
             PrintStatementContext c => visitor.Build(c),
             ProcedureParameterContext c => visitor.Build(c),
+            SystemCallContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context?.GetType().FullName ?? null)
         };
@@ -204,6 +205,13 @@ public static class AstFactory {
         return new MethodCallNode(id, nqr, pps);
     }
 
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SystemCallContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var pps = (context.argumentList()?.expression().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
+
+        return new MethodCallNode(id, new SystemAccessorNode(), pps);
+    }
+
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {
         if (context.scopeQualifier() is { } nq) {
             var nqn = visitor.Visit(nq);
@@ -236,9 +244,9 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, VarDefContext context) {
         var id = visitor.Visit(context.assignableValue());
-        var expr = visitor.Visit(context.expression());
+        var rhs = context.expression() is { } expr ? visitor.Visit(expr) : visitor.Visit(context.systemCall());
 
-        return new VarDefNode(id, expr);
+        return new VarDefNode(id, rhs);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ConstantDefContext context) {
@@ -251,9 +259,9 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssignmentContext context) {
         var id = visitor.Visit(context.assignableValue());
-        var expr = visitor.Visit(context.expression());
+        var rhs = context.expression() is { } expr ? visitor.Visit(expr) : visitor.Visit(context.systemCall());
 
-        return new AssignmentNode(id, expr, false);
+        return new AssignmentNode(id, rhs, false);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, InlineAsignmentContext context) {

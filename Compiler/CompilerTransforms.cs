@@ -13,7 +13,7 @@ public static class CompilerTransforms {
     public static IAstNode? TransformMethodCallNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {
             MethodCallNode mcn => ResolveMethodCall(currentScope, mcn) switch {
-                (SystemAccessorSymbol sas, _) => new SystemAccessorCallNode(mcn.Id, NameSpaceToNode(sas.NameSpace), mcn.Parameters) { DotCalled = mcn.DotCalled },
+                (SystemAccessorSymbol sas, _) when mcn.Qualifier is SystemAccessorNode => new SystemAccessorCallNode(mcn.Id, NameSpaceToNode(sas.NameSpace), mcn.Parameters) { DotCalled = mcn.DotCalled },
                 (ProcedureSymbol ps, false) => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
                 (ProcedureSymbol, true) => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 (FunctionSymbol fs, false) => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),

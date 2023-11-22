@@ -64,13 +64,13 @@ public static class SystemAccessors {
 
     private static Random generator = new();
 
-    public static void seedRandom(int seed) {
+    internal static void seedRandom(int seed) {
         lock (randomLock) {
             generator = new Random(seed);
         }
     }
 
-    public static void resetRandom() {
+    internal static void resetRandom() {
         lock (randomLock) {
             generator = new Random();
         }

@@ -13,14 +13,12 @@ public class T22_RandomNumbers {
         var code = @"#
 main
      call seedRandom(3)
-     print random()
+     print system.random()
 end main
 ";
-        var parseTree = @"*";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use a print in an expression");
+        AssertDoesNotParse(compileData);
     }
 
     #endregion
@@ -32,9 +30,9 @@ end main
         var code = @"#
 main
      call seedRandom(3)
-     var x = random()
+     var x = system.random()
      print x
-     set x to random()
+     set x to system.random()
      print x
 end main
 ";
@@ -50,7 +48,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    StandardLibrary.SystemAccessors.seedRandom(3);
+    StandardLibrary.Procedures.seedRandom(3);
     var x = StandardLibrary.SystemAccessors.random();
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = StandardLibrary.SystemAccessors.random();
@@ -73,9 +71,9 @@ public static class Program {
         var code = @"#
 main
      call seedRandom(3)
-     var x = random(1000.0)
+     var x = system.random(1000.0)
      print x
-     set x to random(1000.0)
+     set x to system.random(1000.0)
      print x
 end main
 ";
@@ -91,7 +89,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    StandardLibrary.SystemAccessors.seedRandom(3);
+    StandardLibrary.Procedures.seedRandom(3);
     var x = StandardLibrary.SystemAccessors.random(1000.0);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = StandardLibrary.SystemAccessors.random(1000.0);
@@ -114,9 +112,9 @@ public static class Program {
         var code = @"#
 main
      call seedRandom(3)
-     var x = random(100.0, 200.0)
+     var x = system.random(100.0, 200.0)
      print x
-     set x to random(100.0, 200.0)
+     set x to system.random(100.0, 200.0)
      print x
 end main
 ";
@@ -132,7 +130,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    StandardLibrary.SystemAccessors.seedRandom(3);
+    StandardLibrary.Procedures.seedRandom(3);
     var x = StandardLibrary.SystemAccessors.random(100.0, 200.0);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = StandardLibrary.SystemAccessors.random(100.0, 200.0);
@@ -155,9 +153,9 @@ public static class Program {
         var code = @"#
 main
      call seedRandom(3)
-     var x = random(6)
+     var x = system.random(6)
      print x
-     set x to random(6)
+     set x to system.random(6)
      print x
 end main
 ";
@@ -173,7 +171,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    StandardLibrary.SystemAccessors.seedRandom(3);
+    StandardLibrary.Procedures.seedRandom(3);
     var x = StandardLibrary.SystemAccessors.random(6);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = StandardLibrary.SystemAccessors.random(6);
@@ -196,9 +194,9 @@ public static class Program {
         var code = @"#
 main
      call seedRandom(3)
-     var x = random(5,10)
+     var x = system.random(5,10)
      print x
-     set x to random(5,10)
+     set x to system.random(5,10)
      print x
 end main
 ";
@@ -214,7 +212,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    StandardLibrary.SystemAccessors.seedRandom(3);
+    StandardLibrary.Procedures.seedRandom(3);
     var x = StandardLibrary.SystemAccessors.random(5, 10);
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     x = StandardLibrary.SystemAccessors.random(5, 10);
