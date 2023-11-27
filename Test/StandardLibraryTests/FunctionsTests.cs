@@ -158,5 +158,19 @@ public class FunctionsTests {
         Assert.AreEqual("Foo {p1:5, p2:Apple}", typeAndProperties(new Foo()));
     }
 
+    [TestMethod]
+    public void Iter() {
+        IEnumerable<int> a = new [] { 1, 2, 3, 5, 6, 7, 8, 9, 10 };
+
+        Assert.AreEqual("6", Functions.asString(Functions.element(a, 5)));
+        Assert.AreEqual("1", Functions.asString(Functions.head(a)));
+        Assert.AreEqual("Iter {2,3,5,6,7,8,9,10}", Functions.asString(Functions.tail(a)));
+        Assert.AreEqual("Iter {5,6,7,8}", Functions.asString(Functions.range(a, 3, 7)));
+        Assert.AreEqual("Iter {6,7,8,9,10}", Functions.asString(Functions.rangeFrom(a, 4)));
+        Assert.AreEqual("Iter {1,2,3,5,6,7,8}", Functions.asString(Functions.rangeTo(a, 7)));
+    }
+
+
+
     #endregion
 }

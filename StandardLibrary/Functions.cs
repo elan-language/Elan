@@ -42,6 +42,7 @@ public static class Functions {
 
     public static ElanArray<T> asArray<T>(ElanList<T> l) => new(l);
 
+
     #endregion
 
     #region iter
@@ -53,6 +54,14 @@ public static class Functions {
     public static ElanArray<T> asArray<T>(IEnumerable<T> l) => new(l);
 
     public static ElanList<T> asList<T>(IEnumerable<T> l) => new(l.ToArray());
+
+    public static T element<T>(IEnumerable<T> e, int index) => e.Skip(index - 1).First();
+    public static T head<T>(IEnumerable<T> e) => e.First();
+    public static IEnumerable<T> tail<T>(IEnumerable<T> e) => e.Skip(1);
+    public static IEnumerable<T> range<T>(IEnumerable<T> e, int inclusiveFrom, int exclusiveTo) => e.Skip(inclusiveFrom).Take(exclusiveTo - inclusiveFrom);
+    public static IEnumerable<T> rangeFrom<T>(IEnumerable<T> e, int inclusiveFrom) => e.Skip(inclusiveFrom);
+    public static IEnumerable<T> rangeTo<T>(IEnumerable<T> e, int exclusiveTo) => e.Take(exclusiveTo); 
+
 
     #endregion
 
@@ -174,6 +183,7 @@ public static class Functions {
             null => throw new NotImplementedException(),
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
             _ when obj.GetType().GetMethod("asString") is { } mi => mi.Invoke(obj, null) as string,
+            IEnumerable e => e.Cast<object>().Any() ? $"Iter {{{string.Join(',', e.Cast<object>().Select(Functions.asString))}}}" : "empty iter",
             _ => obj.ToString()
         };
     }
