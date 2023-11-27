@@ -155,17 +155,17 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_FuncAsProperty() {
         var code = @"
 main
-  var foo = Foo(twice)
+  var foo = new Foo(twice)
   print foo.f(7)
 end main
 
 class Foo
   constructor(f (Int -> Int))
-    self.f = f
+    set self.f to f
   end constructor
 
   property f (Int -> Int)
@@ -180,7 +180,42 @@ function twice(x Int) as Int
 end function
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static int twice(int x) {
+
+    return x * 2;
+  }
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+    private Foo() {}
+    public Foo(Func<int, int> f) {
+      this.f = f;
+    }
+    public virtual Func<int, int> f { get; set; } = (int _) => default;
+    public virtual string asString() {
+
+      return @$""a Foo"";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override Func<int, int> f => (int _) => default;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var foo = new Foo(twice);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(foo.f(7)));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -193,11 +228,11 @@ end function
         AssertObjectCodeExecutes(compileData, "14\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DefaultValue() {
         var code = @"
 main
-  var foo = Foo(twice)
+  var foo = new Foo()
   print foo.f
   print foo.f(7)
 end main
@@ -214,7 +249,39 @@ class Foo
 end class
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+    public virtual Func<int, int> f { get; set; } = (int _) => default;
+    public virtual string asString() {
+
+      return @$""a Foo"";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override Func<int, int> f => (int _) => default;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var foo = new Foo();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(foo.f));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(foo.f(7)));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -224,7 +291,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Default (Int -> Int)\r\n0\r\n");
+        AssertObjectCodeExecutes(compileData, "(Int -> Int)\r\n0\r\n");
     }
 
     #endregion

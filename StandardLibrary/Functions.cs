@@ -184,6 +184,12 @@ public static class Functions {
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
             _ when obj.GetType().GetMethod("asString") is { } mi => mi.Invoke(obj, null) as string,
             IEnumerable e => e.Cast<object>().Any() ? $"Iter {{{string.Join(',', e.Cast<object>().Select(Functions.asString))}}}" : "empty iter",
+            Delegate d => $"({ string.Join(",", d.Method.GetParameters().Select(p => asString(p.ParameterType)))} -> {asString(d.Method.ReturnType)})",
+            Type t => t.Name switch {
+                "Int32" => "Int",
+                "String" => "String",
+                _ => t.Name
+            },
             _ => obj.ToString()
         };
     }

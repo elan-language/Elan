@@ -133,6 +133,12 @@ public class FunctionsTests {
         Assert.AreEqual("(true, false)", asString(t));
     }
 
+    [TestMethod]
+    public void AsStringFunc() {
+        Func<int, string, int> t = (i, s) => 0; 
+        Assert.AreEqual("", asString(t));
+    }
+
     public record class Foo {
         public Foo() {
             p1 = 5;

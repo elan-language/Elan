@@ -90,6 +90,7 @@ public static class CompilerTransforms {
             IScope classScope => classScope.Resolve(mcn.Name) switch {
                 ProcedureSymbol => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 FunctionSymbol => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                VariableSymbol {ReturnType:FuncSymbolType} => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 _ => null
             },
             _ => null
