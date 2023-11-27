@@ -201,7 +201,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {1,2,3,4,5,6,7}\r\nList {4,5,6,7}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Default() {
         var code = @"
 main
@@ -233,14 +233,14 @@ public static partial class Globals {
     public Foo() {
 
     }
-    public virtual System.Collections.Generic.IEnumerable<int> it { get; set; } = System.Collections.Generic.IEnumerable<int>.DefaultInstance;
+    public virtual System.Collections.Generic.IEnumerable<int> it { get; set; } = _DefaultIter<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A Foo"";
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
-      public override System.Collections.Generic.IEnumerable<int> it => System.Collections.Generic.IEnumerable<int>.DefaultInstance;
+      public override System.Collections.Generic.IEnumerable<int> it => _DefaultIter<int>.DefaultInstance;
 
       public override string asString() { return ""default Foo"";  }
     }
