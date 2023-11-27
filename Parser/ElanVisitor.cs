@@ -176,18 +176,6 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFunctionSignature([NotNull] ElanParser.FunctionSignatureContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.systemAccessor"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitSystemAccessor([NotNull] ElanParser.SystemAccessorContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.accessorSignature"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitAccessorSignature([NotNull] ElanParser.AccessorSignatureContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.constantDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
