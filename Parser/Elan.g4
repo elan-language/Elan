@@ -1,7 +1,7 @@
 grammar Elan;
 import Elan_Lexer;
 
-file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test | systemAccessor)* NL* EOF;
+file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test )* NL* EOF;
 
 main: 
 	NL MAIN 
@@ -72,15 +72,6 @@ expressionFunction:
    
 functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
 
-// System Accessor
-systemAccessor: 
-	NL SYSTEM accessorSignature
-	statementBlock
-	NL RETURN expression
-    NL END SYSTEM
-	;
-
-accessorSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
 // CONSTANTS
 constantDef: NL CONSTANT IDENTIFIER ASSIGN (literal | newInstance);
 

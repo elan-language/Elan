@@ -336,30 +336,6 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitFunctionSignature([NotNull] ElanParser.FunctionSignatureContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.systemAccessor"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterSystemAccessor([NotNull] ElanParser.SystemAccessorContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.systemAccessor"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitSystemAccessor([NotNull] ElanParser.SystemAccessorContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.accessorSignature"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterAccessorSignature([NotNull] ElanParser.AccessorSignatureContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.accessorSignature"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitAccessorSignature([NotNull] ElanParser.AccessorSignatureContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.constantDef"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

@@ -220,7 +220,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, $"0\r\n0\r\nfalse\r\n{default(char)}\r\n\r\nempty list\r\nempty dictionary\r\nempty array\r\n"); //Not sure if char is correct - use C# default
+        AssertObjectCodeExecutes(compileData, $"0\r\n0\r\nfalse\r\n\r\n\r\nempty list\r\nempty dictionary\r\nempty array\r\n"); //Not sure if char is correct - use C# default
     }
 
     [TestMethod]
@@ -718,6 +718,83 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "empty list\r\n\r\nempty dictionary\r\nempty array\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\n");
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_PropertyOfAbstractType()
+    {
+        var code = @"#
+main
+    var g = new Game()
+    print(g.p1.ucName())
+end main
+
+class Game
+    constructor()
+    end constructor
+
+    property p1 Player
+    property p2 Player
+
+    function asString() as String
+        return ""A game""
+    end function
+
+end class
+
+abstract class Player
+    property name String
+
+    function ucName() as String
+end class
+";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Game {
+    public static Game DefaultInstance { get; } = new Game._DefaultGame();
+
+    public Game() {
+
+    }
+    public virtual Player p1 { get; set; } = Player.DefaultInstance;
+    public virtual Player p2 { get; set; } = Player.DefaultInstance;
+    public virtual string asString() {
+
+      return @$""A game"";
+    }
+    private record class _DefaultGame : Game {
+      public _DefaultGame() { }
+      public override Player p1 => Player.DefaultInstance;
+      public override Player p2 => Player.DefaultInstance;
+
+      public override string asString() { return ""default Game"";  }
+    }
+  }
+  public interface Player {
+    public string name { get; }
+    public string ucName();
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var g = new Game();
+    System.Console.WriteLine(StandardLibrary.Functions.asString((g.p1.ucName())));
+  }
+}";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "\r\n");
     }
 
     #endregion
