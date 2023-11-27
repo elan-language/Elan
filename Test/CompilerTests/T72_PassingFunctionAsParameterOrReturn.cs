@@ -56,7 +56,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "6\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_PassAsParam2() {
         var code = @"
 main
@@ -72,7 +72,26 @@ function find(x String, y Char ) as Int
 end function
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static void printIt(string s, char c, Func<string, char, int> f) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f(s, c)));
+  }
+  public static int find(string x, char y) {
+
+    return StandardLibrary.Functions.indexOf(x, y);
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    Globals.printIt(@$""Hello"", 'e', find);
+  }
+}";
 
         var parseTree = @"*";
 
@@ -85,11 +104,12 @@ end function
         AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ReturnAFunction() {
         var code = @"
 main
-  print getFunc()(5)
+  var f = getFunc()
+  print f(5)
 end main
 
 function getFunc() as (Int -> Int)
@@ -101,7 +121,28 @@ function twice(x Int) as Int
 end function
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static Func<int, int> getFunc() {
+
+    return twice;
+  }
+  public static int twice(int x) {
+
+    return x * 2;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = Globals.getFunc();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f(5)));
+  }
+}";
 
         var parseTree = @"*";
 

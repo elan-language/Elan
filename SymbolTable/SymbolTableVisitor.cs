@@ -66,7 +66,7 @@ public class SymbolTableVisitor {
 
     private IAstNode VisitFunctionDefNode(FunctionDefNode functionDefNode) {
         var (name, parameterIds) = NameAndParameterIds(functionDefNode.Signature);
-        var rt = MapNodeToSymbolType(functionDefNode.Return);
+        var rt = MapNodeToSymbolType(functionDefNode.Signature);
 
         var ms = new FunctionSymbol(name, rt, currentScope is GlobalScope ? NameSpace.UserGlobal : NameSpace.UserLocal, parameterIds, currentScope);
         currentScope.Define(ms);
@@ -174,6 +174,7 @@ public class SymbolTableVisitor {
             ReturnExpressionNode ren => MapNodeToSymbolType(ren.Expression),
             QualifiedNode qn => MapNodeToSymbolType(qn.Qualified),
             FuncTypeNode fn => new FuncSymbolType(),
+            MethodSignatureNode { ReturnType: not null } msn => MapNodeToSymbolType(msn.ReturnType),
             _ => throw new NotImplementedException()
         };
     }

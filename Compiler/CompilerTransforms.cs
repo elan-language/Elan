@@ -19,6 +19,7 @@ public static class CompilerTransforms {
                 (FunctionSymbol fs, false) => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
                 (FunctionSymbol, true) => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 (ParameterSymbol { ReturnType: FuncSymbolType }, _) => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
+                (VariableSymbol vs, _) when EnsureResolved(vs.ReturnType, currentScope) is FuncSymbolType => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
                 _ => GetSpecificCallNodeForClassMethod(mcn, currentScope)
             },
             _ => null
