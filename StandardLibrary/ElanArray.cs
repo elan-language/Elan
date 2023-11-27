@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Immutable;
 
 namespace StandardLibrary;
 
-public class ElanArray<T> : IEnumerable<T> {
+public class ElanArray<T> : ElanIter<T> {
     private readonly bool twoD;
     private readonly T[][] wrappedArray;
 
@@ -30,6 +31,8 @@ public class ElanArray<T> : IEnumerable<T> {
         }
     }
 
+    private static ElanArray<T> Wrap(ImmutableList<T> list) => new(list);
+
     public static ElanArray<T> DefaultInstance { get; } = new();
 
     private static T? Default => typeof(T) == typeof(string) ? (T)(object)"" : default;
@@ -40,6 +43,8 @@ public class ElanArray<T> : IEnumerable<T> {
         get => wrappedArray[0][index];
         set => wrappedArray[0][index] = value;
     }
+
+    public ElanIter<T> this[Range range] =>  Wrap( wrappedArray[0][range].ToImmutableList());
 
     public T this[int index1, int index2] {
         get => twoD ? wrappedArray[index1][index2] : throw new IndexOutOfRangeException();

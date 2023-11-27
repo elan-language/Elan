@@ -44,6 +44,18 @@ public static class Functions {
 
     #endregion
 
+    #region iter
+
+    public static int length<T>(ElanIter<T> l) => l.Count();
+
+    public static bool isEmpty<T>(ElanIter<T> l) => !l.Any();
+
+    public static ElanArray<T> asArray<T>(ElanIter<T> l) => new(l);
+
+    public static ElanList<T> asList<T>(ElanIter<T> l) => new(l.ToArray());
+
+    #endregion
+
     #region dictionary
 
     public static int length<TKey, TValue>(ElanDictionary<TKey, TValue> l) where TKey : notnull => l.Count;

@@ -157,6 +157,7 @@ public class SymbolTableVisitor {
             LiteralTupleNode => new TupleSymbolType(),
             LiteralListNode => new ListSymbolType(),
             LiteralDictionaryNode => new DictionarySymbolType(),
+            DataStructureTypeNode { Type: DataStructure.Iter } => new IterSymbolType(),
             DataStructureTypeNode { Type: DataStructure.Array } => new ArraySymbolType(),
             DataStructureTypeNode { Type: DataStructure.List } => new ListSymbolType(),
             DataStructureTypeNode { Type: DataStructure.Dictionary } => new DictionarySymbolType(),

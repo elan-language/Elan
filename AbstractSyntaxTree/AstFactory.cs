@@ -557,6 +557,10 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DataStructureTypeContext context) {
         var genericTypes = context.genericSpecifier().type().Select(visitor.Visit);
 
+        if (context.ITERABLE() is not null) {
+            return new DataStructureTypeNode(DataStructure.Iter, genericTypes.ToImmutableArray());
+        }
+
         if (context.LIST() is not null) {
             return new DataStructureTypeNode(DataStructure.List, genericTypes.ToImmutableArray());
         }

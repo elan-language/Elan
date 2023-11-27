@@ -606,6 +606,69 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "empty list\r\n");
     }
 
+    [TestMethod]
+    public void Pass_Default() {
+        var code = @"
+main
+  var f = new Foo()
+  print f.it
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property it List<of Int>
+
+  function asString() as String
+    return ""A Foo""
+  end function
+end class
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+    public virtual StandardLibrary.ElanList<int> it { get; set; } = StandardLibrary.ElanList<int>.DefaultInstance;
+    public virtual string asString() {
+
+      return @$""A Foo"";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override StandardLibrary.ElanList<int> it => StandardLibrary.ElanList<int>.DefaultInstance;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var f = new Foo();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f.it));
+  }
+}";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "empty list\r\n");
+    }
+
     #endregion
 
     #region Fails
