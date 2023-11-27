@@ -18,6 +18,7 @@ public static class CompilerTransforms {
                 (ProcedureSymbol, true) => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 (FunctionSymbol fs, false) => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
                 (FunctionSymbol, true) => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                (ParameterSymbol { ReturnType: FuncSymbolType }, _) => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
                 _ => GetSpecificCallNodeForClassMethod(mcn, currentScope)
             },
             _ => null

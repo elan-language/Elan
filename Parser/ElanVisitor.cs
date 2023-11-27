@@ -110,6 +110,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFunctionCall([NotNull] ElanParser.FunctionCallContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.systemCall"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSystemCall([NotNull] ElanParser.SystemCallContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.argumentList"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -511,6 +517,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitTupleType([NotNull] ElanParser.TupleTypeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.typeList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTypeList([NotNull] ElanParser.TypeListContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.funcType"/>.
 	/// </summary>

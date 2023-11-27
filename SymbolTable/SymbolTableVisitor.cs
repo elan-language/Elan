@@ -173,6 +173,7 @@ public class SymbolTableVisitor {
             PropertyNode pn => MapNodeToSymbolType(pn.Expression),
             ReturnExpressionNode ren => MapNodeToSymbolType(ren.Expression),
             QualifiedNode qn => MapNodeToSymbolType(qn.Qualified),
+            FuncTypeNode fn => new FuncSymbolType(),
             _ => throw new NotImplementedException()
         };
     }

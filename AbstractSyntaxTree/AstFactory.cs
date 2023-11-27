@@ -77,6 +77,7 @@ public static class AstFactory {
             PrintStatementContext c => visitor.Build(c),
             ProcedureParameterContext c => visitor.Build(c),
             SystemCallContext c => visitor.Build(c),
+            FuncTypeContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context.GetType().FullName ?? null)
         };
@@ -548,6 +549,10 @@ public static class AstFactory {
             return new TypeNode(typeName);
         }
 
+        if (context.funcType() is { } ft) {
+            return visitor.Visit(ft);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -808,5 +813,12 @@ public static class AstFactory {
         var expr = context.expression() is { } e ? visitor.Visit(e) : null;
 
         return new PrintNode(expr);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FuncTypeContext context) {
+        var inputTypes = context.typeList().type().Select(visitor.Visit);
+        var returnType = visitor.Visit(context.type()); 
+
+        return new FuncTypeNode(inputTypes.ToImmutableArray(), returnType);
     }
 }

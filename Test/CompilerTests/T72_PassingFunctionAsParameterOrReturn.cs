@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass] [Ignore]
+[TestClass]
 public class T72_PassingFunctionAsParameterOrReturn {
     #region Passes
 
@@ -12,7 +12,7 @@ public class T72_PassingFunctionAsParameterOrReturn {
     public void Pass_PassAsParam() {
         var code = @"
 main
-  printModified(3, twice)
+  call printModified(3, twice)
 end main
 
 procedure printModified(i Int, f (Int -> Int))
@@ -24,7 +24,26 @@ function twice(x Int) as Int
 end function
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static void printModified(int i, Func<int, int> f) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f(i)));
+  }
+  public static int twice(int x) {
+
+    return x * 2;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    Globals.printModified(3, twice);
+  }
+}";
 
         var parseTree = @"*";
 
@@ -37,11 +56,11 @@ end function
         AssertObjectCodeExecutes(compileData, "6\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_PassAsParam2() {
         var code = @"
 main
-  printIt(""Hello"", 'e', find)
+  call printIt(""Hello"", 'e', find)
 end main
 
 procedure printIt(s String, c Char, f (String, Char -> Int))
@@ -66,7 +85,7 @@ end function
         AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_ReturnAFunction() {
         var code = @"
 main
@@ -95,7 +114,7 @@ end function
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_FuncAsProperty() {
         var code = @"
 main
@@ -133,7 +152,7 @@ end function
         AssertObjectCodeExecutes(compileData, "14\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_DefaultValue() {
         var code = @"
 main
@@ -171,11 +190,11 @@ end class
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_FunctionSignatureDoesntMatch() {
         var code = @"
 main
-  printModified(3, power)
+  call printModified(3, power)
 end main
 
 procedure printModified(i Int, f (Int -> Int))
@@ -195,7 +214,7 @@ end function
         AssertDoesNotCompile(compileData, "?");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_UsingReturnedFuncWithoutArgs() {
         var code = @"
 main
@@ -218,7 +237,7 @@ end function
         AssertDoesNotCompile(compileData, "?");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_PrintingAFunction() {
         var code = @"
 main

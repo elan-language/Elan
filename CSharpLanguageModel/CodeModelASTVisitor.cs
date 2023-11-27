@@ -80,6 +80,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             ThrowNode n => HandleScope(BuildThrowModel, n),
             PrintNode n => HandleScope(BuildPrintModel, n),
             ParameterCallNode n => HandleScope(BuildParameterCallModel, n),
+            FuncTypeNode n => HandleScope(BuildFuncTypeModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -358,6 +359,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var id = Visit(typeNode.TypeName);
 
         return new TypeModel(id);
+    }
+
+    private FuncTypeModel BuildFuncTypeModel(FuncTypeNode typeNode) {
+        var types = typeNode.Types.Select(Visit);
+        var ret = Visit(typeNode.ReturnType);
+
+        return new FuncTypeModel(types.ToArray(), ret);
     }
 
     private static ScalarValueModel BuildSelfModel(SelfPrefixNode selfPrefixNode) => new("this");
