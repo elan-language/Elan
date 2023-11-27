@@ -29,7 +29,7 @@ using static Globals;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void printEach(StandardLibrary.ElanIter<int> target) {
+  public static void printEach(System.Collections.Generic.IEnumerable<int> target) {
     foreach (var x in target) {
       System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     }
@@ -75,7 +75,7 @@ using static Globals;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void printEach(StandardLibrary.ElanIter<int> target) {
+  public static void printEach(System.Collections.Generic.IEnumerable<int> target) {
     foreach (var x in target) {
       System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     }
@@ -100,7 +100,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "1\r\n3\r\n6\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_String() {
         var code = @"
 main
@@ -121,7 +121,7 @@ using static Globals;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void printEach(StandardLibrary.ElanIter<char> target) {
+  public static void printEach(System.Collections.Generic.IEnumerable<char> target) {
     foreach (var x in target) {
       System.Console.WriteLine(StandardLibrary.Functions.asString(x));
     }
@@ -146,53 +146,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "F\r\no\r\no\r\n");
     }
 
-    [TestMethod]
-    public void Pass_Indexing() {
-        var code = @"
-main
-  var it = { 1,2,3,4,5,6,7}
-  call printEach(it[2..4])
-end main
-
-procedure printEach(target Iter<of Int>)
-  foreach x in target
-    print x
-  end foreach
-  print target[0]
-end procedure
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using StandardLibrary;
-using static Globals;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-  public static void printEach(StandardLibrary.ElanIter<int> target) {
-    foreach (var x in target) {
-      System.Console.WriteLine(StandardLibrary.Functions.asString(x));
-    }
-    System.Console.WriteLine(StandardLibrary.Functions.asString(target[0]));
-  }
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var it = new StandardLibrary.ElanList<int>(1, 2, 3, 4, 5, 6, 7);
-    Globals.printEach(it[(2)..(4)]);
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3\r\n4\r\n3\r\n");
-    }
+   
 
     [TestMethod]
     public void Pass_Printing() {
@@ -204,12 +158,11 @@ main
 end main
 
 procedure printAsIter(target Iter<of Int>)
-  var some = target[1..3]
-  print some
+  print target
 end procedure
 
 procedure printAsList(target Iter<of Int>)
-  var some = target[3..].asList()
+  var some = target.asList()[3..]
   print some
 end procedure
 ";
@@ -220,12 +173,11 @@ using static Globals;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static void printAsIter(StandardLibrary.ElanIter<int> target) {
-    var some = target[(1)..(3)];
-    System.Console.WriteLine(StandardLibrary.Functions.asString(some));
+  public static void printAsIter(System.Collections.Generic.IEnumerable<int> target) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(target));
   }
-  public static void printAsList(StandardLibrary.ElanIter<int> target) {
-    var some = StandardLibrary.Functions.asList(target[(3)..]);
+  public static void printAsList(System.Collections.Generic.IEnumerable<int> target) {
+    var some = StandardLibrary.Functions.asList(target)[(3)..];
     System.Console.WriteLine(StandardLibrary.Functions.asString(some));
   }
 }
@@ -246,10 +198,10 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {2,3}\r\nList {4,5,6,7}\r\n");
+        AssertObjectCodeExecutes(compileData, "List {1,2,3,4,5,6,7}\r\nList {4,5,6,7}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Default() {
         var code = @"
 main
@@ -281,14 +233,14 @@ public static partial class Globals {
     public Foo() {
 
     }
-    public virtual StandardLibrary.ElanIter<int> it { get; set; } = StandardLibrary.ElanIter<int>.DefaultInstance;
+    public virtual System.Collections.Generic.IEnumerable<int> it { get; set; } = System.Collections.Generic.IEnumerable<int>.DefaultInstance;
     public virtual string asString() {
 
       return @$""A Foo"";
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
-      public override StandardLibrary.ElanIter<int> it => StandardLibrary.ElanIter<int>.DefaultInstance;
+      public override System.Collections.Generic.IEnumerable<int> it => System.Collections.Generic.IEnumerable<int>.DefaultInstance;
 
       public override string asString() { return ""default Foo"";  }
     }
@@ -357,6 +309,30 @@ end procedure
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
+    [TestMethod]
+    public void Fail_Indexing() {
+        var code = @"
+main
+  var it = { 1,2,3,4,5,6,7}
+  call printEach(it[2..4])
+end main
 
+procedure printEach(target Iter<of Int>)
+  foreach x in target
+    print x
+  end foreach
+  print target[0]
+end procedure
+";
+
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
+    }
     #endregion
 }

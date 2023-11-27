@@ -46,13 +46,13 @@ public static class Functions {
 
     #region iter
 
-    public static int length<T>(ElanIter<T> l) => l.Count();
+    public static int length<T>(IEnumerable<T> l) => l.Count();
 
-    public static bool isEmpty<T>(ElanIter<T> l) => !l.Any();
+    public static bool isEmpty<T>(IEnumerable<T> l) => !l.Any();
 
-    public static ElanArray<T> asArray<T>(ElanIter<T> l) => new(l);
+    public static ElanArray<T> asArray<T>(IEnumerable<T> l) => new(l);
 
-    public static ElanList<T> asList<T>(ElanIter<T> l) => new(l.ToArray());
+    public static ElanList<T> asList<T>(IEnumerable<T> l) => new(l.ToArray());
 
     #endregion
 

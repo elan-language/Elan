@@ -105,10 +105,10 @@ public static class CodeHelpers {
 
     public static string DataStructureTypeToCSharpType(DataStructure type) =>
         type switch {
-            DataStructure.Iter => "ElanIter",
-            DataStructure.List => "ElanList",
-            DataStructure.Array => "ElanArray",
-            DataStructure.Dictionary => "ElanDictionary",
+            DataStructure.Iter => "System.Collections.Generic.IEnumerable",
+            DataStructure.List => "StandardLibrary.ElanList",
+            DataStructure.Array => "StandardLibrary.ElanArray",
+            DataStructure.Dictionary => "StandardLibrary.ElanDictionary",
             _ => throw new NotImplementedException(type.ToString())
         };
 

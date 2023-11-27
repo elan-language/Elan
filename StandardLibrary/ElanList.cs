@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 
 namespace StandardLibrary;
 
-public class ElanList<T> : ElanIter<T> {
+public class ElanList<T> : IEnumerable<T> {
     private readonly ImmutableList<T> wrappedList;
 
     public ElanList() => wrappedList = ImmutableList.Create<T>();
@@ -20,7 +20,6 @@ public class ElanList<T> : ElanIter<T> {
 
     public T this[int index] => wrappedList[index];
 
-    ElanIter<T> ElanIter<T>.this[Range range] => Wrap(wrappedList.ToImmutableArray()[range].ToImmutableList());
 
     public ElanList<T> this[Range range] => Wrap(wrappedList.ToImmutableArray()[range].ToImmutableList());
 

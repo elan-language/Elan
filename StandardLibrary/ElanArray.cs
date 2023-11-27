@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 
 namespace StandardLibrary;
 
-public class ElanArray<T> : ElanIter<T> {
+public class ElanArray<T> : IEnumerable<T> {
     private readonly bool twoD;
     private readonly T[][] wrappedArray;
 
@@ -44,7 +44,6 @@ public class ElanArray<T> : ElanIter<T> {
         set => wrappedArray[0][index] = value;
     }
 
-    public ElanIter<T> this[Range range] =>  Wrap( wrappedArray[0][range].ToImmutableList());
 
     public T this[int index1, int index2] {
         get => twoD ? wrappedArray[index1][index2] : throw new IndexOutOfRangeException();
