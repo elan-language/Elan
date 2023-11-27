@@ -20,9 +20,9 @@ public class ElanList<T> : ElanIter<T> {
 
     public T this[int index] => wrappedList[index];
 
-    public ElanIter<T> this[Range range] => Wrap(wrappedList.ToImmutableArray()[range].ToImmutableList());
+    ElanIter<T> ElanIter<T>.this[Range range] => Wrap(wrappedList.ToImmutableArray()[range].ToImmutableList());
 
-    //public ElanList<T> this[Range range] => Wrap(wrappedList.ToImmutableArray()[range].ToImmutableList());
+    public ElanList<T> this[Range range] => Wrap(wrappedList.ToImmutableArray()[range].ToImmutableList());
 
     public IEnumerator<T> GetEnumerator() => wrappedList.GetEnumerator();
 
