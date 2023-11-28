@@ -294,7 +294,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "(Int -> Int)\r\n0\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_DefaultValueObj() {
         var code = @"
 main
@@ -327,14 +327,14 @@ public static partial class Globals {
     public Foo() {
 
     }
-    public virtual Func<int, Foo> f { get; set; } = (_) => default;
+    public virtual Func<int, Foo> f { get; set; } = (_) => Foo.DefaultInstance;
     public virtual string asString() {
 
       return @$""a Foo"";
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
-      public override Func<int, Foo> f => (_) => default;
+      public override Func<int, Foo> f => (_) => Foo.DefaultInstance;
 
       public override string asString() { return ""default Foo"";  }
     }
@@ -357,7 +357,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "(Int -> Foo)\r\n0\r\n");
+        AssertObjectCodeExecutes(compileData, "(Int -> Foo)\r\ndefault Foo\r\n");
     }
 
     #endregion

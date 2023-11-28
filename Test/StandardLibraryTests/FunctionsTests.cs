@@ -143,6 +143,7 @@ public class FunctionsTests {
     public void AsStringFunc1() {
         Func<int, Foo> t = i => Foo.DefaultInstance; 
         Assert.AreEqual("(Int -> Foo)", asString(t));
+        Assert.AreEqual("default Foo", asString(t(1)));
     }
 
     public record class Foo {
