@@ -291,7 +291,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "(Int -> Int)\r\n0\r\n");
+        AssertObjectCodeExecutes(compileData, "Function (Int -> Int)\r\n0\r\n");
     }
 
     [TestMethod]
@@ -357,14 +357,54 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "(Int -> Foo)\r\ndefault Foo\r\n");
+        AssertObjectCodeExecutes(compileData, "Function (Int -> Foo)\r\ndefault Foo\r\n");
     }
+
+    [TestMethod]
+    public void Pass_PrintingAFunction() {
+        var code = @"
+main
+  print twice
+end main
+
+function twice(x Int) as Int
+  return x * 2
+end function
+";
+        var parseTree = @"*";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static int twice(int x) {
+
+    return x * 2;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(twice));
+  }
+}";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Function (Int -> Int)\r\n");
+    }
+
 
     #endregion
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_FunctionSignatureDoesntMatch() {
         var code = @"
 main
@@ -385,14 +425,16 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_UsingReturnedFuncWithoutArgs() {
         var code = @"
 main
-  print getFunc()()
+  var a = getFunc()
+  print a()
 end main
 
 function getFunc() as (Int -> Int)
@@ -408,27 +450,11 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
-    public void Fail_PrintingAFunction() {
-        var code = @"
-main
-  print twice
-end main
-
-function twice(x Int) as Int
-  return x * 2
-end function
-";
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
-    }
+   
 
     #endregion
 }

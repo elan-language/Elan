@@ -136,14 +136,26 @@ public class FunctionsTests {
     [TestMethod]
     public void AsStringFunc() {
         Func<int, string, int> t = (i, s) => 0; 
-        Assert.AreEqual("(Int,String -> Int)", asString(t));
+        Assert.AreEqual("Function (Int,String -> Int)", asString(t));
     }
 
     [TestMethod]
     public void AsStringFunc1() {
         Func<int, Foo> t = i => Foo.DefaultInstance; 
-        Assert.AreEqual("(Int -> Foo)", asString(t));
+        Assert.AreEqual("Function (Int -> Foo)", asString(t));
         Assert.AreEqual("default Foo", asString(t(1)));
+    }
+
+    [TestMethod]
+    public void AsStringTypes() {
+      
+        Assert.AreEqual("Int", asString(typeof(int)));
+        Assert.AreEqual("String", asString(typeof(string)));
+        Assert.AreEqual("Float", asString(typeof(double)));
+        Assert.AreEqual("Char", asString(typeof(char)));
+        Assert.AreEqual("Bool", asString(typeof(bool)));
+        Assert.AreEqual("Foo", asString(typeof(Foo)));
+        Assert.AreEqual("List", asString(typeof(ElanList<int>)));
     }
 
     public record class Foo {

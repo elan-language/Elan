@@ -3,6 +3,7 @@
 
 using System.Collections;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using static StandardLibrary.Constants;
@@ -175,6 +176,25 @@ public static class Functions {
 
     #region AsString
 
+
+    private static object? GetDefaultInstance(Type t) {
+        return t.GetProperty("DefaultInstance") is { } p ? p.GetValue(null) : throw new NotImplementedException();
+    }
+
+    private static string TypeAsString(Type type) =>
+        type.Name switch {
+            "Int32" => "Int",
+            "String" => "String",
+            "Double" => "Float",
+            "Char" => "Char",
+            "Boolean" => "Bool",
+            _ when type.Name.StartsWith("ElanList") => "List",
+            _ when type.Name.StartsWith("ElanDictionary") => "Dictionary",
+            _ when type.Name.StartsWith("ElanArray") => "Array",
+            _ when type.Name.StartsWith("IEnumerable") => "Iter",
+            _ => type.Name
+        };
+
     public static string? asString(object? obj) {
         return obj switch {
             bool b => b ? "true" : "false",
@@ -184,12 +204,8 @@ public static class Functions {
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
             _ when obj.GetType().GetMethod("asString") is { } mi => mi.Invoke(obj, null) as string,
             IEnumerable e => e.Cast<object>().Any() ? $"Iter {{{string.Join(',', e.Cast<object>().Select(Functions.asString))}}}" : "empty iter",
-            Delegate d => $"({ string.Join(",", d.Method.GetParameters().Select(p => asString(p.ParameterType)))} -> {asString(d.Method.ReturnType)})",
-            Type t => t.Name switch {
-                "Int32" => "Int",
-                "String" => "String",
-                _ => t.Name
-            },
+            Delegate d => $"Function ({ string.Join(",", d.Method.GetParameters().Select(p => asString(p.ParameterType)))} -> {asString(d.Method.ReturnType)})",
+            Type t => TypeAsString(t),
             _ => obj.ToString()
         };
     }
