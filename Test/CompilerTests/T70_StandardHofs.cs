@@ -84,18 +84,33 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {3,4,6,8,12,14,18,20,24,28,32,38}\r\nList {2*,3*,5*,7*,11*,13*,17*,19*,23*,27*,31*,37*}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Reduce() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
- print source.reduce(lambda s,x -> s+x))
- print source.reduce(100, lambda s,x -> s+x))
- print source.reduce(""Concat:"",lambda s,x -> s+x.asString()))
+ print source.reduce(lambda s,x -> s+x)
+ print source.reduce(100, lambda s,x -> s+x)
+ print source.reduce(""Concat:"",lambda s,x -> s+x.asString())
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(source, (s, x) => s + x)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(source, 100, (s, x) => s + x)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(source, @$""Concat:"", (s, x) => s + StandardLibrary.Functions.asString(x))));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -105,7 +120,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "195\r\n295\r\nresult:23571113171923273137");
+        AssertObjectCodeExecutes(compileData, "195\r\n295\r\nConcat:23571113171923273137\r\n");
     }
     [TestMethod, Ignore]
     public void Pass_Max() {
