@@ -98,7 +98,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_EmptyEqualsDefault() {
+    public void Pass_EmptyDoesNotEqualDefault() {
         var code = @"#
 main
     var x = new Foo()
