@@ -94,4 +94,9 @@ public class ElanArray<T> : IEnumerable<T> {
     public override int GetHashCode() => GetType().GetHashCode() + this.Aggregate(0, (s, i) => s + i?.GetHashCode() ?? 0);
 
     public override string ToString() => asString();
+
+    public void Deconstruct(out T head, out ElanArray<T> tail) {
+        head = this.First();
+        tail = Wrap(this.Skip(1).ToImmutableList());
+    }
 }

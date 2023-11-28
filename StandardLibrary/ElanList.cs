@@ -88,7 +88,7 @@ public class ElanList<T> : IEnumerable<T> {
     public override string ToString() => asString();
 
     public void Deconstruct(out T head, out ElanList<T> tail) {
-        head = wrappedList.First();
-        tail = Wrap(wrappedList.Skip(1).ToImmutableList());
+        head = this.First();
+        tail = Wrap(this.Skip(1).ToImmutableList());
     }
 }

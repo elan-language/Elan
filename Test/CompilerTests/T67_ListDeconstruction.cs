@@ -9,7 +9,7 @@ public class T67_ListDeconstruction {
     #region Passes
 
     [TestMethod]
-    public void Pass_IntoNewVars() {
+    public void Pass_IntoNewVarsList() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -45,6 +45,91 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "2\r\nList {3,5,7,11,13,17,19,23,27,31,37}\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_IntoNewVarsArray() {
+        var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+main
+  var {x:xs} = source.asArray()
+  print x
+  print xs
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var (x, xs) = StandardLibrary.Functions.asArray(source);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(xs));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2\r\nArray {3,5,7,11,13,17,19,23,27,31,37}\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_IntoNewVarsIter() {
+        var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+main
+  call p(source)
+end main
+
+procedure p(it Iter<of Int>)
+  var {x:xs} = it
+  print x
+  print xs
+end procedure
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+  public static void p(System.Collections.Generic.IEnumerable<int> it) {
+    var (x, xs) = it;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(xs));
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    Globals.p(source);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "2\r\nIter {3,5,7,11,13,17,19,23,27,31,37}\r\n");
     }
 
     [TestMethod]
