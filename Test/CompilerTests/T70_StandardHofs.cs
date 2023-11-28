@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass] [Ignore]
+[TestClass]
 public class T70_StandardHofs {
     #region Passes
 
@@ -13,13 +13,28 @@ public class T70_StandardHofs {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
- print source.filter(lambda x -> x > 20))
- print source.filter(lambda x -> x > 20)).asList()
- print source.filter(lambda x -> x < 3 or x > 35.asList()
+ print source.filter(lambda x -> x > 20)
+ print source.filter(lambda x -> x > 20).asList()
+ print source.filter(lambda x -> x < 3 or x > 35).asList()
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.filter(source, (x) => x > 20)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.asList(StandardLibrary.Functions.filter(source, (x) => x > 20))));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.asList(StandardLibrary.Functions.filter(source, (x) => x < 3 || x > 35))));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -29,10 +44,10 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Iter\r\nList {23,27,31,37}\r\nList {2,37}");
+        AssertObjectCodeExecutes(compileData, "Iter {23,27,31,37}\r\nList {23,27,31,37}\r\nList {2,37}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Map() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
@@ -55,7 +70,7 @@ end main
         AssertObjectCodeExecutes(compileData, "List {3,4,6,8,12,14,18,20,24,28,32,38}\r\nList {2*,3*,5*,7*,11*,13*,17*,19*,23*,27*,31*,37*}");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Reduce() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
@@ -78,7 +93,7 @@ end main
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "195\r\n295\r\nresult:23571113171923273137");
     }
-
+    [TestMethod, Ignore]
     public void Pass_Max() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
@@ -100,7 +115,7 @@ end main
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "37\r\n19\r\n");
     }
-
+    [TestMethod, Ignore]
     public void Pass_Min() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
@@ -123,7 +138,7 @@ end main
         AssertObjectCodeExecutes(compileData, "2\r\n13\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Any() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
@@ -148,7 +163,7 @@ end main
         AssertObjectCodeExecutes(compileData, "true\r\ntrye\r\nfalse");
     }
 
-    [TestMethod]
+    [TestMethod,Ignore]
     public void Pass_GroupBy() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}

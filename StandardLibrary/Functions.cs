@@ -216,4 +216,12 @@ public static class Functions {
         Enumerable.Range(1, t.Length - 1).Aggregate($"({asString(t[0]!)}", (s, x) => s + $", {asString(t[x]!)}") + ")";
 
     #endregion
+
+    #region higher order functions
+
+    public static IEnumerable<T> filter<T>(IEnumerable<T> source, Func<T, bool> predicate) => source.Where(predicate);
+
+
+
+    #endregion
 }
