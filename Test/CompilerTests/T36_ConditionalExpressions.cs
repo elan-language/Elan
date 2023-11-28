@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass] [Ignore]
+[TestClass]
 public class T36_ConditionalExpressions {
     #region Passes
 
@@ -18,13 +18,36 @@ main
  print grade(30)
 end main
 
-function grade(score Int) as String -> if score > 80 then ""Distinction"" 
-  else if score > 60 then ""Merit""
-    else if score > 40 then ""Pass""
-      else ""Fail""
+function grade(score Int) as String -> 
+  if score > 80
+  then ""Distinction"" 
+  else if score > 60
+  then ""Merit""
+  else if score > 40 
+  then ""Pass""
+  else ""Fail""
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static string grade(int score) {
+
+    return score > 80 ? @$""Distinction"" : score > 60 ? @$""Merit"" : score > 40 ? @$""Pass"" : @$""Fail"";
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.grade(90)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.grade(70)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.grade(50)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.grade(30)));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -34,7 +57,7 @@ function grade(score Int) as String -> if score > 80 then ""Distinction""
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Distinction\r\nMerit\r\nPass\r\nFail");
+        AssertObjectCodeExecutes(compileData, "Distinction\r\nMerit\r\nPass\r\nFail\r\n");
     }
 
     #endregion
@@ -42,7 +65,7 @@ function grade(score Int) as String -> if score > 80 then ""Distinction""
     #region Fails
 
     [TestMethod]
-    public void Pass_FailEndIf() {
+    public void Fail_EndIf() {
         var code = @"
 main
  print grade(90)
@@ -51,18 +74,22 @@ main
  print grade(30)
 end main
 
-function grade(score Int) as String -> if score > 80 then ""Distinction"" 
-  else if score > 60 then ""Merit""
-    else if score > 40 then ""Pass""
-      else ""Fail""
-        end if
+function grade(score Int) as String ->
+    if score > 80
+    then ""Distinction"" 
+    else if score > 60
+    then ""Merit""
+    else if score > 40 
+    then ""Pass""
+    else ""Fail""
+    end if
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Pass_IfSubClause() {
+    public void Fail_IfSubClause() {
         var code = @"
 main
  print grade(90)
@@ -71,16 +98,19 @@ main
  print grade(30)
 end main
 
-function grade(score Int) as String -> if score > 80 then ""Distinction"" 
-   if score > 60 then ""Merit""
-      else ""Fail""
+function grade(score Int) as String -> 
+   if score > 80 
+   then ""Distinction"" 
+   if score > 60 
+   then ""Merit""
+   else ""Fail""
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
-    public void Pass_NoThen() {
+    public void Fail_NoThen() {
         var code = @"
 main
  print grade(90)
@@ -89,9 +119,10 @@ main
  print grade(30)
 end main
 
-function grade(score Int) as String -> if score > 80  ""Distinction"" 
-      else ""Fail""
-        end if
+function grade(score Int) as String -> 
+   if score > 80  
+   ""Distinction"" 
+   else ""Fail""
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);

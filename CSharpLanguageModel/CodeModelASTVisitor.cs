@@ -35,6 +35,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             UnaryNode n => HandleScope(BuildUnaryModel, n),
             OperatorNode n => HandleScope(BuildOperatorModel, n),
             IfStatementNode n => HandleScope(BuildIfStatementModel, n),
+            IfExpressionNode n => HandleScope(BuildIfExpressionModel, n),
             WhileStatementNode n => HandleScope(BuildWhileStatementModel, n),
             RepeatStatementNode n => HandleScope(BuildRepeatStatementModel, n),
             StatementBlockNode n => HandleScope(BuildStatementBlockModel, n),
@@ -119,6 +120,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var statementBlocks = ifStatementNode.StatementBlocks.Select(Visit);
 
         return new IfStatementModel(expressions, statementBlocks);
+    }
+
+    private IfExpressionModel BuildIfExpressionModel(IfExpressionNode ifStatementNode) {
+        var expressions = ifStatementNode.Expressions.Select(Visit);
+        return new IfExpressionModel(expressions);
     }
 
     private SwitchStatementModel BuildSwitchStatementModel(SwitchStatementNode switchStatementNode) {

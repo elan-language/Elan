@@ -33,6 +33,7 @@ public static class AstFactory {
             LogicalOpContext c => visitor.Build(c),
             ProceduralControlFlowContext c => visitor.Build(c),
             IfContext c => visitor.Build(c),
+            IfExpressionContext c => visitor.Build(c),
             ForContext c => visitor.Build(c),
             ForeachContext c => visitor.Build(c),
             WhileContext c => visitor.Build(c),
@@ -183,6 +184,10 @@ public static class AstFactory {
             var with = wc.inlineAsignment().Select(visitor.Visit);
 
             return new WithNode(expr, with.ToImmutableArray());
+        }
+
+        if (context.ifExpression() is { } ie) {
+            return visitor.Visit(ie);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -446,6 +451,11 @@ public static class AstFactory {
         var statementBlocks = context.statementBlock().Select(visitor.Visit);
 
         return new IfStatementNode(expressions.ToImmutableArray(), statementBlocks.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, IfExpressionContext context) {
+        var expressions = context.expression().Select(visitor.Visit);
+        return new IfExpressionNode(expressions.ToImmutableArray());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SwitchContext context) {
