@@ -201,20 +201,35 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\n5\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Any()
     {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
-  print source.any(lambda x -> x > 20))
-  print source.any(lambda x -> x mod 2 is 0))
-  print source.any(lambda x -> x > 40))
+  print source.any(lambda x -> x > 20)
+  print source.any(lambda x -> x mod 2 is 0)
+  print source.any(lambda x -> x > 40)
 
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.any(source, (x) => x > 20)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.any(source, (x) => x % 2 == 0)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.any(source, (x) => x > 40)));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -224,21 +239,37 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "true\r\ntrye\r\nfalse");
+        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_GroupBy()
     {
+        // # {5} {11,31} {2,7,17,27,37} {13,23,19}
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
-  var gs = source.groupBy(lambda x -> x mod 5)) # {5} {11,31} {2,7,17,27,37} {13,23,19}
+  var gs = source.groupBy(lambda x -> x mod 5).asList()
   print gs
   print gs[2]
 end main
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var gs = StandardLibrary.Functions.asList(StandardLibrary.Functions.groupBy(source, (x) => x % 5));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(gs));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(gs[2]));
+  }
+}";
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -247,7 +278,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Iter<Group<Int,Int>>\r\nGroup 1 {11,31}"); //Not sure quite what output is reasonable?
+        AssertObjectCodeExecutes(compileData, "List {Iter {2,7,17,27,37},Iter {3,13,23},Iter {5},Iter {11,31},Iter {19}}\r\nIter {5}\r\n"); //Not sure quite what output is reasonable?
     }
 
     #endregion

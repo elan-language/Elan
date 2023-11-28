@@ -247,6 +247,17 @@ public static class Functions {
 
     public static T min<T>(IEnumerable<T> source, Func<T, char> predicate) => source.MinBy(predicate)!;
 
+    public static bool any<T>(IEnumerable<T> source, Func<T, bool> func) => source.Any(func);
+
+    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, int> func) => source.GroupBy(func);
+
+    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, double> func) => source.GroupBy(func);
+
+    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, string> func) => source.GroupBy(func);
+
+    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, char> func) => source.GroupBy(func);
+
+    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, bool> func) => source.GroupBy(func);
 
     #endregion
 }
