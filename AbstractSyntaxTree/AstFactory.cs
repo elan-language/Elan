@@ -55,6 +55,7 @@ public static class AstFactory {
             ProcedureDefContext c => visitor.Build(c),
             FunctionDefContext c => visitor.Build(c),
             FunctionWithBodyContext c => visitor.Build(c),
+            ExpressionFunctionContext c => visitor.Build(c),
             ProcedureSignatureContext c => visitor.Build(c),
             FunctionSignatureContext c => visitor.Build(c),
             ParameterContext c => visitor.Build(c),
@@ -626,12 +627,24 @@ public static class AstFactory {
             return visitor.Visit(fwb);
         }
 
+        if (context.expressionFunction() is { } ef) {
+            return visitor.Visit(ef);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionWithBodyContext context) {
         var signature = visitor.Visit(context.functionSignature());
         var statementBlock = visitor.Visit(context.statementBlock());
+        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
+
+        return new FunctionDefNode(signature, statementBlock, ret);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionFunctionContext context) {
+        var signature = visitor.Visit(context.functionSignature());
+        var statementBlock = new StatementBlockNode(ImmutableArray<IAstNode>.Empty);
         var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
 
         return new FunctionDefNode(signature, statementBlock, ret);

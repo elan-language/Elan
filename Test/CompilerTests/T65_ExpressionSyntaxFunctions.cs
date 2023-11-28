@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass] [Ignore]
+[TestClass]
 public class T65_ExpressionSyntaxFunctions {
     #region Fails
 
@@ -12,7 +12,7 @@ public class T65_ExpressionSyntaxFunctions {
     public void Fail_endFunction() {
         var code = @"
 main
- print square(source[3])
+ print square(3)
 end main
 
 function square(x Int) as Int -> x * x
@@ -31,13 +31,29 @@ end function
     public void Pass_Simple() {
         var code = @"
 main
- print square(source[3])
+ print square(3)
 end main
 
 function square(x Int) as Int -> x * x
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static int square(int x) {
+
+    return x * x;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.square(3)));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -47,7 +63,7 @@ function square(x Int) as Int -> x * x
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "49\r\n");
+        AssertObjectCodeExecutes(compileData, "9\r\n");
     }
 
     [TestMethod]
@@ -60,7 +76,23 @@ end main
 function phi() as Float -> (1 + sqrt(5))/2
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static double phi() {
+
+    return Compiler.WrapperFunctions.FloatDiv((1 + StandardLibrary.Functions.sqrt(5)), 2);
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.phi()));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -70,7 +102,7 @@ function phi() as Float -> (1 + sqrt(5))/2
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "1.618...\r\n");
+        AssertObjectCodeExecutes(compileData, "1.618033988749895\r\n");
     }
 
     #endregion
