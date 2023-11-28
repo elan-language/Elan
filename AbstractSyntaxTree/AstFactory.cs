@@ -78,6 +78,8 @@ public static class AstFactory {
             ProcedureParameterContext c => visitor.Build(c),
             SystemCallContext c => visitor.Build(c),
             FuncTypeContext c => visitor.Build(c),
+            ArgumentContext c => visitor.Build(c),
+            LambdaContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context.GetType().FullName ?? null)
         };
@@ -187,7 +189,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureCallContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
-        var pps = (context.argumentList()?.expression().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
+        var pps = (context.argumentList()?.argument().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
 
         var nqr = context.scopeQualifier() is { } nq ? visitor.Visit(nq) : null;
 
@@ -196,7 +198,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionCallContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
-        var pps = (context.argumentList()?.expression().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
+        var pps = (context.argumentList()?.argument().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
 
         var nqr = context.scopeQualifier() is { } nq ? visitor.Visit(nq) : null;
 
@@ -205,7 +207,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SystemCallContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
-        var pps = (context.argumentList()?.expression().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
+        var pps = (context.argumentList()?.argument().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
 
         return new MethodCallNode(id, new SystemAccessorPrefixNode(), pps);
     }
@@ -527,7 +529,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, NewInstanceContext context) {
         var type = visitor.Visit(context.type());
-        var args = context.argumentList() is { } al ? al.expression().Select(visitor.Visit) : Array.Empty<IAstNode>();
+        var args = context.argumentList() is { } al ? al.argument().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var with = (context.withClause() is { } wc ? wc.inlineAsignment().Select(visitor.Visit) : Array.Empty<IAstNode>()).ToImmutableArray();
 
         var nin = new NewInstanceNode(type, args.ToImmutableArray());
@@ -817,8 +819,27 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FuncTypeContext context) {
         var inputTypes = context.typeList().type().Select(visitor.Visit);
-        var returnType = visitor.Visit(context.type()); 
+        var returnType = visitor.Visit(context.type());
 
         return new FuncTypeNode(inputTypes.ToImmutableArray(), returnType);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ArgumentContext context) {
+        if (context.expression() is { } e) {
+            return visitor.Visit(e);
+        }
+
+        if (context.lambda() is { } l) {
+            return visitor.Visit(l);
+        }
+
+        throw new NotImplementedException(context.children.First().GetText());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LambdaContext context) {
+        var arguments = context.argumentList().argument().Select(visitor.Visit);
+        var expr = visitor.Visit(context.expression());
+
+        return new LambdaDefNode(arguments.ToImmutableArray(), expr);
     }
 }

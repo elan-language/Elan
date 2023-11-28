@@ -38,7 +38,9 @@ functionCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRAC
 
 systemCall: SYSTEM DOT IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
-argumentList: (expression |lambda) (COMMA (expression | lambda))*;
+argument: (expression | lambda);
+
+argumentList: argument (COMMA argument)*;
 
 // PROCEDURES
 procedureDef:

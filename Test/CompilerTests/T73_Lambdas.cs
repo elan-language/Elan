@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass] [Ignore]
+[TestClass]
 public class T73_Lambdas {
     #region Passes
 
@@ -12,7 +12,7 @@ public class T73_Lambdas {
     public void Pass_PassAsParam() {
         var code = @"
 main
-  printModified(4, lambda x -> x * 3)
+  call printModified(4, lambda x -> x * 3)
 end main
 
 procedure printModified(i Int, f (Int -> Int))
@@ -20,7 +20,22 @@ procedure printModified(i Int, f (Int -> Int))
 end procedure
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static void printModified(int i, Func<int, int> f) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(f(i)));
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    Globals.printModified(4, (x) => x * 3);
+  }
+}";
 
         var parseTree = @"*";
 
@@ -41,7 +56,7 @@ end procedure
     public void Fail_PassLambdaWithWrongTypes() {
         var code = @"
 main
-  printModified(4, lambda x -> x.asString())
+  call printModified(4, lambda x -> x.asString())
 end main
 
 procedure printModified(i Int, f (Int -> Int))
@@ -53,17 +68,18 @@ end procedure
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod]
     public void Fail_InvokeLambdaWithWrongType() {
         var code = @"
 main
-  printModified('4', lambda x -> x * 3)
+  call printModified(""4"", lambda x -> x * 3)
 end main
 
-procedure printModified(i Int, f (Int -> Int))
+procedure printModified(s String, f (Int -> Int))
   print f(i)
 end procedure
 ";
@@ -72,7 +88,8 @@ end procedure
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "?");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod]
