@@ -27,6 +27,7 @@ IF:            'if';
 IMMUTABLE:	   'immutable';
 IN:            'in';
 INHERITS:      'inherits';
+INPUT:         'input';
 LAMBDA:		   'lambda';
 LET:           'let';
 MAIN:		   'main';

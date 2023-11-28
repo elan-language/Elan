@@ -175,6 +175,7 @@ public class SymbolTableVisitor {
             QualifiedNode qn => MapNodeToSymbolType(qn.Qualified),
             FuncTypeNode fn => new FuncSymbolType(),
             MethodSignatureNode { ReturnType: not null } msn => MapNodeToSymbolType(msn.ReturnType),
+            InputNode => StringSymbolType.Instance,
             _ => throw new NotImplementedException()
         };
     }

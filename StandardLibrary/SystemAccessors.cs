@@ -15,14 +15,7 @@ public static class SystemAccessors {
 
     #endregion
 
-    #region Input from keyboard
-
-    public static string input(string prompt) {
-        Console.Write(prompt);
-        return input();
-    }
-
-    public static string input() => Console.ReadLine() ?? "";
+    #region input
 
     public static char readKey(bool writeKey = false) {
         char k;

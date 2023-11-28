@@ -10,7 +10,7 @@ public class T30_Expressions4_SystemCalls {
     public void Pass_Input1() {
         var code = @"#
 main
-  var a = system.input()
+  var a = input
   print a
 end main
 ";
@@ -26,7 +26,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = StandardLibrary.SystemAccessors.input();
+    var a = ((Func<string>)(() => {return Console.ReadLine() ?? """";}))();
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
@@ -46,7 +46,7 @@ public static class Program {
     public void Pass_Input2() {
         var code = @"#
 main
-  var a = system.input(""Your name"")
+  var a = input ""Your name""
   print a
 end main
 ";
@@ -62,7 +62,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var a = StandardLibrary.SystemAccessors.input(@$""Your name"");
+    var a = ((Func<string>)(() => { System.Console.Write(""Your name""); return Console.ReadLine() ?? """";}))();
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }";
@@ -90,9 +90,7 @@ end main
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "");
+        AssertDoesNotParse(compileData);
     }
 
     [TestMethod]
@@ -107,9 +105,7 @@ end main
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "");
+        AssertDoesNotParse(compileData);
     }
 
     [TestMethod]

@@ -74,6 +74,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPrintStatement([NotNull] ElanParser.PrintStatementContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.input"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInput([NotNull] ElanParser.InputContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.varDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

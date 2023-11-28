@@ -77,6 +77,7 @@ public static class AstFactory {
             DeconstructedTupleContext c => visitor.Build(c),
             ThrowExceptionContext c => visitor.Build(c),
             PrintStatementContext c => visitor.Build(c),
+            InputContext c => visitor.Build(c),
             ProcedureParameterContext c => visitor.Build(c),
             SystemCallContext c => visitor.Build(c),
             FuncTypeContext c => visitor.Build(c),
@@ -251,7 +252,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, VarDefContext context) {
         var id = visitor.Visit(context.assignableValue());
-        var rhs = context.expression() is { } expr ? visitor.Visit(expr) : visitor.Visit(context.systemCall());
+        var rhs = visitor.Visit(context.expression() ?? context.systemCall() as IParseTree ?? context.input()!);
 
         return new VarDefNode(id, rhs);
     }
@@ -266,7 +267,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssignmentContext context) {
         var id = visitor.Visit(context.assignableValue());
-        var rhs = context.expression() is { } expr ? visitor.Visit(expr) : visitor.Visit(context.systemCall());
+        var rhs = visitor.Visit(context.expression() ?? context.systemCall() as IParseTree ?? context.input()!);
 
         return new AssignmentNode(id, rhs, false);
     }
@@ -850,6 +851,12 @@ public static class AstFactory {
         var expr = context.expression() is { } e ? visitor.Visit(e) : null;
 
         return new PrintNode(expr);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, InputContext context) {
+        var prompt = context.LITERAL_STRING() is { } e ? e.Symbol.Text : null;
+
+        return new InputNode(prompt);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FuncTypeContext context) {

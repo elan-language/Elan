@@ -23,10 +23,12 @@ callStatement: NL CALL (procedureCall | (assignableValue DOT procedureCall));
 throwException: NL THROW (LITERAL_STRING | IDENTIFIER );
 
 printStatement: NL PRINT expression?;
- 
-varDef: NL VAR assignableValue ASSIGN (expression | systemCall);
 
-assignment: NL SET assignableValue TO (expression | systemCall);
+input: INPUT LITERAL_STRING?;
+ 
+varDef: NL VAR assignableValue ASSIGN (expression | systemCall | input);
+
+assignment: NL SET assignableValue TO (expression | systemCall | input);
 
 inlineAsignment: assignableValue ASSIGN expression;
 
