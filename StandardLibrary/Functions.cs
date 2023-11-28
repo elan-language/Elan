@@ -227,5 +227,26 @@ public static class Functions {
 
     public static TAccumulate reduce<T, TAccumulate>(IEnumerable<T> source, TAccumulate seed, Func<TAccumulate, T, TAccumulate> func) => source.Aggregate(seed, func);
 
+    public static T max<T>(IEnumerable<T> source) => source.Max()!;
+
+    public static T max<T>(IEnumerable<T> source, Func<T, int> predicate) => source.MaxBy(predicate)!;
+
+    public static T max<T>(IEnumerable<T> source, Func<T, double> predicate) => source.MaxBy(predicate)!;
+
+    public static T max<T>(IEnumerable<T> source, Func<T, string> predicate) => source.MaxBy(predicate)!;
+
+    public static T max<T>(IEnumerable<T> source, Func<T, char> predicate) => source.MaxBy(predicate)!;
+
+    public static T min<T>(IEnumerable<T> source) => source.Min()!;
+
+    public static T min<T>(IEnumerable<T> source, Func<T, int> predicate) => source.MinBy(predicate)!;
+
+    public static T min<T>(IEnumerable<T> source, Func<T, double> predicate) => source.MinBy(predicate)!;
+
+    public static T min<T>(IEnumerable<T> source, Func<T, string> predicate) => source.MinBy(predicate)!;
+
+    public static T min<T>(IEnumerable<T> source, Func<T, char> predicate) => source.MinBy(predicate)!;
+
+
     #endregion
 }

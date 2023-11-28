@@ -5,11 +5,13 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T70_StandardHofs {
+public class T70_StandardHofs
+{
     #region Passes
 
     [TestMethod]
-    public void Pass_Filter() {
+    public void Pass_Filter()
+    {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -48,7 +50,8 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Map() {
+    public void Pass_Map()
+    {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -85,7 +88,8 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Reduce() {
+    public void Pass_Reduce()
+    {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -122,17 +126,32 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "195\r\n295\r\nConcat:23571113171923273137\r\n");
     }
-    [TestMethod, Ignore]
-    public void Pass_Max() {
+    [TestMethod]
+    public void Pass_Max()
+    {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.max()
- print source.max(lambda x -> x mod 5)).asList()
+ print source.max(lambda x -> x mod 5)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.max(source)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.max(source, (x) => x % 5)));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -144,17 +163,32 @@ end main
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "37\r\n19\r\n");
     }
-    [TestMethod, Ignore]
-    public void Pass_Min() {
+    [TestMethod]
+    public void Pass_Min()
+    {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.min()
- print source.min(lambda x -> x mod 5)).asList()
+ print source.min(lambda x -> x mod 5)
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.min(source)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.min(source, (x) => x % 5)));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -164,11 +198,12 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "2\r\n13\r\n");
+        AssertObjectCodeExecutes(compileData, "2\r\n5\r\n");
     }
 
     [TestMethod, Ignore]
-    public void Pass_Any() {
+    public void Pass_Any()
+    {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -192,8 +227,9 @@ end main
         AssertObjectCodeExecutes(compileData, "true\r\ntrye\r\nfalse");
     }
 
-    [TestMethod,Ignore]
-    public void Pass_GroupBy() {
+    [TestMethod, Ignore]
+    public void Pass_GroupBy()
+    {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
