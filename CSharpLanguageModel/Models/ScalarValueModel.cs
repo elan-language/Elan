@@ -1,6 +1,9 @@
 ﻿namespace CSharpLanguageModel.Models;
 
-public record ScalarValueModel(string Value) : ICodeModel {
+public record ScalarValueModel(string Value) : ICodeModel, IHasDefaultValue {
+
+    public string DefaultValue => Value is "string" ? @""""";" : "default;";
+
     public string ToString(int indent) => MakeLiteralStringsInterpolated(Value);
     private static string MakeLiteralStringsInterpolated(string value) => value.StartsWith("\"") ? "@$" + PrefixKeywords(value) : value;
 

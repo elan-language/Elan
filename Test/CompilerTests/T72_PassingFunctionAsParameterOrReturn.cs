@@ -196,14 +196,14 @@ public static partial class Globals {
     public Foo(Func<int, int> f) {
       this.f = f;
     }
-    public virtual Func<int, int> f { get; set; } = (int _) => default;
+    public virtual Func<int, int> f { get; set; } = (_) => default;
     public virtual string asString() {
 
       return @$""a Foo"";
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
-      public override Func<int, int> f => (int _) => default;
+      public override Func<int, int> f => (_) => default;
 
       public override string asString() { return ""default Foo"";  }
     }
@@ -261,14 +261,14 @@ public static partial class Globals {
     public Foo() {
 
     }
-    public virtual Func<int, int> f { get; set; } = (int _) => default;
+    public virtual Func<int, int> f { get; set; } = (_) => default;
     public virtual string asString() {
 
       return @$""a Foo"";
     }
     private record class _DefaultFoo : Foo {
       public _DefaultFoo() { }
-      public override Func<int, int> f => (int _) => default;
+      public override Func<int, int> f => (_) => default;
 
       public override string asString() { return ""default Foo"";  }
     }
@@ -292,6 +292,72 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "(Int -> Int)\r\n0\r\n");
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_DefaultValueObj() {
+        var code = @"
+main
+  var foo = new Foo()
+  print foo.f
+  print foo.f(7)
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  property f (Int -> Foo)
+
+  function asString() as String
+    return ""a Foo""
+  end function
+end class
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+    public virtual Func<int, Foo> f { get; set; } = (_) => default;
+    public virtual string asString() {
+
+      return @$""a Foo"";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override Func<int, Foo> f => (_) => default;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var foo = new Foo();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(foo.f));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(foo.f(7)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "(Int -> Foo)\r\n0\r\n");
     }
 
     #endregion

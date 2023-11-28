@@ -14,15 +14,9 @@ public record PropertyDefModel(ICodeModel Id, ICodeModel Type, PropertyType Prop
     private string Init =>
         PropertyType == PropertyType.Abstract
             ? ""
-            : Type switch {
-                ScalarValueModel { Value: "string" } => @""""";",
-                ScalarValueModel => "default;",
-                TypeModel => $"{Type}.DefaultInstance;",
-                FuncTypeModel ftm => $"({ftm.Types.AsCommaSeparatedString(" _")}) => default;",
-                DataStructureTypeModel ds when ds.Type.StartsWith("System")  => $"_DefaultIter<{ds.Items.First()}>.DefaultInstance;",
-                DataStructureTypeModel => $"{Type}.DefaultInstance;",
-                _ => throw new NotImplementedException()
-            };
+            : Type is IHasDefaultValue dm
+                ? dm.DefaultValue
+                : throw new NotImplementedException();
 
     private string Modifier => PropertyType switch {
         PropertyType.Abstract => "",
