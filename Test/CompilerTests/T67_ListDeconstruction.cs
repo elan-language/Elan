@@ -4,7 +4,7 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass] [Ignore]
+[TestClass]
 public class T67_ListDeconstruction {
     #region Passes
 
@@ -19,7 +19,22 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var (x, xs) = source;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(xs));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -29,7 +44,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "2\r\nList {2,3,5,7,11,13,17,19,23,27,31,37}\r\n");
+        AssertObjectCodeExecutes(compileData, "2\r\nList {3,5,7,11,13,17,19,23,27,31,37}\r\n");
     }
 
     [TestMethod]
@@ -38,14 +53,31 @@ end main
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
 main
   var x = 0
-  var y = default List<of String>
+  var xs = default List<of Int>
   set {x:xs} to source
   print x
   print xs
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = 0;
+    var xs = StandardLibrary.ElanList<int>.DefaultInstance;
+    (x, xs) = source;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(xs));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -55,10 +87,10 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "2\r\nList {2,3,5,7,11,13,17,19,23,27,31,37}\r\n");
+        AssertObjectCodeExecutes(compileData, "2\r\nList {3,5,7,11,13,17,19,23,27,31,37}\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_InParam() {
         var code = @"
 constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
@@ -68,8 +100,11 @@ main
   print xs
 end main
 
-function reverse({x:xs} as List<Int>) as List<Int> -> if xs.length() is 0 then {x} 
-  else reverse(xs) + x
+function reverse({x:xs} as List<Int>) as List<Int> -> 
+  if xs.length() is 0 then
+    {x} 
+  else 
+    reverse(xs) + x
 ";
 
         var objectCode = @"";

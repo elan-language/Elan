@@ -409,6 +409,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new DeconstructionModel(ids, isNew);
     }
 
+  
+
     private ThrowModel BuildThrowModel(ThrowNode defaultNode) {
         var thrown = Visit(defaultNode.Thrown);
         return new ThrowModel(thrown);

@@ -82,6 +82,7 @@ public static class AstFactory {
             FuncTypeContext c => visitor.Build(c),
             ArgumentContext c => visitor.Build(c),
             LambdaContext c => visitor.Build(c),
+            ListDecompContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context.GetType().FullName ?? null)
         };
@@ -298,6 +299,10 @@ public static class AstFactory {
 
         if (context.deconstructedTuple() is { } dt) {
             return visitor.Visit(dt);
+        }
+
+        if (context.listDecomp() is { } dl) {
+            return visitor.Visit(dl);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -821,6 +826,13 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DeconstructedTupleContext context) {
+        var ids = context.IDENTIFIER().Select(visitor.Visit).ToImmutableArray();
+        var isNew = Enumerable.Range(0, ids.Length).Select(_ => false);
+
+        return new DeconstructionNode(ids, isNew.ToImmutableArray());
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ListDecompContext context) {
         var ids = context.IDENTIFIER().Select(visitor.Visit).ToImmutableArray();
         var isNew = Enumerable.Range(0, ids.Length).Select(_ => false);
 
