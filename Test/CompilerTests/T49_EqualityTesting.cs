@@ -98,6 +98,145 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_EmptyEqualsDefault() {
+        var code = @"#
+main
+    var x = new Foo()
+    print x is default Foo
+end main
+
+class Foo
+    constructor()
+    end constructor
+    property p1 Int
+    property p2 String
+
+    procedure setP1(v Int)
+        set p1 to v
+    end procedure
+
+    function asString() as String
+      return ""{p1} {p2}""
+    end function
+end class
+";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+    public virtual int p1 { get; set; } = default;
+    public virtual string p2 { get; set; } = """";
+    public virtual string asString() {
+
+      return @$""{p1} {p2}"";
+    }
+    public virtual void setP1(int v) {
+      p1 = v;
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+      public override string p2 => """";
+      public override void setP1(int v) { }
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Foo();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == Foo.DefaultInstance));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "false\r\n"); // this may change
+    }
+
+     [TestMethod]
+    public void Pass_DifferentInstancesWithSameLambdaValuesAreEqual() {
+        var code = @"#
+main
+    var x = new Foo()
+    var y = new Foo()
+    print x is x
+    print x is y
+    print x is default Foo
+end main
+
+class Foo
+    constructor()
+    end constructor
+    property p1 (Int -> Int)
+    function asString() as String
+      return """"
+    end function
+end class
+";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+    public virtual Func<int, int> p1 { get; set; } = (_) => default;
+    public virtual string asString() {
+
+      return @$"""";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override Func<int, int> p1 => (_) => default;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = new Foo();
+    var y = new Foo();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == y));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x == Foo.DefaultInstance));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n"); // this may change
+    }
+
+    [TestMethod]
     public void Pass_ActuallyTheSameReference() {
         var code = @"#
 main
