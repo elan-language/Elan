@@ -221,7 +221,7 @@ public static class Functions {
 
     public static IEnumerable<T> filter<T>(IEnumerable<T> source, Func<T, bool> predicate) => source.Where(predicate);
 
-
+    public static IEnumerable<TResult> map<T, TResult>(IEnumerable<T> source, Func<T, TResult> predicate) => source.Select(predicate);
 
     #endregion
 }
