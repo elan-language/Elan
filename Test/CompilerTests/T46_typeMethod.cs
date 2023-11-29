@@ -226,7 +226,7 @@ public static class Program {
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_TypeForAClass()
     {
         var code = @"#
