@@ -1,11 +1,4 @@
-﻿# TODO. Move responsibilities
-# Get rid of Game
-# Clock tick onto Snake
-# Set new position onto Apple
-# Eating, and re-location to Apple
-# Edge detection to Snake - Snake is initialised with board size.
-# Top level playGame deals only with Snake, having passed it the field dimensions and initial Apple
-main
+﻿main
     print welcome
     var k = readKey()
     var newGame = true
@@ -61,7 +54,6 @@ procedure playGame()
     print "Game Over! Score: {game.getScore()}"
 end procedure
 
-# maps from the Square coordinates & size, to characters
 procedure draw(cm CharMap, sq Square, colour Colour)
     var col = sq.x * 2
     var row = sq.y
@@ -70,7 +62,6 @@ procedure draw(cm CharMap, sq Square, colour Colour)
 end procedure
 
 class Game    
-# Dimensions are number of Squares
     constructor (width Int, height Int, startingDirection Direction)
         set self.width to width
         set self.height to height
@@ -82,14 +73,6 @@ class Game
     private property height Int
     private property snake Snake
     property apple Square
-
-    function head() as Square
-      return snake.head
-    end function
-
-    function tail() as Square
-      return snake.tail()
-    end function
 
     procedure clockTick(d Direction, out continue Bool)
         call snake.advanceHeadOneSquare(d)
@@ -118,13 +101,10 @@ class Game
         set apple to sq
     end procedure
 
-    function getScore() as Int
-      return snake.length() - 2
-    end function
-
-    function asString() as String
-      return "Game"
-    end function
+    function head() as Square -> snake.hea
+    function tail() as Square -> snake.tail()
+    function getScore() as Int -> snake.length() - 2
+    function asString() as String -> "Game"
 end class
 
 class Snake
@@ -136,14 +116,6 @@ class Snake
 
     private property body List<of Square>
     property head Square
-
-    function tail() as Square 
-      return body[0]
-    end function
-
-    function hasHitItself() as Bool 
-      return bodyCovers(head)
-    end function
 
     function bodyCovers(sq Square) as Bool
       var result = false
@@ -164,13 +136,10 @@ class Snake
         set body to body[1..]
     end procedure
 
-    function length() as Int 
-      return body.length()
-    end function
-
-    function asString() as String
-      return "Snake"
-    end function
+    function length() as Int -> body.length()
+    function tail() as Square  -> body[0]
+    function hasHitItself() as Bool -> bodyCovers(head)
+    function asString() as String -> "Snake"
 end class
 
 class Square
@@ -199,7 +168,5 @@ class Square
         return new Square(newX, newY)
     end function
 
-    function asString() as String 
-      return "{x},{y}"
-    end function
+    function asString() as String  -> "{x},{y}"
 end class

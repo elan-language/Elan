@@ -804,8 +804,8 @@ public static class Program {
 main
     var p = default Player
     var p2 = p with {name = ""foo""}
-    print(type(p))
-    print(type(p2) is ""Player"")
+    print p.type()
+    print p2.type() is ""Player""
 end main
 
 class Player
