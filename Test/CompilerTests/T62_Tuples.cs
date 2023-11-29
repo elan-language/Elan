@@ -49,6 +49,52 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_FunctionReturnsTuple() {
+        var code = @"#
+main
+    var x = f()
+    print x
+    print x[0]
+    print x[1]
+end main
+function f() as (String, String)
+   return (""1"", ""2"")
+end function
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static (string, string) f() {
+
+    return (@$""1"", @$""2"");
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var x = Globals.f();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item2));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "(1, 2)\r\n1\r\n2\r\n");
+    }
+
+    [TestMethod]
     public void Pass_DeconstructIntoExistingVariables() {
         var code = @"#
 main

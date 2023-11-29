@@ -84,6 +84,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             InputNode n => HandleScope(BuildInputModel, n),
             ParameterCallNode n => HandleScope(BuildParameterCallModel, n),
             FuncTypeNode n => HandleScope(BuildFuncTypeModel, n),
+            TupleTypeNode n => HandleScope(BuildTupleTypeModel, n),
             AbstractFunctionDefNode n => Visit(n.Signature),
             AbstractProcedureDefNode n => Visit(n.Signature),
             null => throw new NotImplementedException("null"),
@@ -177,10 +178,10 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new LiteralListModel(items, type);
     }
 
-    private LiteralTupleModel BuildLiteralTupleModel(LiteralTupleNode literalListNode) {
+    private TupleModel BuildLiteralTupleModel(LiteralTupleNode literalListNode) {
         var items = literalListNode.ItemNodes.Select(Visit);
 
-        return new LiteralTupleModel(items);
+        return new TupleModel(items);
     }
 
     private LiteralDictionaryModel BuildLiteralDictionaryModel(LiteralDictionaryNode literalDictionaryNode) {
@@ -390,6 +391,12 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var ret = Visit(typeNode.ReturnType);
 
         return new FuncTypeModel(types.ToArray(), ret);
+    }
+
+    private TupleModel BuildTupleTypeModel(TupleTypeNode typeNode) {
+        var types = typeNode.Types.Select(Visit);
+
+        return new TupleModel(types);
     }
 
     private static ScalarValueModel BuildSelfModel(SelfPrefixNode selfPrefixNode) => new("this");
