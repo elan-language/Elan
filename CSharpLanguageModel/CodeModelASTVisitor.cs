@@ -85,6 +85,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             ParameterCallNode n => HandleScope(BuildParameterCallModel, n),
             FuncTypeNode n => HandleScope(BuildFuncTypeModel, n),
             TupleTypeNode n => HandleScope(BuildTupleTypeModel, n),
+            TupleDefNode n => HandleScope(BuildTupleDefModel, n),
             AbstractFunctionDefNode n => Visit(n.Signature),
             AbstractProcedureDefNode n => Visit(n.Signature),
             null => throw new NotImplementedException("null"),
@@ -395,6 +396,12 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private TupleModel BuildTupleTypeModel(TupleTypeNode typeNode) {
         var types = typeNode.Types.Select(Visit);
+
+        return new TupleModel(types);
+    }
+
+    private TupleModel BuildTupleDefModel(TupleDefNode typeNode) {
+        var types = typeNode.Expressions.Select(Visit);
 
         return new TupleModel(types);
     }

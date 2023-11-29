@@ -212,6 +212,7 @@ public static class CompilerTransforms {
         return expression switch {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
                 VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
+                ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
                 _ => null
             },
             _ => null
