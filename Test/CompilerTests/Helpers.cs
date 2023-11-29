@@ -6,7 +6,7 @@ namespace Test.CompilerTests;
 
 public static partial class Helpers {
 
-    public static bool LightweightTest { get; } = false;
+    public static bool LightweightTest { get; } = !IsAppveyor;
 
     private static bool IsAppveyor => Environment.GetEnvironmentVariable("APPVEYOR") is "True";
 
