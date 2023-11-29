@@ -163,6 +163,46 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "37\r\n19\r\n");
     }
+
+    [TestMethod]
+    public void Pass_Count()
+    {
+        var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+main
+ print source.count()
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.count(source)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "12\r\n");
+    }
+
+
+
+
     [TestMethod]
     public void Pass_Min()
     {

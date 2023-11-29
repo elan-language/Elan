@@ -249,6 +249,8 @@ public static class Functions {
 
     public static bool any<T>(IEnumerable<T> source, Func<T, bool> func) => source.Any(func);
 
+    public static int count<T>(IEnumerable<T> source) => source.Count();
+
     public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, int> func) => source.GroupBy(func);
 
     public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, double> func) => source.GroupBy(func);
