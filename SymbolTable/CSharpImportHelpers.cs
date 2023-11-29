@@ -19,6 +19,7 @@ public static class CSharpImportHelpers {
             "ElanDictionary`2" => new DictionarySymbolType(),
             "ElanArray`1" => new ArraySymbolType(),
             "ElanList`1" => new ListSymbolType(),
+            "IEnumerable`1" => new IterSymbolType(),
             _ when type.IsGenericParameter => new GenericSymbolType(),
             _ when type.IsEnum => new EnumSymbolType(type.Name),
             _ => new ClassSymbolType(type.Name) // placeholder for everything else 

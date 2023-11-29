@@ -244,17 +244,34 @@ public static class Program {
     public void Pass_MaxInFunction()
     {
         var code = @"
-constant source = {{1}, {2,2}, {3,3}}
+constant source set to {{1}, {2,2}, {3,3}}
 main
  print f(source)
 end main
-function f(it Iter<of String>) as Int
-    var groups = it.groupBy(lambda w -> w.count())
+function f(it Iter<of (Int, Int)>) as Int
+    var groups set to it.groupBy(lambda w -> w.count())
     return groups.max(lambda g -> g.count())
 end function
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<StandardLibrary.ElanList<int>> source = new StandardLibrary.ElanList<StandardLibrary.ElanList<int>>(new StandardLibrary.ElanList<int>(1), new StandardLibrary.ElanList<int>(2, 2), new StandardLibrary.ElanList<int>(3, 3));
+  public static int f(System.Collections.Generic.IEnumerable<(int, int)> it) {
+    var groups = StandardLibrary.Functions.groupBy(it, (w) => StandardLibrary.Functions.count(w));
+    return StandardLibrary.Functions.max(groups, (g) => StandardLibrary.Functions.count(g));
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.f(source)));
+  }
+}";
 
         var parseTree = @"*";
 
