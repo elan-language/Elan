@@ -35,6 +35,9 @@
 		<None Update="ElanSourceCode\mergeSort.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="ElanSourceCode\snake - with expression functions.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ElanSourceCode\snake.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
