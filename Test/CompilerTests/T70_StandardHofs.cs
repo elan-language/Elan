@@ -208,7 +208,7 @@ public static class Program {
     public void Pass_Max1()
     {
         var code = @"
-constant source = {{1}, {2,2}}
+constant source set to {{1}, {2,2}}
 main
  print source.max(lambda t -> t.count())
 end main
