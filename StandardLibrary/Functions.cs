@@ -251,6 +251,8 @@ public static class Functions {
 
     public static int count<T>(IEnumerable<T> source) => source.Count();
 
+    public static IEnumerable<T> asParallel<T>(IEnumerable<T> source) => source.AsParallel();
+
     public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, int> func) => source.GroupBy(func);
 
     public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, double> func) => source.GroupBy(func);

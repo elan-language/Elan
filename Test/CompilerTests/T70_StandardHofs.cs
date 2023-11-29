@@ -50,6 +50,46 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_ParallelFilter()
+    {
+        var code = @"
+constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+main
+ print source.asParallel().filter(lambda x -> x > 20)
+ print source.asParallel().filter(lambda x -> x > 20).asList()
+ print source.asParallel().filter(lambda x -> x < 3 or x > 35).asList()
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.filter(StandardLibrary.Functions.asParallel(source), (x) => x > 20)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.asList(StandardLibrary.Functions.filter(StandardLibrary.Functions.asParallel(source), (x) => x > 20))));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.asList(StandardLibrary.Functions.filter(StandardLibrary.Functions.asParallel(source), (x) => x < 3 || x > 35))));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Iter {23,27,31,37}\r\nList {23,27,31,37}\r\nList {2,37}\r\n");
+    }
+
+    [TestMethod]
     public void Pass_Map()
     {
         var code = @"
