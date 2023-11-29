@@ -10,8 +10,8 @@ public class T_8_ForLoop {
     public void Pass_minimal() {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
+  var tot set to 0
+  for i from 1 to 10
     set tot to tot + i
   end for
   print tot
@@ -52,8 +52,8 @@ public static class Program {
     public void Pass_withStep() {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10 step 2
+  var tot set to 0
+  for i from 1 to 10 step 2
     set tot to tot + i
   end for
   print tot
@@ -94,8 +94,8 @@ public static class Program {
     public void Pass_negativeStep() {
         var code = @"
 main
-  var tot = 0
-  for i = 10 to 3 step -1
+  var tot set to 0
+  for i from 10 to 3 step -1
     set tot to tot + i
   end for
   print tot
@@ -136,9 +136,9 @@ public static class Program {
     public void Pass_innerLoop() {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 3
-    for j = 1 to 4
+  var tot set to 0
+  for i from 1 to 3
+    for j from 1 to 4
       set tot to tot + 1
     end for
   end for
@@ -182,10 +182,10 @@ public static class Program {
     public void Pass_canUseExistingVariablesOfRightType() {
         var code = @"
 main
-  var lower = 1
-  var upper = 10
-  var tot = 0
-  for i = lower to upper step 2 
+  var lower set to 1
+  var upper set to 10
+  var tot set to 0
+  for i from lower to upper step 2 
     set tot to tot + i
   end for
   print tot
@@ -228,8 +228,8 @@ public static class Program {
     public void Fail_useOfFloat() {
         var code = @"
 main
-  var tot = 0
-  for i = 1.5 to 10
+  var tot set to 0
+  for i from 1.5 to 10
     set tot to tot + i
   end for
 end main
@@ -248,8 +248,8 @@ end main
     public void Fail_modifyingCounter() {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
+  var tot set to 0
+  for i from 1 to 10
     set i to 10
   end for
 end main
@@ -266,9 +266,9 @@ end main
     public void Fail_missingEnd() {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 3
-    for j = 1 to 4
+  var tot set to 0
+  for i from 1 to 3
+    for j from 1 to 4
       set tot to tot + 1
     end for
 end main
@@ -281,8 +281,8 @@ end main
     public void Fail_nextVariable() {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
+  var tot set to 0
+  for i from 1 to 10
     set tot to tot + i
   next i
 end main
@@ -295,8 +295,8 @@ end main
     public void Fail_break() {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
+  var tot set to 0
+  for i from 1 to 10
     set tot to tot + i
     break
   next i
@@ -310,8 +310,8 @@ end main
     public void Fail_continue() {
         var code = @"
 main
-  var tot = 0
-  for i = 1 to 10
+  var tot set to 0
+  for i from 1 to 10
     set tot to tot + i
     continue
   next i

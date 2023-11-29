@@ -108,7 +108,7 @@ public static class Program {
     public void Pass_ReturnAFunction() {
         var code = @"
 main
-  var f = getFunc()
+  var f set to getFunc()
   print f(5)
 end main
 
@@ -159,7 +159,7 @@ public static class Program {
     public void Pass_FuncAsProperty() {
         var code = @"
 main
-  var foo = new Foo(twice)
+  var foo set to new Foo(twice)
   print foo.f(7)
 end main
 
@@ -232,7 +232,7 @@ public static class Program {
     public void Pass_DefaultValue() {
         var code = @"
 main
-  var foo = new Foo()
+  var foo set to new Foo()
   print foo.f
   print foo.f(7)
 end main
@@ -298,7 +298,7 @@ public static class Program {
     public void Pass_DefaultValueObj() {
         var code = @"
 main
-  var foo = new Foo()
+  var foo set to new Foo()
   print foo.f
   print foo.f(7)
 end main
@@ -433,7 +433,7 @@ end function
     public void Fail_UsingReturnedFuncWithoutArgs() {
         var code = @"
 main
-  var a = getFunc()
+  var a set to getFunc()
   print a()
 end main
 

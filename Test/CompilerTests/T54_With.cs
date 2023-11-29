@@ -13,7 +13,7 @@ public class T54_With {
     public void Pass_InstantiatingClassWithZeroParamConstructor() {
         var code = @"#
 main
-    var x = new Foo() with {p1 = 3, p2 = ""Apple"" }
+    var x set to new Foo() with {p1 set to 3, p2 set to ""Apple"" }
     print x.p1
     print x.p2
 end main
@@ -84,7 +84,7 @@ public static class Program {
     public void Pass_ConstructorWithParm() {
         var code = @"#
 main
-    var x = new Foo(7) with {p1 = 3, p2 = ""Apple"" }
+    var x set to new Foo(7) with {p1 set to 3, p2 set to ""Apple"" }
     print x.p1
     print x.p2
 end main
@@ -155,8 +155,8 @@ public static class Program {
     public void Pass_AppliedToInstanceButReturnedOneIsNewInstance() {
         var code = @"#
 main
-    var x = new Foo()
-    var y = x with {p1 = 3, p2 = ""Apple"" }
+    var x set to new Foo()
+    var y set to x with {p1 set to 3, p2 set to ""Apple"" }
     print y.p1
     print y.p2
     print x.p1
@@ -230,8 +230,8 @@ public static class Program {
     public void Pass_WorksWithImmutableClass() {
         var code = @"#
 main
-    var x = new Foo()
-    var y = x with {p1 = 3, p2 = ""Apple"" }
+    var x set to new Foo()
+    var y set to x with {p1 set to 3, p2 set to ""Apple"" }
     print y.p1
     print y.p2
     print x.p1
@@ -310,7 +310,7 @@ public static class Program {
     {
         var code = @"#
 main
-    var x = new Foo() with {p1 = 3, p3 = ""Apple"" }
+    var x set to new Foo() with {p1 set to 3, p3 set to ""Apple"" }
     print x.p1
     print x.p2
 end main

@@ -12,8 +12,8 @@ public class T38_ExpressionsSplitOverMoreThanOneLine {
     public void Pass_1() {
         var code = @"#
 main
-  var x = 0.7
-  var y = sin(x) ^ 2 +
+  var x set to 0.7
+  var y set to sin(x) ^ 2 +
      cos(x) ^ 2
   print y
 end main
@@ -51,8 +51,8 @@ public static class Program {
     public void Pass_3() {
         var code = @"#
 main
-  var x = 0.7
-  var y = 
+  var x set to 0.7
+  var y set to 
 sin(x) ^ 2 + cos(x) ^ 2
   print y
 end main
@@ -90,8 +90,8 @@ public static class Program {
     public void Pass_4() {
         var code = @"#
 main
-  var x = 0.7
-  var y = sin(
+  var x set to 0.7
+  var y set to sin(
         x) ^ 2  + cos(x) ^ 2
   print y
 end main
@@ -128,8 +128,8 @@ public static class Program {
     public void Pass_5() {
         var code = @"#
 main
-  var x = 0.7
-  var y = 3 + 4 *
+  var x set to 0.7
+  var y set to 3 + 4 *
     1 + 2
   print y
 end main
@@ -169,8 +169,8 @@ public static class Program {
     public void Fail_1() {
         var code = @"#
 main
-  var x = 0.7
-  var y = sin(x) ^ 2 
+  var x set to 0.7
+  var y set to sin(x) ^ 2 
      + cos(x) ^ 2
   print y
 end main
@@ -183,7 +183,7 @@ end main
     public void Fail_2() {
         var code = @"#
 main
-  var x = 0.7
+  var x set to 0.7
   set y 
      to sin(x) ^ 2  + cos(x) ^ 2
   print y

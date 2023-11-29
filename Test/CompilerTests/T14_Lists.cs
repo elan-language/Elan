@@ -12,7 +12,7 @@ public class T14_Lists {
     public void Pass_literalList() {
         var code = @"
 main
-    var a = {4,5,6,7,8}
+    var a set to {4,5,6,7,8}
     print a
 end main
 ";
@@ -48,8 +48,8 @@ public static class Program {
     public void Pass_literalListOfClass() {
         var code = @"
 main
-    var a = new Foo()
-    var b = {a}
+    var a set to new Foo()
+    var b set to {a}
     print b
 end main
 
@@ -114,16 +114,16 @@ public static class Program {
     public void Pass_literalListOfValueId() {
         var code = @"
 main
-    var a = 1
-    var b = 1.1
-    var c = 'c'
-    var d = ""d""
-    var e = true
-    var v = {a}
-    var w = {b}
-    var x = {c}
-    var y = {d}
-    var z = {e}
+    var a set to 1
+    var b set to 1.1
+    var c set to 'c'
+    var d set to ""d""
+    var e set to true
+    var v set to {a}
+    var w set to {b}
+    var x set to {c}
+    var y set to {d}
+    var z set to {e}
     print v
     print w
     print x
@@ -204,7 +204,7 @@ public static class Program {
     public void Pass_literalListOfString() {
         var code = @"
 main
-    var a = {""Foo"", ""Bar""}
+    var a set to {""Foo"", ""Bar""}
     print a
 end main
 ";
@@ -239,7 +239,7 @@ public static class Program {
     public void Pass_literalListWithCoercion() {
         var code = @"
 main
-    var a = {4.1,5,6,7,8}
+    var a set to {4.1,5,6,7,8}
     print a
 end main
 ";
@@ -275,7 +275,7 @@ public static class Program {
     public void Pass_length() {
         var code = @"
 main
-    var a = {4,5,6,7,8}
+    var a set to {4,5,6,7,8}
     print a.length()
 end main
 ";
@@ -311,7 +311,7 @@ public static class Program {
     public void Pass_emptyList() {
         var code = @"
 main
-    var a = new List<of Int>()
+    var a set to new List<of Int>()
     print a.length()
 end main
 ";
@@ -347,7 +347,7 @@ public static class Program {
     public void Pass_index() {
         var code = @"
 main
-    var a = {4,5,6,7,8}
+    var a set to {4,5,6,7,8}
     print a[2]
 end main
 ";
@@ -382,7 +382,7 @@ public static class Program {
     public void Pass_range() {
         var code = @"
 main
-    var a = {4,5,6,7,8}
+    var a set to {4,5,6,7,8}
     print a[2..]
     print a[1..3]
     print a[..2]
@@ -421,8 +421,8 @@ public static class Program {
     public void Pass_addElementToList() {
         var code = @"
 main
-    var a = {4,5,6,7,8}
-    var b = a + 9
+    var a set to {4,5,6,7,8}
+    var b set to a + 9
     print a
     print b
 end main
@@ -460,8 +460,8 @@ public static class Program {
     public void Pass_addListToElement() {
         var code = @"
 main
-    var a = {4,5,6,7,8}
-    var b = 9 + a
+    var a set to {4,5,6,7,8}
+    var b set to 9 + a
     print a
     print b
 end main
@@ -499,9 +499,9 @@ public static class Program {
     public void Pass_addListToListUsingPlus() {
         var code = @"
 main
-    var a = {4,5,6,7,8}
-    var b = {1,2,3}
-    var c = a + b
+    var a set to {4,5,6,7,8}
+    var b set to {1,2,3}
+    var c set to a + b
     print c
 end main
 ";
@@ -538,7 +538,7 @@ public static class Program {
     [TestMethod]
     public void Pass_constantLists() {
         var code = @"
-constant a = {4,5,6,7,8}
+constant a set to {4,5,6,7,8}
 main
     print a
 end main
@@ -574,7 +574,7 @@ public static class Program {
     public void Pass_createEmptyListUsingConstructor() {
         var code = @"
 main
-    var a = new List<of Int>()
+    var a set to new List<of Int>()
     print a
 end main
 ";
@@ -610,7 +610,7 @@ public static class Program {
     public void Pass_Default() {
         var code = @"
 main
-  var f = new Foo()
+  var f set to new Foo()
   print f.it
 end main
 
@@ -677,7 +677,7 @@ public static class Program {
     public void Fail_emptyLiteralList() {
         var code = @"
 main
-    var a = {}
+    var a set to {}
 end main
 ";
 
@@ -689,7 +689,7 @@ end main
     public void Fail_literalListInconsistentTypes1() {
         var code = @"
 main
-    var a = {3, ""apples""}
+    var a set to {3, ""apples""}
 end main
 ";
 
@@ -702,7 +702,7 @@ end main
     public void Fail_literalListInconsistentTypes2() {
         var code = @"
 main
-    var a = {3, 3.1}
+    var a set to {3, 3.1}
 end main
 "; //Because list type is decided by FIRST element
 
@@ -715,8 +715,8 @@ end main
     public void Fail_OutOfRange() {
         var code = @"
 main
-    var a = {4,5,6,7,8}
-    var b = a[5];
+    var a set to {4,5,6,7,8}
+    var b set to a[5];
 end main
 ";
 

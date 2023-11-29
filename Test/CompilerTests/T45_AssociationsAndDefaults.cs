@@ -18,7 +18,7 @@ public class T45_AssociationsAndDefaults {
     public void Pass_CanHavePropertiesThatAreDataStructuresOrObjects() {
         var code = @"#
 main
-    var g = new Game()
+    var g set to new Game()
     print g.p2
     print g.p1
     print g.previousScores
@@ -128,7 +128,7 @@ public static class Program {
     public void Pass_PropertiesOfAllStandardTypesHaveDefaultValues() {
         var code = @"#
 main
-    var g = new Game()
+    var g set to new Game()
     print g.i
     print g.f
     print g.b
@@ -227,7 +227,7 @@ public static class Program {
     public void Pass_DefaultValuesNotPickedUpFromDefaultConstructor() {
         var code = @"#
 main
-    var g = default Game
+    var g set to default Game
     print g.i
 end main
 
@@ -292,7 +292,7 @@ public static class Program {
     public void Pass_PropertiesOfClassTypesHaveDefaultValues() {
         var code = @"#
 main
-    var g = new Game()
+    var g set to new Game()
     print g.p1
     print g.previousGame
 end main
@@ -391,7 +391,7 @@ public static class Program {
     public void Pass_defaultKeywordToTestValue() {
         var code = @"#
 main
-    var g = new Game()
+    var g set to new Game()
     print g.p1 is default Player
     print g.p2 is default Player
     print g.previousGame is default Game
@@ -514,7 +514,7 @@ public static class Program {
     public void Pass_defaultValueCanBeAssigned() {
         var code = @"#
 main
-    var g = new Game()
+    var g set to new Game()
     print g.score
     call g.setScore(default Int)
     print g.score
@@ -638,7 +638,7 @@ public static class Program {
     public void Pass_defaultForStandardDataStructures() {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     print f.a
     print f.b
     print f.c
@@ -725,8 +725,8 @@ public static class Program {
     {
         var code = @"#
 main
-    var g = new Game()
-    print  g.p1.ucName()
+    var g set to new Game()
+    print(g.p1.ucName())
 end main
 
 class Game
@@ -790,7 +790,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    System.Console.WriteLine(StandardLibrary.Functions.asString(g.p1.ucName()));
+    System.Console.WriteLine(StandardLibrary.Functions.asString((g.p1.ucName())));
   }
 }";
 
@@ -809,8 +809,8 @@ public static class Program {
     {
         var code = @"#
 main
-    var p = default Player
-    var p2 = p with {name = ""foo""}
+    var p set to default Player
+    var p2 set to p with {name = ""foo""}
     print type(p)
     print type(p2) is ""Player""
 end main

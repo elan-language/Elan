@@ -12,54 +12,54 @@ public class T60_CsharpKeywordAsIdentifier {
     public void Pass_CSkeywordAsIdentifier() {
         var code = @"
 main
-  var base = 1
-  var break = 1
-  var byte = 1
-  var checked = 1
-  var const = 1
-  var continue = 1
-  var delegate = 1
-  var do = 1
-  var double = 1
-  var event = 1
-  var explicit = 1
-  var extern = 1
-  var finally = 1
-  var fixed = 1
-  var goto = 1
-  var implicit = 1
-  var interface = 1
-  var internal = 1
-  var lock = 1
-  var long = 1
-  var namespace = 1
-  var null = 1
-  var object = 1
-  var operator = 1
-  var override = 1
-  var params = 1
-  var protected = 1
-  var public = 1
-  var readonly = 1
-  var sbyte = 1
-  var sealed = 1
-  var short = 1
-  var sizeof = 1
-  var stackalloc = 1
-  var static = 1
-  var struct = 1
-  var this = 1
-  var typeof = 1
-  var uint = 1
-  var ulong = 1
-  var unchecked = 1
-  var unsafe = 1
-  var ushort = 1
-  var using = 1
-  var virtual = 1
-  var void = 1
-  var volatile = 1
-  var total = base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+null+object+operator+override+params+protected+public+readonly+sbyte+sealed+short+sizeof+stackalloc+static+struct+this+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
+  var base set to 1
+  var break set to 1
+  var byte set to 1
+  var checked set to 1
+  var const set to 1
+  var continue set to 1
+  var delegate set to 1
+  var do set to 1
+  var double set to 1
+  var event set to 1
+  var explicit set to 1
+  var extern set to 1
+  var finally set to 1
+  var fixed set to 1
+  var goto set to 1
+  var implicit set to 1
+  var interface set to 1
+  var internal set to 1
+  var lock set to 1
+  var long set to 1
+  var namespace set to 1
+  var null set to 1
+  var object set to 1
+  var operator set to 1
+  var override set to 1
+  var params set to 1
+  var protected set to 1
+  var public set to 1
+  var readonly set to 1
+  var sbyte set to 1
+  var sealed set to 1
+  var short set to 1
+  var sizeof set to 1
+  var stackalloc set to 1
+  var static set to 1
+  var struct set to 1
+  var this set to 1
+  var typeof set to 1
+  var uint set to 1
+  var ulong set to 1
+  var unchecked set to 1
+  var unsafe set to 1
+  var ushort set to 1
+  var using set to 1
+  var virtual set to 1
+  var void set to 1
+  var volatile set to 1
+  var total set to base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+null+object+operator+override+params+protected+public+readonly+sbyte+sealed+short+sizeof+stackalloc+static+struct+this+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
   print total
 end main
 ";
@@ -78,7 +78,7 @@ end main
     public void Pass_CSKeywordAsType() {
         var code = @"
 main
-  var m = new Base(3)
+  var m set to new Base(3)
   print m.p1
 end main
 
@@ -111,7 +111,7 @@ end class
     public void Fail_ElanKeywordAsIdentifier() {
         var code = @"
 main
-  var procedure = 1
+  var procedure set to 1
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -119,10 +119,10 @@ end main
     }
 
     [TestMethod]
-    public void Fail_RefAsIdentifier() {
+    public void Fail_OutAsIdentifier() {
         var code = @"
 main
-  var out = 1
+  var out set to 1
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });

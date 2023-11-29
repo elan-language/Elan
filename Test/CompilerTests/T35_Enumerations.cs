@@ -58,7 +58,7 @@ public static class Program {
     public void Pass_useInVariable() {
         var code = @"
 main
- var x = Fruit.apple
+ var x set to Fruit.apple
  set x to Fruit.pear
  print x
 end main
@@ -104,8 +104,8 @@ public static class Program {
     public void Pass_useAsType() {
         var code = @"
 main
- var x = Fruit.apple
- var y = x
+ var x set to Fruit.apple
+ var y set to x
  print x
 end main
 
@@ -150,7 +150,7 @@ public static class Program {
     public void Pass_equality() {
         var code = @"
 main
-    var x = Fruit.apple
+    var x set to Fruit.apple
     print x is Fruit.apple
     print x is Fruit.pear
 end main
@@ -196,7 +196,7 @@ public static class Program {
     public void Pass_SwitchCaseOnEnum() {
         var code = @"
 main
-      var f = Fruit.orange
+      var f set to Fruit.orange
       switch f
         case Fruit.apple
             print 'a'
@@ -261,7 +261,7 @@ public static class Program {
     public void Pass_coercionToString() {
         var code = @"
 main
-  var a = ""Eat more "" + Fruit.apple + ""s!""
+  var a set to ""Eat more "" + Fruit.apple + ""s!""
   print a
 end main
 
@@ -351,7 +351,7 @@ end enum
     public void Fail_coercionToInt() {
         var code = @"
 main
- var a = 1
+ var a set to 1
  set a to Fruit.apple
 end main
 

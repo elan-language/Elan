@@ -11,7 +11,7 @@ public class T74_AnyImmutableTypeAsConstant {
     [TestMethod]
     public void Pass_String() {
         var code = @"
-constant k = ""Apple""
+constant k set to ""Apple""
 
 main 
   print k
@@ -47,7 +47,7 @@ public static class Program {
     [TestMethod]
     public void Pass_Tuple() {
         var code = @"
-constant k = (3, ""Apple"")
+constant k set to (3, ""Apple"")
 
 main 
   print k
@@ -83,7 +83,7 @@ public static class Program {
     [TestMethod]
     public void Pass_List() {
         var code = @"
-constant k = {1,2,3}
+constant k set to {1,2,3}
 
 main 
   print k
@@ -119,7 +119,7 @@ public static class Program {
     [TestMethod]
     public void Pass_Dictionary() {
         var code = @"
-constant k = {'a':1, 'b':3, 'c':3}
+constant k set to {'a':1, 'b':3, 'c':3}
 
 main 
   print k
@@ -155,7 +155,7 @@ public static class Program {
     [TestMethod]
     public void Pass_ImmutableClass() {
         var code = @"
-constant k = new Foo(3)
+constant k set to new Foo(3)
 
 main 
   print k
@@ -225,7 +225,7 @@ public static class Program {
     [TestMethod]
     public void Fail_Array() {
         var code = @"
-constant k = new Array<of Int>(3)
+constant k set to new Array<of Int>(3)
 ";
         var parseTree = @"*";
 
@@ -238,7 +238,7 @@ constant k = new Array<of Int>(3)
     [TestMethod]
     public void Fail_MutableClass() {
         var code = @"
-constant k = new Foo(3)
+constant k set to new Foo(3)
 
 class Foo
     constructor(p1 Int)

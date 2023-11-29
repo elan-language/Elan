@@ -12,7 +12,7 @@ public class T26_Iter {
     public void Pass_List() {
         var code = @"
 main
-  var it = { 1,5,6}
+  var it set to { 1,5,6}
   call printEach(it)
 end main
 
@@ -58,7 +58,7 @@ public static class Program {
     public void Pass_Array() {
         var code = @"
 main
-  var it = { 1,3,6}.asArray()
+  var it set to { 1,3,6}.asArray()
   call printEach(it)
 end main
 
@@ -104,7 +104,7 @@ public static class Program {
     public void Pass_String() {
         var code = @"
 main
-  var s = ""Foo""
+  var s set to ""Foo""
   call printEach(s)
 end main
 
@@ -146,13 +146,11 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "F\r\no\r\no\r\n");
     }
 
-   
-
     [TestMethod]
     public void Pass_Printing() {
         var code = @"
 main
-  var it = { 1,2,3,4,5,6,7}
+  var it set to { 1,2,3,4,5,6,7}
   call printAsIter(it)
   call printAsList(it)
 end main
@@ -162,7 +160,7 @@ procedure printAsIter(target Iter<of Int>)
 end procedure
 
 procedure printAsList(target Iter<of Int>)
-  var some = target.asList()[3..]
+  var some set to target.asList()[3..]
   print some
 end procedure
 ";
@@ -205,7 +203,7 @@ public static class Program {
     public void Pass_Default() {
         var code = @"
 main
-  var f = new Foo()
+  var f set to new Foo()
   print f.it
 end main
 
@@ -290,7 +288,7 @@ end procedure
     public void Fail_PassArgumentWithWrongGenericType() {
         var code = @"
 main
-  var it = {1,2,3,4,5,6,7}
+  var it set to {1,2,3,4,5,6,7}
   call printEach(it)
 end main
 
@@ -309,11 +307,12 @@ end procedure
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
+
     [TestMethod]
     public void Fail_Indexing() {
         var code = @"
 main
-  var it = { 1,2,3,4,5,6,7}
+  var it set to { 1,2,3,4,5,6,7}
   call printEach(it[2..4])
 end main
 

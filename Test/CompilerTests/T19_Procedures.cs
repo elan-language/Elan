@@ -98,8 +98,8 @@ public static class Program {
     public void Pass_WithParamsPassingVariables() {
         var code = @"
 main
-    var a = 2
-    var b = ""hello""
+    var a set to 2
+    var b set to ""hello""
     call foo(a, b)
 end main
 
@@ -144,8 +144,8 @@ public static class Program {
     public void Pass_WithParamsPassingRefVariables() {
         var code = @"
 main
-    var a = 2
-    var b = ""hello""
+    var a set to 2
+    var b set to ""hello""
     call foo(a, b)
 end main
 
@@ -190,8 +190,8 @@ public static class Program {
     public void Pass_WithMixedRefParams() {
         var code = @"
 main
-    var a = 2
-    var b = true
+    var a set to 2
+    var b set to true
     call foo(a, b)
 end main
 
@@ -236,8 +236,8 @@ public static class Program {
     public void Pass_CallingWithDotSyntax() {
         var code = @"
 main
-    var a = 2
-    var b = ""hello""
+    var a set to 2
+    var b set to ""hello""
     call a.foo(b)
 end main
 
@@ -282,7 +282,7 @@ public static class Program {
     public void Pass_WithParamsPassingLiteralsOrExpressions() {
         var code = @"
 main
-    var a = 1
+    var a set to 1
     call foo(a + 1, ""hello"")
 end main
 
@@ -326,8 +326,8 @@ public static class Program {
     public void Pass_RefParamsCanBeUpdated() {
         var code = @"
 main
-    var a = 1
-    var b = ""hello""
+    var a set to 1
+    var b set to ""hello""
     call foo(a, b)
     print a
     print b
@@ -562,7 +562,7 @@ end procedure
     public void Fail_PassingTooFewParams() {
         var code = @"
 main
-    var a = 1
+    var a set to 1
     call foo(a + 1)
 end main
 
@@ -690,8 +690,8 @@ end main
     public void Fail_NonRefParamsCannotBeUpdated() {
         var code = @"
 main
-    var a = 1
-    var b = ""hello""
+    var a set to 1
+    var b set to ""hello""
     call foo(a, b)
     print a
     print b
@@ -714,8 +714,8 @@ end procedure
     public void Fail_RefKeywordMayNotBeAddedToArgument() {
         var code = @"
 main
-    var a = 1
-    var b = ""hello""
+    var a set to 1
+    var b set to ""hello""
     call foo(ref a, b)
     print a
     print b
@@ -735,8 +735,8 @@ end procedure
     public void Fail_WithParamsPassingRefLiteral() {
         var code = @"
 main
-    var a = 2
-    var b = ""hello""
+    var a set to 2
+    var b set to ""hello""
     call foo(a, ""hello"")
 end main
 

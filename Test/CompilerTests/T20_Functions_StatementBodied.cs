@@ -57,7 +57,7 @@ main
 end main
 
 function factorial(a Int) as Int
-    var result = 0;
+    var result set to 0;
     if a > 2 then
         set result to a * factorial(a-1)
     else 
@@ -106,7 +106,7 @@ public static class Program {
     public void Pass_BinarySearch_Recursive() {
         var code = @"
 main
-    var li = {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
+    var li set to {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
     print binarySearch(li, ""lemon"")
     print binarySearch(li, ""apple"")
     print binarySearch(li, ""strawberry"")
@@ -114,14 +114,14 @@ main
 end main
 
 function binarySearch(li List<of String>, item String) as  Bool 
-  var result = false
+  var result set to false
   if li.length() is 0 then  
     set result to false
   else if li.length() is 1 then
     set result to li[0] is item
   else 
-    var mid = li.length() div 2
-    var value = li[mid]
+    var mid set to li.length() div 2
+    var value set to li[mid]
     if item is value then
         set result to true
     else if item.isBefore(value) then
@@ -295,7 +295,7 @@ main
 end main
 
 function foo(a Int, b Int) as Int
-    var c = a * b
+    var c set to a * b
 end function
 ";
 
@@ -307,12 +307,12 @@ end function
     public void Fail_returnTypeIncompatible() {
         var code = @"
 main
-   var a = """"
+   var a set to """"
    set a to foo(3,4)
 end main
 
 function foo(a Int, b Int) as Int
-    var c = a * b
+    var c set to a * b
     return c
 end function
 ";
@@ -332,7 +332,7 @@ main
 end main
 
 function foo(a Int, b Int) as Int
-    var c = a * b
+    var c set to a * b
     return
 end function
 ";
@@ -385,7 +385,7 @@ end main
 
 function foo(a Int, b Int) as Int
     return a * b
-    var c = a + b
+    var c set to a + b
 end function
 ";
 
@@ -419,7 +419,7 @@ main
 end main
 
 function foo(a Int, b Int) as Int
-    var r = system.random()
+    var r set to system.random()
     return a * b
 end function
 ";
@@ -435,7 +435,7 @@ end function
     public void Fail_CanNotContainProcedureCall() {
         var code = @"
 main
-    var result = foo(3,4)
+    var result set to foo(3,4)
     print result
 end main
 
@@ -460,7 +460,7 @@ end procedure
     public void Fail_CannotModifyParam() {
         var code = @"
 main
-    var result = foo(3,4)
+    var result set to foo(3,4)
     print result
 end main
 
@@ -481,7 +481,7 @@ end function
     public void Fail_TooManyParams() {
         var code = @"
 main
-    var result = foo(3,4,5)
+    var result set to foo(3,4,5)
     print result
 end main
 
@@ -502,7 +502,7 @@ end function
     public void Fail_NotEnoughParams() {
         var code = @"
 main
-    var result = foo(3)
+    var result set to foo(3)
     print result
 end main
 
@@ -523,7 +523,7 @@ end function
     public void Fail_WrongParamType() {
         var code = @"
 main
-    var result = foo(3, ""b"")
+    var result set to foo(3, ""b"")
     print result
 end main
 

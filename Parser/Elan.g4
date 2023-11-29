@@ -26,11 +26,11 @@ printStatement: NL PRINT expression?;
 
 input: INPUT LITERAL_STRING?;
  
-varDef: NL VAR assignableValue ASSIGN (expression | systemCall | input);
+varDef: NL VAR assignableValue SET TO (expression | systemCall | input);
 
 assignment: NL SET assignableValue TO (expression | systemCall | input);
 
-inlineAsignment: assignableValue ASSIGN expression;
+inlineAsignment: assignableValue SET TO expression;
 
 assignableValue: (scopeQualifier?  IDENTIFIER index?) | deconstructedTuple | listDecomp;
 
@@ -77,7 +77,7 @@ expressionFunction:
 functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
 
 // CONSTANTS
-constantDef: NL CONSTANT IDENTIFIER ASSIGN (literal | newInstance);
+constantDef: NL CONSTANT IDENTIFIER SET TO (literal | newInstance);
 
 // ENUMERATIONS
 enumDef: 
@@ -150,7 +150,7 @@ if:
 	;
 
 for: 
-	NL FOR IDENTIFIER ASSIGN expression TO expression (STEP MINUS? LITERAL_INTEGER)?
+	NL FOR IDENTIFIER FROM expression TO expression (STEP MINUS? LITERAL_INTEGER)?
 	statementBlock
 	NL END FOR
 	;

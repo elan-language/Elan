@@ -1,19 +1,19 @@
 main
-  var li = {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
+  var li set to {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
   print mergeSort(li)
 end main
 
 function mergeSort(list List<of String>) as List<of String> 
-    var result = list
+    var result set to list
     if list.length() > 1 then
-      var mid = list.length() div 2 
+      var mid set to list.length() div 2 
       set result to merge(mergeSort(list[..mid]), mergeSort(list[mid..]))
     end if
     return result
 end function
 
 function merge(a List<of String>, b List<of String>) as List<of String>
-    var result = new List<of String>()
+    var result set to new List<of String>()
     if a.isEmpty() then 
       set result to b 
     else if b.isEmpty() then

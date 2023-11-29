@@ -30,7 +30,7 @@ end main
         var code = @"#
 main
      call seedRandom(3)
-     var x = system.random()
+     var x set to system.random()
      print x
      set x to system.random()
      print x
@@ -71,7 +71,7 @@ public static class Program {
         var code = @"#
 main
      call seedRandom(3)
-     var x = system.random(1000.0)
+     var x set to system.random(1000.0)
      print x
      set x to system.random(1000.0)
      print x
@@ -112,7 +112,7 @@ public static class Program {
         var code = @"#
 main
      call seedRandom(3)
-     var x = system.random(100.0, 200.0)
+     var x set to system.random(100.0, 200.0)
      print x
      set x to system.random(100.0, 200.0)
      print x
@@ -153,7 +153,7 @@ public static class Program {
         var code = @"#
 main
      call seedRandom(3)
-     var x = system.random(6)
+     var x set to system.random(6)
      print x
      set x to system.random(6)
      print x
@@ -194,7 +194,7 @@ public static class Program {
         var code = @"#
 main
      call seedRandom(3)
-     var x = system.random(5,10)
+     var x set to system.random(5,10)
      print x
      set x to system.random(5,10)
      print x

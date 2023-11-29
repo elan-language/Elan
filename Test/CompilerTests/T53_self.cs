@@ -12,7 +12,7 @@ public class T53_self {
     public void Pass_DisambiguateParamAndProperty() {
         var code = @"#
 main
-    var x = new Foo(7)
+    var x set to new Foo(7)
     print x.p1
 end main
 
@@ -77,7 +77,7 @@ public static class Program {
     public void Pass_UsingSelfAsAnInstance() {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     print f.bar()
 end main
 
@@ -161,7 +161,7 @@ public static class Program {
     public void Fail_NoSuchProperty() {
         var code = @"#
 main
-    var x = new Foo(7)
+    var x set to new Foo(7)
     print x.p1
 end main
 
@@ -191,7 +191,7 @@ end class
     public void Fail_MissingSelfCausesCompileErrorDueToAssigningToParam() {
         var code = @"#
 main
-    var x = new Foo(7)
+    var x set to new Foo(7)
     print x.p1
 end main
 

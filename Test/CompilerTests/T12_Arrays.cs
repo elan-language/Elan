@@ -12,7 +12,7 @@ public class T12_Arrays {
     public void Pass_DeclareAnEmptyArrayBySizeAndCheckLength() {
         var code = @"
 main
-    var a = Array<of String>(3)
+    var a set to Array<of String>(3)
     print a.length()
 end main
 ";
@@ -48,7 +48,7 @@ public static class Program {
     public void Pass_ConfirmStringElementsInitializedToEmptyStringNotNull() {
         var code = @"
 main
-    var a = Array<of String>(3)
+    var a set to Array<of String>(3)
     print a[0].length()
     print a
 end main
@@ -86,7 +86,7 @@ public static class Program {
     public void Pass_SetAndReadElements() {
         var code = @"
 main
-    var a = Array<of String>(3)
+    var a set to Array<of String>(3)
     set a[0] to ""foo""
     set a[2] to ""yon""
     print a[0]
@@ -128,7 +128,7 @@ public static class Program {
     public void Pass_InitializeAnArrayFromAList() {
         var code = @"
 main
-    var a = {""foo"",""bar"",""yon""}.asArray()
+    var a set to {""foo"",""bar"",""yon""}.asArray()
     print a.length()
 end main
 ";
@@ -164,7 +164,7 @@ public static class Program {
     public void Pass_2DArray() {
         var code = @"
 main
-    var a = new Array<of String>(3,4)
+    var a set to new Array<of String>(3,4)
     set a[0,0] to ""foo""
     set a[2,3] to ""yon""
     print a[0,0]
@@ -210,8 +210,8 @@ public static class Program {
     public void Fail_UseRoundBracketsForIndex() {
         var code = @"
 main
-    var a = Array<of String>(3)
-    var b = a(0)
+    var a set to Array<of String>(3)
+    var b set to a(0)
 end main
 ";
         var parseTree = @"*";
@@ -226,8 +226,8 @@ end main
     public void Fail_ApplyIndexToANonIndexable() {
         var code = @"
 main
-    var a = 3
-    var b = a[0]
+    var a set to 3
+    var b set to a[0]
 end main
 ";
         var parseTree = @"*";
@@ -242,7 +242,7 @@ end main
     public void Fail_2DArrayCreatedByDoubleIndex() {
         var code = @"
 main
-    var a = Array<of String>[3][4]
+    var a set to Array<of String>[3][4]
     print a[0,0]
     print a[2,3]
 end main
@@ -256,7 +256,7 @@ end main
     public void Fail_1DArrayAccessedAs2D() {
         var code = @"
 main
-    var a = Array<of String>(3)
+    var a set to Array<of String>(3)
     set a[0,0] to ""foo""
 end main
 ";
@@ -274,8 +274,8 @@ end main
     public void Fail_OutOfRange() {
         var code = @"
 main
-    var a = Array<of String>(3)
-    var b = a[3]
+    var a set to Array<of String>(3)
+    var b set to a[3]
 end main
 ";
 
@@ -310,7 +310,7 @@ public static class Program {
     public void Fail_TypeIncompatibility() {
         var code = @"
 main
-    var a = Array<of String>(3)
+    var a set to Array<of String>(3)
     set a[0] to true
 end main
 ";
@@ -328,7 +328,7 @@ end main
     public void Fail_SizeNotSpecified() {
         var code = @"
 main
-    var a = Array<of String>()
+    var a set to Array<of String>()
 end main
 ";
 
@@ -344,7 +344,7 @@ end main
     public void Fail_SizeSpecifiedInSquareBrackets() {
         var code = @"
 main
-    var a = Array<of String>[3]
+    var a set to Array<of String>[3]
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -355,7 +355,7 @@ end main
     public void Fail_SpecifySizeAndInitializer() {
         var code = @"
 main
-    var a = Array<of String>(3) {""foo"",""bar"",""yon""}
+    var a set to Array<of String>(3) {""foo"",""bar"",""yon""}
 end main
 ";
 
@@ -367,7 +367,7 @@ end main
     public void Fail_SpecifyWithoutSizeOrInitializer() {
         var code = @"
 main
-    var a = Array<of String>()
+    var a set to Array<of String>()
 end main
 ";
         var parseTree = @"*";

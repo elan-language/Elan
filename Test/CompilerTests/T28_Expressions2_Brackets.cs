@@ -12,9 +12,9 @@ public class T28_Expressions2_Brackets {
     public void Pass_BracketsChangeOperatorEvaluation() {
         var code = @"#
 main
-  var x = 2 + 3 * 5 + 1
-  var y = (2 + 3) * 5 + 1
-  var z = (2 + 3) * (5 + 1)
+  var x set to 2 + 3 * 5 + 1
+  var y set to (2 + 3) * 5 + 1
+  var z set to (2 + 3) * (5 + 1)
   print x
   print y
   print z
@@ -56,9 +56,9 @@ public static class Program {
     public void Pass_RedundantBracketsIgnored() {
         var code = @"#
 main
-  var x = 2 + (3 * 5) + 1
-  var y = ((2 + 3)) * 5 + (1)
-  var z = ((2 + 3) * (5 + 1))
+  var x set to 2 + (3 * 5) + 1
+  var y set to ((2 + 3)) * 5 + (1)
+  var z set to ((2 + 3) * (5 + 1))
   print x
   print y
   print z
@@ -100,8 +100,8 @@ public static class Program {
     public void Pass_PowerHasHigherPrecedenceThatMultiply() {
         var code = @"#
 main
-  var x = 2 + 3 ^ 2
-  var y = (2 + 3) ^ 2
+  var x set to 2 + 3 ^ 2
+  var y set to (2 + 3) ^ 2
   print x
   print y
 end main
@@ -140,8 +140,8 @@ public static class Program {
     public void Pass_PowerHasHigherPrecedenceThanFloatDivision() {
         var code = @"#
 main
-  var x = 16.0 / 2 ^ 3
-  var y = (16.0/2) ^ 3
+  var x set to 16.0 / 2 ^ 3
+  var y set to (16.0/2) ^ 3
   print x
   print y
 end main
@@ -181,8 +181,8 @@ public static class Program {
         //Point of this test is that dividing an integer by an integer is implemented a funciton, not an operator, in C#
         var code = @"#
 main
-  var x = 16 / 2 ^ 3
-  var y = (16/2) ^ 3
+  var x set to 16 / 2 ^ 3
+  var y set to (16/2) ^ 3
   print x
   print y
 end main
@@ -221,8 +221,8 @@ public static class Program {
     public void Pass_MinusAsAUnaryOperator() {
         var code = @"#
 main
-  var x = - 4.7
-  var y = 5 * -3
+  var x set to - 4.7
+  var y set to 5 * -3
   print x
   print y
 end main
@@ -261,8 +261,8 @@ public static class Program {
     public void Pass_OperatorPrecedenceForMod() {
         var code = @"#
 main
-    var x = 11 mod 3
-    var y = 5 + 6 mod 3
+    var x set to 11 mod 3
+    var y set to 5 + 6 mod 3
     print x
     print y
 end main
@@ -300,8 +300,8 @@ public static class Program {
     public void Pass_OperatorPrecedenceForDiv() {
         var code = @"#
 main
-    var x = 11 div 3
-    var y = 5 + 6 div 3
+    var x set to 11 div 3
+    var y set to 5 + 6 div 3
     print x
     print y
 end main
@@ -343,7 +343,7 @@ public static class Program {
     public void Fail_PlusIsNotUnary() {
         var code = @"#
     main
-      var a = 3 * + 4
+      var a set to 3 * + 4
     end main
     ";
 
@@ -355,7 +355,7 @@ public static class Program {
     public void Fail_MultiplyAfterMinus() {
         var code = @"#
     main
-      var a = 3 - * 4
+      var a set to 3 - * 4
     end main
     ";
 

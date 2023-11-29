@@ -12,8 +12,8 @@ public class T13_StringManipulation {
     public void Pass_AppendStrings() {
         var code = @"
 main
-    var a = ""Hello""
-    var b = ""World!""
+    var a set to ""Hello""
+    var b set to ""World!""
     print a + "" ""+ b
 end main
 ";
@@ -118,7 +118,7 @@ public static class Program {
     public void Pass_Indexing() {
         var code = @"
 main
-    var a = ""abcde""
+    var a set to ""abcde""
     print a[2]
 end main
 ";
@@ -154,7 +154,7 @@ public static class Program {
     public void Pass_Ranges() {
         var code = @"
 main
-    var a = ""abcde""
+    var a set to ""abcde""
     print a[1..3]
     print a[2..]
     print a[..2]
@@ -284,7 +284,7 @@ public static class Program {
     public void Pass_UseAsStringExplicitly() {
         var code = @"
 main
-    var a = ""abcde""
+    var a set to ""abcde""
     set a to (2.1 + 3.4).asString()
     print a
 end main
@@ -322,9 +322,9 @@ public static class Program {
     public void Pass_Interpolation() {
         var code = @"
 main
-    var a = 3
-    var b = 4
-    var c = ""{a} x {b} = {a * b}""
+    var a set to 3
+    var b set to 4
+    var c set to ""{a} x {b} = {a * b}""
     print c
 end main
 ";
@@ -362,9 +362,9 @@ public static class Program {
     public void Pass_UseBracesInString() {
         var code = @"
 main
-    var a = 3
-    var b = 4
-    var c = ""{{{a} x {b}}} = {a * b}""
+    var a set to 3
+    var b set to 4
+    var c set to ""{{{a} x {b}}} = {a * b}""
     print c
 end main
 ";
@@ -402,7 +402,7 @@ public static class Program {
     public void Pass_literalNewline() {
         var code = @"
 main
-    var c = ""Hello
+    var c set to ""Hello
  World!""
     print c
 end main
@@ -440,7 +440,7 @@ public static class Program {
     public void Pass_newLineConstant() {
         var code = @"
 main
-    var c = ""Hello ""+ newline + ""World!""
+    var c set to ""Hello ""+ newline + ""World!""
     print c
 end main
 ";
@@ -476,7 +476,7 @@ public static class Program {
     public void Pass_AppendStringToNumber() {
         var code = @"
 main
-    var a = 3.1 + ""Hello""
+    var a set to 3.1 + ""Hello""
     print a
 end main
 ";
@@ -516,7 +516,7 @@ public static class Program {
     public void Fail_IndexOutOfRange() {
         var code = @"
 main
-    var a = ""abcde""
+    var a set to ""abcde""
     print a[5]
 end main
 ";
@@ -593,7 +593,7 @@ public static class Program {
     public void Fail_CoerceNumberToString() {
         var code = @"
 main
-    var a = ""abcde""
+    var a set to ""abcde""
     set a to 2.1 + 3.4
     print a
 end main

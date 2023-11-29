@@ -11,10 +11,10 @@ public class T78_identifiersMustBeUniqueIgnoringCase {
     [TestMethod]
     public void Pass_SameVariableNameInDifferentScope() {
         var code = @"
-constant id = 1
+constant id set to 1
 
 main
-    var id = 2
+    var id set to 2
     print id
 end main
 ";
@@ -49,7 +49,7 @@ public static class Program {
     public void Pass_CanUseCSharpKeywordWithDifferentCase() {
         var code = @"#
 main
-    var bReak = 1
+    var bReak set to 1
     print bReak
 end main
 ";
@@ -85,7 +85,7 @@ public static class Program {
     public void Pass_CanHaveIdentiferSameAsTypeExceptCase() {
         var code = @"#
 main
-    var foo = new Foo()
+    var foo set to new Foo()
     print foo
 end main
 class Foo
@@ -149,8 +149,8 @@ public static class Program {
     public void Fail_DeclareSameVarNameWithDifferentCase() {
         var code = @"
 main
-    var fOO = 1
-    var foo = 1
+    var fOO set to 1
+    var foo set to 1
 end main
 ";
         var parseTree = @"*";
@@ -165,7 +165,7 @@ end main
     public void Fail_ElanKeywordWithChangedCase() {
         var code = @"
 main
-    var pRocedure = 1
+    var pRocedure set to 1
 end main
 ";
         var parseTree = @"*";
@@ -200,8 +200,8 @@ end class
     public void Fail_CSharpKeywordWithCorrectCaseIfAlteredCaseAlreadyUsed() {
         var code = @"
 main
-    var bReak = 1
-    var break = 1
+    var bReak set to 1
+    var break set to 1
 end main
 ";
         var parseTree = @"*";
@@ -216,8 +216,8 @@ end main
     public void Fail_SameVariableNameInScope() {
         var code = @"
 main
-    var id = 1
-    var id = 1
+    var id set to 1
+    var id set to 1
 end main
 ";
         var parseTree = @"*";

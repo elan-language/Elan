@@ -120,6 +120,18 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitPrintStatement([NotNull] ElanParser.PrintStatementContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.input"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterInput([NotNull] ElanParser.InputContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.input"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitInput([NotNull] ElanParser.InputContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.varDef"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -203,6 +215,18 @@ public partial class ElanBaseListener : IElanListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitSystemCall([NotNull] ElanParser.SystemCallContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.argument"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterArgument([NotNull] ElanParser.ArgumentContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.argument"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitArgument([NotNull] ElanParser.ArgumentContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.argumentList"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -1007,6 +1031,18 @@ public partial class ElanBaseListener : IElanListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitTupleType([NotNull] ElanParser.TupleTypeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.typeList"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterTypeList([NotNull] ElanParser.TypeListContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.typeList"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitTypeList([NotNull] ElanParser.TypeListContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.funcType"/>.
 	/// <para>The default implementation does nothing.</para>

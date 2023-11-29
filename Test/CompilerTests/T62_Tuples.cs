@@ -12,7 +12,7 @@ public class T62_Tuples {
     public void Pass_CreatingTuplesAndReadingContents() {
         var code = @"#
 main
-    var x = (3,""Apple"")
+    var x set to (3,""Apple"")
     print x
     print x[0]
     print x[1]
@@ -52,7 +52,7 @@ public static class Program {
     public void Pass_FunctionReturnsTuple() {
         var code = @"#
 main
-    var x = f()
+    var x set to f()
     print x
     print x[0]
     print x[1]
@@ -98,9 +98,9 @@ public static class Program {
     public void Pass_DeconstructIntoExistingVariables() {
         var code = @"#
 main
-    var x = (3,""Apple"")
-    var y = 0
-    var z = """"
+    var x set to (3,""Apple"")
+    var y set to 0
+    var z set to """"
     set (y, z) to x
     print y
     print z
@@ -142,8 +142,8 @@ public static class Program {
     public void Pass_DeconstructIntoNewVariables() {
         var code = @"#
 main
-    var x = (3,""Apple"")
-    var (y, z) = x
+    var x set to (3,""Apple"")
+    var (y, z) set to x
     print y
     print z
 end main
@@ -181,7 +181,7 @@ public static class Program {
     public void Pass_AssignANewTupleOfSameType() {
         var code = @"#
 main
-    var x = (3,""Apple"")
+    var x set to (3,""Apple"")
     set x to (4,""Pear"")
     print x
 end main
@@ -223,7 +223,7 @@ public static class Program {
     public void Fail_OutOfRangeError() {
         var code = @"#
 main
-    var x = (3,""Apple"")
+    var x set to (3,""Apple"")
     print x[2]
 end main
 ";
@@ -258,8 +258,8 @@ public static class Program {
     public void Fail_AssignItemToWrongType() {
         var code = @"#
 main
-    var x = (3,""Apple"")
-    var y = 4
+    var x set to (3,""Apple"")
+    var y set to 4
     set y to x[1]
 end main
 ";
@@ -276,7 +276,7 @@ end main
     public void Fail_ImmutableSoCannotAssignAnItem() {
         var code = @"#
 main
-    var x = (3,""Apple"")
+    var x set to (3,""Apple"")
     set x[0] to 4
 end main
 ";
@@ -292,9 +292,9 @@ end main
     public void Fail_DeconstructIntoWrongType() {
         var code = @"#
 main
-    var x = (3,""Apple"")
-    var y = 0
-    var z = """"
+    var x set to (3,""Apple"")
+    var y set to 0
+    var z set to """"
     set (z, y) to x
     print y
     print z
@@ -313,8 +313,8 @@ end main
     public void Fail_DeconstructIntoMixed1() {
         var code = @"#
 main
-    var x = (3,""Apple"")
-    var z = """"
+    var x set to (3,""Apple"")
+    var z set to """"
     set (z, y) to x
     print y
     print z
@@ -333,9 +333,9 @@ end main
     public void Fail_DeconstructIntoMixed2() {
         var code = @"#
 main
-    var x = (3,""Apple"")
-    var z = """"
-    var (z, y) = x
+    var x set to (3,""Apple"")
+    var z set to """"
+    var (z, y) set to x
     print y
     print z
 end main
@@ -352,7 +352,7 @@ end main
     public void Pass_AssignANewTupleOfWrongType() {
         var code = @"#
 main
-    var x = (3,""Apple"")
+    var x set to (3,""Apple"")
     set x to (""4"",""Pear"")
     print x
 end main

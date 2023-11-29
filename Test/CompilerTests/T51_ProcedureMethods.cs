@@ -18,7 +18,7 @@ public class T51_ProcedureMethods {
     {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     print f.p1
     call f.setP1(7)
     print f.p1
@@ -92,7 +92,7 @@ public static class Program {
     {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     call f.display()
 end main
 
@@ -166,7 +166,7 @@ public static class Program {
     {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     call f.setP1(7)
 end main
 
@@ -247,7 +247,7 @@ public static class Program {
     public void Fail_ProcedureMethodCannotBeCalledDirectly() {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     call display(f)
 end main
 
@@ -280,7 +280,7 @@ end class
     public void Fail_CallUnknownMethodOnInstance() {
         var code = @"#
 main
-    var x = new Foo()
+    var x set to new Foo()
     call x.calculate()
 end main
 

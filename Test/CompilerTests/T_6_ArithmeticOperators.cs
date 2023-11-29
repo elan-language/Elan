@@ -114,7 +114,7 @@ public static class Program {
     public void Pass_IncludeVariable() {
         var code = @"
 main
-  var a = 3
+  var a set to 3
   print a + 4
 end main
 ";
@@ -286,7 +286,7 @@ public static class Program {
     public void Pass_UseVariableBothSides() {
         var code = @"
 main
-  var a = 3
+  var a set to 3
   set a to a + 1
   print a
 end main
