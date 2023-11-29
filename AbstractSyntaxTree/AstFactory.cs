@@ -65,6 +65,7 @@ public static class AstFactory {
             TryContext c => visitor.Build(c),
             EnumDefContext c => visitor.Build(c),
             EnumTypeContext c => visitor.Build(c),
+            TupleTypeContext c => visitor.Build(c),
             EnumValueContext c => visitor.Build(c),
             ClassDefContext c => visitor.Build(c),
             ImmutableClassContext c => visitor.Build(c),
@@ -84,6 +85,7 @@ public static class AstFactory {
             ArgumentContext c => visitor.Build(c),
             LambdaContext c => visitor.Build(c),
             ListDecompContext c => visitor.Build(c),
+            TupleDefinitionContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context.GetType().FullName ?? null)
         };
@@ -570,6 +572,10 @@ public static class AstFactory {
             return visitor.Visit(ft);
         }
 
+        if (context.tupleType() is { } tt) {
+            return visitor.Visit(tt);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -602,6 +608,10 @@ public static class AstFactory {
 
         if (context.listDefinition() is { } ld) {
             return visitor.Visit(ld);
+        }
+
+        if (context.tupleDefinition() is { } td) {
+            return visitor.Visit(td);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -864,6 +874,12 @@ public static class AstFactory {
         return new FuncTypeNode(inputTypes.ToImmutableArray(), returnType);
     }
 
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TupleTypeContext context) {
+        var inputTypes = context.type().Select(visitor.Visit);
+
+        return new TupleTypeNode(inputTypes.ToImmutableArray());
+    }
+
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ArgumentContext context) {
         if (context.expression() is { } e) {
             return visitor.Visit(e);
@@ -881,5 +897,11 @@ public static class AstFactory {
         var expr = visitor.Visit(context.expression());
 
         return new LambdaDefNode(arguments.ToImmutableArray(), expr);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TupleDefinitionContext context) {
+        var expression = context.expression().Select(visitor.Visit);
+
+        return new TupleDefNode(expression.ToImmutableArray());
     }
 }

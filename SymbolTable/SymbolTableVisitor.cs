@@ -199,7 +199,8 @@ public class SymbolTableVisitor {
             FuncTypeNode fn => new FuncSymbolType(),
             MethodSignatureNode { ReturnType: not null } msn => MapNodeToSymbolType(msn.ReturnType),
             InputNode => StringSymbolType.Instance,
-            _ => throw new NotImplementedException()
+            TupleTypeNode => new TupleSymbolType(),
+            _ => throw new NotImplementedException(node.GetType().ToString())
         };
     }
 
