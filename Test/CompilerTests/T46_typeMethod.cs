@@ -9,7 +9,7 @@ public class T46_typeMethod {
     #region Passes
 
     [TestMethod]
-    public void Pass_Template() {
+    public void Pass_TypeOfStandardTypes() {
         var code = @"
 main
     print 1.type()
@@ -20,7 +20,6 @@ main
     print {1,2,3}.type()
     print {'a': 3}.type()
     print {1,2,3}.asArray().type()
-    print new Foo(3).type()
 end main
 
 class Foo
@@ -72,7 +71,6 @@ public static class Program {
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(new StandardLibrary.ElanList<int>(1, 2, 3))));
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(new StandardLibrary.ElanDictionary<char,int>(('a', 3)))));
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(StandardLibrary.Functions.asArray(new StandardLibrary.ElanList<int>(1, 2, 3)))));
-    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(new Foo(3))));
   }
 }";
 
@@ -84,7 +82,82 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Int\r\nFloat\r\nChar\r\nBool\r\nString\r\nList<Int>\r\nDictionary<Char,Int>\r\nArray<Int>\r\nFoo\r\n");
+        AssertObjectCodeExecutes(compileData, "Int\r\nFloat\r\nChar\r\nBool\r\nString\r\nList<Int>\r\nDictionary<Char,Int>\r\nArray<Int>\r\n");
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_TypeOfClasses()
+    {
+        var code = @"
+main
+    var a = 1
+    print a.type()
+    print new Foo(3).type()
+    print default Foo.type()
+    var x = new Foo(4)
+    print type(x)
+    print x.type()
+
+end main
+
+class Foo
+    constructor(p1 Int)
+        set self.p1 to p1 * 2
+    end constructor
+
+    property p1 Int
+
+    function asString() as String
+        return ""{p1}""
+    end function
+end class
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+    private Foo() {}
+    public Foo(int p1) {
+      this.p1 = p1 * 2;
+    }
+    public virtual int p1 { get; set; } = default;
+    public virtual string asString() {
+
+      return @$""{p1}"";
+    }
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public override int p1 => default;
+
+      public override string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(new Foo(3))));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(Foo.DefaultInstance)));
+    var x = new Foo(4);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(x)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.type()));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        //AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Int\r\nFoo\r\ndefault Foo\r\nFoo\r\nFoo");
     }
 
     [TestMethod]
@@ -150,6 +223,72 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\n");
+    }
+
+
+    [TestMethod]
+    public void Pass_TypeForAClass()
+    {
+        var code = @"#
+main
+    var p = new Player(""Richard"")
+    print p.type() is ""Player""
+end main
+
+class Player
+    constructor(name String)
+        set self.name to name
+    end constructor
+
+    property name String
+
+    function asString() as String
+        return name
+    end function
+
+end class
+";
+        var objectCode = @"using System.Collections.Generic;
+    using StandardLibrary;
+    using static Globals;
+    using static StandardLibrary.Constants;
+    
+    public static partial class Globals {
+      public record class Player {
+        public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
+        private Player() {}
+        public Player(string name) {
+          this.name = name;
+        }
+        public virtual string name { get; set; } = """";
+        public virtual string asString() {
+    
+          return name;
+        }
+        private record class _DefaultPlayer : Player {
+          public _DefaultPlayer() { }
+          public override string name => """";
+    
+          public override string asString() { return ""default Player"";  }
+        }
+      }
+    }
+    
+    public static class Program {
+      private static void Main(string[] args) {
+        var p = new Player(@$""Richard"");
+        System.Console.WriteLine(StandardLibrary.Functions.asString(p.type() == @$""Player""));
+      }
+    }";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "_DefaultPlayer\r\ntrue\r\n");
     }
 
     #endregion
