@@ -12,7 +12,7 @@ public class T16_SwitchCase {
     public void Pass_Minimal() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch i
         case 1
             print 'a'
@@ -70,7 +70,7 @@ public static class Program {
     public void Pass_BracketsIgnored() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch (i)
         case 1
             print 'a'
@@ -129,7 +129,7 @@ public static class Program {
     public void Pass_DefaultIsUsed() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch i
         case 1
             print 'a'
@@ -179,7 +179,7 @@ public static class Program {
     public void Pass_SwitchOnExpression() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch i + 1
         case 1
             print 'a'
@@ -238,7 +238,7 @@ public static class Program {
     public void Fail_NoDefault() {
         var code = @"
 main
-  for i = 1 to 4
+  for i from 1 to 4
       switch i
         case 1
             print 'a'
@@ -259,7 +259,7 @@ end main
     public void Fail_NoCase() {
         var code = @"
 main
-  for i = 1 to 4
+  for i from 1 to 4
       switch i
         default
             print 'a' 
@@ -276,7 +276,7 @@ end main
     public void Fail_IncompatibleCaseType() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch i
         case 1
             print 'a'
@@ -303,8 +303,8 @@ end main
     public void Fail_UseOfVariableForCase() {
         var code = @"
 main
-  var a = 2
-  for i = 1 to 3
+  var a set to 2
+  for i from 1 to 3
       switch i
         case 1
             print 'a'
@@ -324,7 +324,7 @@ end main
     public void Fail_UseOfExpression() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch i
         case 1
             print 'a'
@@ -345,7 +345,7 @@ end main
     public void Fail_CaseAfterDefault() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch i
         case 1
             print 'a'
@@ -366,7 +366,7 @@ end main
     public void Fail_WithColons() {
         var code = @"
 main
-  for i = 1 to 4
+  for i from 1 to 4
       switch i
         case 1:
             print 'a'
@@ -386,7 +386,7 @@ end main
     public void Fail_actionOnSameLineAsCase() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch i
         case 1 System.Console.WriteLine(StandardLibrary.Functions.asString('a'))
         case 2 System.Console.WriteLine(StandardLibrary.Functions.asString('b'))       
@@ -402,7 +402,7 @@ end main
     public void Fail_missingExpression() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch
         case 1 
             print 'a'
@@ -420,7 +420,7 @@ end main
     public void Fail_caseValueMissing() {
         var code = @"
 main
-  for i = 1 to 3
+  for i from 1 to 3
       switch
         case
             print 'a'

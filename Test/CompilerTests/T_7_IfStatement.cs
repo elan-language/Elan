@@ -11,7 +11,7 @@ public class T_7_IfStatement {
     public void Pass1() {
         var code = @"#
 main
-  var a = true
+  var a set to true
   if a then
     print ""yes""
   else
@@ -56,7 +56,7 @@ public static class Program {
     public void Pass2() {
         var code = @"#
 main
-  var a = false
+  var a set to false
   if a then
     print ""yes""
   else
@@ -101,7 +101,7 @@ public static class Program {
     public void Pass3() {
         var code = @"#
 main
-  var a = 2
+  var a set to 2
   if a is 1 then
     print ""one""
   else if a is 2 then
@@ -151,7 +151,7 @@ public static class Program {
     public void Pass4() {
         var code = @"#
 main
-  var a = 3
+  var a set to 3
   if a is 1 then
     print ""one""
   else if a is 2 then
@@ -201,7 +201,7 @@ public static class Program {
     public void Pass5() {
         var code = @"#
 main
-  var a = true
+  var a set to true
   if a then
     print ""yes""
   end if
@@ -241,7 +241,7 @@ public static class Program {
     public void Pass6() {
         var code = @"#
 main
-  var a = 3
+  var a set to 3
   if a is 1 then
     print ""one""
   else if a is 2 then

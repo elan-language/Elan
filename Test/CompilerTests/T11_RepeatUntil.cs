@@ -10,7 +10,7 @@ public class T11_RepeatUntil {
     public void Pass_minimal() {
         var code = @"
 main
-   var x = 0
+   var x set to 0
    repeat
      set x to x + 1
    until  x >= 10
@@ -52,10 +52,10 @@ public static class Program {
     public void Pass_innerLoop() {
         var code = @"
 main
-   var t = 0
-   var x = 0
+   var t set to 0
+   var x set to 0
    repeat
-    var y = 0
+    var y set to 0
        repeat
          set y to y + 1
          set t to t + 1
@@ -119,7 +119,7 @@ end main
     public void Fail_variableRedeclaredInTest() {
         var code = @"
 main
-    var x = 0
+    var x set to 0
     repeat
       set x to x + 1
    until var x >= 10
@@ -134,7 +134,7 @@ end main
         var code = @"
 main
    repeat
-     var x = x + 1
+     var x set to x + 1
    until  x >= 10
 end main
 ";
@@ -149,7 +149,7 @@ end main
     public void Fail_testPutOnRepeat() {
         var code = @"
 main
-    var x = 0
+    var x set to 0
     repeat x >= 10
       set x to x + 1
     until 
@@ -164,7 +164,7 @@ end main
     public void Fail_noCondition() {
         var code = @"
 main
-    var x = 0
+    var x set to 0
     repeat
       set x to x + 1
     until 
@@ -178,7 +178,7 @@ end main
     public void Fail_invalidCondition() {
         var code = @"
 main
-    var x = 0
+    var x set to 0
     repeat
       set x to x + 1
     until >= 10

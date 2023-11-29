@@ -12,7 +12,7 @@ public class T34_ConcreteClasses {
     public void Pass_Class_SimpleInstantiation_PropertyAccess_Methods() {
         var code = @"#
 main
-    var x = new Foo()
+    var x set to new Foo()
     print x.p1
     print x.p2
     print x.asString()
@@ -85,7 +85,7 @@ public static class Program {
     public void Pass_ConstructorWithParm() {
         var code = @"#
 main
-    var x = new Foo(7, ""Apple"")
+    var x set to new Foo(7, ""Apple"")
     print x.p1
     print x.p2
 end main
@@ -180,7 +180,7 @@ end class
         var code = @"#
 class Foo
 
-    property p1 Int = 3
+    property p1 Int set to 3
     property p2 String
    
     function asString() as String
@@ -197,7 +197,7 @@ end class
     public void Fail_AttemptToModifyAPropertyDirectly() {
         var code = @"#
 main
-    var x = new Foo()
+    var x set to new Foo()
     set x.p1 to 3
 end main
 
@@ -245,7 +245,7 @@ end class
     public void Fail_InstantiateWithoutRequiredArgs() {
         var code = @"#
 main
-    var x = new Foo()
+    var x set to new Foo()
 end main
 
 class Foo
@@ -274,7 +274,7 @@ end class
     public void Fail_InstantiateWithWrongArgType() {
         var code = @"#
 main
-    var x = new Foo(7.1)
+    var x set to new Foo(7.1)
 end main
 
 class Foo
@@ -303,7 +303,7 @@ end class
     public void Fail_SupplyingArgumentNotSpecified() {
         var code = @"#
 main
-    var x = new Foo(7)
+    var x set to new Foo(7)
 end main
 
 class Foo
@@ -334,7 +334,7 @@ end class
     {
         var code = @"#
 main
-    var x = Foo()
+    var x set to Foo()
     print x.p1
     print x.p2
     print x.asString()

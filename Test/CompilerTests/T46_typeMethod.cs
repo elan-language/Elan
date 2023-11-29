@@ -90,11 +90,11 @@ public static class Program {
     {
         var code = @"
 main
-    var a = 1
+    var a set to 1
     print a.type()
     print new Foo(3).type()
     print default Foo.type()
-    var x = new Foo(4)
+    var x set to new Foo(4)
     print type(x)
     print x.type()
 
@@ -225,13 +225,12 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\n");
     }
 
-
     [TestMethod, Ignore]
     public void Pass_TypeForAClass()
     {
         var code = @"#
 main
-    var p = new Player(""Richard"")
+    var p set to new Player(""Richard"")
     print p.type() is ""Player""
 end main
 
@@ -290,7 +289,6 @@ end class
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "_DefaultPlayer\r\ntrue\r\n");
     }
-
     #endregion
 
     #region Fails

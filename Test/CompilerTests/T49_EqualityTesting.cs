@@ -18,9 +18,9 @@ public class T49_EqualityTesting {
     public void Pass_DifferentInstancesWithSameValuesAreEqual() {
         var code = @"#
 main
-    var x = new Foo(7, ""Apple"")
-    var y = new Foo(7, ""Orange"")
-    var z = new Foo(7, ""Orange"")
+    var x set to new Foo(7, ""Apple"")
+    var y set to new Foo(7, ""Orange"")
+    var z set to new Foo(7, ""Orange"")
     print x is x
     print x is y
     print y is z
@@ -101,7 +101,7 @@ public static class Program {
     public void Pass_EmptyDoesNotEqualDefault() {
         var code = @"#
 main
-    var x = new Foo()
+    var x set to new Foo()
     print x is default Foo
 end main
 
@@ -173,8 +173,8 @@ public static class Program {
     public void Pass_DifferentInstancesWithSameLambdaValuesAreEqual() {
         var code = @"#
 main
-    var x = new Foo()
-    var y = new Foo()
+    var x set to new Foo()
+    var y set to new Foo()
     print x is x
     print x is y
     print x is default Foo
@@ -240,10 +240,10 @@ public static class Program {
     public void Pass_ActuallyTheSameReference() {
         var code = @"#
 main
-    var x = new Foo(7, ""Apple"")
-    var y = x
+    var x set to new Foo(7, ""Apple"")
+    var y set to x
     call y.setP1(3)
-    var z = new Foo(8, ""Orange"")
+    var z set to new Foo(8, ""Orange"")
     print x is x
     print x is y
     print x is z
@@ -326,9 +326,9 @@ public static class Program {
     public void Pass_StringEquality() {
         var code = @"#
 main
-    var x = ""Apple""
-    var y = ""Apple""
-    var z = ""apple""
+    var x set to ""Apple""
+    var y set to ""Apple""
+    var z set to ""apple""
     print x is y
     print x is z
 end main
@@ -367,9 +367,9 @@ public static class Program {
     public void Pass_ListEquality() {
         var code = @"#
 main
-    var x = {3,4,5}
-    var y = {3,4,5}
-    var z = {4,3,5}
+    var x set to {3,4,5}
+    var y set to {3,4,5}
+    var z set to {4,3,5}
     print x is y
     print x is z
 end main
@@ -408,10 +408,10 @@ public static class Program {
     public void Pass_ArrayEquality() {
         var code = @"#
 main
-    var x = {3,4,5}.asArray()
-    var y = {3,4,5}.asArray()
-    var z = {4,3,5}.asArray()
-    var w = {3,4,5}
+    var x set to {3,4,5}.asArray()
+    var y set to {3,4,5}.asArray()
+    var z set to {4,3,5}.asArray()
+    var w set to {3,4,5}
     print x is y
     print x is z
     print x is w
@@ -453,11 +453,11 @@ public static class Program {
     public void Pass_DictionaryEquality() {
         var code = @"#
 main
-    var x = {'a':3,'b':4,'c':5}
-    var y = {'a':3,'b':4,'c':5}
-    var z = {'b':4,'c':5,'a':3}
-    var w = {'a':3,'b':6,'c':5}
-    var v = {""b"":4,""c"":5,""a"":3}
+    var x set to {'a':3,'b':4,'c':5}
+    var y set to {'a':3,'b':4,'c':5}
+    var z set to {'b':4,'c':5,'a':3}
+    var w set to {'a':3,'b':6,'c':5}
+    var v set to {""b"":4,""c"":5,""a"":3}
     print x is y
     print x is z
     print x is w

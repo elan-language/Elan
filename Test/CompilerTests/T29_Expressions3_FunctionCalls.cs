@@ -46,7 +46,7 @@ public static class Program {
     public void Pass_SingleFunctionCall() {
         var code = @"#
 main
-  var x = sin(pi/180*30)
+  var x set to sin(pi/180*30)
   print x
 end main
 ";
@@ -82,8 +82,8 @@ public static class Program {
     public void Pass_DotSyntax() {
         var code = @"#
 main
-  var x =  pi/180*30
-  var y = x.sin()
+  var x set to  pi/180*30
+  var y set to x.sin()
   print y
 end main
 ";
@@ -120,8 +120,8 @@ public static class Program {
     public void Pass_DotSyntaxFunctionEvaluationHasPrecedenceOverOperators() {
         var code = @"#
 main
-  var x =  pi/180*30
-  var y = 2 + x.sin()
+  var x set to  pi/180*30
+  var y set to 2 + x.sin()
   print y
 end main
 ";
@@ -158,8 +158,8 @@ public static class Program {
     public void Pass_MoreComplexExpression() {
         var code = @"#
 main
-  var x = 0.7
-  var y = sin(x) ^ 2 + cos(x) ^ 2
+  var x set to 0.7
+  var y set to sin(x) ^ 2 + cos(x) ^ 2
   print y
 end main
 ";
@@ -196,7 +196,7 @@ public static class Program {
     public void Pass_MultiParamCall() {
         var code = @"#
 main
-  var x = min(3.1, 3)
+  var x set to min(3.1, 3)
   print x
 end main
 ";
@@ -231,7 +231,7 @@ public static class Program {
     public void Pass_MultiParamCallUsingDotSyntax() {
         var code = @"#
 main
-  var x = 3.max(3.1)
+  var x set to 3.max(3.1)
   print x
 end main
 ";
@@ -270,7 +270,7 @@ public static class Program {
     public void Fail_IncorrectType() {
         var code = @"#
 main
-  var x = ""hello"".max(""world"")
+  var x set to ""hello"".max(""world"")
 end main
 ";
 
@@ -311,7 +311,7 @@ end main
     public void Fail_UnconsumedExpressionResult3() {
         var code = @"#
     main
-      var a = 1
+      var a set to 1
       call a.sin()
     end main
     ";

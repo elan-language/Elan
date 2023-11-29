@@ -46,7 +46,7 @@ public static class Program {
     public void Pass_ThrowExceptionInMainUsingVariableForMessage() {
         var code = @"
 main
-    var msg = ""Foo""
+    var msg set to ""Foo""
     throw msg
 end main
 ";
@@ -82,7 +82,7 @@ public static class Program {
     public void Pass_ThrowExceptionUsingInterpolatedStringForMessage() {
         var code = @"
 main
-    var bar = 1
+    var bar set to 1
     throw ""{bar}""
 end main
 ";
@@ -210,9 +210,9 @@ public static class Program {
         var code = @"
 main
   try
-    var x = 1
-    var y = 0
-    var z = x div y
+    var x set to 1
+    var y set to 0
+    var z set to x div y
     print @$""not caught"";
   catch e
     print e
@@ -315,7 +315,7 @@ public static class Program {
     public void Fail_ThrowExceptionInFunction() {
         var code = @"
 main
-   var s = foo()
+   var s set to foo()
 end main
 
 function foo(x String) as String
@@ -354,7 +354,7 @@ end procedure
     public void Fail_UseExpressionForMessage() {
         var code = @"
 main
-    var msg = ""Foo""
+    var msg set to ""Foo""
     throw msg + bar
 end main
 ";

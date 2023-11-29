@@ -11,9 +11,9 @@ public class T59_Global {
     [TestMethod]
     public void Pass_DisambiguateConstantFromLocalVariable() {
         var code = @"#
-constant a = 4
+constant a set to 4
 main
-  var a = 3
+  var a set to 3
   print global.a
 end main
 ";
@@ -47,10 +47,10 @@ public static class Program {
     [TestMethod]
     public void Pass_DisambiguateConstantFromInstanceProperty() {
         var code = @"#
-constant a = 4
+constant a set to 4
 
 main
-    var f = new Foo()
+    var f set to new Foo()
     print f.prop()
     print f.cons()
 end main
@@ -134,7 +134,7 @@ public static class Program {
     public void Pass_DisambiguateGlobalFunctionFromInstanceFunction() {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     print f.loc()
     print f.glob()
 end main
@@ -233,9 +233,9 @@ public static class Program {
     [TestMethod]
     public void Fail_NoSuchGlobal() {
         var code = @"#
-constant b = 4
+constant b set to 4
 main
-  var a = 3
+  var a set to 3
   print global.a
 end main
 ";
@@ -253,7 +253,7 @@ end main
     public void Fail_NoSuchGlobalConstant() {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     print f.prop()
     print f.cons()
 end main
@@ -291,7 +291,7 @@ end class
     public void Fail_NoSuchGlobalSubroutine() {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     print f.loc()
     print f.glob()
 end main

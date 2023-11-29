@@ -18,8 +18,8 @@ public class T43_Inheritance {
     public void Pass_DefineAbstractClassAndInheritFromIt() {
         var code = @"#
 main
-    var x = new Bar()
-    var l = new List<of Foo>() + x
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
     print x.p1
     print x.p2
     print x.product()
@@ -135,8 +135,8 @@ public static class Program {
     public void Pass_InheritFromMoreThanOneAbstractClass() {
         var code = @"#
 main
-    var x = new Bar()
-    var l = new List<of Foo>() + x
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
     print x.p1
     print x.p2
     print x.product()
@@ -264,8 +264,8 @@ public static class Program {
     public void Pass_SuperclassesCanDefineSameMember() {
         var code = @"#
 main
-    var x = new Bar()
-    var l = new List<of Foo>() + x
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
     print x.p1
     print x.p2
     print x.product()
@@ -398,8 +398,8 @@ public static class Program {
     public void Fail_CannotInheritFromConcreteClass() {
         var code = @"#
 main
-    var x = new Bar()
-    var l = new List<of Foo>() + x
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
 end main
 
 class Foo
@@ -446,8 +446,8 @@ end class
     public void Fail_AbstractClassCannotInheritFromConcreteClass() {
         var code = @"#
 main
-    var x = new Bar()
-    var l = new List<of Foo>() + x
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
 end main
 
 class Foo
@@ -478,8 +478,8 @@ end class
     public void Fail_MustImplementAllInheritedMethods() {
         var code = @"#
 main
-    var x = new Bar()
-    var l = new List<of Foo>() + x
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
 end main
 
 abstract class Foo
@@ -522,8 +522,8 @@ end class
     public void Fail_ImplementedMethodMustHaveSameSignature() {
         var code = @"#
 main
-    var x = new Bar()
-    var l = new List<of Foo>() + x
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
 end main
 
 abstract class Foo
@@ -570,8 +570,8 @@ end class
     public void Fail_AbstractClassDefinesMethodBody() {
         var code = @"#
 main
-    var x = new Bar()
-    var l = new List<of Foo>() + x
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
 end main
 
 abstract class Foo

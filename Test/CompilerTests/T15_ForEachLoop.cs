@@ -12,8 +12,8 @@ public class T15_ForEachLoop {
     public void Pass_List() {
         var code = @"
 main
-    var a = {7,8,9}
-    var n = 0
+    var a set to {7,8,9}
+    var n set to 0
     foreach x in a
         set n to n + x
     end foreach
@@ -56,8 +56,8 @@ public static class Program {
     public void Pass_Array() {
         var code = @"
 main
-    var a = {7,8,9}.asArray()
-    var n = 0
+    var a set to {7,8,9}.asArray()
+    var n set to 0
     foreach x in a
         set n to n + x
     end foreach
@@ -100,7 +100,7 @@ public static class Program {
     public void Pass_string() {
         var code = @"
 main
-    var a = ""hello""
+    var a set to ""hello""
     foreach x in a
         print x
     end foreach
@@ -231,8 +231,8 @@ public static class Program {
     public void Fail_variableIsScoped() {
         var code = @"
 main
-    var a = {7,8,9}
-    var x = ""hello"";
+    var a set to {7,8,9}
+    var x set to ""hello"";
     foreach x in a
        print x
     end foreach
@@ -274,7 +274,7 @@ public static class Program {
     public void Fail_NoEndForeach() {
         var code = @"
 main
-  var a = ""hello""
+  var a set to ""hello""
   foreach x in a
    print x
   end for
@@ -289,7 +289,7 @@ end main
     public void Fail_applyToANonIterable() {
         var code = @"
 main
-    var y = 10
+    var y set to 10
     foreach x in y
        print x
     end foreach
@@ -309,7 +309,7 @@ end main
     public void Fail_CannotAlterTheIterableWithinLoop() {
         var code = @"
 main
-  var a ={1,2,3,4,5}
+  var a set to {1,2,3,4,5}
   foreach x in a
     set a to a + x
   end foreach

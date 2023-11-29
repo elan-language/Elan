@@ -12,7 +12,7 @@ public class T_5_Variables {
     public void Pass_Int() {
         var code = @"#
 main
-  var a = 3
+  var a set to 3
   print a
 end main
 ";
@@ -48,7 +48,7 @@ public static class Program {
     public void Pass_Int_Expression() {
         var code = @"#
 main
-  var a = 3 + 4
+  var a set to 3 + 4
   print a
 end main
 ";
@@ -84,7 +84,7 @@ public static class Program {
     public void Pass_Reassign() {
         var code = @"#
 main
-  var a = 3
+  var a set to 3
   set a to 4
   print a
 end main
@@ -122,7 +122,7 @@ public static class Program {
     public void Pass_CoerceFloatToIntVar() {
         var code = @"#
 main
-  var a = 3.1
+  var a set to 3.1
   set a to 4
   print a
 end main
@@ -159,9 +159,9 @@ public static class Program {
     [TestMethod]
     public void Pass_LocalVarHidesGlobalConstant() {
         var code = @"#
-constant a = 3
+constant a set to 3
 main
-  var a = 4
+  var a set to 4
   print a
 end main
 ";
@@ -199,14 +199,14 @@ public static class Program {
     public void Pass_OperatorCoverage() {
         var code = @"#
 main
-  var a = 3 - 4
-  var b = 3 < 4
-  var c = 3 <= 4
-  var d = 3 > 4
-  var e = 3 >= 4
-  var f = 3 is 4
-  var g = 3 is not 4
-  var h = not false
+  var a set to 3 - 4
+  var b set to 3 < 4
+  var c set to 3 <= 4
+  var d set to 3 > 4
+  var e set to 3 >= 4
+  var f set to 3 is 4
+  var g set to 3 is not 4
+  var h set to not false
   print a
   print b
   print c
@@ -280,8 +280,8 @@ end main
     public void fail_duplicateVar() {
         var code = @"#
 main
-  var a = 3
-  var a = 4
+  var a set to 3
+  var a set to 4
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -304,7 +304,7 @@ end main
     public void fail_assignIncompatibleType() {
         var code = @"#
 main
-  var a = 4
+  var a set to 4
   set a to 4.1
 end main
 ";

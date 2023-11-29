@@ -10,7 +10,7 @@ public class T30_Expressions4_SystemCalls {
     public void Pass_Input1() {
         var code = @"#
 main
-  var a = input
+  var a set to input
   print a
 end main
 ";
@@ -46,7 +46,7 @@ public static class Program {
     public void Pass_Input2() {
         var code = @"#
 main
-  var a = input ""Your name""
+  var a set to input ""Your name""
   print a
 end main
 ";
@@ -82,7 +82,7 @@ public static class Program {
     public void Fail_NoQualifier1() {
         var code = @"#
 main
-  var a = input()
+  var a set to input()
   print a
 end main
 ";
@@ -97,7 +97,7 @@ end main
     public void Fail_NoQualifier2() {
         var code = @"#
 main
-  var a = input(""Your name"")
+  var a set to input(""Your name"")
   print a
 end main
 ";
@@ -124,7 +124,7 @@ end main
     public void Fail_SystemCallWithinExpression() {
         var code = @"#
 main
-  var a = system.input(""Your name"").length()
+  var a set to system.input(""Your name"").length()
 end main
 ";
 
@@ -136,8 +136,8 @@ end main
     public void Fail_SystemCallUsingDotSyntax() {
         var code = @"#
 main
-  var prompt = ""Your name""
-  var a = system.prompt.input()
+  var prompt set to ""Your name""
+  var a = prompt.system.input()
 end main
 ";
 

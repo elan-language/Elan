@@ -11,7 +11,7 @@ public class T17_Dictionaries {
     [TestMethod]
     public void Pass_LiteralConstantAndPrinting() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a
 end main
@@ -46,7 +46,7 @@ public static class Program {
     [TestMethod]
     public void Pass_AccessByKey() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a['z']
 end main
@@ -81,7 +81,7 @@ public static class Program {
     [TestMethod]
     public void Pass_keys() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a.keys()
 end main
@@ -116,7 +116,7 @@ public static class Program {
     [TestMethod]
     public void Pass_hasKey() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a.hasKey('b')
   print a.hasKey('d')
@@ -152,7 +152,7 @@ public static class Program {
     [TestMethod]
     public void Pass_values() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a.values()
 end main
@@ -186,10 +186,10 @@ public static class Program {
     [TestMethod]
     public void Pass_Set() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
-  var b = a.setItem('b', 4)
-  var c = b.setItem('d', 2)
+  var b set to a.setItem('b', 4)
+  var c set to b.setItem('d', 2)
   print a
   print c
 end main
@@ -227,9 +227,9 @@ public static class Program {
     [TestMethod]
     public void Pass_RemoveEntry() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
-  var b = a.removeItem('b')
+  var b set to a.removeItem('b')
   print a
   print b
 end main
@@ -266,9 +266,9 @@ public static class Program {
     [TestMethod]
     public void Pass_RemoveInvalidKey() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
-  var b = a.removeItem('c')
+  var b set to a.removeItem('c')
   print b
 end main
 ";
@@ -304,8 +304,8 @@ public static class Program {
     public void Pass_CreateEmptyDictionary() {
         var code = @"#
 main
-  var a = new Dictionary<of String, Int>()
-  var b = a.setItem(""Foo"",1)
+  var a set to new Dictionary<of String, Int>()
+  var b set to a.setItem(""Foo"",1)
   set b to b.setItem(""Bar"", 3)
   print b.length()
   print b[""Foo""]
@@ -351,7 +351,7 @@ public static class Program {
     [TestMethod]
     public void Fail_RepeatedKey() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'a':10}
+constant a set to {'a':1, 'b':3, 'a':10}
 main
   print a
 end main
@@ -370,7 +370,7 @@ end main
     [TestMethod]
     public void Fail_InconsistentTypes1() {
         var code = @"#
-constant a = {'a':1, 'b':3.1, 'z':10}
+constant a set to {'a':1, 'b':3.1, 'z':10}
 main
   print a
 end main
@@ -387,7 +387,7 @@ end main
     [TestMethod]
     public void Fail_InconsistentTypes2() {
         var code = @"#
-constant a = {'a':1, 'b':3.1, ""Z"":10}
+constant a set to {'a':1, 'b':3.1, ""Z"":10}
 main
   print a
 end main
@@ -404,7 +404,7 @@ end main
     [TestMethod]
     public void Fail_AccessByInvalidKey() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a['c']
 end main
@@ -438,9 +438,9 @@ public static class Program {
     [TestMethod]
     public void Fail_RemoveInvalidKeyType() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
-  var b = a.removeItem(""b"")
+  var b set to a.removeItem(""b"")
 end main
 ";
 
@@ -456,9 +456,9 @@ end main
     [TestMethod]
     public void Fail_SetInvalidKeyType() {
         var code = @"#
-constant a = {'a':1, 'b':3, 'z':10}
+constant a set to {'a':1, 'b':3, 'z':10}
 main
-  var b = a.setItem(""b"", 4)
+  var b set to a.setItem(""b"", 4)
 end main
 ";
 

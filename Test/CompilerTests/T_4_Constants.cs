@@ -11,7 +11,7 @@ public class T_4_Constants {
     [TestMethod]
     public void Pass_Int() {
         var code = @"#
-constant a = 3
+constant a set to 3
 main
   print a
 end main
@@ -46,7 +46,7 @@ public static class Program {
     [TestMethod]
     public void Pass_Float() {
         var code = @"#
-constant a = 3.1
+constant a set to 3.1
 main
   print a
 end main
@@ -81,7 +81,7 @@ public static class Program {
     [TestMethod]
     public void Pass_String() {
         var code = @"#
-constant a = ""hell0""
+constant a set to ""hell0""
 main
   print a
 end main
@@ -116,7 +116,7 @@ public static class Program {
     [TestMethod]
     public void Pass_Char() {
         var code = @"#
-constant a = 'a'
+constant a set to 'a'
 main
   print a
 end main
@@ -151,7 +151,7 @@ public static class Program {
     [TestMethod]
     public void Pass_Bool() {
         var code = @"#
-constant a = true
+constant a set to true
 main
   print a
 end main
@@ -185,7 +185,7 @@ public static class Program {
     [TestMethod]
     public void Pass_Enum() {
         var code = @"#
-constant a = Fruit.apple
+constant a set to Fruit.apple
 main
   print a
 end main
@@ -267,7 +267,7 @@ end main
     public void Fail_invalidLiteralString2() {
         var code = @"#
 main
-  constant a = hello
+  constant a set to hello
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -277,7 +277,7 @@ end main
     [TestMethod]
     public void Fail_reassignment() {
         var code = @"#
-constant a = 3
+constant a set to 3
 main
   set a to 4
 end main
@@ -292,7 +292,7 @@ end main
     public void Fail_expression() {
         var code = @"#
 
-constant a = 3 + 4
+constant a set to 3 + 4
 
 main
 end main
@@ -305,32 +305,8 @@ end main
     public void Fail_referenceToOtherConstant() {
         var code = @"#
 
-constant a = 3
-constant b = a
-
-main
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod]
-    public void Fail_declareMultiple1() {
-        var code = @"#
-constant a, b = 3
-
-main
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod]
-    public void Fail_declareMultiple2() {
-        var code = @"#
-constant a = b = 3
+constant a set to 3
+constant b set to a
 
 main
 end main

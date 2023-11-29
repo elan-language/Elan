@@ -13,7 +13,7 @@ public class T70_StandardHofs
     public void Pass_Filter()
     {
         var code = @"
-constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.filter(lambda x -> x > 20)
  print source.filter(lambda x -> x > 20).asList()
@@ -53,7 +53,7 @@ public static class Program {
     public void Pass_ParallelFilter()
     {
         var code = @"
-constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.asParallel().filter(lambda x -> x > 20)
  print source.asParallel().filter(lambda x -> x > 20).asList()
@@ -93,7 +93,7 @@ public static class Program {
     public void Pass_Map()
     {
         var code = @"
-constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.map(lambda x -> x + 1).asList()
  print source.map(lambda x -> x.asString() + '*').asList()
@@ -131,7 +131,7 @@ public static class Program {
     public void Pass_Reduce()
     {
         var code = @"
-constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.reduce(lambda s,x -> s+x)
  print source.reduce(100, lambda s,x -> s+x)
@@ -170,7 +170,7 @@ public static class Program {
     public void Pass_Max()
     {
         var code = @"
-constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.max()
  print source.max(lambda x -> x mod 5)
@@ -208,7 +208,7 @@ public static class Program {
     public void Pass_Count()
     {
         var code = @"
-constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.count()
 end main
@@ -247,7 +247,7 @@ public static class Program {
     public void Pass_Min()
     {
         var code = @"
-constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.min()
  print source.min(lambda x -> x mod 5)
@@ -285,7 +285,7 @@ public static class Program {
     public void Pass_Any()
     {
         var code = @"
-constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
   print source.any(lambda x -> x > 20)
   print source.any(lambda x -> x mod 2 is 0)
@@ -327,9 +327,9 @@ public static class Program {
     {
         // # {5} {11,31} {2,7,17,27,37} {13,23,19}
         var code = @"
-constant source = {2,3,5,7,11,13,17,19,23,27,31,37}
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
-  var gs = source.groupBy(lambda x -> x mod 5).asList()
+  var gs set to source.groupBy(lambda x -> x mod 5).asList()
   print gs
   print gs[2]
 end main

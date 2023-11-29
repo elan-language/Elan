@@ -12,9 +12,9 @@ public class T79_InterpolatedStrings {
     public void Pass_CanUseVariables() {
         var code = @"
 main
-    var a = 1
-    var b = ""Apple""
-    var c = {1,2,3}
+    var a set to 1
+    var b set to ""Apple""
+    var c set to {1,2,3}
     print ""{a} {b} {c}""
 end main
 ";
@@ -52,7 +52,7 @@ public static class Program {
     public void Pass_UseCSharpKeywordAsVariable() {
         var code = @"
 main
-    var static = 1
+    var static set to 1
     print ""{static}""
 end main
 ";

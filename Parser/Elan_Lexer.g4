@@ -21,6 +21,7 @@ END:		   'end';
 ENUM:          'enum';
 FOR:           'for';
 FOREACH:       'foreach';
+FROM:		   'from';
 FUNCTION:	   'function';
 GLOBAL:			'global';
 IF:            'if'; 
@@ -66,7 +67,7 @@ DICTIONARY: 'Dictionary';
 ITERABLE: 'Iter';
 
 //Operators And Punctuators
-ASSIGN:               	  '=';
+EQUALS:					  '=';
 ARROW:					  '->'; 
 OPEN_BRACE:               '{';
 CLOSE_BRACE:              '}';

@@ -10,10 +10,10 @@ public class T31_LogicalOperators {
     public void Pass_and() {
         var code = @"#
 main
-    var a = false and false
-    var b = false and true
-    var c = true and false
-    var d = true and true
+    var a set to false and false
+    var b set to false and true
+    var c set to true and false
+    var d set to true and true
     print a
     print b
     print c
@@ -58,10 +58,10 @@ public static class Program {
     public void Pass_or() {
         var code = @"#
 main
-    var a = false or false
-    var b = false or true
-    var c = true or false
-    var d = true or true
+    var a set to false or false
+    var b set to false or true
+    var c set to true or false
+    var d set to true or true
     print a
     print b
     print c
@@ -106,10 +106,10 @@ public static class Program {
     public void Pass_xor() {
         var code = @"#
 main
-    var a = false xor false
-    var b = false xor true
-    var c = true xor false
-    var d = true xor true
+    var a set to false xor false
+    var b set to false xor true
+    var c set to true xor false
+    var d set to true xor true
     print a
     print b
     print c
@@ -154,10 +154,10 @@ public static class Program {
     public void Pass_not() {
         var code = @"#
 main
-    var a = not false
-    var b = not true
-    var c = not not true
-    var d = not not false
+    var a set to not false
+    var b set to not true
+    var c set to not not true
+    var d set to not not false
     print a
     print b
     print c
@@ -202,8 +202,8 @@ public static class Program {
     public void Pass_Precedence() {
         var code = @"#
 main
-    var a = not false and true
-    var b = not (false and true)
+    var a set to not false and true
+    var b set to not (false and true)
     print a
     print b
 end main
@@ -242,7 +242,7 @@ public static class Program {
     public void Fail_UseNotWithTwoArgs() {
         var code = @"#
     main
-      var a = true not false
+      var a set to true not false
     end main
     ";
 

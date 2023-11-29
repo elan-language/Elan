@@ -13,8 +13,8 @@ public class T55_asString {
     public void Pass_AsStringMayBeCalled() {
         var code = @"#
 main
-    var f = new Foo()
-    var s = f.asString()
+    var f set to new Foo()
+    var s set to f.asString()
     print s
 end main
 class Foo
@@ -86,7 +86,7 @@ public static class Program {
     public void Pass_AsStringCalledWhenObjectPrinted() {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     print f
 end main
 class Foo
@@ -157,7 +157,7 @@ public static class Program {
     public void Pass_AsStringUsingDefaultHelper() {
         var code = @"#
 main
-    var f = new Foo()
+    var f set to new Foo()
     print f
 end main
 
@@ -229,14 +229,14 @@ public static class Program {
     public void Pass_AsStringOnVariousDataTypes() {
         var code = @"#
 main
-    var l = {1,2,3}
-    var sl = l.asString()
+    var l set to {1,2,3}
+    var sl set to l.asString()
     print sl
-    var a = {1,2,3}.asArray()
-    var sa = a.asString()
+    var a set to {1,2,3}.asArray()
+    var sa set to a.asString()
     print sa
-    var d = {'a':1, 'b':3, 'z':10}
-    var sd = d.asString()
+    var d set to {'a':1, 'b':3, 'z':10}
+    var sd set to d.asString()
     print sd
 end main
 

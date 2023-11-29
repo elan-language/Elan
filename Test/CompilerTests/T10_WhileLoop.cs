@@ -10,7 +10,7 @@ public class T10_WhileLoop {
     public void Pass_minimal() {
         var code = @"
 main
-   var x = 0
+   var x set to 0
    while x < 10
      set x to x + 1
    end while
@@ -52,10 +52,10 @@ public static class Program {
     public void Pass_innerLoop() {
         var code = @"
 main
-    var t = 0
-    var x = 0
+    var t set to 0
+    var x set to 0
     while x < 3
-        var y = 0
+        var y set to 0
         while y < 4
             set y to y + 1
             set t to t + 1
