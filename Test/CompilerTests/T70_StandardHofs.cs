@@ -205,6 +205,69 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_Max1()
+    {
+        var code = @"
+constant source = {{1}, {2,2}}
+main
+ print source.max(lambda t -> t.count())
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<StandardLibrary.ElanList<int>> source = new StandardLibrary.ElanList<StandardLibrary.ElanList<int>>(new StandardLibrary.ElanList<int>(1), new StandardLibrary.ElanList<int>(2, 2));
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.max(source, (t) => StandardLibrary.Functions.count(t))));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "List {2,2}\r\n");
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_MaxInFunction()
+    {
+        var code = @"
+constant source = {{1}, {2,2}, {3,3}}
+main
+ print f(source)
+end main
+function f(it Iter<of String>) as Int
+    var groups = it.groupBy(lambda w -> w.count())
+    return groups.max(lambda g -> g.count())
+end function
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "List {2,2}\r\n");
+    }
+
+    [TestMethod]
     public void Pass_Count()
     {
         var code = @"
