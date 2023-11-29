@@ -29,6 +29,8 @@ function setTargetIfGreen(attempt String, target String, n Int) as String ->
     then target.setChar(n, '.') 
     else target
 
+function isAlreadyMarkedGreen(attempt String, n Int) as Bool -> attempt[n] is '*'
+
 function isYellow(attempt String, target String, n Int) as Bool -> target.contains(attempt[n])
 
 function setAttemptIfYellow(attempt String, target String, n Int) as String ->
