@@ -62,7 +62,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             SwitchStatementNode n => HandleScope(BuildSwitchStatementModel, n),
             CaseNode n => HandleScope(BuildCaseModel, n),
             TryCatchNode n => HandleScope(BuildTryCatchModel, n),
-            PropertyNode n => HandleScope(BuildPropertyModel, n),
+            PropertyCallNode n => HandleScope(BuildPropertyModel, n),
             EnumDefNode n => HandleScope(BuildEnumDefModel, n),
             EnumValueNode n => HandleScope(BuildEnumValueModel, n),
             PairNode n => HandleScope(BuildKvpModel, n),
@@ -84,6 +84,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             InputNode n => HandleScope(BuildInputModel, n),
             ParameterCallNode n => HandleScope(BuildParameterCallModel, n),
             FuncTypeNode n => HandleScope(BuildFuncTypeModel, n),
+            AbstractFunctionDefNode n => Visit(n.Signature),
+            AbstractProcedureDefNode n => Visit(n.Signature),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -299,9 +301,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new TryCatchModel(triedCode, id, caughtCode);
     }
 
-    private PropertyModel BuildPropertyModel(PropertyNode propertyNode) {
-        var property = Visit(propertyNode.Property);
-        var expression = Visit(propertyNode.Expression);
+    private PropertyModel BuildPropertyModel(PropertyCallNode propertyCallNode) {
+        var property = Visit(propertyCallNode.Property);
+        var expression = Visit(propertyCallNode.Expression);
 
         return new PropertyModel(expression, property);
     }
@@ -342,7 +344,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
         var dProperties = properties.OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Default });
 
-        var defaultClassModel = new DefaultClassDefModel(type, dProperties, pSignatures);
+        var defaultClassModel = new DefaultClassDefModel(type, dProperties, pSignatures, Array.Empty<ICodeModel>());
 
         return new ClassDefModel(type, inherits, constructor, properties, functions, classDefNode.HasDefaultConstructor, defaultClassModel);
     }
@@ -350,10 +352,17 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private AbstractClassDefModel BuildAbstractClassDefModel(AbstractClassDefNode abstractClassDefNode) {
         var type = Visit(abstractClassDefNode.Type);
         var inherits = abstractClassDefNode.Inherits.Select(Visit);
-        var properties = abstractClassDefNode.Properties.Select(Visit).OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Abstract });
-        var functions = abstractClassDefNode.Methods.Select(Visit);
+        var properties = abstractClassDefNode.Properties.Select(Visit).OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Abstract }).ToArray();
+        var methodSignatures = abstractClassDefNode.Methods.Select(Visit).ToArray();
 
-        return new AbstractClassDefModel(type, inherits, properties, functions);
+        var dProperties = properties.Select(p => p with { PropertyType = PropertyType.AbstractDefault });
+
+        var dProcedureSignatures = methodSignatures.OfType<MethodSignatureModel>().Where(ms => ms.ReturnType is null);
+        var dFunctionSignatures = methodSignatures.OfType<MethodSignatureModel>().Where(ms => ms.ReturnType is not null);
+
+        var defaultClassModel = new DefaultClassDefModel(type, dProperties, dProcedureSignatures, dFunctionSignatures, true);
+
+        return new AbstractClassDefModel(type, inherits, properties, methodSignatures, defaultClassModel);
     }
 
     private ConstructorModel BuildConstructorModel(ConstructorNode constructorNode) {

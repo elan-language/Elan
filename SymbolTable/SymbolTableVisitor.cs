@@ -18,7 +18,9 @@ public class SymbolTableVisitor {
         return astNode switch {
             MainNode n => VisitMainNode(n),
             ProcedureDefNode n => VisitProcedureDefNode(n),
+            AbstractProcedureDefNode n => VisitAbstractProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
+            AbstractFunctionDefNode n => VisitAbstractFunctionDefNode(n),
             SystemAccessorDefNode n => VisitSystemAccessorNode(n),
             ConstructorNode n => VisitConstructorNode(n),
             ClassDefNode n => VisitClassDefNode(n),
@@ -38,6 +40,16 @@ public class SymbolTableVisitor {
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(procedureDefNode);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return procedureDefNode;
+    }
+
+    private IAstNode VisitAbstractProcedureDefNode(AbstractProcedureDefNode procedureDefNode) {
+        var (name, parameterIds) = NameAndParameterIds(procedureDefNode.Signature);
+
+        var ms = new ProcedureSymbol(name,  NameSpace.UserLocal, parameterIds, currentScope);
+        currentScope.Define(ms);
+        currentScope = ms;
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return procedureDefNode;
     }
@@ -72,6 +84,17 @@ public class SymbolTableVisitor {
         currentScope.Define(ms);
         currentScope = ms;
         VisitChildren(functionDefNode);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return functionDefNode;
+    }
+
+    private IAstNode VisitAbstractFunctionDefNode(AbstractFunctionDefNode functionDefNode) {
+        var (name, parameterIds) = NameAndParameterIds(functionDefNode.Signature);
+        var rt = MapNodeToSymbolType(functionDefNode.Signature);
+
+        var ms = new FunctionSymbol(name, rt, NameSpace.UserLocal, parameterIds, currentScope);
+        currentScope.Define(ms);
+        currentScope = ms;
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return functionDefNode;
     }
@@ -170,7 +193,7 @@ public class SymbolTableVisitor {
             EnumValueNode en => MapNodeToSymbolType(en.TypeNode),
             DefaultNode dn => MapNodeToSymbolType(dn.Type),
             WithNode wn => MapNodeToSymbolType(wn.Expression),
-            PropertyNode pn => MapNodeToSymbolType(pn.Expression),
+            PropertyCallNode pn => MapNodeToSymbolType(pn.Expression),
             ReturnExpressionNode ren => MapNodeToSymbolType(ren.Expression),
             QualifiedNode qn => MapNodeToSymbolType(qn.Qualified),
             FuncTypeNode fn => new FuncSymbolType(),

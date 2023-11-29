@@ -6,6 +6,7 @@ using static CodeHelpers;
 public enum PropertyType {
     Abstract,
     Default,
+    AbstractDefault,
     Immutable,
     Mutable
 }
@@ -20,6 +21,7 @@ public record PropertyDefModel(ICodeModel Id, ICodeModel Type, PropertyType Prop
 
     private string Modifier => PropertyType switch {
         PropertyType.Abstract => "",
+        PropertyType.AbstractDefault => "",
         PropertyType.Default => "override ",
         _ => "virtual "
     };
@@ -31,6 +33,7 @@ public record PropertyDefModel(ICodeModel Id, ICodeModel Type, PropertyType Prop
 
     private string Setter => PropertyType switch {
         PropertyType.Abstract => "",
+        PropertyType.AbstractDefault => "",
         PropertyType.Immutable => " init;",
         _ => " set;"
     };
@@ -41,6 +44,7 @@ public record PropertyDefModel(ICodeModel Id, ICodeModel Type, PropertyType Prop
         PropertyType switch {
             PropertyType.Abstract => Body,
             PropertyType.Default => $"=> {Init}",
+            PropertyType.AbstractDefault => $"=> {Init}",
             _ => $"{Body} = {Init}"
         };
 

@@ -114,8 +114,15 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public interface Bar {
+    public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
     public int p1 { get; }
     public int square();
+    private record class _DefaultBar : Bar {
+      public _DefaultBar() { }
+      public int p1 => default;
+      public int square() => default;
+      public string asString() { return ""default Bar"";  }
+    }
   }
   public record class Foo : Bar {
     public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();

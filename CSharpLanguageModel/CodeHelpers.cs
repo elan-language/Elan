@@ -167,4 +167,6 @@ public static class CodeHelpers {
 
     public static string Prefix(string id) => CSharpKeywordsExceptElanKeywords.Contains(id) ? $"@{id}" : id;
 
+    public static string DefaultInstance(int indent, ICodeModel type) => $"{Indent(indent + 1)}public static {type} DefaultInstance {{ get; }} = new {type}._Default{type}();";
+
 }

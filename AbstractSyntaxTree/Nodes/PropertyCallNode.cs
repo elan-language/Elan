@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record PropertyNode(IAstNode Expression, IAstNode Property) : IAstNode {
+public record PropertyCallNode(IAstNode Expression, IAstNode Property) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Expression, Property };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

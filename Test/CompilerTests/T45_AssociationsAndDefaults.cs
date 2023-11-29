@@ -720,13 +720,13 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "empty list\r\n\r\nempty dictionary\r\nempty array\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_PropertyOfAbstractType()
     {
         var code = @"#
 main
     var g = new Game()
-    print(g.p1.ucName())
+    print  g.p1.ucName()
 end main
 
 class Game
@@ -775,15 +775,22 @@ public static partial class Globals {
     }
   }
   public interface Player {
+    public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
     public string name { get; }
     public string ucName();
+    private record class _DefaultPlayer : Player {
+      public _DefaultPlayer() { }
+      public string name => """";
+      public string ucName() => """";
+      public string asString() { return ""default Player"";  }
+    }
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
     var g = new Game();
-    System.Console.WriteLine(StandardLibrary.Functions.asString((g.p1.ucName())));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(g.p1.ucName()));
   }
 }";
 

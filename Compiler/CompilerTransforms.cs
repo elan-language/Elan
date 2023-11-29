@@ -74,13 +74,59 @@ public static class CompilerTransforms {
 
     #region helpers
 
-    private static ISymbolType? GetQualifierType(ICallNode callNode, IScope currentScope) {
-        var varSymbol = callNode.Qualifier is IdentifierNode idn ? currentScope.Resolve(idn.Id) : null;
-        return varSymbol switch {
+    private static ISymbolType? ResolveProperty(PropertyCallNode pn, ClassSymbolType? symbolType, IScope currentScope) {
+        
+        var cst = GetGlobalScope(currentScope).Resolve(symbolType.Name) as IScope;
+
+        var name = pn.Property is IdentifierNode idn ? idn.Id : throw new NullReferenceException();
+
+        var symbol = cst.Resolve(name);
+
+        return symbol switch {
             VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
-            ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
             _ => null
         };
+    }
+
+
+
+
+    private static ISymbol? ResolveToIdentifier(IAstNode? node, IScope currentScope)
+    {
+        return node switch
+        {
+            IdentifierNode idn => currentScope.Resolve(idn.Id),
+            PropertyCallNode pn => ResolveToIdentifier(pn.Expression, currentScope),
+            _ => null
+        };
+    }
+
+
+
+    private static ISymbolType? GetQualifierType(ICallNode callNode, IScope currentScope) {
+        //var varSymbol = ResolveToIdentifier(callNode.Qualifier, currentScope); 
+
+        return callNode.Qualifier switch {
+            IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
+                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
+                ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
+                _ => null
+            },
+            PropertyCallNode pn => ResolveToIdentifier(pn, currentScope) switch {
+                VariableSymbol vs => ResolveProperty(pn, EnsureResolved(vs.ReturnType, currentScope) as ClassSymbolType, currentScope),
+                _ => null
+            },
+            _ => null
+        };
+
+
+
+
+        //return varSymbol switch {
+        //    VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
+        //    ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
+        //    _ => null
+        //};
     }
 
     private static IAstNode? GetSpecificCallNode(ICallNode mcn, IScope currentScope, ClassSymbolType cst) {

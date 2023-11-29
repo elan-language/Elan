@@ -129,15 +129,13 @@ public static class AstFactory {
             if (context.functionCall() is { } dmc) {
                 var ms = visitor.Visit<MethodCallNode>(dmc);
                 var exp = visitor.Visit(context.expression().First());
-                //return new MethodCallNode(ms, exp) { DotCalled = true };
-
                 return ms with { DotCalled = true, Qualifier = exp };
             }
 
             if (context.IDENTIFIER() is { } id) {
                 var exp = visitor.Visit(context.expression().First());
                 var prop = visitor.Visit(id);
-                return new PropertyNode(exp, prop);
+                return new PropertyCallNode(exp, prop);
             }
         }
 
@@ -784,8 +782,8 @@ public static class AstFactory {
         var typeName = visitor.Visit(context.TYPENAME());
         var inherits = context.inherits() is { } ih ? ih.type().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var properties = context.property().Select(visitor.Visit);
-        var functions = context.functionSignature().Select(visitor.Visit);
-        var procedures = context.procedureSignature().Select(visitor.Visit);
+        var functions = context.functionSignature().Select(visitor.Visit).Select(n => new AbstractFunctionDefNode(n) as IAstNode);
+        var procedures = context.procedureSignature().Select(visitor.Visit).Select(n => new AbstractProcedureDefNode(n) as IAstNode);
 
         return new AbstractClassDefNode(typeName, inherits.ToImmutableArray(), properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray());
     }

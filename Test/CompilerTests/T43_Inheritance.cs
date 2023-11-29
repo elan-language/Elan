@@ -65,10 +65,18 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public interface Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
     public int p1 { get; }
     public int p2 { get; }
     public int product();
     public void setP1(int v);
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public int p1 => default;
+      public int p2 => default;
+      public void setP1(int v) { }      public int product() => default;
+      public string asString() { return ""default Foo"";  }
+    }
   }
   public record class Bar : Foo {
     public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
@@ -175,14 +183,29 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public interface Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
     public int p1 { get; }
     public int p2 { get; }
 
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public int p1 => default;
+      public int p2 => default;
+
+      public string asString() { return ""default Foo"";  }
+    }
   }
   public interface Yon {
+    public static Yon DefaultInstance { get; } = new Yon._DefaultYon();
 
     public int product();
     public void setP1(int v);
+    private record class _DefaultYon : Yon {
+      public _DefaultYon() { }
+
+      public void setP1(int v) { }      public int product() => default;
+      public string asString() { return ""default Yon"";  }
+    }
   }
   public record class Bar : Foo, Yon {
     public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
@@ -290,14 +313,29 @@ using static StandardLibrary.Constants;
 
 public static partial class Globals {
   public interface Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
     public int p1 { get; }
     public int p2 { get; }
 
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+      public int p1 => default;
+      public int p2 => default;
+
+      public string asString() { return ""default Foo"";  }
+    }
   }
   public interface Yon {
+    public static Yon DefaultInstance { get; } = new Yon._DefaultYon();
     public int p1 { get; }
     public int product();
     public void setP1(int v);
+    private record class _DefaultYon : Yon {
+      public _DefaultYon() { }
+      public int p1 => default;
+      public void setP1(int v) { }      public int product() => default;
+      public string asString() { return ""default Yon"";  }
+    }
   }
   public record class Bar : Foo, Yon {
     public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
