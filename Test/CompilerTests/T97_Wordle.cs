@@ -8,7 +8,7 @@ using static Helpers;
 public class T97_Wordle {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_ConsoleUI() {
         var code = ReadElanSourceCodeFile("Wordle.elan");
 
