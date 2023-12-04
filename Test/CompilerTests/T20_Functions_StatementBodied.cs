@@ -239,6 +239,76 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
     }
 
+    [TestMethod]
+    public void Pass_GlobalFunctionOnClass() {
+        var code = @"
+main
+    var b set to new Bar()
+    print b.foo()
+end main
+
+function foo(bar Bar) as String
+    return bar.asString()
+end function
+class Bar
+    constructor()
+    end constructor
+
+    function asString() as String
+        return ""bar""
+    end function
+
+end class
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static string foo(Bar bar) {
+
+    return bar.asString();
+  }
+  public record class Bar {
+    public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
+
+    public Bar() {
+
+    }
+
+    public virtual string asString() {
+
+      return @$""bar"";
+    }
+    private record class _DefaultBar : Bar {
+      public _DefaultBar() { }
+
+
+      public override string asString() { return ""default Bar"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var b = new Bar();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.foo(b)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "bar\r\n");
+    }
+
     #endregion
 
     #region Fails
