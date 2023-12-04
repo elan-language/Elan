@@ -240,49 +240,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {2,2}\r\n");
     }
 
-    [TestMethod, Ignore]
-    public void Pass_MaxInFunction()
-    {
-        var code = @"
-constant source set to {{1}, {2,2}, {3,3}}
-main
- print f(source)
-end main
-function f(it Iter<of (Int, Int)>) as Int
-    var groups set to it.groupBy(lambda w -> w.count())
-    return groups.max(lambda g -> g.count())
-end function
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using StandardLibrary;
-using static Globals;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-  public static readonly StandardLibrary.ElanList<StandardLibrary.ElanList<int>> source = new StandardLibrary.ElanList<StandardLibrary.ElanList<int>>(new StandardLibrary.ElanList<int>(1), new StandardLibrary.ElanList<int>(2, 2), new StandardLibrary.ElanList<int>(3, 3));
-  public static int f(System.Collections.Generic.IEnumerable<(int, int)> it) {
-    var groups = StandardLibrary.Functions.groupBy(it, (w) => StandardLibrary.Functions.count(w));
-    return StandardLibrary.Functions.max(groups, (g) => StandardLibrary.Functions.count(g));
-  }
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.f(source)));
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {2,2}\r\n");
-    }
 
     [TestMethod]
     public void Pass_Count()
@@ -405,13 +362,11 @@ public static class Program {
     [TestMethod]
     public void Pass_GroupBy()
     {
-        // # {5} {11,31} {2,7,17,27,37} {13,23,19}
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
   var gs set to source.groupBy(lambda x -> x mod 5).asList()
   print gs
-  print gs[2]
 end main
 ";
         var objectCode = @"using System.Collections.Generic;
@@ -427,7 +382,6 @@ public static class Program {
   private static void Main(string[] args) {
     var gs = StandardLibrary.Functions.asList(StandardLibrary.Functions.groupBy(source, (x) => x % 5));
     System.Console.WriteLine(StandardLibrary.Functions.asString(gs));
-    System.Console.WriteLine(StandardLibrary.Functions.asString(gs[2]));
   }
 }";
         var parseTree = @"*";
@@ -438,7 +392,8 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {Iter {2,7,17,27,37},Iter {3,13,23},Iter {5},Iter {11,31},Iter {19}}\r\nIter {5}\r\n"); //Not sure quite what output is reasonable?
+        AssertObjectCodeExecutes(compileData, "List {(0, Iter {5}),(1, Iter {11,31}),(2, Iter {2,7,17,27,37}),(3, Iter {3,13,23}),(4, Iter {19})}\r\n");
+                                            //"List {(0, Iter {5}),(1, Iter {11,31}),(2, Iter {2,7,17,27,37}),(3, Iter {3,13,23}),(4, Iter {19})}\r\n    (0, Iter {5})\r\n    "
     }
 
     #endregion

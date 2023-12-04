@@ -4,11 +4,11 @@ namespace Test.CompilerTests;
 
 using static Helpers;
 
-[TestClass]
+[TestClass, Ignore]
 public class T97_Wordle {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_ConsoleUI() {
         var code = ReadElanSourceCodeFile("Wordle.elan");
 
@@ -71,7 +71,7 @@ public static partial class Globals {
   }
   public static int wordCountRemainingAfterAttempt(System.Collections.Generic.IEnumerable<string> possibleAnswers, string attempt) {
     var groups = StandardLibrary.Functions.groupBy(possibleAnswers, (w) => Globals.markAttempt(attempt, w));
-    return StandardLibrary.Functions.max(groups, (g) => StandardLibrary.Functions.count(g));
+    return StandardLibrary.Functions.max(groups, (g) => StandardLibrary.Functions.count(g[1]));
   }
   public static System.Collections.Generic.IEnumerable<(string, int)> allRemainingWordCounts(StandardLibrary.ElanList<string> possAnswers, System.Collections.Generic.IEnumerable<string> possAttempts) {
 
