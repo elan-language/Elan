@@ -9,8 +9,8 @@ public class T96_Snake {
     #region Passes
 
     [TestMethod]
-    public void Pass_ConsoleUI() {
-        var code = ReadElanSourceCodeFile("snake.elan");
+    public void Pass_Snake_OOP() {
+        var code = ReadElanSourceCodeFile("snake_OOP.elan");
 
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
@@ -199,6 +199,19 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
     }
 
+    [TestMethod, Ignore]
+    public void Pass_Snake_PP()
+    {
+        var code = ReadElanSourceCodeFile("snake_PP.elan");
+
+        var objectCode = @"";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+    }
     #endregion
 
     #region Fails

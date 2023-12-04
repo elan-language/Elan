@@ -35,10 +35,10 @@
 		<None Update="ElanSourceCode\mergeSort.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\snake - with expression functions.elan">
+		<None Update="ElanSourceCode\snake_PP.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\snake.elan">
+		<None Update="ElanSourceCode\snake_OOP.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ElanSourceCode\Wordle.elan">
