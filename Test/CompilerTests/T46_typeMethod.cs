@@ -85,7 +85,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Int\r\nFloat\r\nChar\r\nBool\r\nString\r\nList<Int>\r\nDictionary<Char,Int>\r\nArray<Int>\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_TypeOfClasses()
     {
         var code = @"
@@ -141,11 +141,13 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
+    var a = 1;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(a)));
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(new Foo(3))));
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(Foo.DefaultInstance)));
     var x = new Foo(4);
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(x)));
-    System.Console.WriteLine(StandardLibrary.Functions.asString(x.type()));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(x)));
   }
 }";
 
@@ -155,9 +157,9 @@ public static class Program {
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
-        //AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "Int\r\nFoo\r\ndefault Foo\r\nFoo\r\nFoo");
+        AssertObjectCodeExecutes(compileData, "Int\r\nFoo\r\ndefault Foo\r\nFoo\r\nFoo\r\n");
     }
 
     [TestMethod]
@@ -225,7 +227,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_TypeForAClass()
     {
         var code = @"#
@@ -248,37 +250,37 @@ class Player
 end class
 ";
         var objectCode = @"using System.Collections.Generic;
-    using StandardLibrary;
-    using static Globals;
-    using static StandardLibrary.Constants;
-    
-    public static partial class Globals {
-      public record class Player {
-        public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
-        private Player() {}
-        public Player(string name) {
-          this.name = name;
-        }
-        public virtual string name { get; set; } = """";
-        public virtual string asString() {
-    
-          return name;
-        }
-        private record class _DefaultPlayer : Player {
-          public _DefaultPlayer() { }
-          public override string name => """";
-    
-          public override string asString() { return ""default Player"";  }
-        }
-      }
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Player {
+    public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
+    private Player() {}
+    public Player(string name) {
+      this.name = name;
     }
-    
-    public static class Program {
-      private static void Main(string[] args) {
-        var p = new Player(@$""Richard"");
-        System.Console.WriteLine(StandardLibrary.Functions.asString(p.type() == @$""Player""));
-      }
-    }";
+    public virtual string name { get; set; } = """";
+    public virtual string asString() {
+
+      return name;
+    }
+    private record class _DefaultPlayer : Player {
+      public _DefaultPlayer() { }
+      public override string name => """";
+
+      public override string asString() { return ""default Player"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var p = new Player(@$""Richard"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(p) == @$""Player""));
+  }
+}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -287,7 +289,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "_DefaultPlayer\r\ntrue\r\n");
+        AssertObjectCodeExecutes(compileData, "true\r\n");
     }
     #endregion
 

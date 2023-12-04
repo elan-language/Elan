@@ -106,21 +106,23 @@ public static class CompilerTransforms {
             _ => null
         };
 
-    private static IAstNode? GetSpecificCallNode(ICallNode mcn, IScope currentScope, ClassSymbolType cst) {
+    private static IAstNode? GetSpecificCallNode(MethodCallNode mcn, IScope currentScope, ClassSymbolType cst) {
         var classSymbol = currentScope.Resolve(cst.Name);
 
         return classSymbol switch {
             IScope classScope => classScope.Resolve(mcn.Name) switch {
-                ProcedureSymbol => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                FunctionSymbol => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                VariableSymbol {ReturnType:FuncSymbolType} => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                ProcedureSymbol { NameSpace: NameSpace.UserLocal } => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                FunctionSymbol { NameSpace: NameSpace.UserLocal } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                FunctionSymbol fs => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
+                VariableSymbol { ReturnType: FuncSymbolType } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+
                 _ => null
             },
             _ => null
         };
     }
 
-    private static IAstNode? GetSpecificCallNodeForClassMethod(ICallNode mcn, IScope currentScope) {
+    private static IAstNode? GetSpecificCallNodeForClassMethod(MethodCallNode mcn, IScope currentScope) {
         var type = GetQualifierType(mcn, currentScope);
         return type is ClassSymbolType cst ? GetSpecificCallNode(mcn, currentScope, cst) : null;
     }

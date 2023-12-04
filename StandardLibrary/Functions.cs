@@ -143,6 +143,7 @@ public static class Functions {
             "ElanList`1" => $"List<{MapTypeNames(t.GenericTypeArguments.Single())}>",
             "ElanArray`1" => $"Array<{MapTypeNames(t.GenericTypeArguments.Single())}>",
             "ElanDictionary`2" => $"Dictionary<{MapTypeNames(t.GenericTypeArguments.First())},{MapTypeNames(t.GenericTypeArguments.Last())}>",
+            not null when t.Name.StartsWith("_Default") => $"default {MapTypeNames(t.BaseType)}",
             _ => t?.Name ?? throw new NotImplementedException()
         };
     }
