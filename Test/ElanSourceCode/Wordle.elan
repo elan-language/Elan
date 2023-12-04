@@ -47,11 +47,13 @@ function setTargetIfYellow(attempt String, target String, n Int) as String  ->
     then target.setChar(target.indexOf(attempt[n]), '.')
     else target
 
+constant letterPositions set to {0,1,2,3,4}
+
 function evaluateGreens(attempt String, target String) as (String, String) ->
-    range(5).reduce((attempt, target), lambda a, x -> (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x)))
+    letterPositions.reduce((attempt, target), lambda a, x -> (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x)))
 
 function evaluateYellows(attempt String, target String) as (String, String) ->
-    range(5).reduce((attempt, target),lambda a, x -> (setAttemptIfYellow(a.attempt, a.target, x), setTargetIfYellow(a.attempt, a.target, x)))
+    letterPositions.reduce((attempt, target),lambda a, x -> (setAttemptIfYellow(a.attempt, a.target, x), setTargetIfYellow(a.attempt, a.target, x)))
 
 function markAttempt(attempt String, target String) as String
     var (attemptAfterGreens, targetAfterGreens) set to evaluateGreens(attempt, target)
