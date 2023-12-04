@@ -22,11 +22,11 @@ public static partial class Globals {
   public const string welcome = @$""Welcome to the Snake game. 
 
 Use the w,a,s, and d keys to control the direction of the snake. Letting the snake get to any edge will lose you the game, as will letting the snake's head pass over its body. Eating an apple will
-cause the snake to grow by 
+cause the snake to grow by one segment. 
 
 If you want to re-size the window, please do so now, before starting the game.
 
-Click on this window to get 'focus' (and see a flashing cursor). Then press any key to start.."";
+Press any key to start.."";
   public static void playGame() {
     var charMap = new CharMap();
     charMap.fillBackground();
