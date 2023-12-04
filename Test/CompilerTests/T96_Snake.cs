@@ -18,8 +18,6 @@ using static Globals;
 using static StandardLibrary.Constants;
 
 public static partial class Globals {
-  public static readonly Colour bodyColour = Colour.green;
-  public static readonly Colour appleColour = Colour.red;
   public static readonly StandardLibrary.ElanDictionary<char,Direction> directionByKey = new StandardLibrary.ElanDictionary<char,Direction>(('w', Direction.up), ('s', Direction.down), ('a', Direction.left), ('d', Direction.right));
   public const string welcome = @$""Welcome to the Snake game. 
 
@@ -33,26 +31,25 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
     var charMap = new CharMap();
     charMap.fillBackground();
     var currentDirection = Direction.right;
-    var game = new Game(StandardLibrary.Functions.asInt((Compiler.WrapperFunctions.FloatDiv(charMap.width, 2))), charMap.height, currentDirection);
+    var snake = new Snake(charMap.width / 2, charMap.height, currentDirection);
     var gameOn = true;
-    game.setNewApplePosition();
     while (gameOn) {
-      Globals.draw(charMap, game.head(), bodyColour);
-      Globals.draw(charMap, game.apple, appleColour);
-      var priorTail = game.tail();
+      Globals.draw(charMap, snake.head, Colour.green);
+      Globals.draw(charMap, snake.apple, Colour.red);
+      var priorTail = snake.tail();
       StandardLibrary.Procedures.pause(200);
       var pressed = StandardLibrary.SystemAccessors.keyHasBeenPressed();
       if (pressed) {
         var k = StandardLibrary.SystemAccessors.readKey();
         currentDirection = directionByKey[k];
       }
-      game.clockTick(currentDirection, ref gameOn);
-      if (game.tail() != priorTail) {
+      snake.clockTick(currentDirection, ref gameOn);
+      if (snake.tail() != priorTail) {
         Globals.draw(charMap, priorTail, charMap.backgroundColour);
       }
     }
     charMap.setCursor(0, 0);
-    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Game Over! Score: {game.getScore()}""));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Game Over! Score: {snake.length() - 2}""));
   }
   public static void draw(CharMap cm, Square sq, Colour colour) {
     var col = sq.x * 2;
@@ -60,88 +57,29 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
     cm.putBlockWithColour(col, row, colour);
     cm.putBlockWithColour(col + 1, row, colour);
   }
-  public record class Game {
-    public static Game DefaultInstance { get; } = new Game._DefaultGame();
-    private Game() {}
-    public Game(int width, int height, Direction startingDirection) {
-      this.width = width;
-      this.height = height;
-      snake = new Snake(width / 2, height / 2, startingDirection);
-      setNewApplePosition();
-    }
-    protected virtual int width { get; set; } = default;
-    protected virtual int height { get; set; } = default;
-    protected virtual Snake snake { get; set; } = Snake.DefaultInstance;
-    public virtual Square apple { get; set; } = Square.DefaultInstance;
-    public virtual Square head() {
-
-      return snake.head;
-    }
-    public virtual Square tail() {
-
-      return snake.tail();
-    }
-    public virtual bool hasHitEdge() {
-      var x = snake.head.x;
-      var y = snake.head.y;
-      return x < 0 || y < 0 || x == width || y == height;
-    }
-    public virtual int getScore() {
-
-      return snake.length() - 2;
-    }
-    public virtual string asString() {
-
-      return @$""Game"";
-    }
-    public virtual void clockTick(Direction d, ref bool @continue) {
-      snake.advanceHeadOneSquare(d);
-      if (snake.head == apple) {
-        setNewApplePosition();
-      }
-      else {
-        snake.advanceTailOneSquare();
-      }
-      @continue = !hasHitEdge() && !snake.hasHitItself();
-    }
-    public virtual void setNewApplePosition() {
-      var sq = new Square(0, 0);
-      var collision = false;
-      do {
-        var ranW = StandardLibrary.SystemAccessors.random(width - 1);
-        var ranH = StandardLibrary.SystemAccessors.random(height - 1);
-        sq = new Square(ranW, ranH);
-      } while (!(!snake.bodyCovers(sq)));
-      apple = sq;
-    }
-    private record class _DefaultGame : Game {
-      public _DefaultGame() { }
-      protected override int width => default;
-      protected override int height => default;
-      protected override Snake snake => Snake.DefaultInstance;
-      public override Square apple => Square.DefaultInstance;
-      public override void clockTick(Direction d, ref bool @continue) { }
-      public override void setNewApplePosition() { }
-      public override string asString() { return ""default Game"";  }
-    }
-  }
   public record class Snake {
     public static Snake DefaultInstance { get; } = new Snake._DefaultSnake();
     private Snake() {}
-    public Snake(int x, int y, Direction startingDirection) {
-      var tail = new Square(x, y);
+    public Snake(int boardWidth, int boardHeight, Direction startingDirection) {
+      this.boardWidth = boardWidth;
+      this.boardHeight = boardHeight;
+      var tail = new Square(boardWidth / 2, boardHeight / 2);
       body = new StandardLibrary.ElanList<Square>(tail);
       head = tail.getAdjacentSquare(startingDirection);
+      setNewApplePosition();
     }
-    protected virtual StandardLibrary.ElanList<Square> body { get; set; } = StandardLibrary.ElanList<Square>.DefaultInstance;
+    public virtual int boardWidth { get; set; } = default;
+    public virtual int boardHeight { get; set; } = default;
     public virtual Square head { get; set; } = Square.DefaultInstance;
+    protected virtual StandardLibrary.ElanList<Square> body { get; set; } = StandardLibrary.ElanList<Square>.DefaultInstance;
+    public virtual Square apple { get; set; } = Square.DefaultInstance;
     public virtual Square tail() {
 
       return body[0];
     }
-    public virtual bool hasHitItself() {
+    public virtual int length() {
 
-      return bodyCovers(head);
+      return StandardLibrary.Functions.length(body);
     }
     public virtual bool bodyCovers(Square sq) {
       var result = false;
@@ -152,27 +90,41 @@ Click on this window to get 'focus' (and see a flashing cursor). Then press any 
       }
       return result;
     }
-    public virtual int length() {
+    public virtual bool hasHitEdge() {
 
-      return StandardLibrary.Functions.length(body);
+      return head.x < 0 || head.y < 0 || head.x == boardWidth || head.y == boardHeight;
     }
     public virtual string asString() {
 
       return @$""Snake"";
     }
-    public virtual void advanceHeadOneSquare(Direction d) {
+    public virtual void clockTick(Direction d, ref bool @continue) {
       body = body + head;
       head = head.getAdjacentSquare(d);
+      if (head == apple) {
+        setNewApplePosition();
+      }
+      else {
+        body = body[(1)..];
+      }
+      @continue = !hasHitEdge() && !bodyCovers(head);
     }
-    public virtual void advanceTailOneSquare() {
-      body = body[(1)..];
+    public virtual void setNewApplePosition() {
+      do {
+        var ranW = StandardLibrary.SystemAccessors.random(boardWidth - 1);
+        var ranH = StandardLibrary.SystemAccessors.random(boardHeight - 1);
+        apple = new Square(ranW, ranH);
+      } while (!(!bodyCovers(apple)));
     }
     private record class _DefaultSnake : Snake {
       public _DefaultSnake() { }
-      protected override StandardLibrary.ElanList<Square> body => StandardLibrary.ElanList<Square>.DefaultInstance;
+      public override int boardWidth => default;
+      public override int boardHeight => default;
       public override Square head => Square.DefaultInstance;
-      public override void advanceHeadOneSquare(Direction d) { }
-      public override void advanceTailOneSquare() { }
+      protected override StandardLibrary.ElanList<Square> body => StandardLibrary.ElanList<Square>.DefaultInstance;
+      public override Square apple => Square.DefaultInstance;
+      public override void clockTick(Direction d, ref bool @continue) { }
+      public override void setNewApplePosition() { }
       public override string asString() { return ""default Snake"";  }
     }
   }

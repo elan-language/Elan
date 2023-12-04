@@ -1,10 +1,4 @@
-﻿# TODO. Move responsibilities
-# Get rid of Game
-# Clock tick onto Snake
-# Set new position onto Apple
-# Eating, and re-location to Apple
-# Edge detection to Snake - Snake is initialised with board size.
-# Top level playGame deals only with Snake, having passed it the field dimensions and initial Apple
+﻿# Elan
 main
     print welcome
     var k set to system.readKey()
@@ -22,8 +16,6 @@ main
     end while
 end main
 
-constant bodyColour set to Colour.green
-constant appleColour set to Colour.red
 constant directionByKey set to { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}
 constant welcome set to "Welcome to the Snake game. 
 
@@ -38,30 +30,27 @@ procedure playGame()
     var charMap set to new CharMap()
     call charMap.fillBackground()
     var currentDirection set to Direction.right
-    var game set to new Game((charMap.width/2).asInt(), charMap.height, currentDirection)
+    var snake set to new Snake(charMap.width div 2, charMap.height, currentDirection)
     var gameOn set to true
-    call game.setNewApplePosition()
     while gameOn
-        call draw(charMap, game.head(), bodyColour)
-        call draw(charMap, game.apple, appleColour)
-        var priorTail set to game.tail()
+        call draw(charMap, snake.head, Colour.green)
+        call draw(charMap, snake.apple, Colour.red)
+        var priorTail set to snake.tail()
         call pause(200)
         var pressed set to system.keyHasBeenPressed()
         if pressed then
             var k set to system.readKey()
             set currentDirection to directionByKey[k]
         end if
-        call game.clockTick(currentDirection, gameOn)
-        if game.tail() is not priorTail then
+        call snake.clockTick(currentDirection, gameOn)
+        if snake.tail() is not priorTail then
             call draw(charMap, priorTail, charMap.backgroundColour)
         end if
     end while
-#    call clearKeyBuffer()
     call charMap.setCursor(0, 0)
-    print "Game Over! Score: {game.getScore()}"
+    print "Game Over! Score: {snake.length() - 2}"
 end procedure
 
-# maps from the Square coordinates & size, to characters
 procedure draw(cm CharMap, sq Square, colour Colour)
     var col set to sq.x * 2
     var row set to sq.y
@@ -69,80 +58,28 @@ procedure draw(cm CharMap, sq Square, colour Colour)
     call cm.putBlockWithColour(col + 1, row, colour) # because block is 2 chars wide
 end procedure
 
-class Game    
-# Dimensions are number of Squares
-    constructor (width Int, height Int, startingDirection Direction)
-        set self.width to width
-        set self.height to height
-        set snake to new Snake(width div 2, height div 2, startingDirection) 
+class Snake
+    constructor(boardWidth Int, boardHeight Int, startingDirection Direction)
+        set self.boardWidth to boardWidth
+        set self.boardHeight to boardHeight
+        var tail set to new Square(boardWidth div 2, boardHeight div 2)
+        set body to {tail}
+        set head to tail.getAdjacentSquare(startingDirection)
         call setNewApplePosition()
     end constructor
 
-    private property width Int
-    private property height Int
-    private property snake Snake
+    property boardWidth Int
+    property boardHeight Int
+    property head Square
+    private property body List<of Square>
     property apple Square
 
-    function head() as Square
-      return snake.head
-    end function
-
     function tail() as Square
-      return snake.tail()
-    end function
-
-    procedure clockTick(d Direction, out continue Bool)
-        call snake.advanceHeadOneSquare(d)
-        if snake.head is apple then
-            call setNewApplePosition()
-        else
-            call snake.advanceTailOneSquare()
-        end if
-        set continue to not hasHitEdge() and not snake.hasHitItself()
-    end procedure
-
-    function hasHitEdge() as Bool
-        var x set to snake.head.x
-        var y set to snake.head.y
-        return x < 0 or y < 0 or x is width or y is height
-    end function
-
-    procedure setNewApplePosition()
-        var sq set to new Square(0,0)
-        var collision set to false
-        repeat
-            var ranW set to system.random(width-1)
-            var ranH set to system.random(height-1)
-            set sq to new Square(ranW, ranH) 
-        until not snake.bodyCovers(sq)
-        set apple to sq
-    end procedure
-
-    function getScore() as Int
-      return snake.length() - 2
-    end function
-
-    function asString() as String
-      return "Game"
-    end function
-end class
-
-class Snake
-    constructor(x Int, y Int, startingDirection Direction)
-        var tail set to new Square(x, y)
-        set body to {tail}
-        set head to tail.getAdjacentSquare(startingDirection)
-    end constructor
-
-    private property body List<of Square>
-    property head Square
-
-    function tail() as Square 
       return body[0]
     end function
 
-    function hasHitItself() as Bool 
-      return bodyCovers(head)
+    function length() as Int
+      return body.length()
     end function
 
     function bodyCovers(sq Square) as Bool
@@ -155,18 +92,28 @@ class Snake
       return result
     end function
 
-    procedure advanceHeadOneSquare(d Direction)
-        set body to body + head
-        set head to head.getAdjacentSquare(d)
+    procedure clockTick(d Direction, out continue Bool)
+        set body to body + head;
+        set head to head.getAdjacentSquare(d);
+        if head is apple then
+            call setNewApplePosition()
+        else
+            set body to body[1..]
+        end if
+        set continue to not hasHitEdge() and not bodyCovers(head)
     end procedure
 
-    procedure advanceTailOneSquare()
-        set body to body[1..]
-    end procedure
-
-    function length() as Int 
-      return body.length()
+    function hasHitEdge() as Bool
+        return head.x < 0 or head.y < 0 or head.x is boardWidth or head.y is boardHeight
     end function
+
+    procedure setNewApplePosition()
+        repeat
+            var ranW set to system.random(boardWidth-1)
+            var ranH set to system.random(boardHeight-1)
+            set apple to new Square(ranW, ranH) 
+        until not bodyCovers(apple)
+    end procedure
 
     function asString() as String
       return "Snake"
