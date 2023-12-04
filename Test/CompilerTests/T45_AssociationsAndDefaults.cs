@@ -804,15 +804,18 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "\r\n");
     }
 
-    [TestMethod, Ignore]
-    public void Pass_defaultCanBeReplacedUsingWith()
+    [TestMethod]
+    public void Pass_defaultCannotBeReplacedUsingWith()
     {
         var code = @"#
 main
     var p set to default Player
-    var p2 set to p with {name = ""foo""}
-    print type(p)
-    print type(p2) is ""Player""
+    var p1 set to new Player(""other player"")
+    var p2 set to p with {name set to ""foo"", otherPlayer set to p1}
+    print type(p2)
+    print p2.name
+    print p2.otherPlayer
+    print p2.otherPlayer.name
 end main
 
 class Player
@@ -822,13 +825,53 @@ class Player
 
     property name String
 
+    property otherPlayer Player
+
     function asString() as String
         return name
     end function
 
 end class
 ";
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public record class Player {
+    public static Player DefaultInstance { get; } = new Player._DefaultPlayer();
+    private Player() {}
+    public Player(string name) {
+      this.name = name;
+    }
+    public virtual string name { get; set; } = """";
+    public virtual Player otherPlayer { get; set; } = Player.DefaultInstance;
+    public virtual string asString() {
+
+      return name;
+    }
+    private record class _DefaultPlayer : Player {
+      public _DefaultPlayer() { }
+      public override string name => """";
+      public override Player otherPlayer => Player.DefaultInstance;
+
+      public override string asString() { return ""default Player"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var p = Player.DefaultInstance;
+    var p1 = new Player(@$""other player"");
+    var p2 = p with {name = @$""foo"", otherPlayer = p1};
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.type(p2)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(p2.name));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(p2.otherPlayer));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(p2.otherPlayer.name));
+  }
+}";
 
         var parseTree = @"*";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -837,7 +880,7 @@ end class
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "_DefaultPlayer\r\ntrue\r\n");
+        AssertObjectCodeExecutes(compileData, "default Player\r\n\r\ndefault Player\r\n\r\n");
     }
     #endregion
 
