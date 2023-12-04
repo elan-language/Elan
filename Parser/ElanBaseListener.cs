@@ -84,6 +84,30 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitStatementBlock([NotNull] ElanParser.StatementBlockContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.testStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterTestStatement([NotNull] ElanParser.TestStatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.testStatement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitTestStatement([NotNull] ElanParser.TestStatementContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.assert"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAssert([NotNull] ElanParser.AssertContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.assert"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAssert([NotNull] ElanParser.AssertContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.callStatement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

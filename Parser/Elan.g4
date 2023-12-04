@@ -11,12 +11,16 @@ main:
 
 test: 
 	NL TEST IDENTIFIER
-    statementBlock
+    testStatement*
     NL END TEST 
     ;
 
 // STATEMENTS
 statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement | throwException | printStatement)*;
+
+testStatement: assert | varDef | callStatement;
+
+assert: ASSERT expression IS value;
 
 callStatement: NL CALL (procedureCall | (assignableValue DOT procedureCall));
 
@@ -262,15 +266,15 @@ kvp: expression COLON expression;
 literalKvp: literal COLON literal;
 
 // OPERATIONS
-unaryOp: MINUS | OP_NOT;
+unaryOp: MINUS | NOT;
 
 binaryOp: arithmeticOp | logicalOp | conditionalOp ;
 
-arithmeticOp:  POWER | MULT | DIVIDE | MOD | INT_DIV | PLUS | MINUS;
+arithmeticOp:  POWER | MULT | DIVIDE | MOD | DIV | PLUS | MINUS;
 
-logicalOp: OP_AND | OP_OR | OP_XOR;
+logicalOp: AND | OR | XOR;
 
-conditionalOp: GT | LT | OP_GE | OP_LE | OP_EQ | OP_NE;
+conditionalOp: GT | LT | GE | LE | IS | IS_NOT;
 
 // TYPES
 type:  VALUE_TYPE | dataStructureType | TYPENAME | TYPENAME genericSpecifier | tupleType |  funcType;
