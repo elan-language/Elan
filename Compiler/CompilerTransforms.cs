@@ -112,10 +112,10 @@ public static class CompilerTransforms {
         return classSymbol switch {
             IScope classScope => classScope.Resolve(mcn.Name) switch {
                 ProcedureSymbol { NameSpace: NameSpace.UserLocal } => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                ProcedureSymbol ps => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
                 FunctionSymbol { NameSpace: NameSpace.UserLocal } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 FunctionSymbol fs => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
                 VariableSymbol { ReturnType: FuncSymbolType } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-
                 _ => null
             },
             _ => null

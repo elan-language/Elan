@@ -59,6 +59,76 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_GlobalProcedureOnClass() {
+        var code = @"
+main
+    var b set to new Bar()
+    call b.foo()
+end main
+
+procedure foo(bar Bar)
+    print bar
+end procedure
+class Bar
+    constructor()
+    end constructor
+
+    function asString() as String
+        return ""bar""
+    end function
+
+end class
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static void foo(Bar bar) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(bar));
+  }
+  public record class Bar {
+    public static Bar DefaultInstance { get; } = new Bar._DefaultBar();
+
+    public Bar() {
+
+    }
+
+    public virtual string asString() {
+
+      return @$""bar"";
+    }
+    private record class _DefaultBar : Bar {
+      public _DefaultBar() { }
+
+
+      public override string asString() { return ""default Bar"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var b = new Bar();
+    Globals.foo(b);
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "bar\r\n");
+    }
+
+
+    [TestMethod]
     public void Pass_SystemProcedure() {
         var code = @"
 main
