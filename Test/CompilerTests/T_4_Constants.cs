@@ -148,7 +148,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "a\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_EmptyChar()
     {
         var code = @"#
@@ -159,7 +159,21 @@ main
 end main
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public const char a = default(char);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a == default(char)));
+  }
+}";
 
         var parseTree = @"*";
 
@@ -169,7 +183,7 @@ end main
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "\r\ntrue\r\n");
+        AssertObjectCodeExecutes(compileData, "\0\r\ntrue\r\n");
     }
 
     [TestMethod]

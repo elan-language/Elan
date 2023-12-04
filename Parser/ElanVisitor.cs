@@ -56,6 +56,18 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitStatementBlock([NotNull] ElanParser.StatementBlockContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.testStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTestStatement([NotNull] ElanParser.TestStatementContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.assert"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAssert([NotNull] ElanParser.AssertContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.callStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

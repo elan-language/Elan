@@ -104,7 +104,7 @@ IDENTIFIER:         IdentifierStartingLC;
 LITERAL_INTEGER:     [0-9] [0-9]*;
 LITERAL_FLOAT:        LITERAL_INTEGER DOT LITERAL_INTEGER ExponentPart?;
 
-LITERAL_CHAR:                   '\'' (~['\\\r\n\u0085] | CommonCharacter) '\'';
+LITERAL_CHAR:                   '\'' (~['\\\r\n\u0085] | CommonCharacter) '\'' | '\'\'';
 LITERAL_STRING:                      '"'  (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES:   (Whitespace)+  -> skip;
