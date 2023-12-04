@@ -20,6 +20,7 @@ using static StandardLibrary.Constants;
 public static partial class Globals {
   public static readonly StandardLibrary.ElanList<string> allPossibleAnswers = new StandardLibrary.ElanList<string>(@$""ABACK"", @$""..."");
   public static readonly StandardLibrary.ElanList<string> validWords = new StandardLibrary.ElanList<string>(@$""ABACK"", @$""..."");
+  public static readonly StandardLibrary.ElanList<int> letterPositions = new StandardLibrary.ElanList<int>(0, 1, 2, 3, 4);
   public static bool isGreen(string attempt, string target, int n) {
 
     return target[n] == attempt[n];
@@ -54,11 +55,11 @@ public static partial class Globals {
   }
   public static (string, string) evaluateGreens(string attempt, string target) {
 
-    return StandardLibrary.Functions.reduce(StandardLibrary.Functions.range(5), (attempt, target), (a, x) => (Globals.setAttemptIfGreen(a.attempt, a.target, x), Globals.setTargetIfGreen(a.attempt, a.target, x)));
+    return StandardLibrary.Functions.reduce(letterPositions, (attempt, target), (a, x) => (Globals.setAttemptIfGreen(a.attempt, a.target, x), Globals.setTargetIfGreen(a.attempt, a.target, x)));
   }
   public static (string, string) evaluateYellows(string attempt, string target) {
 
-    return StandardLibrary.Functions.reduce(StandardLibrary.Functions.range(5), (attempt, target), (a, x) => (Globals.setAttemptIfYellow(a.attempt, a.target, x), Globals.setTargetIfYellow(a.attempt, a.target, x)));
+    return StandardLibrary.Functions.reduce(letterPositions, (attempt, target), (a, x) => (Globals.setAttemptIfYellow(a.attempt, a.target, x), Globals.setTargetIfYellow(a.attempt, a.target, x)));
   }
   public static string markAttempt(string attempt, string target) {
     var (attemptAfterGreens, targetAfterGreens) = Globals.evaluateGreens(attempt, target);
