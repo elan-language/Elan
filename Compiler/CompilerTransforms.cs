@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using AbstractSyntaxTree.Nodes;
+using CSharpLanguageModel.Models;
 using SymbolTable;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
@@ -215,6 +216,10 @@ public static class CompilerTransforms {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
                 VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
+                _ => null
+            },
+            FunctionCallNode fcn => currentScope.Resolve(fcn.Name) switch {
+                FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
                 _ => null
             },
             _ => null
