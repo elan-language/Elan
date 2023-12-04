@@ -65,7 +65,7 @@ function possibleAnswersAfterAttempt(prior Iter<of String>, attempt String, mark
 
 function wordCountRemainingAfterAttempt(possibleAnswers Iter<of String>, attempt String) as Int
     var groups set to possibleAnswers.groupBy(lambda w -> markAttempt(attempt, w))
-    return groups.max(lambda g -> g.count())
+    return groups.max(lambda g -> g[1].count())
 end function
 
 function allRemainingWordCounts(possAnswers List<of String>, possAttempts Iter<of String>) as Iter<of (String, Int)> ->

@@ -254,15 +254,7 @@ public static class Functions {
 
     public static IEnumerable<T> asParallel<T>(IEnumerable<T> source) => source.AsParallel();
 
-    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, int> func) => source.GroupBy(func);
-
-    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, double> func) => source.GroupBy(func);
-
-    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, string> func) => source.GroupBy(func);
-
-    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, char> func) => source.GroupBy(func);
-
-    public static IEnumerable<IEnumerable<T>> groupBy<T>(IEnumerable<T> source, Func<T, bool> func) => source.GroupBy(func);
-
+    public static IEnumerable<(U, IEnumerable<T>)> groupBy<T,U>(IEnumerable<T> source, Func<T, U> func) => 
+        source.GroupBy(func).Select(g => (g.Key, (IEnumerable<T>) g)).OrderBy(g => g.Item1);
     #endregion
 }
