@@ -166,6 +166,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "195\r\n295\r\nConcat:23571113171923273137\r\n");
     }
+
     [TestMethod]
     public void Pass_Max()
     {
@@ -173,7 +174,6 @@ public static class Program {
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.max()
- print source.max(lambda x -> x mod 5)
 end main
 ";
 
@@ -189,7 +189,6 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.max(source)));
-    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.max(source, (x) => x % 5)));
   }
 }";
 
@@ -201,16 +200,52 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "37\r\n19\r\n");
+        AssertObjectCodeExecutes(compileData, "37\r\n");
     }
 
     [TestMethod]
-    public void Pass_Max1()
+    public void Pass_MaxBy()
+    {
+        var code = @"
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
+main
+ print source.maxBy(lambda x -> x mod 5)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.maxBy(source, (x) => x % 5)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "19\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_MaxBy1()
     {
         var code = @"
 constant source set to {{1}, {2,2}}
 main
- print source.max(lambda t -> t.count())
+ print source.maxBy(lambda t -> t.count())
 end main
 ";
 
@@ -225,7 +260,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.max(source, (t) => StandardLibrary.Functions.count(t))));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.maxBy(source, (t) => StandardLibrary.Functions.count(t))));
   }
 }";
 
@@ -240,6 +275,41 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {2,2}\r\n");
     }
 
+    [TestMethod]
+    public void Pass_MaxBy2()
+    {
+        var code = @"
+constant source set to {""apple"", ""orange"",""pear""}
+main
+ print source.maxBy(lambda t -> t.length())
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<string> source = new StandardLibrary.ElanList<string>(@$""apple"", @$""orange"", @$""pear"");
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.maxBy(source, (t) => StandardLibrary.Functions.length(t))));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "orange\r\n");
+    }
 
     [TestMethod]
     public void Pass_Count()
@@ -277,9 +347,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-
-
-
     [TestMethod]
     public void Pass_Min()
     {
@@ -287,7 +354,6 @@ public static class Program {
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.min()
- print source.min(lambda x -> x mod 5)
 end main
 ";
 
@@ -303,7 +369,6 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.min(source)));
-    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.min(source, (x) => x % 5)));
   }
 }";
 
@@ -315,7 +380,43 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "2\r\n5\r\n");
+        AssertObjectCodeExecutes(compileData, "2\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_MinBy()
+    {
+        var code = @"
+constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
+main
+ print source.minBy(lambda x -> x mod 5)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<int> source = new StandardLibrary.ElanList<int>(2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37);
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.minBy(source, (x) => x % 5)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "5\r\n");
     }
 
     [TestMethod]
