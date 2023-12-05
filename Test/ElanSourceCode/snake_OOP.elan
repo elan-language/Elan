@@ -1,0 +1,152 @@
+﻿# Elan
+main
+    print welcome
+    var k set to system.readKey()
+    var newGame set to true
+    while newGame
+        call playGame()
+        print "Do you want to play again (y/n)?"
+        var answer set to ' '
+        repeat
+            set answer to system.readKey()
+        until answer is 'y' or answer is 'n'
+        if answer is 'n' then
+            set newGame to false
+        end if
+    end while
+end main
+
+constant directionByKey set to { 'w': Direction.up, 's' : Direction.down, 'a': Direction.left, 'd': Direction.right}
+constant welcome set to "Welcome to the Snake game. 
+
+Use the w,a,s, and d keys to control the direction of the snake. Letting the snake get to any edge will lose you the game, as will letting the snake's head pass over its body. Eating an apple will
+cause the snake to grow by one segment. 
+
+If you want to re-size the window, please do so now, before starting the game.
+
+Press any key to start.."
+
+procedure playGame()
+    var charMap set to new CharMap()
+    call charMap.fillBackground()
+    var currentDirection set to Direction.right
+    var snake set to new Snake(charMap.width div 2, charMap.height, currentDirection)
+    var gameOn set to true
+    while gameOn
+        call draw(charMap, snake.head, Colour.green)
+        call draw(charMap, snake.apple, Colour.red)
+        var priorTail set to snake.tail()
+        call pause(200)
+        var pressed set to system.keyHasBeenPressed()
+        if pressed then
+            var k set to system.readKey()
+            set currentDirection to directionByKey[k]
+        end if
+        call snake.clockTick(currentDirection, gameOn)
+        if snake.tail() is not priorTail then
+            call draw(charMap, priorTail, charMap.backgroundColour)
+        end if
+    end while
+    call charMap.setCursor(0, 0)
+    print "Game Over! Score: {snake.length() - 2}"
+end procedure
+
+procedure draw(cm CharMap, sq Square, colour Colour)
+    var col set to sq.x * 2
+    var row set to sq.y
+    call cm.putBlockWithColour(col, row, colour)
+    call cm.putBlockWithColour(col + 1, row, colour) # because block is 2 chars wide
+end procedure
+
+class Snake
+    constructor(boardWidth Int, boardHeight Int, startingDirection Direction)
+        set self.boardWidth to boardWidth
+        set self.boardHeight to boardHeight
+        var tail set to new Square(boardWidth div 2, boardHeight div 2)
+        set body to {tail}
+        set head to tail.getAdjacentSquare(startingDirection)
+        call setNewApplePosition()
+    end constructor
+
+    property boardWidth Int
+    property boardHeight Int
+    property head Square
+    private property body List<of Square>
+    property apple Square
+
+    function tail() as Square
+      return body[0]
+    end function
+
+    function length() as Int
+      return body.length()
+    end function
+
+    function bodyCovers(sq Square) as Bool
+      var result set to false
+      foreach seg in body
+        if (seg is sq) then
+          set result to true
+        end if
+      end foreach
+      return result
+    end function
+
+    procedure clockTick(d Direction, out continue Bool)
+        set body to body + head;
+        set head to head.getAdjacentSquare(d);
+        if head is apple then
+            call setNewApplePosition()
+        else
+            set body to body[1..]
+        end if
+        set continue to not hasHitEdge() and not bodyCovers(head)
+    end procedure
+
+    function hasHitEdge() as Bool
+        return head.x < 0 or head.y < 0 or head.x is boardWidth or head.y is boardHeight
+    end function
+
+    procedure setNewApplePosition()
+        repeat
+            var ranW set to system.random(boardWidth-1)
+            var ranH set to system.random(boardHeight-1)
+            set apple to new Square(ranW, ranH) 
+        until not bodyCovers(apple)
+    end procedure
+
+    function asString() as String
+      return "Snake"
+    end function
+end class
+
+class Square
+    constructor (x Int, y Int)
+        set self.x to x
+        set self.y to y
+    end constructor
+
+    property x Int
+    property y Int
+
+    function getAdjacentSquare(d Direction) as Square
+        var newX set to x
+        var newY set to y
+        switch d
+            case Direction.left
+                set newX to newX - 1     
+            case Direction.right
+                set newX to newX + 1
+            case Direction.up
+                set newY to newY - 1 
+            case Direction.down
+                set newY to newY + 1
+            default
+        end switch
+        return new Square(newX, newY)
+    end function
+
+    function asString() as String 
+      return "{x},{y}"
+    end function
+end class
