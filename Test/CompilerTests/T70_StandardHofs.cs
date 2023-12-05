@@ -133,7 +133,7 @@ public static class Program {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
- print source.reduce(lambda s,x -> s+x)
+ print source.reduce(0, lambda s,x -> s+x)
  print source.reduce(100, lambda s,x -> s+x)
  print source.reduce(""Concat:"",lambda s,x -> s+x.asString())
 end main
@@ -150,7 +150,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(source, (s, x) => s + x)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(source, 0, (s, x) => s + x)));
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(source, 100, (s, x) => s + x)));
     System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(source, @$""Concat:"", (s, x) => s + StandardLibrary.Functions.asString(x))));
   }
