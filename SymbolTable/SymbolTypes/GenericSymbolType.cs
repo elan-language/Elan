@@ -1,3 +1,3 @@
 ﻿namespace SymbolTable.SymbolTypes;
 
-public record GenericSymbolType : ISymbolType { }
+public record GenericSymbolType(string TypeName) : ISymbolType { }

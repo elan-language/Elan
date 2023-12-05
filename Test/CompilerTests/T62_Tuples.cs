@@ -95,6 +95,81 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_IndexFunctionReturnsTuple() {
+        var code = @"#
+main
+    print f()[0]
+end main
+function f() as (String, String)
+   return (""1"", ""2"")
+end function
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static (string, string) f() {
+
+    return (@$""1"", @$""2"");
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.f().Item1));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "1\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_IndexGenericFunctionReturnsTuple() {
+        var code = @"#
+main
+    print a.reduce(lambda i, j -> j)[0]
+end main
+constant a set to {(1,2)}
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<(int, int)> a = new StandardLibrary.ElanList<(int, int)>((1, 2));
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(a, (i, j) => j).Item1));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "1\r\n");
+    }
+
+    [TestMethod]
     public void Pass_FunctionTupleParameter() {
         var code = @"#
 main

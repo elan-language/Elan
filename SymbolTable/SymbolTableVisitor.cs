@@ -26,6 +26,7 @@ public class SymbolTableVisitor {
             ClassDefNode n => VisitClassDefNode(n),
             AbstractClassDefNode n => VisitAbstractClassDefNode(n),
             VarDefNode n => VisitVarDefNode(n),
+            ConstantDefNode n => VisitConstantDefNode(n),
             ParameterNode n => VisitParameterNode(n),
             PropertyDefNode n => VisitPropertyDefNode(n),
             null => throw new NotImplementedException("null"),
@@ -178,11 +179,11 @@ public class SymbolTableVisitor {
             ValueNode vn => MapNodeToSymbolType(vn.TypeNode),
             ValueTypeNode vtn => MapElanValueTypeToSymbolType(vtn.Type.ToString()),
             LiteralTupleNode => new TupleSymbolType(),
-            LiteralListNode => new ListSymbolType(),
+            LiteralListNode lln => new ListSymbolType(MapNodeToSymbolType(lln.ItemNodes.First())),
             LiteralDictionaryNode => new DictionarySymbolType(),
             DataStructureTypeNode { Type: DataStructure.Iter } => new IterSymbolType(),
             DataStructureTypeNode { Type: DataStructure.Array } => new ArraySymbolType(),
-            DataStructureTypeNode { Type: DataStructure.List } => new ListSymbolType(),
+            DataStructureTypeNode { Type: DataStructure.List } dsn => new ListSymbolType(MapNodeToSymbolType(dsn.GenericTypes.Single())),
             DataStructureTypeNode { Type: DataStructure.Dictionary } => new DictionarySymbolType(),
             MethodCallNode mcn => new PendingResolveSymbol(mcn.Name),
             BinaryNode { Operator: OperatorNode op } when OperatorEvaluatesToBoolean(op.Value) => BoolSymbolType.Instance,
@@ -218,6 +219,16 @@ public class SymbolTableVisitor {
 
         VisitChildren(varDefNode);
         return varDefNode;
+    }
+
+    private IAstNode VisitConstantDefNode(ConstantDefNode constantDefNode) {
+        var name = constantDefNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(constantDefNode.Id.GetType().ToString());
+        var type = MapNodeToSymbolType(constantDefNode.Expression);
+
+        var ms = new VariableSymbol(name, type, currentScope);
+        currentScope.Define(ms);
+        VisitChildren(constantDefNode);
+        return constantDefNode;
     }
 
     private void VisitDeconstructionNode(DeconstructionNode dn) {
