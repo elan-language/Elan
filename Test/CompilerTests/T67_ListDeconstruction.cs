@@ -175,35 +175,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\nList {3,5,7,11,13,17,19,23,27,31,37}\r\n");
     }
 
-    [TestMethod, Ignore]
-    public void Pass_InParam() {
-        var code = @"
-constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
-main
-  var {x:xs} set to source
-  print x
-  print xs
-end main
-
-function reverse({x:xs} as List<Int>) as List<Int> -> 
-  if xs.length() is 0 then
-    {x} 
-  else 
-    reverse(xs) + x
-";
-
-        var objectCode = @"";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {37,31,27,23,19,17,13,11,7,5,3,2}\r\n");
-    }
     #endregion
 
     #region Fails

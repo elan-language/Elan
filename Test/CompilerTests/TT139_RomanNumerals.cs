@@ -532,71 +532,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "MCMXCIX\r\n");
     }
 
-    [TestMethod, Ignore]
-    public void Pass_ListDeconstruction()
-    {
-        var code = @"
-main
-    var d set to 1999
-    print roman(d, valueSymbols)
-end main
-
-function roman(d Int, {x:xs} List<of (Int, String)>) as String
-    var result set to """"
-    var (value, symbol) set to x
-    if d > 0 then
-        if (d >= value) then
-           set result to result + symbol + roman(d - value, {x:xs})
-        else
-           set result to roman(d, xs)
-        end if
-    end if
-    return result
-end function
-
-constant valueSymbols set to { (1000,""M""), (900,""CM""), (500,""D""), (400,""CD""), (100,""C""), (90,""XC""), (50,""L""), (40,""XL""), (10,""X""), (9,""IX""), (5,""V""), (4,""IV""), (1,""I"") }
-";
-
-        var objectCode = @"using System.Collections.Generic;
-using StandardLibrary;
-using static Globals;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-  public static readonly StandardLibrary.ElanList<(int, string)> valueSymbols = new StandardLibrary.ElanList<(int, string)>((1000, @$""M""), (900, @$""CM""), (500, @$""D""), (400, @$""CD""), (100, @$""C""), (90, @$""XC""), (50, @$""L""), (40, @$""XL""), (10, @$""X""), (9, @$""IX""), (5, @$""V""), (4, @$""IV""), (1, @$""I""));
-  public static string roman(int d, StandardLibrary.ElanList<(int, string)> valueSymbols) {
-    var result = @$"""";
-    var (value, symbol) = valueSymbols[0];
-    if (d > 0) {
-      if ((d >= value)) {
-        result = result + symbol + Globals.roman(d - value, valueSymbols);
-      }
-      else {
-        result = Globals.roman(d, valueSymbols[(1)..]);
-      }
-    }
-    return result;
-  }
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var d = 1999;
-    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.roman(d, valueSymbols)));
-  }
-}";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "MCMXCIX\r\n");
-    }
-    #endregion
+   #endregion
 
     #region Fails
 
