@@ -63,7 +63,7 @@ public static partial class Globals {
   }
   public static string markAttempt(string attempt, string target) {
     var (attemptAfterGreens, targetAfterGreens) = Globals.evaluateGreens(attempt, target);
-    return Globals.evaluateYellows(attemptAfterGreens, targetAfterGreens)[0];
+    return Globals.evaluateYellows(attemptAfterGreens, targetAfterGreens).Item1;
   }
   public static System.Collections.Generic.IEnumerable<string> possibleAnswersAfterAttempt(System.Collections.Generic.IEnumerable<string> prior, string attempt, string mark) {
 
@@ -71,7 +71,7 @@ public static partial class Globals {
   }
   public static int wordCountRemainingAfterAttempt(System.Collections.Generic.IEnumerable<string> possibleAnswers, string attempt) {
     var groups = StandardLibrary.Functions.groupBy(possibleAnswers, (w) => Globals.markAttempt(attempt, w));
-    return StandardLibrary.Functions.max(groups, (g) => StandardLibrary.Functions.count(g[1]));
+    return StandardLibrary.Functions.maxBy(groups, (g) => StandardLibrary.Functions.count(g[1]));
   }
   public static System.Collections.Generic.IEnumerable<(string, int)> allRemainingWordCounts(StandardLibrary.ElanList<string> possAnswers, System.Collections.Generic.IEnumerable<string> possAttempts) {
 
