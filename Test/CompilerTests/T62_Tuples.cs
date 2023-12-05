@@ -138,7 +138,7 @@ public static class Program {
     public void Pass_IndexGenericFunctionReturnsTuple() {
         var code = @"#
 main
-    print a.reduce(lambda i, j -> j)[0]
+    print a.reduce((1,1), lambda i, j -> j)[0]
 end main
 constant a set to {(1,2)}
 ";
@@ -154,7 +154,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(a, (i, j) => j).Item1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(a, (1, 1), (i, j) => j)[0]));
   }
 }";
 
