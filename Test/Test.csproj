@@ -41,6 +41,9 @@
 		<None Update="ElanSourceCode\snake_OOP.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="ElanSourceCode\Wordle2.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ElanSourceCode\Wordle.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

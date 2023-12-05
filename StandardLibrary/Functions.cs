@@ -62,8 +62,9 @@ public static class Functions {
     public static IEnumerable<T> tail<T>(IEnumerable<T> e) => e.Skip(1);
     public static IEnumerable<T> range<T>(IEnumerable<T> e, int inclusiveFrom, int exclusiveTo) => e.Skip(inclusiveFrom).Take(exclusiveTo - inclusiveFrom);
     public static IEnumerable<T> rangeFrom<T>(IEnumerable<T> e, int inclusiveFrom) => e.Skip(inclusiveFrom);
-    public static IEnumerable<T> rangeTo<T>(IEnumerable<T> e, int exclusiveTo) => e.Take(exclusiveTo); 
+    public static IEnumerable<T> rangeTo<T>(IEnumerable<T> e, int exclusiveTo) => e.Take(exclusiveTo);
 
+    public static bool contains<T>(IEnumerable<T> l, T element) => l.Contains(element);
 
     #endregion
 
@@ -241,7 +242,7 @@ public static class Functions {
 
     public static IEnumerable<T> asParallel<T>(IEnumerable<T> source) => source.AsParallel();
 
-    public static IEnumerable<(U, IEnumerable<T>)> groupBy<T,U>(IEnumerable<T> source, Func<T, U> func) => 
-        source.GroupBy(func).Select(g => (g.Key, (IEnumerable<T>) g)).OrderBy(g => g.Item1);
+    public static IEnumerable<ElanGroup<K,T>> groupBy<K,T>(IEnumerable<T> source, Func<T, K> func) => 
+        source.GroupBy(func).Select(g => new ElanGroup<K,T>(g.Key, (IEnumerable<T>) g)).OrderBy(g => g.key);
     #endregion
 }

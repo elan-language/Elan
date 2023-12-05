@@ -493,8 +493,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {(0, Iter {5}),(1, Iter {11,31}),(2, Iter {2,7,17,27,37}),(3, Iter {3,13,23}),(4, Iter {19})}\r\n");
-                                            //"List {(0, Iter {5}),(1, Iter {11,31}),(2, Iter {2,7,17,27,37}),(3, Iter {3,13,23}),(4, Iter {19})}\r\n    (0, Iter {5})\r\n    "
+        AssertObjectCodeExecutes(compileData, "List {Group key:0 count: 1,Group key:1 count: 2,Group key:2 count: 5,Group key:3 count: 3,Group key:4 count: 1}\r\n");
     }
 
     #endregion

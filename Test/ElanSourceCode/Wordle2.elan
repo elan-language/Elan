@@ -3,12 +3,12 @@ constant allPossibleAnswers set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABH
 constant validWords set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABHOR","ABIDE","ABLED","ABODE","ABORT","ABOUT","ABOVE"}
 
 main
-   var possible set to allPossibleAnswers
+   var possible set to validWords
    var marking set to ""
    var attempt set to "RAISE"
    while marking is not "*****"
       print attempt
-      set marking to input 
+      set marking to input
       set possible to possibleAnswersAfterAttempt(possible, attempt, marking).asList()
       set attempt to bestAttempt(possible, validWords)
    end while
@@ -63,25 +63,35 @@ end function
 function possibleAnswersAfterAttempt(prior Iter<of String>, attempt String, mark String) as Iter<of String> ->
     prior.filter(lambda w -> markAttempt(attempt, w) is mark)
 
-function wordCountRemainingAfterAttempt(possibleAnswers Iter<of String>, attempt String) as Int
+function wordCountRemainingAfterAttempt(possibleAnswers Iter<of String>, attempt String) as WordCount
     var groups set to possibleAnswers.groupBy(lambda w -> markAttempt(attempt, w))
-    return groups.maxBy(lambda g -> g.members.count()).members.count()
+    return new WordCount(attempt, groups.maxBy(lambda g -> g.members.count()).members.count())
 end function
 
-function allRemainingWordCounts(possAnswers List<of String>, possAttempts Iter<of String>) as Iter<of (String, Int)> ->
-    possAttempts.asParallel().map(lambda w-> (w, wordCountRemainingAfterAttempt(possAnswers, w)))
+function allRemainingWordCounts(possAnswers List<of String>, possAttempts Iter<of String>) as Iter<of WordCount> ->
+    possAttempts.asParallel().map(lambda w-> wordCountRemainingAfterAttempt(possAnswers, w))
 
-function betterOf(word1 (String, Int), word2 (String, Int), possAnswers Iter<of String>) as (String, Int)
-  var (w1, w1Count) set to word1
-  var (w2, w2Count) set to word2  
-  var isBetter set to w2Count < w1Count
-  var isEqualAndPossAnswer set to w2Count is w1Count and possAnswers.contains(w2)
+function betterOf(wc1 WordCount, wc2 WordCount, possAnswers Iter<of String>) as WordCount
+  var isBetter set to wc2.count < wc1.count
+  var isEqualAndPossAnswer set to wc2.count is wc1.count and possAnswers.contains(wc2.word)
   return if isBetter or isEqualAndPossAnswer 
-    then word2 
-    else word1
+    then wc2 
+    else wc1
 end function
 
 function bestAttempt(possAnswers List<of String>, possAttempts List<of String>) as String 
    var wordCounts set to allRemainingWordCounts(possAnswers, possAttempts)
-   return wordCounts.reduce(("",2309),lambda bestSoFar, newWord -> betterOf(bestSoFar, newWord, possAnswers))[0]
+   return wordCounts.reduce(wordCounts.head(),lambda bestSoFar, newWord -> betterOf(bestSoFar, newWord, possAnswers)).word
 end function
+
+immutable class WordCount
+  constructor(word String, count Int) 
+    set self.word to word
+    set self.count to count
+  end constructor
+
+  property word String
+  property count Int
+
+  function asString() as String -> "{word}, {count}"
+end class
