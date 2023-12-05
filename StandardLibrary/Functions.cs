@@ -224,8 +224,6 @@ public static class Functions {
 
     public static IEnumerable<TResult> map<T, TResult>(IEnumerable<T> source, Func<T, TResult> predicate) => source.Select(predicate);
 
-    public static T reduce<T>(IEnumerable<T> source, Func<T, T, T> func) => source.Aggregate(func);
-
     public static TAccumulate reduce<T, TAccumulate>(IEnumerable<T> source, TAccumulate seed, Func<TAccumulate, T, TAccumulate> func) => source.Aggregate(seed, func);
 
     public static T max<T>(IEnumerable<T> source) => source.Max()!;
