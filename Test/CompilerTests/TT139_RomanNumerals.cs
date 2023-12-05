@@ -532,7 +532,63 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "MCMXCIX\r\n");
     }
 
-   #endregion
+    [TestMethod]
+    public void Pass_MostElegant()
+    {
+        var code = @"
+main
+    var d set to 1789
+    print roman(d)
+end main
+
+function roman(d Int) as String
+   var ds set to d.asString()
+   var rm set to """"
+   for i from ds.length() -1 to 0 step -1
+		set rm to symbols[i][ds[i].asInt()-48] + rm
+   end for
+   return rm
+end function
+
+constant symbols set to {{"""",""M"",""MM""},{"""",""C"",""CC"",""CCC"",""CD"",""D"",""DC"",""DCC"",""DCCC"",""CX""},{"""","""",""XX"",""XXX"",""XL"",""L"",""LX"",""LXX"",""LXXX"",""XX""},{"""",""I"",""II"",""III"",""IV"",""V"",""VI"",""VII"",""VIII"",""IX""}}
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<StandardLibrary.ElanList<string>> symbols = new StandardLibrary.ElanList<StandardLibrary.ElanList<string>>(new StandardLibrary.ElanList<string>(@$"""", @$""M"", @$""MM""), new StandardLibrary.ElanList<string>(@$"""", @$""C"", @$""CC"", @$""CCC"", @$""CD"", @$""D"", @$""DC"", @$""DCC"", @$""DCCC"", @$""CX""), new StandardLibrary.ElanList<string>(@$"""", @$"""", @$""XX"", @$""XXX"", @$""XL"", @$""L"", @$""LX"", @$""LXX"", @$""LXXX"", @$""XX""), new StandardLibrary.ElanList<string>(@$"""", @$""I"", @$""II"", @$""III"", @$""IV"", @$""V"", @$""VI"", @$""VII"", @$""VIII"", @$""IX""));
+  public static string roman(int d) {
+    var ds = StandardLibrary.Functions.asString(d);
+    var rm = @$"""";
+    for (var i = StandardLibrary.Functions.length(ds) - 1; i >= 0; i = i - 1) {
+      rm = symbols[i][StandardLibrary.Functions.asInt(ds[i]) - 48] + rm;
+    }
+    return rm;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var d = 1789;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.roman(d)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "MDCCLXXXIX\r\n");
+    }
+
+    #endregion
 
     #region Fails
 
