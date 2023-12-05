@@ -1,0 +1,18 @@
+﻿main
+    var d = input "Decimal number: " 
+    print roman(d)
+end main
+
+function roman(d Int) as String
+    var result set to ""
+    foreach kvp in valueSymbols
+        var (value, symbol) = kvp
+        while (d >= value)
+            set result to result + symbol
+            set d to d - value
+        end while
+    end for
+    return result
+end function
+
+constant valueSymbols set to { 1000:"M", 900:"CM", 500:"D", 400:"CD", 100:"C", 90:"XC", 50:"L", 40:"XL", 10:"X", 9:"IX", 5:"V", 4:"IV", 1:"I" }

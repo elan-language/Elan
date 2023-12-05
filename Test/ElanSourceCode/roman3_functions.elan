@@ -1,0 +1,34 @@
+﻿main
+    var d = input "Decimal number: " 
+    print roman(d)
+end main
+
+
+function roman(d Int) as String
+    var result set to ""
+    var d2 set to d
+    (d, result) set to processSymbol(1000, "M", d2, result)
+    (d, result) set to processSymbol(900, "CM", d2, result)
+    (d, result) set to processSymbol(500, "D", d2, result)
+    (d, result) set to processSymbol(400, "CD", d2, result)
+    (d, result) set to processSymbol(100, "C", d2, result)
+    (d, result) set to processSymbol(90, "XC", d2, result)
+    (d, result) set to processSymbol(50, "L", d2, result)
+    (d, result) set to processSymbol(40, "XL", d2, result)
+    (d, result) set to processSymbol(10, "X", d2, result)
+    (d, result) set to processSymbol(9, "IX", d2, result)
+    (d, result) set to processSymbol(5, "V", d2, result)
+    (d, result) set to processSymbol(4, "IV", d2, result)
+    (d, result) set to processSymbol(1, "I", d2, result)
+    return result
+end function
+
+function processSymbol(n Int, x String, d Int, result String) as (Int, String)
+    var d2 set to d
+    var result2 set to result
+    while d2 >= n
+        d2 set to d2 - n
+        result2 set to result2 + x
+    end while
+    return (d2, result2)
+end function

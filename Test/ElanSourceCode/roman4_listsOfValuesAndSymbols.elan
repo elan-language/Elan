@@ -1,0 +1,19 @@
+﻿main
+    var d = input "Decimal number: " 
+    print roman(d)
+end main
+
+function roman(d Int) as String
+    var result set to ""
+    for i = 0 to values.length() - 1
+        var value = values[i]
+        while (d >= value)
+            set result to result + symbols[i]
+            set d to d - value
+        end while
+    end for
+    return result
+end function
+
+constant values set to { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 }
+constant symbols set to { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"}
