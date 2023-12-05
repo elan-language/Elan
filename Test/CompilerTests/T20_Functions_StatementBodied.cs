@@ -103,7 +103,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_BinarySearch_Recursive() {
+    public void Pass_BinarySearch() {
         var code = @"
 main
     var li set to {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
@@ -185,6 +185,95 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\ntrue\r\nfalse\r\n");
     }
+
+    [TestMethod]
+    public void Pass_BinarySearch2()
+    {
+        var code = @"
+main
+    var li1 set to {""apple"",""apricot"",""banana"",""lemon"",""lime"",""melon"",""orange"",""pear"",""plum"",""strawberry""}
+    print binarySearch(li1, ""banana"")
+    print binarySearch(li1, ""blueberry"")
+    print binarySearch(li1, ""apple"")
+    print binarySearch(li1, ""strawberry"")
+    print binarySearch(li1, ""lime"")
+    print binarySearch(li1, ""melon"")
+    var li2 set to {""lemon"",""lime"",""orange""}
+    print binarySearch(li2, ""lemon"")
+    print binarySearch(li2, ""lime"")
+    print binarySearch(li2, ""orange"")
+    print binarySearch(li2, ""pear"")
+end main
+
+function binarySearch(li List<of String>, item String) as  Bool 
+  var result set to false
+  if li.length() > 0 then  
+    var mid set to li.length() div 2
+    var value set to li[mid]
+    if item is value then
+        set result to true
+    else if item.isBefore(value) then
+        set result to binarySearch(li[..mid], item) 
+    else 
+        set result to binarySearch(li[mid+1..], item)
+    end if
+  end if
+  return result
+end function";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static bool binarySearch(StandardLibrary.ElanList<string> li, string item) {
+    var result = false;
+    if (StandardLibrary.Functions.length(li) > 0) {
+      var mid = StandardLibrary.Functions.length(li) / 2;
+      var value = li[mid];
+      if (item == value) {
+        result = true;
+      }
+      else if (StandardLibrary.Functions.isBefore(item, value)) {
+        result = Globals.binarySearch(li[..(mid)], item);
+      }
+      else {
+        result = Globals.binarySearch(li[(mid + 1)..], item);
+      }
+    }
+    return result;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var li1 = new StandardLibrary.ElanList<string>(@$""apple"", @$""apricot"", @$""banana"", @$""lemon"", @$""lime"", @$""melon"", @$""orange"", @$""pear"", @$""plum"", @$""strawberry"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li1, @$""banana"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li1, @$""blueberry"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li1, @$""apple"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li1, @$""strawberry"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li1, @$""lime"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li1, @$""melon"")));
+    var li2 = new StandardLibrary.ElanList<string>(@$""lemon"", @$""lime"", @$""orange"");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$""lemon"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$""lime"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$""orange"")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$""pear"")));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "true\r\nfalse\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\nfalse\r\n");
+    }
+
 
     [TestMethod]
     public void Pass_MergeSort_Recursive() {
