@@ -1,3 +1,3 @@
 ﻿namespace SymbolTable.SymbolTypes;
 
-public record ListSymbolType : ISymbolType { }
+public record ListSymbolType(ISymbolType OfType) : ISymbolType { }

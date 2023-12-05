@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using AbstractSyntaxTree.Nodes;
+using CSharpLanguageModel.Models;
 using SymbolTable;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
@@ -198,16 +199,49 @@ public static class CompilerTransforms {
     };
 
     private static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope) {
-        if (symbolType is PendingResolveSymbol rr) {
-            return currentScope.Resolve(rr.Name) switch {
+        return symbolType switch {
+            PendingResolveSymbol rr => currentScope.Resolve(rr.Name) switch {
                 VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 ClassSymbol cs => new ClassSymbolType(cs.Name),
                 FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
                 _ => throw new NotImplementedException()
-            };
+            },
+            _ => symbolType
+        };
+    }
+
+    private static ISymbolType GetTypeFromDepth(ISymbolType type, int depth) {
+        if (depth is 0) {
+            return type;
         }
 
-        return symbolType;
+        return type switch {
+            ListSymbolType lst => GetTypeFromDepth(lst.OfType, depth - 1),
+            _ => throw new NotImplementedException()
+        };
+    }
+
+
+    private static ISymbolType ResolveGenericType(GenericSymbolType gst, GenericFunctionSymbol fst, FunctionCallNode fcn, IScope currentScope) {
+        var name = gst.TypeName;
+        var indexAndDepth = fst.GenericParameters[name];
+        var matchingParameter = fcn.Parameters[indexAndDepth.Item1];
+
+        var st = GetExpressionType(matchingParameter, currentScope);
+
+        var actualType = GetTypeFromDepth(st, indexAndDepth.Item2);
+
+
+        return actualType;
+    }
+
+
+    private static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {
+        return symbolType switch {
+            PendingResolveSymbol => EnsureResolved(symbolType, currentScope),
+            GenericSymbolType gst => ResolveGenericType(gst, fs, fcn, currentScope),
+            _ => symbolType
+        };
     }
 
     private static ISymbolType? GetExpressionType(IAstNode expression, IScope currentScope) {
@@ -217,6 +251,12 @@ public static class CompilerTransforms {
                 ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
                 _ => null
             },
+            FunctionCallNode fcn => currentScope.Resolve(fcn.Name) switch {
+                GenericFunctionSymbol fs => EnsureResolved(fs.ReturnType, fs, fcn, currentScope),
+                FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
+                _ => null
+            },
+            LiteralTupleNode => new TupleSymbolType(),
             _ => null
         };
     }

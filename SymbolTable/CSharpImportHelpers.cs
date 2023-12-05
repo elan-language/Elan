@@ -18,9 +18,9 @@ public static class CSharpImportHelpers {
             "ITuple" => new TupleSymbolType(),
             "ElanDictionary`2" => new DictionarySymbolType(),
             "ElanArray`1" => new ArraySymbolType(),
-            "ElanList`1" => new ListSymbolType(),
+            "ElanList`1" => new ListSymbolType(ConvertCSharpTypesToBuiltInSymbol(type.GetGenericArguments().Single())),
             "IEnumerable`1" => new IterSymbolType(),
-            _ when type.IsGenericParameter => new GenericSymbolType(),
+            _ when type.IsGenericParameter => new GenericSymbolType(type.Name),
             _ when type.IsEnum => new EnumSymbolType(type.Name),
             _ => new ClassSymbolType(type.Name) // placeholder for everything else 
         };
@@ -125,8 +125,34 @@ public static class CSharpImportHelpers {
         return sa;
     }
 
+    private static (bool, int, int) MatchParameterAtDepth(Type t, Type parameterType, int index, int depth) {
+
+        if (parameterType.Name == t.Name) {
+            return (true, index, depth);
+        }
+
+        if (parameterType.IsGenericType) {
+            var matches = parameterType.GetGenericArguments().Select(pt => MatchParameterAtDepth(t, pt, index, depth + 1));
+
+            return matches.FirstOrDefault(m => m.Item1);
+        }
+
+        return (false, index, 0);
+    }
+
+    private static (int, int) MatchParametersAtDepth(Type t, Type[] parameterTypes, int depth) {
+        return parameterTypes.Select((pt, i) => MatchParameterAtDepth(t, pt, i, 0)).Where(m => m.Item1).Select(tt => (tt.Item2, tt.Item3)).First();
+    }
+
     private static FunctionSymbol CreateFunctionSymbol(MethodInfo mi, IScope? scope = null) {
-        var fs = new FunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), scope == null ? NameSpace.LibraryFunction : NameSpace.UserLocal, ParameterIds(mi), scope);
+        var mm = mi.IsGenericMethodDefinition
+            ? mi.GetGenericArguments().Select(gp => (gp.Name, MatchParametersAtDepth(gp, mi.GetParameters().Select(p => p.ParameterType).ToArray(), 0))).ToArray()
+            : Array.Empty<(string, (int, int))>();
+
+        var fs = mm.Any()
+            ? new GenericFunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), scope == null ? NameSpace.LibraryFunction : NameSpace.UserLocal, ParameterIds(mi), mm.ToDictionary(t => t.Item1, t => t.Item2), scope)
+            : new FunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), scope == null ? NameSpace.LibraryFunction : NameSpace.UserLocal, ParameterIds(mi), scope);
+
         ImportParameters(fs, mi);
         return fs;
     }
