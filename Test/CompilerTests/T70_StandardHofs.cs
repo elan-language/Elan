@@ -500,6 +500,74 @@ public static class Program {
     #endregion
 
     #region Fails
+    [TestMethod]
+    public void Fail_MaxOnNonNumeric()
+    {
+        var code = @"
+constant source set to {""apple"",""orange"",""pear""}
+main
+ print source.max()
+end main
+";
 
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<string> source = new StandardLibrary.ElanList<string>(@$""apple"", @$""orange"", @$""pear"");
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.max(source)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeDoesNotCompile(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_MaxLambdaReturningNonNumeric()
+    {
+        var code = @"
+constant source set to {""apple"", ""orange"",""pear""}
+main
+ print source.maxBy(lambda t -> t.asUpperCase())
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<string> source = new StandardLibrary.ElanList<string>(@$""apple"", @$""orange"", @$""pear"");
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.maxBy(source, (t) => StandardLibrary.Functions.asUpperCase(t))));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeDoesNotCompile(compileData);
+    }
     #endregion
 }

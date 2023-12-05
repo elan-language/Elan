@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using static StandardLibrary.Constants;
@@ -226,25 +227,13 @@ public static class Functions {
 
     public static TAccumulate reduce<T, TAccumulate>(IEnumerable<T> source, TAccumulate seed, Func<TAccumulate, T, TAccumulate> func) => source.Aggregate(seed, func);
 
-    public static T max<T>(IEnumerable<T> source) => source.Max()!;
+    public static T max<T>(IEnumerable<T> source) where T : INumber<T> => source.Max()!;
 
-    public static T maxBy<T>(IEnumerable<T> source, Func<T, int> predicate) => source.MaxBy(predicate)!;
+    public static T maxBy<T, U>(IEnumerable<T> source, Func<T, U> predicate) where U : INumber<U> => source.MaxBy(predicate)!;
 
-    public static T maxBy<T>(IEnumerable<T> source, Func<T, double> predicate) => source.MaxBy(predicate)!;
+    public static T min<T>(IEnumerable<T> source) where T : INumber<T> => source.Min()!;
 
-    public static T maxBy<T>(IEnumerable<T> source, Func<T, string> predicate) => source.MaxBy(predicate)!;
-
-    public static T maxBy<T>(IEnumerable<T> source, Func<T, char> predicate) => source.MaxBy(predicate)!;
-
-    public static T min<T>(IEnumerable<T> source) => source.Min()!;
-
-    public static T minBy<T>(IEnumerable<T> source, Func<T, int> predicate) => source.MinBy(predicate)!;
-
-    public static T minBy<T>(IEnumerable<T> source, Func<T, double> predicate) => source.MinBy(predicate)!;
-
-    public static T minBy<T>(IEnumerable<T> source, Func<T, string> predicate) => source.MinBy(predicate)!;
-
-    public static T minBy<T>(IEnumerable<T> source, Func<T, char> predicate) => source.MinBy(predicate)!;
+    public static T minBy<T,U>(IEnumerable<T> source, Func<T, U> predicate) where U : INumber<U> => source.MinBy(predicate)!;
 
     public static bool any<T>(IEnumerable<T> source, Func<T, bool> func) => source.Any(func);
 
