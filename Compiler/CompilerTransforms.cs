@@ -256,6 +256,7 @@ public static class CompilerTransforms {
                 FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
                 _ => null
             },
+            LiteralTupleNode => new TupleSymbolType(),
             _ => null
         };
     }

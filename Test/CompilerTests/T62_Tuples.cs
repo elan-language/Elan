@@ -154,7 +154,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(a, (1, 1), (i, j) => j)[0]));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.reduce(a, (1, 1), (i, j) => j).Item1));
   }
 }";
 
