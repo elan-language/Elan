@@ -232,7 +232,7 @@ range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT exp
 // VALUES
 value: literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | SELF | DEFAULT type;
 
-scopeQualifier: (SELF | GLOBAL ) DOT; // might add 'namespace' as a further option in future
+scopeQualifier: (SELF | GLOBAL | LIBRARY) DOT; // might add 'namespace' as a further option in future
  
 // LITERALS
 literal: literalValue | literalDataStructure ; 

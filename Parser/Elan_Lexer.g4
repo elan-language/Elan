@@ -34,6 +34,7 @@ INHERITS:      'inherits';
 INPUT:         'input';
 LAMBDA:		   'lambda';
 LET:           'let';
+LIBRARY: 	   'library';
 MAIN:		   'main';
 MOD:           'mod';
 NEW:		   'new';
