@@ -1,0 +1,45 @@
+﻿using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static double calcSumX(StandardLibrary.ElanList<(double, double)> points) {
+
+    return StandardLibrary.Functions.reduce(points, 0.0, (s, p) => s + p[0]);
+  }
+  public static double calcSumY(StandardLibrary.ElanList<(double, double)> points) {
+
+    return StandardLibrary.Functions.reduce(points, 0.0, (s, p) => s + p[1]);
+  }
+  public static double calcSumXsq(StandardLibrary.ElanList<(double, double)> points) {
+
+    return StandardLibrary.Functions.reduce(points, 0.0, (s, p) => s + p[0] * p[0]);
+  }
+  public static double calcSumXY(StandardLibrary.ElanList<(double, double)> points) {
+
+    return StandardLibrary.Functions.reduce(points, 0.0, (s, p) => s + p[0] * p[1]);
+  }
+  public static double calcA(double sumX, double sumXsq, double sumY, double sumXY, int n) {
+
+    return Compiler.WrapperFunctions.FloatDiv((sumY * sumXsq - sumX * sumXY), (n * sumXsq - sumX * sumX));
+  }
+  public static double calcB(double sumX, double sumXsq, double sumY, double sumXY, int n) {
+
+    return Compiler.WrapperFunctions.FloatDiv((n * sumXY - sumX * sumY), (n * sumXsq - sumX * sumX));
+  }
+  public static (double, double) bestFitFromSummaryTerms(double sumX, double sumX2, double sumY, double sumXY, int n) {
+
+    return (Globals.calcA(sumX, sumX2, sumY, sumXY, n), Globals.calcB(sumX, sumX2, sumY, sumXY, n));
+  }
+  public static (double, double) bestFitFromPoints(StandardLibrary.ElanList<(double, double)> points) {
+
+    return Globals.bestFitFromSummaryTerms(Globals.calcSumX(points), Globals.calcSumXsq(points), Globals.calcSumY(points), Globals.calcSumXY(points), StandardLibrary.Functions.length(points));
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+
+  }
+}
