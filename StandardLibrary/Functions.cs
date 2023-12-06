@@ -66,6 +66,8 @@ public static class Functions {
 
     public static bool contains<T>(IEnumerable<T> l, T element) => l.Contains(element);
 
+    public static IEnumerable<int> integers(int from, int toInclusive) => Enumerable.Range(from, toInclusive - from + 1);
+
     #endregion
 
     #region dictionary

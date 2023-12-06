@@ -32,6 +32,9 @@
 		<None Update="ElanSourceCode\binarySearch.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="ElanSourceCode\Life.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ElanSourceCode\mergeSort.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
