@@ -10,13 +10,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="ElanSourceCode\Constants.cs" />
-	  <Compile Remove="ElanSourceCode\QueueOfTiles.cs" />
-	  <Compile Remove="ElanSourceCode\Snake.cs" />
-	  <Compile Remove="ElanSourceCode\words_complete.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
 		<PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
 		<PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
@@ -29,25 +22,91 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="ElanSourceCode\binarySearch.elan">
+		<None Update="ExampleProjects\binarySearch.obj">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\Life.elan">
+		<None Update="ExampleProjects\binarySearch.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\mergeSort.elan">
+		<None Update="ExampleProjects\Life.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\snake_PP.elan">
+		<None Update="ExampleProjects\RomanNumerals_3.obj">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\snake_OOP.elan">
+		<None Update="ExampleProjects\RomanNumerals_4.obj">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\Wordle2.elan">
+		<None Update="ExampleProjects\RomanNumerals_6.obj">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="ElanSourceCode\Wordle.elan">
+		<None Update="ExampleProjects\RomanNumerals_5.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_7.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_8.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_8.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_7.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_6.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_5.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_4.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_3.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_2.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_2.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_1.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\RomanNumerals_1.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\mergeSort.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\mergeSort.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\snake_OOP.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\snake_PP.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\snake_PP.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\snake_OOP.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\Wordle_1.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\Wordle_2.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\Wordle_2.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\Wordle_1.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

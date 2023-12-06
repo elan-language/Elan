@@ -1,0 +1,68 @@
+using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var d = 1789;
+    var result = @$"";
+    while (d >= 1000) {
+      d = d - 1000;
+      result = result + @$"M";
+    }
+    while (d >= 900) {
+      d = d - 900;
+      result = result + @$"CM";
+    }
+    while (d >= 500) {
+      d = d - 500;
+      result = result + @$"D";
+    }
+    while (d >= 400) {
+      d = d - 400;
+      result = result + @$"CD";
+    }
+    while (d >= 100) {
+      d = d - 100;
+      result = result + @$"C";
+    }
+    while (d >= 90) {
+      d = d - 90;
+      result = result + @$"XC";
+    }
+    while (d >= 50) {
+      d = d - 50;
+      result = result + @$"L";
+    }
+    while (d >= 40) {
+      d = d - 40;
+      result = result + @$"XL";
+    }
+    while (d >= 10) {
+      d = d - 10;
+      result = result + @$"X";
+    }
+    while (d >= 9) {
+      d = d - 9;
+      result = result + @$"IX";
+    }
+    while (d >= 5) {
+      d = d - 5;
+      result = result + @$"V";
+    }
+    while (d >= 4) {
+      d = d - 4;
+      result = result + @$"IV";
+    }
+    while (d >= 1) {
+      d = d - 1;
+      result = result + @$"I";
+    }
+    System.Console.WriteLine(StandardLibrary.Functions.asString(result));
+  }
+}

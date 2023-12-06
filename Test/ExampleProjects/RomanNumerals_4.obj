@@ -1,0 +1,42 @@
+using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static string roman(int d) {
+    var result = @$"";
+    var d2 = d;
+    (d2, result) = Globals.processSymbol(1000, @$"M", d2, result);
+    (d2, result) = Globals.processSymbol(900, @$"CM", d2, result);
+    (d2, result) = Globals.processSymbol(900, @$"CM", d2, result);
+    (d2, result) = Globals.processSymbol(500, @$"D", d2, result);
+    (d2, result) = Globals.processSymbol(400, @$"CD", d2, result);
+    (d2, result) = Globals.processSymbol(100, @$"C", d2, result);
+    (d2, result) = Globals.processSymbol(90, @$"XC", d2, result);
+    (d2, result) = Globals.processSymbol(50, @$"L", d2, result);
+    (d2, result) = Globals.processSymbol(40, @$"XL", d2, result);
+    (d2, result) = Globals.processSymbol(10, @$"X", d2, result);
+    (d2, result) = Globals.processSymbol(9, @$"IX", d2, result);
+    (d2, result) = Globals.processSymbol(5, @$"V", d2, result);
+    (d2, result) = Globals.processSymbol(4, @$"IV", d2, result);
+    (d2, result) = Globals.processSymbol(1, @$"I", d2, result);
+    return result;
+  }
+  public static (int, string) processSymbol(int n, string x, int d, string result) {
+    var d2 = d;
+    var result2 = result;
+    while (d2 >= n) {
+      d2 = d2 - n;
+      result2 = result2 + x;
+    }
+    return (d2, result2);
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var d = 1999;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.roman(d)));
+  }
+}
