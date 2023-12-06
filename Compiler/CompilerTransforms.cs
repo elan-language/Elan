@@ -174,23 +174,23 @@ public static class CompilerTransforms {
                 ? GetGlobalScope(s)
                 : scope;
 
-    private static IAstNode MapSymbolToTypeNode(ISymbolType? type) {
-        return type switch {
+    private static IAstNode MapSymbolToTypeNode(ISymbolType? type, IScope currentScope) {
+        return EnsureResolved(type!, currentScope) switch {
             ClassSymbolType cst => new TypeNode(new IdentifierNode(cst.Name)),
             IntSymbolType => new ValueTypeNode(ValueType.Int),
             FloatSymbolType => new ValueTypeNode(ValueType.Float),
             CharSymbolType => new ValueTypeNode(ValueType.Char),
             StringSymbolType => new ValueTypeNode(ValueType.String),
             BoolSymbolType => new ValueTypeNode(ValueType.Bool),
-            LambdaSymbolType t => new LambdaTypeNode(t.Arguments.Select(MapSymbolToTypeNode).ToImmutableArray(), MapSymbolToTypeNode(t.ReturnType)),
-            TupleSymbolType t => new TupleTypeNode(t.Types.Select(MapSymbolToTypeNode).ToImmutableArray()),
+            LambdaSymbolType t => new LambdaTypeNode(t.Arguments.Select(a => MapSymbolToTypeNode(a, currentScope)).ToImmutableArray(), MapSymbolToTypeNode(t.ReturnType, currentScope)),
+            TupleSymbolType t => new TupleTypeNode(t.Types.Select(a => MapSymbolToTypeNode(a, currentScope)).ToImmutableArray()),
             _ => throw new NotImplementedException(type?.ToString())
         };
     }
 
     private static IAstNode TypeIdentifier(IdentifierNode node, IScope currentScope) {
         var type = GetExpressionType(node, currentScope);
-        var typeNode = MapSymbolToTypeNode(type);
+        var typeNode = MapSymbolToTypeNode(type, currentScope);
 
         return new IdentifierWithTypeNode(node.Id, typeNode);
     }
