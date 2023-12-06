@@ -83,7 +83,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             PrintNode n => HandleScope(BuildPrintModel, n),
             InputNode n => HandleScope(BuildInputModel, n),
             ParameterCallNode n => HandleScope(BuildParameterCallModel, n),
-            FuncTypeNode n => HandleScope(BuildFuncTypeModel, n),
+            LambdaTypeNode n => HandleScope(BuildFuncTypeModel, n),
             TupleTypeNode n => HandleScope(BuildTupleTypeModel, n),
             TupleDefNode n => HandleScope(BuildTupleDefModel, n),
             AbstractFunctionDefNode n => Visit(n.Signature),
@@ -387,7 +387,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new TypeModel(id);
     }
 
-    private FuncTypeModel BuildFuncTypeModel(FuncTypeNode typeNode) {
+    private FuncTypeModel BuildFuncTypeModel(LambdaTypeNode typeNode) {
         var types = typeNode.Types.Select(Visit);
         var ret = Visit(typeNode.ReturnType);
 

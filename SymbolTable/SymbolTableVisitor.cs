@@ -1,7 +1,9 @@
 ﻿using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
+using Antlr4.Runtime.Atn;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
+using static SymbolTable.SymbolHelpers;
 
 namespace SymbolTable;
 
@@ -20,6 +22,7 @@ public class SymbolTableVisitor {
             ProcedureDefNode n => VisitProcedureDefNode(n),
             AbstractProcedureDefNode n => VisitAbstractProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
+            LambdaDefNode n => VisitLambdaDefNode(n),
             AbstractFunctionDefNode n => VisitAbstractFunctionDefNode(n),
             SystemAccessorDefNode n => VisitSystemAccessorNode(n),
             ConstructorNode n => VisitConstructorNode(n),
@@ -89,6 +92,18 @@ public class SymbolTableVisitor {
         return functionDefNode;
     }
 
+    private IAstNode VisitLambdaDefNode(LambdaDefNode lambda) {
+        var parameterIds = lambda.Arguments.OfType<IdentifierNode>().Select(idn => idn.Id).ToArray();
+        var rt = MapNodeToSymbolType(lambda.Expression);
+
+        var ms = new LambdaSymbol(lambda.Name, rt, parameterIds, currentScope);
+        currentScope.Define(ms);
+        currentScope = ms;
+        VisitChildren(lambda);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return lambda;
+    }
+
     private IAstNode VisitAbstractFunctionDefNode(AbstractFunctionDefNode functionDefNode) {
         var (name, parameterIds) = NameAndParameterIds(functionDefNode.Signature);
         var rt = MapNodeToSymbolType(functionDefNode.Signature);
@@ -140,70 +155,8 @@ public class SymbolTableVisitor {
         return abstractClassDefNode;
     }
 
-    private static bool OperatorEvaluatesToBoolean(Operator op) =>
-        op switch {
-            Operator.And => true,
-            Operator.Plus => false,
-            Operator.Minus => false,
-            Operator.Multiply => false,
-            Operator.Divide => false,
-            Operator.Power => false,
-            Operator.Modulus => false,
-            Operator.IntDivide => false,
-            Operator.Equal => true,
-            Operator.Or => true,
-            Operator.Xor => true,
-            Operator.LessThan => true,
-            Operator.GreaterThanEqual => true,
-            Operator.GreaterThan => true,
-            Operator.LessThanEqual => true,
-            Operator.NotEqual => true,
-            _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
-        };
-
-    private static ISymbolType MapElanValueTypeToSymbolType(string type) =>
-        type switch {
-            IntSymbolType.Name => IntSymbolType.Instance,
-            StringSymbolType.Name => StringSymbolType.Instance,
-            FloatSymbolType.Name => FloatSymbolType.Instance,
-            BoolSymbolType.Name => BoolSymbolType.Instance,
-            CharSymbolType.Name => CharSymbolType.Instance,
-            _ => throw new NotImplementedException()
-        };
-
-    private static ISymbolType MapNodeToSymbolType(IAstNode node) {
-        return node switch {
-            IdentifierNode idn => new PendingResolveSymbol(idn.Id),
-            TypeNode tn => MapNodeToSymbolType(tn.TypeName),
-            NewInstanceNode nin => MapNodeToSymbolType(nin.Type),
-            ValueNode vn => MapNodeToSymbolType(vn.TypeNode),
-            ValueTypeNode vtn => MapElanValueTypeToSymbolType(vtn.Type.ToString()),
-            LiteralTupleNode => new TupleSymbolType(),
-            LiteralListNode lln => new ListSymbolType(MapNodeToSymbolType(lln.ItemNodes.First())),
-            LiteralDictionaryNode => new DictionarySymbolType(),
-            DataStructureTypeNode { Type: DataStructure.Iter } => new IterSymbolType(),
-            DataStructureTypeNode { Type: DataStructure.Array } => new ArraySymbolType(),
-            DataStructureTypeNode { Type: DataStructure.List } dsn => new ListSymbolType(MapNodeToSymbolType(dsn.GenericTypes.Single())),
-            DataStructureTypeNode { Type: DataStructure.Dictionary } => new DictionarySymbolType(),
-            MethodCallNode mcn => new PendingResolveSymbol(mcn.Name),
-            BinaryNode { Operator: OperatorNode op } when OperatorEvaluatesToBoolean(op.Value) => BoolSymbolType.Instance,
-            BinaryNode bn => MapNodeToSymbolType(bn.Operand1),
-            IndexedExpressionNode ien => MapNodeToSymbolType(ien.Expression),
-            BracketNode bn => MapNodeToSymbolType(bn.BracketedNode),
-            UnaryNode un => MapNodeToSymbolType(un.Operand),
-            EnumValueNode en => MapNodeToSymbolType(en.TypeNode),
-            DefaultNode dn => MapNodeToSymbolType(dn.Type),
-            WithNode wn => MapNodeToSymbolType(wn.Expression),
-            PropertyCallNode pn => MapNodeToSymbolType(pn.Expression),
-            ReturnExpressionNode ren => MapNodeToSymbolType(ren.Expression),
-            QualifiedNode qn => MapNodeToSymbolType(qn.Qualified),
-            FuncTypeNode fn => new FuncSymbolType(),
-            MethodSignatureNode { ReturnType: not null } msn => MapNodeToSymbolType(msn.ReturnType),
-            InputNode => StringSymbolType.Instance,
-            TupleTypeNode => new TupleSymbolType(),
-            _ => throw new NotImplementedException(node.GetType().ToString())
-        };
-    }
+ 
+   
 
     private IAstNode VisitVarDefNode(VarDefNode varDefNode) {
         switch (varDefNode.Id) {

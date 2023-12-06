@@ -6,9 +6,9 @@ namespace Compiler;
 public class SecondPassVisitor {
     static SecondPassVisitor() {
         Transforms.Add(CompilerTransforms.TransformMethodCallNodes);
-        Transforms.Add(CompilerTransforms.TransformIndexNodes);
         Transforms.Add(CompilerTransforms.TransformLiteralListNodes);
         Transforms.Add(CompilerTransforms.TransformProcedureParameterNodes);
+        Transforms.Add(CompilerTransforms.TransformIndexNodes);
     }
 
     public SecondPassVisitor(SymbolTableImpl symbolTable) => SymbolTable = symbolTable;
@@ -27,6 +27,7 @@ public class SecondPassVisitor {
             MainNode => currentScope.Resolve(Constants.WellKnownMainId) as IScope ?? throw new ArgumentNullException(),
             ClassDefNode cdn => currentScope.Resolve(cdn.Name) as IScope ?? throw new ArgumentNullException(),
             FunctionDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
+            LambdaDefNode fdn => currentScope.Resolve(fdn.Name) as IScope ?? throw new ArgumentNullException(),
             SystemAccessorDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
             ProcedureDefNode pdn => currentScope.Resolve(SignatureId(pdn.Signature)) as IScope ?? throw new ArgumentNullException(),
             ConstructorNode => currentScope.Resolve(Constants.WellKnownConstructorId) as IScope ?? throw new ArgumentNullException(),
@@ -38,6 +39,7 @@ public class SecondPassVisitor {
             MainNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             ClassDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             FunctionDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            LambdaDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             SystemAccessorDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             ProcedureDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             ConstructorNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),

@@ -3,6 +3,7 @@
 public static class Constants {
     public const string WellKnownMainId = "_main";
     public const string WellKnownConstructorId = "_constructor";
+    public const string WellKnownLambdaId = "_lambda";
 
     public static readonly string[] ElanKeywords = {
         "abstract", "case", "catch", "class",

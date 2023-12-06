@@ -3,6 +3,9 @@
 namespace AbstractSyntaxTree.Nodes;
 
 public record LambdaDefNode(ImmutableArray<IAstNode> Arguments, IAstNode Expression) : IAstNode {
+
+    public string Name { get; } = Helpers.UniqueLambdaName;
+
     public IEnumerable<IAstNode> Children => Arguments.Append(Expression);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

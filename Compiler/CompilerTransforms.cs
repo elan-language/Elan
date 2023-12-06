@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Runtime.ExceptionServices;
 using AbstractSyntaxTree.Nodes;
 using CSharpLanguageModel.Models;
 using SymbolTable;
@@ -19,8 +20,8 @@ public static class CompilerTransforms {
                 (ProcedureSymbol, true) => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 (FunctionSymbol fs, false) => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
                 (FunctionSymbol, true) => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                (ParameterSymbol { ReturnType: FuncSymbolType }, _) => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
-                (VariableSymbol vs, _) when EnsureResolved(vs.ReturnType, currentScope) is FuncSymbolType => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
+                (ParameterSymbol { ReturnType: LambdaSymbolType }, _) => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
+                (VariableSymbol vs, _) when EnsureResolved(vs.ReturnType, currentScope) is LambdaSymbolType => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
                 _ => GetSpecificCallNodeForClassMethod(mcn, currentScope)
             },
             _ => null
@@ -71,6 +72,8 @@ public static class CompilerTransforms {
         };
     }
 
+   
+
     #endregion
 
     #region helpers
@@ -116,7 +119,7 @@ public static class CompilerTransforms {
                 ProcedureSymbol ps => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
                 FunctionSymbol { NameSpace: NameSpace.UserLocal } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 FunctionSymbol fs => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
-                VariableSymbol { ReturnType: FuncSymbolType } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+                VariableSymbol { ReturnType: LambdaSymbolType } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
                 _ => null
             },
             _ => null
@@ -179,7 +182,9 @@ public static class CompilerTransforms {
             CharSymbolType => new ValueTypeNode(ValueType.Char),
             StringSymbolType => new ValueTypeNode(ValueType.String),
             BoolSymbolType => new ValueTypeNode(ValueType.Bool),
-            _ => throw new NotImplementedException()
+            LambdaSymbolType t => new LambdaTypeNode(t.Arguments.Select(MapSymbolToTypeNode).ToImmutableArray(), MapSymbolToTypeNode(t.ReturnType)),
+            TupleSymbolType t => new TupleTypeNode(t.Types.Select(MapSymbolToTypeNode).ToImmutableArray()),
+            _ => throw new NotImplementedException(type?.ToString())
         };
     }
 
@@ -204,6 +209,7 @@ public static class CompilerTransforms {
                 VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 ClassSymbol cs => new ClassSymbolType(cs.Name),
                 FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
+                LambdaParameterSymbol lps => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             },
             _ => symbolType
@@ -236,6 +242,9 @@ public static class CompilerTransforms {
     }
 
 
+
+
+
     private static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {
         return symbolType switch {
             PendingResolveSymbol => EnsureResolved(symbolType, currentScope),
@@ -249,6 +258,7 @@ public static class CompilerTransforms {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
                 VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
+                LambdaParameterSymbol lps => EnsureResolved(lps.ReturnType, currentScope),
                 _ => null
             },
             FunctionCallNode fcn => currentScope.Resolve(fcn.Name) switch {
@@ -256,10 +266,11 @@ public static class CompilerTransforms {
                 FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
                 _ => null
             },
-            LiteralTupleNode => new TupleSymbolType(),
-            _ => null
+            _ => SymbolHelpers.MapNodeToSymbolType(expression)
         };
     }
+
+   
 
     #endregion
 }

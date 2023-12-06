@@ -46,4 +46,8 @@ public static class Helpers {
 
     public static IEnumerable<IAstNode> SafePrepend(this IEnumerable<IAstNode> nodes, IAstNode? node) =>
         node is null ? nodes : nodes.Prepend(node);
+
+    public static string UniqueID => Guid.NewGuid().ToString();
+
+    public static string UniqueLambdaName => $"_lambda{UniqueID}";
 }

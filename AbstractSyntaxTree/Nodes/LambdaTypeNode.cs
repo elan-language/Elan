@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record FuncTypeNode(ImmutableArray<IAstNode> Types, IAstNode ReturnType) : IAstNode {
+public record LambdaTypeNode(ImmutableArray<IAstNode> Types, IAstNode ReturnType) : IAstNode {
     public IEnumerable<IAstNode> Children => Types.Append(ReturnType);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

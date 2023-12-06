@@ -871,7 +871,7 @@ public static class AstFactory {
         var inputTypes = context.typeList().type().Select(visitor.Visit);
         var returnType = visitor.Visit(context.type());
 
-        return new FuncTypeNode(inputTypes.ToImmutableArray(), returnType);
+        return new LambdaTypeNode(inputTypes.ToImmutableArray(), returnType);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TupleTypeContext context) {
@@ -893,7 +893,7 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LambdaContext context) {
-        var arguments = context.argumentList().argument().Select(visitor.Visit);
+        var arguments = context.argumentList().argument().Select(a => visitor.Visit(a));
         var expr = visitor.Visit(context.expression());
 
         return new LambdaDefNode(arguments.ToImmutableArray(), expr);

@@ -15,11 +15,12 @@ public static class CSharpImportHelpers {
             "Char" => CharSymbolType.Instance,
             "Boolean" => BoolSymbolType.Instance,
             "Object" => new ClassSymbolType(type.Name),
-            "ITuple" => new TupleSymbolType(),
+            "ITuple" => new TupleSymbolType(type.GetGenericArguments().Select(ConvertCSharpTypesToBuiltInSymbol).ToArray()),
             "ElanDictionary`2" => new DictionarySymbolType(),
             "ElanArray`1" => new ArraySymbolType(),
             "ElanList`1" => new ListSymbolType(ConvertCSharpTypesToBuiltInSymbol(type.GetGenericArguments().Single())),
             "IEnumerable`1" => new IterSymbolType(),
+            _ when type.Name.StartsWith("Func") => new LambdaSymbolType(type.GetGenericArguments().Select(ConvertCSharpTypesToBuiltInSymbol).SkipLast(1).ToArray(), type.GetGenericArguments().Select(ConvertCSharpTypesToBuiltInSymbol).Last()), 
             _ when type.IsGenericParameter => new GenericSymbolType(type.Name),
             _ when type.IsEnum => new EnumSymbolType(type.Name),
             _ => new ClassSymbolType(type.Name) // placeholder for everything else 
