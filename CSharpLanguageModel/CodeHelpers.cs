@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
+using Antlr4.Runtime.Atn;
 using Compiler;
 using CSharpLanguageModel.Models;
 using ValueType = AbstractSyntaxTree.ValueType;
@@ -126,6 +127,7 @@ public static class CodeHelpers {
             IdentifierWithTypeNode idt => NodeToCSharpType(idt.Type),
             ValueTypeNode vtn => ValueTypeToCSharpType(vtn.Type),
             EnumValueNode evn => NodeToCSharpType(evn.TypeNode),
+            TupleTypeNode ttn => $"({string.Join(", ", ttn.Types.Select(NodeToCSharpType))})",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
         };
     }

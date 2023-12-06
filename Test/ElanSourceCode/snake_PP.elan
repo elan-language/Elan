@@ -42,7 +42,7 @@ procedure playGame()
     while gameOn
         call draw(charMap, snake.head, Colour.green)
         call draw(charMap, snake.apple, Colour.red)
-        var priorTail set to tail(body)
+        var priorTail set to ttail(body)
         call pause(200)
         var pressed set to system.keyHasBeenPressed()
         if pressed then
@@ -50,7 +50,7 @@ procedure playGame()
             set currentDirection to directionByKey[k]
         end if
         call clockTick(body, head, apple, currentDirection, boardWidth, boardHeight, gameOn)
-        if tail(body) is not priorTail then
+        if ttail(body) is not priorTail then
             call draw(charMap, priorTail, charMap.backgroundColour)
         end if
     end while
@@ -58,7 +58,7 @@ procedure playGame()
     print "Game Over! Score: {body.length() - 2}"
 end procedure
 
-function tail(body (Int, Int)) as (Int, Int)
+function ttail(body (Int, Int)) as (Int, Int)
   return body[0];
 end function
 
