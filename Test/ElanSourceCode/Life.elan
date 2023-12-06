@@ -1,7 +1,24 @@
 ﻿main
-  print exampleCells
+  var g set to exampleCells
+  while true
+    call drawGrid(g)
+    set g to nextGeneration(g)
+  end while
 end main
 
+procedure drawGrid(cm CharMap, grid List<of Bool>)
+#   should be re-done using buffered char map to reduce flickering.
+    for row from 0 to 19
+      for col from 0 to 19
+         var cell set to grid[col * 20 + row]
+         var colour set to if cell
+           then black
+           else white
+         call cm.putBlockWithColour(col * 2, row, colour)
+         call cm.putBlockWithColour(col * 2 + 1, row, colour) # because square block is 2 chars wide
+      end for
+    end for
+end procedure
 
 function north(c Int) as Int -> 
   if c > 19 

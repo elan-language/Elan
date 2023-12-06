@@ -9,7 +9,7 @@ public class TT145_Life
 {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Template() {
         var code = ReadElanSourceCodeFile("Life.elan");
 
