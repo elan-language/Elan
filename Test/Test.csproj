@@ -22,6 +22,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="ExampleProjects\BestFit tests.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ExampleProjects\BestFit.obj">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
@@ -32,6 +35,9 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ExampleProjects\binarySearch.elan">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ExampleProjects\Life tests.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="ExampleProjects\Life.elan">

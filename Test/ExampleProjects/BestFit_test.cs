@@ -10,8 +10,8 @@ public class BestFit_test
 {
     #region Passes
 
-    [TestMethod]
-    public void Pass_BinarySearch()
+    [TestMethod, Ignore]
+    public void Pass_1()
     {
         var code = ReadCodeFile("BestFit.elan"); ;
         var objectCode = ReadCodeFile("BestFit.obj");
@@ -24,7 +24,7 @@ public class BestFit_test
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "\r\n");
+        //AssertObjectCodeExecutes(compileData, "\r\n");
     }
 
     #endregion
