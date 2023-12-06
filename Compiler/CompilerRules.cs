@@ -39,6 +39,7 @@ public static class CompilerRules {
             IdentifierNode idn2 when n1 is IdentifierNode idn1 => idn1.Id == idn2.Id,
             IndexedExpressionNode ien when n1 is IdentifierNode idn1 => Match(idn1, ien.Expression) || ien.Expression.Children.Any(c => Match(idn1, c)),
             ParameterCallNode pn when n1 is IdentifierNode idn1 && pn.Expression is IdentifierNode idn2 => idn1.Id == idn2.Id,
+            DeconstructionNode dn => dn.ItemNodes.Any(n => Match(n1, n)),
             _ => false
         };
     }
