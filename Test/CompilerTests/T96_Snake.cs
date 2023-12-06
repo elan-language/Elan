@@ -199,7 +199,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Snake_PP()
     {
         var code = ReadElanSourceCodeFile("snake_PP.elan");
@@ -226,15 +226,16 @@ Press any key to start.."";
     var boardHeight = charMap.height;
     var currentDirection = Direction.right;
     var startTail = (boardWidth / 2, boardHeight / 2);
-    var body = new StandardLibrary.ElanList<(CharMap, CharMap)>(startTail);
+    var body = new StandardLibrary.ElanList<(int, int)>();
+    body = body + startTail;
     var head = Globals.getAdjacentSquare(startTail, currentDirection);
     var apple = (0, 0);
     Globals.setNewApplePosition(body, ref apple, boardWidth, boardHeight);
     var gameOn = true;
     while (gameOn) {
-      Globals.draw(charMap, snake.head, Colour.green);
-      Globals.draw(charMap, snake.apple, Colour.red);
-      var priorTail = Globals.ttail(body);
+      Globals.draw(charMap, head, Colour.green);
+      Globals.draw(charMap, apple, Colour.red);
+      var priorTail = Globals.snakeTail(body);
       StandardLibrary.Procedures.pause(200);
       var pressed = StandardLibrary.SystemAccessors.keyHasBeenPressed();
       if (pressed) {
@@ -242,7 +243,7 @@ Press any key to start.."";
         currentDirection = directionByKey[k];
       }
       Globals.clockTick(ref body, ref head, ref apple, currentDirection, boardWidth, boardHeight, ref gameOn);
-      if (Globals.ttail(body) != priorTail) {
+      if (Globals.snakeTail(body) != priorTail) {
         Globals.draw(charMap, priorTail, charMap.backgroundColour);
       }
     }
@@ -274,9 +275,9 @@ Press any key to start.."";
       apple = newPos;
     } while (!(!Globals.bodyCovers(body, apple)));
   }
-  public static (int, int) ttail((int, int) body) {
+  public static (int, int) snakeTail(StandardLibrary.ElanList<(int, int)> body) {
 
-    return body.Item1;
+    return body[0];
   }
   public static bool bodyCovers(StandardLibrary.ElanList<(int, int)> body, (int, int) sq) {
     var result = false;

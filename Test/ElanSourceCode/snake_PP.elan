@@ -33,16 +33,17 @@ procedure playGame()
     var boardHeight set to charMap.height
     var currentDirection set to Direction.right
     var startTail set to (boardWidth div 2, boardHeight div 2)
-    var body set to { startTail }
+    var body set to new List<of (Int, Int)>()
+    set body to body + startTail
     var head set to getAdjacentSquare(startTail, currentDirection)
     var apple set to (0,0)
     call setNewApplePosition(body, apple, boardWidth, boardHeight)
 
     var gameOn set to true
     while gameOn
-        call draw(charMap, snake.head, Colour.green)
-        call draw(charMap, snake.apple, Colour.red)
-        var priorTail set to ttail(body)
+        call draw(charMap, head, Colour.green)
+        call draw(charMap, apple, Colour.red)
+        var priorTail set to snakeTail(body)
         call pause(200)
         var pressed set to system.keyHasBeenPressed()
         if pressed then
@@ -50,7 +51,7 @@ procedure playGame()
             set currentDirection to directionByKey[k]
         end if
         call clockTick(body, head, apple, currentDirection, boardWidth, boardHeight, gameOn)
-        if ttail(body) is not priorTail then
+        if snakeTail(body) is not priorTail then
             call draw(charMap, priorTail, charMap.backgroundColour)
         end if
     end while
@@ -58,7 +59,7 @@ procedure playGame()
     print "Game Over! Score: {body.length() - 2}"
 end procedure
 
-function ttail(body (Int, Int)) as (Int, Int)
+function snakeTail(body List<of (Int, Int)>) as (Int, Int)
   return body[0];
 end function
 
