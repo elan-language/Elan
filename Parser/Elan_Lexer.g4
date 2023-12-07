@@ -29,6 +29,7 @@ FUNCTION:	   'function';
 GLOBAL:		   'global';
 IF:            'if'; 
 IMMUTABLE:	   'immutable';
+IMPORT: 	   'import';
 IN:            'in';
 INHERITS:      'inherits';
 INPUT:         'input';
@@ -101,6 +102,7 @@ IS_NOT:                   IS (Whitespace)* NOT;
 
 TYPENAME:           IdentifierStartingUC;
 IDENTIFIER:         IdentifierStartingLC;
+NAMESPACE:         IdentifierStartingUCorLC (DOT IdentifierStartingUCorLC)*;
 
 LITERAL_INTEGER:     [0-9] [0-9]*;
 LITERAL_FLOAT:        LITERAL_INTEGER DOT LITERAL_INTEGER ExponentPart?;

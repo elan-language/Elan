@@ -1,7 +1,9 @@
 grammar Elan;
 import Elan_Lexer;
 
-file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test )* NL* EOF;
+file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test | importStatement )* NL* EOF;
+
+importStatement: IMPORT NAMESPACE;
 
 main: 
 	NL MAIN 
@@ -232,7 +234,7 @@ range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT exp
 // VALUES
 value: literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | SELF | DEFAULT type;
 
-scopeQualifier: (SELF | GLOBAL | LIBRARY) DOT; // might add 'namespace' as a further option in future
+scopeQualifier: (SELF | GLOBAL | LIBRARY | NAMESPACE) DOT; // might add 'namespace' as a further option in future
  
 // LITERALS
 literal: literalValue | literalDataStructure ; 
