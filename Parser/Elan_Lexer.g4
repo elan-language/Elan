@@ -44,7 +44,6 @@ OF:			   'of';
 IS:            'is';
 OR:            'or';
 OUT:		   'out';
-PACKAGE:       'package';
 PARTIAL: 	   'partial';
 PRINT:		   'print';
 PRIVATE:       'private';

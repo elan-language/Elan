@@ -1,7 +1,11 @@
 grammar Elan;
 import Elan_Lexer;
 
-file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test  )* NL* EOF;
+file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test | importStatement )* NL* EOF;
+
+importStatement: IMPORT namespace (DOT namespace )*;
+
+namespace: TYPENAME | IDENTIFIER;
 
 main: 
 	NL MAIN 
