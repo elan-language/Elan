@@ -44,6 +44,7 @@ OF:			   'of';
 IS:            'is';
 OR:            'or';
 OUT:		   'out';
+PACKAGE:       'package';
 PARTIAL: 	   'partial';
 PRINT:		   'print';
 PRIVATE:       'private';
@@ -102,7 +103,6 @@ IS_NOT:                   IS (Whitespace)* NOT;
 
 TYPENAME:           IdentifierStartingUC;
 IDENTIFIER:         IdentifierStartingLC;
-NAMESPACE:         IdentifierStartingUCorLC (DOT IdentifierStartingUCorLC)*;
 
 LITERAL_INTEGER:     [0-9] [0-9]*;
 LITERAL_FLOAT:        LITERAL_INTEGER DOT LITERAL_INTEGER ExponentPart?;
