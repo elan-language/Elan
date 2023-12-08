@@ -3,12 +3,12 @@ import Elan_Lexer;
 
 file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test | importStatement )* NL* EOF;
 
-importStatement: IMPORT namespace (DOT namespace )*;
+importStatement: IMPORT namespace;
 
-namespace: TYPENAME | IDENTIFIER;
+namespace: (TYPENAME | IDENTIFIER) (DOT (TYPENAME | IDENTIFIER))*;
 
-main: 
-	NL MAIN 
+main:  
+	NL MAIN  
     statementBlock
     NL END MAIN 
     ;
@@ -236,7 +236,7 @@ range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT exp
 // VALUES
 value: literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | SELF | DEFAULT type;
 
-scopeQualifier: (SELF | GLOBAL | LIBRARY) DOT; 
+scopeQualifier: (SELF | GLOBAL | LIBRARY | (IMPORT DOT namespace?)) DOT; 
  
 // LITERALS
 literal: literalValue | literalDataStructure ; 
