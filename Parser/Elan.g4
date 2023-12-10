@@ -236,7 +236,7 @@ range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT exp
 // VALUES
 value: literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | SELF | DEFAULT type;
 
-scopeQualifier: (SELF | GLOBAL | LIBRARY | (IMPORT DOT namespace?)) DOT; 
+scopeQualifier: (SELF | GLOBAL | LIBRARY | (PACKAGE DOT namespace)) DOT; 
  
 // LITERALS
 literal: literalValue | literalDataStructure ; 
