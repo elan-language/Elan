@@ -19,7 +19,7 @@ end main
 
 immutable class Foo
     constructor(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end constructor
     property p1 Int
     function square() as Int
@@ -95,7 +95,7 @@ end class
 
 immutable class Foo inherits Bar
     constructor(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end constructor
     property p1 Int
     function square() as Int
@@ -176,13 +176,13 @@ public static class Program {
         var code = @"#
 immutable class Foo
     constructor(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end constructor
 
     property p1 Int
 
     procedure setP1(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end procedure
     
     function asString() as String

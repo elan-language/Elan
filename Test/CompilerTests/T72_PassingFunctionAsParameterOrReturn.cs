@@ -165,7 +165,7 @@ end main
 
 class Foo
   constructor(f (Int -> Int))
-    set self.f to f
+    set property.f to f
   end constructor
 
   property f (Int -> Int)

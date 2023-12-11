@@ -234,9 +234,9 @@ index: OPEN_SQ_BRACKET (expression | expression COMMA expression | range) CLOSE_
 range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT expression; 
 
 // VALUES
-value: literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | SELF | DEFAULT type;
+value: literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | THIS | DEFAULT type;
 
-scopeQualifier: (SELF | GLOBAL | LIBRARY | (PACKAGE DOT namespace)) DOT; 
+scopeQualifier: (PROPERTY | GLOBAL | LIBRARY | (PACKAGE DOT namespace)) DOT; 
  
 // LITERALS
 literal: literalValue | literalDataStructure ; 

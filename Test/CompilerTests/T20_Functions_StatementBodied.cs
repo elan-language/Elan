@@ -346,6 +346,26 @@ end function
         AssertDoesNotCompile(compileData, "Cannot print in function");
     }
 
+    [TestMethod, Ignore]
+    public void Fail_CanNotContainInput()
+    {
+        var code = @"
+main
+end main
+
+function foo(a Int, b Int) as Int
+    var x set to input
+    return a * b
+end function
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Cannot input in function");
+    }
+
     [TestMethod]
     public void Fail_CanNotContainSystemAccessors() {
         var code = @"
@@ -364,6 +384,8 @@ end function
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Cannot use system accessor in function");
     }
+
+
 
     [TestMethod]
     public void Fail_CanNotContainProcedureCall() {

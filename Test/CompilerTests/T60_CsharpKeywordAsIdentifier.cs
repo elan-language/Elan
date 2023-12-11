@@ -48,7 +48,6 @@ main
   var stackalloc set to 1
   var static set to 1
   var struct set to 1
-  var this set to 1
   var typeof set to 1
   var uint set to 1
   var ulong set to 1
@@ -59,7 +58,7 @@ main
   var virtual set to 1
   var void set to 1
   var volatile set to 1
-  var total set to base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+null+object+operator+override+params+protected+public+readonly+sbyte+sealed+short+sizeof+stackalloc+static+struct+this+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
+  var total set to base+break+byte+checked+const+continue+delegate+do+double+event+explicit+extern+finally+fixed+goto+implicit+interface+internal+lock+long+namespace+null+object+operator+override+params+protected+public+readonly+sbyte+sealed+short+sizeof+stackalloc+static+struct+typeof+uint+ulong+unchecked+unsafe+ushort+using+virtual+void+volatile
   print total
 end main
 ";
@@ -84,7 +83,7 @@ end main
 
 class Base
   constructor(p1 Int)
-    set self.p1 to p1
+    set property.p1 to p1
   end constructor
   property p1 Int
   function asString() as String

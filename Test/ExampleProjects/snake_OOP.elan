@@ -60,8 +60,8 @@ end procedure
 
 class Snake
     constructor(boardWidth Int, boardHeight Int, startingDirection Direction)
-        set self.boardWidth to boardWidth
-        set self.boardHeight to boardHeight
+        set property.boardWidth to boardWidth
+        set property.boardHeight to boardHeight
         var tail set to new Square(boardWidth div 2, boardHeight div 2)
         set body to {tail}
         set head to tail.getAdjacentSquare(startingDirection)
@@ -122,8 +122,8 @@ end class
 
 class Square
     constructor (x Int, y Int)
-        set self.x to x
-        set self.y to y
+        set property.x to x
+        set property.y to y
     end constructor
 
     property x Int

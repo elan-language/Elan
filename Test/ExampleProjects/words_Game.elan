@@ -3,9 +3,9 @@ end main
 
 class Game
     constructor(player1 Player, player2 Player,allowedWords List<String>)
-        set self.player1 to player1
-        set self.player2 to player2 
-        set self.allowedWords to allowedWords
+        set property.player1 to player1
+        set property.player2 to player2 
+        set property.allowedWords to allowedWords
         set tileQueue to QueueOfTiles(100)
     end constructor
 
@@ -145,7 +145,7 @@ end class
 
 class Player
     constructor(name String)
-        set self.name to name
+        set property.name to name
         set score to 50
     end constructor
 
@@ -203,7 +203,7 @@ end class
 
 class QueueOfTiles
     constructor(maxSize Int)
-        set self.maxSize to maxSize
+        set property.maxSize to maxSize
         set contents to Array<String>(maxSize)
         set rear to -1 # signifies 'empty'
     end constructor

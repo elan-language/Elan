@@ -42,9 +42,9 @@ public partial class ElanParser : Parser {
 		FROM=22, FUNCTION=23, GLOBAL=24, IF=25, IMMUTABLE=26, IMPORT=27, IN=28, 
 		INHERITS=29, INPUT=30, LAMBDA=31, LET=32, LIBRARY=33, MAIN=34, MOD=35, 
 		NEW=36, NOT=37, OF=38, IS=39, OR=40, OUT=41, PACKAGE=42, PARTIAL=43, PRINT=44, 
-		PRIVATE=45, PROCEDURE=46, PROPERTY=47, REPEAT=48, RETURN=49, SELF=50, 
-		SET=51, STEP=52, SWITCH=53, SYSTEM=54, TEST=55, THEN=56, THROW=57, TO=58, 
-		TRY=59, UNTIL=60, VAR=61, WHILE=62, WITH=63, XOR=64, BOOL_VALUE=65, VALUE_TYPE=66, 
+		PRIVATE=45, PROCEDURE=46, PROPERTY=47, REPEAT=48, RETURN=49, SET=50, STEP=51, 
+		SWITCH=52, SYSTEM=53, TEST=54, THEN=55, THIS=56, THROW=57, TO=58, TRY=59, 
+		UNTIL=60, VAR=61, WHILE=62, WITH=63, XOR=64, BOOL_VALUE=65, VALUE_TYPE=66, 
 		ARRAY=67, LIST=68, DICTIONARY=69, ITERABLE=70, EQUALS=71, ARROW=72, OPEN_BRACE=73, 
 		CLOSE_BRACE=74, OPEN_SQ_BRACKET=75, CLOSE_SQ_BRACKET=76, OPEN_BRACKET=77, 
 		CLOSE_BRACKET=78, DOUBLE_DOT=79, DOT=80, COMMA=81, COLON=82, PLUS=83, 
@@ -106,8 +106,8 @@ public partial class ElanParser : Parser {
 		"'in'", "'inherits'", "'input'", "'lambda'", "'let'", "'library'", "'main'", 
 		"'mod'", "'new'", "'not'", "'of'", "'is'", "'or'", "'out'", "'package'", 
 		"'partial'", "'print'", "'private'", "'procedure'", "'property'", "'repeat'", 
-		"'return'", "'self'", "'set'", "'step'", "'switch'", "'system'", "'test'", 
-		"'then'", "'throw'", "'to'", "'try'", "'until'", "'var'", "'while'", "'with'", 
+		"'return'", "'set'", "'step'", "'switch'", "'system'", "'test'", "'then'", 
+		"'this'", "'throw'", "'to'", "'try'", "'until'", "'var'", "'while'", "'with'", 
 		"'xor'", null, null, "'Array'", "'List'", "'Dictionary'", "'Iter'", "'='", 
 		"'->'", "'{'", "'}'", "'['", "']'", "'('", "')'", "'..'", "'.'", "','", 
 		"':'", "'+'", "'-'", "'*'", "'/'", "'^'", "'<'", "'>'", "'<='", "'>='"
@@ -119,8 +119,8 @@ public partial class ElanParser : Parser {
 		"FUNCTION", "GLOBAL", "IF", "IMMUTABLE", "IMPORT", "IN", "INHERITS", "INPUT", 
 		"LAMBDA", "LET", "LIBRARY", "MAIN", "MOD", "NEW", "NOT", "OF", "IS", "OR", 
 		"OUT", "PACKAGE", "PARTIAL", "PRINT", "PRIVATE", "PROCEDURE", "PROPERTY", 
-		"REPEAT", "RETURN", "SELF", "SET", "STEP", "SWITCH", "SYSTEM", "TEST", 
-		"THEN", "THROW", "TO", "TRY", "UNTIL", "VAR", "WHILE", "WITH", "XOR", 
+		"REPEAT", "RETURN", "SET", "STEP", "SWITCH", "SYSTEM", "TEST", "THEN", 
+		"THIS", "THROW", "TO", "TRY", "UNTIL", "VAR", "WHILE", "WITH", "XOR", 
 		"BOOL_VALUE", "VALUE_TYPE", "ARRAY", "LIST", "DICTIONARY", "ITERABLE", 
 		"EQUALS", "ARROW", "OPEN_BRACE", "CLOSE_BRACE", "OPEN_SQ_BRACKET", "CLOSE_SQ_BRACKET", 
 		"OPEN_BRACKET", "CLOSE_BRACKET", "DOUBLE_DOT", "DOT", "COMMA", "COLON", 
@@ -1161,7 +1161,8 @@ public partial class ElanParser : Parser {
 			case NEW:
 			case NOT:
 			case PACKAGE:
-			case SELF:
+			case PROPERTY:
+			case THIS:
 			case BOOL_VALUE:
 			case ARRAY:
 			case OPEN_BRACE:
@@ -1265,7 +1266,8 @@ public partial class ElanParser : Parser {
 			case NEW:
 			case NOT:
 			case PACKAGE:
-			case SELF:
+			case PROPERTY:
+			case THIS:
 			case BOOL_VALUE:
 			case ARRAY:
 			case OPEN_BRACE:
@@ -1407,7 +1409,7 @@ public partial class ElanParser : Parser {
 			case GLOBAL:
 			case LIBRARY:
 			case PACKAGE:
-			case SELF:
+			case PROPERTY:
 			case IDENTIFIER:
 				EnterOuterAlt(_localctx, 1);
 				{
@@ -1415,7 +1417,7 @@ public partial class ElanParser : Parser {
 				State = 298;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1130306560065536L) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 145144141578240L) != 0)) {
 					{
 					State = 297;
 					scopeQualifier();
@@ -1504,7 +1506,7 @@ public partial class ElanParser : Parser {
 			State = 309;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1130306560065536L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 145144141578240L) != 0)) {
 				{
 				State = 308;
 				scopeQualifier();
@@ -1518,7 +1520,7 @@ public partial class ElanParser : Parser {
 			State = 314;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1130514899566594L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 16911962373L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 72202946519007234L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 16911962373L) != 0)) {
 				{
 				State = 313;
 				argumentList();
@@ -1578,7 +1580,7 @@ public partial class ElanParser : Parser {
 			State = 319;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1130306560065536L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 145144141578240L) != 0)) {
 				{
 				State = 318;
 				scopeQualifier();
@@ -1592,7 +1594,7 @@ public partial class ElanParser : Parser {
 			State = 324;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1130514899566594L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 16911962373L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 72202946519007234L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 16911962373L) != 0)) {
 				{
 				State = 323;
 				argumentList();
@@ -1659,7 +1661,7 @@ public partial class ElanParser : Parser {
 			State = 333;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1130514899566594L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 16911962373L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 72202946519007234L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 16911962373L) != 0)) {
 				{
 				State = 332;
 				argumentList();
@@ -1723,7 +1725,8 @@ public partial class ElanParser : Parser {
 			case NEW:
 			case NOT:
 			case PACKAGE:
-			case SELF:
+			case PROPERTY:
+			case THIS:
 			case BOOL_VALUE:
 			case ARRAY:
 			case OPEN_BRACE:
@@ -3600,7 +3603,7 @@ public partial class ElanParser : Parser {
 				State = 571;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1130514899566594L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 16911962373L) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 72202946519007234L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 16911962373L) != 0)) {
 					{
 					State = 570;
 					argumentList();
@@ -5107,7 +5110,7 @@ public partial class ElanParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public DataStructureDefinitionContext dataStructureDefinition() {
 			return GetRuleContext<DataStructureDefinitionContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SELF() { return GetToken(ElanParser.SELF, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode THIS() { return GetToken(ElanParser.THIS, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DEFAULT() { return GetToken(ElanParser.DEFAULT, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public TypeContext type() {
 			return GetRuleContext<TypeContext>(0);
@@ -5151,7 +5154,7 @@ public partial class ElanParser : Parser {
 				State = 785;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1130306560065536L) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 145144141578240L) != 0)) {
 					{
 					State = 784;
 					scopeQualifier();
@@ -5173,7 +5176,7 @@ public partial class ElanParser : Parser {
 				EnterOuterAlt(_localctx, 4);
 				{
 				State = 789;
-				Match(SELF);
+				Match(THIS);
 				}
 				break;
 			case 5:
@@ -5203,7 +5206,7 @@ public partial class ElanParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DOT(int i) {
 			return GetToken(ElanParser.DOT, i);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SELF() { return GetToken(ElanParser.SELF, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode PROPERTY() { return GetToken(ElanParser.PROPERTY, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode GLOBAL() { return GetToken(ElanParser.GLOBAL, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LIBRARY() { return GetToken(ElanParser.LIBRARY, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode PACKAGE() { return GetToken(ElanParser.PACKAGE, 0); }
@@ -5237,10 +5240,10 @@ public partial class ElanParser : Parser {
 			State = 800;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case SELF:
+			case PROPERTY:
 				{
 				State = 794;
-				Match(SELF);
+				Match(PROPERTY);
 				}
 				break;
 			case GLOBAL:
@@ -7189,9 +7192,9 @@ public partial class ElanParser : Parser {
 		205,203,1,0,0,0,206,209,1,0,0,0,207,205,1,0,0,0,207,208,1,0,0,0,208,5,
 		1,0,0,0,209,207,1,0,0,0,210,211,5,1,0,0,211,212,5,34,0,0,212,213,3,10,
 		5,0,213,214,5,1,0,0,214,215,5,18,0,0,215,216,5,34,0,0,216,7,1,0,0,0,217,
-		218,5,1,0,0,218,219,5,55,0,0,219,223,5,94,0,0,220,222,3,12,6,0,221,220,
+		218,5,1,0,0,218,219,5,54,0,0,219,223,5,94,0,0,220,222,3,12,6,0,221,220,
 		1,0,0,0,222,225,1,0,0,0,223,221,1,0,0,0,223,224,1,0,0,0,224,226,1,0,0,
-		0,225,223,1,0,0,0,226,227,5,1,0,0,227,228,5,18,0,0,228,229,5,55,0,0,229,
+		0,225,223,1,0,0,0,226,227,5,1,0,0,227,228,5,18,0,0,228,229,5,54,0,0,229,
 		9,1,0,0,0,230,237,3,24,12,0,231,237,3,26,13,0,232,237,3,90,45,0,233,237,
 		3,16,8,0,234,237,3,18,9,0,235,237,3,20,10,0,236,230,1,0,0,0,236,231,1,
 		0,0,0,236,232,1,0,0,0,236,233,1,0,0,0,236,234,1,0,0,0,236,235,1,0,0,0,
@@ -7205,12 +7208,12 @@ public partial class ElanParser : Parser {
 		19,1,0,0,0,264,265,5,1,0,0,265,267,5,44,0,0,266,268,3,110,55,0,267,266,
 		1,0,0,0,267,268,1,0,0,0,268,21,1,0,0,0,269,271,5,30,0,0,270,272,5,98,0,
 		0,271,270,1,0,0,0,271,272,1,0,0,0,272,23,1,0,0,0,273,274,5,1,0,0,274,275,
-		5,61,0,0,275,276,3,30,15,0,276,277,5,51,0,0,277,281,5,58,0,0,278,282,3,
+		5,61,0,0,275,276,3,30,15,0,276,277,5,50,0,0,277,281,5,58,0,0,278,282,3,
 		110,55,0,279,282,3,36,18,0,280,282,3,22,11,0,281,278,1,0,0,0,281,279,1,
-		0,0,0,281,280,1,0,0,0,282,25,1,0,0,0,283,284,5,1,0,0,284,285,5,51,0,0,
+		0,0,0,281,280,1,0,0,0,282,25,1,0,0,0,283,284,5,1,0,0,284,285,5,50,0,0,
 		285,286,3,30,15,0,286,290,5,58,0,0,287,291,3,110,55,0,288,291,3,36,18,
 		0,289,291,3,22,11,0,290,287,1,0,0,0,290,288,1,0,0,0,290,289,1,0,0,0,291,
-		27,1,0,0,0,292,293,3,30,15,0,293,294,5,51,0,0,294,295,5,58,0,0,295,296,
+		27,1,0,0,0,292,293,3,30,15,0,293,294,5,50,0,0,294,295,5,58,0,0,295,296,
 		3,110,55,0,296,29,1,0,0,0,297,299,3,124,62,0,298,297,1,0,0,0,298,299,1,
 		0,0,0,299,300,1,0,0,0,300,302,5,94,0,0,301,303,3,118,59,0,302,301,1,0,
 		0,0,302,303,1,0,0,0,303,307,1,0,0,0,304,307,3,138,69,0,305,307,3,144,72,
@@ -7220,7 +7223,7 @@ public partial class ElanParser : Parser {
 		315,316,1,0,0,0,316,317,5,78,0,0,317,33,1,0,0,0,318,320,3,124,62,0,319,
 		318,1,0,0,0,319,320,1,0,0,0,320,321,1,0,0,0,321,322,5,94,0,0,322,324,5,
 		77,0,0,323,325,3,40,20,0,324,323,1,0,0,0,324,325,1,0,0,0,325,326,1,0,0,
-		0,326,327,5,78,0,0,327,35,1,0,0,0,328,329,5,54,0,0,329,330,5,80,0,0,330,
+		0,326,327,5,78,0,0,327,35,1,0,0,0,328,329,5,53,0,0,329,330,5,80,0,0,330,
 		331,5,94,0,0,331,333,5,77,0,0,332,334,3,40,20,0,333,332,1,0,0,0,333,334,
 		1,0,0,0,334,335,1,0,0,0,335,336,5,78,0,0,336,37,1,0,0,0,337,340,3,110,
 		55,0,338,340,3,116,58,0,339,337,1,0,0,0,339,338,1,0,0,0,340,39,1,0,0,0,
@@ -7244,7 +7247,7 @@ public partial class ElanParser : Parser {
 		409,3,110,55,0,409,59,1,0,0,0,410,411,5,94,0,0,411,413,5,77,0,0,412,414,
 		3,48,24,0,413,412,1,0,0,0,413,414,1,0,0,0,414,415,1,0,0,0,415,416,5,78,
 		0,0,416,417,5,6,0,0,417,418,3,166,83,0,418,61,1,0,0,0,419,420,5,1,0,0,
-		420,421,5,12,0,0,421,422,5,94,0,0,422,423,5,51,0,0,423,426,5,58,0,0,424,
+		420,421,5,12,0,0,421,422,5,94,0,0,422,423,5,50,0,0,423,426,5,58,0,0,424,
 		427,3,126,63,0,425,427,3,86,43,0,426,424,1,0,0,0,426,425,1,0,0,0,427,63,
 		1,0,0,0,428,429,5,1,0,0,429,430,5,19,0,0,430,431,3,66,33,0,431,432,5,1,
 		0,0,432,437,5,94,0,0,433,434,5,81,0,0,434,436,5,94,0,0,435,433,1,0,0,0,
@@ -7294,15 +7297,15 @@ public partial class ElanParser : Parser {
 		595,601,3,96,48,0,596,601,3,98,49,0,597,601,3,100,50,0,598,601,3,102,51,
 		0,599,601,3,104,52,0,600,593,1,0,0,0,600,594,1,0,0,0,600,595,1,0,0,0,600,
 		596,1,0,0,0,600,597,1,0,0,0,600,598,1,0,0,0,600,599,1,0,0,0,601,91,1,0,
-		0,0,602,603,5,1,0,0,603,604,5,25,0,0,604,605,3,110,55,0,605,606,5,56,0,
+		0,0,602,603,5,1,0,0,603,604,5,25,0,0,604,605,3,110,55,0,605,606,5,55,0,
 		0,606,616,3,10,5,0,607,608,5,1,0,0,608,609,5,17,0,0,609,610,5,25,0,0,610,
-		611,3,110,55,0,611,612,5,56,0,0,612,613,3,10,5,0,613,615,1,0,0,0,614,607,
+		611,3,110,55,0,611,612,5,55,0,0,612,613,3,10,5,0,613,615,1,0,0,0,614,607,
 		1,0,0,0,615,618,1,0,0,0,616,614,1,0,0,0,616,617,1,0,0,0,617,622,1,0,0,
 		0,618,616,1,0,0,0,619,620,5,1,0,0,620,621,5,17,0,0,621,623,3,10,5,0,622,
 		619,1,0,0,0,622,623,1,0,0,0,623,624,1,0,0,0,624,625,5,1,0,0,625,626,5,
 		18,0,0,626,627,5,25,0,0,627,93,1,0,0,0,628,629,5,1,0,0,629,630,5,20,0,
 		0,630,631,5,94,0,0,631,632,5,22,0,0,632,633,3,110,55,0,633,634,5,58,0,
-		0,634,640,3,110,55,0,635,637,5,52,0,0,636,638,5,84,0,0,637,636,1,0,0,0,
+		0,634,640,3,110,55,0,635,637,5,51,0,0,636,638,5,84,0,0,637,636,1,0,0,0,
 		637,638,1,0,0,0,638,639,1,0,0,0,639,641,5,95,0,0,640,635,1,0,0,0,640,641,
 		1,0,0,0,641,642,1,0,0,0,642,643,3,10,5,0,643,644,5,1,0,0,644,645,5,18,
 		0,0,645,646,5,20,0,0,646,95,1,0,0,0,647,648,5,1,0,0,648,649,5,21,0,0,649,
@@ -7314,10 +7317,10 @@ public partial class ElanParser : Parser {
 		3,110,55,0,671,101,1,0,0,0,672,673,5,1,0,0,673,674,5,59,0,0,674,675,3,
 		10,5,0,675,676,5,1,0,0,676,677,5,10,0,0,677,678,5,94,0,0,678,679,3,10,
 		5,0,679,680,5,1,0,0,680,681,5,18,0,0,681,682,5,59,0,0,682,103,1,0,0,0,
-		683,684,5,1,0,0,684,685,5,53,0,0,685,687,3,110,55,0,686,688,3,106,53,0,
+		683,684,5,1,0,0,684,685,5,52,0,0,685,687,3,110,55,0,686,688,3,106,53,0,
 		687,686,1,0,0,0,688,689,1,0,0,0,689,687,1,0,0,0,689,690,1,0,0,0,690,691,
 		1,0,0,0,691,692,3,108,54,0,692,693,5,1,0,0,693,694,5,18,0,0,694,695,5,
-		53,0,0,695,105,1,0,0,0,696,697,5,1,0,0,697,699,5,9,0,0,698,700,5,84,0,
+		52,0,0,695,105,1,0,0,0,696,697,5,1,0,0,697,699,5,9,0,0,698,700,5,84,0,
 		0,699,698,1,0,0,0,699,700,1,0,0,0,700,701,1,0,0,0,701,702,3,128,64,0,702,
 		703,3,10,5,0,703,107,1,0,0,0,704,705,5,1,0,0,705,706,5,15,0,0,706,707,
 		3,10,5,0,707,109,1,0,0,0,708,709,6,55,-1,0,709,720,3,112,56,0,710,720,
@@ -7333,7 +7336,7 @@ public partial class ElanParser : Parser {
 		0,0,738,733,1,0,0,0,738,736,1,0,0,0,739,742,1,0,0,0,740,738,1,0,0,0,740,
 		741,1,0,0,0,741,111,1,0,0,0,742,740,1,0,0,0,743,744,5,77,0,0,744,745,3,
 		110,55,0,745,746,5,78,0,0,746,113,1,0,0,0,747,748,5,25,0,0,748,749,3,110,
-		55,0,749,750,5,1,0,0,750,751,5,56,0,0,751,752,3,110,55,0,752,753,5,1,0,
+		55,0,749,750,5,1,0,0,750,751,5,55,0,0,751,752,3,110,55,0,752,753,5,1,0,
 		0,753,754,5,17,0,0,754,755,3,110,55,0,755,115,1,0,0,0,756,757,5,31,0,0,
 		757,758,3,40,20,0,758,759,5,72,0,0,759,760,3,110,55,0,760,117,1,0,0,0,
 		761,768,5,75,0,0,762,769,3,110,55,0,763,764,3,110,55,0,764,765,5,81,0,
@@ -7344,9 +7347,9 @@ public partial class ElanParser : Parser {
 		5,79,0,0,780,782,3,110,55,0,781,772,1,0,0,0,781,776,1,0,0,0,781,779,1,
 		0,0,0,782,121,1,0,0,0,783,793,3,126,63,0,784,786,3,124,62,0,785,784,1,
 		0,0,0,785,786,1,0,0,0,786,787,1,0,0,0,787,793,5,94,0,0,788,793,3,130,65,
-		0,789,793,5,50,0,0,790,791,5,15,0,0,791,793,3,166,83,0,792,783,1,0,0,0,
+		0,789,793,5,56,0,0,790,791,5,15,0,0,791,793,3,166,83,0,792,783,1,0,0,0,
 		792,785,1,0,0,0,792,788,1,0,0,0,792,789,1,0,0,0,792,790,1,0,0,0,793,123,
-		1,0,0,0,794,801,5,50,0,0,795,801,5,24,0,0,796,801,5,33,0,0,797,798,5,42,
+		1,0,0,0,794,801,5,47,0,0,795,801,5,24,0,0,796,801,5,33,0,0,797,798,5,42,
 		0,0,798,799,5,80,0,0,799,801,3,4,2,0,800,794,1,0,0,0,800,795,1,0,0,0,800,
 		796,1,0,0,0,800,797,1,0,0,0,801,802,1,0,0,0,802,803,5,80,0,0,803,125,1,
 		0,0,0,804,807,3,128,64,0,805,807,3,132,66,0,806,804,1,0,0,0,806,805,1,

@@ -24,7 +24,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        set self.p1 to p1 * 2
+        set property.p1 to p1 * 2
     end constructor
 
     property p1 Int
@@ -102,7 +102,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        set self.p1 to p1 * 2
+        set property.p1 to p1 * 2
     end constructor
 
     property p1 Int
@@ -172,7 +172,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        set self.p1 to p1 * 2
+        set property.p1 to p1 * 2
     end constructor
 
     property p1 Int
@@ -238,7 +238,7 @@ end main
 
 class Player
     constructor(name String)
-        set self.name to name
+        set property.name to name
     end constructor
 
     property name String

@@ -44,7 +44,7 @@ end class
 
 class Player
     constructor(name String)
-        set self.name to name
+        set property.name to name
     end constructor
 
     property name String
@@ -312,7 +312,7 @@ end class
 
 class Player
     constructor(name String)
-        set self.name to name
+        set property.name to name
     end constructor
 
     property name String
@@ -423,7 +423,7 @@ end class
 
 class Player
     constructor(name String)
-        set self.name to name
+        set property.name to name
     end constructor
 
     property name String
@@ -547,7 +547,7 @@ end class
 
 class Player
     constructor(name String)
-        set self.name to name
+        set property.name to name
     end constructor
 
     property name String
@@ -820,7 +820,7 @@ end main
 
 class Player
     constructor(name String)
-        set self.name to name
+        set property.name to name
     end constructor
 
     property name String

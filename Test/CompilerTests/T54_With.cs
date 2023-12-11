@@ -91,7 +91,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end constructor
     property p1 Int
 

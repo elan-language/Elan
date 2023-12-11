@@ -239,8 +239,8 @@ public static class AstFactory {
             return visitor.Visit(ds);
         }
 
-        if (context.SELF() is not null) {
-            return new SelfPrefixNode();
+        if (context.THIS() is not null) {
+            return new ThisInstanceNode();
         }
 
         if (context.DEFAULT() is not null) {
@@ -827,8 +827,8 @@ public static class AstFactory {
             return new GlobalPrefixNode();
         }
 
-        if (context.SELF() is not null) {
-            return new SelfPrefixNode();
+        if (context.PROPERTY() is not null) {
+            return new PropertyPrefixNode();
         }
 
         throw new NotImplementedException(context.children.First().GetText());
