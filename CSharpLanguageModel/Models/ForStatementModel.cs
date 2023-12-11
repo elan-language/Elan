@@ -2,7 +2,7 @@
 
 using static CodeHelpers;
 
-public record ForStatementModel(ICodeModel Id, IEnumerable<ICodeModel> Expressions, ICodeModel? Step, bool Neg, ICodeModel StatementBlock) : ICodeModel {
+public record ForStatementModel(ICodeModel Id, ICodeModel[] Expressions, ICodeModel? Step, bool Neg, ICodeModel StatementBlock) : ICodeModel {
     private string UpOrDown => Step is not null && Neg ? "-" : "+";
     private string GteOrLte => Step is not null && Neg ? ">=" : "<=";
 

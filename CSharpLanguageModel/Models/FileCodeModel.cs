@@ -1,6 +1,6 @@
 ﻿namespace CSharpLanguageModel.Models;
 
-public record FileCodeModel(IEnumerable<ICodeModel> Globals, ICodeModel? Main) : ICodeModel {
+public record FileCodeModel(ICodeModel[] Globals, ICodeModel? Main) : ICodeModel {
     public string ToString(int indent) =>
         $@"using System.Collections.Generic;
 using StandardLibrary;

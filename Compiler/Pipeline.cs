@@ -90,7 +90,7 @@ public static class Pipeline {
             return compileData;
         }
 
-        var codeVisitor = new CodeModelAstVisitor();
+        var codeVisitor = new CodeModelAstVisitor(compileData.SymbolTable?.GlobalScope ?? throw new NullReferenceException());
         var codeModel = codeVisitor.Visit(compileData.AbstractSyntaxTree);
         var objectCode = codeModel.ToString() ?? "";
 

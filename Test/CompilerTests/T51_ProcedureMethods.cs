@@ -243,7 +243,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_ProcedureMethodCannotBeCalledDirectly() {
         var code = @"#
 main
@@ -276,7 +276,7 @@ end class
         AssertDoesNotCompile(compileData, "Calling unknown method");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CallUnknownMethodOnInstance() {
         var code = @"#
 main

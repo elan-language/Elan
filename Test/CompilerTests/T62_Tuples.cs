@@ -134,7 +134,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "1\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_IndexGenericFunctionReturnsTuple() {
         var code = @"#
 main

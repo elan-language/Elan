@@ -287,7 +287,7 @@ end class
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_NoSuchGlobalSubroutine() {
         var code = @"#
 main

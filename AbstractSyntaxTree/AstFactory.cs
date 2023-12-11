@@ -117,21 +117,23 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CallStatementContext context) {
         if (context.DOT() is not null) {
-            var ms = visitor.Visit<MethodCallNode>(context.procedureCall());
+            var ms = visitor.Visit<ProcedureCallNode>(context.procedureCall());
             var exp = visitor.Visit(context.assignableValue());
 
-            return new CallStatementNode(ms with { DotCalled = true, Qualifier = exp });
+            return new CallStatementNode(ms with { CalledOn = exp });
         }
 
-        return new CallStatementNode(visitor.Visit(context.procedureCall()));
+        return new CallStatementNode(visitor.Visit<ProcedureCallNode>(context.procedureCall()));
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionContext context) {
         if (context.DOT() is not null) {
+
             if (context.functionCall() is { } dmc) {
-                var ms = visitor.Visit<MethodCallNode>(dmc);
+                var ms = visitor.Visit<FunctionCallNode>(dmc);
                 var exp = visitor.Visit(context.expression().First());
-                return ms with { DotCalled = true, Qualifier = exp };
+
+                return ms with { CalledOn = exp };
             }
 
             if (context.IDENTIFIER() is { } id) {
@@ -198,26 +200,24 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureCallContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var pps = (context.argumentList()?.argument().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
+        var sq = context.scopeQualifier() is { } s ? visitor.Visit(s) : null;
 
-        var nqr = context.scopeQualifier() is { } nq ? visitor.Visit(nq) : null;
-
-        return new MethodCallNode(id, nqr, pps);
+        return new ProcedureCallNode(id, sq, pps, null);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionCallContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var pps = (context.argumentList()?.argument().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
+        var sq = context.scopeQualifier() is { } s ? visitor.Visit(s) : null;
 
-        var nqr = context.scopeQualifier() is { } nq ? visitor.Visit(nq) : null;
-
-        return new MethodCallNode(id, nqr, pps);
+        return new FunctionCallNode(id, sq, pps, null);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SystemCallContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var pps = (context.argumentList()?.argument().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
 
-        return new MethodCallNode(id, new SystemAccessorPrefixNode(), pps);
+        return new SystemAccessorCallNode(id, new SystemAccessorPrefixNode(), pps);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {

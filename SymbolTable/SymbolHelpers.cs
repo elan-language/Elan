@@ -1,6 +1,7 @@
 ﻿using AbstractSyntaxTree.Nodes;
 using AbstractSyntaxTree;
 using SymbolTable.SymbolTypes;
+using SymbolTable.Symbols;
 
 namespace SymbolTable; 
 
@@ -20,7 +21,9 @@ public class SymbolHelpers {
             DataStructureTypeNode { Type: DataStructure.Array } => new ArraySymbolType(),
             DataStructureTypeNode { Type: DataStructure.List } dsn => new ListSymbolType(MapNodeToSymbolType(dsn.GenericTypes.Single())),
             DataStructureTypeNode { Type: DataStructure.Dictionary } => new DictionarySymbolType(),
-            MethodCallNode mcn => new PendingResolveSymbol(mcn.Name),
+            FunctionCallNode mcn => new PendingResolveSymbol(mcn.Name),
+            ProcedureCallNode mcn => new PendingResolveSymbol(mcn.Name),
+            SystemAccessorCallNode mcn => new PendingResolveSymbol(mcn.Name),
             BinaryNode { Operator: OperatorNode op } when OperatorEvaluatesToBoolean(op.Value) => BoolSymbolType.Instance,
             BinaryNode bn => MapNodeToSymbolType(bn.Operand1),
             IndexedExpressionNode ien => MapNodeToSymbolType(ien.Expression),
@@ -72,4 +75,98 @@ public class SymbolHelpers {
              _ => throw new NotImplementedException()
          };
 
+     
+
+    private static string? GetId(IAstNode? node) => node switch {
+        IdentifierNode idn => idn.Id,
+        IndexedExpressionNode ien => GetId(ien.Expression),
+        _ => null
+    };
+
+    private static IScope GetGlobalScope(IScope scope) =>
+        scope is GlobalScope
+            ? scope
+            : scope.EnclosingScope is { } s
+                ? GetGlobalScope(s)
+                : scope;
+
+    private static ISymbol? GetSymbolForCallNode(ICallNode mcn, IScope currentScope, ClassSymbolType cst)
+    {
+        var classSymbol = currentScope.Resolve(cst.Name);
+
+        return classSymbol switch
+        {
+            IScope classScope => classScope.Resolve(mcn.Name),
+            _ => null
+        };
+    }
+    private static ISymbolType? ResolveProperty(PropertyCallNode pn, ClassSymbolType? symbolType, IScope currentScope) {
+        var cst = symbolType is not null ? GetGlobalScope(currentScope).Resolve(symbolType.Name) as IScope : null;
+        var name = pn.Property is IdentifierNode idn ? idn.Id : throw new NullReferenceException();
+        var symbol = cst?.Resolve(name);
+
+        return symbol switch {
+            VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
+            _ => null
+        };
+    }
+
+    private static ISymbol? ResolveToIdentifier(IAstNode? node, IScope currentScope) =>
+        node switch {
+            IdentifierNode idn => currentScope.Resolve(idn.Id),
+            PropertyCallNode pn => ResolveToIdentifier(pn.Expression, currentScope),
+            _ => null
+        };
+
+    private static ISymbolType? GetQualifierType(ICallNode callNode, IScope currentScope) =>
+        callNode.CalledOn switch {
+            IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
+                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
+                ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
+                _ => null
+            },
+            PropertyCallNode pn => ResolveToIdentifier(pn, currentScope) switch {
+                VariableSymbol vs => ResolveProperty(pn, EnsureResolved(vs.ReturnType, currentScope) as ClassSymbolType, currentScope),
+                _ => null
+            },
+            _ => null
+        };
+
+    private static ISymbol? GetSpecificCallNodeForClassMethod(ICallNode mcn, IScope currentScope)
+    {
+        var type = GetQualifierType(mcn, currentScope);
+        return type is ClassSymbolType cst ? GetSymbolForCallNode(mcn, currentScope, cst) : null;
+    }
+
+    private static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope) {
+        return symbolType switch {
+            PendingResolveSymbol rr => currentScope.Resolve(rr.Name) switch {
+                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
+                ClassSymbol cs => new ClassSymbolType(cs.Name),
+                FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
+                LambdaParameterSymbol lps => throw new NotImplementedException(),
+                _ => throw new NotImplementedException()
+            },
+            _ => symbolType
+        };
+    }
+
+    public static ISymbol? ResolveCall(ICallNode callNode, IScope currentScope) {
+        if (callNode.CalledOn is { } co) {
+            var qualifiedId = GetId(co);
+
+            if (qualifiedId is not null) {
+                switch (currentScope.Resolve(qualifiedId)) {
+                    case VariableSymbol vs when EnsureResolved(vs.ReturnType, currentScope) is ClassSymbolType:
+                        return GetSpecificCallNodeForClassMethod(callNode, currentScope);
+                    case ParameterSymbol ps when EnsureResolved(ps.ReturnType, currentScope) is ClassSymbolType:
+                        return GetSpecificCallNodeForClassMethod(callNode, currentScope);
+                    default:  return GetGlobalScope(currentScope).Resolve(callNode.Name);
+                }
+            }
+        }
+
+
+        return currentScope.Resolve(callNode.Name);
+    }
 }

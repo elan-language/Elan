@@ -212,8 +212,8 @@ public static class CompilerRules {
         return classSymbols.Any(s => s.ClassType is not ClassSymbolTypeType.Abstract) ? "Cannot inherit from concrete class" : null;
     }
 
-    public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
-        var leafNode = nodes.Last();
-        return leafNode is MethodCallNode ? $"Calling unknown method : {leafNode}" : null;
-    }
+    //public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
+    //    var leafNode = nodes.Last();
+    //    return leafNode is MethodCallNode ? $"Calling unknown method : {leafNode}" : null;
+    //}
 }

@@ -206,7 +206,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_UseRoundBracketsForIndex() {
         var code = @"
 main

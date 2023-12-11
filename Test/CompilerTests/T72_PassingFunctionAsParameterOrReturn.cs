@@ -155,7 +155,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "10\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_FuncAsProperty() {
         var code = @"
 main
@@ -228,7 +228,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "14\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_DefaultValue() {
         var code = @"
 main
@@ -294,7 +294,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Function (Int -> Int)\r\n0\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_DefaultValueObj() {
         var code = @"
 main

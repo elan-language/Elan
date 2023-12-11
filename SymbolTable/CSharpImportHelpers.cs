@@ -47,19 +47,19 @@ public static class CSharpImportHelpers {
 
         var allExportedClasses = exportedTypes.Where(t => !t.IsStatic()).Where(IsStdLib);
 
-        foreach (var fs in stdLib.Where(mi => mi.DeclaringType == typeof(Functions)).Select(mi => CreateFunctionSymbol(mi))) {
+        foreach (var fs in stdLib.Where(mi => mi.DeclaringType == typeof(Functions)).Select(mi => CreateFunctionSymbol(mi, globalScope))) {
             globalScope.DefineSystem(fs);
         }
 
-        foreach (var fs in stdLib.Where(mi => mi.DeclaringType == typeof(Procedures)).Select(mi => CreateProcedureSymbol(mi))) {
+        foreach (var fs in stdLib.Where(mi => mi.DeclaringType == typeof(Procedures)).Select(mi => CreateProcedureSymbol(mi, globalScope))) {
             globalScope.DefineSystem(fs);
         }
 
-        foreach (var scs in systemAccessors.Select(mi => CreateSystemAccessorSymbol(mi))) {
+        foreach (var scs in systemAccessors.Select(mi => CreateSystemAccessorSymbol(mi, globalScope))) {
             globalScope.DefineSystem(scs);
         }
 
-        foreach (var vs in constants.Select(fieldInfo => CreateVariableSymbol(fieldInfo))) {
+        foreach (var vs in constants.Select(fieldInfo => CreateVariableSymbol(fieldInfo, globalScope))) {
             globalScope.Define(vs);
         }
 
@@ -110,17 +110,17 @@ public static class CSharpImportHelpers {
         return cls;
     }
 
-    private static ProcedureSymbol CreateProcedureSymbol(MethodInfo mi, IScope? scope = null) {
-        var ps = new ProcedureSymbol(mi.Name, scope == null ? NameSpace.LibraryProcedure : NameSpace.UserLocal, ParameterIds(mi), scope);
+    private static ProcedureSymbol CreateProcedureSymbol(MethodInfo mi, IScope scope) {
+        var ps = new ProcedureSymbol(mi.Name, scope is GlobalScope ? NameSpace.LibraryProcedure : NameSpace.UserLocal, ParameterIds(mi), scope);
         ImportParameters(ps, mi);
         return ps;
     }
 
-    private static VariableSymbol CreateVariableSymbol(FieldInfo fi, IScope? scope = null) => new(fi.Name, ConvertCSharpTypesToBuiltInSymbol(fi.FieldType), scope);
+    private static VariableSymbol CreateVariableSymbol(FieldInfo fi, IScope scope) => new(fi.Name, ConvertCSharpTypesToBuiltInSymbol(fi.FieldType), scope);
 
-    private static VariableSymbol CreateVariableSymbol(PropertyInfo pi, IScope? scope = null) => new(pi.Name, ConvertCSharpTypesToBuiltInSymbol(pi.PropertyType), scope);
+    private static VariableSymbol CreateVariableSymbol(PropertyInfo pi, IScope scope) => new(pi.Name, ConvertCSharpTypesToBuiltInSymbol(pi.PropertyType), scope);
 
-    private static SystemAccessorSymbol CreateSystemAccessorSymbol(MethodInfo mi, IScope? scope = null) {
+    private static SystemAccessorSymbol CreateSystemAccessorSymbol(MethodInfo mi, IScope scope) {
         var sa = new SystemAccessorSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), NameSpace.System, ParameterIds(mi), scope);
         ImportParameters(sa, mi);
         return sa;
@@ -145,14 +145,14 @@ public static class CSharpImportHelpers {
         return parameterTypes.Select((pt, i) => MatchParameterAtDepth(t, pt, i, 0)).Where(m => m.Item1).Select(tt => (tt.Item2, tt.Item3)).First();
     }
 
-    private static FunctionSymbol CreateFunctionSymbol(MethodInfo mi, IScope? scope = null) {
+    private static FunctionSymbol CreateFunctionSymbol(MethodInfo mi, IScope scope) {
         var mm = mi.IsGenericMethodDefinition
             ? mi.GetGenericArguments().Select(gp => (gp.Name, MatchParametersAtDepth(gp, mi.GetParameters().Select(p => p.ParameterType).ToArray(), 0))).ToArray()
             : Array.Empty<(string, (int, int))>();
 
         var fs = mm.Any()
-            ? new GenericFunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), scope == null ? NameSpace.LibraryFunction : NameSpace.UserLocal, ParameterIds(mi), mm.ToDictionary(t => t.Item1, t => t.Item2), scope)
-            : new FunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), scope == null ? NameSpace.LibraryFunction : NameSpace.UserLocal, ParameterIds(mi), scope);
+            ? new GenericFunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), scope is GlobalScope ? NameSpace.LibraryFunction : NameSpace.UserLocal, ParameterIds(mi), mm.ToDictionary(t => t.Item1, t => t.Item2), scope)
+            : new FunctionSymbol(mi.Name, ConvertCSharpTypesToBuiltInSymbol(mi.ReturnType), scope is GlobalScope ? NameSpace.LibraryFunction : NameSpace.UserLocal, ParameterIds(mi), scope);
 
         ImportParameters(fs, mi);
         return fs;

@@ -1,6 +1,8 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Roles;
 
-public record SystemAccessorDefNode(IAstNode Signature, IAstNode StatementBlock, IAstNode Return, bool Standalone = true) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record SystemAccessorDefNode(IAstNode Signature, IAstNode StatementBlock, IAstNode Return, bool Standalone = true) : IAstNode, IHasScope {
     public IEnumerable<IAstNode> Children => new[] { Signature, StatementBlock, Return };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
@@ -11,4 +13,6 @@ public record SystemAccessorDefNode(IAstNode Signature, IAstNode StatementBlock,
             _ => throw new NotImplementedException()
         };
     }
+
+    public string Name => ((INamedAstNode)Signature).Name;
 }

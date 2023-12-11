@@ -4,6 +4,9 @@ using AbstractSyntaxTree.Nodes;
 using Antlr4.Runtime.Atn;
 using Compiler;
 using CSharpLanguageModel.Models;
+using SymbolTable;
+using SymbolTable.Symbols;
+using SymbolTable.SymbolTypes;
 using ValueType = AbstractSyntaxTree.ValueType;
 
 namespace CSharpLanguageModel;
@@ -170,5 +173,6 @@ public static class CodeHelpers {
     public static string Prefix(string id) => CSharpKeywordsExceptElanKeywords.Contains(id) ? $"@{id}" : id;
 
     public static string DefaultInstance(int indent, ICodeModel type) => $"{Indent(indent + 1)}public static {type} DefaultInstance {{ get; }} = new {type}._Default{type}();";
+
 
 }

@@ -2,7 +2,7 @@
 
 using static CodeHelpers;
 
-public record MethodCallModel(MethodType MethodType, ICodeModel Id, ICodeModel? Qualifier, IEnumerable<ICodeModel> Parameters) : ICodeModel {
+public record MethodCallModel(MethodType MethodType, ICodeModel Id, ICodeModel? Qualifier, ICodeModel[] Parameters) : ICodeModel {
     private string Qual => Qualifier is null ? "" : $"{Qualifier}.";
 
     public string ToString(int indent) =>

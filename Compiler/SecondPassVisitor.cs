@@ -5,7 +5,7 @@ namespace Compiler;
 
 public class SecondPassVisitor {
     static SecondPassVisitor() {
-        Transforms.Add(CompilerTransforms.TransformMethodCallNodes);
+        //Transforms.Add(CompilerTransforms.TransformMethodCallNodes);
         Transforms.Add(CompilerTransforms.TransformLiteralListNodes);
         Transforms.Add(CompilerTransforms.TransformProcedureParameterNodes);
         Transforms.Add(CompilerTransforms.TransformIndexNodes);

@@ -3,7 +3,7 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record AbstractClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inherits, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods) : IAstNode, INamed {
+public record AbstractClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inherits, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods) : IAstNode, INamedAstNode, IHasScope {
     public string Name => ((IdentifierNode)Type).Id;
     public IEnumerable<IAstNode> Children => Inherits.Prepend(Type).Concat(Properties).Concat(Methods);
 

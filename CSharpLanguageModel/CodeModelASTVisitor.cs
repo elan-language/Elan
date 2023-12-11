@@ -1,23 +1,43 @@
 ﻿using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
+using AbstractSyntaxTree.Roles;
 using CSharpLanguageModel.Models;
+using StandardLibrary;
+using SymbolTable;
+using SymbolTable.Symbols;
 
 namespace CSharpLanguageModel;
 
 public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
-    protected override void Enter(IAstNode node) { }
 
-    protected override void Exit(IAstNode node) { }
+    public CodeModelAstVisitor(IScope currentScope) {
+        CurrentScope = currentScope;
+    }
+
+
+    private IScope CurrentScope { get; set; }
+
+    protected override void Enter(IAstNode node) {
+        if (node is IHasScope hs) {
+            CurrentScope = CurrentScope.Resolve(hs.Name) as IScope ?? throw new NullReferenceException();
+        }
+    }
+
+    protected override void Exit(IAstNode node) {
+        if (node is IHasScope) {
+            CurrentScope = CurrentScope.EnclosingScope ?? throw new NullReferenceException();
+        }
+    }
 
     private FileCodeModel BuildFileModel(FileNode fileNode) {
         var main = fileNode.MainNode is { } mn ? Visit(mn) : null;
         var globals = fileNode.GlobalNodes.Select(Visit);
-        return new FileCodeModel(globals, main);
+        return new FileCodeModel(globals.ToArray(), main);
     }
 
     private MainCodeModel BuildMainModel(MainNode mainNode) => new(Visit(mainNode.StatementBlock));
 
-    private StatementBlockModel BuildStatementBlockModel(StatementBlockNode statementBlock) => new(statementBlock.Statements.Select(Visit));
+    private StatementBlockModel BuildStatementBlockModel(StatementBlockNode statementBlock) => new(statementBlock.Statements.Select(Visit).ToArray());
 
     public override ICodeModel Visit(IAstNode astNode) {
         return astNode switch {
@@ -74,7 +94,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             SelfPrefixNode n => HandleScope(BuildSelfModel, n),
             GlobalPrefixNode n => HandleScope(BuildGlobalModel, n),
             LibraryNode n => HandleScope(BuildNamespaceModel, n),
-            ReturnExpressionNode n => Visit(n.Expression),
+            ReturnExpressionNode n => HandleScope(BuildReturnExpressionModel, n),
             QualifiedNode n => HandleScope(BuildQualifiedModel, n),
             DefaultNode n => HandleScope(BuildDefaultModel, n),
             WithNode n => HandleScope(BuildWithModel, n),
@@ -86,12 +106,18 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             LambdaTypeNode n => HandleScope(BuildFuncTypeModel, n),
             TupleTypeNode n => HandleScope(BuildTupleTypeModel, n),
             TupleDefNode n => HandleScope(BuildTupleDefModel, n),
-            AbstractFunctionDefNode n => Visit(n.Signature),
-            AbstractProcedureDefNode n => Visit(n.Signature),
+            AbstractFunctionDefNode n => HandleScope(BuildAbstractFunctionDefModel,n),
+            AbstractProcedureDefNode n => HandleScope(BuildAbstractProcedureDefModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
     }
+
+    private ICodeModel BuildReturnExpressionModel(ReturnExpressionNode n) => Visit(n.Expression);
+
+    private ICodeModel BuildAbstractProcedureDefModel(AbstractProcedureDefNode n) => Visit(n.Signature);
+
+    private ICodeModel BuildAbstractFunctionDefModel(AbstractFunctionDefNode n) => Visit(n.Signature);
 
     private VarDefModel BuildVarDefModel(VarDefNode varDefNode) => new(Visit(varDefNode.Id), Visit(varDefNode.Rhs));
 
@@ -100,20 +126,68 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private AssignmentModel BuildAssignmentModel(AssignmentNode assignmentNode) => new(Visit(assignmentNode.Id), Visit(assignmentNode.Rhs), assignmentNode.Inline);
 
     private ProcedureCallModel BuildProcedureCallModel(ProcedureCallNode procedureCallNode) {
+        var symbol = SymbolHelpers.ResolveCall(procedureCallNode, CurrentScope) as ProcedureSymbol;
         var parameters = procedureCallNode.Parameters.Select(Visit);
-        var qualifier = procedureCallNode.Qualifier is { } q ? Visit(q) : null;
+        var qNode = NameSpaceToNode(symbol?.NameSpace) ?? procedureCallNode.Qualifier;
+        var qModel = qNode is { } q ? Visit(q) : null;
 
-        return new ProcedureCallModel(Visit(procedureCallNode.Id), qualifier, parameters);
+        // TODO cloned code fix once working
+
+        var calledOnNode = procedureCallNode.CalledOn;
+        var calledOnModel = calledOnNode is { } con ? Visit(con) : null;
+
+        if (qNode is null && symbol?.NameSpace is NameSpace.UserLocal) {
+            qModel = Visit(calledOnNode!);
+        }
+        else if (calledOnModel is not null) {
+            parameters = parameters.Prepend(calledOnModel);
+        }
+
+        return new ProcedureCallModel(Visit(procedureCallNode.Id), qModel, parameters.ToArray());
     }
 
     private MethodCallModel BuildSystemAccessorModel(SystemAccessorCallNode systemAccessorCallNode) {
-        var qual = systemAccessorCallNode.Qualifier is { } q ? Visit(q) : null;
-        return new MethodCallModel(CodeHelpers.MethodType.SystemCall, Visit(systemAccessorCallNode.Id), qual, systemAccessorCallNode.Parameters.Select(Visit));
+        var symbol = CurrentScope.Resolve(systemAccessorCallNode.Name) as SystemAccessorSymbol;
+        var qNode = NameSpaceToNode(symbol?.NameSpace) ?? systemAccessorCallNode.Qualifier;
+        var qModel = qNode is { } q ? Visit(q) : null;
+        return new MethodCallModel(CodeHelpers.MethodType.SystemCall, Visit(systemAccessorCallNode.Id), qModel, systemAccessorCallNode.Parameters.Select(Visit).ToArray());
     }
 
+    private static IAstNode? NameSpaceToNode(NameSpace? ns) => ns switch {
+        NameSpace.System => new LibraryNode("StandardLibrary.SystemAccessors"),
+        NameSpace.LibraryFunction => new LibraryNode("StandardLibrary.Functions"),
+        NameSpace.LibraryProcedure => new LibraryNode("StandardLibrary.Procedures"),
+        NameSpace.UserGlobal => new GlobalPrefixNode(),
+        _ => null
+    };
+
     private MethodCallModel BuildFunctionCallModel(FunctionCallNode functionCallNode) {
-        var qual = functionCallNode.Qualifier is { } q ? Visit(q) : null;
-        return new MethodCallModel(CodeHelpers.MethodType.Function, Visit(functionCallNode.Id), qual, functionCallNode.Parameters.Select(Visit));
+        var symbol = SymbolHelpers.ResolveCall(functionCallNode, CurrentScope) as FunctionSymbol;
+        var qNode =  functionCallNode.Qualifier ?? NameSpaceToNode(symbol?.NameSpace);
+        var qModel = qNode is { } q ? Visit(q) : null;
+
+        // TODO cloned code fix once working
+
+        var calledOnNode = functionCallNode.CalledOn;
+        var calledOnModel = calledOnNode is { } con ? Visit(con) : null;
+
+        var parameters = functionCallNode.Parameters.Select(Visit);
+
+        if (qNode is null && calledOnNode is not null && symbol?.NameSpace is NameSpace.UserLocal) {
+
+            qModel = Visit(calledOnNode);
+
+        }
+        else if (calledOnModel is not null) {
+            parameters = parameters.Prepend(calledOnModel);
+        }
+        else if (qModel is ScalarValueModel {Value : "this"} qm) {
+            parameters = parameters.Prepend(qm);
+            qModel = Visit(NameSpaceToNode(symbol?.NameSpace));
+        }
+
+
+        return new MethodCallModel(CodeHelpers.MethodType.Function, Visit(functionCallNode.Id), qModel, parameters.ToArray());
     }
 
     private static ScalarValueModel BuildScalarValueModel(IScalarValueNode scalarValueNode) => new(scalarValueNode.Value);
@@ -124,12 +198,12 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var expressions = ifStatementNode.Expressions.Select(Visit);
         var statementBlocks = ifStatementNode.StatementBlocks.Select(Visit);
 
-        return new IfStatementModel(expressions, statementBlocks);
+        return new IfStatementModel(expressions.ToArray(), statementBlocks.ToArray());
     }
 
     private IfExpressionModel BuildIfExpressionModel(IfExpressionNode ifStatementNode) {
         var expressions = ifStatementNode.Expressions.Select(Visit);
-        return new IfExpressionModel(expressions);
+        return new IfExpressionModel(expressions.ToArray());
     }
 
     private SwitchStatementModel BuildSwitchStatementModel(SwitchStatementNode switchStatementNode) {
@@ -137,7 +211,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var cases = switchStatementNode.Cases.Select(Visit);
         var defaultCase = Visit(switchStatementNode.DefaultCase);
 
-        return new SwitchStatementModel(expression, cases, defaultCase);
+        return new SwitchStatementModel(expression, cases.ToArray(), defaultCase);
     }
 
     private ForStatementModel BuildForStatementModel(ForStatementNode forStatementNode) {
@@ -147,7 +221,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var step = forStatementNode.Step is { } i ? Visit(i) : null;
         var neg = forStatementNode.Neg;
 
-        return new ForStatementModel(id, expressions, step, neg, statementBlock);
+        return new ForStatementModel(id, expressions.ToArray(), step, neg, statementBlock);
     }
 
     private ForInStatementModel BuildForInStatementModel(ForInStatementNode forInStatementNode) {
@@ -176,20 +250,20 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var type = CodeHelpers.NodeToCSharpType(literalListNode.ItemNodes.First());
         var items = literalListNode.ItemNodes.Select(Visit);
 
-        return new LiteralListModel(items, type);
+        return new LiteralListModel(items.ToArray(), type);
     }
 
     private TupleModel BuildLiteralTupleModel(LiteralTupleNode literalListNode) {
         var items = literalListNode.ItemNodes.Select(Visit);
 
-        return new TupleModel(items);
+        return new TupleModel(items.ToArray());
     }
 
     private LiteralDictionaryModel BuildLiteralDictionaryModel(LiteralDictionaryNode literalDictionaryNode) {
         var type = CodeHelpers.NodeToCSharpType(literalDictionaryNode.ItemNodes.First());
         var items = literalDictionaryNode.ItemNodes.Select(Visit);
 
-        return new LiteralDictionaryModel(items, type);
+        return new LiteralDictionaryModel(items.ToArray(), type);
     }
 
     private static ICodeModel BuildOperatorModel(OperatorNode operatorNode) {
@@ -230,13 +304,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var type = Visit(newInstanceNode.Type);
         var args = newInstanceNode.Arguments.Select(Visit);
 
-        return new NewInstanceModel(type, args);
+        return new NewInstanceModel(type, args.ToArray());
     }
 
     private DataStructureTypeModel BuildDataStructureTypeModel(DataStructureTypeNode dataStructureTypeNode) {
         var types = dataStructureTypeNode.GenericTypes.Select(Visit);
 
-        return new DataStructureTypeModel(types, CodeHelpers.DataStructureTypeToCSharpType(dataStructureTypeNode.Type));
+        return new DataStructureTypeModel(types.ToArray(), CodeHelpers.DataStructureTypeToCSharpType(dataStructureTypeNode.Type));
     }
 
     private static ScalarValueModel BuildValueTypeModel(ValueTypeNode valueTypeNode) => new(CodeHelpers.ValueTypeToCSharpType(valueTypeNode.Type));
@@ -262,7 +336,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var expr = Visit(lambdaDefNode.Expression);
         var arguments = lambdaDefNode.Arguments.Select(Visit);
 
-        return new LambdaDefModel(arguments, expr);
+        return new LambdaDefModel(arguments.ToArray(), expr);
     }
 
     private FunctionDefModel BuildSystemAccessorDefModel(SystemAccessorDefNode functionDefNode) {
@@ -277,7 +351,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var id = Visit(methodSignatureNode.Id);
         var parameters = methodSignatureNode.Parameters.Select(Visit);
         var returnType = methodSignatureNode.ReturnType is { } rt ? Visit(rt) : null;
-        return new MethodSignatureModel(id, parameters, returnType);
+        return new MethodSignatureModel(id, parameters.ToArray(), returnType);
     }
 
     private ParameterModel BuildParameterModel(ParameterNode parameterNode) {
@@ -314,7 +388,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var type = Visit(enumDefNode.Type);
         var values = enumDefNode.Values.Select(Visit);
 
-        return new EnumDefModel(type, values);
+        return new EnumDefModel(type, values.ToArray());
     }
 
     private EnumValueModel BuildEnumValueModel(EnumValueNode enumValueNode) {
@@ -333,18 +407,18 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private ClassDefModel BuildClassDefModel(ClassDefNode classDefNode) {
         var type = Visit(classDefNode.Type);
-        var inherits = classDefNode.Inherits.Select(Visit);
+        var inherits = classDefNode.Inherits.Select(Visit).ToArray();
         var constructor = Visit(classDefNode.Constructor);
-        var properties = classDefNode.Properties.Select(Visit).ToList();
-        var functions = classDefNode.Methods.Select(Visit);
+        var properties = classDefNode.Properties.Select(Visit).ToArray();
+        var functions = classDefNode.Methods.Select(Visit).ToArray();
 
         if (classDefNode.Immutable) {
-            properties = properties.OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Immutable }).Cast<ICodeModel>().ToList();
+            properties = properties.OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Immutable }).Cast<ICodeModel>().ToArray();
         }
 
-        var pSignatures = classDefNode.Methods.OfType<ProcedureDefNode>().Select(n => n.Signature).Select(Visit);
+        var pSignatures = classDefNode.Methods.OfType<ProcedureDefNode>().Select(n => n.Signature).Select(Visit).ToArray();
 
-        var dProperties = properties.OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Default });
+        var dProperties = properties.OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Default }).Cast<ICodeModel>().ToArray();
 
         var defaultClassModel = new DefaultClassDefModel(type, dProperties, pSignatures, Array.Empty<ICodeModel>());
 
@@ -353,25 +427,25 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private AbstractClassDefModel BuildAbstractClassDefModel(AbstractClassDefNode abstractClassDefNode) {
         var type = Visit(abstractClassDefNode.Type);
-        var inherits = abstractClassDefNode.Inherits.Select(Visit);
+        var inherits = abstractClassDefNode.Inherits.Select(Visit).ToArray();
         var properties = abstractClassDefNode.Properties.Select(Visit).OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Abstract }).ToArray();
         var methodSignatures = abstractClassDefNode.Methods.Select(Visit).ToArray();
 
-        var dProperties = properties.Select(p => p with { PropertyType = PropertyType.AbstractDefault });
+        var dProperties = properties.Select(p => p with { PropertyType = PropertyType.AbstractDefault }).Cast<ICodeModel>().ToArray();
 
-        var dProcedureSignatures = methodSignatures.OfType<MethodSignatureModel>().Where(ms => ms.ReturnType is null);
-        var dFunctionSignatures = methodSignatures.OfType<MethodSignatureModel>().Where(ms => ms.ReturnType is not null);
+        var dProcedureSignatures = methodSignatures.OfType<MethodSignatureModel>().Where(ms => ms.ReturnType is null).Cast<ICodeModel>().ToArray();
+        var dFunctionSignatures = methodSignatures.OfType<MethodSignatureModel>().Where(ms => ms.ReturnType is not null).Cast<ICodeModel>().ToArray();
 
         var defaultClassModel = new DefaultClassDefModel(type, dProperties, dProcedureSignatures, dFunctionSignatures, true);
 
-        return new AbstractClassDefModel(type, inherits, properties, methodSignatures, defaultClassModel);
+        return new AbstractClassDefModel(type, inherits, properties.Cast<ICodeModel>().ToArray(), methodSignatures, defaultClassModel);
     }
 
     private ConstructorModel BuildConstructorModel(ConstructorNode constructorNode) {
         var body = Visit(constructorNode.StatementBlock);
         var parameters = constructorNode.Parameters.Select(Visit);
 
-        return new ConstructorModel(parameters, body);
+        return new ConstructorModel(parameters.ToArray(), body);
     }
 
     private PropertyDefModel BuildPropertyDefModel(PropertyDefNode propertyDefNode) {
@@ -397,13 +471,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private TupleModel BuildTupleTypeModel(TupleTypeNode typeNode) {
         var types = typeNode.Types.Select(Visit);
 
-        return new TupleModel(types);
+        return new TupleModel(types.ToArray());
     }
 
     private TupleModel BuildTupleDefModel(TupleDefNode typeNode) {
         var types = typeNode.Expressions.Select(Visit);
 
-        return new TupleModel(types);
+        return new TupleModel(types.ToArray());
     }
 
     private static ScalarValueModel BuildSelfModel(SelfPrefixNode selfPrefixNode) => new("this");
@@ -424,13 +498,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var expr = Visit(withNode.Expression);
         var assignments = withNode.AssignmentNodes.Select(Visit);
 
-        return new WithModel(expr, assignments);
+        return new WithModel(expr, assignments.ToArray());
     }
 
     private DeconstructionModel BuildDeconstructionModel(DeconstructionNode defaultNode) {
         var ids = defaultNode.ItemNodes.Select(Visit);
         var isNew = defaultNode.IsNew;
-        return new DeconstructionModel(ids, isNew);
+        return new DeconstructionModel(ids.ToArray(), isNew);
     }
 
   

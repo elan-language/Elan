@@ -2,7 +2,7 @@
 
 using static CodeHelpers;
 
-public record DefaultClassDefModel(ICodeModel Type, IEnumerable<ICodeModel> Properties, IEnumerable<ICodeModel> Procedures, IEnumerable<ICodeModel> Functions, bool IsAbstract = false) : ICodeModel {
+public record DefaultClassDefModel(ICodeModel Type, ICodeModel[] Properties, ICodeModel[] Procedures, ICodeModel[] Functions, bool IsAbstract = false) : ICodeModel {
 
     private string Override => IsAbstract ? "" : " override";
 
@@ -14,7 +14,7 @@ public record DefaultClassDefModel(ICodeModel Type, IEnumerable<ICodeModel> Prop
 {Indent(indent + 1)}public{Override} string asString() {{ return ""default {Type}"";  }}
 {Indent(indent)}}}";
 
-    private static string DefaultFunctions(IEnumerable<ICodeModel> mm, int indent = 0) {
+    private static string DefaultFunctions(ICodeModel[] mm, int indent = 0) {
         return string.Join("\r\n", mm.Select(cm => $"{Indent(indent)}public {cm}{Init(cm)}"));
     }
 

@@ -1,6 +1,6 @@
 ﻿namespace CSharpLanguageModel.Models;
 
-public record DeconstructionModel(IEnumerable<ICodeModel> Variables, IEnumerable<bool> IsNew) : ICodeModel {
+public record DeconstructionModel(ICodeModel[] Variables, IEnumerable<bool> IsNew) : ICodeModel {
     private string VariableStr => string.Join(", ", Variables.Select((v, i) => $"{Prefix(i)}{v}"));
 
     public string ToString(int indent) => $"({VariableStr})";

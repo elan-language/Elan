@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\AbstractSyntaxTree\AbstractSyntaxTree.csproj" />
 		<ProjectReference Include="..\StandardLibrary\StandardLibrary.csproj" />
+		<ProjectReference Include="..\SymbolTable\SymbolTable.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record TypeNode(IAstNode TypeName) : IAstNode, INamed {
+public record TypeNode(IAstNode TypeName) : IAstNode, INamedAstNode {
     public IEnumerable<IAstNode> Children => new[] { TypeName };
 
     public IAstNode Replace(IAstNode from, IAstNode to) => new TypeNode(to);

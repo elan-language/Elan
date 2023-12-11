@@ -12,20 +12,22 @@ namespace Compiler;
 public static class CompilerTransforms {
     #region rules
 
-    public static IAstNode? TransformMethodCallNodes(IAstNode[] nodes, IScope currentScope) =>
-        nodes.Last() switch {
-            MethodCallNode mcn => ResolveMethodCall(currentScope, mcn) switch {
-                (SystemAccessorSymbol sas, _) when mcn.Qualifier is SystemAccessorPrefixNode => new SystemAccessorCallNode(mcn.Id, NameSpaceToNode(sas.NameSpace), mcn.Parameters) { DotCalled = mcn.DotCalled },
-                (ProcedureSymbol ps, false) => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
-                (ProcedureSymbol, true) => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                (FunctionSymbol fs, false) => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
-                (FunctionSymbol, true) => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                (ParameterSymbol { ReturnType: LambdaSymbolType }, _) => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
-                (VariableSymbol vs, _) when EnsureResolved(vs.ReturnType, currentScope) is LambdaSymbolType => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
-                _ => GetSpecificCallNodeForClassMethod(mcn, currentScope)
-            },
-            _ => null
-        };
+    //public static IAstNode? TransformMethodCallNodes(IAstNode[] nodes, IScope currentScope) =>
+    //    nodes.Last() switch
+    //    {
+    //        MethodCallNode mcn => ResolveMethodCall(currentScope, mcn) switch
+    //        {
+    //            (SystemAccessorSymbol sas, _) when mcn.Qualifier is SystemAccessorPrefixNode => new SystemAccessorCallNode(mcn.Id, NameSpaceToNode(sas.NameSpace), mcn.Parameters) { DotCalled = mcn.DotCalled },
+    //            (ProcedureSymbol ps, false) => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
+    //            (ProcedureSymbol, true) => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+    //            (FunctionSymbol fs, false) => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
+    //            (FunctionSymbol, true) => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+    //            (ParameterSymbol { ReturnType: LambdaSymbolType }, _) => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
+    //            (VariableSymbol vs, _) when EnsureResolved(vs.ReturnType, currentScope) is LambdaSymbolType => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
+    //            _ => GetSpecificCallNodeForClassMethod(mcn, currentScope)
+    //        },
+    //        _ => null
+    //    };
 
     public static IAstNode? TransformLiteralListNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {
@@ -97,7 +99,7 @@ public static class CompilerTransforms {
         };
 
     private static ISymbolType? GetQualifierType(ICallNode callNode, IScope currentScope) =>
-        callNode.Qualifier switch {
+        callNode.CalledOn switch {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
                 VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
@@ -110,26 +112,26 @@ public static class CompilerTransforms {
             _ => null
         };
 
-    private static IAstNode? GetSpecificCallNode(MethodCallNode mcn, IScope currentScope, ClassSymbolType cst) {
-        var classSymbol = currentScope.Resolve(cst.Name);
+    //private static IAstNode? GetSpecificCallNode(MethodCallNode mcn, IScope currentScope, ClassSymbolType cst) {
+    //    var classSymbol = currentScope.Resolve(cst.Name);
 
-        return classSymbol switch {
-            IScope classScope => classScope.Resolve(mcn.Name) switch {
-                ProcedureSymbol { NameSpace: NameSpace.UserLocal } => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                ProcedureSymbol ps => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
-                FunctionSymbol { NameSpace: NameSpace.UserLocal } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                FunctionSymbol fs => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
-                VariableSymbol { ReturnType: LambdaSymbolType } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-                _ => null
-            },
-            _ => null
-        };
-    }
+    //    return classSymbol switch {
+    //        IScope classScope => classScope.Resolve(mcn.Name) switch {
+    //            ProcedureSymbol { NameSpace: NameSpace.UserLocal } => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+    //            ProcedureSymbol ps => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
+    //            FunctionSymbol { NameSpace: NameSpace.UserLocal } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+    //            FunctionSymbol fs => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
+    //            VariableSymbol { ReturnType: LambdaSymbolType } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
+    //            _ => null
+    //        },
+    //        _ => null
+    //    };
+    //}
 
-    private static IAstNode? GetSpecificCallNodeForClassMethod(MethodCallNode mcn, IScope currentScope) {
-        var type = GetQualifierType(mcn, currentScope);
-        return type is ClassSymbolType cst ? GetSpecificCallNode(mcn, currentScope, cst) : null;
-    }
+    //private static IAstNode? GetSpecificCallNodeForClassMethod(MethodCallNode mcn, IScope currentScope) {
+    //    var type = GetQualifierType(mcn, currentScope);
+    //    return type is ClassSymbolType cst ? GetSpecificCallNode(mcn, currentScope, cst) : null;
+    //}
 
     private static ProcedureSymbol? GetProcedure(ICallNode mcn, IScope currentScope) {
         var type = GetQualifierType(mcn, currentScope);
@@ -150,7 +152,7 @@ public static class CompilerTransforms {
 
     private static (ISymbol?, bool) ResolveMethodCall(IScope currentScope, ICallNode mcn) {
         var isGlobal = mcn.Qualifier is GlobalPrefixNode;
-        var qualifiedId = GetId(mcn.Qualifier);
+        var qualifiedId = GetId(mcn.CalledOn);
 
         if (qualifiedId is not null) {
             switch (currentScope.Resolve(qualifiedId)) {

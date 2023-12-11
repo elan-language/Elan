@@ -1,6 +1,11 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Roles;
+using Microsoft.VisualBasic;
 
-public record MainNode(IAstNode StatementBlock) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record MainNode(IAstNode StatementBlock) : IAstNode, IHasScope {
     public IEnumerable<IAstNode> Children => new[] { StatementBlock };
     public IAstNode Replace(IAstNode from, IAstNode to) => new MainNode(to);
+
+    public string Name => "_main"; // TODO make constant
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Immutable;
+using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record LambdaDefNode(ImmutableArray<IAstNode> Arguments, IAstNode Expression) : IAstNode {
+public record LambdaDefNode(ImmutableArray<IAstNode> Arguments, IAstNode Expression) : IAstNode, IHasScope {
 
     public string Name { get; } = Helpers.UniqueLambdaName;
 

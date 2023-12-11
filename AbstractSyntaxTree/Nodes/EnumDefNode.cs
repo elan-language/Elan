@@ -3,7 +3,7 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record EnumDefNode(IAstNode Type, ImmutableArray<IAstNode> Values) : IAstNode, INamed {
+public record EnumDefNode(IAstNode Type, ImmutableArray<IAstNode> Values) : IAstNode, INamedAstNode {
     public IEnumerable<IAstNode> Children => Values.Prepend(Type);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

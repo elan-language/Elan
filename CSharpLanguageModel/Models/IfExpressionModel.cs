@@ -1,6 +1,6 @@
 ﻿namespace CSharpLanguageModel.Models;
 
-public record IfExpressionModel(IEnumerable<ICodeModel> Expressions) : ICodeModel {
+public record IfExpressionModel(ICodeModel[] Expressions) : ICodeModel {
     public string ToString(int indent) {
         if (Expressions.Count() is 3) {
             var expr1 = Expressions.First();

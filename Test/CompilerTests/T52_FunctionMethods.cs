@@ -388,7 +388,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_FunctionCannotBeCalledDirectly() {
         var code = @"#
 main

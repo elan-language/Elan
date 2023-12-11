@@ -2,7 +2,7 @@
 
 using static CodeHelpers;
 
-public record ClassDefModel(ICodeModel Type, IEnumerable<ICodeModel> Inherits, ICodeModel Constructor, IEnumerable<ICodeModel> Properties, IEnumerable<ICodeModel> Functions, bool HasDefaultConstructor, ICodeModel DefaultClassModel) : ICodeModel {
+public record ClassDefModel(ICodeModel Type, ICodeModel[] Inherits, ICodeModel Constructor, ICodeModel[] Properties, ICodeModel[] Functions, bool HasDefaultConstructor, ICodeModel DefaultClassModel) : ICodeModel {
     public string ToString(int indent) =>
         $@"{Indent(indent)}public record class {Type}{InheritsAsString()} {{
 {CodeHelpers.DefaultInstance(indent, Type)}

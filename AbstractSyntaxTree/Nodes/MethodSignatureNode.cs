@@ -1,8 +1,9 @@
 ﻿using System.Collections.Immutable;
+using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record MethodSignatureNode(IAstNode Id, ImmutableArray<IAstNode> Parameters, IAstNode? ReturnType = null) : IAstNode {
+public record MethodSignatureNode(IAstNode Id, ImmutableArray<IAstNode> Parameters, IAstNode? ReturnType = null) : INamedAstNode {
     public IEnumerable<IAstNode> Children => Parameters.Prepend(Id).SafeAppend(ReturnType);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
@@ -12,4 +13,6 @@ public record MethodSignatureNode(IAstNode Id, ImmutableArray<IAstNode> Paramete
             _ => this with { Parameters = Parameters.SafeReplace(from, to) }
         };
     }
+
+    public string Name => ((IdentifierNode)Id).Id;
 }

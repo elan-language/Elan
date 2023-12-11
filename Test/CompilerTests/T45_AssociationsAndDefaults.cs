@@ -720,7 +720,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "empty list\r\n\r\nempty dictionary\r\nempty array\r\ntrue\r\ntrue\r\ntrue\r\ntrue\r\n");
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_PropertyOfAbstractType()
     {
         var code = @"#

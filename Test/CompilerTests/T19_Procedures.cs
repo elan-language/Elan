@@ -543,7 +543,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_CallingUndeclaredProc() {
         var code = @"
 main

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Immutable;
+using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record ConstructorNode(ImmutableArray<IAstNode> Parameters, IAstNode StatementBlock) : IAstNode {
+public record ConstructorNode(ImmutableArray<IAstNode> Parameters, IAstNode StatementBlock) : IAstNode, IHasScope {
     public IEnumerable<IAstNode> Children => Parameters.Append(StatementBlock);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
@@ -11,4 +12,6 @@ public record ConstructorNode(ImmutableArray<IAstNode> Parameters, IAstNode Stat
             _ => this with { Parameters = Parameters.SafeReplace(from, to) }
         };
     }
+
+    public string Name => "_constructor";
 }

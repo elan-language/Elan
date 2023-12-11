@@ -2,7 +2,7 @@
 
 using static CodeHelpers;
 
-public record IfStatementModel(IEnumerable<ICodeModel> Expressions, IEnumerable<ICodeModel> StatementBlocks) : ICodeModel {
+public record IfStatementModel(ICodeModel[] Expressions, ICodeModel[] StatementBlocks) : ICodeModel {
     public string ToString(int indent) {
         // check data 
         if (Expressions.Count() == StatementBlocks.Count() || StatementBlocks.Count() == Expressions.Count() + 1) {

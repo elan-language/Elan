@@ -3,10 +3,12 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public interface ICallNode : INamed {
+public interface ICallNode : INamedAstNode {
     public IAstNode Id { get; }
 
     public IAstNode? Qualifier { get; }
+
+    public IAstNode? CalledOn { get; }
 
     public ImmutableArray<IAstNode> Parameters { get; }
 }

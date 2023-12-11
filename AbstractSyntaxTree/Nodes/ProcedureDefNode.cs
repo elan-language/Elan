@@ -1,6 +1,8 @@
-﻿namespace AbstractSyntaxTree.Nodes;
+﻿using AbstractSyntaxTree.Roles;
 
-public record ProcedureDefNode(IAstNode Signature, IAstNode StatementBlock, bool Standalone = true) : IAstNode {
+namespace AbstractSyntaxTree.Nodes;
+
+public record ProcedureDefNode(IAstNode Signature, IAstNode StatementBlock, bool Standalone = true) : IAstNode, IHasScope {
     public IEnumerable<IAstNode> Children => new[] { Signature, StatementBlock };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
@@ -10,4 +12,6 @@ public record ProcedureDefNode(IAstNode Signature, IAstNode StatementBlock, bool
             _ => throw new NotImplementedException()
         };
     }
+
+    public string Name => ((INamedAstNode)Signature).Name;
 }
