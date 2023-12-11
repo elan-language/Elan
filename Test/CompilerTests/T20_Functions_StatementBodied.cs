@@ -346,7 +346,7 @@ end function
         AssertDoesNotCompile(compileData, "Cannot print in function");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CanNotContainInput()
     {
         var code = @"
@@ -363,7 +363,7 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot input in function");
+        AssertDoesNotCompile(compileData, "Cannot use 'input' within a function");
     }
 
     [TestMethod]
@@ -382,7 +382,7 @@ end function
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot use system accessor in function");
+        AssertDoesNotCompile(compileData, "Cannot access system within a function");
     }
 
 
