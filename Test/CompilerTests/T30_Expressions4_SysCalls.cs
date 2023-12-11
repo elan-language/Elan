@@ -79,6 +79,44 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_Me()
+    {
+        var code = @"#
+main
+  var a set to system.me()
+  print a
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = StandardLibrary.SystemAccessors.me();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        var expected = Environment.UserName;
+        AssertObjectCodeExecutes(compileData, $"{expected}\r\n");
+    }
+
+    [TestMethod]
     public void Fail_NoQualifier1() {
         var code = @"#
 main

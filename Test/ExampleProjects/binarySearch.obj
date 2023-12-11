@@ -1,0 +1,43 @@
+using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static bool binarySearch(StandardLibrary.ElanList<string> li, string item) {
+    var result = false;
+    if (StandardLibrary.Functions.length(li) > 0) {
+      var mid = StandardLibrary.Functions.length(li) / 2;
+      var value = li[mid];
+      if (item == value) {
+        result = true;
+      }
+      else if (StandardLibrary.Functions.isBefore(item, value)) {
+        result = Globals.binarySearch(li[..(mid)], item);
+      }
+      else {
+        result = Globals.binarySearch(li[(mid + 1)..], item);
+      }
+    }
+    return result;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var li2 = new StandardLibrary.ElanList<string>(@$"lemon", @$"lime", @$"orange");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"lemon")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"lime")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"orange")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"pear")));
+    var li3 = new StandardLibrary.ElanList<string>(@$"lemon", @$"orange");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"lemon")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"orange")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"pear")));
+    var li4 = new StandardLibrary.ElanList<string>(@$"lemon");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"lemon")));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"pear")));
+    var li5 = new StandardLibrary.ElanList<string>();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.binarySearch(li2, @$"pear")));
+  }
+}

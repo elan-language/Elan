@@ -1,10 +1,14 @@
 grammar Elan;
 import Elan_Lexer;
 
-file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test )* NL* EOF;
+file: (main | procedureDef | functionDef | constantDef | enumDef | classDef | test | importStatement )* NL* EOF;
 
-main: 
-	NL MAIN 
+importStatement: IMPORT namespace;
+
+namespace: (TYPENAME | IDENTIFIER) (DOT (TYPENAME | IDENTIFIER))*;
+
+main:  
+	NL MAIN  
     statementBlock
     NL END MAIN 
     ;
@@ -232,7 +236,7 @@ range: expression DOUBLE_DOT expression | expression DOUBLE_DOT	| DOUBLE_DOT exp
 // VALUES
 value: literal | scopeQualifier? IDENTIFIER  |dataStructureDefinition | SELF | DEFAULT type;
 
-scopeQualifier: (SELF | GLOBAL ) DOT; // might add 'namespace' as a further option in future
+scopeQualifier: (SELF | GLOBAL | LIBRARY | (PACKAGE DOT namespace)) DOT; 
  
 // LITERALS
 literal: literalValue | literalDataStructure ; 

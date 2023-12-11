@@ -1,0 +1,38 @@
+using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static StandardLibrary.ElanList<string> mergeSort(StandardLibrary.ElanList<string> list) {
+    var result = list;
+    if (StandardLibrary.Functions.length(list) > 1) {
+      var mid = StandardLibrary.Functions.length(list) / 2;
+      result = Globals.merge(Globals.mergeSort(list[..(mid)]), Globals.mergeSort(list[(mid)..]));
+    }
+    return result;
+  }
+  public static StandardLibrary.ElanList<string> merge(StandardLibrary.ElanList<string> a, StandardLibrary.ElanList<string> b) {
+    var result = new StandardLibrary.ElanList<string>();
+    if (StandardLibrary.Functions.isEmpty(a)) {
+      result = b;
+    }
+    else if (StandardLibrary.Functions.isEmpty(b)) {
+      result = a;
+    }
+    else if (StandardLibrary.Functions.isBefore(a[0], b[0])) {
+      result = a[0] + Globals.merge(a[(1)..], b);
+    }
+    else {
+      result = b[0] + Globals.merge(a, b[(1)..]);
+    }
+    return result;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var li = new StandardLibrary.ElanList<string>(@$"plum", @$"apricot", @$"lime", @$"lemon", @$"melon", @$"apple", @$"orange", @$"strawberry", @$"pear", @$"banana");
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.mergeSort(li)));
+  }
+}

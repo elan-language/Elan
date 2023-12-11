@@ -124,7 +124,7 @@ public static partial class Helpers {
         }
     }
 
-    public static string ReadElanSourceCodeFile(string fileName) => File.ReadAllText($"ElanSourceCode\\{fileName}");
+    public static string ReadCodeFile(string fileName) => File.ReadAllText($"ExampleProjects\\{fileName}");
 
     public static void CleanUpArtifacts() {
         var wd = $@"{Directory.GetCurrentDirectory()}\obj";

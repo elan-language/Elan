@@ -1,19 +1,21 @@
 ﻿using Compiler;
+using Test.CompilerTests;
 
-namespace Test.CompilerTests;
+namespace Test.ExampleProjects;
 
 using static Helpers;
 
-[TestClass] 
-public class TT145_Life
+[TestClass]
+public class MergeSort_test
 {
     #region Passes
 
-    [TestMethod, Ignore]
-    public void Pass_Template() {
-        var code = ReadElanSourceCodeFile("Life.elan");
+    [TestMethod]
+    public void Pass_MergeSort_Recursive()
+    {
+        var code = ReadCodeFile("mergeSort.elan");
 
-        var objectCode = @"";
+        var objectCode = ReadCodeFile("mergeSort.obj");
 
         var parseTree = @"*";
 
@@ -23,7 +25,6 @@ public class TT145_Life
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        ///AssertObjectCodeExecutes(compileData, "\r\n");
     }
 
     #endregion

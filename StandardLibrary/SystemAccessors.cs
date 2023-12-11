@@ -120,4 +120,8 @@ public static class SystemAccessors {
     //Separate methods for binary file handling?
 
     #endregion
+
+    #region User
+    public static string me() => Environment.UserName;
+    #endregion
 }

@@ -1,0 +1,37 @@
+using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static void roman(ref int d, ref string result) {
+    Globals.processSymbol(1000, @$"M", ref d, ref result);
+    Globals.processSymbol(900, @$"CM", ref d, ref result);
+    Globals.processSymbol(500, @$"D", ref d, ref result);
+    Globals.processSymbol(400, @$"CD", ref d, ref result);
+    Globals.processSymbol(100, @$"C", ref d, ref result);
+    Globals.processSymbol(90, @$"XC", ref d, ref result);
+    Globals.processSymbol(50, @$"L", ref d, ref result);
+    Globals.processSymbol(40, @$"XL", ref d, ref result);
+    Globals.processSymbol(10, @$"X", ref d, ref result);
+    Globals.processSymbol(9, @$"IX", ref d, ref result);
+    Globals.processSymbol(5, @$"V", ref d, ref result);
+    Globals.processSymbol(4, @$"IV", ref d, ref result);
+    Globals.processSymbol(1, @$"I", ref d, ref result);
+  }
+  public static void processSymbol(int n, string x, ref int d, ref string result) {
+    while (d >= n) {
+      d = d - n;
+      result = result + x;
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var d = 1999;
+    var result = @$"";
+    Globals.roman(ref d, ref result);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(result));
+  }
+}
