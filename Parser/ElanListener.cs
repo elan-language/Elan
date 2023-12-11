@@ -511,15 +511,15 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitFor([NotNull] ElanParser.ForContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.foreach"/>.
+	/// Enter a parse tree produced by <see cref="ElanParser.each"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterForeach([NotNull] ElanParser.ForeachContext context);
+	void EnterEach([NotNull] ElanParser.EachContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.foreach"/>.
+	/// Exit a parse tree produced by <see cref="ElanParser.each"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitForeach([NotNull] ElanParser.ForeachContext context);
+	void ExitEach([NotNull] ElanParser.EachContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.while"/>.
 	/// </summary>

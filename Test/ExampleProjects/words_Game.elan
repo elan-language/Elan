@@ -90,9 +90,9 @@ class Game
 
     function listTileValues(player Player) as String
         var values = "                  "
-        foreach c in player.tilesInHand
+        each c in player.tilesInHand
             set values to values + tileDictionary[c]
-        end foreach
+        end each
         return values
     end function
 
@@ -121,10 +121,10 @@ class Game
         var s = "
 TILE VALUES
 "
-        foreach k in tileDictionary.keys()
+        each k in tileDictionary.keys()
             var v = tileDictionary[k]
             set s to s + "Point for {k}: {v}"
-        end foreach
+        end each
         set s to s + newline
         return s
     end function
@@ -174,26 +174,26 @@ class Player
     procedure wordAsWouldBePlayed(word String, asPlayed String)
         set asPlayed to ""
         set tilesPlayed to tilesPlayed + word.length()
-        foreach letter in word
+        each letter in word
              var c = letter
              if not tilesInHand.contains(letter) then 
                set c to '*'
              end if
              set asPlayed to asPlayed + c
-        end foreach
+        end each
     end procedure
 
     procedure removeLetters(wordAsPlayed String)
-        foreach letter in wordAsPlayed
+        each letter in wordAsPlayed
              var x = letter
              call removeLetter(x)
-        end foreach
+        end each
     end procedure
 
     procedure deductAnyPenalty()
-      foreach tile in tilesInHand
+      each tile in tilesInHand
         set score to score - tileDictionary[tile]
-      end foreach
+      end each
     end procedure
 
     function asString() as String 
@@ -244,9 +244,9 @@ class QueueOfTiles
 
     function show() as String
        var result = ""
-       foreach letter in contents
+       each letter in contents
          set result to result + letter       
-       end foreach
+       end each
        return result + newline
     end function
 

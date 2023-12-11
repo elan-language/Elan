@@ -312,7 +312,7 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitForeach([NotNull] ElanParser.ForeachContext context);
+	Result VisitForeach([NotNull] ElanParser.EachContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.while"/>.
 	/// </summary>

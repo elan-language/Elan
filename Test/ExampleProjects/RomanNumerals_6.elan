@@ -7,13 +7,13 @@ end main
 function roman(d Int) as String
     var result set to ""
     var d2 set to d
-    foreach vs in valueSymbols
+    each vs in valueSymbols
         var (value, symbol) set to vs
         while d2 >= value
             set result to result + symbol
             set d2 to d2 - value
         end while
-    end foreach
+    end each
     return result
 end function
 

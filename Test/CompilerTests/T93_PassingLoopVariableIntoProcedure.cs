@@ -13,10 +13,10 @@ public class T93_PassingLoopVariableIntoProcedure {
     public void Pass_CorrectedPattern() {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)
-  foreach letter in wordAsPlayed
+  each letter in wordAsPlayed
     var x set to letter
     call removeLetter(x)
-  end foreach
+  end each
 end procedure
 
 procedure removeLetter(l Char)
@@ -66,9 +66,9 @@ public static class Program {
     public void Fail_InvalidPattern() {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)
-  foreach letter in wordAsPlayed
+  each letter in wordAsPlayed
     call removeLetter(letter)
-  end foreach
+  end each
 end procedure
 
 procedure removeLetter(l Char)
