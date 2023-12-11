@@ -504,7 +504,7 @@ public static class AstFactory {
         var expression = visitor.Visit(context.expression());
         var statementBlock = visitor.Visit(context.statementBlock());
 
-        return new ForEachStatementNode(id, expression, statementBlock);
+        return new ForEachStatementNode(new ForEachParameterNode(id, expression), statementBlock);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, RepeatContext context) {

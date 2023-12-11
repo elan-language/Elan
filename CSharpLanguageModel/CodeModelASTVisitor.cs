@@ -79,6 +79,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             SystemAccessorDefNode n => HandleScope(BuildSystemAccessorDefModel, n),
             MethodSignatureNode n => HandleScope(BuildMethodSignatureModel, n),
             ParameterNode n => HandleScope(BuildParameterModel, n),
+            ForEachParameterNode n => HandleScope(BuildForEachParameterModel, n),
             SwitchStatementNode n => HandleScope(BuildSwitchStatementModel, n),
             CaseNode n => HandleScope(BuildCaseModel, n),
             TryCatchNode n => HandleScope(BuildTryCatchModel, n),
@@ -225,12 +226,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new ForStatementModel(id, expressions.ToArray(), step, neg, statementBlock);
     }
 
-    private ForInStatementModel BuildForInStatementModel(ForEachStatementNode forEachStatementNode) {
-        var id = Visit(forEachStatementNode.Id);
-        var expression = Visit(forEachStatementNode.Expression);
+    private ForEachStatementModel BuildForInStatementModel(ForEachStatementNode forEachStatementNode) {
+        var parameter = Visit(forEachStatementNode.Parameter);
         var statementBlock = Visit(forEachStatementNode.StatementBlock);
 
-        return new ForInStatementModel(id, expression, statementBlock);
+        return new ForEachStatementModel(parameter, statementBlock);
     }
 
     private WhileStatementModel BuildWhileStatementModel(WhileStatementNode whileStatementNode) {
@@ -361,6 +361,13 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var isRef = parameterNode.IsRef;
 
         return new ParameterModel(id, type, isRef);
+    }
+
+    private ForEachParameterModel BuildForEachParameterModel(ForEachParameterNode parameterNode) {
+        var id = Visit(parameterNode.Id);
+        var expression = Visit(parameterNode.Expression);
+
+        return new ForEachParameterModel(id, expression);
     }
 
     private CaseModel BuildCaseModel(CaseNode caseNode) {

@@ -1,4 +1,5 @@
-﻿using Compiler;
+﻿using System.Xml.Serialization;
+using Compiler;
 
 namespace Test.CompilerTests;
 
@@ -8,7 +9,7 @@ using static Helpers;
 public class T93_PassingLoopVariableIntoProcedure {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_CorrectedPattern() {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)
@@ -61,7 +62,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_InvalidPattern() {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)

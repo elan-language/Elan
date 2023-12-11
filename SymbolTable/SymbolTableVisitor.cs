@@ -32,6 +32,7 @@ public class SymbolTableVisitor {
             MainNode n => VisitMainNode(n),
             ProcedureDefNode n => VisitProcedureDefNode(n),
             ForEachStatementNode n => VisitForEachNode(n),
+            ForEachParameterNode n => VisitForEachParameterNode(n),
             AbstractProcedureDefNode n => VisitAbstractProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
             LambdaDefNode n => VisitLambdaDefNode(n),
@@ -70,7 +71,7 @@ public class SymbolTableVisitor {
     }
 
     private IAstNode VisitForEachNode(ForEachStatementNode forEachStatementNode) {
-        var parameterIds = new string[] { GetId(forEachStatementNode.Id)! };
+        var parameterIds = new string[] { GetId(forEachStatementNode.Parameter)! };
 
         if (Pass is VisitorPass.First) {
 
@@ -346,6 +347,19 @@ public class SymbolTableVisitor {
             var ms = new ParameterSymbol(name, type, parameterNode.IsRef, currentScope);
             currentScope.Define(ms);
 
+        }
+
+        VisitChildren(parameterNode);
+        return parameterNode;
+    }
+
+    private IAstNode VisitForEachParameterNode(ForEachParameterNode parameterNode) {
+        var name = parameterNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(parameterNode.Id.GetType().ToString());
+        var type = MapNodeToSymbolType(parameterNode.Expression); // todo this type will be collection not item!
+
+        if (Pass is VisitorPass.First) {
+            var ms = new ParameterSymbol(name, type, false, currentScope);
+            currentScope.Define(ms);
         }
 
         VisitChildren(parameterNode);
