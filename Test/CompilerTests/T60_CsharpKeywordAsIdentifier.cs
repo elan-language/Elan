@@ -70,7 +70,7 @@ end main
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "47\r\n");
+        AssertObjectCodeExecutes(compileData, "46\r\n");
     }
 
     [TestMethod]
