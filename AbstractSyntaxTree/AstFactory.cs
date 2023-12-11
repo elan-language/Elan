@@ -35,7 +35,7 @@ public static class AstFactory {
             IfContext c => visitor.Build(c),
             IfExpressionContext c => visitor.Build(c),
             ForContext c => visitor.Build(c),
-            ForeachContext c => visitor.Build(c),
+            EachContext c => visitor.Build(c),
             WhileContext c => visitor.Build(c),
             RepeatContext c => visitor.Build(c),
             SwitchContext c => visitor.Build(c),
@@ -447,7 +447,7 @@ public static class AstFactory {
             return visitor.Visit(f);
         }
 
-        if (context.@foreach() is { } fi) {
+        if (context.@each() is { } fi) {
             return visitor.Visit(fi);
         }
 
@@ -499,7 +499,7 @@ public static class AstFactory {
         return new ForStatementNode(id, expressions.ToImmutableArray(), step, neg, statementBlock);
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ForeachContext context) {
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EachContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var expression = visitor.Visit(context.expression());
         var statementBlock = visitor.Visit(context.statementBlock());

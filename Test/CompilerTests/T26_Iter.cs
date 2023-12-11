@@ -17,9 +17,9 @@ main
 end main
 
 procedure printEach(target Iter<of Int>)
-  foreach x in target
+  each x in target
     print x
-  end foreach
+  end each
 end procedure
 ";
 
@@ -63,9 +63,9 @@ main
 end main
 
 procedure printEach(target Iter<of Int>)
-  foreach x in target
+  each x in target
     print x
-  end foreach
+  end each
 end procedure
 ";
 
@@ -109,9 +109,9 @@ main
 end main
 
 procedure printEach(target Iter<of Char>)
-  foreach x in target
+  each x in target
     print x
-  end foreach
+  end each
 end procedure
 ";
 
@@ -273,9 +273,9 @@ main
 end main
 
 procedure printEach(target Iter)
-  foreach x in target
+  each x in target
     print x
-  end foreach
+  end each
 end procedure
 ";
         var parseTree = @"*";
@@ -293,9 +293,9 @@ main
 end main
 
 procedure printEach(target Iter<of String>)
-  foreach x in target
+  each x in target
     print x
-  end foreach
+  end each
 end procedure
 ";
 
@@ -317,9 +317,9 @@ main
 end main
 
 procedure printEach(target Iter<of Int>)
-  foreach x in target
+  each x in target
     print x
-  end foreach
+  end each
   print target[0]
 end procedure
 ";

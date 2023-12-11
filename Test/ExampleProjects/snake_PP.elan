@@ -83,11 +83,11 @@ end procedure
 
 function bodyCovers(body List<of (Int, Int)>, sq (Int, Int)) as Bool
     var result set to false
-    foreach seg in body
+    each seg in body
         if (seg is sq) then
             set result to true
         end if
-    end foreach
+    end each
     return result
 end function
 

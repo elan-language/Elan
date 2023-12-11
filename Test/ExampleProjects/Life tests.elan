@@ -62,9 +62,9 @@ end test
 procedure neighbourCells(cell Int, expected List<of Int>)
     var n set to neighbourCells(cell)
     assert n.Count is 8
-    foreach val in expected
+    each val in expected
         assert n.contains(val) is true
-    end foreach
+    end each
 end procedure
 
 test neighbourCells_tests

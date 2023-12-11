@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T15_ForEachLoop {
+public class T15_eachLoop {
     #region Passes
 
     [TestMethod]
@@ -14,9 +14,9 @@ public class T15_ForEachLoop {
 main
     var a set to {7,8,9}
     var n set to 0
-    foreach x in a
+    each x in a
         set n to n + x
-    end foreach
+    end each
     print n
 end main
 ";
@@ -58,9 +58,9 @@ public static class Program {
 main
     var a set to {7,8,9}.asArray()
     var n set to 0
-    foreach x in a
+    each x in a
         set n to n + x
-    end foreach
+    end each
     print n
 end main
 ";
@@ -101,9 +101,9 @@ public static class Program {
         var code = @"
 main
     var a set to ""hello""
-    foreach x in a
+    each x in a
         print x
-    end foreach
+    end each
 end main
 ";
 
@@ -140,11 +140,11 @@ public static class Program {
     public void Pass_doubleLoop() {
         var code = @"
 main
-    foreach x in ""12""
-        foreach y in ""34""
+    each x in ""12""
+        each y in ""34""
             print ""{x}{y }""
-        end foreach
-    end foreach
+        end each
+    end each
 end main
 ";
 
@@ -182,9 +182,9 @@ public static class Program {
     public void Pass_functionProvidingList() {
         var code = @"
 main
-    foreach x in fruit()
+    each x in fruit()
         print x
-    end foreach
+    end each
 end main
 
 function fruit() as List<of String>
@@ -233,9 +233,9 @@ public static class Program {
 main
     var a set to {7,8,9}
     var x set to ""hello"";
-    foreach x in a
+    each x in a
        print x
-    end foreach
+    end each
     print x
 end main
 ";
@@ -271,11 +271,11 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_NoEndForeach() {
+    public void Fail_NoEndeach() {
         var code = @"
 main
   var a set to ""hello""
-  foreach x in a
+  each x in a
    print x
   end for
 end main
@@ -290,9 +290,9 @@ end main
         var code = @"
 main
     var y set to 10
-    foreach x in y
+    each x in y
        print x
-    end foreach
+    end each
 end main
 ";
 
@@ -310,9 +310,9 @@ end main
         var code = @"
 main
   var a set to {1,2,3,4,5}
-  foreach x in a
+  each x in a
     set a to a + x
-  end foreach
+  end each
 end main
 ";
         var parseTree = @"*";
