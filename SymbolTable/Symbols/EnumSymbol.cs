@@ -1,5 +1,7 @@
 ﻿namespace SymbolTable.Symbols;
 
+
+// TODO should not have scope ? 
 public class EnumSymbol : BaseScope, ISymbol {
     public EnumSymbol(string name, IScope enclosingScope) : this(name) => EnclosingScope = enclosingScope;
 

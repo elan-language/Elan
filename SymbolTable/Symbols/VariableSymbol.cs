@@ -9,7 +9,7 @@ public class VariableSymbol : ISymbol {
         EnclosingScope = enclosingScope;
     }
 
-    public ISymbolType ReturnType { get; }
+    public ISymbolType ReturnType { get; set; }
     public IScope? EnclosingScope { get; }
     public string Name { get; }
 

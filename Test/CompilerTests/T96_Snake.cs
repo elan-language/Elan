@@ -10,7 +10,7 @@ public class T96_Snake {
 
     [TestMethod, Ignore]
     public void Pass_Snake_OOP() {
-        var code = ReadElanSourceCodeFile("snake_OOP.elan");
+        var code = ReadCodeFile("snake_OOP.elan");
 
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
@@ -202,7 +202,7 @@ public static class Program {
     [TestMethod, Ignore]
     public void Pass_Snake_PP()
     {
-        var code = ReadElanSourceCodeFile("snake_PP.elan");
+        var code = ReadCodeFile("snake_PP.elan");
 
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;

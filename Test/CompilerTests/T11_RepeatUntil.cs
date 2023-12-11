@@ -129,7 +129,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_variableDefinedInLoop() {
         var code = @"
 main

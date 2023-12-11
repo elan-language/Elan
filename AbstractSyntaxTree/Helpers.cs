@@ -50,4 +50,6 @@ public static class Helpers {
     public static string UniqueID => Guid.NewGuid().ToString();
 
     public static string UniqueLambdaName => $"_lambda{UniqueID}";
+
+    public static string UniqueScopeName => $"_scope{UniqueID}";
 }

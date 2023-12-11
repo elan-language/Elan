@@ -77,7 +77,7 @@ public class SymbolHelpers {
 
      
 
-    private static string? GetId(IAstNode? node) => node switch {
+    public static string? GetId(IAstNode? node) => node switch {
         IdentifierNode idn => idn.Id,
         IndexedExpressionNode ien => GetId(ien.Expression),
         _ => null
@@ -138,13 +138,16 @@ public class SymbolHelpers {
         return type is ClassSymbolType cst ? GetSymbolForCallNode(mcn, currentScope, cst) : null;
     }
 
-    private static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope) {
+    public static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope) {
         return symbolType switch {
             PendingResolveSymbol rr => currentScope.Resolve(rr.Name) switch {
-                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
-                ClassSymbol cs => new ClassSymbolType(cs.Name),
-                FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
-                LambdaParameterSymbol lps => throw new NotImplementedException(),
+                VariableSymbol s => EnsureResolved(s.ReturnType, currentScope),
+                ClassSymbol s => new ClassSymbolType(s.Name),
+                EnumSymbol s => new EnumSymbolType(s.Name),
+                FunctionSymbol s => EnsureResolved(s.ReturnType, currentScope),
+                ParameterSymbol s => EnsureResolved(s.ReturnType, currentScope),
+                SystemAccessorSymbol s => EnsureResolved(s.ReturnType, currentScope),
+                LambdaParameterSymbol s => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             },
             _ => symbolType
@@ -168,5 +171,17 @@ public class SymbolHelpers {
 
 
         return currentScope.Resolve(callNode.Name);
+    }
+
+    public static void ResolveVariable(string name, IScope currentScope) {
+        var vs = currentScope.Resolve(name) as VariableSymbol ?? throw new NullReferenceException(name);
+
+        if (vs.ReturnType is PendingResolveSymbol prs) {
+            var rt = EnsureResolved(prs, currentScope) ?? throw new NullReferenceException(name);
+            if (rt is PendingResolveSymbol) {
+                throw new NotImplementedException();
+            }
+            vs.ReturnType = rt;
+        }
     }
 }

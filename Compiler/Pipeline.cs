@@ -119,6 +119,15 @@ public static class Pipeline {
             return compileData with { CompileErrors = symbolTableVisitor.SymbolErrors.ToArray() };
         }
 
+        symbolTableVisitor.Pass = VisitorPass.Second;
+
+        symbolTableVisitor.Visit(compileData.AbstractSyntaxTree);
+
+        if (symbolTableVisitor.SymbolErrors.Any()) {
+            return compileData with { CompileErrors = symbolTableVisitor.SymbolErrors.ToArray() };
+        }
+
+
         return compileData with { SymbolTable = symbolTableVisitor.SymbolTable };
     }
 

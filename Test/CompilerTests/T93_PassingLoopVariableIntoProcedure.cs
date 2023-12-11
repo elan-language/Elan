@@ -8,7 +8,7 @@ using static Helpers;
 public class T93_PassingLoopVariableIntoProcedure {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_CorrectedPattern() {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)

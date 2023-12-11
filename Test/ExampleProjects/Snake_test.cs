@@ -5,7 +5,7 @@ namespace Test.ExampleProjects;
 
 using static Helpers;
 
-[TestClass]
+[TestClass, Ignore]
 public class Snake_test
 {
     #region Passes

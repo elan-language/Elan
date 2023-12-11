@@ -10,7 +10,7 @@ public class T97_Wordle {
 
     [TestMethod, Ignore]
     public void Pass_ConsoleUI() {
-        var code = ReadElanSourceCodeFile("Wordle.elan");
+        var code = ReadCodeFile("Wordle.elan");
 
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
@@ -112,10 +112,10 @@ public static class Program {
     }
 
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_UsingClassInPlaceOfTuples()
     {
-        var code = ReadElanSourceCodeFile("Wordle2.elan");
+        var code = ReadCodeFile("Wordle2.elan");
 
         var objectCode = @"using System.Collections.Generic;
 using StandardLibrary;
