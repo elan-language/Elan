@@ -79,6 +79,43 @@ public static class Program {
     }
 
     [TestMethod]
+    public void Pass_InputInExpression()
+    {
+        var code = @"#
+main
+  var a set to ""Hello "" + input 
+  print a
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = @$""Hello "" + ((Func<string>)(() => {return Console.ReadLine() ?? """";}))();
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Hello Fred\r\n", "Fred");
+    }
+
+    [TestMethod]
     public void Pass_Me()
     {
         var code = @"#

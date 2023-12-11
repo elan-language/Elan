@@ -192,6 +192,16 @@ public static class AstFactory {
             return visitor.Visit(ie);
         }
 
+        if (context.systemCall() is { } sc)
+        {
+            return visitor.Visit(sc);
+        }
+
+        if (context.input() is { } inp)
+        {
+            return visitor.Visit(inp);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -252,7 +262,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, VarDefContext context) {
         var id = visitor.Visit(context.assignableValue());
-        var rhs = visitor.Visit(context.expression() ?? context.systemCall() as IParseTree ?? context.input()!);
+        var rhs = visitor.Visit(context.expression());
 
         return new VarDefNode(id, rhs);
     }
@@ -267,7 +277,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssignmentContext context) {
         var id = visitor.Visit(context.assignableValue());
-        var rhs = visitor.Visit(context.expression() ?? context.systemCall() as IParseTree ?? context.input()!);
+        var rhs = visitor.Visit(context.expression());
 
         return new AssignmentNode(id, rhs, false);
     }

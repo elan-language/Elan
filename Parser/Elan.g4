@@ -32,11 +32,9 @@ throwException: NL THROW (LITERAL_STRING | IDENTIFIER );
 
 printStatement: NL PRINT expression?;
 
-input: INPUT LITERAL_STRING?;
- 
-varDef: NL VAR assignableValue SET TO (expression | systemCall | input);
+varDef: NL VAR assignableValue SET TO expression;
 
-assignment: NL SET assignableValue TO (expression | systemCall | input);
+assignment: NL SET assignableValue TO expression;
 
 inlineAsignment: assignableValue SET TO expression;
 
@@ -47,6 +45,8 @@ procedureCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRA
 functionCall: scopeQualifier? IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
 
 systemCall: SYSTEM DOT IDENTIFIER OPEN_BRACKET (argumentList)? CLOSE_BRACKET;
+
+input: INPUT LITERAL_STRING?;
 
 argument: (expression | lambda);
 
@@ -220,6 +220,8 @@ expression:
 	| newInstance
 	| ifExpression
 	| expression withClause
+	| input
+	| systemCall
 	| NL expression // so that any expression may be broken over multiple lines at its 'natural joints' i.e. before any sub-expression
 	;
 
