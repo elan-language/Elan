@@ -255,7 +255,7 @@ public class SymbolTableVisitor {
                 break;
             }
             case DeconstructionNode dn: {
-                VisitDeconstructionNode(dn);
+                VisitDeconstructionNode(varDefNode, dn);
                 break;
             }
         }
@@ -356,11 +356,12 @@ public class SymbolTableVisitor {
         };
     }
 
-    private void VisitDeconstructionNode(DeconstructionNode dn) {
+    private void VisitDeconstructionNode(VarDefNode varDefNode, DeconstructionNode dn) {
         var names = dn.ItemNodes.OfType<IdentifierNode>().Select(i => i.Id).ToArray();
 
         if (Pass is VisitorPass.First) {
-            var types = names.Select((n, i) => new PendingTupleResolveSymbol(n, i + 1));
+            var ttype = MapNodeToSymbolType(varDefNode.Rhs);
+            var types = names.Select((_, i) => new PendingTupleResolveSymbol(ttype, i + 1));
             var zip = names.Zip(types);
 
             foreach (var (name, type) in zip) {

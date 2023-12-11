@@ -17,8 +17,8 @@ public class SymbolHelpers {
             LiteralTupleNode ltn => new TupleSymbolType(ltn.ItemNodes.Select(MapNodeToSymbolType).ToArray()),
             LiteralListNode lln => new ListSymbolType(MapNodeToSymbolType(lln.ItemNodes.First())),
             LiteralDictionaryNode => new DictionarySymbolType(),
-            DataStructureTypeNode { Type: DataStructure.Iter } => new IterSymbolType(),
-            DataStructureTypeNode { Type: DataStructure.Array } => new ArraySymbolType(),
+            DataStructureTypeNode { Type: DataStructure.Iter } dsn => new IterSymbolType(MapNodeToSymbolType(dsn.GenericTypes.Single())),
+            DataStructureTypeNode { Type: DataStructure.Array } dsn => new ArraySymbolType(MapNodeToSymbolType(dsn.GenericTypes.Single())),
             DataStructureTypeNode { Type: DataStructure.List } dsn => new ListSymbolType(MapNodeToSymbolType(dsn.GenericTypes.Single())),
             DataStructureTypeNode { Type: DataStructure.Dictionary } => new DictionarySymbolType(),
             FunctionCallNode mcn => new PendingResolveSymbol(mcn.Name),
@@ -150,6 +150,13 @@ public class SymbolHelpers {
                 LambdaParameterSymbol s => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             },
+            PendingTupleResolveSymbol rr => EnsureResolved(rr.Tuple, currentScope) switch {
+                TupleSymbolType st => st.Types[rr.Index - 1],
+                ListSymbolType st => st.OfType,
+                ArraySymbolType st => st.OfType,
+                IterSymbolType st => st.OfType,
+                _ => throw new NotImplementedException()
+            },
             _ => symbolType
         };
     }
@@ -176,7 +183,7 @@ public class SymbolHelpers {
     public static void ResolveReturnType(string name, IScope currentScope) {
         var vs = currentScope.Resolve(name) as IHasReturnType ?? throw new NullReferenceException(name);
 
-        if (vs.ReturnType is PendingResolveSymbol prs) {
+        if (vs.ReturnType is IPendingResolveSymbolType prs) {
             var rt = EnsureResolved(prs, currentScope) ?? throw new NullReferenceException(name);
             if (rt is PendingResolveSymbol) {
                 throw new NotImplementedException();

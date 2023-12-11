@@ -19,7 +19,7 @@ public class SymbolTableImpl {
         var symbols = ((BaseScope)scope).Symbols;
 
         foreach (var symbol in symbols) {
-            if (symbol is IHasReturnType { ReturnType: PendingResolveSymbol }) {
+            if (symbol is IHasReturnType { ReturnType: IPendingResolveSymbolType }) {
                 throw new NotImplementedException(symbol.ToString());
             }
 
