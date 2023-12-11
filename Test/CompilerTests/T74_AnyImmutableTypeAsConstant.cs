@@ -163,7 +163,7 @@ end main
 
 immutable class Foo
     constructor(p1 Int)
-        set self.p1 to p1 * 2
+        set property.p1 to p1 * 2
     end constructor
 
     property p1 Int
@@ -242,7 +242,7 @@ constant k set to new Foo(3)
 
 class Foo
     constructor(p1 Int)
-        set self.p1 to p1 * 2
+        set property.p1 to p1 * 2
     end constructor
 
     property p1 Int

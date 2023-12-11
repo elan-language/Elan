@@ -141,16 +141,6 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitPrintStatement([NotNull] ElanParser.PrintStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.input"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterInput([NotNull] ElanParser.InputContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.input"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitInput([NotNull] ElanParser.InputContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.varDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -220,6 +210,16 @@ public interface IElanListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitSystemCall([NotNull] ElanParser.SystemCallContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.input"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInput([NotNull] ElanParser.InputContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.input"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInput([NotNull] ElanParser.InputContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.argument"/>.
 	/// </summary>

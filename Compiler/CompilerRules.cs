@@ -23,16 +23,32 @@ public static class CompilerRules {
         return null;
     }
 
-    public static string? SystemCallMustBeAssignedRule(IAstNode[] nodes, IScope currentScope) {
+    public static string? CannotAccessSystemInAFunction(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is SystemAccessorCallNode scn && currentScope.Resolve(scn.Name) is SystemAccessorSymbol scs) {
             if (nodes.AnyOtherNodeIs(n => n is FunctionDefNode)) {
-                return $"Cannot use system accessor in function : {leafNode}";
+                return $"Cannot access system within a function : {leafNode}";
             }
         }
 
         return null;
     }
+
+    public static string? CannotUseInputInAFunction(IAstNode[] nodes, IScope currentScope)
+    {
+        var leafNode = nodes.Last();
+        if (leafNode is InputNode inp)
+        {
+            if (nodes.AnyOtherNodeIs(n => n is FunctionDefNode))
+            {
+                return $"Cannot use 'input' within a function : {leafNode}";
+            }
+        }
+
+        return null;
+    }
+
+
 
     private static bool Match(IAstNode n1, IAstNode n2) {
         return n2 switch {

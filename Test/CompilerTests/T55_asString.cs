@@ -172,7 +172,7 @@ class Foo
     private property p2 String
 
     function asString() as String
-         return self.typeAndProperties()
+         return property.typeAndProperties()
     end function
 
 end class

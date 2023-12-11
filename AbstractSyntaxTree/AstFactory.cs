@@ -194,6 +194,16 @@ public static class AstFactory {
             return visitor.Visit(ie);
         }
 
+        if (context.systemCall() is { } sc)
+        {
+            return visitor.Visit(sc);
+        }
+
+        if (context.input() is { } inp)
+        {
+            return visitor.Visit(inp);
+        }
+
         throw new NotImplementedException(context.children.First().GetText());
     }
 
@@ -239,8 +249,8 @@ public static class AstFactory {
             return visitor.Visit(ds);
         }
 
-        if (context.SELF() is not null) {
-            return new SelfPrefixNode();
+        if (context.THIS() is not null) {
+            return new ThisInstanceNode();
         }
 
         if (context.DEFAULT() is not null) {
@@ -252,7 +262,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, VarDefContext context) {
         var id = visitor.Visit(context.assignableValue());
-        var rhs = visitor.Visit(context.expression() ?? context.systemCall() as IParseTree ?? context.input()!);
+        var rhs = visitor.Visit(context.expression());
 
         return new VarDefNode(id, rhs);
     }
@@ -267,7 +277,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssignmentContext context) {
         var id = visitor.Visit(context.assignableValue());
-        var rhs = visitor.Visit(context.expression() ?? context.systemCall() as IParseTree ?? context.input()!);
+        var rhs = visitor.Visit(context.expression());
 
         return new AssignmentNode(id, rhs, false);
     }
@@ -827,8 +837,8 @@ public static class AstFactory {
             return new GlobalPrefixNode();
         }
 
-        if (context.SELF() is not null) {
-            return new SelfPrefixNode();
+        if (context.PROPERTY() is not null) {
+            return new PropertyPrefixNode();
         }
 
         throw new NotImplementedException(context.children.First().GetText());

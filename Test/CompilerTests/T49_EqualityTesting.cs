@@ -28,8 +28,8 @@ end main
 
 class Foo
     constructor(p1 Int, p2 String)
-        set self.p1 to p1
-        set self.p2 to p2
+        set property.p1 to p1
+        set property.p2 to p2
     end constructor
     property p1 Int
     property p2 String
@@ -251,8 +251,8 @@ end main
 
 class Foo
     constructor(p1 Int, p2 String)
-        set self.p1 to p1
-        set self.p2 to p2
+        set property.p1 to p1
+        set property.p2 to p2
     end constructor
 
     property p1 Int

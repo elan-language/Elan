@@ -91,7 +91,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             ConstructorNode n => HandleScope(BuildConstructorModel, n),
             PropertyDefNode n => HandleScope(BuildPropertyDefModel, n),
             TypeNode n => HandleScope(BuildTypeModel, n),
-            SelfPrefixNode n => HandleScope(BuildSelfModel, n),
+            PropertyPrefixNode n => HandleScope(BuildPropertyPrefixModel, n),
+            ThisInstanceNode n => HandleScope(BuildThisInstanceModel, n),
             GlobalPrefixNode n => HandleScope(BuildGlobalModel, n),
             LibraryNode n => HandleScope(BuildNamespaceModel, n),
             ReturnExpressionNode n => HandleScope(BuildReturnExpressionModel, n),
@@ -480,7 +481,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new TupleModel(types.ToArray());
     }
 
-    private static ScalarValueModel BuildSelfModel(SelfPrefixNode selfPrefixNode) => new("this");
+    private static ScalarValueModel BuildPropertyPrefixModel(PropertyPrefixNode selfPrefixNode) => new("this");
+
+    private static ScalarValueModel BuildThisInstanceModel(ThisInstanceNode thisInstanceNode) => new("this");
 
     private static ScalarValueModel BuildGlobalModel(GlobalPrefixNode globalPrefixNode) => new("Globals");
 

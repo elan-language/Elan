@@ -18,7 +18,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end constructor
 
     property p1 Int
@@ -74,7 +74,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_UsingSelfAsAnInstance() {
+    public void Pass_UsingThisAsAnInstance() {
         var code = @"#
 main
     var f set to new Foo()
@@ -93,7 +93,7 @@ class Foo
     property p1 Int
 
     function bar() as Int
-        return doubled(self)
+        return doubled(this)
     end function
 
     function asString() as String
@@ -167,7 +167,7 @@ end main
 
 class Foo
     constructor(p1 Int)
-        set self.p to p1
+        set property.p to p1
     end constructor
 
     property p1 Int

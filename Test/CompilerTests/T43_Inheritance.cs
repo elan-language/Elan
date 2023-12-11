@@ -45,7 +45,7 @@ class Bar inherits Foo
     property p2 Int
 
     procedure setP1(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end procedure
 
     function product() as Int
@@ -163,7 +163,7 @@ class Bar inherits Foo, Yon
     property p2 Int
 
     procedure setP1(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end procedure
 
     function product() as Int
@@ -293,7 +293,7 @@ class Bar inherits Foo, Yon
     property p2 Int
 
     procedure setP1(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end procedure
 
     function product() as Int
@@ -421,7 +421,7 @@ class Bar inherits Foo
     property p2 Int
 
     procedure setP1(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end procedure
 
     function product() as Int
@@ -500,7 +500,7 @@ class Bar inherits Foo
     property p2 Int
 
     procedure setP1(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end procedure
 
     function asString() as String 
@@ -544,7 +544,7 @@ class Bar inherits Foo
     property p2 Int
 
     procedure setP1(p1 Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end procedure
 
     function product() as Float
@@ -579,7 +579,7 @@ abstract class Foo
     property p2 Int
 
     procedure setP1(v Int)
-        set self.p1 to p1
+        set property.p1 to p1
     end procedure
 
     function product() as Int
