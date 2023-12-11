@@ -173,8 +173,8 @@ public class SymbolHelpers {
         return currentScope.Resolve(callNode.Name);
     }
 
-    public static void ResolveVariable(string name, IScope currentScope) {
-        var vs = currentScope.Resolve(name) as VariableSymbol ?? throw new NullReferenceException(name);
+    public static void ResolveReturnType(string name, IScope currentScope) {
+        var vs = currentScope.Resolve(name) as IHasReturnType ?? throw new NullReferenceException(name);
 
         if (vs.ReturnType is PendingResolveSymbol prs) {
             var rt = EnsureResolved(prs, currentScope) ?? throw new NullReferenceException(name);

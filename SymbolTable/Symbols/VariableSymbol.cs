@@ -2,7 +2,7 @@
 
 namespace SymbolTable.Symbols;
 
-public class VariableSymbol : ISymbol {
+public class VariableSymbol : ISymbol, IHasReturnType {
     public VariableSymbol(string name, ISymbolType returnType, IScope? enclosingScope) {
         Name = name;
         ReturnType = returnType;

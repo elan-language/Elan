@@ -7,7 +7,7 @@ public abstract class BaseScope : IScope {
 
     protected abstract string ScopeName { get; }
     public IEnumerable<IScope> ChildScopes => Symbols.OfType<IScope>();
-    private IEnumerable<ISymbol> Symbols => symbols.Values;
+    internal IEnumerable<ISymbol> Symbols => symbols.Values;
     public abstract IScope? EnclosingScope { get; }
 
     public virtual void Define(ISymbol symbol) {

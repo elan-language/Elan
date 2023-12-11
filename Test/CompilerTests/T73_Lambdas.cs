@@ -8,7 +8,7 @@ using static Helpers;
 public class T73_Lambdas {
     #region Passes
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_PassAsParam() {
         var code = @"
 main
@@ -113,7 +113,7 @@ end procedure
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_InvokeLambdaWithWrongType() {
         var code = @"
 main

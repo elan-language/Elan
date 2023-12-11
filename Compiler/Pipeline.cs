@@ -123,6 +123,8 @@ public static class Pipeline {
 
         symbolTableVisitor.Visit(compileData.AbstractSyntaxTree);
 
+        symbolTableVisitor.SymbolTable.Validate();
+
         if (symbolTableVisitor.SymbolErrors.Any()) {
             return compileData with { CompileErrors = symbolTableVisitor.SymbolErrors.ToArray() };
         }

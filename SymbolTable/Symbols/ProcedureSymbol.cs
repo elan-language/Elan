@@ -3,7 +3,7 @@
 namespace SymbolTable.Symbols;
 
 public class ProcedureSymbol : MethodSymbol {
-    public ProcedureSymbol(string name, NameSpace nameSpace, string[] parameterNames, IScope? enclosingScope) : base(name, VoidSymbolType.Instance, nameSpace, parameterNames, enclosingScope) { }
+    public ProcedureSymbol(string name, NameSpace nameSpace, string[] parameterNames, IScope? enclosingScope) : base(name, nameSpace, parameterNames, enclosingScope) { }
 
     protected override string ScopeName => Name switch {
         Constants.WellKnownMainId => "'main'",

@@ -2,7 +2,7 @@
 
 namespace SymbolTable.Symbols;
 
-public class ParameterSymbol : ISymbol {
+public class ParameterSymbol : ISymbol, IHasReturnType {
     public ParameterSymbol(string name, ISymbolType returnType, bool byRef, IScope enclosingScope) {
         Name = name;
         ReturnType = returnType;
@@ -10,7 +10,7 @@ public class ParameterSymbol : ISymbol {
         EnclosingScope = enclosingScope;
     }
 
-    public ISymbolType ReturnType { get; }
+    public ISymbolType ReturnType { get; set;  }
     public bool ByRef { get; }
     public IScope EnclosingScope { get; }
     public string Name { get; }
