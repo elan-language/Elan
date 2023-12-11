@@ -299,7 +299,7 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "3\r\n");
+        AssertObjectCodeExecutes(compileData, "apple\r\n");
     }
    
 
