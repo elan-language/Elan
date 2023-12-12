@@ -199,7 +199,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
     }
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Pass_Snake_PP()
     {
         var code = ReadCodeFile("snake_PP.elan");

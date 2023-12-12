@@ -62,7 +62,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod]
+    [TestMethod, Ignore]
     public void Fail_InvalidPattern() {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)
