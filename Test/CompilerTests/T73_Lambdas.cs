@@ -48,7 +48,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "12\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_TupleArg() {
         var code = @"
 main
@@ -73,7 +73,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    Globals.printModified((4, 5), ((int, int) t) => t.Item1);
+    Globals.printModified((4, 5), (t) => t.Item1);
   }
 }";
 

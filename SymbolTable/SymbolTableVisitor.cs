@@ -293,6 +293,15 @@ public class SymbolTableVisitor {
         return enumDefNode;
     }
 
+    private void AddLambdaArguments(LambdaDefNode lambda, LambdaSymbolType lst, LambdaSymbol ls) {
+        var zipArgs = lambda.Arguments.Zip(lst.Arguments);
+
+        foreach (var valueTuple in zipArgs) {
+            var symbol = new ParameterSymbol(GetId(valueTuple.First)!, valueTuple.Second, false, ls);
+            ls.Define(symbol);
+        }
+    }
+
     private IAstNode VisitCallNode(ICallNode callNode) {
         var sig = ResolveCall(callNode, currentScope);
 
@@ -332,6 +341,8 @@ public class SymbolTableVisitor {
                             var lambdaSymbolType = matchingSymbol.ReturnType as LambdaSymbolType;
                             var rt = lambdaSymbolType.ReturnType;
                             ls = new LambdaSymbol(lambda.Name, rt, parameterIds, currentScope);
+
+                            AddLambdaArguments(lambda, lambdaSymbolType, ls);
                         }
                         else {
                             ls = new LambdaSymbol(lambda.Name, new PendingResolveSymbolType(lambda.Name), parameterIds, currentScope);

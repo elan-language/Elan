@@ -89,7 +89,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Iter {23,27,31,37}\r\nList {23,27,31,37}\r\nList {2,37}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Map()
     {
         var code = @"
@@ -127,7 +127,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {3,4,6,8,12,14,18,20,24,28,32,38}\r\nList {2*,3*,5*,7*,11*,13*,17*,19*,23*,27*,31*,37*}\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Reduce()
     {
         var code = @"
@@ -203,7 +203,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "37\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_MaxBy()
     {
         var code = @"
@@ -383,7 +383,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "2\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_MinBy()
     {
         var code = @"
@@ -460,7 +460,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "true\r\ntrue\r\nfalse\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_GroupBy()
     {
         var code = @"

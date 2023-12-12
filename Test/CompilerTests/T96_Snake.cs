@@ -8,7 +8,7 @@ using static Helpers;
 public class T96_Snake {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Snake_OOP() {
         var code = ReadCodeFile("snake_OOP.elan");
 
@@ -199,7 +199,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Snake_PP()
     {
         var code = ReadCodeFile("snake_PP.elan");
