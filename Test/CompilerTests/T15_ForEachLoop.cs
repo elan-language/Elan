@@ -305,7 +305,7 @@ end main
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CannotAlterTheIterableWithinLoop() {
         var code = @"
 main

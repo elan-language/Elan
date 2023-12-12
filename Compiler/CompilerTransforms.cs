@@ -44,11 +44,11 @@ public static class CompilerTransforms {
     // must come after TransformMethodCallNodes
     public static IAstNode? TransformProcedureParameterNodes(IAstNode[] nodes, IScope currentScope) {
         static IAstNode? TransformProcedureCallNode(ProcedureCallNode pcn, IScope scope) {
-            var procedureScope = ResolveMethodCall(scope, pcn).Item1 as ProcedureSymbol ?? GetProcedure(pcn, scope) ?? throw new NullReferenceException();
+            var procedureScope = ResolveMethodCall(scope, pcn).Item1 as ProcedureSymbol ?? GetProcedure(pcn, scope); // may be no such procedure
 
             var parameterNodes = pcn.Parameters.Where(p => p is not ParameterCallNode).ToArray();
 
-            if (parameterNodes.Any()) {
+            if (procedureScope is not null && parameterNodes.Any()) {
                 var transformedParameters = pcn.Parameters.Select((p, i) => TransformParameter(p, i, procedureScope));
                 return pcn with { Parameters = transformedParameters.ToImmutableArray() };
             }

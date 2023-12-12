@@ -102,7 +102,7 @@ public static class CompilerRules {
                     return $"Cannot modify control variable : {leafNode}";
                 }
 
-                if (otherNodes.OfType<ForEachStatementNode>().Any(fin => fin.Parameter is IdentifierNode idn && Match(idn, an.Id))) {
+                if (otherNodes.OfType<ForEachStatementNode>().Any(fin => fin.Parameter is ForEachParameterNode idn && Match(idn.Expression, an.Id))) {
                     return $"Cannot modify control variable : {leafNode}";
                 }
 
@@ -117,7 +117,7 @@ public static class CompilerRules {
                         return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
                     }
 
-                    if (otherNodes.OfType<ForEachStatementNode>().Any(fin => fin.Parameter is IdentifierNode idn && Match(idn, pp))) {
+                    if (otherNodes.OfType<ForEachStatementNode>().Any(fin => fin.Parameter is ForEachParameterNode idn && Match(idn.Expression, pp))) {
                         return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
                     }
                 }

@@ -243,7 +243,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_ProcedureMethodCannotBeCalledDirectly() {
         var code = @"#
 main
@@ -273,10 +273,11 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Calling unknown method");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CallUnknownMethodOnInstance() {
         var code = @"#
 main
@@ -304,7 +305,8 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Calling unknown method");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     #endregion

@@ -113,7 +113,7 @@ end procedure
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_InvokeLambdaWithWrongType() {
         var code = @"
 main

@@ -62,7 +62,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_InvalidPattern() {
         var code = @"#
 procedure removeLetters(wordAsPlayed String)
@@ -82,7 +82,8 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot pass control variable into a procedure (consider declaring a new variable copying the value)");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     #endregion

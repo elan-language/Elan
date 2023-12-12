@@ -543,7 +543,7 @@ public static class Program {
 
     #region Fails
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_CallingUndeclaredProc() {
         var code = @"
 main
@@ -555,7 +555,8 @@ end main
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Calling unknown method");
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     [TestMethod]

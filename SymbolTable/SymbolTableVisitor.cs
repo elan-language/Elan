@@ -322,6 +322,12 @@ public class SymbolTableVisitor {
     private IAstNode VisitCallNode(ICallNode callNode) {
         var sig = ResolveCall(callNode, currentScope);
 
+        // check they match
+        if ((sig is ProcedureSymbol && callNode is not ProcedureCallNode) || (sig is FunctionSymbol && callNode is not FunctionCallNode)) {
+            throw new SymbolException($"Mismatched Procedure/Function call {callNode.MethodName}");
+        }
+
+
         var names = sig switch {
             MethodSymbol ms => ms.ParameterNames,
             ParameterSymbol ps => new[] { ps.Name },
