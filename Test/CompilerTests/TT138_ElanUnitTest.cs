@@ -10,7 +10,7 @@ public class TT138_ElanUnitTest
     #region Passes
 
     [TestMethod]
-    public void Pass_Template() {
+    public void Pass_1() {
         var code = @"
 test square_happyCase1
   assert square(3) is 9
