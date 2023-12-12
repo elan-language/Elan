@@ -93,8 +93,6 @@ public static class CodeHelpers {
 
     public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm) => string.Join(", ", mm.Select(v => v.ToString(0)));
 
-    public static string AsCommaSeparatedString(this IEnumerable<ICodeModel> mm, string suffix) => string.Join(", ", mm.Select(v => $"{v}{suffix}"));
-
     public static string ValueTypeToCSharpType(ValueType type) =>
         type switch {
             ValueType.Int => "int",
