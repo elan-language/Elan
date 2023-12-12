@@ -63,8 +63,8 @@ public static class CompilerTransforms {
     private static ISymbolType? GetQualifierType(ICallNode callNode, IScope currentScope) =>
         callNode.CalledOn switch {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
-                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
-                ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
+                VariableSymbol vs => vs.ReturnType,
+                ParameterSymbol ps => ps.ReturnType,
                 _ => null
             },
             _ => null
@@ -93,9 +93,9 @@ public static class CompilerTransforms {
 
         if (qualifiedId is not null) {
             switch (currentScope.Resolve(qualifiedId)) {
-                case VariableSymbol vs when EnsureResolved(vs.ReturnType, currentScope) is ClassSymbolType:
+                case VariableSymbol { ReturnType: ClassSymbolType }:
                     return (null, false);
-                case ParameterSymbol ps when EnsureResolved(ps.ReturnType, currentScope) is ClassSymbolType:
+                case ParameterSymbol { ReturnType: ClassSymbolType }:
                     return (null, false);
                 case VariableSymbol or ParameterSymbol or null:
                     return (GetGlobalScope(currentScope).Resolve(mcn.MethodName), isGlobal);
@@ -114,7 +114,7 @@ public static class CompilerTransforms {
                 : scope;
 
     private static IAstNode MapSymbolToTypeNode(ISymbolType? type, IScope currentScope) {
-        return EnsureResolved(type!, currentScope) switch {
+        return type switch {
             ClassSymbolType cst => new TypeNode(new IdentifierNode(cst.Name)),
             IntSymbolType => new ValueTypeNode(ValueType.Int),
             FloatSymbolType => new ValueTypeNode(ValueType.Float),
@@ -132,18 +132,6 @@ public static class CompilerTransforms {
         var typeNode = MapSymbolToTypeNode(type, currentScope);
 
         return new IdentifierWithTypeNode(node.Id, typeNode);
-    }
-
-    private static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope) {
-        return symbolType switch {
-            PendingResolveSymbolType rr => currentScope.Resolve(rr.Name) switch {
-                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
-                ClassSymbol cs => new ClassSymbolType(cs.Name),
-                FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
-                _ => throw new NotImplementedException()
-            },
-            _ => symbolType
-        };
     }
 
     private static ISymbolType GetTypeFromDepth(ISymbolType type, int depth) {
@@ -171,7 +159,7 @@ public static class CompilerTransforms {
 
     private static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {
         return symbolType switch {
-            PendingResolveSymbolType => EnsureResolved(symbolType, currentScope),
+            PendingResolveSymbolType => symbolType,
             GenericSymbolType gst => ResolveGenericType(gst, fs, fcn, currentScope),
             _ => symbolType
         };
@@ -180,13 +168,13 @@ public static class CompilerTransforms {
     private static ISymbolType? GetExpressionType(IAstNode expression, IScope currentScope) {
         return expression switch {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
-                VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
-                ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
+                VariableSymbol vs => vs.ReturnType,
+                ParameterSymbol ps => ps.ReturnType,
                 _ => null
             },
             FunctionCallNode fcn => currentScope.Resolve(fcn.MethodName) switch {
                 GenericFunctionSymbol fs => EnsureResolved(fs.ReturnType, fs, fcn, currentScope),
-                FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
+                FunctionSymbol fs => fs.ReturnType,
                 _ => null
             },
             _ => SymbolHelpers.MapNodeToSymbolType(expression)
