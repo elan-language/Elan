@@ -130,7 +130,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private ProcedureCallModel BuildProcedureCallModel(ProcedureCallNode procedureCallNode) {
         var symbol = SymbolHelpers.ResolveCall(procedureCallNode, CurrentScope) as ProcedureSymbol;
         var parameters = procedureCallNode.Parameters.Select(Visit);
-        var qNode = NameSpaceToNode(symbol?.NameSpace) ?? procedureCallNode.Qualifier;
+        var ns = symbol?.NameSpace;  
+        var qNode = NameSpaceToNode(ns) ?? procedureCallNode.Qualifier;
         var qModel = qNode is { } q ? Visit(q) : null;
 
         // TODO cloned code fix once working
@@ -138,11 +139,17 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var calledOnNode = procedureCallNode.CalledOn;
         var calledOnModel = calledOnNode is { } con ? Visit(con) : null;
 
-        if (qNode is null && symbol?.NameSpace is NameSpace.UserLocal) {
-            qModel = Visit(calledOnNode!);
+        if (qNode is null && calledOnNode is not null && ns is NameSpace.UserLocal) {
+
+            qModel = Visit(calledOnNode);
+
         }
         else if (calledOnModel is not null) {
             parameters = parameters.Prepend(calledOnModel);
+        }
+        else if (qModel is ScalarValueModel {Value : "this"} qm) {
+            parameters = parameters.Prepend(qm);
+            qModel = Visit(NameSpaceToNode(ns)!);
         }
 
         return new ProcedureCallModel(Visit(procedureCallNode.Id), qModel, parameters.ToArray());
@@ -164,8 +171,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     };
 
     private MethodCallModel BuildFunctionCallModel(FunctionCallNode functionCallNode) {
-        var symbol = SymbolHelpers.ResolveCall(functionCallNode, CurrentScope) as FunctionSymbol;
-        var qNode =  functionCallNode.Qualifier ?? NameSpaceToNode(symbol?.NameSpace);
+        var symbol = SymbolHelpers.ResolveCall(functionCallNode, CurrentScope);
+
+        var ns = symbol is MethodSymbol ms ? ms.NameSpace : NameSpace.UserLocal;  
+
+        var qNode =  functionCallNode.Qualifier ?? NameSpaceToNode(ns);
         var qModel = qNode is { } q ? Visit(q) : null;
 
         // TODO cloned code fix once working
@@ -175,7 +185,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
         var parameters = functionCallNode.Parameters.Select(Visit);
 
-        if (qNode is null && calledOnNode is not null && symbol?.NameSpace is NameSpace.UserLocal) {
+        if (qNode is null && calledOnNode is not null && ns is NameSpace.UserLocal) {
 
             qModel = Visit(calledOnNode);
 
@@ -185,7 +195,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         }
         else if (qModel is ScalarValueModel {Value : "this"} qm) {
             parameters = parameters.Prepend(qm);
-            qModel = Visit(NameSpaceToNode(symbol?.NameSpace));
+            qModel = Visit(NameSpaceToNode(ns)!);
         }
 
 

@@ -299,6 +299,7 @@ public class SymbolTableVisitor {
         var names = sig switch {
             MethodSymbol ms => ms.ParameterNames,
             ParameterSymbol ps => new[] { ps.Name },
+            VariableSymbol {ReturnType: LambdaSymbolType} => Array.Empty<string>(),
             _ => Array.Empty<string>()
         };
 

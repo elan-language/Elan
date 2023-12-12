@@ -40,9 +40,10 @@ public class SymbolHelpers {
             InputNode => StringSymbolType.Instance,
             TupleTypeNode ttn => new TupleSymbolType(ttn.Types.Select(MapNodeToSymbolType).ToArray()),
             TupleDefNode ttn => new TupleSymbolType(ttn.Expressions.Select(MapNodeToSymbolType).ToArray()),
+            LambdaDefNode ldn => new LambdaSymbolType(ldn.Arguments.Select(MapNodeToSymbolType).ToArray(), MapNodeToSymbolType(ldn.Expression)),
             _ => throw new NotImplementedException(node.GetType().ToString())
         };
-    }
+     }
 
      private static bool OperatorEvaluatesToBoolean(Operator op) =>
          op switch {
@@ -80,6 +81,7 @@ public class SymbolHelpers {
     public static string? GetId(IAstNode? node) => node switch {
         IdentifierNode idn => idn.Id,
         IndexedExpressionNode ien => GetId(ien.Expression),
+        PropertyCallNode pcn => GetId(pcn.Expression),
         _ => null
     };
 
