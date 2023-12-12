@@ -16,5 +16,9 @@ public record FunctionCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<
         };
     }
 
-    public string Name => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
+    private string UniqueId { get; } = Helpers.UniqueID;
+
+    public string Name => Id is IdentifierNode idn ? $"_{idn.Id}{UniqueId}" : throw new NotImplementedException();
+
+    public string MethodName => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
 }

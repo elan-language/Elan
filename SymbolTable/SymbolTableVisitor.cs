@@ -35,7 +35,7 @@ public class SymbolTableVisitor {
             ForEachParameterNode n => VisitForEachParameterNode(n),
             AbstractProcedureDefNode n => VisitAbstractProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
-            LambdaDefNode n => VisitLambdaDefNode(n),
+            //LambdaDefNode n => VisitLambdaDefNode(n),
             AbstractFunctionDefNode n => VisitAbstractFunctionDefNode(n),
             SystemAccessorDefNode n => VisitSystemAccessorNode(n),
             ConstructorNode n => VisitConstructorNode(n),
@@ -46,6 +46,7 @@ public class SymbolTableVisitor {
             ParameterNode n => VisitParameterNode(n),
             PropertyDefNode n => VisitPropertyDefNode(n),
             EnumDefNode n => VisitEnumDefNode(n),
+            ICallNode n => VisitCallNode(n),
             null => throw new NotImplementedException("null"),
             _ => VisitChildren(astNode)
         };
@@ -77,7 +78,6 @@ public class SymbolTableVisitor {
         var parameterIds = new string[] { GetId(forEachStatementNode.Parameter)! };
 
         if (Pass is VisitorPass.First) {
-
             var ms = new ScopedStatementSymbol(forEachStatementNode.Name, parameterIds, currentScope);
             currentScope.Define(ms);
             currentScope = ms;
@@ -142,24 +142,24 @@ public class SymbolTableVisitor {
         return functionDefNode;
     }
 
-    private IAstNode VisitLambdaDefNode(LambdaDefNode lambda) {
-        var parameterIds = lambda.Arguments.OfType<IdentifierNode>().Select(idn => idn.Id).ToArray();
+    //private IAstNode VisitLambdaDefNode(LambdaDefNode lambda) {
+    //    var parameterIds = lambda.Arguments.OfType<IdentifierNode>().Select(idn => idn.Id).ToArray();
         
-        if (Pass is VisitorPass.First) {
-            var rt = MapNodeToSymbolType(lambda.Expression);
-            var ms = new LambdaSymbol(lambda.Name, rt, parameterIds, currentScope);
-            currentScope.Define(ms);
-            currentScope = ms;
-        }
-        else {
-            SymbolHelpers.ResolveReturnType(lambda.Name, currentScope);
-            currentScope = currentScope.Resolve(lambda.Name) as IScope ?? throw new Exception("unexpected null scope");
-        }
+    //    if (Pass is VisitorPass.First) {
+    //        var rt = MapNodeToSymbolType(lambda.Expression);
+    //        var ms = new LambdaSymbol(lambda.Name, rt, parameterIds, currentScope);
+    //        currentScope.Define(ms);
+    //        currentScope = ms;
+    //    }
+    //    else {
+    //        SymbolHelpers.ResolveReturnType(lambda.Name, currentScope);
+    //        currentScope = currentScope.Resolve(lambda.Name) as IScope ?? throw new Exception("unexpected null scope");
+    //    }
 
-        VisitChildren(lambda);
-        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
-        return lambda;
-    }
+    //    VisitChildren(lambda);
+    //    currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+    //    return lambda;
+    //}
 
     private IAstNode VisitAbstractFunctionDefNode(AbstractFunctionDefNode functionDefNode) {
         var (name, parameterIds) = NameAndParameterIds(functionDefNode.Signature);
@@ -293,6 +293,70 @@ public class SymbolTableVisitor {
         return enumDefNode;
     }
 
+    private IAstNode VisitCallNode(ICallNode callNode) {
+        var sig = ResolveCall(callNode, currentScope);
+
+        var names = sig switch {
+            MethodSymbol ms => ms.ParameterNames,
+            ParameterSymbol ps => new[] { ps.Name },
+            _ => Array.Empty<string>()
+        };
+
+        var scopeName = $"{callNode.Name}";
+
+        if (Pass is VisitorPass.First) {
+            var ss = new ScopedStatementSymbol(scopeName, names, currentScope);
+            currentScope.Define(ss);
+            currentScope = ss;
+        }
+        else {
+            var ss = currentScope.Resolve(scopeName) as ScopedStatementSymbol ?? throw new Exception("unexpected null scope");
+            ss.ParameterNames = names;
+            currentScope = ss;
+        }
+
+        if (callNode.Parameters.Any(p => p is LambdaDefNode)) {
+            
+            var index = callNode.Parameters.Length == names.Length ? 0 : 1; // to ignore 'this' parameter if not passed in 
+            foreach (var node in callNode.Parameters) {
+                if (node is LambdaDefNode lambda) {
+                    
+                    if (Pass is VisitorPass.First) {
+                        var parameterIds = lambda.Arguments.OfType<IdentifierNode>().Select(idn => idn.Id).ToArray();
+                        LambdaSymbol? ls = null;
+
+                        if (sig is IScope sigScope) {
+                            var matchingSymbolName = names[index];
+                            var matchingSymbol = sigScope.Resolve(matchingSymbolName) as ParameterSymbol;
+                            var lambdaSymbolType = matchingSymbol.ReturnType as LambdaSymbolType;
+                            var rt = lambdaSymbolType.ReturnType;
+                            ls = new LambdaSymbol(lambda.Name, rt, parameterIds, currentScope);
+                        }
+                        else {
+                            ls = new LambdaSymbol(lambda.Name, new PendingResolveSymbolType(lambda.Name), parameterIds, currentScope);
+                        }
+
+                        currentScope.Define(ls);
+                        currentScope = ls;
+                    }
+                    else {
+                        ResolveReturnType(lambda.Name, currentScope);
+                        currentScope = currentScope.Resolve(lambda.Name) as IScope ?? throw new Exception("unexpected null scope");
+                    }
+
+                    VisitChildren(lambda);
+                    currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+                }
+
+                index++;
+            }
+        }
+
+        VisitChildren(callNode);
+        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
+        return callNode;
+    }
+
     private IAstNode VisitParameterNode(ParameterNode parameterNode) {
         var name = parameterNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(parameterNode.Id.GetType().ToString());
         var type = MapNodeToSymbolType(parameterNode.TypeNode);
@@ -360,8 +424,7 @@ public class SymbolTableVisitor {
         var names = dn.ItemNodes.OfType<IdentifierNode>().Select(i => i.Id).ToArray();
 
         if (Pass is VisitorPass.First) {
-            var ttype = MapNodeToSymbolType(varDefNode.Rhs);
-            var types = names.Select((_, i) => new PendingTupleResolveSymbol(ttype, i + 1));
+            var types = names.Select((_, i) => new PendingDeconstructionResolveSymbol(MapNodeToSymbolType(varDefNode.Rhs), i + 1));
             var zip = names.Zip(types);
 
             foreach (var (name, type) in zip) {

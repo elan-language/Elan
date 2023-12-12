@@ -1,5 +1,5 @@
 ﻿namespace AbstractSyntaxTree.Roles; 
 
-public interface IHasScope {
-    public string Name { get; }
+public interface IHasScope : INamedAstNode {
+   
 }

@@ -8,7 +8,7 @@ using static Helpers;
 public class T73_Lambdas {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_PassAsParam() {
         var code = @"
 main

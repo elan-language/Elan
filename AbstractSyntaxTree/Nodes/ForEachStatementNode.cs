@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record ForEachStatementNode(IAstNode Parameter, IAstNode StatementBlock) : IAstNode, ICanWrapExpression {
+public record ForEachStatementNode(IAstNode Parameter, IAstNode StatementBlock) : IAstNode, ICanWrapExpression, IHasScope {
 
     public string Name { get; } = Helpers.UniqueScopeName;
 

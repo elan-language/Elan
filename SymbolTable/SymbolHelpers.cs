@@ -9,7 +9,7 @@ public class SymbolHelpers {
    
      public static ISymbolType MapNodeToSymbolType(IAstNode node) {
         return node switch {
-            IdentifierNode idn => new PendingResolveSymbol(idn.Id),
+            IdentifierNode idn => new PendingResolveSymbolType(idn.Id),
             TypeNode tn => MapNodeToSymbolType(tn.TypeName),
             NewInstanceNode nin => MapNodeToSymbolType(nin.Type),
             ValueNode vn => MapNodeToSymbolType(vn.TypeNode),
@@ -21,9 +21,9 @@ public class SymbolHelpers {
             DataStructureTypeNode { Type: DataStructure.Array } dsn => new ArraySymbolType(MapNodeToSymbolType(dsn.GenericTypes.Single())),
             DataStructureTypeNode { Type: DataStructure.List } dsn => new ListSymbolType(MapNodeToSymbolType(dsn.GenericTypes.Single())),
             DataStructureTypeNode { Type: DataStructure.Dictionary } => new DictionarySymbolType(),
-            FunctionCallNode mcn => new PendingResolveSymbol(mcn.Name),
-            ProcedureCallNode mcn => new PendingResolveSymbol(mcn.Name),
-            SystemAccessorCallNode mcn => new PendingResolveSymbol(mcn.Name),
+            FunctionCallNode mcn => new PendingResolveSymbolType(mcn.MethodName),
+            ProcedureCallNode mcn => new PendingResolveSymbolType(mcn.MethodName),
+            SystemAccessorCallNode mcn => new PendingResolveSymbolType(mcn.MethodName),
             BinaryNode { Operator: OperatorNode op } when OperatorEvaluatesToBoolean(op.Value) => BoolSymbolType.Instance,
             BinaryNode bn => MapNodeToSymbolType(bn.Operand1),
             IndexedExpressionNode ien => MapNodeToSymbolType(ien.Expression),
@@ -96,7 +96,7 @@ public class SymbolHelpers {
 
         return classSymbol switch
         {
-            IScope classScope => classScope.Resolve(mcn.Name),
+            IScope classScope => classScope.Resolve(mcn.MethodName),
             _ => null
         };
     }
@@ -140,7 +140,7 @@ public class SymbolHelpers {
 
     public static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope) {
         return symbolType switch {
-            PendingResolveSymbol rr => currentScope.Resolve(rr.Name) switch {
+            PendingResolveSymbolType rr => currentScope.Resolve(rr.Name) switch {
                 VariableSymbol s => EnsureResolved(s.ReturnType, currentScope),
                 ClassSymbol s => new ClassSymbolType(s.Name),
                 EnumSymbol s => new EnumSymbolType(s.Name),
@@ -148,14 +148,14 @@ public class SymbolHelpers {
                 ParameterSymbol s => EnsureResolved(s.ReturnType, currentScope),
                 SystemAccessorSymbol s => EnsureResolved(s.ReturnType, currentScope),
                 LambdaParameterSymbol s => throw new NotImplementedException(),
-                _ => throw new NotImplementedException()
+                _ => rr
             },
-            PendingTupleResolveSymbol rr => EnsureResolved(rr.Tuple, currentScope) switch {
+            PendingDeconstructionResolveSymbol rr => EnsureResolved(rr.Tuple, currentScope) switch {
                 TupleSymbolType st => st.Types[rr.Index - 1],
                 ListSymbolType st => st.OfType,
                 ArraySymbolType st => st.OfType,
                 IterSymbolType st => st.OfType,
-                _ => throw new NotImplementedException()
+                _ => rr
             },
             _ => symbolType
         };
@@ -171,13 +171,13 @@ public class SymbolHelpers {
                         return GetSpecificCallNodeForClassMethod(callNode, currentScope);
                     case ParameterSymbol ps when EnsureResolved(ps.ReturnType, currentScope) is ClassSymbolType:
                         return GetSpecificCallNodeForClassMethod(callNode, currentScope);
-                    default:  return GetGlobalScope(currentScope).Resolve(callNode.Name);
+                    default:  return GetGlobalScope(currentScope).Resolve(callNode.MethodName);
                 }
             }
         }
 
 
-        return currentScope.Resolve(callNode.Name);
+        return currentScope.Resolve(callNode.MethodName);
     }
 
     public static void ResolveReturnType(string name, IScope currentScope) {
@@ -185,7 +185,7 @@ public class SymbolHelpers {
 
         if (vs.ReturnType is IPendingResolveSymbolType prs) {
             var rt = EnsureResolved(prs, currentScope) ?? throw new NullReferenceException(name);
-            if (rt is PendingResolveSymbol) {
+            if (rt is PendingResolveSymbolType) {
                 throw new NotImplementedException();
             }
             vs.ReturnType = rt;

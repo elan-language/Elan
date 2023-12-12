@@ -3,7 +3,7 @@
 namespace SymbolTable.Symbols;
 
 public class ScopedStatementSymbol : BaseScope, ISymbol {
-    public string[] ParameterNames { get; }
+    public string[] ParameterNames { get; set; }
     public override  IScope? EnclosingScope { get; }
 
     public ScopedStatementSymbol(string name, string[] parameterNames, IScope? enclosingScope) {
@@ -15,5 +15,5 @@ public class ScopedStatementSymbol : BaseScope, ISymbol {
     public string Name { get; }
     public IScope? Scope { get; set; }
 
-    protected override string ScopeName => $"Function '{Name}'";
+    protected override string ScopeName => $"Scoped Statement '{Name}'";
 }

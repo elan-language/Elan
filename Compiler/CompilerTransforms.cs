@@ -140,7 +140,7 @@ public static class CompilerTransforms {
 
     private static ProcedureSymbol? GetProcedureSymbolFromClass(ICallNode mcn, IScope currentScope, ClassSymbolType cst) =>
         currentScope.Resolve(cst.Name) switch {
-            ClassSymbol cs => cs.Resolve(mcn.Name) as ProcedureSymbol,
+            ClassSymbol cs => cs.Resolve(mcn.MethodName) as ProcedureSymbol,
             _ => throw new NotImplementedException()
         };
 
@@ -161,12 +161,12 @@ public static class CompilerTransforms {
                 case ParameterSymbol ps when EnsureResolved(ps.ReturnType, currentScope) is ClassSymbolType:
                     return (null, false);
                 case VariableSymbol or ParameterSymbol or null:
-                    return (GetGlobalScope(currentScope).Resolve(mcn.Name), isGlobal);
+                    return (GetGlobalScope(currentScope).Resolve(mcn.MethodName), isGlobal);
             }
         }
 
         var scope = isGlobal ? GetGlobalScope(currentScope) : currentScope;
-        return (scope.Resolve(mcn.Name), isGlobal);
+        return (scope.Resolve(mcn.MethodName), isGlobal);
     }
 
     private static IScope GetGlobalScope(IScope scope) =>
@@ -207,7 +207,7 @@ public static class CompilerTransforms {
 
     private static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope) {
         return symbolType switch {
-            PendingResolveSymbol rr => currentScope.Resolve(rr.Name) switch {
+            PendingResolveSymbolType rr => currentScope.Resolve(rr.Name) switch {
                 VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 ClassSymbol cs => new ClassSymbolType(cs.Name),
                 FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
@@ -249,7 +249,7 @@ public static class CompilerTransforms {
 
     private static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {
         return symbolType switch {
-            PendingResolveSymbol => EnsureResolved(symbolType, currentScope),
+            PendingResolveSymbolType => EnsureResolved(symbolType, currentScope),
             GenericSymbolType gst => ResolveGenericType(gst, fs, fcn, currentScope),
             _ => symbolType
         };
@@ -263,7 +263,7 @@ public static class CompilerTransforms {
                 LambdaParameterSymbol lps => EnsureResolved(lps.ReturnType, currentScope),
                 _ => null
             },
-            FunctionCallNode fcn => currentScope.Resolve(fcn.Name) switch {
+            FunctionCallNode fcn => currentScope.Resolve(fcn.MethodName) switch {
                 GenericFunctionSymbol fs => EnsureResolved(fs.ReturnType, fs, fcn, currentScope),
                 FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
                 _ => null

@@ -7,5 +7,5 @@ public class GenericFunctionSymbol : FunctionSymbol {
 
     public  IDictionary<string, (int, int)> GenericParameters { get; }
 
-    protected override string ScopeName => $"Function '{Name}'";
+    protected override string ScopeName => $"Generic Function '{Name}'";
 }

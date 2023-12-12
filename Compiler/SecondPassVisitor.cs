@@ -1,4 +1,5 @@
 ﻿using AbstractSyntaxTree.Nodes;
+using AbstractSyntaxTree.Roles;
 using SymbolTable;
 
 namespace Compiler;
@@ -22,27 +23,28 @@ public class SecondPassVisitor {
             _ => throw new NotImplementedException()
         };
 
+    //private static IScope Enter(IAstNode node, IScope currentScope) =>
+    //    node switch {
+    //        MainNode => currentScope.Resolve(Constants.WellKnownMainId) as IScope ?? throw new ArgumentNullException(),
+    //        ClassDefNode cdn => currentScope.Resolve(cdn.Name) as IScope ?? throw new ArgumentNullException(),
+    //        FunctionDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
+    //        LambdaDefNode fdn => currentScope.Resolve(fdn.Name) as IScope ?? throw new ArgumentNullException(),
+    //        SystemAccessorDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
+    //        ProcedureDefNode pdn => currentScope.Resolve(SignatureId(pdn.Signature)) as IScope ?? throw new ArgumentNullException(),
+    //        ConstructorNode => currentScope.Resolve(Constants.WellKnownConstructorId) as IScope ?? throw new ArgumentNullException(),
+    //        ICallNode fdn => currentScope.Resolve(fdn.Name) as IScope ?? throw new ArgumentNullException(),
+    //        _ => currentScope
+    //    };
+
     private static IScope Enter(IAstNode node, IScope currentScope) =>
         node switch {
-            MainNode => currentScope.Resolve(Constants.WellKnownMainId) as IScope ?? throw new ArgumentNullException(),
-            ClassDefNode cdn => currentScope.Resolve(cdn.Name) as IScope ?? throw new ArgumentNullException(),
-            FunctionDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
-            LambdaDefNode fdn => currentScope.Resolve(fdn.Name) as IScope ?? throw new ArgumentNullException(),
-            SystemAccessorDefNode fdn => currentScope.Resolve(SignatureId(fdn.Signature)) as IScope ?? throw new ArgumentNullException(),
-            ProcedureDefNode pdn => currentScope.Resolve(SignatureId(pdn.Signature)) as IScope ?? throw new ArgumentNullException(),
-            ConstructorNode => currentScope.Resolve(Constants.WellKnownConstructorId) as IScope ?? throw new ArgumentNullException(),
+            IHasScope hs => currentScope.Resolve(hs.Name) as IScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
 
     private static IScope Exit(IAstNode node, IScope currentScope) =>
         node switch {
-            MainNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            ClassDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            FunctionDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            LambdaDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            SystemAccessorDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            ProcedureDefNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
-            ConstructorNode => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
+            IHasScope => currentScope.EnclosingScope ?? throw new ArgumentNullException(),
             _ => currentScope
         };
 

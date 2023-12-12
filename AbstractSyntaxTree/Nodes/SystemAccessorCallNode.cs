@@ -16,4 +16,6 @@ public record SystemAccessorCallNode(IAstNode Id, IAstNode? Qualifier, Immutable
             _ => this with { Parameters = Parameters.SafeReplace(from, to) }
         };
     }
+
+    public string MethodName => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
 }

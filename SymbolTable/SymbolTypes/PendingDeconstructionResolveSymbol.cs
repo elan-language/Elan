@@ -1,7 +1,7 @@
 ﻿namespace SymbolTable.SymbolTypes;
 
-public record PendingTupleResolveSymbol : IPendingResolveSymbolType {
-    public PendingTupleResolveSymbol(ISymbolType tuple, int index) {
+public record PendingDeconstructionResolveSymbol : IPendingResolveSymbolType {
+    public PendingDeconstructionResolveSymbol(ISymbolType tuple, int index) {
         Index = index;
         Tuple = tuple;
     }

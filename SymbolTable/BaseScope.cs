@@ -36,5 +36,5 @@ public abstract class BaseScope : IScope {
         }
     }
 
-    public override string ToString() => string.Join(", ", symbols.Keys);
+    public override string ToString() => $"{ScopeName}: {string.Join(", ", symbols.Keys)}";
 }
