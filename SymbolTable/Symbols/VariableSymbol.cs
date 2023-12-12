@@ -12,6 +12,7 @@ public class VariableSymbol : ISymbol, IHasReturnType {
     public ISymbolType ReturnType { get; set; }
     public IScope? EnclosingScope { get; }
     public string Name { get; }
-
     public IScope? Scope { get; set; } = null;
+
+    public override string ToString() => $"Variable {Name} {ReturnType} {EnclosingScope}";
 }

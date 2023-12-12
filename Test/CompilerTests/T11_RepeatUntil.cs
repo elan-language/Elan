@@ -129,7 +129,7 @@ end main
         AssertDoesNotParse(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Fail_variableDefinedInLoop() {
         var code = @"
 main
@@ -141,8 +141,7 @@ end main
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
+        AssertDoesNotCompile(compileData, "Unresolved Symbol Variable x PendingResolveSymbolType { Name = x } 'main': x");
     }
 
     [TestMethod]

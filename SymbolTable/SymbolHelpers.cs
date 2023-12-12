@@ -140,16 +140,16 @@ public class SymbolHelpers {
         return type is ClassSymbolType cst ? GetSymbolForCallNode(mcn, currentScope, cst) : null;
     }
 
-    public static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope) {
+    public static ISymbolType? EnsureResolved(ISymbolType symbolType, IScope currentScope, int rc = 0) {
         return symbolType switch {
+            _ when rc > 1 => symbolType,
             PendingResolveSymbolType rr => currentScope.Resolve(rr.Name) switch {
-                VariableSymbol s => EnsureResolved(s.ReturnType, currentScope),
+                VariableSymbol s => EnsureResolved(s.ReturnType, currentScope, ++rc),
                 ClassSymbol s => new ClassSymbolType(s.Name),
                 EnumSymbol s => new EnumSymbolType(s.Name),
-                FunctionSymbol s => EnsureResolved(s.ReturnType, currentScope),
-                ParameterSymbol s => EnsureResolved(s.ReturnType, currentScope),
-                SystemAccessorSymbol s => EnsureResolved(s.ReturnType, currentScope),
-                LambdaParameterSymbol s => throw new NotImplementedException(),
+                FunctionSymbol s => EnsureResolved(s.ReturnType, currentScope, ++rc),
+                ParameterSymbol s => EnsureResolved(s.ReturnType, currentScope, ++rc),
+                SystemAccessorSymbol s => EnsureResolved(s.ReturnType, currentScope, ++rc),
                 _ => rr
             },
             PendingDeconstructionResolveSymbol rr => EnsureResolved(rr.Tuple, currentScope) switch {
@@ -187,9 +187,6 @@ public class SymbolHelpers {
 
         if (vs.ReturnType is IPendingResolveSymbolType prs) {
             var rt = EnsureResolved(prs, currentScope) ?? throw new NullReferenceException(name);
-            if (rt is PendingResolveSymbolType) {
-                throw new NotImplementedException();
-            }
             vs.ReturnType = rt;
         }
     }

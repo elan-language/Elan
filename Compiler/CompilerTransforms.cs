@@ -211,7 +211,6 @@ public static class CompilerTransforms {
                 VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 ClassSymbol cs => new ClassSymbolType(cs.Name),
                 FunctionSymbol fs => EnsureResolved(fs.ReturnType, currentScope),
-                LambdaParameterSymbol lps => throw new NotImplementedException(),
                 _ => throw new NotImplementedException()
             },
             _ => symbolType
@@ -260,7 +259,6 @@ public static class CompilerTransforms {
             IdentifierNode idn => currentScope.Resolve(idn.Id) switch {
                 VariableSymbol vs => EnsureResolved(vs.ReturnType, currentScope),
                 ParameterSymbol ps => EnsureResolved(ps.ReturnType, currentScope),
-                LambdaParameterSymbol lps => EnsureResolved(lps.ReturnType, currentScope),
                 _ => null
             },
             FunctionCallNode fcn => currentScope.Resolve(fcn.MethodName) switch {

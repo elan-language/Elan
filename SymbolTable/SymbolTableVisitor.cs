@@ -52,8 +52,25 @@ public class SymbolTableVisitor {
         };
     }
 
-    #region visit functions
+    public void Validate() {
+        ValidateScope(SymbolTable.GlobalScope);
+    }
 
+    private void ValidateScope(IScope scope) {
+        var symbols = ((BaseScope)scope).Symbols;
+
+        foreach (var symbol in symbols) {
+            if (symbol is IHasReturnType { ReturnType: IPendingResolveSymbolType }) {
+                SymbolErrors.Add($"Unresolved Symbol {symbol}");
+            }
+
+            if (symbol is IScope subScope) {
+                ValidateScope(subScope);
+            }
+        }
+    }
+
+    #region visit functions
 
 
     private IAstNode VisitProcedureDefNode(ProcedureDefNode procedureDefNode) {
