@@ -4,7 +4,6 @@ using AbstractSyntaxTree.Roles;
 namespace AbstractSyntaxTree.Nodes;
 
 public record AbstractClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inherits, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods) : IAstNode, INamedAstNode, IHasScope {
-    public string Name => ((IdentifierNode)Type).Id;
     public IEnumerable<IAstNode> Children => Inherits.Prepend(Type).Concat(Properties).Concat(Methods);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
@@ -17,4 +16,6 @@ public record AbstractClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inher
             }
         };
     }
+
+    public string Name => ((IdentifierNode)Type).Id;
 }

@@ -19,7 +19,6 @@ public class ThirdPassVisitor {
         Rules.Add(CompilerRules.ConstructorConstraintsRule);
         Rules.Add(CompilerRules.ClassMustHaveAsString);
         Rules.Add(CompilerRules.ClassCannotInheritConcreteClass);
-        //Rules.Add(CompilerRules.MethodCallsShouldBeResolvedRule);
     }
 
     public ThirdPassVisitor(SymbolTableImpl symbolTable) {

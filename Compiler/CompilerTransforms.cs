@@ -1,7 +1,5 @@
 ﻿using System.Collections.Immutable;
-using System.Runtime.ExceptionServices;
 using AbstractSyntaxTree.Nodes;
-using CSharpLanguageModel.Models;
 using SymbolTable;
 using SymbolTable.Symbols;
 using SymbolTable.SymbolTypes;
@@ -11,23 +9,6 @@ namespace Compiler;
 
 public static class CompilerTransforms {
     #region rules
-
-    //public static IAstNode? TransformMethodCallNodes(IAstNode[] nodes, IScope currentScope) =>
-    //    nodes.Last() switch
-    //    {
-    //        MethodCallNode mcn => ResolveMethodCall(currentScope, mcn) switch
-    //        {
-    //            (SystemAccessorSymbol sas, _) when mcn.Qualifier is SystemAccessorPrefixNode => new SystemAccessorCallNode(mcn.Id, NameSpaceToNode(sas.NameSpace), mcn.Parameters) { DotCalled = mcn.DotCalled },
-    //            (ProcedureSymbol ps, false) => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
-    //            (ProcedureSymbol, true) => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-    //            (FunctionSymbol fs, false) => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
-    //            (FunctionSymbol, true) => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-    //            (ParameterSymbol { ReturnType: LambdaSymbolType }, _) => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
-    //            (VariableSymbol vs, _) when EnsureResolved(vs.ReturnType, currentScope) is LambdaSymbolType => new FunctionCallNode(mcn.Id, null, mcn.Parameters),
-    //            _ => GetSpecificCallNodeForClassMethod(mcn, currentScope)
-    //        },
-    //        _ => null
-    //    };
 
     public static IAstNode? TransformLiteralListNodes(IAstNode[] nodes, IScope currentScope) =>
         nodes.Last() switch {
@@ -74,8 +55,6 @@ public static class CompilerTransforms {
         };
     }
 
-   
-
     #endregion
 
     #region helpers
@@ -111,27 +90,6 @@ public static class CompilerTransforms {
             },
             _ => null
         };
-
-    //private static IAstNode? GetSpecificCallNode(MethodCallNode mcn, IScope currentScope, ClassSymbolType cst) {
-    //    var classSymbol = currentScope.Resolve(cst.Name);
-
-    //    return classSymbol switch {
-    //        IScope classScope => classScope.Resolve(mcn.Name) switch {
-    //            ProcedureSymbol { NameSpace: NameSpace.UserLocal } => new ProcedureCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-    //            ProcedureSymbol ps => new ProcedureCallNode(mcn, NameSpaceToNode(ps.NameSpace)),
-    //            FunctionSymbol { NameSpace: NameSpace.UserLocal } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-    //            FunctionSymbol fs => new FunctionCallNode(mcn, NameSpaceToNode(fs.NameSpace)),
-    //            VariableSymbol { ReturnType: LambdaSymbolType } => new FunctionCallNode(mcn.Id, mcn.Qualifier, mcn.Parameters),
-    //            _ => null
-    //        },
-    //        _ => null
-    //    };
-    //}
-
-    //private static IAstNode? GetSpecificCallNodeForClassMethod(MethodCallNode mcn, IScope currentScope) {
-    //    var type = GetQualifierType(mcn, currentScope);
-    //    return type is ClassSymbolType cst ? GetSpecificCallNode(mcn, currentScope, cst) : null;
-    //}
 
     private static ProcedureSymbol? GetProcedure(ICallNode mcn, IScope currentScope) {
         var type = GetQualifierType(mcn, currentScope);
@@ -228,7 +186,6 @@ public static class CompilerTransforms {
         };
     }
 
-
     private static ISymbolType ResolveGenericType(GenericSymbolType gst, GenericFunctionSymbol fst, FunctionCallNode fcn, IScope currentScope) {
         var name = gst.TypeName;
         var indexAndDepth = fst.GenericParameters[name];
@@ -238,13 +195,8 @@ public static class CompilerTransforms {
 
         var actualType = GetTypeFromDepth(st, indexAndDepth.Item2);
 
-
         return actualType;
     }
-
-
-
-
 
     private static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {
         return symbolType switch {
@@ -269,8 +221,6 @@ public static class CompilerTransforms {
             _ => SymbolHelpers.MapNodeToSymbolType(expression)
         };
     }
-
-   
 
     #endregion
 }

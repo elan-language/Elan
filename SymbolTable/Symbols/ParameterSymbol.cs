@@ -10,9 +10,10 @@ public class ParameterSymbol : ISymbol, IHasReturnType {
         EnclosingScope = enclosingScope;
     }
 
-    public ISymbolType ReturnType { get; set;  }
     public bool ByRef { get; }
     public IScope EnclosingScope { get; }
+
+    public ISymbolType ReturnType { get; set; }
     public string Name { get; }
 
     public IScope? Scope { get; set; } = null;

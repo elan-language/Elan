@@ -3,7 +3,7 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public interface ICallNode :  IHasScope {
+public interface ICallNode : IHasScope {
     public IAstNode Id { get; }
 
     public IAstNode? Qualifier { get; }

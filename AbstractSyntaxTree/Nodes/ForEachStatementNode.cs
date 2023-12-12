@@ -3,9 +3,6 @@
 namespace AbstractSyntaxTree.Nodes;
 
 public record ForEachStatementNode(IAstNode Parameter, IAstNode StatementBlock) : IAstNode, ICanWrapExpression, IHasScope {
-
-    public string Name { get; } = Helpers.UniqueScopeName;
-
     public IEnumerable<IAstNode> Children => new[] { Parameter, StatementBlock };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
@@ -15,4 +12,6 @@ public record ForEachStatementNode(IAstNode Parameter, IAstNode StatementBlock) 
             _ => throw new NotImplementedException()
         };
     }
+
+    public string Name { get; } = Helpers.UniqueScopeName;
 }

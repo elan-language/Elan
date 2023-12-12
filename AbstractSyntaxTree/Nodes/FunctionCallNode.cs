@@ -4,6 +4,7 @@ using AbstractSyntaxTree.Roles;
 namespace AbstractSyntaxTree.Nodes;
 
 public record FunctionCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters, IAstNode? CalledOn) : IAstNode, ICanWrapExpression, ICallNode {
+    private string UniqueId { get; } = Helpers.UniqueID;
 
     public IEnumerable<IAstNode> Children => Parameters.SafePrepend(Qualifier).Prepend(Id).SafeAppend(CalledOn);
 
@@ -15,8 +16,6 @@ public record FunctionCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<
             _ => this with { Parameters = Parameters.SafeReplace(from, to) }
         };
     }
-
-    private string UniqueId { get; } = Helpers.UniqueID;
 
     public string Name => Id is IdentifierNode idn ? $"_{idn.Id}{UniqueId}" : throw new NotImplementedException();
 

@@ -6,10 +6,7 @@ using SymbolTable;
 namespace Compiler;
 
 public static class Pipeline {
-
-
-    public static bool RunCompileObjectCode = true; 
-
+    public static bool RunCompileObjectCode = true;
 
     public static CompileData Compile(string fileName) {
         var compileData = new CompileData { FileName = fileName };

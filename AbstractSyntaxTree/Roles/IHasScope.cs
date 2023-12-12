@@ -1,5 +1,3 @@
-﻿namespace AbstractSyntaxTree.Roles; 
+﻿namespace AbstractSyntaxTree.Roles;
 
-public interface IHasScope : INamedAstNode {
-   
-}
+public interface IHasScope : INamedAstNode { }

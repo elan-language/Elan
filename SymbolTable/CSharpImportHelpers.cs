@@ -20,7 +20,7 @@ public static class CSharpImportHelpers {
             "ElanArray`1" => new ArraySymbolType(ConvertCSharpTypesToBuiltInSymbol(type.GetGenericArguments().Single())),
             "ElanList`1" => new ListSymbolType(ConvertCSharpTypesToBuiltInSymbol(type.GetGenericArguments().Single())),
             "IEnumerable`1" => new IterSymbolType(ConvertCSharpTypesToBuiltInSymbol(type.GetGenericArguments().Single())),
-            _ when type.Name.StartsWith("Func") => new LambdaSymbolType(type.GetGenericArguments().Select(ConvertCSharpTypesToBuiltInSymbol).SkipLast(1).ToArray(), type.GetGenericArguments().Select(ConvertCSharpTypesToBuiltInSymbol).Last()), 
+            _ when type.Name.StartsWith("Func") => new LambdaSymbolType(type.GetGenericArguments().Select(ConvertCSharpTypesToBuiltInSymbol).SkipLast(1).ToArray(), type.GetGenericArguments().Select(ConvertCSharpTypesToBuiltInSymbol).Last()),
             _ when type.IsGenericParameter => new GenericSymbolType(type.Name),
             _ when type.IsEnum => new EnumSymbolType(type.Name),
             _ => new ClassSymbolType(type.Name) // placeholder for everything else 
@@ -68,9 +68,7 @@ public static class CSharpImportHelpers {
         }
     }
 
-    private static ISymbol ImportType(Type type) {
-        return type.IsClass ? ImportClass(type) : ImportEnum(type);
-    }
+    private static ISymbol ImportType(Type type) => type.IsClass ? ImportClass(type) : ImportEnum(type);
 
     private static ISymbol ImportEnum(Type type) => new EnumSymbol(type.Name, null!);
 
@@ -127,7 +125,6 @@ public static class CSharpImportHelpers {
     }
 
     private static (bool, int, int) MatchParameterAtDepth(Type t, Type parameterType, int index, int depth) {
-
         if (parameterType.Name == t.Name) {
             return (true, index, depth);
         }

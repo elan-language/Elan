@@ -18,12 +18,13 @@ public record IfStatementModel(ICodeModel[] Expressions, ICodeModel[] StatementB
 {StatementBlocks.First().ToString(indent + 1)}
 {Indent(indent)}}}";
 
-    private string Else(int indent) {
-        return Expressions.Count() < StatementBlocks.Count() ? $@"
+    private string Else(int indent) =>
+        Expressions.Count() < StatementBlocks.Count()
+            ? $@"
 {Indent(indent)}else {{
 {StatementBlocks.Last().ToString(indent + 1)}
-{Indent(indent)}}}" : "";
-    }
+{Indent(indent)}}}"
+            : "";
 
     private static string ElseIf(ICodeModel expression, ICodeModel statementBlock, int indent) =>
         $@"{Indent(indent)}else if ({expression}) {{

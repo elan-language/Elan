@@ -1,6 +1,4 @@
-﻿using SymbolTable.SymbolTypes;
-
-namespace SymbolTable.Symbols;
+﻿namespace SymbolTable.Symbols;
 
 public enum NameSpace {
     System,

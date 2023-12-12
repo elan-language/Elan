@@ -5,7 +5,7 @@ using static CodeHelpers;
 public record ClassDefModel(ICodeModel Type, ICodeModel[] Inherits, ICodeModel Constructor, ICodeModel[] Properties, ICodeModel[] Functions, bool HasDefaultConstructor, ICodeModel DefaultClassModel) : ICodeModel {
     public string ToString(int indent) =>
         $@"{Indent(indent)}public record class {Type}{InheritsAsString()} {{
-{CodeHelpers.DefaultInstance(indent, Type)}
+{DefaultInstance(indent, Type)}
 {DefaultConstructor(indent)}
 {ConstructorAsString(indent)}
 {Properties.AsLineSeparatedString(indent + 1)}

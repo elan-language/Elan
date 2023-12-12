@@ -3,7 +3,6 @@
 using static CodeHelpers;
 
 public record DefaultClassDefModel(ICodeModel Type, ICodeModel[] Properties, ICodeModel[] Procedures, ICodeModel[] Functions, bool IsAbstract = false) : ICodeModel {
-
     private string Override => IsAbstract ? "" : " override";
 
     public string ToString(int indent) =>
@@ -24,7 +23,6 @@ public record DefaultClassDefModel(ICodeModel Type, ICodeModel[] Properties, ICo
                 ? $" => {dm.DefaultValue}"
                 : ";"
             : ";";
-
 
     private string DefaultConstructor(int indent) => $"{Indent(indent + 1)}public _Default{Type}() {{ }}";
 }

@@ -128,7 +128,6 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionContext context) {
         if (context.DOT() is not null) {
-
             if (context.functionCall() is { } dmc) {
                 var ms = visitor.Visit<FunctionCallNode>(dmc);
                 var exp = visitor.Visit(context.expression().First());
@@ -194,13 +193,11 @@ public static class AstFactory {
             return visitor.Visit(ie);
         }
 
-        if (context.systemCall() is { } sc)
-        {
+        if (context.systemCall() is { } sc) {
             return visitor.Visit(sc);
         }
 
-        if (context.input() is { } inp)
-        {
+        if (context.input() is { } inp) {
             return visitor.Visit(inp);
         }
 
@@ -447,7 +444,7 @@ public static class AstFactory {
             return visitor.Visit(f);
         }
 
-        if (context.@each() is { } fi) {
+        if (context.each() is { } fi) {
             return visitor.Visit(fi);
         }
 

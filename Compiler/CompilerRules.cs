@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.Design;
-using AbstractSyntaxTree;
+﻿using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using AbstractSyntaxTree.Roles;
 using SymbolTable;
 using SymbolTable.Symbols;
-using SymbolTable.SymbolTypes;
 
 namespace Compiler;
 
@@ -34,21 +32,16 @@ public static class CompilerRules {
         return null;
     }
 
-    public static string? CannotUseInputInAFunction(IAstNode[] nodes, IScope currentScope)
-    {
+    public static string? CannotUseInputInAFunction(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is InputNode inp)
-        {
-            if (nodes.AnyOtherNodeIs(n => n is FunctionDefNode))
-            {
+        if (leafNode is InputNode inp) {
+            if (nodes.AnyOtherNodeIs(n => n is FunctionDefNode)) {
                 return $"Cannot use 'input' within a function : {leafNode}";
             }
         }
 
         return null;
     }
-
-
 
     private static bool Match(IAstNode n1, IAstNode n2) {
         return n2 switch {
@@ -227,9 +220,4 @@ public static class CompilerRules {
         var classSymbols = inherits.Select(currentScope.Resolve).OfType<ClassSymbol>();
         return classSymbols.Any(s => s.ClassType is not ClassSymbolTypeType.Abstract) ? "Cannot inherit from concrete class" : null;
     }
-
-    //public static string? MethodCallsShouldBeResolvedRule(IAstNode[] nodes, IScope currentScope) {
-    //    var leafNode = nodes.Last();
-    //    return leafNode is MethodCallNode ? $"Calling unknown method : {leafNode}" : null;
-    //}
 }

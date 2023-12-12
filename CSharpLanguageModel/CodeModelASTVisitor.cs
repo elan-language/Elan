@@ -2,18 +2,13 @@
 using AbstractSyntaxTree.Nodes;
 using AbstractSyntaxTree.Roles;
 using CSharpLanguageModel.Models;
-using StandardLibrary;
 using SymbolTable;
 using SymbolTable.Symbols;
 
 namespace CSharpLanguageModel;
 
 public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
-
-    public CodeModelAstVisitor(IScope currentScope) {
-        CurrentScope = currentScope;
-    }
-
+    public CodeModelAstVisitor(IScope currentScope) => CurrentScope = currentScope;
 
     private IScope CurrentScope { get; set; }
 
@@ -108,7 +103,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             LambdaTypeNode n => HandleScope(BuildFuncTypeModel, n),
             TupleTypeNode n => HandleScope(BuildTupleTypeModel, n),
             TupleDefNode n => HandleScope(BuildTupleDefModel, n),
-            AbstractFunctionDefNode n => HandleScope(BuildAbstractFunctionDefModel,n),
+            AbstractFunctionDefNode n => HandleScope(BuildAbstractFunctionDefModel, n),
             AbstractProcedureDefNode n => HandleScope(BuildAbstractProcedureDefModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
@@ -130,7 +125,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private ProcedureCallModel BuildProcedureCallModel(ProcedureCallNode procedureCallNode) {
         var symbol = SymbolHelpers.ResolveCall(procedureCallNode, CurrentScope) as ProcedureSymbol;
         var parameters = procedureCallNode.Parameters.Select(Visit);
-        var ns = symbol?.NameSpace;  
+        var ns = symbol?.NameSpace;
         var qNode = NameSpaceToNode(ns) ?? procedureCallNode.Qualifier;
         var qModel = qNode is { } q ? Visit(q) : null;
 
@@ -140,14 +135,12 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var calledOnModel = calledOnNode is { } con ? Visit(con) : null;
 
         if (qNode is null && calledOnNode is not null && ns is NameSpace.UserLocal) {
-
             qModel = Visit(calledOnNode);
-
         }
         else if (calledOnModel is not null) {
             parameters = parameters.Prepend(calledOnModel);
         }
-        else if (qModel is ScalarValueModel {Value : "this"} qm) {
+        else if (qModel is ScalarValueModel { Value : "this" } qm) {
             parameters = parameters.Prepend(qm);
             qModel = Visit(NameSpaceToNode(ns)!);
         }
@@ -173,9 +166,9 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private MethodCallModel BuildFunctionCallModel(FunctionCallNode functionCallNode) {
         var symbol = SymbolHelpers.ResolveCall(functionCallNode, CurrentScope);
 
-        var ns = symbol is MethodSymbol ms ? ms.NameSpace : NameSpace.UserLocal;  
+        var ns = symbol is MethodSymbol ms ? ms.NameSpace : NameSpace.UserLocal;
 
-        var qNode =  functionCallNode.Qualifier ?? NameSpaceToNode(ns);
+        var qNode = functionCallNode.Qualifier ?? NameSpaceToNode(ns);
         var qModel = qNode is { } q ? Visit(q) : null;
 
         // TODO cloned code fix once working
@@ -186,18 +179,15 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var parameters = functionCallNode.Parameters.Select(Visit);
 
         if (qNode is null && calledOnNode is not null && ns is NameSpace.UserLocal) {
-
             qModel = Visit(calledOnNode);
-
         }
         else if (calledOnModel is not null) {
             parameters = parameters.Prepend(calledOnModel);
         }
-        else if (qModel is ScalarValueModel {Value : "this"} qm) {
+        else if (qModel is ScalarValueModel { Value : "this" } qm) {
             parameters = parameters.Prepend(qm);
             qModel = Visit(NameSpaceToNode(ns)!);
         }
-
 
         return new MethodCallModel(CodeHelpers.MethodType.Function, Visit(functionCallNode.Id), qModel, parameters.ToArray());
     }
@@ -526,8 +516,6 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var isNew = defaultNode.IsNew;
         return new DeconstructionModel(ids.ToArray(), isNew);
     }
-
-  
 
     private ThrowModel BuildThrowModel(ThrowNode defaultNode) {
         var thrown = Visit(defaultNode.Thrown);

@@ -4,9 +4,6 @@ using AbstractSyntaxTree.Roles;
 namespace AbstractSyntaxTree.Nodes;
 
 public record LambdaDefNode(ImmutableArray<IAstNode> Arguments, IAstNode Expression) : IAstNode, IHasScope {
-
-    public string Name { get; } = Helpers.UniqueLambdaName;
-
     public IEnumerable<IAstNode> Children => Arguments.Append(Expression);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
@@ -15,4 +12,6 @@ public record LambdaDefNode(ImmutableArray<IAstNode> Arguments, IAstNode Express
             _ => this with { Arguments = Arguments.SafeReplace(from, to) }
         };
     }
+
+    public string Name { get; } = Helpers.UniqueLambdaName;
 }

@@ -1,6 +1,4 @@
-﻿using SymbolTable.SymbolTypes;
-
-namespace SymbolTable.Symbols;
+﻿namespace SymbolTable.Symbols;
 
 public class ProcedureSymbol : MethodSymbol {
     public ProcedureSymbol(string name, NameSpace nameSpace, string[] parameterNames, IScope? enclosingScope) : base(name, nameSpace, parameterNames, enclosingScope) { }

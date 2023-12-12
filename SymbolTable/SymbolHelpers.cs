@@ -1,13 +1,12 @@
-﻿using AbstractSyntaxTree.Nodes;
-using AbstractSyntaxTree;
-using SymbolTable.SymbolTypes;
+﻿using AbstractSyntaxTree;
+using AbstractSyntaxTree.Nodes;
 using SymbolTable.Symbols;
+using SymbolTable.SymbolTypes;
 
-namespace SymbolTable; 
+namespace SymbolTable;
 
 public class SymbolHelpers {
-   
-     public static ISymbolType MapNodeToSymbolType(IAstNode node) {
+    public static ISymbolType MapNodeToSymbolType(IAstNode node) {
         return node switch {
             IdentifierNode idn => new PendingResolveSymbolType(idn.Id),
             TypeNode tn => MapNodeToSymbolType(tn.TypeName),
@@ -43,40 +42,38 @@ public class SymbolHelpers {
             LambdaDefNode ldn => new LambdaSymbolType(ldn.Arguments.Select(MapNodeToSymbolType).ToArray(), MapNodeToSymbolType(ldn.Expression)),
             _ => throw new NotImplementedException(node.GetType().ToString())
         };
-     }
+    }
 
-     private static bool OperatorEvaluatesToBoolean(Operator op) =>
-         op switch {
-             Operator.And => true,
-             Operator.Plus => false,
-             Operator.Minus => false,
-             Operator.Multiply => false,
-             Operator.Divide => false,
-             Operator.Power => false,
-             Operator.Modulus => false,
-             Operator.IntDivide => false,
-             Operator.Equal => true,
-             Operator.Or => true,
-             Operator.Xor => true,
-             Operator.LessThan => true,
-             Operator.GreaterThanEqual => true,
-             Operator.GreaterThan => true,
-             Operator.LessThanEqual => true,
-             Operator.NotEqual => true,
-             _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
-         };
+    private static bool OperatorEvaluatesToBoolean(Operator op) =>
+        op switch {
+            Operator.And => true,
+            Operator.Plus => false,
+            Operator.Minus => false,
+            Operator.Multiply => false,
+            Operator.Divide => false,
+            Operator.Power => false,
+            Operator.Modulus => false,
+            Operator.IntDivide => false,
+            Operator.Equal => true,
+            Operator.Or => true,
+            Operator.Xor => true,
+            Operator.LessThan => true,
+            Operator.GreaterThanEqual => true,
+            Operator.GreaterThan => true,
+            Operator.LessThanEqual => true,
+            Operator.NotEqual => true,
+            _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
+        };
 
-     private static ISymbolType MapElanValueTypeToSymbolType(string type) =>
-         type switch {
-             IntSymbolType.Name => IntSymbolType.Instance,
-             StringSymbolType.Name => StringSymbolType.Instance,
-             FloatSymbolType.Name => FloatSymbolType.Instance,
-             BoolSymbolType.Name => BoolSymbolType.Instance,
-             CharSymbolType.Name => CharSymbolType.Instance,
-             _ => throw new NotImplementedException()
-         };
-
-     
+    private static ISymbolType MapElanValueTypeToSymbolType(string type) =>
+        type switch {
+            IntSymbolType.Name => IntSymbolType.Instance,
+            StringSymbolType.Name => StringSymbolType.Instance,
+            FloatSymbolType.Name => FloatSymbolType.Instance,
+            BoolSymbolType.Name => BoolSymbolType.Instance,
+            CharSymbolType.Name => CharSymbolType.Instance,
+            _ => throw new NotImplementedException()
+        };
 
     public static string? GetId(IAstNode? node) => node switch {
         IdentifierNode idn => idn.Id,
@@ -92,16 +89,15 @@ public class SymbolHelpers {
                 ? GetGlobalScope(s)
                 : scope;
 
-    private static ISymbol? GetSymbolForCallNode(ICallNode mcn, IScope currentScope, ClassSymbolType cst)
-    {
+    private static ISymbol? GetSymbolForCallNode(ICallNode mcn, IScope currentScope, ClassSymbolType cst) {
         var classSymbol = currentScope.Resolve(cst.Name);
 
-        return classSymbol switch
-        {
+        return classSymbol switch {
             IScope classScope => classScope.Resolve(mcn.MethodName),
             _ => null
         };
     }
+
     private static ISymbolType? ResolveProperty(PropertyCallNode pn, ClassSymbolType? symbolType, IScope currentScope) {
         var cst = symbolType is not null ? GetGlobalScope(currentScope).Resolve(symbolType.Name) as IScope : null;
         var name = pn.Property is IdentifierNode idn ? idn.Id : throw new NullReferenceException();
@@ -134,8 +130,7 @@ public class SymbolHelpers {
             _ => null
         };
 
-    private static ISymbol? GetSpecificCallNodeForClassMethod(ICallNode mcn, IScope currentScope)
-    {
+    private static ISymbol? GetSpecificCallNodeForClassMethod(ICallNode mcn, IScope currentScope) {
         var type = GetQualifierType(mcn, currentScope);
         return type is ClassSymbolType cst ? GetSymbolForCallNode(mcn, currentScope, cst) : null;
     }
@@ -173,11 +168,10 @@ public class SymbolHelpers {
                         return GetSpecificCallNodeForClassMethod(callNode, currentScope);
                     case ParameterSymbol ps when EnsureResolved(ps.ReturnType, currentScope) is ClassSymbolType:
                         return GetSpecificCallNodeForClassMethod(callNode, currentScope);
-                    default:  return GetGlobalScope(currentScope).Resolve(callNode.MethodName);
+                    default: return GetGlobalScope(currentScope).Resolve(callNode.MethodName);
                 }
             }
         }
-
 
         return currentScope.Resolve(callNode.MethodName);
     }

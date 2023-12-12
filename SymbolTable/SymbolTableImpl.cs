@@ -1,6 +1,4 @@
-﻿using SymbolTable.Symbols;
-using SymbolTable.SymbolTypes;
-using static SymbolTable.CSharpImportHelpers;
+﻿using static SymbolTable.CSharpImportHelpers;
 
 namespace SymbolTable;
 
@@ -10,5 +8,4 @@ public class SymbolTableImpl {
     }
 
     public GlobalScope GlobalScope { get; } = new();
-
 }

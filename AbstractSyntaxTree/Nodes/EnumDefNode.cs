@@ -12,5 +12,6 @@ public record EnumDefNode(IAstNode Type, ImmutableArray<IAstNode> Values) : IAst
             _ => this with { Values = Values.SafeReplace(from, to) }
         };
     }
+
     public string Name => ((IdentifierNode)Type).Id;
 }
