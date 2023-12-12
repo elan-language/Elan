@@ -1,1 +1,131 @@
-﻿TODO
+﻿using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanDictionary<char,Direction> directionByKey = new StandardLibrary.ElanDictionary<char,Direction>(('w', Direction.up), ('s', Direction.down), ('a', Direction.left), ('d', Direction.right));
+  public const string welcome = @$"Welcome to the Snake game. 
+
+Use the w,a,s, and d keys to control the direction of the snake. Letting the snake get to any edge will lose you the game, as will letting the snake's head pass over its body. Eating an apple will
+cause the snake to grow by one segment. 
+
+If you want to re-size the window, please do so now, before starting the game.
+
+Press any key to start..";
+  public static void playGame() {
+    var charMap = new CharMap();
+    charMap.fillBackground();
+    var boardWidth = charMap.width / 2;
+    var boardHeight = charMap.height;
+    var currentDirection = Direction.right;
+    var startTail = (boardWidth / 2, boardHeight / 2);
+    var body = new StandardLibrary.ElanList<(int, int)>();
+    body = body + startTail;
+    var head = Globals.getAdjacentSquare(startTail, currentDirection);
+    var apple = (0, 0);
+    Globals.setNewApplePosition(body, ref apple, boardWidth, boardHeight);
+    var gameOn = true;
+    while (gameOn) {
+      Globals.draw(charMap, head, Colour.green);
+      Globals.draw(charMap, apple, Colour.red);
+      var priorTail = Globals.snakeTail(body);
+      StandardLibrary.Procedures.pause(200);
+      var pressed = StandardLibrary.SystemAccessors.keyHasBeenPressed();
+      if (pressed) {
+        var k = StandardLibrary.SystemAccessors.readKey();
+        currentDirection = directionByKey[k];
+      }
+      Globals.clockTick(ref body, ref head, ref apple, currentDirection, boardWidth, boardHeight, ref gameOn);
+      if (Globals.snakeTail(body) != priorTail) {
+        Globals.draw(charMap, priorTail, charMap.backgroundColour);
+      }
+    }
+    charMap.setCursor(0, 0);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$"Game Over! Score: {body.length() - 2}"));
+  }
+  public static void draw(CharMap cm, (int, int) sq, Colour colour) {
+    var col = sq.Item1 * 2;
+    var row = sq.Item2;
+    cm.putBlockWithColour(col, row, colour);
+    cm.putBlockWithColour(col + 1, row, colour);
+  }
+  public static void clockTick(ref StandardLibrary.ElanList<(int, int)> body, ref (int, int) head, ref (int, int) apple, Direction d, int boardWidth, int boardHeight, ref bool @continue) {
+    body = body + head;
+    head = Globals.getAdjacentSquare(head, head, d);
+    if (head == apple) {
+      Globals.setNewApplePosition(body, ref apple, boardWidth, boardHeight);
+    }
+    else {
+      body = body[(1)..];
+    }
+    @continue = !Globals.hasHitEdge(head, boardWidth, boardHeight) && !Globals.bodyCovers(body, head);
+  }
+  public static void setNewApplePosition(StandardLibrary.ElanList<(int, int)> body, ref (int, int) apple, int boardWidth, int boardHeight) {
+    do {
+      var ranW = StandardLibrary.SystemAccessors.random(boardWidth - 1);
+      var ranH = StandardLibrary.SystemAccessors.random(boardHeight - 1);
+      var newPos = (ranW, ranH);
+      apple = newPos;
+    } while (!(!Globals.bodyCovers(body, apple)));
+  }
+  public static (int, int) snakeTail(StandardLibrary.ElanList<(int, int)> body) {
+
+    return body[0];
+  }
+  public static bool bodyCovers(StandardLibrary.ElanList<(int, int)> body, (int, int) sq) {
+    var result = false;
+    foreach (var seg in body) {
+      if ((seg == sq)) {
+        result = true;
+      }
+    }
+    return result;
+  }
+  public static bool hasHitEdge((int, int) head, int boardWidth, int boardHeight) {
+    var x = head.Item1;
+    var y = head.Item2;
+    return x < 0 || y < 0 || x == boardWidth || y == boardHeight;
+  }
+  public static (int, int) getAdjacentSquare((int, int) sq, Direction d) {
+    var newX = sq.Item1;
+    var newY = sq.Item2;
+    switch (d) {
+      case Direction.left:
+        newX = newX - 1;
+        break;
+      case Direction.right:
+        newX = newX + 1;
+        break;
+      case Direction.up:
+        newY = newY - 1;
+        break;
+      case Direction.down:
+        newY = newY + 1;
+        break;
+      default:
+        
+        break;
+    }
+    return (newX, newY);
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(welcome));
+    var k = StandardLibrary.SystemAccessors.readKey();
+    var newGame = true;
+    while (newGame) {
+      Globals.playGame();
+      System.Console.WriteLine(StandardLibrary.Functions.asString(@$"Do you want to play again (y/n)?"));
+      var answer = ' ';
+      do {
+        answer = StandardLibrary.SystemAccessors.readKey();
+      } while (!(answer == 'y' || answer == 'n'));
+      if (answer == 'n') {
+        newGame = false;
+      }
+    }
+  }
+}

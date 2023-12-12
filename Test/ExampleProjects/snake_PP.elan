@@ -71,8 +71,8 @@ procedure draw(cm CharMap, sq (Int, Int), colour Colour)
 end procedure
 
 procedure clockTick(out body List<of (Int, Int)>, out head (Int, Int),out apple (Int, Int), d Direction, boardWidth Int, boardHeight Int, out continue Bool)
-    set body to body + head;
-    set head to head.getAdjacentSquare(head, d);
+    set body to body + head
+    set head to head.getAdjacentSquare(head, d)
     if head is apple then
         call setNewApplePosition(body, apple, boardWidth, boardHeight)
     else
