@@ -31,7 +31,6 @@ public class SymbolTableVisitor {
             AbstractProcedureDefNode n => VisitAbstractProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
             AbstractFunctionDefNode n => VisitAbstractFunctionDefNode(n),
-            SystemAccessorDefNode n => VisitSystemAccessorNode(n),
             ConstructorNode n => VisitConstructorNode(n),
             ClassDefNode n => VisitClassDefNode(n),
             AbstractClassDefNode n => VisitAbstractClassDefNode(n),
@@ -224,25 +223,6 @@ public class SymbolTableVisitor {
 
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return functionDefNode;
-    }
-
-    private IAstNode VisitSystemAccessorNode(SystemAccessorDefNode systemAccessorDefNode) {
-        var (name, parameterIds) = NameAndParameterIds(systemAccessorDefNode.Signature);
-
-        if (Pass is VisitorPass.First) {
-            var rt = MapNodeToSymbolType(systemAccessorDefNode.Return);
-            var ms = new SystemAccessorSymbol(name, rt, NameSpace.UserGlobal, parameterIds, currentScope);
-            currentScope.Define(ms);
-            currentScope = ms;
-        }
-        else {
-            ResolveReturnType(name, currentScope);
-            currentScope = currentScope.Resolve(name) as IScope ?? throw new Exception("unexpected null scope");
-        }
-
-        VisitChildren(systemAccessorDefNode);
-        currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
-        return systemAccessorDefNode;
     }
 
     private IAstNode VisitMainNode(MainNode mainNode) {

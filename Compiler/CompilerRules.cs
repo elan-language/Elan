@@ -157,13 +157,6 @@ public static class CompilerRules {
                 }
             }
 
-            if (expandedOtherNodes.Any(n => n is SystemAccessorDefNode)) {
-                var varNodes = expandedOtherNodes.OfType<VarDefNode>();
-                if (!varNodes.Any(vn => Match(vn.Id, an.Id))) {
-                    return $"Cannot modify param in system accessor : {leafNode}";
-                }
-            }
-
             return null;
         }
 

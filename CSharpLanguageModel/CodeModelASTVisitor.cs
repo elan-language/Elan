@@ -71,7 +71,6 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             ProcedureDefNode n => HandleScope(BuildProcedureDefModel, n),
             FunctionDefNode n => HandleScope(BuildFunctionDefModel, n),
             LambdaDefNode n => HandleScope(BuildLambdaDefModel, n),
-            SystemAccessorDefNode n => HandleScope(BuildSystemAccessorDefModel, n),
             MethodSignatureNode n => HandleScope(BuildMethodSignatureModel, n),
             ParameterNode n => HandleScope(BuildParameterModel, n),
             ForEachParameterNode n => HandleScope(BuildForEachParameterModel, n),
@@ -338,14 +337,6 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var arguments = lambdaDefNode.Arguments.Select(Visit);
 
         return new LambdaDefModel(arguments.ToArray(), expr);
-    }
-
-    private FunctionDefModel BuildSystemAccessorDefModel(SystemAccessorDefNode functionDefNode) {
-        var signature = Visit(functionDefNode.Signature);
-        var statementBlock = Visit(functionDefNode.StatementBlock);
-        var ret = Visit(functionDefNode.Return);
-
-        return new FunctionDefModel(signature, statementBlock, ret, functionDefNode.Standalone);
     }
 
     private MethodSignatureModel BuildMethodSignatureModel(MethodSignatureNode methodSignatureNode) {
