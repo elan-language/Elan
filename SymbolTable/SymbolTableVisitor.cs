@@ -26,7 +26,7 @@ public class SymbolTableVisitor {
         return astNode switch {
             MainNode n => VisitMainNode(n),
             ProcedureDefNode n => VisitProcedureDefNode(n),
-            ForEachStatementNode n => VisitForEachNode(n),
+            EachStatementNode n => VisitForEachNode(n),
             ForEachParameterNode n => VisitForEachParameterNode(n),
             AbstractProcedureDefNode n => VisitAbstractProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
@@ -140,21 +140,21 @@ public class SymbolTableVisitor {
         return procedureDefNode;
     }
 
-    private IAstNode VisitForEachNode(ForEachStatementNode forEachStatementNode) {
-        var parameterIds = new[] { GetId(forEachStatementNode.Parameter)! };
+    private IAstNode VisitForEachNode(EachStatementNode eachStatementNode) {
+        var parameterIds = new[] { GetId(eachStatementNode.Parameter)! };
 
         if (Pass is VisitorPass.First) {
-            var ms = new ScopedStatementSymbol(forEachStatementNode.Name, parameterIds, currentScope);
+            var ms = new ScopedStatementSymbol(eachStatementNode.Name, parameterIds, currentScope);
             currentScope.Define(ms);
             currentScope = ms;
         }
         else {
-            currentScope = currentScope.Resolve(forEachStatementNode.Name) as IScope ?? throw new Exception("unexpected null scope");
+            currentScope = currentScope.Resolve(eachStatementNode.Name) as IScope ?? throw new Exception("unexpected null scope");
         }
 
-        VisitChildren(forEachStatementNode);
+        VisitChildren(eachStatementNode);
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
-        return forEachStatementNode;
+        return eachStatementNode;
     }
 
     private IAstNode VisitAbstractProcedureDefNode(AbstractProcedureDefNode procedureDefNode) {

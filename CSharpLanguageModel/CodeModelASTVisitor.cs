@@ -65,7 +65,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             DataStructureTypeNode n => HandleScope(BuildDataStructureTypeModel, n),
             ValueTypeNode n => HandleScope(BuildValueTypeModel, n),
             ForStatementNode n => HandleScope(BuildForStatementModel, n),
-            ForEachStatementNode n => HandleScope(BuildForInStatementModel, n),
+            EachStatementNode n => HandleScope(BuildEachStatementModel, n),
             TwoDIndexExpressionNode n => HandleScope(Build2DIndexModel, n),
             ProcedureDefNode n => HandleScope(BuildProcedureDefModel, n),
             FunctionDefNode n => HandleScope(BuildFunctionDefModel, n),
@@ -224,11 +224,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new ForStatementModel(id, expressions.ToArray(), step, neg, statementBlock);
     }
 
-    private ForEachStatementModel BuildForInStatementModel(ForEachStatementNode forEachStatementNode) {
-        var parameter = Visit(forEachStatementNode.Parameter);
-        var statementBlock = Visit(forEachStatementNode.StatementBlock);
+    private EachStatementModel BuildEachStatementModel(EachStatementNode eachStatementNode) {
+        var parameter = Visit(eachStatementNode.Parameter);
+        var statementBlock = Visit(eachStatementNode.StatementBlock);
 
-        return new ForEachStatementModel(parameter, statementBlock);
+        return new EachStatementModel(parameter, statementBlock);
     }
 
     private WhileStatementModel BuildWhileStatementModel(WhileStatementNode whileStatementNode) {
