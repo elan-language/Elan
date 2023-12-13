@@ -194,7 +194,7 @@ public static class CompilerRules {
             _ => Array.Empty<TypeNode>()
         };
 
-        var inherits = typeNodes.Select(tn => GetId(tn.TypeName));
+        var inherits = typeNodes.Select(tn => GetId(tn.TypeName)!);
         var classSymbols = inherits.Select(currentScope.Resolve).OfType<ClassSymbol>();
         return classSymbols.Any(s => s.ClassType is not ClassSymbolTypeType.Abstract) ? "Cannot inherit from concrete class" : null;
     }
