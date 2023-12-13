@@ -287,8 +287,8 @@ public class SymbolHelpers {
 
     public static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {
         return symbolType switch {
-            PendingResolveSymbolType => symbolType,
-            GenericSymbolType gst => SymbolHelpers.ResolveGenericType(gst, fs, fcn, currentScope),
+            PendingResolveSymbolType => EnsureResolved(symbolType, currentScope),
+            GenericSymbolType gst =>  EnsureResolved(SymbolHelpers.ResolveGenericType(gst, fs, fcn, currentScope)!, currentScope),
             _ => symbolType
         };
     }

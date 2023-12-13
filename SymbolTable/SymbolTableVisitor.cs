@@ -323,6 +323,18 @@ public class SymbolTableVisitor {
         }
     }
 
+    private void ReplaceLambdaArguments(LambdaDefNode lambda, ISymbolType[] arguments, LambdaSymbol ls) {
+        var zipArgs = lambda.Arguments.Zip(arguments);
+
+        foreach (var valueTuple in zipArgs) {
+            var vs = ls.Resolve(GetId(valueTuple.First)!) as ParameterSymbol;
+
+            if (vs?.ReturnType is IPendingResolveSymbolType) {
+                vs.ReturnType = valueTuple.Second;
+            }
+        }
+    }
+
     private IAstNode VisitCallNode(ICallNode callNode) {
         var sig = ResolveCall(callNode, currentScope);
 
@@ -369,7 +381,7 @@ public class SymbolTableVisitor {
                             var arguments =
                                 sig is GenericFunctionSymbol gfs && callNode is FunctionCallNode fcn
                                     ? lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, gfs, fcn, currentScope)!)
-                                    : lambdaSymbolType.Arguments;
+                                    : lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, currentScope)!);
                             
                             AddLambdaArguments(lambda, arguments.ToArray(), ls);
                         }
@@ -381,6 +393,22 @@ public class SymbolTableVisitor {
                         currentScope = ls;
                     }
                     else {
+                        if (sig is IScope sigScope)
+                        {
+                            var ls = currentScope.Resolve(lambda.Name) as LambdaSymbol;
+                            var matchingSymbolName = names[index];
+                            var matchingSymbol = sigScope.Resolve(matchingSymbolName) as ParameterSymbol;
+                            var lambdaSymbolType = matchingSymbol.ReturnType as LambdaSymbolType;
+                            var rt = lambdaSymbolType.ReturnType;
+
+                            var arguments =
+                                sig is GenericFunctionSymbol gfs && callNode is FunctionCallNode fcn
+                                    ? lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, gfs, fcn, currentScope)!)
+                                    : lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, currentScope)!);
+
+                            ReplaceLambdaArguments(lambda, arguments.ToArray(), ls!);
+                        }
+
                         ResolveReturnType(lambda.Name, currentScope);
                         currentScope = currentScope.Resolve(lambda.Name) as IScope ?? throw new Exception("unexpected null scope");
                     }
