@@ -10,7 +10,7 @@ public class Pathfinder_test
 {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Pathfinder()
     {
         var code = ReadCodeFile("Pathfinder.elan");
