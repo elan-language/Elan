@@ -2,16 +2,16 @@
 
 class GridGraph
     constructor(gridSize Int)
-        set nodes to new Set<of Point>()
+        set nodes to new List<of Point>() # Temp solution - need a proper Set
         set property.gridSize to gridSize
         call setBlock(new Point(0, 0), new Point(gridSize - 1, gridSize - 1), true)
     end constructor
 
     property gridSize Int
-    property nodes Set<of Point> 
+    property nodes List<of Point> 
 
     procedure setBlock(p1 Point, p2 Point, add Bool)
-# TODO: check that p1, p2 are in right order!
+        # TODO: check that p1, p2 are in right order!
         for x from p1.x  to p2.x
             for y from p1.y to p2.y
                 var p set to new Point(x, y)
@@ -29,25 +29,26 @@ class GridGraph
     function pointsAreAdjacentDiagonally(p1 Point,p2 Point) as Bool ->
          abs(p1.x - p2.x) is 1 and abs(p1.y - p2.y) is 1
 
-# Assumes that it will only be called if the points ARE immediate neighbours
-#   function findEdge(p1 Point, p2 Point) as Float -> p1.distanceFrom(p2)
-# Returns a list of nodes that can be reached from the specified node
+    # Assumes that it will only be called if the points ARE immediate neighbours
+    function findEdge(p1 Point, p2 Point) as Float -> p1.distanceFrom(p2)
+
+    # Returns a list of nodes that can be reached from the specified node
     function neighbours(p Point) as List<of Point>
         var list set to { new Point(p.x, p.y-1),new Point(p.x+1, p.y-1),new Point(p.x+1, p.y),new Point(p.x+1, p.y+1),new Point(p.x, p.y+1),new Point(p.x-1, p.y+1), new Point(p.x-1, p.y),new Point(p.x-1, p.y-1) }
         return list.filter(lambda n -> nodeExists(n)).asList()
     end function
 
-# Returns a list of nodes, from source to destination, representing the shortest path, using dijkstra's algorithm
-# You may make use of existing methods such a s Neignbours, or findEdge.
+    # Returns a list of nodes, from source to destination, representing the shortest path, using dijkstra's algorithm
+    # You may make use of existing methods such a s Neignbours, or findEdge.
     procedure shortestPath(source Point, destination Point, alg Algorithm, out route List<of Point>)
-# Initialise the 'table' with three 'columns' - one 'row' per node
+        # Initialise the 'table' with three 'columns' - one 'row' per node
         var visited set to newDictionaryOfAllPointsReturningFalseValues()
         var costFromSource set to  newDictionaryOfAllPointsReturningDoublesSetToInfinity()
         var via set to newDictionaryOfAllPointsReturningNull()
-# Set start
+        # Set start
         var currentNode set to source
         set costFromSource[currentNode] to 0
-# Iterate until shortest path found
+        # Iterate until shortest path found
         while currentNode is not destination
             set visited[currentNode] to true
             call updateCostAndViaOfEachNeighbourIfApplicable(costFromSource, via, currentNode, destination)
@@ -97,7 +98,7 @@ class GridGraph
     function estimatedCostToDestination(current Point, destination Point) as Float ->
         sqrt((current.x - destination.x) ^ 2 + (current.y - destination.y) ^ 2)
 
-    function nextNodeToVisit(currentNode Point ,visited Dictionary<of Point, Bool> ,costFromSource Dictionary<of Point, Float> ,destination Point ,alg Algorithm ) as Point
+    function nextNodeToVisit(currentNode Point, visited Dictionary<of Point, Bool>, costFromSource Dictionary<of Point, Float>, destination Point ,alg Algorithm) as Point
         var lowestCostSoFar set to infinity
         var lowestCostNode set to nodes.first()
         var possibilities set to nodes.filter(lambda n ->  not visited[n] and costFromSource[n] < infinity)
@@ -160,7 +161,7 @@ immutable class Point
   function asString() as String -> "a GridGraph"
 end class
 
-enum Algorithms
+enum Algorithm
         dijkstra, optimistic, aStar
 end enum
 
