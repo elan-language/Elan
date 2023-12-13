@@ -246,7 +246,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private LiteralListModel BuildLiteralListModel(LiteralListNode literalListNode) {
-        var type = CodeHelpers.NodeToCSharpType(literalListNode.ItemNodes.First());
+        var type = CodeHelpers.NodeToCSharpType(literalListNode.ItemNodes.First(), CurrentScope);
         var items = literalListNode.ItemNodes.Select(Visit);
 
         return new LiteralListModel(items.ToArray(), type);
@@ -259,7 +259,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private LiteralDictionaryModel BuildLiteralDictionaryModel(LiteralDictionaryNode literalDictionaryNode) {
-        var type = CodeHelpers.NodeToCSharpType(literalDictionaryNode.ItemNodes.First());
+        var type = CodeHelpers.NodeToCSharpType(literalDictionaryNode.ItemNodes.First(), CurrentScope);
         var items = literalDictionaryNode.ItemNodes.Select(Visit);
 
         return new LiteralDictionaryModel(items.ToArray(), type);

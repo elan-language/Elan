@@ -3,6 +3,8 @@ using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using Compiler;
 using CSharpLanguageModel.Models;
+using SymbolTable;
+using SymbolTable.Symbols;
 using ValueType = AbstractSyntaxTree.ValueType;
 
 namespace CSharpLanguageModel;
@@ -112,7 +114,14 @@ public static class CodeHelpers {
             _ => throw new NotImplementedException(type.ToString())
         };
 
-    public static string NodeToCSharpType(IAstNode node) {
+    private static string FunctionCallNodeToCSharpType(FunctionCallNode fcn, IScope currentScope) {
+        var symbol = SymbolHelpers.ResolveMethodCall(currentScope, fcn).Item1 as FunctionSymbol;
+        var symbolType = symbol?.ReturnType;
+        var typeNode = SymbolHelpers.MapSymbolToTypeNode(symbolType, currentScope);
+        return NodeToCSharpType(typeNode);
+    }
+
+    private static string NodeToCSharpType(IAstNode node) {
         return node switch {
             ValueNode vn => NodeToCSharpType(vn.TypeNode),
             LiteralListNode lln => $"StandardLibrary.ElanList<{NodeToCSharpType(lln.ItemNodes.First())}>",
@@ -126,6 +135,13 @@ public static class CodeHelpers {
             EnumValueNode evn => NodeToCSharpType(evn.TypeNode),
             TupleTypeNode ttn => $"({string.Join(", ", ttn.Types.Select(NodeToCSharpType))})",
             _ => throw new NotImplementedException(node?.GetType().ToString() ?? "null")
+        };
+    }
+
+    public static string NodeToCSharpType(IAstNode node, IScope currentScope) {
+        return node switch {
+            FunctionCallNode fcn => FunctionCallNodeToCSharpType(fcn, currentScope),
+            _ => NodeToCSharpType(node)
         };
     }
 

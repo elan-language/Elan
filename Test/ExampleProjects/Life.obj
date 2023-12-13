@@ -1,1 +1,80 @@
-﻿
+﻿using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static readonly StandardLibrary.ElanList<bool> exampleCells = new StandardLibrary.ElanList<bool>(false, true, false, true, false, false, true, true, true, false, false, true, true, false, true, true, false, false, true, true, true, true, true, true, false, false, true, false, true, true, true, false, true, true, true, true, false, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, true, false, false, true, false, false, true, true, false, false, false, true, true, false, false, true, true, false, true, true, true, true, false, false, false, false, false, false, false, false, true, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, true, true, false, true, false, true, true, false, false, false, false, false, true, false, false, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, false, true, false, true, true, false, false, false, false, true, false, false, true, false, false, false, false, true, false, false, false, true, false, true, false, true, false, false, false, false, false, true, true, false, true, true, false, false, false, false, false, true, false, false, true, true, true, false, false, false, true, false, true, false, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, false, false, true, false, false, false, true, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, true, false, false, true, false, true, false, true, false, false, false, false, false, true, false, true, false, false, false, false, true, true, false, false, true, true, false, true, true, false, true, true, false, true, false, false, true, false, true, false, false, true, false, true, true, false, false, false, false, false, true, true, false, false, false, true, true, true, false, false, false, true, true, false, true, true, true, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, false, true, false, false, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false);
+  public static void drawGrid(CharMap cm, StandardLibrary.ElanList<bool> grid) {
+    for (var row = 0; row <= 19; row = row + 1) {
+      for (var col = 0; col <= 19; col = col + 1) {
+        var cell = grid[col * 20 + row];
+        var colour = cell ? black : white;
+        cm.putBlockWithColour(col * 2, row, colour);
+        cm.putBlockWithColour(col * 2 + 1, row, colour);
+      }
+    }
+  }
+  public static int north(int c) {
+
+    return c > 19 ? c - 20 : c + 380;
+  }
+  public static int south(int c) {
+
+    return c < 380 ? c + 20 : c - 380;
+  }
+  public static int east(int c) {
+
+    return c % 20 < 19 ? c + 1 : c - 19;
+  }
+  public static int west(int c) {
+
+    return c % 20 > 0 ? c - 1 : c + 19;
+  }
+  public static int northEast(int c) {
+
+    return Globals.north(Globals.east(c));
+  }
+  public static int southEast(int c) {
+
+    return Globals.south(Globals.east(c));
+  }
+  public static int northWest(int c) {
+
+    return Globals.north(Globals.west(c));
+  }
+  public static int southWest(int c) {
+
+    return Globals.south(Globals.west(c));
+  }
+  public static StandardLibrary.ElanList<int> neighbourCells(int c) {
+
+    return new StandardLibrary.ElanList<int>(Globals.northWest(c), Globals.north(c), Globals.northEast(c), Globals.west(c), Globals.east(c), Globals.southWest(c), Globals.south(c), Globals.southEast(c));
+  }
+  public static int liveNeighbours(StandardLibrary.ElanList<bool> cells, int c) {
+
+    return StandardLibrary.Functions.count(StandardLibrary.Functions.filter(Globals.neighbourCells(c), (i) => cells[i]));
+  }
+  public static bool willLive(bool currentlyAlive, int liveNeighbours) {
+
+    return currentlyAlive ? liveNeighbours > 1 && liveNeighbours < 4 : liveNeighbours == 3;
+  }
+  public static bool nextCellValue(StandardLibrary.ElanList<bool> cells, int c) {
+
+    return Globals.willLive(cells[c], Globals.liveNeighbours(cells, c));
+  }
+  public static StandardLibrary.ElanList<bool> nextGeneration(StandardLibrary.ElanList<bool> cells) {
+
+    return StandardLibrary.Functions.asList(StandardLibrary.Functions.map(cells, (n) => Globals.nextCellValue(cells, n)));
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var g = exampleCells;
+    while (true) {
+      Globals.drawGrid(g);
+      g = Globals.nextGeneration(g);
+    }
+  }
+}

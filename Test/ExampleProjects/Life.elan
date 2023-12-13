@@ -49,7 +49,7 @@ function neighbourCells(c Int) as List<of Int> ->
   {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
 
 function liveNeighbours(cells List<of Bool>, c Int) as Int -> 
-  neighbourCells(c).count(lambda i -> cells[i])
+  neighbourCells(c).filter(lambda i -> cells[i]).count()
 
 function willLive(currentlyAlive Bool, liveNeighbours Int) as Bool -> 
   if currentlyAlive 
@@ -60,7 +60,7 @@ function nextCellValue(cells List<of Bool>, c Int) as Bool ->
   willLive(cells[c], liveNeighbours(cells, c))
 
 function nextGeneration(cells List<of Bool>) as List<of Bool> -> 
-  cells.map(lambda (c, n) -> nextCellValue(cells, n)).asList()
+  cells.map(lambda n -> nextCellValue(cells, n)).asList()
 
 constant exampleCells set to {false, true, false, true, false, false, true, true, true, false, false, true, true, false, true, true, false, false, true, true, true, true, true, true, false, false, true, false, true, true, true, false, true, true, true, true, false, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, true, false, false, true, false, false, true, true, false, false, false, true, true, false, false, true, true, false, true, true, true, true, false, false, false, false, false, false, false, false, true, true, false, true, false, false, true, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, true, false, false, true, true, false, true, false, true, true, false, false, false, false, false, true, false, false, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, false, true, false, true, true, false, false, false, false, true, false, false, true, false, false, false, false, true, false, false, false, true, false, true, false, true, false, false, false, false, false, true, true, false, true, true, false, false, false, false, false, true, false, false, true, true, true, false, false, false, true, false, true, false, false, true, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, false, false, true, false, false, false, true, false, true, false, true, false, false, true, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, true, false, false, true, false, true, false, true, false, false, false, false, false, true, false, true, false, false, false, false, true, true, false, false, true, true, false, true, true, false, true, true, false, true, false, false, true, false, true, false, false, true, false, true, true, false, false, false, false, false, true, true, false, false, false, true, true, true, false, false, false, true, true, false, true, true, true, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, false, true, false, false, true, true, false, false, true, true, true, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false}
 
