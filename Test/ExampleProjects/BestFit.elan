@@ -2,16 +2,16 @@
 end main
 
 function calcSumX(points List<of (Float, Float)>) as Float -> 
-    points.reduce(0.0, lambda s,p -> s + p[0])
+    points.reduce(0.0, lambda s,p -> s + p.first())
 
 function calcSumY(points List<of (Float, Float)>) as Float ->
-    points.reduce(0.0, lambda s,p -> s + p[1])
+    points.reduce(0.0, lambda s,p -> s + p.second())
 
 function calcSumXsq(points List<of (Float, Float)>) as Float -> 
-    points.reduce(0.0, lambda s,p -> s + p[0] * p[0])
+    points.reduce(0.0, lambda s,p -> s + p.first() * p.first())
 
 function calcSumXY(points List<of (Float, Float)>) as Float -> 
-    points.reduce(0.0, lambda s,p ->s + p[0] * p[1])
+    points.reduce(0.0, lambda s,p ->s + p.first() * p.second())
 
 function calcA(sumX Float, sumXsq Float, sumY Float, sumXY Float, n Int) as Float ->
     (sumY * sumXsq - sumX * sumXY) / (n * sumXsq - sumX * sumX)

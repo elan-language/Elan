@@ -10,7 +10,7 @@ public class BestFit_test
 {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_1()
     {
         var code = ReadCodeFile("BestFit.elan"); ;
