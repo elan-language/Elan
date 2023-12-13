@@ -40,6 +40,7 @@ public class SymbolHelpers {
             TupleTypeNode ttn => new TupleSymbolType(ttn.Types.Select(MapNodeToSymbolType).ToArray()),
             TupleDefNode ttn => new TupleSymbolType(ttn.Expressions.Select(MapNodeToSymbolType).ToArray()),
             LambdaDefNode ldn => new LambdaSymbolType(ldn.Arguments.Select(MapNodeToSymbolType).ToArray(), MapNodeToSymbolType(ldn.Expression)),
+            IfExpressionNode n => MapNodeToSymbolType(n.Expressions.First()),
             _ => throw new NotImplementedException(node.GetType().ToString())
         };
     }

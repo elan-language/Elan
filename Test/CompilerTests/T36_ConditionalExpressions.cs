@@ -60,7 +60,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Distinction\r\nMerit\r\nPass\r\nFail\r\n");
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_InVariableDeclaration()
     {
         var code = @"
@@ -78,7 +78,22 @@ end main
 
 ";
 
-        var objectCode = @"";
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var score = 70;
+    var grade = score > 80 ? @$""Distinction"" : score > 60 ? @$""Merit"" : score > 40 ? @$""Pass"" : @$""Fail"";
+    System.Console.WriteLine(StandardLibrary.Functions.asString(grade));
+  }
+}";
 
         var parseTree = @"*";
 
