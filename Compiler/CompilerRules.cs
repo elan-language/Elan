@@ -95,7 +95,7 @@ public static class CompilerRules {
                         return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
                     }
 
-                    if (otherNodes.OfType<ForEachStatementNode>().Any(fin => fin.Parameter is ForEachParameterNode idn && Match(idn.Expression, pp))) {
+                    if (otherNodes.OfType<ForEachStatementNode>().Any(fin => fin.Parameter is ForEachParameterNode idn && Match(idn.Id, pp))) {
                         return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
                     }
                 }
