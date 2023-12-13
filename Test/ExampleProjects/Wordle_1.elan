@@ -83,5 +83,5 @@ end function
 
 function bestAttempt(possAnswers List<of String>, possAttempts List<of String>) as String 
    var wordCounts set to allRemainingWordCounts(possAnswers, possAttempts)
-   return wordCounts.reduce(("",2309),lambda bestSoFar, newWord -> betterOf(bestSoFar, newWord, possAnswers))[0]
+   return wordCounts.reduce(("",2309),lambda bestSoFar, newWord -> betterOf(bestSoFar, newWord, possAnswers)).first()
 end function

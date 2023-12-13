@@ -8,7 +8,7 @@ using static Helpers;
 public class T97_Wordle {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Wordle_1() {
         var code = ReadCodeFile("Wordle_1.elan");
         var objectCode = ReadCodeFile("Wordle_1.obj");

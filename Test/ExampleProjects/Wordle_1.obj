@@ -49,7 +49,7 @@ public static partial class Globals {
   }
   public static string markAttempt(string attempt, string target) {
     var (attemptAfterGreens, targetAfterGreens) = Globals.evaluateGreens(attempt, target);
-    return Globals.evaluateYellows(attemptAfterGreens, targetAfterGreens).Item1;
+    return StandardLibrary.Functions.first(Globals.evaluateYellows(attemptAfterGreens, targetAfterGreens));
   }
   public static System.Collections.Generic.IEnumerable<string> possibleAnswersAfterAttempt(System.Collections.Generic.IEnumerable<string> prior, string attempt, string mark) {
 
@@ -72,7 +72,7 @@ public static partial class Globals {
   }
   public static string bestAttempt(StandardLibrary.ElanList<string> possAnswers, StandardLibrary.ElanList<string> possAttempts) {
     var wordCounts = Globals.allRemainingWordCounts(possAnswers, possAttempts);
-    return StandardLibrary.Functions.reduce(wordCounts, (@$"", 2309), (bestSoFar, newWord) => Globals.betterOf(bestSoFar, newWord, possAnswers))[0];
+    return StandardLibrary.Functions.first(StandardLibrary.Functions.reduce(wordCounts, (@$"", 2309), (bestSoFar, newWord) => Globals.betterOf(bestSoFar, newWord, possAnswers)));
   }
 }
 
