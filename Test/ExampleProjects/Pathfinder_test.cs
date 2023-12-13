@@ -14,7 +14,7 @@ public class Pathfinder_test
     public void Pass_Pathfinder()
     {
         var code = ReadCodeFile("Pathfinder.elan");
-        var objectCode = ReadCodeFile("Life.obj");
+        var objectCode = ReadCodeFile("Pathfinder.obj");
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);

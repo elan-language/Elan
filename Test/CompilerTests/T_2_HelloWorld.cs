@@ -15,6 +15,41 @@ public class T_2_HelloWorld {
     #region Passes
 
     [TestMethod]
+    public void Pass_CommentsOnly()
+    {
+        var code = @"#
+# comment 1
+main # comment 2
+  # comment 3 (indented)
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+
+  }
+}";
+
+        var parseTree = @"*";
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "");
+    }
+
+    [TestMethod]
     public void Pass_PrintWithNoExpression() {
         var code = @"#
 main

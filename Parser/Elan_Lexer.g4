@@ -1,7 +1,7 @@
 lexer grammar Elan_Lexer;
 
 NL: [\r\n\f]+ ;
-SINGLE_LINE_COMMENT: NL? COMMENT_MARKER InputCharacter*    -> skip; 
+SINGLE_LINE_COMMENT: NL? Whitespace* COMMENT_MARKER InputCharacter*    -> skip; 
 
 COMMENT_MARKER: '#';
 
