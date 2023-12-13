@@ -314,8 +314,8 @@ public class SymbolTableVisitor {
         return enumDefNode;
     }
 
-    private void AddLambdaArguments(LambdaDefNode lambda, LambdaSymbolType lst, LambdaSymbol ls) {
-        var zipArgs = lambda.Arguments.Zip(lst.Arguments);
+    private void AddLambdaArguments(LambdaDefNode lambda, ISymbolType[] arguments, LambdaSymbol ls) {
+        var zipArgs = lambda.Arguments.Zip(arguments);
 
         foreach (var valueTuple in zipArgs) {
             var symbol = new ParameterSymbol(GetId(valueTuple.First)!, valueTuple.Second, false, ls);
@@ -366,7 +366,12 @@ public class SymbolTableVisitor {
                             var rt = lambdaSymbolType.ReturnType;
                             ls = new LambdaSymbol(lambda.Name, rt, parameterIds, currentScope);
 
-                            AddLambdaArguments(lambda, lambdaSymbolType, ls);
+                            var arguments =
+                                sig is GenericFunctionSymbol gfs && callNode is FunctionCallNode fcn
+                                    ? lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, gfs, fcn, currentScope)!)
+                                    : lambdaSymbolType.Arguments;
+                            
+                            AddLambdaArguments(lambda, arguments.ToArray(), ls);
                         }
                         else {
                             ls = new LambdaSymbol(lambda.Name, new PendingResolveSymbolType(lambda.Name), parameterIds, currentScope);

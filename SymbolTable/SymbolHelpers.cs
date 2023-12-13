@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using SymbolTable.Symbols;
@@ -192,6 +193,7 @@ public class SymbolHelpers {
 
         return type switch {
             ListSymbolType lst => GetTypeFromDepth(lst.OfType, depth - 1),
+            IterSymbolType lst => GetTypeFromDepth(lst.OfType, depth - 1),
             _ => throw new NotImplementedException()
         };
     }
@@ -215,11 +217,14 @@ public class SymbolHelpers {
 
     public static ISymbolType? ResolveGenericType(GenericSymbolType gst, GenericFunctionSymbol fst, FunctionCallNode fcn, IScope currentScope) {
         var name = gst.TypeName;
-        var indexAndDepth = fst.GenericParameters[name];
-        var matchingParameter = fcn.Parameters[indexAndDepth.Item1];
-        var symbolType = GetExpressionType(matchingParameter, currentScope);
+        var indexAndDepthAndArg = fst.GenericParameters[name];
 
-        return symbolType is not null ? GetTypeFromDepth(symbolType, indexAndDepth.Item2) : null;
+        var parameters = (fst.ParameterNames.Length > fcn.Parameters.Length) ? fcn.Parameters.Prepend(fcn.CalledOn)  : fcn.Parameters;
+
+        var matchingParameter = parameters.ToArray()[indexAndDepthAndArg.Item1];
+        var symbolType = GetExpressionType(matchingParameter!, currentScope);
+
+        return symbolType is not null ? GetTypeFromDepth(symbolType, indexAndDepthAndArg.Item2) : null;
     }
 
     public static IAstNode TypeIdentifier(IdentifierNode node, IScope currentScope) {
@@ -280,18 +285,12 @@ public class SymbolHelpers {
         return (scope.Resolve(mcn.MethodName), isGlobal);
     }
 
-  
-  
-    
-
-    private static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {
+    public static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {
         return symbolType switch {
             PendingResolveSymbolType => symbolType,
             GenericSymbolType gst => SymbolHelpers.ResolveGenericType(gst, fs, fcn, currentScope),
             _ => symbolType
         };
     }
-
-   
 
 }

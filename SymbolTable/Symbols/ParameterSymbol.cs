@@ -17,4 +17,6 @@ public class ParameterSymbol : ISymbol, IHasReturnType {
     public string Name { get; }
 
     public IScope? Scope { get; set; } = null;
+
+    public override string ToString() => $"Parameter {Name} {ReturnType} {EnclosingScope}";
 }
