@@ -139,16 +139,13 @@ public static class CompilerTransforms {
         };
     }
 
-    private static ISymbolType ResolveGenericType(GenericSymbolType gst, GenericFunctionSymbol fst, FunctionCallNode fcn, IScope currentScope) {
+    private static ISymbolType? ResolveGenericType(GenericSymbolType gst, GenericFunctionSymbol fst, FunctionCallNode fcn, IScope currentScope) {
         var name = gst.TypeName;
         var indexAndDepth = fst.GenericParameters[name];
         var matchingParameter = fcn.Parameters[indexAndDepth.Item1];
+        var symbolType = GetExpressionType(matchingParameter, currentScope);
 
-        var st = GetExpressionType(matchingParameter, currentScope);
-
-        var actualType = GetTypeFromDepth(st, indexAndDepth.Item2);
-
-        return actualType;
+        return symbolType is not null ? GetTypeFromDepth(symbolType, indexAndDepth.Item2) : null;
     }
 
     private static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {

@@ -23,7 +23,7 @@ public static class CompilerRules {
 
     public static string? CannotAccessSystemInAFunction(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is SystemAccessorCallNode scn && currentScope.Resolve(scn.Name) is SystemAccessorSymbol scs) {
+        if (leafNode is SystemAccessorCallNode scn && currentScope.Resolve(scn.MethodName) is SystemAccessorSymbol) {
             if (nodes.AnyOtherNodeIs(n => n is FunctionDefNode)) {
                 return $"Cannot access system within a function : {leafNode}";
             }
@@ -34,7 +34,7 @@ public static class CompilerRules {
 
     public static string? CannotUseInputInAFunction(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
-        if (leafNode is InputNode inp) {
+        if (leafNode is InputNode) {
             if (nodes.AnyOtherNodeIs(n => n is FunctionDefNode)) {
                 return $"Cannot use 'input' within a function : {leafNode}";
             }
@@ -76,11 +76,11 @@ public static class CompilerRules {
             case AssignmentNode an: {
                 var otherNodes = nodes.SkipLast(1).ToArray();
 
-                if (otherNodes.OfType<ForStatementNode>().Any(forNode => Match(forNode.Id, an.Id))) {
+                if (otherNodes.OfType<ForStatementNode>().Any(n => Match(n.Id, an.Id))) {
                     return $"Cannot modify control variable : {leafNode}";
                 }
 
-                if (otherNodes.OfType<EachStatementNode>().Any(fin => fin.Parameter is EachParameterNode idn && Match(idn.Expression, an.Id))) {
+                if (otherNodes.OfType<EachStatementNode>().Any(n => n.Parameter is EachParameterNode epn && Match(epn.Expression, an.Id))) {
                     return $"Cannot modify control variable : {leafNode}";
                 }
 
@@ -91,11 +91,11 @@ public static class CompilerRules {
                 var parameters = pcn.Parameters;
 
                 foreach (var pp in parameters) {
-                    if (otherNodes.OfType<ForStatementNode>().Any(forNode => Match(forNode.Id, pp))) {
+                    if (otherNodes.OfType<ForStatementNode>().Any(n => Match(n.Id, pp))) {
                         return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
                     }
 
-                    if (otherNodes.OfType<EachStatementNode>().Any(fin => fin.Parameter is EachParameterNode idn && Match(idn.Id, pp))) {
+                    if (otherNodes.OfType<EachStatementNode>().Any(n => n.Parameter is EachParameterNode epn && Match(epn.Id, pp))) {
                         return $"Cannot pass control variable into a procedure (consider declaring a new variable copying the value) : {leafNode}";
                     }
                 }
@@ -163,7 +163,7 @@ public static class CompilerRules {
             if (otherNodes.Any(n => n is ConstructorNode)) {
                 var paramNodes = otherNodes.OfType<ConstructorNode>().Single().Parameters.OfType<ParameterNode>();
 
-                if (paramNodes.Any(pn => Match(pn.Id, an.Id))) {
+                if (paramNodes.Any(n => Match(n.Id, an.Id))) {
                     return $"Cannot modify param in constructor : {leafNode}";
                 }
             }
@@ -194,7 +194,7 @@ public static class CompilerRules {
             _ => Array.Empty<TypeNode>()
         };
 
-        var inherits = typeNodes.Select(tn => ((IdentifierNode)tn.TypeName).Id);
+        var inherits = typeNodes.Select(tn => GetId(tn.TypeName));
         var classSymbols = inherits.Select(currentScope.Resolve).OfType<ClassSymbol>();
         return classSymbols.Any(s => s.ClassType is not ClassSymbolTypeType.Abstract) ? "Cannot inherit from concrete class" : null;
     }
