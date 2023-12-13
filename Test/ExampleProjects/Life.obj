@@ -9,7 +9,7 @@ public static partial class Globals {
     for (var row = 0; row <= 19; row = row + 1) {
       for (var col = 0; col <= 19; col = col + 1) {
         var cell = grid[col * 20 + row];
-        var colour = cell ? black : white;
+        var colour = cell ? Colour.white : Colour.black;
         cm.putBlockWithColour(col * 2, row, colour);
         cm.putBlockWithColour(col * 2 + 1, row, colour);
       }
@@ -65,15 +65,16 @@ public static partial class Globals {
   }
   public static StandardLibrary.ElanList<bool> nextGeneration(StandardLibrary.ElanList<bool> cells) {
 
-    return StandardLibrary.Functions.asList(StandardLibrary.Functions.map(cells, (n) => Globals.nextCellValue(cells, n)));
+    return StandardLibrary.Functions.asList(StandardLibrary.Functions.map(StandardLibrary.Functions.integers(0, StandardLibrary.Functions.length(cells) - 1), (n) => Globals.nextCellValue(cells, n)));
   }
 }
 
 public static class Program {
   private static void Main(string[] args) {
+    var cm = new CharMap();
     var g = exampleCells;
     while (true) {
-      Globals.drawGrid(g);
+      Globals.drawGrid(cm, g);
       g = Globals.nextGeneration(g);
     }
   }

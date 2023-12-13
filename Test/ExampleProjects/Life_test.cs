@@ -10,7 +10,7 @@ public class Life_test
 {
     #region Passes
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Life()
     {
         var code = ReadCodeFile("Life.elan");
