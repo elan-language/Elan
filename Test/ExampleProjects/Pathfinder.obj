@@ -1,1 +1,196 @@
-﻿
+﻿using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public const double infinity = 1000000.0;
+  public enum Algorithm {
+    dijkstra,
+    optimistic,
+    aStar,
+  }
+  public record class GridGraph {
+    public static GridGraph DefaultInstance { get; } = new GridGraph._DefaultGridGraph();
+    private GridGraph() {}
+    public GridGraph(int gridSize) {
+      nodes = new StandardLibrary.ElanList<Point>();
+      this.gridSize = gridSize;
+      setBlock(new Point(0, 0), new Point(gridSize - 1, gridSize - 1), true);
+    }
+    public virtual int gridSize { get; set; } = default;
+    public virtual StandardLibrary.ElanList<Point> nodes { get; set; } = StandardLibrary.ElanList<Point>.DefaultInstance;
+    public virtual bool nodeExists(Point p) {
+
+      return StandardLibrary.Functions.contains(nodes, p);
+    }
+    public virtual bool pointsAreAdjacentDiagonally(Point p1, Point p2) {
+
+      return StandardLibrary.Functions.absolute(p1.x - p2.x) == 1 && StandardLibrary.Functions.absolute(p1.y - p2.y) == 1;
+    }
+    public virtual double findEdge(Point p1, Point p2) {
+
+      return p1.distanceFrom(p2);
+    }
+    public virtual StandardLibrary.ElanList<Point> neighbours(Point p) {
+      var list = new StandardLibrary.ElanList<Point>(new Point(p.x, p.y - 1), new Point(p.x + 1, p.y - 1), new Point(p.x + 1, p.y), new Point(p.x + 1, p.y + 1), new Point(p.x, p.y + 1), new Point(p.x - 1, p.y + 1), new Point(p.x - 1, p.y), new Point(p.x - 1, p.y - 1));
+      return StandardLibrary.Functions.asList(StandardLibrary.Functions.filter(list, (n) => nodeExists(n)));
+    }
+    public virtual StandardLibrary.ElanDictionary<Point, Point> newDictionaryOfAllPointsReturningNull() {
+      var dict = new StandardLibrary.ElanDictionary<Point, Point>();
+      foreach (var p in nodes) {
+        dict = StandardLibrary.Functions.setItem(dict, p, Point.DefaultInstance);
+      }
+      return dict;
+    }
+    public virtual StandardLibrary.ElanDictionary<Point, double> newDictionaryOfAllPointsReturningDoublesSetToInfinity() {
+      var dict = new StandardLibrary.ElanDictionary<Point, double>();
+      foreach (var p in nodes) {
+        dict = StandardLibrary.Functions.setItem(dict, p, infinity);
+      }
+      return dict;
+    }
+    public virtual StandardLibrary.ElanDictionary<Point, bool> newDictionaryOfAllPointsReturningFalseValues() {
+      var dict = new StandardLibrary.ElanDictionary<Point, bool>();
+      foreach (var p in nodes) {
+        dict = StandardLibrary.Functions.setItem(dict, p, false);
+      }
+      return dict;
+    }
+    public virtual double estimatedCostToDestination(Point current, Point destination) {
+
+      return StandardLibrary.Functions.sqrt(System.Math.Pow((current.x - destination.x), 2) + System.Math.Pow((current.y - destination.y), 2));
+    }
+    public virtual Point nextNodeToVisit(Point currentNode, StandardLibrary.ElanDictionary<Point, bool> visited, StandardLibrary.ElanDictionary<Point, double> costFromSource, Point destination, Algorithm alg) {
+      var lowestCostSoFar = infinity;
+      var lowestCostNode = StandardLibrary.Functions.element(nodes, 0);
+      var possibilities = StandardLibrary.Functions.filter(nodes, (n) => !visited[n] && costFromSource[n] < infinity);
+      foreach (var p in possibilities) {
+        var cost = 0.0;
+        switch (alg) {
+          case Algorithm.dijkstra:
+            cost = costFromSource[p];
+            break;
+          case Algorithm.optimistic:
+            cost = estimatedCostToDestination(p, destination);
+            break;
+          case Algorithm.aStar:
+            cost = costFromSource[p] + estimatedCostToDestination(p, destination);
+            break;
+          default:
+            
+            break;
+        }
+        if (cost < lowestCostSoFar) {
+          lowestCostSoFar = cost;
+          lowestCostNode = p;
+        }
+      }
+      return lowestCostNode;
+    }
+    public virtual StandardLibrary.ElanList<Point> retraceRoute(Point destination, Point source, StandardLibrary.ElanDictionary<Point, Point> via) {
+      var result = new StandardLibrary.ElanList<Point>(destination);
+      var currentNode = destination;
+      while (currentNode != source) {
+        var previous = via[currentNode];
+        result = StandardLibrary.Functions.insert(result, 0, previous);
+        currentNode = previous;
+      }
+      return result;
+    }
+    public virtual double sumOfEdges(StandardLibrary.ElanList<Point> route) {
+      var result = 0.0;
+      var stage = 0;
+      while (stage < StandardLibrary.Functions.length(route) - 1) {
+        result = result + findEdge(route[stage], route[stage + 1]);
+        stage = stage + 1;
+      }
+      return result;
+    }
+    public virtual string asString() {
+
+      return @$"a GridGraph";
+    }
+    public virtual void setBlock(Point p1, Point p2, bool add) {
+      for (var x = p1.x; x <= p2.x; x = x + 1) {
+        for (var y = p1.y; y <= p2.y; y = y + 1) {
+          var p = new Point(x, y);
+          if (add) {
+            nodes = nodes + p;
+          }
+          else {
+            throw new StandardLibrary.ElanException(@$"not implemented");
+          }
+        }
+      }
+    }
+    public virtual void shortestPath(Point source, Point destination, Algorithm alg, ref StandardLibrary.ElanList<Point> route) {
+      var visited = newDictionaryOfAllPointsReturningFalseValues();
+      var costFromSource = newDictionaryOfAllPointsReturningDoublesSetToInfinity();
+      var via = newDictionaryOfAllPointsReturningNull();
+      var currentNode = source;
+      costFromSource = StandardLibrary.Functions.setItem(costFromSource, currentNode, 0);
+      while (currentNode != destination) {
+        visited = StandardLibrary.Functions.setItem(visited, currentNode, true);
+        updateCostAndViaOfEachNeighbourIfApplicable(ref costFromSource, ref via, currentNode, destination);
+        currentNode = nextNodeToVisit(currentNode, visited, costFromSource, destination, alg);
+        if (costFromSource[currentNode] == infinity) {
+          throw new StandardLibrary.ElanException(@$"Cannot reach destination -  graph is 'disconnected'");
+        }
+        else {
+
+        }
+      }
+      route = retraceRoute(destination, source, via);
+    }
+    public virtual void updateCostAndViaOfEachNeighbourIfApplicable(ref StandardLibrary.ElanDictionary<Point, double> costFromSource, ref StandardLibrary.ElanDictionary<Point, Point> via, Point currentNode, Point destination) {
+      foreach (var neighbour in neighbours(currentNode)) {
+        var newCost = costFromSource[currentNode] + findEdge(currentNode, neighbour);
+        if (newCost < costFromSource[neighbour]) {
+          costFromSource = StandardLibrary.Functions.setItem(costFromSource, neighbour, newCost);
+          via = StandardLibrary.Functions.setItem(via, neighbour, currentNode);
+        }
+      }
+    }
+    private record class _DefaultGridGraph : GridGraph {
+      public _DefaultGridGraph() { }
+      public override int gridSize => default;
+      public override StandardLibrary.ElanList<Point> nodes => StandardLibrary.ElanList<Point>.DefaultInstance;
+      public override void setBlock(Point p1, Point p2, bool add) { }
+      public override void shortestPath(Point source, Point destination, Algorithm alg, ref StandardLibrary.ElanList<Point> route) { }
+      public override void updateCostAndViaOfEachNeighbourIfApplicable(ref StandardLibrary.ElanDictionary<Point, double> costFromSource, ref StandardLibrary.ElanDictionary<Point, Point> via, Point currentNode, Point destination) { }
+      public override string asString() { return "default GridGraph";  }
+    }
+  }
+  public record class Point {
+    public static Point DefaultInstance { get; } = new Point._DefaultPoint();
+    private Point() {}
+    public Point(int x, int y) {
+      this.x = x;
+      this.y = y;
+    }
+    public virtual int x { get; init; } = default;
+    public virtual int y { get; init; } = default;
+    public virtual double distanceFrom(Point p2) {
+
+      return StandardLibrary.Functions.sqrt(System.Math.Pow((p2.x - x), 2) + System.Math.Pow((p2.y - y), 2));
+    }
+    public virtual string asString() {
+
+      return @$"a GridGraph";
+    }
+    private record class _DefaultPoint : Point {
+      public _DefaultPoint() { }
+      public override int x => default;
+      public override int y => default;
+
+      public override string asString() { return "default Point";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+
+  }
+}

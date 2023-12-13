@@ -1,4 +1,7 @@
-﻿#TODO look for all the add to list or dictionary - as both are now immutable
+﻿# Elan v0.0
+
+main
+end main
 
 class GridGraph
     constructor(gridSize Int)
@@ -16,9 +19,9 @@ class GridGraph
             for y from p1.y to p2.y
                 var p set to new Point(x, y)
                 if add then
-                  set nodes to nodes.add(p)
+                  set nodes to nodes + p
                 else
-                  set nodes to  nodes.remove(p)
+                  throw "not implemented"
                 end if
             end for
         end for
@@ -27,7 +30,7 @@ class GridGraph
     function nodeExists(p Point) as Bool ->  nodes.contains(p)
 
     function pointsAreAdjacentDiagonally(p1 Point,p2 Point) as Bool ->
-         abs(p1.x - p2.x) is 1 and abs(p1.y - p2.y) is 1
+         absolute(p1.x - p2.x) is 1 and absolute(p1.y - p2.y) is 1
 
     # Assumes that it will only be called if the points ARE immediate neighbours
     function findEdge(p1 Point, p2 Point) as Float -> p1.distanceFrom(p2)
@@ -47,10 +50,10 @@ class GridGraph
         var via set to newDictionaryOfAllPointsReturningNull()
         # Set start
         var currentNode set to source
-        set costFromSource[currentNode] to 0
+        set costFromSource to costFromSource.setItem(currentNode, 0)
         # Iterate until shortest path found
         while currentNode is not destination
-            set visited[currentNode] to true
+            set visited to visited.setItem(currentNode,true)
             call updateCostAndViaOfEachNeighbourIfApplicable(costFromSource, via, currentNode, destination)
             set currentNode to nextNodeToVisit(currentNode, visited, costFromSource, destination, alg)
             if costFromSource[currentNode] is infinity then
@@ -64,7 +67,7 @@ class GridGraph
     function newDictionaryOfAllPointsReturningNull() as Dictionary<of Point,Point>
         var dict set to new Dictionary<of Point, Point>()
         each p in nodes
-           set dict to dict.add(p, null)
+           set dict to dict.setItem(p, default Point)
         end each
         return dict
     end function
@@ -72,7 +75,7 @@ class GridGraph
     function newDictionaryOfAllPointsReturningDoublesSetToInfinity() as Dictionary<of Point, Float>
         var dict set to new Dictionary<of Point, Float>()
         each p in nodes
-            set dict to dict.add(p, infinity)
+            set dict to dict.setItem(p, infinity)
         end each
         return dict
     end function
@@ -80,17 +83,17 @@ class GridGraph
     function newDictionaryOfAllPointsReturningFalseValues() as Dictionary<of Point, Bool>
         var dict set to new Dictionary<of Point, Bool>()
         each p in nodes
-            set dict to dict.add(p, false)
+            set dict to dict.setItem(p, false)
         end each
         return dict
     end function
 
-    procedure updateCostAndViaOfEachNeighbourIfApplicable(costFromSource Dictionary<of Point, Float>, out via Dictionary<of Point, Point>,  currentNode Point,  destination Point)
+    procedure updateCostAndViaOfEachNeighbourIfApplicable(out costFromSource Dictionary<of Point, Float>, out via Dictionary<of Point, Point>,  currentNode Point,  destination Point)
         each neighbour in neighbours(currentNode)
             var newCost set to costFromSource[currentNode] + findEdge(currentNode, neighbour)
             if newCost < costFromSource[neighbour] then
-                set costFromSource[neighbour] to newCost # Wrong -  don't update cost to estimate -  update to actual. Use estimate to choose the lowest cost unvisited node only. 
-                set via[neighbour]  to currentNode
+                set costFromSource to costFromSource.setItem(neighbour, newCost) # Wrong -  don't update cost to estimate -  update to actual. Use estimate to choose the lowest cost unvisited node only. 
+                set via to via.setItem(neighbour,currentNode)
             end if
         end each
     end procedure
@@ -100,11 +103,8 @@ class GridGraph
 
     function nextNodeToVisit(currentNode Point, visited Dictionary<of Point, Bool>, costFromSource Dictionary<of Point, Float>, destination Point ,alg Algorithm) as Point
         var lowestCostSoFar set to infinity
-        var lowestCostNode set to nodes.first()
+        var lowestCostNode set to nodes.element(0)
         var possibilities set to nodes.filter(lambda n ->  not visited[n] and costFromSource[n] < infinity)
-        if possibilities.count() is 0 then
-            throw "The graph is disconnected -  there are no routes from start to destination."
-        end if
         each p in possibilities
             var cost set to 0.0
             switch alg
@@ -148,7 +148,6 @@ class GridGraph
     function asString() as String -> "a GridGraph"
 end class
 
-
 immutable class Point 
   constructor(x Int, y Int)
     set property.x to x
@@ -158,11 +157,13 @@ immutable class Point
   property x Int
   property y Int
 
+  function distanceFrom(p2 Point) as Float -> sqrt((p2.x - x)^2 + (p2.y - y)^2);
+
   function asString() as String -> "a GridGraph"
 end class
 
 enum Algorithm
-        dijkstra, optimistic, aStar
+    dijkstra, optimistic, aStar
 end enum
 
 constant infinity set to 1000000.0 # big enough for this purpose!

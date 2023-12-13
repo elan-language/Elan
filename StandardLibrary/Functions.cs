@@ -37,8 +37,6 @@ public static class Functions {
 
     #endregion
 
-
-
     #region arrays
 
     public static int length<T>(ElanArray<T> l) => l.Count;
@@ -54,6 +52,8 @@ public static class Functions {
     public static bool isEmpty<T>(ElanList<T> l) => !l.Any();
 
     public static ElanArray<T> asArray<T>(ElanList<T> l) => new(l);
+
+    public static ElanList<T> insert<T>(ElanList<T> l, int index, T item) => l.Insert(index, item);
 
 
     #endregion
@@ -101,6 +101,8 @@ public static class Functions {
 
     #region Math
 
+    public static double absolute(double d) => Math.Abs(d);
+    public static int absolute(int d) => Math.Abs(d);
     public static double aCos(double d) => Math.Cos(d);
     public static double aCosh(double d) => Math.Acosh(d);
     public static double aSin(double d) => Math.Asin(d);
