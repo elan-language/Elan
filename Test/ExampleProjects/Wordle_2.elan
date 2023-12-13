@@ -57,7 +57,7 @@ function evaluateYellows(attempt String, target String) as (String, String) ->
 
 function markAttempt(attempt String, target String) as String
     var (attemptAfterGreens, targetAfterGreens) set to evaluateGreens(attempt, target)
-    return attemptAfterGreens.evaluateYellows(targetAfterGreens)[0]
+    return attemptAfterGreens.evaluateYellows(targetAfterGreens).first()
 end function
 
 function possibleAnswersAfterAttempt(prior Iter<of String>, attempt String, mark String) as Iter<of String> ->

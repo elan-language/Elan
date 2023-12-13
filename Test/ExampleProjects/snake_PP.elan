@@ -61,12 +61,12 @@ procedure playGame()
 end procedure
 
 function snakeTail(body List<of (Int, Int)>) as (Int, Int)
-  return body[0];
+  return body[0]
 end function
 
 procedure draw(cm CharMap, sq (Int, Int), colour Colour)
-    var col set to sq[0] * 2
-    var row set to sq[1]
+    var col set to sq.first() * 2
+    var row set to sq.second()
     call cm.putBlockWithColour(col, row, colour)
     call cm.putBlockWithColour(col + 1, row, colour) # because block is 2 chars wide
 end procedure
@@ -93,8 +93,8 @@ function bodyCovers(body List<of (Int, Int)>, sq (Int, Int)) as Bool
 end function
 
 function hasHitEdge(head (Int, Int), boardWidth Int, boardHeight Int) as Bool
-    var x set to head[0]
-    var y set to head[1]
+    var x set to head.first()
+    var y set to head.second()
     return x < 0 or y < 0 or x is boardWidth or y is boardHeight
 end function
 
@@ -108,8 +108,8 @@ procedure setNewApplePosition(body List<of (Int, Int)>, out apple (Int, Int) ,bo
 end procedure
 
 function getAdjacentSquare(sq (Int, Int), d Direction) as (Int, Int)
-    var newX set to sq[0]
-    var newY set to sq[1]
+    var newX set to sq.first()
+    var newY set to sq.second()
     switch d
         case Direction.left
             set newX to newX - 1     

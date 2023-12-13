@@ -14,8 +14,8 @@ public class T62_Tuples {
 main
     var x set to (3,""Apple"")
     print x
-    print x[0]
-    print x[1]
+    print x.first()
+    print x.second()
 end main
 ";
 
@@ -32,8 +32,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
-    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item1));
-    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.first(x)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.second(x)));
   }
 }";
 
@@ -54,8 +54,8 @@ public static class Program {
 main
     var x set to f()
     print x
-    print x[0]
-    print x[1]
+    print x.first()
+    print x.second()
 end main
 function f() as (String, String)
    return (""1"", ""2"")
@@ -78,8 +78,8 @@ public static class Program {
   private static void Main(string[] args) {
     var x = Globals.f();
     System.Console.WriteLine(StandardLibrary.Functions.asString(x));
-    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item1));
-    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item2));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.first(x)));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.second(x)));
   }
 }";
 
@@ -98,7 +98,7 @@ public static class Program {
     public void Pass_IndexFunctionReturnsTuple() {
         var code = @"#
 main
-    print f()[0]
+    print f().first()
 end main
 function f() as (String, String)
    return (""1"", ""2"")
@@ -119,7 +119,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.f().Item1));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.Functions.first(Globals.f())));
   }
 }";
 
@@ -178,7 +178,7 @@ main
     print f((x,y))
 end main
 function f(t (String, String)) as String
-   return t[0]
+   return t.first()
 end function
 ";
 
@@ -190,7 +190,7 @@ using static StandardLibrary.Constants;
 public static partial class Globals {
   public static string f((string, string) t) {
 
-    return t.Item1;
+    return StandardLibrary.Functions.first(t);
   }
 }
 
@@ -343,7 +343,7 @@ public static class Program {
         var code = @"#
 main
     var x set to (3,""Apple"")
-    print x[2]
+    print x.third()
 end main
 ";
 
@@ -359,7 +359,7 @@ public static partial class Globals {
 public static class Program {
   private static void Main(string[] args) {
     var x = (3, @$""Apple"");
-    System.Console.WriteLine(StandardLibrary.Functions.asString(x.Item3));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(x.third()));
   }
 }";
 
@@ -379,7 +379,7 @@ public static class Program {
 main
     var x set to (3,""Apple"")
     var y set to 4
-    set y to x[1]
+    set y to x.second()
 end main
 ";
         var parseTree = @"*";
@@ -396,15 +396,14 @@ end main
         var code = @"#
 main
     var x set to (3,""Apple"")
-    set x[0] to 4
+    set x.first() to 4
 end main
 ";
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Cannot modify an element within a tuple");
+        AssertDoesNotParse(compileData);
+    
     }
 
     [TestMethod]

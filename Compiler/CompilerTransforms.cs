@@ -16,12 +16,6 @@ public static class CompilerTransforms {
             _ => null
         };
 
-    public static IAstNode? TransformIndexNodes(IAstNode[] nodes, IScope currentScope) =>
-        nodes.Last() switch {
-            IndexedExpressionNode ien when GetExpressionType(ien.Expression, currentScope) is TupleSymbolType => new ItemizedExpressionNode(ien.Expression, ien.Range),
-            _ => null
-        };
-
     // must come after TransformMethodCallNodes
     public static IAstNode? TransformProcedureParameterNodes(IAstNode[] nodes, IScope currentScope) {
         static IAstNode? TransformProcedureCallNode(ProcedureCallNode pcn, IScope scope) {

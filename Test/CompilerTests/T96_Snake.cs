@@ -252,8 +252,8 @@ Press any key to start.."";
     System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Game Over! Score: {score}""));
   }
   public static void draw(CharMap cm, (int, int) sq, Colour colour) {
-    var col = sq.Item1 * 2;
-    var row = sq.Item2;
+    var col = StandardLibrary.Functions.first(sq) * 2;
+    var row = StandardLibrary.Functions.second(sq);
     cm.putBlockWithColour(col, row, colour);
     cm.putBlockWithColour(col + 1, row, colour);
   }
@@ -290,13 +290,13 @@ Press any key to start.."";
     return result;
   }
   public static bool hasHitEdge((int, int) head, int boardWidth, int boardHeight) {
-    var x = head.Item1;
-    var y = head.Item2;
+    var x = StandardLibrary.Functions.first(head);
+    var y = StandardLibrary.Functions.second(head);
     return x < 0 || y < 0 || x == boardWidth || y == boardHeight;
   }
   public static (int, int) getAdjacentSquare((int, int) sq, Direction d) {
-    var newX = sq.Item1;
-    var newY = sq.Item2;
+    var newX = StandardLibrary.Functions.first(sq);
+    var newY = StandardLibrary.Functions.second(sq);
     switch (d) {
       case Direction.left:
         newX = newX - 1;

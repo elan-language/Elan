@@ -28,6 +28,17 @@ public static class Functions {
         return $"{name} {{{pString}}}";
     }
 
+    #region tuple
+
+    public static T1 first<T1, T2>(ValueTuple<T1, T2> t) => t.Item1;
+
+    public static T2 second<T1, T2>(ValueTuple<T1, T2> t) => t.Item2;
+   
+
+    #endregion
+
+
+
     #region arrays
 
     public static int length<T>(ElanArray<T> l) => l.Count;

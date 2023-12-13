@@ -52,7 +52,7 @@ public static class Program {
     public void Pass_TupleArg() {
         var code = @"
 main
-  call printModified((4, 5), lambda t -> t[0])
+  call printModified((4, 5), lambda t -> t.first())
 end main
 
 procedure printModified(i (Int, Int), f ((Int, Int) -> Int))
@@ -73,7 +73,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    Globals.printModified((4, 5), (t) => t.Item1);
+    Globals.printModified((4, 5), (t) => StandardLibrary.Functions.first(t));
   }
 }";
 
