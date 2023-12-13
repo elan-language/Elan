@@ -56,7 +56,8 @@ procedure playGame()
         end if
     end while
     call charMap.setCursor(0, 0)
-    print "Game Over! Score: {body.length() - 2}"
+    var score set to body.length() - 2
+    print "Game Over! Score: {score}"
 end procedure
 
 function snakeTail(body List<of (Int, Int)>) as (Int, Int)
@@ -72,7 +73,7 @@ end procedure
 
 procedure clockTick(out body List<of (Int, Int)>, out head (Int, Int),out apple (Int, Int), d Direction, boardWidth Int, boardHeight Int, out continue Bool)
     set body to body + head
-    set head to head.getAdjacentSquare(head, d)
+    set head to head.getAdjacentSquare(d)
     if head is apple then
         call setNewApplePosition(body, apple, boardWidth, boardHeight)
     else

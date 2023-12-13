@@ -199,7 +199,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Snake_PP()
     {
         var code = ReadCodeFile("snake_PP.elan");
@@ -248,7 +248,8 @@ Press any key to start.."";
       }
     }
     charMap.setCursor(0, 0);
-    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Game Over! Score: {body.length() - 2}""));
+    var score = StandardLibrary.Functions.length(body) - 2;
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Game Over! Score: {score}""));
   }
   public static void draw(CharMap cm, (int, int) sq, Colour colour) {
     var col = sq.Item1 * 2;
@@ -258,7 +259,7 @@ Press any key to start.."";
   }
   public static void clockTick(ref StandardLibrary.ElanList<(int, int)> body, ref (int, int) head, ref (int, int) apple, Direction d, int boardWidth, int boardHeight, ref bool @continue) {
     body = body + head;
-    head = Globals.getAdjacentSquare(head, head, d);
+    head = Globals.getAdjacentSquare(head, d);
     if (head == apple) {
       Globals.setNewApplePosition(body, ref apple, boardWidth, boardHeight);
     }
