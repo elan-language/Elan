@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record ForEachParameterNode(IAstNode Id, IAstNode Expression) : IAstNode {
+public record EachParameterNode(IAstNode Id, IAstNode Expression) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Id, Expression };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

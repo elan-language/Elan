@@ -72,7 +72,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             LambdaDefNode n => HandleScope(BuildLambdaDefModel, n),
             MethodSignatureNode n => HandleScope(BuildMethodSignatureModel, n),
             ParameterNode n => HandleScope(BuildParameterModel, n),
-            ForEachParameterNode n => HandleScope(BuildForEachParameterModel, n),
+            EachParameterNode n => HandleScope(BuildEachParameterModel, n),
             SwitchStatementNode n => HandleScope(BuildSwitchStatementModel, n),
             CaseNode n => HandleScope(BuildCaseModel, n),
             TryCatchNode n => HandleScope(BuildTryCatchModel, n),
@@ -346,11 +346,11 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         return new ParameterModel(id, type, isRef);
     }
 
-    private ForEachParameterModel BuildForEachParameterModel(ForEachParameterNode parameterNode) {
+    private EachParameterModel BuildEachParameterModel(EachParameterNode parameterNode) {
         var id = Visit(parameterNode.Id);
         var expression = Visit(parameterNode.Expression);
 
-        return new ForEachParameterModel(id, expression);
+        return new EachParameterModel(id, expression);
     }
 
     private CaseModel BuildCaseModel(CaseNode caseNode) {

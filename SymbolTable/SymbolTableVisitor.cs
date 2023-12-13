@@ -27,7 +27,7 @@ public class SymbolTableVisitor {
             MainNode n => VisitMainNode(n),
             ProcedureDefNode n => VisitProcedureDefNode(n),
             EachStatementNode n => VisitForEachNode(n),
-            ForEachParameterNode n => VisitForEachParameterNode(n),
+            EachParameterNode n => VisitForEachParameterNode(n),
             AbstractProcedureDefNode n => VisitAbstractProcedureDefNode(n),
             FunctionDefNode n => VisitFunctionDefNode(n),
             AbstractFunctionDefNode n => VisitAbstractFunctionDefNode(n),
@@ -409,7 +409,7 @@ public class SymbolTableVisitor {
         return parameterNode;
     }
 
-    private IAstNode VisitForEachParameterNode(ForEachParameterNode parameterNode) {
+    private IAstNode VisitForEachParameterNode(EachParameterNode parameterNode) {
         var name = parameterNode.Id is IdentifierNode n ? n.Id : throw new NotImplementedException(parameterNode.Id.GetType().ToString());
         var type = MapNodeToSymbolType(parameterNode.Expression); // todo this type will be collection not item!
 
