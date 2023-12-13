@@ -11,7 +11,6 @@ public class ThirdPassVisitor {
         Rules.Add(CompilerRules.ExpressionMustBeAssignedRule);
         Rules.Add(CompilerRules.CannotAccessSystemInAFunction);
         Rules.Add(CompilerRules.CannotUseInputInAFunction);
-        Rules.Add(CompilerRules.CannotMutateTupleRule);
         Rules.Add(CompilerRules.CannotMutateControlVariableRule);
         Rules.Add(CompilerRules.NoMutableConstantsRule);
         Rules.Add(CompilerRules.ArrayInitialization);
