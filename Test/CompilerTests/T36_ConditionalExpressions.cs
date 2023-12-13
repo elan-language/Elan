@@ -9,7 +9,7 @@ public class T36_ConditionalExpressions {
     #region Passes
 
     [TestMethod]
-    public void Pass_Filter() {
+    public void Pass_InFunction() {
         var code = @"
 main
  print grade(90)
@@ -58,6 +58,37 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Distinction\r\nMerit\r\nPass\r\nFail\r\n");
+    }
+
+    [TestMethod, Ignore]
+    public void Pass_InVariableDeclaration()
+    {
+        var code = @"
+main
+  var score set to 70
+  var grade set to if score > 80
+      then ""Distinction"" 
+      else if score > 60
+      then ""Merit""
+      else if score > 40 
+      then ""Pass""
+      else ""Fail""
+  print grade
+end main
+
+";
+
+        var objectCode = @"";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "Merit\r\n");
     }
 
     #endregion

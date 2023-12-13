@@ -14,14 +14,10 @@ public class Life_test
     public void Pass_Life()
     {
         var code = ReadCodeFile("Life.elan");
-
-        var objectCode = @"";
-
-        var parseTree = @"*";
+        var objectCode = ReadCodeFile("Life.obj");
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
