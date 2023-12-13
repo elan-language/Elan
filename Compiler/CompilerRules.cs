@@ -3,12 +3,11 @@ using AbstractSyntaxTree.Nodes;
 using AbstractSyntaxTree.Roles;
 using SymbolTable;
 using SymbolTable.Symbols;
+using static SymbolTable.SymbolHelpers;
 
 namespace Compiler;
 
 public static class CompilerRules {
-    private static bool AnyOtherNodeIs(this IAstNode[] nodes, Func<IAstNode, bool> check) => nodes.SkipLast(1).ToArray().Any(check);
-
     public static string? ExpressionMustBeAssignedRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is FunctionCallNode) {
@@ -21,7 +20,7 @@ public static class CompilerRules {
         return null;
     }
 
-    public static string? CannotAccessSystemInAFunction(IAstNode[] nodes, IScope currentScope) {
+    public static string? CannotAccessSystemInAFunctionRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is SystemAccessorCallNode scn && currentScope.Resolve(scn.MethodName) is SystemAccessorSymbol) {
             if (nodes.AnyOtherNodeIs(n => n is FunctionDefNode)) {
@@ -32,7 +31,7 @@ public static class CompilerRules {
         return null;
     }
 
-    public static string? CannotUseInputInAFunction(IAstNode[] nodes, IScope currentScope) {
+    public static string? CannotUseInputInAFunctionRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (leafNode is InputNode) {
             if (nodes.AnyOtherNodeIs(n => n is FunctionDefNode)) {
@@ -41,20 +40,6 @@ public static class CompilerRules {
         }
 
         return null;
-    }
-
-    private static bool Match(IAstNode n1, IAstNode n2) {
-        return n2 switch {
-            IdentifierNode idn2 when n1 is IdentifierNode idn1 => idn1.Id == idn2.Id,
-            IndexedExpressionNode ien when n1 is IdentifierNode idn1 => Match(idn1, ien.Expression) || ien.Expression.Children.Any(c => Match(idn1, c)),
-            ParameterCallNode pn when n1 is IdentifierNode idn1 && pn.Expression is IdentifierNode idn2 => idn1.Id == idn2.Id,
-            DeconstructionNode dn => dn.ItemNodes.Any(n => Match(n1, n)),
-            _ => false
-        };
-    }
-
-    private static IEnumerable<IAstNode> Expand(this IEnumerable<IAstNode> nodes) {
-        return nodes.SelectMany(n => n is StatementBlockNode ? n.Children : new[] { n });
     }
 
     public static string? NoMutableConstantsRule(IAstNode[] nodes, IScope currentScope) {
@@ -107,18 +92,12 @@ public static class CompilerRules {
         return null;
     }
 
-    public static string? ArrayInitialization(IAstNode[] nodes, IScope currentScope) {
+    public static string? ArrayInitializationRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         return leafNode is NewInstanceNode { Type : DataStructureTypeNode { Type: DataStructure.Array }, Arguments.Length: 0 }
             ? $"Array must have size specified in round brackets : {leafNode}"
             : null;
     }
-
-    private static string? GetId(IAstNode? node) => node switch {
-        IdentifierNode idn => idn.Id,
-        IndexedExpressionNode ien => GetId(ien.Expression),
-        _ => null
-    };
 
     public static string? FunctionConstraintsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
@@ -172,7 +151,7 @@ public static class CompilerRules {
         return null;
     }
 
-    public static string? ClassMustHaveAsString(IAstNode[] nodes, IScope currentScope) {
+    public static string? ClassMustHaveAsStringRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
 
         if (leafNode is ClassDefNode cdn) {
@@ -185,7 +164,7 @@ public static class CompilerRules {
         return null;
     }
 
-    public static string? ClassCannotInheritConcreteClass(IAstNode[] nodes, IScope currentScope) {
+    public static string? ClassCannotInheritConcreteClassRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
 
         var typeNodes = leafNode switch {

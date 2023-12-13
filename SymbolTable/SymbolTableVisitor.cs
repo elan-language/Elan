@@ -64,14 +64,12 @@ public class SymbolTableVisitor {
     }
 
     private static string[] ParameterIds(MethodSignatureNode node) {
-        return node.Parameters.OfType<ParameterNode>().Select(pn => Id(pn.Id)).ToArray();
+        return node.Parameters.OfType<ParameterNode>().Select(pn => GetId(pn.Id)!).ToArray();
     }
-
-    private static string Id(IAstNode node) => node is IdentifierNode idn ? idn.Id : throw new NotImplementedException($"{node}");
 
     private static (string, string[]) NameAndParameterIds(IAstNode node) {
         return node switch {
-            MethodSignatureNode msn => (Id(msn.Id), ParameterIds(msn)),
+            MethodSignatureNode msn => (GetId(msn.Id)!, ParameterIds(msn)),
             _ => throw new NotImplementedException("null")
         };
     }

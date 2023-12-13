@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using SymbolTable.Symbols;
@@ -8,7 +7,7 @@ using ValueType = AbstractSyntaxTree.ValueType;
 
 namespace SymbolTable;
 
-public class SymbolHelpers {
+public static class SymbolHelpers {
     public static ISymbolType MapNodeToSymbolType(IAstNode node) {
         return node switch {
             IdentifierNode idn => new PendingResolveSymbolType(idn.Id),
@@ -79,16 +78,12 @@ public class SymbolHelpers {
             _ => throw new NotImplementedException()
         };
 
-  
-
     private static IScope GetGlobalScope(IScope scope) =>
         scope is GlobalScope
             ? scope
             : scope.EnclosingScope is { } s
                 ? GetGlobalScope(s)
                 : scope;
-
-
 
     private static ISymbol? GetSymbolForCallNode(ICallNode mcn, IScope currentScope, ClassSymbolType cst) {
         var classSymbol = currentScope.Resolve(cst.Name);
@@ -194,11 +189,10 @@ public class SymbolHelpers {
         return type switch {
             ListSymbolType lst => GetTypeFromDepth(lst.OfType, depth - 1),
             IterSymbolType lst => GetTypeFromDepth(lst.OfType, depth - 1),
-            PendingResolveSymbolType prs => prs, 
+            PendingResolveSymbolType prs => prs,
             _ => throw new NotImplementedException()
         };
     }
-
 
     private static ISymbolType? GetExpressionType(IAstNode expression, IScope currentScope) {
         return expression switch {
@@ -212,7 +206,7 @@ public class SymbolHelpers {
                 FunctionSymbol fs => fs.ReturnType,
                 _ => null
             },
-            _ => SymbolHelpers.MapNodeToSymbolType(expression)
+            _ => MapNodeToSymbolType(expression)
         };
     }
 
@@ -220,7 +214,7 @@ public class SymbolHelpers {
         var name = gst.TypeName;
         var indexAndDepthAndArg = fst.GenericParameters[name];
 
-        var parameters = (fst.ParameterNames.Length > fcn.Parameters.Length) ? fcn.Parameters.Prepend(fcn.CalledOn)  : fcn.Parameters;
+        var parameters = fst.ParameterNames.Length > fcn.Parameters.Length ? fcn.Parameters.Prepend(fcn.CalledOn) : fcn.Parameters;
 
         var matchingParameter = parameters.ToArray()[indexAndDepthAndArg.Item1];
         var symbolType = GetExpressionType(matchingParameter!, currentScope);
@@ -289,9 +283,24 @@ public class SymbolHelpers {
     public static ISymbolType? EnsureResolved(ISymbolType symbolType, GenericFunctionSymbol fs, FunctionCallNode fcn, IScope currentScope) {
         return symbolType switch {
             PendingResolveSymbolType => EnsureResolved(symbolType, currentScope),
-            GenericSymbolType gst =>  EnsureResolved(SymbolHelpers.ResolveGenericType(gst, fs, fcn, currentScope)!, currentScope),
+            GenericSymbolType gst => EnsureResolved(ResolveGenericType(gst, fs, fcn, currentScope)!, currentScope),
             _ => symbolType
         };
     }
 
+    public static bool AnyOtherNodeIs(this IAstNode[] nodes, Func<IAstNode, bool> check) => nodes.SkipLast(1).ToArray().Any(check);
+
+    public static bool Match(IAstNode n1, IAstNode n2) {
+        return n2 switch {
+            IdentifierNode idn2 when n1 is IdentifierNode idn1 => idn1.Id == idn2.Id,
+            IndexedExpressionNode ien when n1 is IdentifierNode idn1 => Match(idn1, ien.Expression) || ien.Expression.Children.Any(c => Match(idn1, c)),
+            ParameterCallNode pn when n1 is IdentifierNode idn1 && pn.Expression is IdentifierNode idn2 => idn1.Id == idn2.Id,
+            DeconstructionNode dn => dn.ItemNodes.Any(n => Match(n1, n)),
+            _ => false
+        };
+    }
+
+    public static IEnumerable<IAstNode> Expand(this IEnumerable<IAstNode> nodes) {
+        return nodes.SelectMany(n => n is StatementBlockNode ? n.Children : new[] { n });
+    }
 }

@@ -9,15 +9,15 @@ public class ThirdPassVisitor {
 
     static ThirdPassVisitor() {
         Rules.Add(CompilerRules.ExpressionMustBeAssignedRule);
-        Rules.Add(CompilerRules.CannotAccessSystemInAFunction);
-        Rules.Add(CompilerRules.CannotUseInputInAFunction);
+        Rules.Add(CompilerRules.CannotAccessSystemInAFunctionRule);
+        Rules.Add(CompilerRules.CannotUseInputInAFunctionRule);
         Rules.Add(CompilerRules.CannotMutateControlVariableRule);
         Rules.Add(CompilerRules.NoMutableConstantsRule);
-        Rules.Add(CompilerRules.ArrayInitialization);
+        Rules.Add(CompilerRules.ArrayInitializationRule);
         Rules.Add(CompilerRules.FunctionConstraintsRule);
         Rules.Add(CompilerRules.ConstructorConstraintsRule);
-        Rules.Add(CompilerRules.ClassMustHaveAsString);
-        Rules.Add(CompilerRules.ClassCannotInheritConcreteClass);
+        Rules.Add(CompilerRules.ClassMustHaveAsStringRule);
+        Rules.Add(CompilerRules.ClassCannotInheritConcreteClassRule);
     }
 
     public ThirdPassVisitor(SymbolTableImpl symbolTable) {
