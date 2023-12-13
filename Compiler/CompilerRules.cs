@@ -57,21 +57,6 @@ public static class CompilerRules {
         return nodes.SelectMany(n => n is StatementBlockNode ? n.Children : new[] { n });
     }
 
-    public static string? CannotMutateTupleRule(IAstNode[] nodes, IScope currentScope) {
-        var leafNode = nodes.Last();
-        if (leafNode is ItemizedExpressionNode ien) {
-            var parent = nodes.SkipLast(1).Last();
-
-            if (parent is AssignmentNode an) {
-                if (ReferenceEquals(an.Id, ien)) {
-                    return $"Cannot modify an element within a tuple : {leafNode}";
-                }
-            }
-        }
-
-        return null;
-    }
-
     public static string? NoMutableConstantsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (nodes.AnyOtherNodeIs(n => n is ConstantDefNode)) {
