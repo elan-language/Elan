@@ -193,8 +193,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "4\r\n");
     }
 
-  
-
     [TestMethod]
     public void Pass_OperatorCoverage() {
         var code = @"#
@@ -301,7 +299,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "apple\r\n");
     }
-   
 
     #endregion
 

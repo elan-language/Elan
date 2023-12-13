@@ -1,5 +1,4 @@
 ﻿using Compiler;
-using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -8,9 +7,7 @@ using static Helpers;
 [TestClass]
 public class T49_EqualityTesting {
     [TestInitialize]
-    public void TestInit() {
-       
-    }
+    public void TestInit() { }
 
     #region Passes
 
@@ -169,7 +166,7 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "false\r\n"); // this may change
     }
 
-     [TestMethod]
+    [TestMethod]
     public void Pass_DifferentInstancesWithSameLambdaValuesAreEqual() {
         var code = @"#
 main

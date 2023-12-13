@@ -88,7 +88,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "4\r\n");
     }
 
-
     #endregion
 
     #region Fails

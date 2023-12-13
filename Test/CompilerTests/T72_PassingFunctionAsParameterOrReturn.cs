@@ -399,7 +399,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "Function (Int -> Int)\r\n");
     }
 
-
     #endregion
 
     #region Fails
@@ -453,8 +452,6 @@ end function
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
-
-   
 
     #endregion
 }

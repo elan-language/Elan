@@ -399,11 +399,9 @@ main
     set x.first() to 4
 end main
 ";
-        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
-    
     }
 
     [TestMethod]

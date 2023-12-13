@@ -1,5 +1,4 @@
 ﻿using Compiler;
-using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -8,14 +7,12 @@ using static Helpers;
 [TestClass]
 public class T51_ProcedureMethods {
     [TestInitialize]
-    public void TestInit() {
-       
-    }
+    public void TestInit() { }
 
     #region Passes
+
     [TestMethod]
-    public void Pass_HappyCase()
-    {
+    public void Pass_HappyCase() {
         var code = @"#
 main
     var f set to new Foo()
@@ -88,8 +85,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ProcedureCanContainSystemCall()
-    {
+    public void Pass_ProcedureCanContainSystemCall() {
         var code = @"#
 main
     var f set to new Foo()
@@ -162,8 +158,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_CallGlobalProcedure()
-    {
+    public void Pass_CallGlobalProcedure() {
         var code = @"#
 main
     var f set to new Foo()
@@ -239,6 +234,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "7\r\n");
     }
+
     #endregion
 
     #region Fails
@@ -310,6 +306,4 @@ end class
     }
 
     #endregion
-
-
 }

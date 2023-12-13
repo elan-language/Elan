@@ -86,8 +86,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_TypeOfClasses()
-    {
+    public void Pass_TypeOfClasses() {
         var code = @"
 main
     var a set to 1
@@ -228,8 +227,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_TypeForAClass()
-    {
+    public void Pass_TypeForAClass() {
         var code = @"#
 main
     var p set to new Player(""Richard"")
@@ -291,6 +289,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "true\r\n");
     }
+
     #endregion
 
     #region Fails

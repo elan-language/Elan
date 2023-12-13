@@ -15,8 +15,7 @@ public class T_2_HelloWorld {
     #region Passes
 
     [TestMethod]
-    public void Pass_CommentsOnly()
-    {
+    public void Pass_CommentsOnly() {
         var code = @"#
 # comment 1
 main # comment 2

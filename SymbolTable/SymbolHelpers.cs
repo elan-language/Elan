@@ -194,6 +194,7 @@ public class SymbolHelpers {
         return type switch {
             ListSymbolType lst => GetTypeFromDepth(lst.OfType, depth - 1),
             IterSymbolType lst => GetTypeFromDepth(lst.OfType, depth - 1),
+            PendingResolveSymbolType prs => prs, 
             _ => throw new NotImplementedException()
         };
     }

@@ -5,8 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass] [Ignore]
-public class TT138_ElanUnitTest
-{
+public class TT138_ElanUnitTest {
     #region Passes
 
     [TestMethod]

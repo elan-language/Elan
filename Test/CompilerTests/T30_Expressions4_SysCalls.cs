@@ -79,8 +79,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_InputInExpression()
-    {
+    public void Pass_InputInExpression() {
         var code = @"#
 main
   var a set to ""Hello "" + input 
@@ -116,8 +115,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Me()
-    {
+    public void Pass_Me() {
         var code = @"#
 main
   var a set to system.me()
@@ -162,8 +160,6 @@ main
 end main
 ";
 
-        var parseTree = @"*";
-
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
@@ -176,8 +172,6 @@ main
   print a
 end main
 ";
-
-        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);

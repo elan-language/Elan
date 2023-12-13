@@ -328,10 +328,8 @@ end class
         AssertObjectCodeDoesNotCompile(compileData);
     }
 
-
     [TestMethod]
-    public void Fail_MissingNewOnInstantiation()
-    {
+    public void Fail_MissingNewOnInstantiation() {
         var code = @"#
 main
     var x set to Foo()
@@ -357,7 +355,6 @@ end class
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
     }
-
 
     #endregion
 }
