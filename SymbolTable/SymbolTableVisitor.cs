@@ -372,17 +372,9 @@ public class SymbolTableVisitor {
                         LambdaSymbol? ls = null;
 
                         if (sig is IScope sigScope) {
-                            var matchingSymbolName = names[index];
-                            var matchingSymbol = sigScope.Resolve(matchingSymbolName) as ParameterSymbol;
-                            var lambdaSymbolType = matchingSymbol.ReturnType as LambdaSymbolType;
-                            var rt = lambdaSymbolType.ReturnType;
-                            ls = new LambdaSymbol(lambda.Name, rt, parameterIds, currentScope);
-
-                            var arguments =
-                                sig is GenericFunctionSymbol gfs && callNode is FunctionCallNode fcn
-                                    ? lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, gfs, fcn, currentScope)!)
-                                    : lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, currentScope)!);
-                            
+                            var lambdaSymbolType = GetLambdaSymbolType(names, index, sigScope);
+                            ls = new LambdaSymbol(lambda.Name, lambdaSymbolType.ReturnType, parameterIds, currentScope);
+                            var arguments = GetLambdaArguments(callNode, sig, lambdaSymbolType);
                             AddLambdaArguments(lambda, arguments.ToArray(), ls);
                         }
                         else {
@@ -393,18 +385,10 @@ public class SymbolTableVisitor {
                         currentScope = ls;
                     }
                     else {
-                        if (sig is IScope sigScope)
-                        {
+                        if (sig is IScope sigScope) {
+                            var lambdaSymbolType = GetLambdaSymbolType(names, index, sigScope);
                             var ls = currentScope.Resolve(lambda.Name) as LambdaSymbol;
-                            var matchingSymbolName = names[index];
-                            var matchingSymbol = sigScope.Resolve(matchingSymbolName) as ParameterSymbol;
-                            var lambdaSymbolType = matchingSymbol.ReturnType as LambdaSymbolType;
-                            var rt = lambdaSymbolType.ReturnType;
-
-                            var arguments =
-                                sig is GenericFunctionSymbol gfs && callNode is FunctionCallNode fcn
-                                    ? lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, gfs, fcn, currentScope)!)
-                                    : lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, currentScope)!);
+                            var arguments = GetLambdaArguments(callNode, sig, lambdaSymbolType);
 
                             ReplaceLambdaArguments(lambda, arguments.ToArray(), ls!);
                         }
@@ -424,6 +408,20 @@ public class SymbolTableVisitor {
         VisitChildren(callNode);
         currentScope = currentScope.EnclosingScope ?? throw new Exception("unexpected null scope");
         return callNode;
+    }
+
+    private static LambdaSymbolType GetLambdaSymbolType(string[] names, int index, IScope sigScope) {
+        var matchingSymbolName = names[index];
+        var matchingSymbol = sigScope.Resolve(matchingSymbolName) as ParameterSymbol;
+        var lambdaSymbolType = matchingSymbol?.ReturnType as LambdaSymbolType;
+        return lambdaSymbolType!;
+    }
+
+    private IEnumerable<ISymbolType> GetLambdaArguments(ICallNode callNode, ISymbol sig, LambdaSymbolType lambdaSymbolType) {
+        return
+            sig is GenericFunctionSymbol gfs && callNode is FunctionCallNode fcn
+                ? lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, gfs, fcn, currentScope)!)
+                : lambdaSymbolType.Arguments.Select(a => EnsureResolved(a, currentScope)!);
     }
 
     private IAstNode VisitParameterNode(ParameterNode parameterNode) {
