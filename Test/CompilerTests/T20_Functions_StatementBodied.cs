@@ -102,7 +102,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "120\r\n");
     }
 
-
     [TestMethod]
     public void Pass_GlobalFunctionOnClass() {
         var code = @"
@@ -347,8 +346,7 @@ end function
     }
 
     [TestMethod]
-    public void Fail_CanNotContainInput()
-    {
+    public void Fail_CanNotContainInput() {
         var code = @"
 main
 end main
@@ -384,8 +382,6 @@ end function
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Cannot access system within a function");
     }
-
-
 
     [TestMethod]
     public void Fail_CanNotContainProcedureCall() {

@@ -149,8 +149,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_EmptyChar()
-    {
+    public void Pass_EmptyChar() {
         var code = @"#
 constant a set to ''
 main
@@ -187,8 +186,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_SpaceAsChar()
-    {
+    public void Pass_SpaceAsChar() {
         var code = @"#
 constant a set to ' '
 main

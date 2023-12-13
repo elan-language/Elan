@@ -6,6 +6,32 @@ using static Helpers;
 
 [TestClass]
 public class T55_asString {
+    #region Fails
+
+    [TestMethod]
+    public void Fail_ClassHasNoAsString() {
+        var code = @"#
+class Foo
+    constructor()
+        set p1 to 5
+        set p2 to ""Apple""
+    end constructor
+
+    property p1 Int
+
+    private property p2 String
+end class
+";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Class must have asString method");
+    }
+
+    #endregion
 
     #region Passes
 
@@ -277,33 +303,4 @@ public static class Program {
     }
 
     #endregion
-
-    #region Fails
-
-    [TestMethod]
-    public void Fail_ClassHasNoAsString()
-    {
-        var code = @"#
-class Foo
-    constructor()
-        set p1 to 5
-        set p2 to ""Apple""
-    end constructor
-
-    property p1 Int
-
-    private property p2 String
-end class
-";
-
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertDoesNotCompile(compileData, "Class must have asString method");
-    }
-
-    #endregion
-
 }

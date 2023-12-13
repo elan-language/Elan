@@ -1,5 +1,4 @@
 ﻿using Compiler;
-using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -8,9 +7,7 @@ using static Helpers;
 [TestClass]
 public class T19_Procedures {
     [TestInitialize]
-    public void TestInit() {
-       
-    }
+    public void TestInit() { }
 
     #region Passes
 
@@ -126,7 +123,6 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "bar\r\n");
     }
-
 
     [TestMethod]
     public void Pass_SystemProcedure() {

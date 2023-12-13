@@ -6,6 +6,41 @@ using static Helpers;
 
 [TestClass]
 public class T54_With {
+    #region Fails
+
+    [TestMethod]
+    public void Fail_NonMatchingProperty() {
+        var code = @"#
+main
+    var x set to new Foo() with {p1 set to 3, p3 set to ""Apple"" }
+    print x.p1
+    print x.p2
+end main
+
+class Foo
+    constructor()
+        set p1 to 5
+    end constructor
+    property p1 Int
+
+    property p2 String
+
+    function asString() as String
+         return """"
+    end function
+
+end class
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeDoesNotCompile(compileData);
+    }
+
+    #endregion
 
     #region Passes
 
@@ -299,43 +334,6 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "3\r\nApple\r\n5\r\n");
-    }
-
-    #endregion
-
-    #region Fails
-
-    [TestMethod]
-    public void Fail_NonMatchingProperty()
-    {
-        var code = @"#
-main
-    var x set to new Foo() with {p1 set to 3, p3 set to ""Apple"" }
-    print x.p1
-    print x.p2
-end main
-
-class Foo
-    constructor()
-        set p1 to 5
-    end constructor
-    property p1 Int
-
-    property p2 String
-
-    function asString() as String
-         return """"
-    end function
-
-end class
-";
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     #endregion

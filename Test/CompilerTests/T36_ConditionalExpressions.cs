@@ -61,8 +61,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_InVariableDeclaration()
-    {
+    public void Pass_InVariableDeclaration() {
         var code = @"
 main
   var score set to 70

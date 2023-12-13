@@ -5,13 +5,11 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T70_StandardHofs
-{
+public class T70_StandardHofs {
     #region Passes
 
     [TestMethod]
-    public void Pass_Filter()
-    {
+    public void Pass_Filter() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -50,8 +48,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_ParallelFilter()
-    {
+    public void Pass_ParallelFilter() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -90,8 +87,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Map()
-    {
+    public void Pass_Map() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -128,8 +124,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Reduce()
-    {
+    public void Pass_Reduce() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -168,8 +163,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Max()
-    {
+    public void Pass_Max() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -204,8 +198,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_MaxBy()
-    {
+    public void Pass_MaxBy() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -240,8 +233,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_MaxBy1()
-    {
+    public void Pass_MaxBy1() {
         var code = @"
 constant source set to {{1}, {2,2}}
 main
@@ -276,8 +268,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_MaxBy2()
-    {
+    public void Pass_MaxBy2() {
         var code = @"
 constant source set to {""apple"", ""orange"",""pear""}
 main
@@ -312,8 +303,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Count()
-    {
+    public void Pass_Count() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -348,8 +338,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Min()
-    {
+    public void Pass_Min() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -384,8 +373,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_MinBy()
-    {
+    public void Pass_MinBy() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -420,8 +408,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_Any()
-    {
+    public void Pass_Any() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -461,8 +448,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_GroupBy()
-    {
+    public void Pass_GroupBy() {
         var code = @"
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
@@ -497,8 +483,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_GroupByInFunction()
-    {
+    public void Pass_GroupByInFunction() {
         var code = @"
 constant source set to {""1"", ""22""}
 main
@@ -543,9 +528,9 @@ public static class Program {
     #endregion
 
     #region Fails
+
     [TestMethod]
-    public void Fail_MaxOnNonNumeric()
-    {
+    public void Fail_MaxOnNonNumeric() {
         var code = @"
 constant source set to {""apple"",""orange"",""pear""}
 main
@@ -579,8 +564,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_MaxLambdaReturningNonNumeric()
-    {
+    public void Fail_MaxLambdaReturningNonNumeric() {
         var code = @"
 constant source set to {""apple"", ""orange"",""pear""}
 main
@@ -612,5 +596,6 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeDoesNotCompile(compileData);
     }
+
     #endregion
 }

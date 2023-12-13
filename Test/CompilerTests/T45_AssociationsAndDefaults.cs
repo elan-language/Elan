@@ -1,5 +1,4 @@
 ﻿using Compiler;
-using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -8,9 +7,7 @@ using static Helpers;
 [TestClass]
 public class T45_AssociationsAndDefaults {
     [TestInitialize]
-    public void TestInit() {
-        
-    }
+    public void TestInit() { }
 
     #region Passes
 
@@ -721,8 +718,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_PropertyOfAbstractType()
-    {
+    public void Pass_PropertyOfAbstractType() {
         var code = @"#
 main
     var g set to new Game()
@@ -805,8 +801,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Pass_defaultCannotBeReplacedUsingWith()
-    {
+    public void Pass_defaultCannotBeReplacedUsingWith() {
         var code = @"#
 main
     var p set to default Player
@@ -882,6 +877,7 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "default Player\r\n\r\ndefault Player\r\n\r\n");
     }
+
     #endregion
 
     #region Fails

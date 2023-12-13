@@ -278,7 +278,6 @@ procedure printEach(target Iter)
   end each
 end procedure
 ";
-        var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
         AssertDoesNotParse(compileData);
@@ -324,7 +323,6 @@ procedure printEach(target Iter<of Int>)
 end procedure
 ";
 
-
         var parseTree = @"*";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -333,5 +331,6 @@ end procedure
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
     }
+
     #endregion
 }

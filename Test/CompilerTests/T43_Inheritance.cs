@@ -1,5 +1,4 @@
 ﻿using Compiler;
-using CSharpLanguageModel;
 
 namespace Test.CompilerTests;
 
@@ -8,9 +7,7 @@ using static Helpers;
 [TestClass]
 public class T43_Inheritance {
     [TestInitialize]
-    public void TestInit() {
-       
-    }
+    public void TestInit() { }
 
     #region Passes
 
