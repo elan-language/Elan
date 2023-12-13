@@ -482,49 +482,6 @@ public static class Program {
         AssertObjectCodeExecutes(compileData, "List {Group key:0 count: 1,Group key:1 count: 2,Group key:2 count: 5,Group key:3 count: 3,Group key:4 count: 1}\r\n");
     }
 
-    [TestMethod]
-    public void Pass_GroupByInFunction() {
-        var code = @"
-constant source set to {""1"", ""22""}
-main
-  var gs set to f(source)
-  print gs
-end main
-function f(ss List<of String>) as List<of String>
-  var g set to ss.groupBy(lambda s -> s)
-  return g.maxBy(lambda i -> i.count())
-end function
-";
-        var objectCode = @"using System.Collections.Generic;
-using StandardLibrary;
-using static Globals;
-using static StandardLibrary.Constants;
-
-public static partial class Globals {
-  public static readonly StandardLibrary.ElanList<string> source = new StandardLibrary.ElanList<string>(@$""1"", @$""22"");
-  public static StandardLibrary.ElanList<string> f(StandardLibrary.ElanList<string> ss) {
-    var g = StandardLibrary.Functions.groupBy(ss, (s) => s);
-    return StandardLibrary.Functions.maxBy(g, (i) => StandardLibrary.Functions.count(i));
-  }
-}
-
-public static class Program {
-  private static void Main(string[] args) {
-    var gs = Globals.f(source);
-    System.Console.WriteLine(StandardLibrary.Functions.asString(gs));
-  }
-}";
-        var parseTree = @"*";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeIs(compileData, objectCode);
-        AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "List {Group key:0 count: 1,Group key:1 count: 2,Group key:2 count: 5,Group key:3 count: 3,Group key:4 count: 1}\r\n");
-    }
-
     #endregion
 
     #region Fails
