@@ -43,6 +43,9 @@
 		<None Update="ExampleProjects\Life.elan">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="ExampleProjects\Life.obj">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ExampleProjects\RomanNumerals_3.obj">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

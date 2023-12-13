@@ -5,13 +5,13 @@ namespace Test.ExampleProjects;
 
 using static Helpers;
 
-[TestClass, Ignore]
+[TestClass]
 public class Wordle_test
 {
     #region Passes
 
     [TestMethod]
-    public void Pass_ConsoleUI()
+    public void Pass_Wordle_1()
     {
         var code = ReadCodeFile("Wordle_1.elan");
         var objectCode = ReadCodeFile("Wordle_1.obj");
@@ -25,7 +25,7 @@ public class Wordle_test
 
 
     [TestMethod]
-    public void Pass_UsingClassInPlaceOfTuples()
+    public void Pass_Wordle_2()
     {
         var code = ReadCodeFile("Wordle_2.elan");
         var objectCode = ReadCodeFile("Wordle_2.obj");

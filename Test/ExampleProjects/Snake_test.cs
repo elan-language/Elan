@@ -24,7 +24,7 @@ public class Snake_test
         AssertObjectCodeCompiles(compileData);
     }
 
-    [TestMethod, Ignore]
+    [TestMethod]
     public void Pass_Snake_PP()
     {
         var code = ReadCodeFile("snake_PP.elan");
