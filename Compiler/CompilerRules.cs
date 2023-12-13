@@ -88,7 +88,7 @@ public static class CompilerRules {
             }
             case ProcedureCallNode pcn: {
                 var otherNodes = nodes.SkipLast(1).ToArray();
-                var parameters = pcn.Parameters;
+                var parameters = pcn.Parameters.OfType<ParameterCallNode>().Where(p => p.IsRef);
 
                 foreach (var pp in parameters) {
                     if (otherNodes.OfType<ForStatementNode>().Any(n => Match(n.Id, pp))) {
