@@ -2,7 +2,7 @@
 
 public static class Program {
     private static void HandleCompile(string fileName) {
-        Pipeline.Compile("");
+        Pipeline.Compile(fileName);
         Console.WriteLine("Compiled OK");
     }
 
