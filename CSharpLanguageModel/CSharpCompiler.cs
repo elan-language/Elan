@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 
 namespace CSharpLanguageModel;
@@ -76,10 +77,7 @@ public static class CSharpCompiler {
         }
 
         var baseName = Path.GetFileNameWithoutExtension(fileName);
-        var dir = Path.GetDirectoryName(fileName);
-        if (string.IsNullOrEmpty(dir)) {
-            dir = Directory.GetCurrentDirectory();
-        }
+        var dir = Directory.GetCurrentDirectory();
 
         var objectDir = $@"{dir}\obj\";
 
@@ -98,7 +96,10 @@ public static class CSharpCompiler {
 
         File.WriteAllText(csProjName, csproj);
 
-        File.Copy("StandardLibrary.dll", $@"{objectDir}\StandardLibrary.dll", true);
+        var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly()?.Location);
+        var libPath = Path.Combine(assemblyPath!, "StandardLibrary.dll");
+
+        File.Copy(libPath, $@"{objectDir}\StandardLibrary.dll", true);
 
         var (stdOut, stdErr) = Compile($"{baseName}.csproj", objectDir);
 
