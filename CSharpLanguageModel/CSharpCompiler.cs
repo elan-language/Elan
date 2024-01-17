@@ -71,13 +71,13 @@ public static class CSharpCompiler {
         }
     }
 
-    public static (string, string, string) CompileObjectCode(string fileName, string objectCode) {
+    public static (string, string, string) CompileObjectCode(string fileName, string objectCode, string workingDir) {
         if (string.IsNullOrWhiteSpace(fileName)) {
             fileName = $"{Guid.NewGuid()}.elan";
         }
 
         var baseName = Path.GetFileNameWithoutExtension(fileName);
-        var dir = Directory.GetCurrentDirectory();
+        var dir =  string.IsNullOrEmpty(workingDir) ? Directory.GetCurrentDirectory() : workingDir;
 
         var objectDir = $@"{dir}\obj\";
 

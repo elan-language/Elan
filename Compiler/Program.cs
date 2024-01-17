@@ -1,8 +1,8 @@
 ﻿namespace Compiler;
 
 public static class Program {
-    private static void HandleCompile(string fileName) {
-        var compileData = Pipeline.Compile(fileName);
+    private static void HandleCompile(string fileName, string workingDir) {
+        var compileData = Pipeline.Compile(fileName, workingDir);
 
         if (compileData.ParserErrors.Length > 0 || compileData.CompileErrors.Length > 0) {
             Console.WriteLine("Failed to Compile");
@@ -20,6 +20,9 @@ public static class Program {
     }
 
     private static void Main(string[] args) {
-        HandleCompile(args.Single());
+        var fileName = args.First();
+        var workingDir = args.Length > 1 ? args[1] : "";
+
+        HandleCompile(fileName, workingDir);
     }
 }

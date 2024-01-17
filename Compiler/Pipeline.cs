@@ -8,8 +8,8 @@ namespace Compiler;
 public static class Pipeline {
     public static bool RunCompileObjectCode = true;
 
-    public static CompileData Compile(string fileName) {
-        var compileData = new CompileData { FileName = fileName };
+    public static CompileData Compile(string fileName, string workingDir) {
+        var compileData = new CompileData { FileName = fileName, WorkingDirectory = workingDir };
         compileData = ReadCode(compileData);
         return Compile(compileData);
     }
@@ -99,7 +99,7 @@ public static class Pipeline {
             return compileData;
         }
 
-        var (fileName, stdOut, stdErr) = CSharpCompiler.CompileObjectCode(compileData.FileName, compileData.ObjectCode);
+        var (fileName, stdOut, stdErr) = CSharpCompiler.CompileObjectCode(compileData.FileName, compileData.ObjectCode, compileData.WorkingDirectory);
 
         return compileData with { FileName = fileName, ObjectCodeCompileStdOut = stdOut, ObjectCodeCompileStdErr = stdErr };
     }

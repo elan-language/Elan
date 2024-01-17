@@ -6,6 +6,8 @@ namespace Compiler;
 public record CompileData {
     public string FileName { get; init; } = "";
 
+    public string WorkingDirectory { get; init; } = "";
+
     public string ElanCode { get; init; } = "";
 
     public ParserErrorException[] ParserErrors { get; init; } = Array.Empty<ParserErrorException>();
