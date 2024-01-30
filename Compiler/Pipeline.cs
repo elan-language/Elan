@@ -50,7 +50,7 @@ public static class Pipeline {
 
     private static CompileData ValidateHeader(CompileData compileData) {
         var code = compileData.ElanCode;
-        var firstLine = code.Split(ElanSymbols.NewLine).FirstOrDefault() ?? string.Empty;
+        var firstLine = code.Split("\n").FirstOrDefault() ?? string.Empty;
         var headerTokens = firstLine.Split(" ");
 
         var headerErrors = new List<string>();
