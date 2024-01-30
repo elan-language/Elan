@@ -12,7 +12,7 @@ public class T83_PrintingCommonSymbols {
     // in a cmd prompt - so may be just locale issue. 
     [TestMethod]
     public void Pass_CommonSymbolsAccessibleFromUKKeyboard() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   print ""¬!£$%^&*()@~#`|<>'""
 end main

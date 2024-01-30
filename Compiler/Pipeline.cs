@@ -15,6 +15,7 @@ public static class Pipeline {
     }
 
     public static CompileData Compile(CompileData compileData) {
+        compileData = ValidateHeader(compileData);
         compileData = ParseCode(compileData);
         compileData = CompileCode(compileData);
         compileData = GenerateSymbolTable(compileData);
@@ -32,11 +33,11 @@ public static class Pipeline {
     }
 
     private static CompileData ParseCode(CompileData compileData) {
-        if (string.IsNullOrWhiteSpace(compileData.ElanCode)) {
+        if (compileData.HeaderErrors.Length > 0) {
             return compileData;
         }
 
-        compileData = NormalizeCode(compileData);
+        compileData = ValidateHeader(compileData);
 
         var parser = GetParser(compileData.ElanCode);
         var parseTree = parser.file();
@@ -47,17 +48,38 @@ public static class Pipeline {
         return compileData with { ParserErrors = syntaxErrors, ParseTree = parseTree, ParseStringTree = parseStringTree };
     }
 
-    private static CompileData NormalizeCode(CompileData compileData) {
+    private static CompileData ValidateHeader(CompileData compileData) {
         var code = compileData.ElanCode;
+        var firstLine = code.Split(ElanSymbols.NewLine).FirstOrDefault() ?? string.Empty;
+        var headerTokens = firstLine.Split(" ");
 
-        if (code.StartsWith(ElanSymbols.Comment)) {
-            return compileData;
+        var headerErrors = new List<string>();
+
+        if (headerTokens.Length < 4) {
+            headerErrors.Add("Header must be comment with Elan version, status and hash");
+        }
+        else {
+            if (headerTokens[0].Trim() != "#") {
+                headerErrors.Add("Header is not comment");
+            }
+
+            if (headerTokens[1].Trim() != "Elanv0.1") {
+                headerErrors.Add("Incorrect Elan version expect: 'Elan v0.1'");
+            }
+
+            if (headerTokens[2].Trim() != "Parsed") {
+                headerErrors.Add("Status must be 'Parsed'");
+            }
+
+            if (!ValidateHash(headerTokens[3], code)) {
+                headerErrors.Add("Hash check failed");
+            }
         }
 
-        code = $"{ElanSymbols.Comment}{ElanSymbols.NewLine}{code}";
-
-        return compileData with { ElanCode = code };
+        return headerErrors.Count == 0 ? compileData with { ElanCode = code } : compileData with { ElanCode = "", HeaderErrors = headerErrors.ToArray() };
     }
+
+    private static bool ValidateHash(string headerToken, string code) => true;
 
     private static CompileData CompileCode(CompileData compileData) {
         if (compileData.ParseTree is null || compileData.ParserErrors.Length > 0) {

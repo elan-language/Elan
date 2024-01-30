@@ -10,7 +10,7 @@ public class T29_Expressions3_FunctionCalls {
 
     [TestMethod]
     public void Pass_LibraryConst() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   print pi
 end main
@@ -44,7 +44,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_SingleFunctionCall() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var x set to sin(pi/180*30)
   print x
@@ -80,7 +80,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DotSyntax() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var x set to  pi/180*30
   var y set to x.sin()
@@ -118,7 +118,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DotSyntaxFunctionEvaluationHasPrecedenceOverOperators() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var x set to  pi/180*30
   var y set to 2 + x.sin()
@@ -156,7 +156,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MoreComplexExpression() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var x set to 0.7
   var y set to sin(x) ^ 2 + cos(x) ^ 2
@@ -194,7 +194,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MultiParamCall() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var x set to min(3.1, 3)
   print x
@@ -229,7 +229,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MultiParamCallUsingDotSyntax() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var x set to 3.max(3.1)
   print x
@@ -268,7 +268,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_IncorrectType() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var x set to ""hello"".max(""world"")
 end main
@@ -284,7 +284,7 @@ end main
 
     [TestMethod]
     public void Fail_UnconsumedExpressionResult1() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
     main
       call sin(1)
     end main
@@ -297,7 +297,7 @@ end main
 
     [TestMethod]
     public void Fail_UnconsumedExpressionResult2() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
     main
       1 + 2
     end main
@@ -309,7 +309,7 @@ end main
 
     [TestMethod]
     public void Fail_UnconsumedExpressionResult3() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
     main
       var a set to 1
       call a.sin()

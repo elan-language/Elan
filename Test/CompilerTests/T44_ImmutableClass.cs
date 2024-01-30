@@ -10,7 +10,7 @@ public class T44_ImmutableClass {
 
     [TestMethod]
     public void Pass_BasicImmutableClass() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var f set to new Foo(3)
     print f.p1
@@ -81,7 +81,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AbstractImmutableClass() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var f set to new Foo(3)
     print f.p1
@@ -173,7 +173,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_ProcedureMethod() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 immutable class Foo
     constructor(p1 Int)
         set property.p1 to p1
@@ -196,7 +196,7 @@ end class
 
     [TestMethod]
     public void Fail_ProcedureMethodOnAbstractImmutableClass() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 abstract immutable class Bar
     property p1 Int
 
@@ -210,7 +210,7 @@ end class
 
     [TestMethod]
     public void Fail_AbstractAndImmutableReversed() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 immutable abstract class Bar
     property p1 Int
 

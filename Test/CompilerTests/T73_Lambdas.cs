@@ -10,7 +10,7 @@ public class T73_Lambdas {
 
     [TestMethod]
     public void Pass_PassAsParam() {
-        var code = @"
+       var code = @"# Elanv0.1 Parsed FFFF
 main
   call printModified(4, lambda x -> x * 3)
 end main
@@ -50,7 +50,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_TupleArg() {
-        var code = @"
+       var code = @"# Elanv0.1 Parsed FFFF
 main
   call printModified((4, 5), lambda t -> t.first())
 end main
@@ -94,7 +94,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_PassLambdaWithWrongTypes() {
-        var code = @"
+       var code = @"# Elanv0.1 Parsed FFFF
 main
   call printModified(4, lambda x -> x.asString())
 end main
@@ -114,7 +114,7 @@ end procedure
 
     [TestMethod]
     public void Fail_InvokeLambdaWithWrongType() {
-        var code = @"
+       var code = @"# Elanv0.1 Parsed FFFF
 main
   call printModified(""4"", lambda x -> x * 3)
 end main
@@ -134,7 +134,7 @@ end procedure
 
     [TestMethod]
     public void Fail_AssignALambdaToAVariable() {
-        var code = @"
+       var code = @"# Elanv0.1 Parsed FFFF
 main
   var l = lambda x -> x * 5
 end main
@@ -145,7 +145,7 @@ end main
 
     [TestMethod]
     public void Fail_ReturnALambda() {
-        var code = @"
+       var code = @"# Elanv0.1 Parsed FFFF
 main
 end main
 

@@ -8,7 +8,7 @@ using static Helpers;
 public class T31_LogicalOperators {
     [TestMethod]
     public void Pass_and() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to false and false
     var b set to false and true
@@ -56,7 +56,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_or() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to false or false
     var b set to false or true
@@ -104,7 +104,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_xor() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to false xor false
     var b set to false xor true
@@ -152,7 +152,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_not() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to not false
     var b set to not true
@@ -200,7 +200,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Precedence() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to not false and true
     var b set to not (false and true)
@@ -240,7 +240,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_UseNotWithTwoArgs() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
     main
       var a set to true not false
     end main

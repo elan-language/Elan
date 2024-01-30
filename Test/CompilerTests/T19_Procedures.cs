@@ -13,7 +13,7 @@ public class T19_Procedures {
 
     [TestMethod]
     public void Pass_BasicOperationIncludingPrint() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     print 1
     call foo()
@@ -57,7 +57,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_GlobalProcedureOnClass() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var b set to new Bar()
     call b.foo()
@@ -126,7 +126,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_SystemProcedure() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     call pause(1)
     print 1
@@ -162,7 +162,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_WithParamsPassingVariables() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 2
     var b set to ""hello""
@@ -208,7 +208,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_WithParamsPassingRefVariables() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 2
     var b set to ""hello""
@@ -254,7 +254,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_WithMixedRefParams() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 2
     var b set to true
@@ -300,7 +300,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CallingWithDotSyntax() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 2
     var b set to ""hello""
@@ -346,7 +346,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_WithParamsPassingLiteralsOrExpressions() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 1
     call foo(a + 1, ""hello"")
@@ -390,7 +390,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_RefParamsCanBeUpdated() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 1
     var b set to ""hello""
@@ -440,7 +440,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_NestedCalls() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     call foo()
     print 3
@@ -491,7 +491,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Recursion() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     call foo(3)
 end main
@@ -541,7 +541,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_CallingUndeclaredProc() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     call bar()
 end main
@@ -557,7 +557,7 @@ end main
 
     [TestMethod]
     public void Fail_TypeSpecifiedBeforeParamName() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
 end main
 
@@ -572,7 +572,7 @@ end procedure
 
     [TestMethod]
     public void Fail_NoEnd() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     print 1
     call foo()
@@ -588,7 +588,7 @@ procedure foo()
 
     [TestMethod]
     public void Fail_CannotCallMain() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     print 1
     call foo()
@@ -605,7 +605,7 @@ end procedure
 
     [TestMethod]
     public void Fail_PassingUnnecessaryParameter() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     print 1
     call foo(3)
@@ -627,7 +627,7 @@ end procedure
 
     [TestMethod]
     public void Fail_PassingTooFewParams() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 1
     call foo(a + 1)
@@ -650,7 +650,7 @@ end procedure
 
     [TestMethod]
     public void Fail_PassingWrongType() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     call foo(1,2)
 end main
@@ -672,7 +672,7 @@ end procedure
 
     [TestMethod]
     public void Fail_InclusionOfOutInCall() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     call foo(out 1,2)
 end main
@@ -688,7 +688,7 @@ end procedure
 
     [TestMethod]
     public void Fail_InclusionOfRefInDefinition() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     call foo(byref 1,2)
 end main
@@ -704,7 +704,7 @@ end procedure
 
     [TestMethod]
     public void Fail_UnterminatedRecursion() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     call foo(3)
 end main
@@ -744,7 +744,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_CannotCallPrintAsAProcedure() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF# Elanv0.1 Parsed FFFF
 main
   call print(""Hello World!"")
 end main
@@ -755,7 +755,7 @@ end main
 
     [TestMethod]
     public void Fail_NonRefParamsCannotBeUpdated() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 1
     var b set to ""hello""
@@ -779,7 +779,7 @@ end procedure
 
     [TestMethod]
     public void Fail_RefKeywordMayNotBeAddedToArgument() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 1
     var b set to ""hello""
@@ -800,7 +800,7 @@ end procedure
 
     [TestMethod]
     public void Fail_WithParamsPassingRefLiteral() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 2
     var b set to ""hello""

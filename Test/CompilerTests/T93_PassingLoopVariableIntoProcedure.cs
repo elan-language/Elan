@@ -10,7 +10,7 @@ public class T93_PassingLoopVariableIntoProcedure {
 
     [TestMethod]
     public void Pass_CorrectedPattern() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 procedure removeLetters(wordAsPlayed String)
   each letter in wordAsPlayed
     var x set to letter
@@ -63,7 +63,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_InvalidPattern() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 procedure removeLetters(wordAsPlayed String)
   each letter in wordAsPlayed
     call removeLetter(letter)

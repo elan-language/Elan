@@ -124,6 +124,14 @@ public static partial class Helpers {
         }
     }
 
+    public static void AssertInvalidHeader(CompileData compileData, string messageStarting) {
+        Assert.IsTrue(compileData.HeaderErrors.Length > 0, "Unexpectedly valid header");
+        var actual = compileData.HeaderErrors[0];
+        if (messageStarting != "*" && !actual.StartsWith(messageStarting)) {
+            Assert.AreEqual(messageStarting, actual);
+        }
+    }
+
     public static string ReadCodeFile(string fileName) => File.ReadAllText($"ExampleProjects\\{fileName}");
 
     public static void CleanUpArtifacts() {

@@ -10,7 +10,7 @@ public class T54_With {
 
     [TestMethod]
     public void Fail_NonMatchingProperty() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var x set to new Foo() with {p1 set to 3, p3 set to ""Apple"" }
     print x.p1
@@ -46,7 +46,7 @@ end class
 
     [TestMethod]
     public void Pass_InstantiatingClassWithZeroParamConstructor() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var x set to new Foo() with {p1 set to 3, p2 set to ""Apple"" }
     print x.p1
@@ -117,7 +117,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ConstructorWithParm() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var x set to new Foo(7) with {p1 set to 3, p2 set to ""Apple"" }
     print x.p1
@@ -188,7 +188,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AppliedToInstanceButReturnedOneIsNewInstance() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var x set to new Foo()
     var y set to x with {p1 set to 3, p2 set to ""Apple"" }
@@ -263,7 +263,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_WorksWithImmutableClass() {
-        var code = @"#
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var x set to new Foo()
     var y set to x with {p1 set to 3, p2 set to ""Apple"" }

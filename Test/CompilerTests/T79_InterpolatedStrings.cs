@@ -10,7 +10,7 @@ public class T79_InterpolatedStrings {
 
     [TestMethod]
     public void Pass_CanUseVariables() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 1
     var b set to ""Apple""
@@ -50,7 +50,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_UseCSharpKeywordAsVariable() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var static set to 1
     print ""{static}""

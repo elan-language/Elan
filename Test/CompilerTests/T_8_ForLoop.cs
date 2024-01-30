@@ -8,7 +8,7 @@ using static Helpers;
 public class T_8_ForLoop {
     [TestMethod]
     public void Pass_minimal() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 1 to 10
@@ -50,7 +50,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_withStep() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 1 to 10 step 2
@@ -92,7 +92,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_negativeStep() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 10 to 3 step -1
@@ -134,7 +134,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_innerLoop() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 1 to 3
@@ -180,7 +180,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_canUseExistingVariablesOfRightType() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var lower set to 1
   var upper set to 10
@@ -226,7 +226,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_useOfFloat() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 1.5 to 10
@@ -246,7 +246,7 @@ end main
 
     [TestMethod]
     public void Fail_modifyingCounter() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 1 to 10
@@ -264,7 +264,7 @@ end main
     }
 
     public void Fail_missingEnd() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 1 to 3
@@ -279,7 +279,7 @@ end main
 
     [TestMethod]
     public void Fail_nextVariable() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 1 to 10
@@ -293,7 +293,7 @@ end main
 
     [TestMethod]
     public void Fail_break() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 1 to 10
@@ -308,7 +308,7 @@ end main
 
     [TestMethod]
     public void Fail_continue() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
   var tot set to 0
   for i from 1 to 10

@@ -10,7 +10,7 @@ public class T12_Arrays {
 
     [TestMethod]
     public void Pass_DeclareAnEmptyArrayBySizeAndCheckLength() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>(3)
     print a.length()
@@ -46,7 +46,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ConfirmStringElementsInitializedToEmptyStringNotNull() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>(3)
     print a[0].length()
@@ -84,7 +84,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_SetAndReadElements() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>(3)
     set a[0] to ""foo""
@@ -126,7 +126,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_InitializeAnArrayFromAList() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to {""foo"",""bar"",""yon""}.asArray()
     print a.length()
@@ -162,7 +162,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_2DArray() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to new Array<of String>(3,4)
     set a[0,0] to ""foo""
@@ -208,7 +208,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_UseRoundBracketsForIndex() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>(3)
     var b set to a(0)
@@ -225,7 +225,7 @@ end main
 
     [TestMethod]
     public void Fail_ApplyIndexToANonIndexable() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to 3
     var b set to a[0]
@@ -241,7 +241,7 @@ end main
 
     [TestMethod]
     public void Fail_2DArrayCreatedByDoubleIndex() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>[3][4]
     print a[0,0]
@@ -255,7 +255,7 @@ end main
 
     [TestMethod]
     public void Fail_1DArrayAccessedAs2D() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>(3)
     set a[0,0] to ""foo""
@@ -273,7 +273,7 @@ end main
 
     [TestMethod]
     public void Fail_OutOfRange() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>(3)
     var b set to a[3]
@@ -309,7 +309,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_TypeIncompatibility() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>(3)
     set a[0] to true
@@ -327,7 +327,7 @@ end main
 
     [TestMethod]
     public void Fail_SizeNotSpecified() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>()
 end main
@@ -343,7 +343,7 @@ end main
 
     [TestMethod]
     public void Fail_SizeSpecifiedInSquareBrackets() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>[3]
 end main
@@ -354,7 +354,7 @@ end main
 
     [TestMethod]
     public void Fail_SpecifySizeAndInitializer() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>(3) {""foo"",""bar"",""yon""}
 end main
@@ -366,7 +366,7 @@ end main
 
     [TestMethod]
     public void Fail_SpecifyWithoutSizeOrInitializer() {
-        var code = @"
+        var code = @"# Elanv0.1 Parsed FFFF
 main
     var a set to Array<of String>()
 end main
