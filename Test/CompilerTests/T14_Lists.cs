@@ -10,7 +10,7 @@ public class T14_Lists {
 
     [TestMethod]
     public void Pass_literalList() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {4,5,6,7,8}
     print a
@@ -46,7 +46,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_literalListOfClass() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to new Foo()
     var b set to {a}
@@ -112,7 +112,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_literalListOfValueId() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to 1
     var b set to 1.1
@@ -202,7 +202,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_literalListOfString() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {""Foo"", ""Bar""}
     print a
@@ -237,7 +237,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_literalListWithCoercion() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {4.1,5,6,7,8}
     print a
@@ -273,7 +273,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_length() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {4,5,6,7,8}
     print a.length()
@@ -309,7 +309,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_emptyList() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to new List<of Int>()
     print a.length()
@@ -345,7 +345,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_index() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {4,5,6,7,8}
     print a[2]
@@ -380,7 +380,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_range() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {4,5,6,7,8}
     print a[2..]
@@ -419,7 +419,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_addElementToList() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {4,5,6,7,8}
     var b set to a + 9
@@ -458,7 +458,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_addListToElement() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {4,5,6,7,8}
     var b set to 9 + a
@@ -497,7 +497,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_addListToListUsingPlus() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {4,5,6,7,8}
     var b set to {1,2,3}
@@ -537,7 +537,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_constantLists() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {4,5,6,7,8}
 main
     print a
@@ -572,7 +572,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_createEmptyListUsingConstructor() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to new List<of Int>()
     print a
@@ -608,7 +608,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Default() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var f set to new Foo()
   print f.it
@@ -675,7 +675,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_emptyLiteralList() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {}
 end main
@@ -687,7 +687,7 @@ end main
 
     [TestMethod]
     public void Fail_literalListInconsistentTypes1() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {3, ""apples""}
 end main
@@ -700,7 +700,7 @@ end main
 
     [TestMethod]
     public void Fail_literalListInconsistentTypes2() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {3, 3.1}
 end main
@@ -713,7 +713,7 @@ end main
 
     [TestMethod]
     public void Fail_OutOfRange() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {4,5,6,7,8}
     var b set to a[5];

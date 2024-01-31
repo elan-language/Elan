@@ -10,7 +10,7 @@ public class T38_ExpressionsSplitOverMoreThanOneLine {
 
     [TestMethod]
     public void Pass_1() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 0.7
   var y set to sin(x) ^ 2 +
@@ -49,7 +49,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_3() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 0.7
   var y set to 
@@ -88,7 +88,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_4() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 0.7
   var y set to sin(
@@ -126,7 +126,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_5() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 0.7
   var y set to 3 + 4 *
@@ -167,7 +167,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_1() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 0.7
   var y set to sin(x) ^ 2 
@@ -181,7 +181,7 @@ end main
 
     [TestMethod]
     public void Fail_2() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 0.7
   set y 

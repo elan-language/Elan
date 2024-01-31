@@ -1,4 +1,4 @@
-# Elanv0.1 Parsed FFFF
+# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var li2 set to {"lemon","lime","orange"}
     print binarySearch(li2, "lemon")

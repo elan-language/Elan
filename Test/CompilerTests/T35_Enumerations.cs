@@ -10,7 +10,7 @@ public class T35_enums {
 
     [TestMethod]
     public void Pass_PrintValues() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
  print Fruit.apple
  print Fruit.orange
@@ -56,7 +56,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_useInVariable() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
  var x set to Fruit.apple
  set x to Fruit.pear
@@ -102,7 +102,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_useAsType() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
  var x set to Fruit.apple
  var y set to x
@@ -148,7 +148,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_equality() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to Fruit.apple
     print x is Fruit.apple
@@ -194,7 +194,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_SwitchCaseOnEnum() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
       var f set to Fruit.orange
       switch f
@@ -259,7 +259,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_coercionToString() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to ""Eat more "" + Fruit.apple + ""s!""
   print a
@@ -307,7 +307,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_InvalidTypeName() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
 end main
 
@@ -321,7 +321,7 @@ end enum
 
     [TestMethod]
     public void Fail_InvalidValueName() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
 end main
 
@@ -335,7 +335,7 @@ end enum
 
     [TestMethod]
     public void Fail_AssigningIntsToValues() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
 end main
 
@@ -349,7 +349,7 @@ end enum
 
     [TestMethod]
     public void Fail_coercionToInt() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
  var a set to 1
  set a to Fruit.apple

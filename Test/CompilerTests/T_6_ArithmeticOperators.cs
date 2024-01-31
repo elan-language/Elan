@@ -10,7 +10,7 @@ public class T_6_ArithmeticOperators {
 
     [TestMethod]
     public void Pass_IntAddition() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 + 4
 end main
@@ -44,7 +44,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntSubtraction() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 - 4
 end main
@@ -78,7 +78,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntMultiplication() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 * 4
 end main
@@ -112,7 +112,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IncludeVariable() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3
   print a + 4
@@ -148,7 +148,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DivideIntegersToFloat() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3/2
 end main
@@ -182,7 +182,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntegerDivision() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 7 div 2
 end main
@@ -216,7 +216,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Mod() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 11 mod 3
 end main
@@ -250,7 +250,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Power() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 ^ 3
 end main
@@ -284,7 +284,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_UseVariableBothSides() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3
   set a to a + 1
@@ -326,7 +326,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_InvalidExpression() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
     main
       var a = 3 4
     end main
@@ -338,7 +338,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_PlusEquals() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
     main
       var a = 3
       set a +to 1
@@ -351,7 +351,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_PlusPlus() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
     main
       var a = 3
       a ++

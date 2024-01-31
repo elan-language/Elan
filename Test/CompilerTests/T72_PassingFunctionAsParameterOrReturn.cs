@@ -10,7 +10,7 @@ public class T72_PassingFunctionAsParameterOrReturn {
 
     [TestMethod]
     public void Pass_PassAsParam() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   call printModified(3, twice)
 end main
@@ -58,7 +58,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_PassAsParam2() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   call printIt(""Hello"", 'e', find)
 end main
@@ -106,7 +106,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ReturnAFunction() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var f set to getFunc()
   print f(5)
@@ -157,7 +157,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FuncAsProperty() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var foo set to new Foo(twice)
   print foo.f(7)
@@ -230,7 +230,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DefaultValue() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var foo set to new Foo()
   print foo.f
@@ -296,7 +296,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DefaultValueObj() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var foo set to new Foo()
   print foo.f
@@ -362,7 +362,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_PrintingAFunction() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print twice
 end main
@@ -405,7 +405,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_FunctionSignatureDoesntMatch() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   call printModified(3, power)
 end main
@@ -430,7 +430,7 @@ end function
 
     [TestMethod]
     public void Fail_UsingReturnedFuncWithoutArgs() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to getFunc()
   print a()

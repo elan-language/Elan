@@ -10,7 +10,7 @@ public class T17_Dictionaries {
 
     [TestMethod]
     public void Pass_LiteralConstantAndPrinting() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a
@@ -45,7 +45,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AccessByKey() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a['z']
@@ -80,7 +80,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_keys() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a.keys()
@@ -115,7 +115,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_hasKey() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a.hasKey('b')
@@ -151,7 +151,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_values() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a.values()
@@ -185,7 +185,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Set() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   var b set to a.setItem('b', 4)
@@ -226,7 +226,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_RemoveEntry() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   var b set to a.removeItem('b')
@@ -265,7 +265,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_RemoveInvalidKey() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   var b set to a.removeItem('c')
@@ -302,7 +302,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CreateEmptyDictionary() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to new Dictionary<of String, Int>()
   var b set to a.setItem(""Foo"",1)
@@ -350,7 +350,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_RepeatedKey() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'a':10}
 main
   print a
@@ -369,7 +369,7 @@ end main
 
     [TestMethod]
     public void Fail_InconsistentTypes1() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3.1, 'z':10}
 main
   print a
@@ -386,7 +386,7 @@ end main
 
     [TestMethod]
     public void Fail_InconsistentTypes2() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3.1, ""Z"":10}
 main
   print a
@@ -403,7 +403,7 @@ end main
 
     [TestMethod]
     public void Fail_AccessByInvalidKey() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   print a['c']
@@ -437,7 +437,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_RemoveInvalidKeyType() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   var b set to a.removeItem(""b"")
@@ -455,7 +455,7 @@ end main
 
     [TestMethod]
     public void Fail_SetInvalidKeyType() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to {'a':1, 'b':3, 'z':10}
 main
   var b set to a.setItem(""b"", 4)

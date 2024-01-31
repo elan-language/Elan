@@ -1,4 +1,4 @@
-# Elanv0.1 Parsed FFFF
+# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var d set to 1999
     var result set to ""

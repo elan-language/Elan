@@ -10,7 +10,7 @@ public class T34_ConcreteClasses {
 
     [TestMethod]
     public void Pass_Class_SimpleInstantiation_PropertyAccess_Methods() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo()
     print x.p1
@@ -83,7 +83,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ConstructorWithParm() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo(7, ""Apple"")
     print x.p1
@@ -159,7 +159,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_NoConstructor() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 class Foo
 
     property p1 Int
@@ -177,7 +177,7 @@ end class
 
     [TestMethod]
     public void Fail_InitialisePropertyInLine() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 class Foo
 
     property p1 Int set to 3
@@ -195,7 +195,7 @@ end class
 
     [TestMethod]
     public void Fail_AttemptToModifyAPropertyDirectly() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo()
     set x.p1 to 3
@@ -219,7 +219,7 @@ end class
 
     [TestMethod]
     public void Fail_OverloadedConstructor() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 
 class Foo
     constructor()
@@ -243,7 +243,7 @@ end class
 
     [TestMethod]
     public void Fail_InstantiateWithoutRequiredArgs() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo()
 end main
@@ -272,7 +272,7 @@ end class
 
     [TestMethod]
     public void Fail_InstantiateWithWrongArgType() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo(7.1)
 end main
@@ -301,7 +301,7 @@ end class
 
     [TestMethod]
     public void Fail_SupplyingArgumentNotSpecified() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo(7)
 end main
@@ -330,7 +330,7 @@ end class
 
     [TestMethod]
     public void Fail_MissingNewOnInstantiation() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to Foo()
     print x.p1

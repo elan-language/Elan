@@ -10,7 +10,7 @@ public class T_9_Conditions {
 
     [TestMethod]
     public void Pass_lessThan() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 < 4
   print 3 < 2
@@ -48,7 +48,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_greaterThan() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 > 4
   print 3 > 2
@@ -86,7 +86,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_lessThanOrEqual() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 <= 4
   print 3 <= 2
@@ -124,7 +124,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_greaterThanOrEqual() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 >= 4
   print 3 >= 2
@@ -162,7 +162,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_isNot() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 is not 4
   print 3 is not 2
@@ -200,7 +200,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_is() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 is 4
   print 3 is 2
@@ -238,7 +238,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_canCompareCoerdableTypes() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 < 3.1
   print 3 is 3.0
@@ -279,7 +279,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_not_is() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 not is 3
 end main
@@ -290,7 +290,7 @@ end main
 
     [TestMethod]
     public void Fail_not() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 not 3
 end main
@@ -301,7 +301,7 @@ end main
 
     [TestMethod]
     public void Fail_notEqual() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 != 3
 end main
@@ -312,7 +312,7 @@ end main
 
     [TestMethod]
     public void Fail_EqualToOrLessThan() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 =< 3
 end main
@@ -323,7 +323,7 @@ end main
 
     [TestMethod]
     public void Fail_Greater_Or_Equal() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 > or = 3
 end main
@@ -334,7 +334,7 @@ end main
 
     [TestMethod]
     public void Fail_SingleEquals() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 = 4
 end main
@@ -345,7 +345,7 @@ end main
 
     [TestMethod]
     public void Fail_compareDifferentTypes() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 is ""3""
 end main
@@ -378,7 +378,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_greaterOrLessThan() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 <> 4
 end main
@@ -390,7 +390,7 @@ end main
 
     [TestMethod]
     public void Fail_doubleEquals() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 3 == 4
 end main

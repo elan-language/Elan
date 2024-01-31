@@ -10,7 +10,7 @@ public class T16_SwitchCase {
 
     [TestMethod]
     public void Pass_Minimal() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch i
@@ -68,7 +68,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_BracketsIgnored() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch (i)
@@ -127,7 +127,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DefaultIsUsed() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch i
@@ -177,7 +177,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_SwitchOnExpression() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch i + 1
@@ -236,7 +236,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_NoDefault() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 4
       switch i
@@ -257,7 +257,7 @@ end main
 
     [TestMethod]
     public void Fail_NoCase() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 4
       switch i
@@ -274,7 +274,7 @@ end main
 
     [TestMethod]
     public void Fail_IncompatibleCaseType() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch i
@@ -301,7 +301,7 @@ end main
 
     [TestMethod]
     public void Fail_UseOfVariableForCase() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 2
   for i from 1 to 3
@@ -322,7 +322,7 @@ end main
 
     [TestMethod]
     public void Fail_UseOfExpression() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch i
@@ -343,7 +343,7 @@ end main
 
     [TestMethod]
     public void Fail_CaseAfterDefault() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch i
@@ -364,7 +364,7 @@ end main
 
     [TestMethod]
     public void Fail_WithColons() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 4
       switch i
@@ -384,7 +384,7 @@ end main
 
     [TestMethod]
     public void Fail_actionOnSameLineAsCase() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch i
@@ -400,7 +400,7 @@ end main
 
     [TestMethod]
     public void Fail_missingExpression() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch
@@ -418,7 +418,7 @@ end main
 
     [TestMethod]
     public void Fail_caseValueMissing() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   for i from 1 to 3
       switch

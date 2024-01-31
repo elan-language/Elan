@@ -10,7 +10,7 @@ public class T65_ExpressionSyntaxFunctions {
 
     [TestMethod]
     public void Fail_endFunction() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
  print square(3)
 end main
@@ -29,7 +29,7 @@ end function
 
     [TestMethod]
     public void Pass_Simple() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
  print square(3)
 end main
@@ -68,7 +68,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_NoParams() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
  print phi()
 end main

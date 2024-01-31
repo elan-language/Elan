@@ -1,4 +1,6 @@
-﻿using AbstractSyntaxTree;
+﻿using System.Security.Cryptography;
+using System.Text;
+using AbstractSyntaxTree;
 using Antlr4.Runtime;
 using CSharpLanguageModel;
 using SymbolTable;
@@ -51,27 +53,32 @@ public static class Pipeline {
     private static CompileData ValidateHeader(CompileData compileData) {
         var code = compileData.ElanCode;
         var firstLine = code.Split("\n").FirstOrDefault() ?? string.Empty;
+        var codeBody = code[(code.IndexOf("\n") + 1)..];
         var headerTokens = firstLine.Split(" ");
 
         var headerErrors = new List<string>();
 
-        if (headerTokens.Length < 4) {
-            headerErrors.Add("Header must be comment with Elan version, status and hash");
+        if (headerTokens.Length < 5) {
+            headerErrors.Add("Header must be comment with Elan, version, status and hash");
         }
         else {
             if (headerTokens[0].Trim() != "#") {
                 headerErrors.Add("Header is not comment");
             }
 
-            if (headerTokens[1].Trim() != "Elanv0.1") {
-                headerErrors.Add("Incorrect Elan version expect: 'Elan v0.1'");
+            if (headerTokens[1].Trim() != "Elan") {
+                headerErrors.Add("Incorrect language expect: 'Elan'");
             }
 
-            if (headerTokens[2].Trim() != "Parsed") {
-                headerErrors.Add("Status must be 'Parsed'");
+            if (headerTokens[2].Trim() != "v0.1") {
+                headerErrors.Add("Incorrect Elan version expect: 'v0.1'");
             }
 
-            if (!ValidateHash(headerTokens[3], code)) {
+            if (headerTokens[3].Trim() != "valid") {
+                headerErrors.Add("Status must be 'valid'");
+            }
+
+            if (!ValidateHash(headerTokens[4].Trim(), codeBody)) {
                 headerErrors.Add("Hash check failed");
             }
         }
@@ -79,7 +86,20 @@ public static class Pipeline {
         return headerErrors.Count == 0 ? compileData with { ElanCode = code } : compileData with { ElanCode = "", HeaderErrors = headerErrors.ToArray() };
     }
 
-    private static bool ValidateHash(string headerToken, string code) => true;
+    private static bool ValidateHash(string headerToken, string code) {
+        if (headerToken == "FFFFFFFFFFFFFFFF") {
+            return true;
+        }
+
+        using var mySHA256 = SHA256.Create();
+        var bs = Encoding.UTF8.GetBytes(code);
+
+        var hash = mySHA256.ComputeHash(bs);
+        var hex = BitConverter.ToString(hash).Replace("-", "").ToLower();
+        var truncatedHex = hex[..16];
+
+        return truncatedHex == headerToken;
+    }
 
     private static CompileData CompileCode(CompileData compileData) {
         if (compileData.ParseTree is null || compileData.ParserErrors.Length > 0) {

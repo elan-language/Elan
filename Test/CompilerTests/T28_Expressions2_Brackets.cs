@@ -10,7 +10,7 @@ public class T28_Expressions2_Brackets {
 
     [TestMethod]
     public void Pass_BracketsChangeOperatorEvaluation() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 2 + 3 * 5 + 1
   var y set to (2 + 3) * 5 + 1
@@ -54,7 +54,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_RedundantBracketsIgnored() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 2 + (3 * 5) + 1
   var y set to ((2 + 3)) * 5 + (1)
@@ -98,7 +98,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_PowerHasHigherPrecedenceThatMultiply() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 2 + 3 ^ 2
   var y set to (2 + 3) ^ 2
@@ -138,7 +138,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_PowerHasHigherPrecedenceThanFloatDivision() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 16.0 / 2 ^ 3
   var y set to (16.0/2) ^ 3
@@ -179,7 +179,7 @@ public static class Program {
     [TestMethod]
     public void Pass_PowerHasHigherPrecedenceThanIntDivision() {
         //Point of this test is that dividing an integer by an integer is implemented a funciton, not an operator, in C#
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to 16 / 2 ^ 3
   var y set to (16/2) ^ 3
@@ -219,7 +219,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MinusAsAUnaryOperator() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var x set to - 4.7
   var y set to 5 * -3
@@ -259,7 +259,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_OperatorPrecedenceForMod() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to 11 mod 3
     var y set to 5 + 6 mod 3
@@ -298,7 +298,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_OperatorPrecedenceForDiv() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to 11 div 3
     var y set to 5 + 6 div 3
@@ -341,7 +341,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_PlusIsNotUnary() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
     main
       var a set to 3 * + 4
     end main
@@ -353,7 +353,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_MultiplyAfterMinus() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
     main
       var a set to 3 - * 4
     end main

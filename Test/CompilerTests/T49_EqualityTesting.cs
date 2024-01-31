@@ -13,7 +13,7 @@ public class T49_EqualityTesting {
 
     [TestMethod]
     public void Pass_DifferentInstancesWithSameValuesAreEqual() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo(7, ""Apple"")
     var y set to new Foo(7, ""Orange"")
@@ -96,7 +96,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_EmptyDoesNotEqualDefault() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo()
     print x is default Foo
@@ -168,7 +168,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DifferentInstancesWithSameLambdaValuesAreEqual() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo()
     var y set to new Foo()
@@ -235,7 +235,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ActuallyTheSameReference() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo(7, ""Apple"")
     var y set to x
@@ -321,7 +321,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_StringEquality() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to ""Apple""
     var y set to ""Apple""
@@ -362,7 +362,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ListEquality() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to {3,4,5}
     var y set to {3,4,5}
@@ -403,7 +403,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ArrayEquality() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to {3,4,5}.asArray()
     var y set to {3,4,5}.asArray()
@@ -448,7 +448,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DictionaryEquality() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to {'a':3,'b':4,'c':5}
     var y set to {'a':3,'b':4,'c':5}

@@ -13,7 +13,7 @@ public class T95_RepeatedCallToProcedureWithLiteralArgument {
 
     [TestMethod]
     public void Pass_Template() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   call square(3)
   call square(5)

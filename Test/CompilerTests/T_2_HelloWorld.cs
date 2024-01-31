@@ -16,7 +16,7 @@ public class T_2_HelloWorld {
 
     [TestMethod]
     public void Pass_CommentsOnly() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 # comment 1
 main # comment 2
   # comment 3 (indented)
@@ -50,7 +50,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_PrintWithNoExpression() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print
   print
@@ -85,7 +85,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_StringLiteral() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print ""Hello World!""
 end main
@@ -118,7 +118,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_BracketsMakeNoDifference() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print(""Hello World!"")
 end main
@@ -151,7 +151,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntegerLiteral() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 1
 end main
@@ -185,7 +185,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FloatLiteral() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 2.1
 end main
@@ -219,7 +219,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FloatWithExponent() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 2.1E4
 end main
@@ -252,7 +252,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FloatWithExponent2() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 2.1E100
 end main
@@ -285,7 +285,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FloatWithExponent3() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print 2.1e-4
 end main
@@ -318,7 +318,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CharLiteral() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print '%'
 end main
@@ -352,7 +352,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_BoolLiteral() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print true
 end main
@@ -386,7 +386,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_EmptyLine() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print """"
 end main
@@ -424,7 +424,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_noMain() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 print ""Hello World`
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -433,7 +433,7 @@ print ""Hello World`
 
     [TestMethod]
     public void Fail_noEnd() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print ""Hello World!""
 
@@ -444,7 +444,7 @@ main
 
     [TestMethod]
     public void Fail_WrongCasing() {
-        var code = @"# Elanv0.1 Parsed FFFF
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   print ""Hello World!""
 
