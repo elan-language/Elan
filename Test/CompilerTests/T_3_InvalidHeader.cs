@@ -95,10 +95,11 @@ public static class Program {
 
     [TestMethod]
     public void Pass_hash() {
-        var code = @"# Elan v0.1 valid 5500d24de64ecce5
+        var code = @"# Elan v0.1 valid eb3dc7628a465e14
 
 main
-  print ""Hello World!""
+  # My first program
+  print ""Hello World!"" 
 end main
 ";
 

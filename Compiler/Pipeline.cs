@@ -88,13 +88,16 @@ public static class Pipeline {
 
     private static bool ValidateHash(string headerToken, string code) {
         if (headerToken == "FFFFFFFFFFFFFFFF") {
+            // debug test value
             return true;
         }
 
-        using var mySHA256 = SHA256.Create();
-        var bs = Encoding.UTF8.GetBytes(code);
+        var normalizedCode = code.Trim().Replace("\r", "");
 
-        var hash = mySHA256.ComputeHash(bs);
+        using var sha256 = SHA256.Create();
+        var bs = Encoding.UTF8.GetBytes(normalizedCode);
+
+        var hash = sha256.ComputeHash(bs);
         var hex = BitConverter.ToString(hash).Replace("-", "").ToLower();
         var truncatedHex = hex[..16];
 
