@@ -5,59 +5,8 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T_3_InvalidHeader {
-    [TestMethod]
-    public void Fail_noComment() {
-        var code = @"main
-  print ""Hello World!""
-end main
-";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-       
-        AssertInvalidHeader(compileData, "Header must be comment with Elan, version, status and hash");
-    }
-
-    [TestMethod]
-    public void Fail_noContent() {
-        var code = @"#
-main
-  print ""Hello World!""
-end main
-";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-       
-        AssertInvalidHeader(compileData, "Header must be comment with Elan, version, status and hash");
-    }
-
-    [TestMethod]
-    public void Fail_BadStatus() {
-        var code = @"# Elan v0.1 Incomplete FFFFFFFFFFFFFFFF
-main
-  print ""Hello World!""
-end main
-";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-       
-        AssertInvalidHeader(compileData, "Status must be 'valid'");
-    }
-
-    [TestMethod]
-    public void Fail_BadHash() {
-        var code = @"# Elan v0.1 valid AAAAAAAAAAAAAAAA
-
-main
-  # My first program
-  print ""Hello World!"" 
-end main
-";
-
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-       
-        AssertInvalidHeader(compileData, "Hash check failed");
-    }
+public class T_3_Header {
+    #region Passes
 
     [TestMethod]
     public void Pass_header() {
@@ -128,4 +77,90 @@ public static class Program {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
+
+    #endregion
+
+    #region Fails
+
+    [TestMethod]
+    public void Fail_noComment() {
+        var code = @"main
+  print ""Hello World!""
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+
+        AssertInvalidHeader(compileData, "Header must be comment with Elan, version, status and hash");
+    }
+
+    [TestMethod]
+    public void Fail_noContent() {
+        var code = @"#
+main
+  print ""Hello World!""
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+
+        AssertInvalidHeader(compileData, "Header must be comment with Elan, version, status and hash");
+    }
+
+    [TestMethod]
+    public void Fail_BadVersion() {
+        var code = @"# Elan v0.2 valid FFFFFFFFFFFFFFFF
+main
+  print ""Hello World!""
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+
+        AssertInvalidHeader(compileData, "Incorrect Elan version expect: 'v0.1'");
+    }
+
+    [TestMethod]
+    public void Fail_BadLanguage() {
+        var code = @"# Python v0.1 valid FFFFFFFFFFFFFFFF
+main
+  print ""Hello World!""
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+
+        AssertInvalidHeader(compileData, "Incorrect language expect: 'Elan'");
+    }
+
+
+    [TestMethod]
+    public void Fail_BadStatus() {
+        var code = @"# Elan v0.1 Incomplete FFFFFFFFFFFFFFFF
+main
+  print ""Hello World!""
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+
+        AssertInvalidHeader(compileData, "Status must be 'valid'");
+    }
+
+    [TestMethod]
+    public void Fail_BadHash() {
+        var code = @"# Elan v0.1 valid eb3dc7628a465e15
+
+main
+  # My first program
+  print ""Hello World!"" 
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+
+        AssertInvalidHeader(compileData, "Hash check failed");
+    }
+
+    #endregion
 }

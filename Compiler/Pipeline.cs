@@ -58,7 +58,7 @@ public static class Pipeline {
 
         var headerErrors = new List<string>();
 
-        if (headerTokens.Length < 5) {
+        if (headerTokens.Length != 5) {
             headerErrors.Add("Header must be comment with Elan, version, status and hash");
         }
         else {
