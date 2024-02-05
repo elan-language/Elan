@@ -9,7 +9,7 @@ main
         var answer set to ' '
         repeat
             set answer to system.readKey()
-        until answer is 'y' or answer is 'n'
+        end repeat when answer is 'y' or answer is 'n'
         if answer is 'n' then
             set newGame to false
         end if
@@ -104,7 +104,7 @@ procedure setNewApplePosition(body List<of (Int, Int)>, out apple (Int, Int) ,bo
         var ranH set to system.random(boardHeight-1)
         var newPos set to (ranW, ranH) 
         set apple to newPos
-    until not bodyCovers(body, apple)
+    end repeat when not bodyCovers(body, apple)
 end procedure
 
 function getAdjacentSquare(sq (Int, Int), d Direction) as (Int, Int)

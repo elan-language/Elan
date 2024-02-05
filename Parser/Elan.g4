@@ -178,7 +178,7 @@ while:
 repeat: 
 	NL (REPEAT)
     statementBlock
-    NL UNTIL expression
+    NL END REPEAT WHEN expression
 	;
 
 try: 

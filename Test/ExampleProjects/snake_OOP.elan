@@ -9,7 +9,7 @@ main
         var answer set to ' '
         repeat
             set answer to system.readKey()
-        until answer is 'y' or answer is 'n'
+        end repeat when answer is 'y' or answer is 'n'
         if answer is 'n' then
             set newGame to false
         end if
@@ -112,7 +112,7 @@ class Snake
             var ranW set to system.random(boardWidth-1)
             var ranH set to system.random(boardHeight-1)
             set apple to new Square(ranW, ranH) 
-        until not bodyCovers(apple)
+        end repeat when not bodyCovers(apple)
     end procedure
 
     function asString() as String

@@ -13,7 +13,7 @@ main
    var x set to 0
    repeat
      set x to x + 1
-   until  x >= 10
+   end repeat when x >= 10
    print x
 end main
 ";
@@ -59,9 +59,9 @@ main
        repeat
          set y to y + 1
          set t to t + 1
-       until  y > 4
+       end repeat when y > 4
      set x to x + 1
-   until  x > 3
+   end repeat when x > 3
    print t
 end main
 ";
@@ -103,7 +103,7 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_noUntil() {
+    public void Fail_no_end() {
         var code = @"
 main
    var x = 0
@@ -122,7 +122,7 @@ main
     var x set to 0
     repeat
       set x to x + 1
-   until var x >= 10
+   end repeat when var x >= 10
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -135,7 +135,7 @@ end main
 main
    repeat
      var x set to x + 1
-   until  x >= 10
+   end repeat when  x >= 10
 end main
 ";
 
@@ -151,7 +151,7 @@ main
     var x set to 0
     repeat x >= 10
       set x to x + 1
-    until 
+    end repeat 
 end main
 ";
 
@@ -166,7 +166,7 @@ main
     var x set to 0
     repeat
       set x to x + 1
-    until 
+    end repeat when 
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
@@ -180,7 +180,7 @@ main
     var x set to 0
     repeat
       set x to x + 1
-    until >= 10
+    end repeat when >= 10
 end main
 ";
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
