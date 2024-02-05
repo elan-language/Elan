@@ -10,7 +10,7 @@ public class T46_typeMethod {
 
     [TestMethod]
     public void Pass_TypeOfStandardTypes() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     print 1.type()
     print 1.1.type()
@@ -87,7 +87,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_TypeOfClasses() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to 1
     print a.type()
@@ -163,7 +163,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_TypeTesting() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     print 1.type() is 2.type();
     print 1.0.type() is 2.type();
@@ -228,7 +228,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_TypeForAClass() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var p set to new Player(""Richard"")
     print p.type() is ""Player""

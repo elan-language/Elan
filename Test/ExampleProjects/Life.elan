@@ -1,4 +1,5 @@
-﻿main
+﻿# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
   var cm set to new CharMap()
   var g set to exampleCells
   while true

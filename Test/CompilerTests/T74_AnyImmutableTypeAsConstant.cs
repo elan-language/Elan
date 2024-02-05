@@ -10,7 +10,7 @@ public class T74_AnyImmutableTypeAsConstant {
 
     [TestMethod]
     public void Pass_String() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant k set to ""Apple""
 
 main 
@@ -46,7 +46,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Tuple() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant k set to (3, ""Apple"")
 
 main 
@@ -82,7 +82,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_List() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant k set to {1,2,3}
 
 main 
@@ -118,7 +118,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Dictionary() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant k set to {'a':1, 'b':3, 'c':3}
 
 main 
@@ -154,7 +154,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ImmutableClass() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant k set to new Foo(3)
 
 main 
@@ -224,7 +224,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_Array() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant k set to new Array<of Int>(3)
 ";
         var parseTree = @"*";
@@ -237,7 +237,7 @@ constant k set to new Array<of Int>(3)
 
     [TestMethod]
     public void Fail_MutableClass() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant k set to new Foo(3)
 
 class Foo

@@ -14,6 +14,8 @@ public record CompileData {
 
     public string[] CompileErrors { get; init; } = { "Compile second pass not run" };
 
+    public string[] HeaderErrors { get; init; } = Array.Empty<string>();
+
     public ElanParser.FileContext? ParseTree { get; init; }
 
     public string ParseStringTree { get; init; } = "";

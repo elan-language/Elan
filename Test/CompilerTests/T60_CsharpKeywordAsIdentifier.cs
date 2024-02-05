@@ -10,7 +10,7 @@ public class T60_CsharpKeywordAsIdentifier {
 
     [TestMethod]
     public void Pass_CSkeywordAsIdentifier() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var base set to 1
   var break set to 1
@@ -75,7 +75,7 @@ end main
 
     [TestMethod]
     public void Pass_CSKeywordAsType() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var m set to new Base(3)
   print m.p1
@@ -108,7 +108,7 @@ end class
 
     [TestMethod]
     public void Fail_ElanKeywordAsIdentifier() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var procedure set to 1
 end main
@@ -119,7 +119,7 @@ end main
 
     [TestMethod]
     public void Fail_OutAsIdentifier() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var out set to 1
 end main

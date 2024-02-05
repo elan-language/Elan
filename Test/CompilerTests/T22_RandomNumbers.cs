@@ -10,7 +10,7 @@ public class T22_RandomNumbers {
 
     [TestMethod]
     public void Pass_CalledWithinExpression() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
      call seedRandom(3)
      print system.random()
@@ -34,7 +34,7 @@ end main
 
     [TestMethod]
     public void Pass_Raw() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
      call seedRandom(3)
      var x set to system.random()
@@ -75,7 +75,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MaxFloat() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
      call seedRandom(3)
      var x set to system.random(1000.0)
@@ -116,7 +116,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_RangeFloat() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
      call seedRandom(3)
      var x set to system.random(100.0, 200.0)
@@ -157,7 +157,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MaxInt() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
      call seedRandom(3)
      var x set to system.random(6)
@@ -198,7 +198,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_RangeInt() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
      call seedRandom(3)
      var x set to system.random(5,10)

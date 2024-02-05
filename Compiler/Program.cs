@@ -4,8 +4,12 @@ public static class Program {
     private static void HandleCompile(string fileName, string workingDir) {
         var compileData = Pipeline.Compile(fileName, workingDir);
 
-        if (compileData.ParserErrors.Length > 0 || compileData.CompileErrors.Length > 0) {
+        if (compileData.HeaderErrors.Length > 0 || compileData.ParserErrors.Length > 0 || compileData.CompileErrors.Length > 0) {
             Console.WriteLine("Failed to Compile");
+            foreach (var error in compileData.HeaderErrors) {
+                Console.WriteLine(error);
+            }
+
             foreach (var error in compileData.ParserErrors) {
                 Console.WriteLine(error.Message);
             }

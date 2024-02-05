@@ -14,7 +14,7 @@ public class T57_ConstructorParmsNotMutable {
 
     [TestMethod]
     public void Fail_reassigningIntParam() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 class Foo
     constructor(p_1 Int)
         set p_1 to p1
@@ -38,7 +38,7 @@ end class
 
     [TestMethod]
     public void Fail_MutatingArrayParam() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 class Foo
     constructor(a Array<of Int>)
         set a[0] to 4

@@ -13,7 +13,7 @@ public class T43_Inheritance {
 
     [TestMethod]
     public void Pass_DefineAbstractClassAndInheritFromIt() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -130,7 +130,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_InheritFromMoreThanOneAbstractClass() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -259,7 +259,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_SuperclassesCanDefineSameMember() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -393,7 +393,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_CannotInheritFromConcreteClass() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -441,7 +441,7 @@ end class
 
     [TestMethod]
     public void Fail_AbstractClassCannotInheritFromConcreteClass() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -473,7 +473,7 @@ end class
 
     [TestMethod]
     public void Fail_MustImplementAllInheritedMethods() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -517,7 +517,7 @@ end class
 
     [TestMethod]
     public void Fail_ImplementedMethodMustHaveSameSignature() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -565,7 +565,7 @@ end class
 
     [TestMethod]
     public void Fail_AbstractClassDefinesMethodBody() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x

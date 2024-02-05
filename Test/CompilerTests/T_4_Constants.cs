@@ -10,7 +10,7 @@ public class T_4_Constants {
 
     [TestMethod]
     public void Pass_Int() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to 3
 main
   print a
@@ -45,7 +45,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Float() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to 3.1
 main
   print a
@@ -80,7 +80,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_String() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to ""hell0""
 main
   print a
@@ -115,7 +115,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Char() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to 'a'
 main
   print a
@@ -150,7 +150,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_EmptyChar() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to ''
 main
   print a
@@ -187,7 +187,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_SpaceAsChar() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to ' '
 main
   print a
@@ -222,7 +222,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Bool() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to true
 main
   print a
@@ -256,7 +256,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Enum() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to Fruit.apple
 main
   print a
@@ -303,7 +303,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_useInsideMain() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   constant a = 3
   print a
@@ -315,7 +315,7 @@ end main
 
     [TestMethod]
     public void Fail_incorrectKeyword() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   const a = 3
 end main
@@ -326,7 +326,7 @@ end main
 
     [TestMethod]
     public void Fail_invalidLiteralString() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   constant a = 'hello'
 end main
@@ -337,7 +337,7 @@ end main
 
     [TestMethod]
     public void Fail_invalidLiteralString2() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   constant a set to hello
 end main
@@ -348,7 +348,7 @@ end main
 
     [TestMethod]
     public void Fail_reassignment() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to 3
 main
   set a to 4
@@ -362,7 +362,7 @@ end main
 
     [TestMethod]
     public void Fail_expression() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 
 constant a set to 3 + 4
 
@@ -375,7 +375,7 @@ end main
 
     [TestMethod]
     public void Fail_referenceToOtherConstant() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 
 constant a set to 3
 constant b set to a

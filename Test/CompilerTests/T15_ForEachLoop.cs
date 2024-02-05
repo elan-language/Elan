@@ -10,7 +10,7 @@ public class T15_eachLoop {
 
     [TestMethod]
     public void Pass_List() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {7,8,9}
     var n set to 0
@@ -54,7 +54,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Array() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {7,8,9}.asArray()
     var n set to 0
@@ -98,7 +98,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_string() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to ""hello""
     each x in a
@@ -138,7 +138,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_doubleLoop() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     each x in ""12""
         each y in ""34""
@@ -180,7 +180,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_functionProvidingList() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     each x in fruit()
         print x
@@ -229,7 +229,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_variableIsScoped() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var a set to {7,8,9}
     var x set to ""hello"";
@@ -272,7 +272,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_NoEndeach() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to ""hello""
   each x in a
@@ -287,7 +287,7 @@ end main
 
     [TestMethod]
     public void Fail_applyToANonIterable() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var y set to 10
     each x in y
@@ -307,7 +307,7 @@ end main
 
     [TestMethod]
     public void Fail_CannotAlterTheIterableWithinLoop() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to {1,2,3,4,5}
   each x in a

@@ -5,16 +5,14 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T10_WhileLoop {
+public class T_3_Header {
+    #region Passes
+
     [TestMethod]
-    public void Pass_minimal() {
+    public void Pass_header() {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
-   var x set to 0
-   while x < 10
-     set x to x + 1
-   end while
-   print x
+  print ""Hello World!""
 end main
 ";
 
@@ -29,11 +27,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var x = 0;
-    while (x < 10) {
-      x = x + 1;
-    }
-    System.Console.WriteLine(StandardLibrary.Functions.asString(x));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Hello World!""));
   }
 }";
 
@@ -45,24 +39,16 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "10\r\n");
+        AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
 
     [TestMethod]
-    public void Pass_innerLoop() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+    public void Pass_hash() {
+        var code = @"# Elan v0.1 valid eb3dc7628a465e14
+
 main
-    var t set to 0
-    var x set to 0
-    while x < 3
-        var y set to 0
-        while y < 4
-            set y to y + 1
-            set t to t + 1
-        end while
-        set x to x + 1
-    end while
-   print t
+  # My first program
+  print ""Hello World!"" 
 end main
 ";
 
@@ -77,17 +63,7 @@ public static partial class Globals {
 
 public static class Program {
   private static void Main(string[] args) {
-    var t = 0;
-    var x = 0;
-    while (x < 3) {
-      var y = 0;
-      while (y < 4) {
-        y = y + 1;
-        t = t + 1;
-      }
-      x = x + 1;
-    }
-    System.Console.WriteLine(StandardLibrary.Functions.asString(t));
+    System.Console.WriteLine(StandardLibrary.Functions.asString(@$""Hello World!""));
   }
 }";
 
@@ -99,79 +75,92 @@ public static class Program {
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
-        AssertObjectCodeExecutes(compileData, "12\r\n");
+        AssertObjectCodeExecutes(compileData, "Hello World!\r\n");
     }
 
-    [TestMethod]
-    public void Fail_noEnd() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
-main
-   var x = 0
-   while x < 10
-     set x to x + 1
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
+    #endregion
+
+    #region Fails
 
     [TestMethod]
-    public void Fail_variableNotPredefined() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
-main
-   while x < 10
-     set x to x + 1
-   end while
-end main
-";
-
-        var parseTree = @"*";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertParses(compileData);
-        AssertParseTreeIs(compileData, parseTree);
-        AssertCompiles(compileData);
-        AssertObjectCodeDoesNotCompile(compileData);
-    }
-
-    [TestMethod]
-    public void Fail_variableDefinedInWhile() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
-main
-   while var x < 10
-     set x to x + 1
-   end while
+    public void Fail_noComment() {
+        var code = @"main
+  print ""Hello World!""
 end main
 ";
 
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+
+        AssertInvalidHeader(compileData, "Header must be comment with Elan, version, status and hash");
     }
 
     [TestMethod]
-    public void Fail_noCondition() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+    public void Fail_noContent() {
+        var code = @"#
 main
-   var x = 0
-   while
-     set x to x + 1
-   end while
+  print ""Hello World!""
 end main
 ";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+
+        AssertInvalidHeader(compileData, "Header must be comment with Elan, version, status and hash");
     }
 
     [TestMethod]
-    public void Fail_while_do() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+    public void Fail_BadVersion() {
+        var code = @"# Elan v0.2 valid FFFFFFFFFFFFFFFF
 main
-   var x = 0
-   while x < 10
-     set x to x + 1
-   do
+  print ""Hello World!""
 end main
 ";
+
         var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
+
+        AssertInvalidHeader(compileData, "Incorrect Elan version expect: 'v0.1'");
     }
+
+    [TestMethod]
+    public void Fail_BadLanguage() {
+        var code = @"# Python v0.1 valid FFFFFFFFFFFFFFFF
+main
+  print ""Hello World!""
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+
+        AssertInvalidHeader(compileData, "Incorrect language expect: 'Elan'");
+    }
+
+
+    [TestMethod]
+    public void Fail_BadStatus() {
+        var code = @"# Elan v0.1 Incomplete FFFFFFFFFFFFFFFF
+main
+  print ""Hello World!""
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+
+        AssertInvalidHeader(compileData, "Status must be 'valid'");
+    }
+
+    [TestMethod]
+    public void Fail_BadHash() {
+        var code = @"# Elan v0.1 valid eb3dc7628a465e15
+
+main
+  # My first program
+  print ""Hello World!"" 
+end main
+";
+
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+
+        AssertInvalidHeader(compileData, "Hash check failed");
+    }
+
+    #endregion
 }

@@ -10,7 +10,7 @@ public class T55_asString {
 
     [TestMethod]
     public void Fail_ClassHasNoAsString() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 class Foo
     constructor()
         set p1 to 5
@@ -37,7 +37,7 @@ end class
 
     [TestMethod]
     public void Pass_AsStringMayBeCalled() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     var s set to f.asString()
@@ -110,7 +110,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AsStringCalledWhenObjectPrinted() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     print f
@@ -181,7 +181,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AsStringUsingDefaultHelper() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     print f
@@ -253,7 +253,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AsStringOnVariousDataTypes() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var l set to {1,2,3}
     var sl set to l.asString()

@@ -1,3 +1,4 @@
+# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var li set to {"plum","apricot","lime","lemon","melon","apple","orange","strawberry","pear","banana"}
   print mergeSort(li)

@@ -10,7 +10,7 @@ public class T56_PrivateProperties {
 
     [TestMethod]
     public void Pass_PrivatePropertyCanBeDeclared() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo()
 end main
@@ -84,7 +84,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_PrivatePropertyCannotBeAccessed() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     var s set to f.p2

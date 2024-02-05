@@ -10,7 +10,7 @@ public class T53_self {
 
     [TestMethod]
     public void Pass_DisambiguateParamAndProperty() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo(7)
     print x.p1
@@ -75,7 +75,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_UsingThisAsAnInstance() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     print f.bar()
@@ -159,7 +159,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_NoSuchProperty() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo(7)
     print x.p1
@@ -189,7 +189,7 @@ end class
 
     [TestMethod]
     public void Fail_MissingSelfCausesCompileErrorDueToAssigningToParam() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to new Foo(7)
     print x.p1

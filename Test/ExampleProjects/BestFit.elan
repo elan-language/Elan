@@ -1,4 +1,5 @@
-﻿main
+﻿# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
 end main
 
 function calcSumX(points List<of (Float, Float)>) as Float -> 

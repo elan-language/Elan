@@ -1,4 +1,4 @@
-﻿# Elan
+﻿# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     print welcome
     var k set to system.readKey()

@@ -10,7 +10,7 @@ public class T18_ThrowAndCatchException {
 
     [TestMethod]
     public void Pass_ThrowExceptionInMain() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     throw ""Foo""
 end main
@@ -44,7 +44,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ThrowExceptionInMainUsingVariableForMessage() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var msg set to ""Foo""
     throw msg
@@ -80,7 +80,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ThrowExceptionUsingInterpolatedStringForMessage() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var bar set to 1
     throw ""{bar}""
@@ -116,7 +116,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ThrowExceptionInProcedure() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
    call foo()
 end main
@@ -156,7 +156,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CatchException() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   try
      call foo()
@@ -207,7 +207,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CatchSystemGeneratedException() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   try
     var x set to 1
@@ -257,7 +257,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_UseException() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   try
      call foo()
@@ -313,7 +313,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_ThrowExceptionInFunction() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
    var s set to foo()
 end main
@@ -331,7 +331,7 @@ end function
 
     [TestMethod]
     public void Fail_catchMissingVariable() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   try
      call foo()
@@ -352,7 +352,7 @@ end procedure
 
     [TestMethod]
     public void Fail_UseExpressionForMessage() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var msg set to ""Foo""
     throw msg + bar

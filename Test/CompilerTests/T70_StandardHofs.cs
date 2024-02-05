@@ -10,7 +10,7 @@ public class T70_StandardHofs {
 
     [TestMethod]
     public void Pass_Filter() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.filter(lambda x -> x > 20)
@@ -49,7 +49,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ParallelFilter() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.asParallel().filter(lambda x -> x > 20)
@@ -88,7 +88,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Map() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.map(lambda x -> x + 1).asList()
@@ -125,7 +125,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Reduce() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.reduce(0, lambda s,x -> s+x)
@@ -164,7 +164,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Max() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.max()
@@ -199,7 +199,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MaxBy() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.maxBy(lambda x -> x mod 5)
@@ -234,7 +234,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MaxBy1() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {{1}, {2,2}}
 main
  print source.maxBy(lambda t -> t.count())
@@ -269,7 +269,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MaxBy2() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {""apple"", ""orange"",""pear""}
 main
  print source.maxBy(lambda t -> t.length())
@@ -304,7 +304,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Count() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.count()
@@ -339,7 +339,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Min() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.min()
@@ -374,7 +374,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_MinBy() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
  print source.minBy(lambda x -> x mod 5)
@@ -409,7 +409,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Any() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
   print source.any(lambda x -> x > 20)
@@ -449,7 +449,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_GroupBy() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
   var gs set to source.groupBy(lambda x -> x mod 5).asList()
@@ -488,7 +488,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_MaxOnNonNumeric() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {""apple"",""orange"",""pear""}
 main
  print source.max()
@@ -522,7 +522,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_MaxLambdaReturningNonNumeric() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant source set to {""apple"", ""orange"",""pear""}
 main
  print source.maxBy(lambda t -> t.asUpperCase())

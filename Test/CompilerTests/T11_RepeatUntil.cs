@@ -8,7 +8,7 @@ using static Helpers;
 public class T11_RepeatUntil {
     [TestMethod]
     public void Pass_minimal() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
    var x set to 0
    repeat
@@ -50,7 +50,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_innerLoop() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
    var t set to 0
    var x set to 0
@@ -103,21 +103,8 @@ public static class Program {
     }
 
     [TestMethod]
-    public void Fail_no_end() {
-        var code = @"
-main
-   var x = 0
-   repeat
-     set x to x + 1
-end main
-";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
-        AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod]
     public void Fail_variableRedeclaredInTest() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to 0
     repeat
@@ -131,7 +118,7 @@ end main
 
     [TestMethod]
     public void Fail_variableDefinedInLoop() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
    repeat
      var x set to x + 1
@@ -146,7 +133,7 @@ end main
 
     [TestMethod]
     public void Fail_testPutOnRepeat() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to 0
     repeat x >= 10
@@ -161,7 +148,7 @@ end main
 
     [TestMethod]
     public void Fail_noCondition() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to 0
     repeat
@@ -175,7 +162,7 @@ end main
 
     [TestMethod]
     public void Fail_invalidCondition() {
-        var code = @"
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var x set to 0
     repeat

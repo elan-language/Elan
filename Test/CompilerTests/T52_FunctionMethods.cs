@@ -10,7 +10,7 @@ public class T52_FunctionMethods {
 
     [TestMethod]
     public void Pass_HappyCase() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     print f.times(2)
@@ -84,7 +84,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FunctionMethodMayCallOtherClassFunctionViaProperty() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     print f.length()
@@ -197,7 +197,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FunctionMethodMayCallOtherClassFunctionMethod() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     var b set to new Bar()
@@ -320,7 +320,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FunctionMethodNameHidesGlobalFunction() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     print f
@@ -390,7 +390,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_FunctionCannotBeCalledDirectly() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     print times(f,2)
@@ -424,7 +424,7 @@ end class
 
     [TestMethod]
     public void Fail_FunctionMethodCannotMutateProperty() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 class Foo
     constructor()
         set p1 to 5
@@ -453,7 +453,7 @@ end class
 
     [TestMethod]
     public void Fail_FunctionMethodCannotCallProcedureMethod() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 class Foo
     constructor()
         set p1 to 5

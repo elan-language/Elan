@@ -10,7 +10,7 @@ public class T_5_Variables {
 
     [TestMethod]
     public void Pass_Int() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3
   print a
@@ -46,7 +46,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Int_Expression() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3 + 4
   print a
@@ -82,7 +82,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Reassign() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3
   set a to 4
@@ -120,7 +120,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CoerceFloatToIntVar() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3.1
   set a to 4
@@ -158,7 +158,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_LocalVarHidesGlobalConstant() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 constant a set to 3
 main
   var a set to 4
@@ -195,7 +195,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_OperatorCoverage() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3 - 4
   var b set to 3 < 4
@@ -259,7 +259,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Enum() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to Fruit.apple
   print a
@@ -306,7 +306,7 @@ public static class Program {
 
     [TestMethod]
     public void fail_wrongKeyword() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   variable a = 3
 end main
@@ -317,7 +317,7 @@ end main
 
     [TestMethod]
     public void fail_duplicateVar() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3
   var a set to 4
@@ -330,7 +330,7 @@ end main
 
     [TestMethod]
     public void fail_GlobalVariable() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 var a = 4
 main
 end main
@@ -341,7 +341,7 @@ end main
 
     [TestMethod]
     public void fail_assignIncompatibleType() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 4
   set a to 4.1
@@ -355,7 +355,7 @@ end main
 
     [TestMethod]
     public void fail_notInitialised() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a
   set a to 4.1
@@ -367,7 +367,7 @@ end main
 
     [TestMethod]
     public void fail_invalidVariableName1() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var A = 4.1
 end main
@@ -378,7 +378,7 @@ end main
 
     [TestMethod]
     public void fail_invalidVariableName2() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a@b = 4.1
 end main
@@ -389,7 +389,7 @@ end main
 
     [TestMethod]
     public void fail_useOfKeywordAsName() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var if = 4.1
 end main

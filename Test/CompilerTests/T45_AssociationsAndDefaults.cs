@@ -13,7 +13,7 @@ public class T45_AssociationsAndDefaults {
 
     [TestMethod]
     public void Pass_CanHavePropertiesThatAreDataStructuresOrObjects() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var g set to new Game()
     print g.p2
@@ -123,7 +123,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_PropertiesOfAllStandardTypesHaveDefaultValues() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var g set to new Game()
     print g.i
@@ -222,7 +222,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DefaultValuesNotPickedUpFromDefaultConstructor() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var g set to default Game
     print g.i
@@ -287,7 +287,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_PropertiesOfClassTypesHaveDefaultValues() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var g set to new Game()
     print g.p1
@@ -386,7 +386,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_defaultKeywordToTestValue() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var g set to new Game()
     print g.p1 is default Player
@@ -509,7 +509,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_defaultValueCanBeAssigned() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var g set to new Game()
     print g.score
@@ -633,7 +633,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_defaultForStandardDataStructures() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var f set to new Foo()
     print f.a
@@ -719,7 +719,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_PropertyOfAbstractType() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var g set to new Game()
     print(g.p1.ucName())
@@ -802,7 +802,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_defaultCannotBeReplacedUsingWith() {
-        var code = @"#
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
     var p set to default Player
     var p1 set to new Player(""other player"")
