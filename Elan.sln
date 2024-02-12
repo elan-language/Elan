@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StandardLibrary", "Standard
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymbolTable", "SymbolTable\SymbolTable.csproj", "{68E48CC2-5220-4884-BF70-C82AB61BF2E6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanguageServer", "LanguageServer\LanguageServer.csproj", "{EDD0D448-C770-43AE-868A-CDBDC0F2A821}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{68E48CC2-5220-4884-BF70-C82AB61BF2E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68E48CC2-5220-4884-BF70-C82AB61BF2E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68E48CC2-5220-4884-BF70-C82AB61BF2E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDD0D448-C770-43AE-868A-CDBDC0F2A821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD0D448-C770-43AE-868A-CDBDC0F2A821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD0D448-C770-43AE-868A-CDBDC0F2A821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD0D448-C770-43AE-868A-CDBDC0F2A821}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
