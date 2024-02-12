@@ -21,7 +21,7 @@ namespace Server
         private readonly TextDocumentSelector _documentSelector = new TextDocumentSelector(
             new TextDocumentFilter()
             {
-                Pattern = "**/*.csproj"
+                Pattern = "**/*.elan"
             }
         );
 
@@ -46,7 +46,7 @@ namespace Server
 
         public TextDocumentAttributes GetTextDocumentAttributes(Uri uri)
         {
-            return new TextDocumentAttributes(uri, "xml");
+            return new TextDocumentAttributes(uri, "elan");
         }
 
         public Task<Unit> Handle(DidChangeTextDocumentParams request, CancellationToken cancellationToken)
