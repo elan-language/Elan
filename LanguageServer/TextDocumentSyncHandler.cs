@@ -15,7 +15,7 @@ namespace Server
 {
     internal class TextDocumentSyncHandler : ITextDocumentSyncHandler
     {
-        private readonly ILanguageServer _router;
+        private readonly ILanguageServerFacade  _router;
         private readonly BufferManager _bufferManager;
 
         private readonly TextDocumentSelector _documentSelector = new TextDocumentSelector(
@@ -27,7 +27,7 @@ namespace Server
 
         private TextSynchronizationCapability _capability;
 
-        public TextDocumentSyncHandler(ILanguageServer router, BufferManager bufferManager)
+        public TextDocumentSyncHandler(ILanguageServerFacade router, BufferManager bufferManager)
         {
             _router = router;
             _bufferManager = bufferManager;
@@ -42,11 +42,6 @@ namespace Server
                 DocumentSelector = _documentSelector,
                 SyncKind = Change
             };
-        }
-
-        public TextDocumentAttributes GetTextDocumentAttributes(Uri uri)
-        {
-            return new TextDocumentAttributes(uri, "elan");
         }
 
         public Task<Unit> Handle(DidChangeTextDocumentParams request, CancellationToken cancellationToken)
@@ -82,32 +77,29 @@ namespace Server
             _capability = capability;
         }
 
-        //ITextDocumentRegistrationOptions IRegistration<TextDocumentRegistrationOptions>.GetRegistrationOptions()
-        //{
-        //    return new TextDocumentSaveRegistrationOptions()
-        //    {
-        //        DocumentSelector = _documentSelector,
-        //    };
-        //}
-
-        //TextDocumentSaveRegistrationOptions IRegistration<TextDocumentSaveRegistrationOptions>.GetRegistrationOptions()
-        //{
-        //    return new TextDocumentSaveRegistrationOptions()
-        //    {
-        //        DocumentSelector = _documentSelector,
-        //        IncludeText = true
-        //    };
-        //}
+       
         TextDocumentChangeRegistrationOptions IRegistration<TextDocumentChangeRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) {
-            throw new NotImplementedException();
+            return new TextDocumentChangeRegistrationOptions()
+            {
+                DocumentSelector = _documentSelector
+                
+            };
         }
 
         TextDocumentOpenRegistrationOptions IRegistration<TextDocumentOpenRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) {
-            throw new NotImplementedException();
+            return new TextDocumentOpenRegistrationOptions()
+            {
+                DocumentSelector = _documentSelector
+              
+            };
         }
 
         TextDocumentCloseRegistrationOptions IRegistration<TextDocumentCloseRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) {
-            throw new NotImplementedException();
+            return new TextDocumentCloseRegistrationOptions()
+            {
+                DocumentSelector = _documentSelector
+               
+            };
         }
 
         TextDocumentSaveRegistrationOptions IRegistration<TextDocumentSaveRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) {
@@ -119,7 +111,7 @@ namespace Server
         }
 
         public TextDocumentAttributes GetTextDocumentAttributes(DocumentUri uri) {
-            throw new NotImplementedException();
+            return new TextDocumentAttributes(uri, "elan");
         }
     }
 }
