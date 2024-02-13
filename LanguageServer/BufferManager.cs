@@ -12,6 +12,7 @@ internal class BufferManager {
         var compileData = Pipeline.Compile(new CompileData { ElanCode = buffer });
 
         buffers.AddOrUpdate(documentPath, k => (buffer, compileData), (k, v) => (buffer, compileData));
+        Pipeline.RunCompileObjectCode = true;
     }
 
     public (string Code, CompileData CompileData) GetBuffer(string documentPath) => buffers.GetValueOrDefault(documentPath);
