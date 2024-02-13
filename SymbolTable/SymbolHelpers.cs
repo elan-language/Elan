@@ -303,4 +303,12 @@ public static class SymbolHelpers {
     public static IEnumerable<IAstNode> Expand(this IEnumerable<IAstNode> nodes) {
         return nodes.SelectMany(n => n is StatementBlockNode ? n.Children : new[] { n });
     }
+
+    public static ISymbol[] GetAllSymbolsFlattened(BaseScope scope) {
+        var symbols = scope.Symbols.ToArray();
+
+        var subSymbols = symbols.OfType<BaseScope>().Aggregate(new List<ISymbol>(), (a, s) => a.Concat(GetAllSymbolsFlattened(s)).ToList());
+
+        return symbols.Concat(subSymbols).ToArray();
+    }
 }

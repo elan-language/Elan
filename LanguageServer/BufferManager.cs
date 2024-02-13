@@ -1,19 +1,18 @@
 ﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
+using Compiler;
 
-namespace Server
-{
-    internal class BufferManager
-    {
-        private ConcurrentDictionary<string, string> _buffers = new ConcurrentDictionary<string, string>();
+namespace Server;
 
-        public void UpdateBuffer(string documentPath, string buffer)
-        {
-            _buffers.AddOrUpdate(documentPath, buffer, (k, v) => buffer);
-        }
+internal class BufferManager {
+    private readonly ConcurrentDictionary<string, (string Code, CompileData CompileData)> buffers = new();
 
-        public string GetBuffer(string documentPath)
-        {
-            return _buffers.TryGetValue(documentPath, out var buffer) ? buffer : null;
-        }
+    public void UpdateBuffer(string documentPath, string buffer) {
+        Pipeline.RunCompileObjectCode = false;
+        var compileData = Pipeline.Compile(new CompileData { ElanCode = buffer });
+
+        buffers.AddOrUpdate(documentPath, k => (buffer, compileData), (k, v) => (buffer, compileData));
     }
+
+    public (string Code, CompileData CompileData) GetBuffer(string documentPath) => buffers.GetValueOrDefault(documentPath);
 }
