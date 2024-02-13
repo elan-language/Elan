@@ -18,6 +18,7 @@ namespace Server
                     .AddDefaultLoggingProvider()
                     .WithServices(ConfigureServices)
                     .WithHandler<TextDocumentSyncHandler>()
+                    .WithHandler<CompletionHandler>()
                 );
 
             await server.WaitForExit;
