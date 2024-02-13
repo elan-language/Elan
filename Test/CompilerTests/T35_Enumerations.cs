@@ -45,7 +45,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -91,7 +91,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -137,7 +137,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -183,7 +183,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -248,7 +248,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -292,7 +292,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -315,7 +315,7 @@ enum fruit
     apple, orange, pear
 end enum
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -329,7 +329,7 @@ enum Fruit
     apple, Orange, pear
 end enum
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -343,7 +343,7 @@ enum Fruit
     apple = 1, orange = 2, pear = 3
 end enum
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -361,7 +361,7 @@ end enum
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);

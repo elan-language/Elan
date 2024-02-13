@@ -20,7 +20,7 @@ end main
         var parseTree = "*";
         var objectCode = "using System.Collections.Generic;\r\nusing StandardLibrary;\r\nusing static Globals;\r\nusing static StandardLibrary.Constants;\r\n\r\npublic static partial class Globals {\r\n\r\n}\r\n\r\npublic static class Program {\r\n  private static void Main(string[] args) {\r\n    StandardLibrary.Procedures.seedRandom(3);\r\n    System.Console.WriteLine(StandardLibrary.Functions.asString(StandardLibrary.SystemAccessors.random()));\r\n  }\r\n}";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -64,7 +64,7 @@ public static class Program {
 }";
 
         var parseTree = @"*";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -105,7 +105,7 @@ public static class Program {
 }";
 
         var parseTree = @"*";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -146,7 +146,7 @@ public static class Program {
 }";
 
         var parseTree = @"*";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -187,7 +187,7 @@ public static class Program {
 }";
 
         var parseTree = @"*";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -228,7 +228,7 @@ public static class Program {
 }";
 
         var parseTree = @"*";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);

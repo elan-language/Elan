@@ -40,7 +40,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -93,7 +93,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -163,7 +163,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -187,7 +187,7 @@ function foo(a Int, b Int) as Int
     return a * b
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -202,7 +202,7 @@ function foo(a Int, b Int)
 end function
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -217,7 +217,7 @@ function foo(a Int, b Int) Int
 end function
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -232,7 +232,7 @@ function foo(a Int, b Int) as Int
 end function
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -251,7 +251,7 @@ end function
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -269,7 +269,7 @@ function foo(a Int, b Int) as Int
     return
 end function
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -287,7 +287,7 @@ function foo(a Int, b Int) as Bool
     end if
 end function
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -303,7 +303,7 @@ end function
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -322,7 +322,7 @@ function foo(a Int, b Int) as Int
 end function
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -339,7 +339,7 @@ end function
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Cannot print in function");
@@ -358,7 +358,7 @@ end function
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Cannot use 'input' within a function");
@@ -377,7 +377,7 @@ end function
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Cannot access system within a function");
@@ -402,7 +402,7 @@ end procedure
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Cannot call a procedure within a function");
@@ -423,7 +423,7 @@ end function
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertDoesNotCompile(compileData, "Cannot modify param in function");
@@ -443,7 +443,7 @@ end function
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -464,7 +464,7 @@ end function
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -485,7 +485,7 @@ end function
 ";
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -503,7 +503,7 @@ function foo(ref a Int, b Int) as Int
 end function
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 

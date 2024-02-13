@@ -16,7 +16,7 @@ public class Life_test
         var code = ReadCodeFile("Life.elan");
         var objectCode = ReadCodeFile("Life.obj");
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);

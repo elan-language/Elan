@@ -35,7 +35,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -71,7 +71,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -109,7 +109,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -147,7 +147,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -184,7 +184,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -248,7 +248,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -291,7 +291,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -311,7 +311,7 @@ main
   variable a = 3
 end main
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -323,7 +323,7 @@ main
   var a set to 4
 end main
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertDoesNotCompile(compileData, "Duplicate id 'a' in scope 'main'");
     }
@@ -335,7 +335,7 @@ var a = 4
 main
 end main
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -347,7 +347,7 @@ main
   set a to 4.1
 end main
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeDoesNotCompile(compileData);
@@ -361,7 +361,7 @@ main
   set a to 4.1
 end main
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -372,7 +372,7 @@ main
   var A = 4.1
 end main
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -383,7 +383,7 @@ main
   var a@b = 4.1
 end main
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 
@@ -394,7 +394,7 @@ main
   var if = 4.1
 end main
 ";
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
     }
 

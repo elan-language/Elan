@@ -141,4 +141,9 @@ public static partial class Helpers {
             Directory.Delete(wd, true);
         }
     }
+
+    public static CompileData CompileData(string elanCode) {
+        return new CompileData() { ElanCode = elanCode, CompileOptions = new CompileOptions() { CompileToCSharp = !LightweightTest } };
+    }
+
 }

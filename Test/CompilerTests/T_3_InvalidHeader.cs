@@ -33,7 +33,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -69,7 +69,7 @@ public static class Program {
 
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -89,7 +89,7 @@ public static class Program {
 end main
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
 
         AssertInvalidHeader(compileData, "Header must be comment with Elan, version, status and hash");
     }
@@ -102,7 +102,7 @@ main
 end main
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
 
         AssertInvalidHeader(compileData, "Header must be comment with Elan, version, status and hash");
     }
@@ -115,7 +115,7 @@ main
 end main
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
 
         AssertInvalidHeader(compileData, "Incorrect Elan version expect: 'v0.1'");
     }
@@ -128,7 +128,7 @@ main
 end main
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
 
         AssertInvalidHeader(compileData, "Incorrect language expect: 'Elan'");
     }
@@ -142,7 +142,7 @@ main
 end main
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
 
         AssertInvalidHeader(compileData, "Status must be 'valid'");
     }
@@ -157,7 +157,7 @@ main
 end main
 ";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
 
         AssertInvalidHeader(compileData, "Hash check failed");
     }

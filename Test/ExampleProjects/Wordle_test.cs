@@ -16,7 +16,7 @@ public class Wordle_test
         var code = ReadCodeFile("Wordle_1.elan");
         var objectCode = ReadCodeFile("Wordle_1.obj");
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
@@ -30,7 +30,7 @@ public class Wordle_test
         var code = ReadCodeFile("Wordle_2.elan");
         var objectCode = ReadCodeFile("Wordle_2.obj");
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);

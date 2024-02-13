@@ -8,8 +8,6 @@ using SymbolTable;
 namespace Compiler;
 
 public static class Pipeline {
-    public static bool RunCompileObjectCode = true;
-
     public static CompileData Compile(string fileName, string workingDir) {
         var compileData = new CompileData { FileName = fileName, WorkingDirectory = workingDir };
         compileData = ReadCode(compileData);
@@ -140,7 +138,7 @@ public static class Pipeline {
     }
 
     private static CompileData CompileObjectCode(CompileData compileData) {
-        if (!RunCompileObjectCode || string.IsNullOrWhiteSpace(compileData.ObjectCode)) {
+        if (!compileData.CompileOptions.CompileToCSharp || string.IsNullOrWhiteSpace(compileData.ObjectCode)) {
             return compileData;
         }
 

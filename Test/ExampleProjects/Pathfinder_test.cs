@@ -16,7 +16,7 @@ public class Pathfinder_test
         var code = ReadCodeFile("Pathfinder.elan");
         var objectCode = ReadCodeFile("Pathfinder.obj");
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);

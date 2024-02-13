@@ -3,6 +3,11 @@ using SymbolTable;
 
 namespace Compiler;
 
+public record CompileOptions {
+    public bool CompileToCSharp { get; init; } = true;
+}
+
+
 public record CompileData {
     public string FileName { get; init; } = "";
 
@@ -29,4 +34,6 @@ public record CompileData {
     public string ObjectCodeCompileStdOut { get; init; } = "";
 
     public string ObjectCodeCompileStdErr { get; init; } = "";
+
+    public CompileOptions CompileOptions { get; init; } = new CompileOptions();
 }

@@ -17,7 +17,7 @@ public class Snake_test
 
         var objectCode = ReadCodeFile("snake_OOP.obj");
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);
@@ -31,7 +31,7 @@ public class Snake_test
 
         var objectCode = ReadCodeFile("snake_PP.obj");
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertCompiles(compileData);
         AssertObjectCodeIs(compileData, objectCode);

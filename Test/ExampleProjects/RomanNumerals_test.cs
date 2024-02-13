@@ -17,7 +17,7 @@ public class RomanNumerals_test
         var objectCode = ReadCodeFile("RomanNumerals_1.obj");
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -33,7 +33,7 @@ public class RomanNumerals_test
         var objectCode = ReadCodeFile("RomanNumerals_2.obj");
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -49,7 +49,7 @@ public class RomanNumerals_test
         var objectCode = ReadCodeFile("RomanNumerals_3.obj");
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -65,7 +65,7 @@ public class RomanNumerals_test
         var objectCode = ReadCodeFile("RomanNumerals_4.obj");
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -81,7 +81,7 @@ public class RomanNumerals_test
         var objectCode = ReadCodeFile("RomanNumerals_5.obj");
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -97,7 +97,7 @@ public class RomanNumerals_test
         var objectCode = ReadCodeFile("RomanNumerals_6.obj");
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -113,7 +113,7 @@ public class RomanNumerals_test
         var objectCode = ReadCodeFile("RomanNumerals_7.obj");
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
@@ -129,7 +129,7 @@ public class RomanNumerals_test
         var objectCode = ReadCodeFile("RomanNumerals_8.obj");
         var parseTree = @"*";
 
-        var compileData = Pipeline.Compile(new CompileData { ElanCode = code });
+        var compileData = Pipeline.Compile(CompileData(code));
         AssertParses(compileData);
         AssertParseTreeIs(compileData, parseTree);
         AssertCompiles(compileData);
