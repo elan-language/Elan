@@ -32,6 +32,10 @@ namespace Server
             }, cancellationToken)!;
         }
 
-        public DocumentSymbolRegistrationOptions GetRegistrationOptions(DocumentSymbolCapability capability, ClientCapabilities clientCapabilities) => new();
+        public DocumentSymbolRegistrationOptions GetRegistrationOptions(DocumentSymbolCapability capability, ClientCapabilities clientCapabilities) {
+            return new DocumentSymbolRegistrationOptions() {
+
+            };
+        }
     }
 }

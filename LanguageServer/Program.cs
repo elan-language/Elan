@@ -22,6 +22,7 @@ namespace Server
                     .WithServices(ConfigureServices)
                     .WithHandler<TextDocumentSyncHandler>()
                     .WithHandler<CompletionHandler>()
+                    .WithHandler<SymbolHandler>()
                 );
 
             await server.WaitForExit;
