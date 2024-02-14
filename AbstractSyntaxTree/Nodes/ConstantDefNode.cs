@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record ConstantDefNode(IAstNode Id, IAstNode Expression) : IAstNode {
+public record ConstantDefNode(IAstNode Id, IAstNode Expression, int Line, int Column) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Id, Expression };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

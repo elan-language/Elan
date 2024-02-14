@@ -3,7 +3,7 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record SystemAccessorCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters) : IAstNode, ICanWrapExpression {
+public record SystemAccessorCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters, int Line, int Column) : IAstNode, ICanWrapExpression {
     public string Name => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();
 
     public string MethodName => Id is IdentifierNode idn ? idn.Id : throw new NotImplementedException();

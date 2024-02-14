@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record FunctionDefNode(IAstNode Signature, IAstNode StatementBlock, IAstNode Return, bool Standalone = true) : IAstNode, IHasScope {
+public record FunctionDefNode(IAstNode Signature, IAstNode StatementBlock, IAstNode Return, bool Standalone/*true*/, int Line, int Column) : IAstNode, IHasScope {
     public IEnumerable<IAstNode> Children => new[] { Signature, StatementBlock, Return };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

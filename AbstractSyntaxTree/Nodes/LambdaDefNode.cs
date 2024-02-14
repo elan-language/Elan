@@ -3,7 +3,7 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record LambdaDefNode(ImmutableArray<IAstNode> Arguments, IAstNode Expression) : IAstNode, IHasScope {
+public record LambdaDefNode(ImmutableArray<IAstNode> Arguments, IAstNode Expression, int Line, int Column) : IAstNode, IHasScope {
     public IEnumerable<IAstNode> Children => Arguments.Append(Expression);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

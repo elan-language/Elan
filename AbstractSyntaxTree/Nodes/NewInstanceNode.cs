@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record NewInstanceNode(IAstNode Type, ImmutableArray<IAstNode> Arguments) : IAstNode {
+public record NewInstanceNode(IAstNode Type, ImmutableArray<IAstNode> Arguments, int Line, int Column) : IAstNode {
     public IEnumerable<IAstNode> Children => Arguments.Prepend(Type);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

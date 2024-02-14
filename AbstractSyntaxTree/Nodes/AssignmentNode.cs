@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record AssignmentNode(IAstNode Id, IAstNode Rhs, bool Inline) : IAstNode, ICanWrapExpression {
+public record AssignmentNode(IAstNode Id, IAstNode Rhs, bool Inline, int Line, int Column) : IAstNode, ICanWrapExpression {
     public IEnumerable<IAstNode> Children => new[] { Id, Rhs };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

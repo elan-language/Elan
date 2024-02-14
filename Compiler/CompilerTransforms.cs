@@ -31,13 +31,13 @@ public static class CompilerTransforms {
         static IAstNode TransformParameter(IAstNode p, int i, ProcedureSymbol scope) {
             // avoid failed with mismatched parameter counts
             if (i >= scope.ParameterNames.Length) {
-                return new ParameterCallNode(p, false);
+                return new ParameterCallNode(p, false, 0, 0);
             }
 
             var matchingParm = scope.ParameterNames[i];
 
             var symbol = scope.Resolve(matchingParm) as ParameterSymbol ?? throw new NullReferenceException();
-            return new ParameterCallNode(p, symbol.ByRef);
+            return new ParameterCallNode(p, symbol.ByRef, 0, 0);
         }
 
         return nodes.Last() switch {

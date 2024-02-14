@@ -10,11 +10,7 @@ using static Server.Helpers;
 
 namespace Server;
 
-internal class SymbolHandler : IDocumentSymbolHandler {
-    private readonly BufferManager bufferManager;
-
-    public SymbolHandler(BufferManager bufferManager) => this.bufferManager = bufferManager;
-
+internal class SymbolHandler(BufferManager bufferManager) : IDocumentSymbolHandler {
     public Task<SymbolInformationOrDocumentSymbolContainer?> Handle(DocumentSymbolParams request, CancellationToken cancellationToken) {
         return Task.Run(() => {
             var documentPath = request.TextDocument.Uri.ToString();

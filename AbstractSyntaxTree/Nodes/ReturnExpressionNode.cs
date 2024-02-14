@@ -2,8 +2,8 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record ReturnExpressionNode(IAstNode Expression) : IAstNode, ICanWrapExpression {
+public record ReturnExpressionNode(IAstNode Expression, int Line, int Column) : IAstNode, ICanWrapExpression {
     public IEnumerable<IAstNode> Children => new[] { Expression };
 
-    public IAstNode Replace(IAstNode from, IAstNode to) => new ReturnExpressionNode(to);
+    public IAstNode Replace(IAstNode from, IAstNode to) => new ReturnExpressionNode(to, 0, 0);
 }

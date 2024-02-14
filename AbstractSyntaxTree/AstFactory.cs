@@ -90,7 +90,7 @@ public static class AstFactory {
             _ => throw new NotImplementedException(context.GetType().FullName ?? null)
         };
 
-    public static IAstNode BuildTerminal(this ElanBaseVisitor<IAstNode> visitor, ITerminalNode node) => new IdentifierNode(node.Symbol.Text);
+    public static IAstNode BuildTerminal(this ElanBaseVisitor<IAstNode> visitor, ITerminalNode node) => new IdentifierNode(node.Symbol.Text, node.Symbol.Line, node.Symbol.Column);
 
     private static FileNode Build(this ElanBaseVisitor<IAstNode> visitor, FileContext context) {
         var constants = context.constantDef().Select(visitor.Visit);
@@ -101,18 +101,18 @@ public static class AstFactory {
         var globals = constants.Concat(procedures).Concat(functions).Concat(enums).Concat(classes).ToImmutableArray();
         var mainNode = context.main().Select(visitor.Visit<MainNode>).SingleOrDefault();
 
-        return new FileNode(globals, mainNode);
+        return new FileNode(globals, mainNode, 0, 0);
     }
 
     private static StatementBlockNode Build(this ElanBaseVisitor<IAstNode> visitor, StatementBlockContext context) {
         var statements = context.children is { } c ? c.Select(visitor.Visit) : Array.Empty<IAstNode>();
-        return new StatementBlockNode(statements.ToImmutableArray());
+        return new StatementBlockNode(statements.ToImmutableArray(), 0, 0);
     }
 
     private static MainNode Build(this ElanBaseVisitor<IAstNode> visitor, MainContext context) {
         var block = visitor.Visit<StatementBlockNode>(context.statementBlock());
 
-        return new MainNode(block);
+        return new MainNode(block, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CallStatementContext context) {
@@ -120,10 +120,10 @@ public static class AstFactory {
             var ms = visitor.Visit<ProcedureCallNode>(context.procedureCall());
             var exp = visitor.Visit(context.assignableValue());
 
-            return new CallStatementNode(ms with { CalledOn = exp });
+            return new CallStatementNode(ms with { CalledOn = exp }, 0, 0);
         }
 
-        return new CallStatementNode(visitor.Visit<ProcedureCallNode>(context.procedureCall()));
+        return new CallStatementNode(visitor.Visit<ProcedureCallNode>(context.procedureCall()), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionContext context) {
@@ -138,7 +138,7 @@ public static class AstFactory {
             if (context.IDENTIFIER() is { } id) {
                 var exp = visitor.Visit(context.expression().First());
                 var prop = visitor.Visit(id);
-                return new PropertyCallNode(exp, prop);
+                return new PropertyCallNode(exp, prop, 0, 0);
             }
         }
 
@@ -147,12 +147,12 @@ public static class AstFactory {
         }
 
         if (context.binaryOp() is { } bop) {
-            return new BinaryNode(visitor.Visit(bop), visitor.Visit(context.expression().First()), visitor.Visit(context.expression().Last()));
+            return new BinaryNode(visitor.Visit(bop), visitor.Visit(context.expression().First()), visitor.Visit(context.expression().Last()), 0, 0);
         }
 
         if (context.POWER() is { } p) {
-            var op = new OperatorNode(Helpers.MapOperator(p.Symbol.Type));
-            return new BinaryNode(op, visitor.Visit(context.expression().First()), visitor.Visit(context.expression().Last()));
+            var op = new OperatorNode(Helpers.MapOperator(p.Symbol.Type), 0, 0);
+            return new BinaryNode(op, visitor.Visit(context.expression().First()), visitor.Visit(context.expression().Last()), 0, 0);
         }
 
         if (context.value() is { } v) {
@@ -160,18 +160,19 @@ public static class AstFactory {
         }
 
         if (context.bracketedExpression() is { } b) {
-            return new BracketNode(visitor.Visit(b.expression()));
+            return new BracketNode(visitor.Visit(b.expression()), 0, 0);
         }
 
         if (context.unaryOp() is { } uop) {
-            return new UnaryNode(visitor.Visit(uop), visitor.Visit(context.expression().Single()));
+            var symbol = (uop.MINUS() ?? uop.NOT()).Symbol;
+            return new UnaryNode(visitor.Visit(uop), visitor.Visit(context.expression().Single()), symbol.Line, symbol.Column);
         }
 
         if (context.index() is { } idx) {
             var expr = visitor.Visit(context.expression().Single());
             var range = visitor.Visit(idx);
-
-            return new IndexedExpressionNode(expr, range);
+            var symbol = idx.OPEN_SQ_BRACKET().Symbol;
+            return new IndexedExpressionNode(expr, range, symbol.Line, symbol.Column);
         }
 
         if (context.newInstance() is { } ni) {
@@ -185,8 +186,8 @@ public static class AstFactory {
         if (context.withClause() is { } wc) {
             var expr = visitor.Visit(context.expression().Single());
             var with = wc.inlineAsignment().Select(visitor.Visit);
-
-            return new WithNode(expr, with.ToImmutableArray());
+            var symbol = wc.WITH().Symbol;
+            return new WithNode(expr, with.ToImmutableArray(), symbol.Line, symbol.Column);
         }
 
         if (context.ifExpression() is { } ie) {
@@ -209,7 +210,7 @@ public static class AstFactory {
         var pps = (context.argumentList()?.argument().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
         var sq = context.scopeQualifier() is { } s ? visitor.Visit(s) : null;
 
-        return new ProcedureCallNode(id, sq, pps, null);
+        return new ProcedureCallNode(id, sq, pps, null, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionCallContext context) {
@@ -217,21 +218,21 @@ public static class AstFactory {
         var pps = (context.argumentList()?.argument().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
         var sq = context.scopeQualifier() is { } s ? visitor.Visit(s) : null;
 
-        return new FunctionCallNode(id, sq, pps, null);
+        return new FunctionCallNode(id, sq, pps, null, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SystemCallContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var pps = (context.argumentList()?.argument().Select(visitor.Visit) ?? Array.Empty<IAstNode>()).ToImmutableArray();
 
-        return new SystemAccessorCallNode(id, new SystemAccessorPrefixNode(), pps);
+        return new SystemAccessorCallNode(id, new SystemAccessorPrefixNode(0, 0), pps, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ValueContext context) {
         if (context.scopeQualifier() is { } nq) {
             var nqn = visitor.Visit(nq);
             var idn = visitor.Visit(context.IDENTIFIER());
-            return new QualifiedNode(nqn, idn);
+            return new QualifiedNode(nqn, idn, 0, 0);
         }
 
         if (context.literal() is { } lv) {
@@ -247,11 +248,11 @@ public static class AstFactory {
         }
 
         if (context.THIS() is not null) {
-            return new ThisInstanceNode();
+            return new ThisInstanceNode(0,0);
         }
 
         if (context.DEFAULT() is not null) {
-            return new DefaultNode(visitor.Visit(context.type()));
+            return new DefaultNode(visitor.Visit(context.type()), 0, 0);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -261,7 +262,7 @@ public static class AstFactory {
         var id = visitor.Visit(context.assignableValue());
         var rhs = visitor.Visit(context.expression());
 
-        return new VarDefNode(id, rhs);
+        return new VarDefNode(id, rhs, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ConstantDefContext context) {
@@ -269,21 +270,21 @@ public static class AstFactory {
         var expr = context.literal() is { } l ? visitor.Visit(l) : null;
         var newInstance = context.newInstance() is { } n ? visitor.Visit(n) : null;
 
-        return new ConstantDefNode(id, expr ?? newInstance!);
+        return new ConstantDefNode(id, expr ?? newInstance!, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssignmentContext context) {
         var id = visitor.Visit(context.assignableValue());
         var rhs = visitor.Visit(context.expression());
 
-        return new AssignmentNode(id, rhs, false);
+        return new AssignmentNode(id, rhs, false, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, InlineAsignmentContext context) {
         var id = visitor.Visit(context.assignableValue());
         var expr = visitor.Visit(context.expression());
 
-        return new AssignmentNode(id, expr, true);
+        return new AssignmentNode(id, expr, true, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssignableValueContext context) {
@@ -291,14 +292,14 @@ public static class AstFactory {
             var index = visitor.Visit(idx);
             var expr = visitor.Visit(context.IDENTIFIER());
 
-            return new IndexedExpressionNode(expr, index);
+            return new IndexedExpressionNode(expr, index, 0, 0);
         }
 
         if (context.scopeQualifier() is { } nq) {
             var qual = visitor.Visit(nq);
             var expr = visitor.Visit(context.IDENTIFIER());
 
-            return new QualifiedNode(qual, expr);
+            return new QualifiedNode(qual, expr, 0, 0);
         }
 
         if (context.IDENTIFIER() is { } id) {
@@ -318,19 +319,19 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralValueContext context) {
         if (context.LITERAL_INTEGER() is { } i) {
-            return new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int));
+            return new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int, i.Symbol.Line, i.Symbol.Column), i.Symbol.Line, i.Symbol.Column);
         }
 
         if (context.LITERAL_FLOAT() is { } f) {
-            return new ValueNode(f.Symbol.Text, new ValueTypeNode(ValueType.Float));
+            return new ValueNode(f.Symbol.Text, new ValueTypeNode(ValueType.Float, f.Symbol.Line, f.Symbol.Column), f.Symbol.Line, f.Symbol.Column);
         }
 
         if (context.LITERAL_CHAR() is { } c) {
-            return new ValueNode(c.Symbol.Text, new ValueTypeNode(ValueType.Char));
+            return new ValueNode(c.Symbol.Text, new ValueTypeNode(ValueType.Char, c.Symbol.Line, c.Symbol.Column), c.Symbol.Line, c.Symbol.Column);
         }
 
         if (context.BOOL_VALUE() is { } b) {
-            return new ValueNode(b.Symbol.Text, new ValueTypeNode(ValueType.Bool));
+            return new ValueNode(b.Symbol.Text, new ValueTypeNode(ValueType.Bool,b.Symbol.Line, b.Symbol.Column), b.Symbol.Line, b.Symbol.Column);
         }
 
         if (context.enumValue() is { } ev) {
@@ -344,12 +345,12 @@ public static class AstFactory {
         var key = visitor.Visit(context.literal().First());
         var value = visitor.Visit(context.literal().Last());
 
-        return new PairNode(key, value);
+        return new PairNode(key, value, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralDataStructureContext context) {
         if (context.LITERAL_STRING() is { } ls) {
-            return new ValueNode(ls.Symbol.Text, new ValueTypeNode(ValueType.String));
+            return new ValueNode(ls.Symbol.Text, new ValueTypeNode(ValueType.String,ls.Symbol.Line, ls.Symbol.Column), ls.Symbol.Line, ls.Symbol.Column);
         }
 
         if (context.literalList() is { } ll) {
@@ -397,7 +398,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, UnaryOpContext context) {
         if (context.children.First() is ITerminalNode tn) {
-            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type));
+            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type), 0, 0);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -405,7 +406,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ArithmeticOpContext context) {
         if (context.children.First() is ITerminalNode tn) {
-            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type));
+            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type), 0, 0);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -413,7 +414,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ConditionalOpContext context) {
         if (context.children.First() is ITerminalNode tn) {
-            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type));
+            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type), 0, 0);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -421,7 +422,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LogicalOpContext context) {
         if (context.children.First() is ITerminalNode tn) {
-            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type));
+            return new OperatorNode(Helpers.MapOperator(tn.Symbol.Type), 0, 0);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -463,27 +464,30 @@ public static class AstFactory {
         var expressions = context.expression().Select(visitor.Visit);
         var statementBlocks = context.statementBlock().Select(visitor.Visit);
 
-        return new IfStatementNode(expressions.ToImmutableArray(), statementBlocks.ToImmutableArray());
+        return new IfStatementNode(expressions.ToImmutableArray(), statementBlocks.ToImmutableArray(), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, IfExpressionContext context) {
         var expressions = context.expression().Select(visitor.Visit);
-        return new IfExpressionNode(expressions.ToImmutableArray());
+        var symbol = context.IF().Symbol;
+        return new IfExpressionNode(expressions.ToImmutableArray(), symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SwitchContext context) {
         var expression = visitor.Visit(context.expression());
         var cases = context.@case().Select(visitor.Visit);
         var defaultCase = visitor.Visit(context.caseDefault());
+        var symbol = context.SWITCH(0).Symbol;
 
-        return new SwitchStatementNode(expression, cases.ToImmutableArray(), defaultCase);
+        return new SwitchStatementNode(expression, cases.ToImmutableArray(), defaultCase, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, WhileContext context) {
         var expression = visitor.Visit(context.expression());
         var statementBlock = visitor.Visit(context.statementBlock());
+        var symbol = context.WHILE(0).Symbol;
 
-        return new WhileStatementNode(expression, statementBlock);
+        return new WhileStatementNode(expression, statementBlock, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ForContext context) {
@@ -492,41 +496,46 @@ public static class AstFactory {
         var statementBlock = visitor.Visit(context.statementBlock());
         var step = context.LITERAL_INTEGER() is { } i ? visitor.Visit(i) : null;
         var neg = context.MINUS() is not null;
+        var symbol = context.FOR(0).Symbol;
 
-        return new ForStatementNode(id, expressions.ToImmutableArray(), step, neg, statementBlock);
+        return new ForStatementNode(id, expressions.ToImmutableArray(), step, neg, statementBlock, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EachContext context) {
-        var id = visitor.Visit(context.IDENTIFIER());
+        var idToken = context.IDENTIFIER();
+        var id = visitor.Visit(idToken);
         var expression = visitor.Visit(context.expression());
         var statementBlock = visitor.Visit(context.statementBlock());
+        var symbol = context.EACH(0).Symbol;
 
-        return new EachStatementNode(new EachParameterNode(id, expression), statementBlock);
+        return new EachStatementNode(new EachParameterNode(id, expression, idToken.Symbol.Line, idToken.Symbol.Column), statementBlock, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, RepeatContext context) {
         var expression = visitor.Visit(context.expression());
         var statementBlock = visitor.Visit(context.statementBlock());
+        var symbol = context.REPEAT(0).Symbol;
 
-        return new RepeatStatementNode(expression, statementBlock);
+        return new RepeatStatementNode(expression, statementBlock, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralListContext context) {
         var items = context.literal().Select(visitor.Visit);
+        var symbol = context.OPEN_BRACE().Symbol;
 
-        return new LiteralListNode(items.ToImmutableArray());
+        return new LiteralListNode(items.ToImmutableArray(), symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralTupleContext context) {
         var items = context.literal().Select(visitor.Visit);
-
-        return new LiteralTupleNode(items.ToImmutableArray());
+        var symbol = context.OPEN_BRACKET().Symbol;
+        return new LiteralTupleNode(items.ToImmutableArray(), symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralDictionaryContext context) {
         var items = context.literalKvp().Select(visitor.Visit);
-
-        return new LiteralDictionaryNode(items.ToImmutableArray());
+        var symbol = context.OPEN_BRACE().Symbol;
+        return new LiteralDictionaryNode(items.ToImmutableArray(), symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, IndexContext context) {
@@ -535,10 +544,11 @@ public static class AstFactory {
         }
 
         var expressions = context.expression();
+        var symbol = context.OPEN_SQ_BRACKET().Symbol;
 
         return expressions.Length switch {
             1 => visitor.Visit(expressions.Single()),
-            2 => new TwoDIndexExpressionNode(visitor.Visit(expressions.First()), visitor.Visit(expressions.Last())),
+            2 => new TwoDIndexExpressionNode(visitor.Visit(expressions.First()), visitor.Visit(expressions.Last()), symbol.Line, symbol.Column),
             _ => throw new NotImplementedException(context.children.First().GetText())
         };
     }
@@ -548,17 +558,22 @@ public static class AstFactory {
         var expr1 = visitor.Visit(context.children[prefix ? 1 : 0]);
         var expr2 = context.ChildCount == 3 ? visitor.Visit(context.children[2]) : null;
 
-        return new RangeExpressionNode(prefix, expr1, expr2);
+        return new RangeExpressionNode(prefix, expr1, expr2, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, NewInstanceContext context) {
         var type = visitor.Visit(context.type());
         var args = context.argumentList() is { } al ? al.argument().Select(visitor.Visit) : Array.Empty<IAstNode>();
-        var with = (context.withClause() is { } wc ? wc.inlineAsignment().Select(visitor.Visit) : Array.Empty<IAstNode>()).ToImmutableArray();
+        var symbol = context.NEW().Symbol;
+        var nin = new NewInstanceNode(type, args.ToImmutableArray(), symbol.Line, symbol.Column);
 
-        var nin = new NewInstanceNode(type, args.ToImmutableArray());
+        if (context.withClause() is { } wc) {
+            var withSymbol = wc.WITH().Symbol;
+            var with = wc.inlineAsignment().Select(visitor.Visit).ToImmutableArray();
+            return new WithNode(nin, with, withSymbol.Line, withSymbol.Column);
+        }
 
-        return with.Any() ? new WithNode(nin, with) : nin;
+        return nin;
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TypeContext context) {
@@ -567,12 +582,12 @@ public static class AstFactory {
         }
 
         if (context.VALUE_TYPE() is { } vt) {
-            return new ValueTypeNode(Helpers.MapValueType(vt.GetText()));
+            return new ValueTypeNode(Helpers.MapValueType(vt.GetText()), vt.Symbol.Line, vt.Symbol.Column);
         }
 
         if (context.TYPENAME() is { } tn) {
             var typeName = visitor.Visit(tn);
-            return new TypeNode(typeName);
+            return new TypeNode(typeName, tn.Symbol.Line, tn.Symbol.Column);
         }
 
         if (context.funcType() is { } ft) {
@@ -589,20 +604,20 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DataStructureTypeContext context) {
         var genericTypes = context.genericSpecifier().type().Select(visitor.Visit);
 
-        if (context.ITERABLE() is not null) {
-            return new DataStructureTypeNode(DataStructure.Iter, genericTypes.ToImmutableArray());
+        if (context.ITERABLE() is {} iter) {
+            return new DataStructureTypeNode(DataStructure.Iter, genericTypes.ToImmutableArray(), iter.Symbol.Line, iter.Symbol.Column);
         }
 
-        if (context.LIST() is not null) {
-            return new DataStructureTypeNode(DataStructure.List, genericTypes.ToImmutableArray());
+        if (context.LIST() is {} lst) {
+            return new DataStructureTypeNode(DataStructure.List, genericTypes.ToImmutableArray(), lst.Symbol.Line, lst.Symbol.Column);
         }
 
-        if (context.ARRAY() is not null) {
-            return new DataStructureTypeNode(DataStructure.Array, genericTypes.ToImmutableArray());
+        if (context.ARRAY() is {} arr) {
+            return new DataStructureTypeNode(DataStructure.Array, genericTypes.ToImmutableArray(), arr.Symbol.Line, arr.Symbol.Column);
         }
 
-        if (context.DICTIONARY() is not null) {
-            return new DataStructureTypeNode(DataStructure.Dictionary, genericTypes.ToImmutableArray());
+        if (context.DICTIONARY() is {} dict) {
+            return new DataStructureTypeNode(DataStructure.Dictionary, genericTypes.ToImmutableArray(), dict.Symbol.Line, dict.Symbol.Column);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -627,14 +642,14 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ArrayDefinitionContext context) {
         if (context.genericSpecifier() is { } gs) {
             var genericSpecifier = visitor.Visit(gs);
-            var type = new DataStructureTypeNode(DataStructure.Array, ImmutableArray.Create(genericSpecifier));
+            var type = new DataStructureTypeNode(DataStructure.Array, ImmutableArray.Create(genericSpecifier), 0, 0);
             var args = ImmutableArray<IAstNode>.Empty;
 
             if (context.LITERAL_INTEGER() is { } i) {
-                args = args.Add(new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int)));
+                args = args.Add(new ValueNode(i.Symbol.Text, new ValueTypeNode(ValueType.Int, i.Symbol.Line, i.Symbol.Column), i.Symbol.Line, i.Symbol.Column));
             }
 
-            return new NewInstanceNode(type, args);
+            return new NewInstanceNode(type, args, 0, 0);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -643,14 +658,14 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ListDefinitionContext context) {
         var exprs = context.expression().Select(visitor.Visit);
 
-        return new LiteralListNode(exprs.ToImmutableArray());
+        return new LiteralListNode(exprs.ToImmutableArray(), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureDefContext context) {
         var signature = visitor.Visit(context.procedureSignature());
         var statementBlock = visitor.Visit(context.statementBlock());
-
-        return new ProcedureDefNode(signature, statementBlock);
+        var symbol = context.PROCEDURE(0).Symbol;
+        return new ProcedureDefNode(signature, statementBlock, true, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionDefContext context) {
@@ -668,44 +683,51 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionWithBodyContext context) {
         var signature = visitor.Visit(context.functionSignature());
         var statementBlock = visitor.Visit(context.statementBlock());
-        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
+        var symbol = context.RETURN().Symbol;
+        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()), symbol.Line, symbol.Column);
 
-        return new FunctionDefNode(signature, statementBlock, ret);
+        symbol = context.FUNCTION(0).Symbol;
+        return new FunctionDefNode(signature, statementBlock, ret, true, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionFunctionContext context) {
         var signature = visitor.Visit(context.functionSignature());
-        var statementBlock = new StatementBlockNode(ImmutableArray<IAstNode>.Empty);
-        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()));
-
-        return new FunctionDefNode(signature, statementBlock, ret);
+        var symbol = context.ARROW().Symbol;
+        var statementBlock = new StatementBlockNode(ImmutableArray<IAstNode>.Empty, symbol.Line, symbol.Column);
+        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()), symbol.Line, symbol.Column);
+        symbol = context.FUNCTION().Symbol;
+        return new FunctionDefNode(signature, statementBlock, ret, true, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureSignatureContext context) {
-        var id = visitor.Visit(context.IDENTIFIER());
+        var idToken = context.IDENTIFIER();
+        var id = visitor.Visit(idToken);
+        var symbol = idToken.Symbol;
 
         if (context.procedureParameterList() is { } pl) {
             var parameters = pl.procedureParameter().Select(visitor.Visit);
 
-            return new MethodSignatureNode(id, parameters.ToImmutableArray());
+            return new MethodSignatureNode(id, parameters.ToImmutableArray(), null, symbol.Line, symbol.Column);
         }
 
-        return new MethodSignatureNode(id, ImmutableArray<IAstNode>.Empty);
+        return new MethodSignatureNode(id, ImmutableArray<IAstNode>.Empty, null, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionSignatureContext context) {
-        var id = visitor.Visit(context.IDENTIFIER());
+        var idToken = context.IDENTIFIER();
+        var id = visitor.Visit(idToken);
+        var symbol = idToken.Symbol;
         var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var ret = visitor.Visit(context.type());
 
-        return new MethodSignatureNode(id, parameters.ToImmutableArray(), ret);
+        return new MethodSignatureNode(id, parameters.ToImmutableArray(), ret, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ParameterContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
         var type = visitor.Visit(context.type());
 
-        return new ParameterNode(id, type);
+        return new ParameterNode(id, type, false, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ProcedureParameterContext context) {
@@ -713,44 +735,44 @@ public static class AstFactory {
         var type = visitor.Visit(context.type());
         var byRef = context.OUT() is not null;
 
-        return new ParameterNode(id, type, byRef);
+        return new ParameterNode(id, type, byRef, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CaseContext context) {
         var val = visitor.Visit(context.literalValue());
         var statementBlock = visitor.Visit(context.statementBlock());
 
-        return new CaseNode(statementBlock, val);
+        return new CaseNode(statementBlock, val, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, CaseDefaultContext context) {
         var statementBlock = visitor.Visit(context.statementBlock());
-
-        return new CaseNode(statementBlock);
+        var symbol = context.DEFAULT().Symbol;
+        return new CaseNode(statementBlock, null, symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TryContext context) {
         var statementBlocks = context.statementBlock().Select(visitor.Visit).ToArray();
         var id = visitor.Visit(context.IDENTIFIER());
-
-        return new TryCatchNode(statementBlocks.First(), id, statementBlocks.Last());
+        var symbol = context.TRY(0).Symbol;
+        return new TryCatchNode(statementBlocks.First(), id, statementBlocks.Last(), symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumDefContext context) {
         var ids = context.IDENTIFIER().Select(visitor.Visit);
         var type = visitor.Visit(context.enumType());
 
-        return new EnumDefNode(type, ids.ToImmutableArray());
+        return new EnumDefNode(type, ids.ToImmutableArray(), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumValueContext context) {
         var type = visitor.Visit(context.enumType());
         var id = context.IDENTIFIER();
 
-        return new EnumValueNode(id.GetText(), type);
+        return new EnumValueNode(id.GetText(), type, 0, 0);
     }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumTypeContext context) => new TypeNode(visitor.Visit(context.TYPENAME()));
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumTypeContext context) => new TypeNode(visitor.Visit(context.TYPENAME()), 0, 0);
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());
 
@@ -782,7 +804,7 @@ public static class AstFactory {
         var functions = context.functionDef().Select(fd => visitor.Visit<FunctionDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
         var procedures = context.procedureDef().Select(fd => visitor.Visit<ProcedureDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
 
-        return new ClassDefNode(typeName, inherits.ToImmutableArray(), constructor, properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray(), false);
+        return new ClassDefNode(typeName, inherits.ToImmutableArray(), constructor, properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray(), false, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ImmutableClassContext context) {
@@ -792,17 +814,17 @@ public static class AstFactory {
         var properties = context.property().Select(visitor.Visit);
         var functions = context.functionDef().Select(fd => visitor.Visit<FunctionDefNode>(fd) with { Standalone = false }).Cast<IAstNode>();
 
-        return new ClassDefNode(typeName, inherits.ToImmutableArray(), constructor, properties.ToImmutableArray(), functions.ToImmutableArray(), true);
+        return new ClassDefNode(typeName, inherits.ToImmutableArray(), constructor, properties.ToImmutableArray(), functions.ToImmutableArray(), true, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AbstractClassContext context) {
         var typeName = visitor.Visit(context.TYPENAME());
         var inherits = context.inherits() is { } ih ? ih.type().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var properties = context.property().Select(visitor.Visit);
-        var functions = context.functionSignature().Select(visitor.Visit).Select(n => new AbstractFunctionDefNode(n) as IAstNode);
-        var procedures = context.procedureSignature().Select(visitor.Visit).Select(n => new AbstractProcedureDefNode(n) as IAstNode);
+        var functions = context.functionSignature().Select(visitor.Visit).Select(n => new AbstractFunctionDefNode(n, 0, 0) as IAstNode);
+        var procedures = context.procedureSignature().Select(visitor.Visit).Select(n => new AbstractProcedureDefNode(n, 0, 0) as IAstNode);
 
-        return new AbstractClassDefNode(typeName, inherits.ToImmutableArray(), properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray());
+        return new AbstractClassDefNode(typeName, inherits.ToImmutableArray(), properties.ToImmutableArray(), functions.Concat(procedures).ToImmutableArray(), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AbstractImmutableClassContext context) {
@@ -811,14 +833,14 @@ public static class AstFactory {
         var properties = context.property().Select(visitor.Visit);
         var functions = context.functionSignature().Select(visitor.Visit);
 
-        return new AbstractClassDefNode(typeName, inherits.ToImmutableArray(), properties.ToImmutableArray(), functions.ToImmutableArray());
+        return new AbstractClassDefNode(typeName, inherits.ToImmutableArray(), properties.ToImmutableArray(), functions.ToImmutableArray(), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ConstructorContext context) {
         var parameters = context.parameterList() is { } pl ? pl.parameter().Select(visitor.Visit) : Array.Empty<IAstNode>();
         var body = visitor.Visit(context.statementBlock());
 
-        return new ConstructorNode(parameters.ToImmutableArray(), body);
+        return new ConstructorNode(parameters.ToImmutableArray(), body, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, PropertyContext context) {
@@ -826,16 +848,16 @@ public static class AstFactory {
         var type = visitor.Visit(context.type());
         var isPrivate = context.PRIVATE() is not null;
 
-        return new PropertyDefNode(id, type, isPrivate);
+        return new PropertyDefNode(id, type, isPrivate, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ScopeQualifierContext context) {
         if (context.GLOBAL() is not null) {
-            return new GlobalPrefixNode();
+            return new GlobalPrefixNode(0,0);
         }
 
         if (context.PROPERTY() is not null) {
-            return new PropertyPrefixNode();
+            return new PropertyPrefixNode(0,0);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -845,46 +867,46 @@ public static class AstFactory {
         var ids = context.IDENTIFIER().Select(visitor.Visit).ToImmutableArray();
         var isNew = Enumerable.Range(0, ids.Length).Select(_ => false);
 
-        return new DeconstructionNode(ids, isNew.ToImmutableArray());
+        return new DeconstructionNode(ids, isNew.ToImmutableArray(), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ListDecompContext context) {
         var ids = context.IDENTIFIER().Select(visitor.Visit).ToImmutableArray();
         var isNew = Enumerable.Range(0, ids.Length).Select(_ => false);
 
-        return new DeconstructionNode(ids, isNew.ToImmutableArray());
+        return new DeconstructionNode(ids, isNew.ToImmutableArray(), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ThrowExceptionContext context) {
         var i = context.IDENTIFIER() is { } id ? visitor.Visit(id) : null;
-        var s = context.LITERAL_STRING() is { } ls ? new ValueNode(ls.Symbol.Text, new ValueTypeNode(ValueType.String)) : null;
+        var s = context.LITERAL_STRING() is { } ls ? new ValueNode(ls.Symbol.Text, new ValueTypeNode(ValueType.String, ls.Symbol.Line, ls.Symbol.Column), ls.Symbol.Line, ls.Symbol.Column) : null;
 
-        return new ThrowNode(i ?? s ?? throw new NullReferenceException());
+        return new ThrowNode(i ?? s ?? throw new NullReferenceException(), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, PrintStatementContext context) {
         var expr = context.expression() is { } e ? visitor.Visit(e) : null;
 
-        return new PrintNode(expr);
+        return new PrintNode(expr, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, InputContext context) {
         var prompt = context.LITERAL_STRING() is { } e ? e.Symbol.Text : null;
 
-        return new InputNode(prompt);
+        return new InputNode(prompt, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FuncTypeContext context) {
         var inputTypes = context.typeList().type().Select(visitor.Visit);
         var returnType = visitor.Visit(context.type());
 
-        return new LambdaTypeNode(inputTypes.ToImmutableArray(), returnType);
+        return new LambdaTypeNode(inputTypes.ToImmutableArray(), returnType, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TupleTypeContext context) {
         var inputTypes = context.type().Select(visitor.Visit);
 
-        return new TupleTypeNode(inputTypes.ToImmutableArray());
+        return new TupleTypeNode(inputTypes.ToImmutableArray(), 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ArgumentContext context) {
@@ -903,12 +925,12 @@ public static class AstFactory {
         var arguments = context.argumentList().argument().Select(a => visitor.Visit(a));
         var expr = visitor.Visit(context.expression());
 
-        return new LambdaDefNode(arguments.ToImmutableArray(), expr);
+        return new LambdaDefNode(arguments.ToImmutableArray(), expr, 0, 0);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TupleDefinitionContext context) {
         var expression = context.expression().Select(visitor.Visit);
 
-        return new TupleDefNode(expression.ToImmutableArray());
+        return new TupleDefNode(expression.ToImmutableArray(), 0, 0);
     }
 }

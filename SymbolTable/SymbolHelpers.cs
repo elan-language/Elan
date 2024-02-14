@@ -226,19 +226,19 @@ public static class SymbolHelpers {
         var type = GetExpressionType(node, currentScope);
         var typeNode = MapSymbolToTypeNode(type, currentScope);
 
-        return new IdentifierWithTypeNode(node.Id, typeNode);
+        return new IdentifierWithTypeNode(node.Id, typeNode, 0, 0);
     }
 
     public static IAstNode MapSymbolToTypeNode(ISymbolType? type, IScope currentScope) {
         return type switch {
-            ClassSymbolType cst => new TypeNode(new IdentifierNode(cst.Name)),
-            IntSymbolType => new ValueTypeNode(ValueType.Int),
-            FloatSymbolType => new ValueTypeNode(ValueType.Float),
-            CharSymbolType => new ValueTypeNode(ValueType.Char),
-            StringSymbolType => new ValueTypeNode(ValueType.String),
-            BoolSymbolType => new ValueTypeNode(ValueType.Bool),
-            LambdaSymbolType t => new LambdaTypeNode(t.Arguments.Select(a => MapSymbolToTypeNode(a, currentScope)).ToImmutableArray(), MapSymbolToTypeNode(t.ReturnType, currentScope)),
-            TupleSymbolType t => new TupleTypeNode(t.Types.Select(a => MapSymbolToTypeNode(a, currentScope)).ToImmutableArray()),
+            ClassSymbolType cst => new TypeNode(new IdentifierNode(cst.Name, 0, 0), 0, 0),
+            IntSymbolType => new ValueTypeNode(ValueType.Int, 0, 0),
+            FloatSymbolType => new ValueTypeNode(ValueType.Float, 0, 0),
+            CharSymbolType => new ValueTypeNode(ValueType.Char, 0, 0),
+            StringSymbolType => new ValueTypeNode(ValueType.String, 0, 0),
+            BoolSymbolType => new ValueTypeNode(ValueType.Bool, 0, 0),
+            LambdaSymbolType t => new LambdaTypeNode(t.Arguments.Select(a => MapSymbolToTypeNode(a, currentScope)).ToImmutableArray(), MapSymbolToTypeNode(t.ReturnType, currentScope), 0, 0),
+            TupleSymbolType t => new TupleTypeNode(t.Types.Select(a => MapSymbolToTypeNode(a, currentScope)).ToImmutableArray(), 0, 0),
             _ => throw new NotImplementedException(type?.ToString())
         };
     }

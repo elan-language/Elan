@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record RangeExpressionNode(bool Prefix, IAstNode Expression1, IAstNode? Expression2) : IAstNode {
+public record RangeExpressionNode(bool Prefix, IAstNode Expression1, IAstNode? Expression2, int Line, int Column) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Expression1 }.SafeAppend(Expression2);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

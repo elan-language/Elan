@@ -154,10 +154,10 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private static IAstNode? NameSpaceToNode(NameSpace? ns) => ns switch {
-        NameSpace.System => new LibraryNode("StandardLibrary.SystemAccessors"),
-        NameSpace.LibraryFunction => new LibraryNode("StandardLibrary.Functions"),
-        NameSpace.LibraryProcedure => new LibraryNode("StandardLibrary.Procedures"),
-        NameSpace.UserGlobal => new GlobalPrefixNode(),
+        NameSpace.System => new LibraryNode("StandardLibrary.SystemAccessors", 0, 0),
+        NameSpace.LibraryFunction => new LibraryNode("StandardLibrary.Functions", 0, 0),
+        NameSpace.LibraryProcedure => new LibraryNode("StandardLibrary.Procedures", 0, 0),
+        NameSpace.UserGlobal => new GlobalPrefixNode(0,0),
         _ => null
     };
 

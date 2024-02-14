@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record WhileStatementNode(IAstNode Expression, IAstNode StatementBlock) : IAstNode, ICanWrapExpression {
+public record WhileStatementNode(IAstNode Expression, IAstNode StatementBlock, int Line, int Column) : IAstNode, ICanWrapExpression {
     public IEnumerable<IAstNode> Children => new[] { Expression, StatementBlock };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

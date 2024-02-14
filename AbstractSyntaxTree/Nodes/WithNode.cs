@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record WithNode(IAstNode Expression, ImmutableArray<IAstNode> AssignmentNodes) : IAstNode {
+public record WithNode(IAstNode Expression, ImmutableArray<IAstNode> AssignmentNodes, int Line, int Column) : IAstNode {
     public IEnumerable<IAstNode> Children => AssignmentNodes.Prepend(Expression);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

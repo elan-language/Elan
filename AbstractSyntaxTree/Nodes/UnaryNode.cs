@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record UnaryNode(IAstNode Operator, IAstNode Operand) : IAstNode {
+public record UnaryNode(IAstNode Operator, IAstNode Operand, int Line, int Column) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Operator, Operand };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

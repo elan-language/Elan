@@ -3,7 +3,7 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record ConstructorNode(ImmutableArray<IAstNode> Parameters, IAstNode StatementBlock) : IAstNode, IHasScope {
+public record ConstructorNode(ImmutableArray<IAstNode> Parameters, IAstNode StatementBlock, int Line, int Column) : IAstNode, IHasScope {
     public IEnumerable<IAstNode> Children => Parameters.Append(StatementBlock);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

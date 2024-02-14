@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record EachStatementNode(IAstNode Parameter, IAstNode StatementBlock) : IAstNode, ICanWrapExpression, IHasScope {
+public record EachStatementNode(IAstNode Parameter, IAstNode StatementBlock, int Line, int Column) : IAstNode, ICanWrapExpression, IHasScope {
     public IEnumerable<IAstNode> Children => new[] { Parameter, StatementBlock };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

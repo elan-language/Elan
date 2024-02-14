@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record ParameterNode(IAstNode Id, IAstNode TypeNode, bool IsRef = false) : IAstNode {
+public record ParameterNode(IAstNode Id, IAstNode TypeNode, bool IsRef /*false*/, int Line, int Column) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Id, TypeNode };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

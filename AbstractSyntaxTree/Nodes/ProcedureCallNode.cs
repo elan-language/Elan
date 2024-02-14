@@ -3,7 +3,7 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record ProcedureCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters, IAstNode? CalledOn) : IAstNode, ICanWrapExpression, ICallNode {
+public record ProcedureCallNode(IAstNode Id, IAstNode? Qualifier, ImmutableArray<IAstNode> Parameters, IAstNode? CalledOn, int Line, int Column) : IAstNode, ICanWrapExpression, ICallNode {
     private string UniqueId { get; } = Helpers.UniqueID;
 
     public IEnumerable<IAstNode> Children => Parameters.SafePrepend(Qualifier).Prepend(Id).SafeAppend(CalledOn);

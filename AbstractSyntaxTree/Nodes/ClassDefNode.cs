@@ -3,7 +3,7 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record ClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inherits, IAstNode Constructor, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods, bool Immutable) : IAstNode, INamedAstNode, IHasScope {
+public record ClassDefNode(IAstNode Type, ImmutableArray<IAstNode> Inherits, IAstNode Constructor, ImmutableArray<IAstNode> Properties, ImmutableArray<IAstNode> Methods, bool Immutable, int Line, int Column) : IAstNode, INamedAstNode, IHasScope {
     public bool HasDefaultConstructor => Constructor is ConstructorNode cn && !cn.Parameters.Any();
 
     public IEnumerable<IAstNode> Children => Inherits.Prepend(Type).Append(Constructor).Concat(Properties).Concat(Methods);

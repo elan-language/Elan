@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record QualifiedNode(IAstNode Qualifier, IAstNode Qualified) : IAstNode {
+public record QualifiedNode(IAstNode Qualifier, IAstNode Qualified, int Line, int Column) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { Qualifier, Qualified };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

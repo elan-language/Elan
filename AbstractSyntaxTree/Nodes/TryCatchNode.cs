@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record TryCatchNode(IAstNode TriedCode, IAstNode Id, IAstNode CaughtCode) : IAstNode {
+public record TryCatchNode(IAstNode TriedCode, IAstNode Id, IAstNode CaughtCode, int Line, int Column) : IAstNode {
     public IEnumerable<IAstNode> Children => new[] { TriedCode, Id, CaughtCode };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

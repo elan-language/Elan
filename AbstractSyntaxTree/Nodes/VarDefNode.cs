@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record VarDefNode(IAstNode Id, IAstNode Rhs) : IAstNode, ICanWrapExpression {
+public record VarDefNode(IAstNode Id, IAstNode Rhs, int Line, int Column) : IAstNode, ICanWrapExpression {
     public IEnumerable<IAstNode> Children => new[] { Id, Rhs };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

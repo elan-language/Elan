@@ -1,6 +1,6 @@
 ﻿namespace AbstractSyntaxTree.Nodes;
 
-public record DefaultNode(IAstNode Type) : IAstNode {
+public record DefaultNode(IAstNode Type, int Line, int Column) : IAstNode {
     public TypeType TypeType => Type switch {
         ValueNode => TypeType.Value,
         IdentifierNode => TypeType.Class,
@@ -11,5 +11,5 @@ public record DefaultNode(IAstNode Type) : IAstNode {
     };
 
     public IEnumerable<IAstNode> Children => Array.Empty<IAstNode>();
-    public IAstNode Replace(IAstNode from, IAstNode to) => new DefaultNode(to);
+    public IAstNode Replace(IAstNode from, IAstNode to) => new DefaultNode(to, 0, 0);
 }

@@ -2,7 +2,7 @@
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record SwitchStatementNode(IAstNode Expression, ImmutableArray<IAstNode> Cases, IAstNode DefaultCase) : IAstNode {
+public record SwitchStatementNode(IAstNode Expression, ImmutableArray<IAstNode> Cases, IAstNode DefaultCase, int Line, int Column) : IAstNode {
     public IEnumerable<IAstNode> Children => Cases.Prepend(Expression).Append(DefaultCase);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
