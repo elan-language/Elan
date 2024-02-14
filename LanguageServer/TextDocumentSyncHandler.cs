@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -10,108 +9,73 @@ using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Window;
+using static Server.Helpers;
 
-namespace Server
-{
-    internal class TextDocumentSyncHandler : ITextDocumentSyncHandler
-    {
-        private readonly ILanguageServerFacade  _router;
-        private readonly BufferManager _bufferManager;
+namespace Server;
 
-        private readonly TextDocumentSelector _documentSelector = new TextDocumentSelector(
-            new TextDocumentFilter()
-            {
-                Pattern = "**/*.elan"
-            }
-        );
+internal class TextDocumentSyncHandler : ITextDocumentSyncHandler {
+    private readonly BufferManager _bufferManager;
+    private readonly ILanguageServerFacade _router;
 
-        private TextSynchronizationCapability _capability;
+    private TextSynchronizationCapability _capability;
 
-        public TextDocumentSyncHandler(ILanguageServerFacade router, BufferManager bufferManager)
-        {
-            _router = router;
-            _bufferManager = bufferManager;
-        }
+    public TextDocumentSyncHandler(ILanguageServerFacade router, BufferManager bufferManager) {
+        _router = router;
+        _bufferManager = bufferManager;
+    }
 
-        public TextDocumentSyncKind Change { get; } = TextDocumentSyncKind.Full;
+    public TextDocumentSyncKind Change { get; } = TextDocumentSyncKind.Full;
 
-        public TextDocumentChangeRegistrationOptions GetRegistrationOptions()
-        {
-            return new TextDocumentChangeRegistrationOptions()
-            {
-                DocumentSelector = _documentSelector,
-                SyncKind = Change
-            };
-        }
+    public Task<Unit> Handle(DidChangeTextDocumentParams request, CancellationToken cancellationToken) {
+        var documentPath = request.TextDocument.Uri.ToString();
+        var text = request.ContentChanges.FirstOrDefault()?.Text;
 
-        public Task<Unit> Handle(DidChangeTextDocumentParams request, CancellationToken cancellationToken)
-        {
-            var documentPath = request.TextDocument.Uri.ToString();
-            var text = request.ContentChanges.FirstOrDefault()?.Text;
+        _bufferManager.UpdateBuffer(documentPath, text);
 
-            _bufferManager.UpdateBuffer(documentPath, text);
+        _router.Window.LogInfo($"Updated buffer for document: {documentPath}\n{text}");
 
-            _router.Window.LogInfo($"Updated buffer for document: {documentPath}\n{text}");
+        return Unit.Task;
+    }
 
-            return Unit.Task;
-        }
+    public Task<Unit> Handle(DidOpenTextDocumentParams request, CancellationToken cancellationToken) {
+        _bufferManager.UpdateBuffer(request.TextDocument.Uri.ToString(), request.TextDocument.Text);
+        return Unit.Task;
+    }
 
-        public Task<Unit> Handle(DidOpenTextDocumentParams request, CancellationToken cancellationToken)
-        {
-            _bufferManager.UpdateBuffer(request.TextDocument.Uri.ToString(), request.TextDocument.Text);
-            return Unit.Task;
-        }
+    public Task<Unit> Handle(DidCloseTextDocumentParams request, CancellationToken cancellationToken) => Unit.Task;
 
-        public Task<Unit> Handle(DidCloseTextDocumentParams request, CancellationToken cancellationToken)
-        {
-            return Unit.Task;
-        }
+    public Task<Unit> Handle(DidSaveTextDocumentParams request, CancellationToken cancellationToken) => Unit.Task;
 
-        public Task<Unit> Handle(DidSaveTextDocumentParams request, CancellationToken cancellationToken)
-        {
-            return Unit.Task;
-        }
+    TextDocumentChangeRegistrationOptions IRegistration<TextDocumentChangeRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) =>
+        new() {
+            DocumentSelector = ElanDocumentSelector
+        };
 
-        public void SetCapability(TextSynchronizationCapability capability)
-        {
-            _capability = capability;
-        }
+    TextDocumentOpenRegistrationOptions IRegistration<TextDocumentOpenRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) =>
+        new() {
+            DocumentSelector = ElanDocumentSelector
+        };
 
-       
-        TextDocumentChangeRegistrationOptions IRegistration<TextDocumentChangeRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) {
-            return new TextDocumentChangeRegistrationOptions()
-            {
-                DocumentSelector = _documentSelector
-                
-            };
-        }
+    TextDocumentCloseRegistrationOptions IRegistration<TextDocumentCloseRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) =>
+        new() {
+            DocumentSelector = ElanDocumentSelector
+        };
 
-        TextDocumentOpenRegistrationOptions IRegistration<TextDocumentOpenRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) {
-            return new TextDocumentOpenRegistrationOptions()
-            {
-                DocumentSelector = _documentSelector
-              
-            };
-        }
+    TextDocumentSaveRegistrationOptions IRegistration<TextDocumentSaveRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) =>
+        new() {
+            DocumentSelector = ElanDocumentSelector,
+            IncludeText = true
+        };
 
-        TextDocumentCloseRegistrationOptions IRegistration<TextDocumentCloseRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) {
-            return new TextDocumentCloseRegistrationOptions()
-            {
-                DocumentSelector = _documentSelector
-               
-            };
-        }
+    public TextDocumentAttributes GetTextDocumentAttributes(DocumentUri uri) => new(uri, "elan");
 
-        TextDocumentSaveRegistrationOptions IRegistration<TextDocumentSaveRegistrationOptions, TextSynchronizationCapability>.GetRegistrationOptions(TextSynchronizationCapability capability, ClientCapabilities clientCapabilities) {
-            return new TextDocumentSaveRegistrationOptions()
-            {
-                DocumentSelector = _documentSelector,
-                IncludeText = true
-            };
-        }
+    public TextDocumentChangeRegistrationOptions GetRegistrationOptions() =>
+        new() {
+            DocumentSelector = ElanDocumentSelector,
+            SyncKind = Change
+        };
 
-        public TextDocumentAttributes GetTextDocumentAttributes(DocumentUri uri) {
-            return new TextDocumentAttributes(uri, "elan");
-        }
+    public void SetCapability(TextSynchronizationCapability capability) {
+        _capability = capability;
     }
 }
