@@ -27,13 +27,18 @@ class GridGraph
         end for
     end procedure
 
-    function nodeExists(p Point) as Bool ->  nodes.contains(p)
+    function nodeExists(p Point) as Bool
+        return nodes.contains(p)
+    end function
 
-    function pointsAreAdjacentDiagonally(p1 Point,p2 Point) as Bool ->
-         absolute(p1.x - p2.x) is 1 and absolute(p1.y - p2.y) is 1
+    function pointsAreAdjacentDiagonally(p1 Point,p2 Point) as Bool
+         return absolute(p1.x - p2.x) is 1 and absolute(p1.y - p2.y) is 1
+    end function
 
     # Assumes that it will only be called if the points ARE immediate neighbours
-    function findEdge(p1 Point, p2 Point) as Float -> p1.distanceFrom(p2)
+    function findEdge(p1 Point, p2 Point) as Float
+        return p1.distanceFrom(p2)
+    end function
 
     # Returns a list of nodes that can be reached from the specified node
     function neighbours(p Point) as List<of Point>
@@ -98,8 +103,9 @@ class GridGraph
         end each
     end procedure
 
-    function estimatedCostToDestination(current Point, destination Point) as Float ->
-        sqrt((current.x - destination.x) ^ 2 + (current.y - destination.y) ^ 2)
+    function estimatedCostToDestination(current Point, destination Point) as Float
+        return sqrt((current.x - destination.x) ^ 2 + (current.y - destination.y) ^ 2)
+    end function
 
     function nextNodeToVisit(currentNode Point, visited Dictionary<of Point, Bool>, costFromSource Dictionary<of Point, Float>, destination Point ,alg Algorithm) as Point
         var lowestCostSoFar set to infinity
@@ -145,7 +151,9 @@ class GridGraph
         return result
     end function
 
-    function asString() as String -> "a GridGraph"
+    function asString() as String
+        return "a GridGraph"
+    end function
 end class
 
 immutable class Point 
@@ -157,9 +165,13 @@ immutable class Point
   property x Int
   property y Int
 
-  function distanceFrom(p2 Point) as Float -> sqrt((p2.x - x)^2 + (p2.y - y)^2);
+  function distanceFrom(p2 Point) as Float
+    return sqrt((p2.x - x)^2 + (p2.y - y)^2)
+  end function
 
-  function asString() as String -> "a GridGraph"
+  function asString() as String
+    return "a GridGraph"
+  end function
 end class
 
 enum Algorithm

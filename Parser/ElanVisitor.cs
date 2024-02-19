@@ -200,18 +200,6 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFunctionDef([NotNull] ElanParser.FunctionDefContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.functionWithBody"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitFunctionWithBody([NotNull] ElanParser.FunctionWithBodyContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.expressionFunction"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitExpressionFunction([NotNull] ElanParser.ExpressionFunctionContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.functionSignature"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

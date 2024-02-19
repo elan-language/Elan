@@ -372,30 +372,6 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitFunctionDef([NotNull] ElanParser.FunctionDefContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.functionWithBody"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterFunctionWithBody([NotNull] ElanParser.FunctionWithBodyContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.functionWithBody"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitFunctionWithBody([NotNull] ElanParser.FunctionWithBodyContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.expressionFunction"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExpressionFunction([NotNull] ElanParser.ExpressionFunctionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.expressionFunction"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExpressionFunction([NotNull] ElanParser.ExpressionFunctionContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.functionSignature"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

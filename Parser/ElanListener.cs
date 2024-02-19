@@ -311,26 +311,6 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitFunctionDef([NotNull] ElanParser.FunctionDefContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.functionWithBody"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterFunctionWithBody([NotNull] ElanParser.FunctionWithBodyContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.functionWithBody"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitFunctionWithBody([NotNull] ElanParser.FunctionWithBodyContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.expressionFunction"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterExpressionFunction([NotNull] ElanParser.ExpressionFunctionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.expressionFunction"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitExpressionFunction([NotNull] ElanParser.ExpressionFunctionContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.functionSignature"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

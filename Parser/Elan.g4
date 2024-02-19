@@ -70,17 +70,12 @@ parameter: IDENTIFIER type;
 procedureParameter: OUT? IDENTIFIER type;
 
 // FUNCTIONS
-functionDef: functionWithBody | expressionFunction;
-
-functionWithBody: 
+functionDef: 
 	NL FUNCTION functionSignature
 	statementBlock
 	NL RETURN expression
     NL END FUNCTION
 	;
-
-expressionFunction: 
-	NL FUNCTION functionSignature ARROW expression; 
    
 functionSignature: IDENTIFIER OPEN_BRACKET parameterList? CLOSE_BRACKET AS type;
 

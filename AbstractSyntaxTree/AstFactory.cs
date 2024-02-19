@@ -54,8 +54,6 @@ public static class AstFactory {
             GenericSpecifierContext c => visitor.Build(c),
             ProcedureDefContext c => visitor.Build(c),
             FunctionDefContext c => visitor.Build(c),
-            FunctionWithBodyContext c => visitor.Build(c),
-            ExpressionFunctionContext c => visitor.Build(c),
             ProcedureSignatureContext c => visitor.Build(c),
             FunctionSignatureContext c => visitor.Build(c),
             ParameterContext c => visitor.Build(c),
@@ -667,33 +665,12 @@ public static class AstFactory {
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionDefContext context) {
-        if (context.functionWithBody() is { } fwb) {
-            return visitor.Visit(fwb);
-        }
-
-        if (context.expressionFunction() is { } ef) {
-            return visitor.Visit(ef);
-        }
-
-        throw new NotImplementedException(context.children.First().GetText());
-    }
-
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, FunctionWithBodyContext context) {
         var signature = visitor.Visit(context.functionSignature());
         var statementBlock = visitor.Visit(context.statementBlock());
         var symbol = context.RETURN().Symbol;
         var ret = new ReturnExpressionNode(visitor.Visit(context.expression()), symbol.Line, symbol.Column);
 
         symbol = context.FUNCTION(0).Symbol;
-        return new FunctionDefNode(signature, statementBlock, ret, true, symbol.Line, symbol.Column);
-    }
-
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ExpressionFunctionContext context) {
-        var signature = visitor.Visit(context.functionSignature());
-        var symbol = context.ARROW().Symbol;
-        var statementBlock = new StatementBlockNode(ImmutableArray<IAstNode>.Empty, symbol.Line, symbol.Column);
-        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()), symbol.Line, symbol.Column);
-        symbol = context.FUNCTION().Symbol;
         return new FunctionDefNode(signature, statementBlock, ret, true, symbol.Line, symbol.Column);
     }
 

@@ -18,8 +18,9 @@ main
  print grade(30)
 end main
 
-function grade(score Int) as String -> 
-    ""Distinction"" if score > 80 else ""Merit"" if score > 60 else ""Pass"" if score > 40 else ""Fail""
+function grade(score Int) as String  
+    return ""Distinction"" if score > 80 else ""Merit"" if score > 60 else ""Pass"" if score > 40 else ""Fail""
+end function
 ";
 
         var objectCode = @"using System.Collections.Generic;
