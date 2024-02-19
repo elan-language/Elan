@@ -227,9 +227,9 @@ expression:
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET ; //made into rule so that compiler can add the brackets explicitly
 
-ifExpression: NL IF expression;
+ifExpression: IF expression;
 
-elseExpression : NL ELSE expression;
+elseExpression : ELSE expression;
 
 lambda: LAMBDA argumentList ARROW expression;
 

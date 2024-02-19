@@ -19,13 +19,7 @@ main
 end main
 
 function grade(score Int) as String -> 
-    ""Distinction"" 
-    if score > 80 
-    else ""Merit"" 
-    if score > 60 
-    else ""Pass"" 
-    if score > 40 
-    else ""Fail""
+    ""Distinction"" if score > 80 else ""Merit"" if score > 60 else ""Pass"" if score > 40 else ""Fail""
 ";
 
         var objectCode = @"using System.Collections.Generic;
@@ -65,13 +59,7 @@ public static class Program {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var score set to 70
-  var grade set to ""Distinction"" 
-                   if score > 80 
-                   else ""Merit"" 
-                   if score > 60 
-                   else ""Pass"" 
-                   if score > 40 
-                   else ""Fail""
+  var grade set to ""Distinction"" if score > 80 else ""Merit"" if score > 60  else ""Pass"" if score > 40 else ""Fail""
   print grade
 end main
 

@@ -20,32 +20,20 @@ function setChar(word String, n Int, newChar Char) as String ->
     word[..n] + newChar + word[n+1..]
 
 function setAttemptIfGreen(attempt String, target String, n Int) as String ->
-    attempt.setChar(n, '*') 
-    if attempt.isGreen(target, n) 
-    else attempt
+    attempt.setChar(n, '*')  if attempt.isGreen(target, n)  else attempt
 
 function setTargetIfGreen(attempt String, target String, n Int) as String ->
-    target.setChar(n, '.') 
-    if attempt.isGreen(target, n) 
-    else target
+    target.setChar(n, '.')  if attempt.isGreen(target, n) else target
 
 function isAlreadyMarkedGreen(attempt String, n Int) as Bool -> attempt[n] is '*'
 
 function isYellow(attempt String, target String, n Int) as Bool -> target.contains(attempt[n])
 
 function setAttemptIfYellow(attempt String, target String, n Int) as String ->
-    attempt
-    if attempt[n] is '*' 
-    else attempt.setChar(n, '+')
-    if attempt.isYellow(target, n) 
-    else attempt.setChar(n, '_')
+    attempt if attempt[n] is '*'  else attempt.setChar(n, '+') if attempt.isYellow(target, n)  else attempt.setChar(n, '_')
 
 function setTargetIfYellow(attempt String, target String, n Int) as String  ->
-    target
-    if attempt.isAlreadyMarkedGreen(n) 
-    else target.setChar(target.indexOf(attempt[n]), '.')
-    if attempt.isYellow(target, n) 
-    else target
+    target if attempt.isAlreadyMarkedGreen(n)  else target.setChar(target.indexOf(attempt[n]), '.')  if attempt.isYellow(target, n)  else target
 
 constant letterPositions set to {0,1,2,3,4}
 
@@ -74,9 +62,7 @@ function allRemainingWordCounts(possAnswers List<of String>, possAttempts Iter<o
 function betterOf(wc1 WordCount, wc2 WordCount, possAnswers Iter<of String>) as WordCount
   var isBetter set to wc2.count < wc1.count
   var isEqualAndPossAnswer set to wc2.count is wc1.count and possAnswers.contains(wc2.word)
-  return wc2 
-         if isBetter or isEqualAndPossAnswer 
-         else wc1
+  return wc2  if isBetter or isEqualAndPossAnswer  else wc1
 end function
 
 function bestAttempt(possAnswers List<of String>, possAttempts List<of String>) as String 
