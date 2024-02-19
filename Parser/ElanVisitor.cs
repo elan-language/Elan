@@ -38,6 +38,18 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFile([NotNull] ElanParser.FileContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.importStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitImportStatement([NotNull] ElanParser.ImportStatementContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.namespace"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNamespace([NotNull] ElanParser.NamespaceContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.main"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -86,12 +98,6 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPrintStatement([NotNull] ElanParser.PrintStatementContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.input"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitInput([NotNull] ElanParser.InputContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.varDef"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -133,6 +139,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitSystemCall([NotNull] ElanParser.SystemCallContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.input"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInput([NotNull] ElanParser.InputContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.argument"/>.
 	/// </summary>
@@ -308,11 +320,11 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFor([NotNull] ElanParser.ForContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="ElanParser.foreach"/>.
+	/// Visit a parse tree produced by <see cref="ElanParser.each"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitForeach([NotNull] ElanParser.EachContext context);
+	Result VisitEach([NotNull] ElanParser.EachContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.while"/>.
 	/// </summary>
@@ -367,6 +379,12 @@ public interface IElanVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitIfExpression([NotNull] ElanParser.IfExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="ElanParser.elseExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitElseExpression([NotNull] ElanParser.ElseExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="ElanParser.lambda"/>.
 	/// </summary>

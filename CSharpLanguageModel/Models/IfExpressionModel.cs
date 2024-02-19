@@ -3,8 +3,8 @@
 public record IfExpressionModel(ICodeModel[] Expressions) : ICodeModel {
     public string ToString(int indent) {
         if (Expressions.Count() is 3) {
-            var expr1 = Expressions.First();
-            var expr2 = Expressions.Skip(1).First();
+            var expr1 = Expressions.Skip(1).First();
+            var expr2 = Expressions.First();
             var expr3 = Expressions.Last();
 
             return $"{expr1} ? {expr2} : {expr3}";

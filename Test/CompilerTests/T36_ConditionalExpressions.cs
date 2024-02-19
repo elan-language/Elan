@@ -19,13 +19,13 @@ main
 end main
 
 function grade(score Int) as String -> 
-  if score > 80
-  then ""Distinction"" 
-  else if score > 60
-  then ""Merit""
-  else if score > 40 
-  then ""Pass""
-  else ""Fail""
+    ""Distinction"" 
+    if score > 80 
+    else ""Merit"" 
+    if score > 60 
+    else ""Pass"" 
+    if score > 40 
+    else ""Fail""
 ";
 
         var objectCode = @"using System.Collections.Generic;
@@ -65,13 +65,13 @@ public static class Program {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var score set to 70
-  var grade set to if score > 80
-      then ""Distinction"" 
-      else if score > 60
-      then ""Merit""
-      else if score > 40 
-      then ""Pass""
-      else ""Fail""
+  var grade set to ""Distinction"" 
+                   if score > 80 
+                   else ""Merit"" 
+                   if score > 60 
+                   else ""Pass"" 
+                   if score > 40 
+                   else ""Fail""
   print grade
 end main
 
@@ -119,55 +119,15 @@ main
  print grade(30)
 end main
 
-function grade(score Int) as String ->
-    if score > 80
-    then ""Distinction"" 
-    else if score > 60
-    then ""Merit""
-    else if score > 40 
-    then ""Pass""
-    else ""Fail""
+function grade(score Int) as String -> 
+    ""Distinction"" 
+    if score > 80 
+    else ""Merit"" 
+    if score > 60 
+    else ""Pass"" 
+    if score > 40 
+    else ""Fail"" 
     end if
-";
-        var compileData = Pipeline.Compile(CompileData(code));
-        AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod]
-    public void Fail_IfSubClause() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
-main
- print grade(90)
- print grade(70)
- print grade(50)
- print grade(30)
-end main
-
-function grade(score Int) as String -> 
-   if score > 80 
-   then ""Distinction"" 
-   if score > 60 
-   then ""Merit""
-   else ""Fail""
-";
-        var compileData = Pipeline.Compile(CompileData(code));
-        AssertDoesNotParse(compileData);
-    }
-
-    [TestMethod]
-    public void Fail_NoThen() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
-main
- print grade(90)
- print grade(70)
- print grade(50)
- print grade(30)
-end main
-
-function grade(score Int) as String -> 
-   if score > 80  
-   ""Distinction"" 
-   else ""Fail""
 ";
         var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);

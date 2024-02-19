@@ -33,7 +33,6 @@ public static class AstFactory {
             LogicalOpContext c => visitor.Build(c),
             ProceduralControlFlowContext c => visitor.Build(c),
             IfContext c => visitor.Build(c),
-            IfExpressionContext c => visitor.Build(c),
             ForContext c => visitor.Build(c),
             EachContext c => visitor.Build(c),
             WhileContext c => visitor.Build(c),
@@ -86,6 +85,8 @@ public static class AstFactory {
             LambdaContext c => visitor.Build(c),
             ListDecompContext c => visitor.Build(c),
             TupleDefinitionContext c => visitor.Build(c),
+            ElseExpressionContext c => visitor.Build(c),
+            IfExpressionContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context.GetType().FullName ?? null)
         };
@@ -190,8 +191,11 @@ public static class AstFactory {
             return new WithNode(expr, with.ToImmutableArray(), symbol.Line, symbol.Column);
         }
 
-        if (context.ifExpression() is { } ie) {
-            return visitor.Visit(ie);
+        if (context.elseExpression() is { } tre) {
+            var expr = visitor.Visit(context.expression().Single());
+            var ifExpr = visitor.Visit(context.ifExpression());
+            var elseExpr = visitor.Visit(tre);
+            return new IfExpressionNode(new[] {expr, ifExpr, elseExpr}.ToImmutableArray(), expr.Line, expr.Column);
         }
 
         if (context.systemCall() is { } sc) {
@@ -465,12 +469,6 @@ public static class AstFactory {
         var statementBlocks = context.statementBlock().Select(visitor.Visit);
 
         return new IfStatementNode(expressions.ToImmutableArray(), statementBlocks.ToImmutableArray(), 0, 0);
-    }
-
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, IfExpressionContext context) {
-        var expressions = context.expression().Select(visitor.Visit);
-        var symbol = context.IF().Symbol;
-        return new IfExpressionNode(expressions.ToImmutableArray(), symbol.Line, symbol.Column);
     }
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, SwitchContext context) {
@@ -932,5 +930,16 @@ public static class AstFactory {
         var expression = context.expression().Select(visitor.Visit);
 
         return new TupleDefNode(expression.ToImmutableArray(), 0, 0);
+    }
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElseExpressionContext context) {
+        var expression = visitor.Visit(context.expression());
+
+        return expression;
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, IfExpressionContext context) {
+        var expression = visitor.Visit(context.expression());
+
+        return expression;
     }
 }

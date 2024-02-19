@@ -208,7 +208,7 @@ caseDefault :
 
 // EXPRESSIONS
 expression: 
-	  bracketedExpression 
+	  bracketedExpression
 	| functionCall 
 	| value
 	| expression index
@@ -218,7 +218,7 @@ expression:
 	| expression POWER expression // so that ^ has higher priority (because implemented with function in CSharp)
 	| expression binaryOp expression
 	| newInstance
-	| ifExpression
+	| expression ifExpression elseExpression 
 	| expression withClause
 	| input
 	| systemCall
@@ -227,7 +227,9 @@ expression:
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET ; //made into rule so that compiler can add the brackets explicitly
 
-ifExpression: IF expression NL THEN expression NL ELSE expression;
+ifExpression: NL IF expression;
+
+elseExpression : NL ELSE expression;
 
 lambda: LAMBDA argumentList ARROW expression;
 

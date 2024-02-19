@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c://Elan//Repository//Parser//Elan.g4 by ANTLR 4.13.1
+// Generated from c:/GitHub/Elan/Parser/Elan.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -731,6 +731,18 @@ public partial class ElanBaseListener : IElanListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitIfExpression([NotNull] ElanParser.IfExpressionContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="ElanParser.elseExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterElseExpression([NotNull] ElanParser.ElseExpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="ElanParser.elseExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitElseExpression([NotNull] ElanParser.ElseExpressionContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.lambda"/>.
 	/// <para>The default implementation does nothing.</para>
