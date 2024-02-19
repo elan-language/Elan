@@ -25,12 +25,12 @@ main
 end main
 
 abstract class Foo
-    property p1 Int
-    property p2 Int
+    abstract property p1 Int
+    abstract property p2 Int
 
-    procedure setP1(v Int)
+    abstract procedure setP1(v Int)
 
-    function product() as Int
+    abstract function product() as Int
 end class
 
 class Bar inherits Foo
@@ -142,13 +142,13 @@ main
 end main
 
 abstract class Foo
-    property p1 Int
-    property p2 Int
+    abstract property p1 Int
+    abstract property p2 Int
 end class
 
 abstract class Yon
-    procedure setP1(v Int)
-    function product() as Int
+    abstract procedure setP1(v Int)
+    abstract function product() as Int
 end class
 
 class Bar inherits Foo, Yon
@@ -271,14 +271,14 @@ main
 end main
 
 abstract class Foo
-    property p1 Int
-    property p2 Int
+    abstract property p1 Int
+    abstract property p2 Int
 end class
 
 abstract class Yon
-    property p1 Int
-    procedure setP1(v Int)
-    function product() as Int
+    abstract property p1 Int
+    abstract procedure setP1(v Int)
+    abstract function product() as Int
 end class
 
 class Bar inherits Foo, Yon
@@ -458,8 +458,8 @@ class Foo
 end class
 
 abstract class Bar inherits Foo
-    property p1 Int
-    property p2 Int
+    abstract property p1 Int
+    abstract property p2 Int
 end class
 ";
 
@@ -480,12 +480,12 @@ main
 end main
 
 abstract class Foo
-    property p1 Int
-    property p2 Int
+    abstract property p1 Int
+    abstract property p2 Int
 
-    procedure setP1(v Int)
+    abstract procedure setP1(v Int)
 
-    function product() as Int
+    abstract function product() as Int
 end class
 
 class Bar inherits Foo
@@ -524,12 +524,12 @@ main
 end main
 
 abstract class Foo
-    property p1 Int
-    property p2 Int
+    abstract property p1 Int
+    abstract property p2 Int
 
-    procedure setP1(v Int)
+    abstract procedure setP1(v Int)
 
-    function product() as Int
+    abstract function product() as Int
 end class
 
 class Bar inherits Foo
@@ -572,14 +572,65 @@ main
 end main
 
 abstract class Foo
-    property p1 Int
-    property p2 Int
+    abstract property p1 Int
+    abstract property p2 Int
 
-    procedure setP1(v Int)
+    abstract procedure setP1(v Int)
         set property.p1 to p1
     end procedure
 
+    abstract function product() as Int
+end class
+";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_MissingAbstractProperty() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
+end main
+
+abstract class Foo
+    property p1 Int
+end class
+";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_MissingAbstractFunction() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
+end main
+
+abstract class Foo
     function product() as Int
+end class
+";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_MissingAbstractProcedure() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
+    var x set to new Bar()
+    var l set to new List<of Foo>() + x
+end main
+
+abstract class Foo
+    procedure setP1(v Int)
 end class
 ";
 

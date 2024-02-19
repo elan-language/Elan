@@ -89,8 +89,8 @@ main
 end main
 
 abstract immutable class Bar
-    property p1 Int
-    function square() as Int
+    abstract property p1 Int
+    abstract function square() as Int
 end class
 
 immutable class Foo inherits Bar

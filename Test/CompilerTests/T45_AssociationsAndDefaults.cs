@@ -739,9 +739,9 @@ class Game
 end class
 
 abstract class Player
-    property name String
+    abstract property name String
 
-    function ucName() as String
+    abstract function ucName() as String
 end class
 ";
         var objectCode = @"using System.Collections.Generic;

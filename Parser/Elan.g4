@@ -103,32 +103,32 @@ classDef: mutableClass | abstractClass| immutableClass | abstractImmutableClass;
 mutableClass: 
 	NL CLASS TYPENAME inherits?
 	constructor
-    (property | functionDef | procedureDef )*	
+    (NL property | functionDef | procedureDef )*	
     NL END CLASS
 	;
 
 abstractClass:
 	NL ABSTRACT CLASS TYPENAME inherits?
-    (property | NL FUNCTION functionSignature | NL PROCEDURE procedureSignature)*
+    (NL ABSTRACT property | NL ABSTRACT FUNCTION functionSignature | NL ABSTRACT PROCEDURE procedureSignature)*
     NL END CLASS
 	;
 
 immutableClass: 
 	NL IMMUTABLE CLASS TYPENAME inherits?
 	constructor
-    (property | functionDef )*
+    (NL property | functionDef)*
     NL END CLASS 
 	;
 
 abstractImmutableClass:
 	NL ABSTRACT IMMUTABLE CLASS TYPENAME inherits?
-    (property | NL FUNCTION functionSignature)*
+    (NL ABSTRACT property | NL ABSTRACT FUNCTION functionSignature)*
     NL END CLASS
 	;
  
 inherits: INHERITS type (COMMA type)*;
 
-property: NL PRIVATE? PROPERTY IDENTIFIER type; 
+property: PRIVATE? PROPERTY IDENTIFIER type; 
 
 constructor: 
 	NL CONSTRUCTOR OPEN_BRACKET parameterList? CLOSE_BRACKET
