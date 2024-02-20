@@ -573,6 +573,36 @@ end function
     }
 
     [TestMethod]
+    public void Fail_CannotPassInArray() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+function foo(a Array<of Int>) as Int
+    return a[0]
+end function
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Cannot pass an Array into a function");
+    }
+
+    [TestMethod]
+    public void Fail_CannotPassInArrayMultipleParameters() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+function foo(b Int, a Array<of Int>) as Int
+    return a[0]
+end function
+";
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertDoesNotCompile(compileData, "Cannot pass an Array into a function");
+    }
+
+    [TestMethod]
     public void Fail_TooManyParams() {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main

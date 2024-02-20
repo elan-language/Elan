@@ -42,6 +42,17 @@ public static class CompilerRules {
         return null;
     }
 
+    public static string? CannotHaveArrayParameterInFunctionRule(IAstNode[] nodes, IScope currentScope) {
+        var leafNode = nodes.Last();
+        if (leafNode is FunctionDefNode { Signature: MethodSignatureNode msn }) {
+            if (msn.Parameters.Any(pn => pn is ParameterNode { TypeNode : DataStructureTypeNode { Type: DataStructure.Array } })) {
+                return $"Cannot pass an Array into a function : {leafNode}";
+            }
+        }
+
+        return null;
+    }
+
     public static string? NoMutableConstantsRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
         if (nodes.AnyOtherNodeIs(n => n is ConstantDefNode)) {
