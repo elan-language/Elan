@@ -411,7 +411,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
         var dProperties = properties.OfType<PropertyDefModel>().Select(p => p with { PropertyType = PropertyType.Default }).Cast<ICodeModel>().ToArray();
 
-        var defaultClassModel = new DefaultClassDefModel(type, dProperties, pSignatures, Array.Empty<ICodeModel>());
+        var defaultClassModel = new DefaultClassDefModel(type, dProperties, pSignatures, Array.Empty<ICodeModel>(), classDefNode.HasAsString, false);
 
         return new ClassDefModel(type, inherits, constructor, properties, functions, classDefNode.HasDefaultConstructor, defaultClassModel);
     }
@@ -427,7 +427,7 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
         var dProcedureSignatures = methodSignatures.OfType<MethodSignatureModel>().Where(ms => ms.ReturnType is null).Cast<ICodeModel>().ToArray();
         var dFunctionSignatures = methodSignatures.OfType<MethodSignatureModel>().Where(ms => ms.ReturnType is not null).Cast<ICodeModel>().ToArray();
 
-        var defaultClassModel = new DefaultClassDefModel(type, dProperties, dProcedureSignatures, dFunctionSignatures, true);
+        var defaultClassModel = new DefaultClassDefModel(type, dProperties, dProcedureSignatures, dFunctionSignatures, false, true);
 
         return new AbstractClassDefModel(type, inherits, properties.Cast<ICodeModel>().ToArray(), methodSignatures, defaultClassModel);
     }

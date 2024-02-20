@@ -135,20 +135,20 @@ public class FunctionsTests {
 
     [TestMethod]
     public void AsStringFunc() {
-        Func<int, string, int> t = (i, s) => 0; 
+        Func<int, string, int> t = (i, s) => 0;
         Assert.AreEqual("Function (Int,String -> Int)", asString(t));
     }
 
     [TestMethod]
     public void AsStringFunc1() {
-        Func<int, Foo> t = i => Foo.DefaultInstance; 
+        Func<int, Foo> t = i => Foo.DefaultInstance;
         Assert.AreEqual("Function (Int -> Foo)", asString(t));
         Assert.AreEqual("default Foo", asString(t(1)));
     }
 
     [TestMethod]
     public void AsStringTypes() {
-      
+
         Assert.AreEqual("Int", asString(typeof(int)));
         Assert.AreEqual("String", asString(typeof(string)));
         Assert.AreEqual("Float", asString(typeof(double)));
@@ -158,29 +158,81 @@ public class FunctionsTests {
         Assert.AreEqual("List", asString(typeof(ElanList<int>)));
     }
 
-    public record class Foo {
+    [TestMethod]
+    public void AsStringClass() {
+        var x = new Bar();
+        Assert.AreEqual("a Bar", asString(x));
+    }
+
+    [TestMethod]
+    public void AsStringDefaultClass() {
+        var x = Bar.DefaultInstance;
+        Assert.AreEqual("default Bar", asString(x));
+    }
+
+    [TestMethod]
+    public void AsStringDefaultClassReplaceAsString() {
+        var x = new Foo();
+        var y = x.p3.asString();
+        Assert.AreEqual("default Foo", asString(y));
+    }
+
+    [TestMethod]
+    public void AsStringEnum() {
+        var a = Fruit.apple;
+
+        Assert.AreEqual("apple", asString(a));
+    }
+
+    private enum Fruit {
+        apple,
+        orange,
+        pear
+    }
+
+public record class Foo {
         public Foo() {
             p1 = 5;
             p2 = @"Apple";
         }
 
-        public static Foo DefaultInstance { get; } = new _DefaultFoo();
+        public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
 
-        public virtual int p1 { get; set; }
+        public virtual int p1 { get; set; } = default;
         protected virtual string p2 { get; set; } = "";
+
+        public virtual Foo p3 { get; set; } = Foo.DefaultInstance;
+
         public virtual string asString() => typeAndProperties(this);
 
         private record class _DefaultFoo : Foo {
             public override int p1 => default;
             protected override string p2 => "";
 
+            public override Foo p3 { get; set; } = Foo.DefaultInstance;
+
             public override string asString() => "default Foo";
+        }
+    }
+
+    public record class Bar
+    {
+        public Bar()
+        {
+
+        }
+
+        public static Bar DefaultInstance { get; } = new _DefaultBar();
+
+        private record class _DefaultBar : Bar
+        {
+            public string asString() => "default Bar";
         }
     }
 
     [TestMethod]
     public void TypeAndProperties() {
-        Assert.AreEqual("Foo {p1:5, p2:Apple}", typeAndProperties(new Foo()));
+        Assert.AreEqual("Foo {p1:5, p2:Apple, p3:default Foo}", typeAndProperties(new Foo()));
     }
 
     [TestMethod]

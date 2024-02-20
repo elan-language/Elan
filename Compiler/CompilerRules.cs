@@ -151,19 +151,6 @@ public static class CompilerRules {
         return null;
     }
 
-    public static string? ClassMustHaveAsStringRule(IAstNode[] nodes, IScope currentScope) {
-        var leafNode = nodes.Last();
-
-        if (leafNode is ClassDefNode cdn) {
-            var children = cdn.Methods.OfType<FunctionDefNode>();
-            if (!children.Any(n => n is { Signature: MethodSignatureNode { Id : IdentifierNode { Id : "asString" } } })) {
-                return $"Class must have asString method: {leafNode}";
-            }
-        }
-
-        return null;
-    }
-
     public static string? ClassCannotInheritConcreteClassRule(IAstNode[] nodes, IScope currentScope) {
         var leafNode = nodes.Last();
 

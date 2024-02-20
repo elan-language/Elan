@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -217,14 +218,18 @@ public static class Functions {
         return obj switch {
             bool b => b ? "true" : "false",
             string s => s,
+            char c => c.ToString(),
+            int i => i.ToString(),
+            double d => d.ToString(CultureInfo.InvariantCulture),
             ElanException e => e.message,
             null => throw new NotImplementedException(),
+            _ when obj.GetType().IsEnum => obj.ToString(),
             _ when obj.GetType().IsAssignableTo(typeof(ITuple)) => asString<ITuple>((ITuple)obj),
             _ when obj.GetType().GetMethod("asString") is { } mi => mi.Invoke(obj, null) as string,
             IEnumerable e => e.Cast<object>().Any() ? $"Iter {{{string.Join(',', e.Cast<object>().Select(Functions.asString))}}}" : "empty iter",
             Delegate d => $"Function ({ string.Join(",", d.Method.GetParameters().Select(p => asString(p.ParameterType)))} -> {asString(d.Method.ReturnType)})",
             Type t => TypeAsString(t),
-            _ => obj.ToString()
+            _ => $"a {obj.GetType().Name}"
         };
     }
 
