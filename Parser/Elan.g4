@@ -73,7 +73,7 @@ procedureParameter: OUT? IDENTIFIER type;
 functionDef: 
 	NL FUNCTION functionSignature
 	statementBlock
-	NL RETURN expression
+	NL RETURN (expression | DEFAULT)
     NL END FUNCTION
 	;
    

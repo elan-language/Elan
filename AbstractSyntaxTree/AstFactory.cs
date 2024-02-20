@@ -668,7 +668,11 @@ public static class AstFactory {
         var signature = visitor.Visit(context.functionSignature());
         var statementBlock = visitor.Visit(context.statementBlock());
         var symbol = context.RETURN().Symbol;
-        var ret = new ReturnExpressionNode(visitor.Visit(context.expression()), symbol.Line, symbol.Column);
+        var ret = context.expression() is { } expr
+            ? (IAstNode) new ReturnExpressionNode(visitor.Visit(expr), symbol.Line, symbol.Column)
+            : signature is MethodSignatureNode { ReturnType: { } rt }
+                ? new DefaultNode(rt, symbol.Line, symbol.Column)
+                : throw new NotImplementedException(context.children.First().GetText());
 
         symbol = context.FUNCTION(0).Symbol;
         return new FunctionDefNode(signature, statementBlock, ret, true, symbol.Line, symbol.Column);

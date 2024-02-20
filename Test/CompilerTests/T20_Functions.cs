@@ -5,7 +5,7 @@ namespace Test.CompilerTests;
 using static Helpers;
 
 [TestClass]
-public class T20_Functions_StatementBodied {
+public class T20_Functions {
     #region Passes
 
     [TestMethod]
@@ -47,6 +47,149 @@ public static class Program {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "12\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_ReturnSimpleDefault() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
+    print foo(3,4)
+end main
+
+function foo(a Int, b Int) as Int
+    return default
+end function
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static int foo(int a, int b) {
+
+    return default(int);
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.foo(3, 4)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "0\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_ReturnClassDefault() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
+    print foo(3,4)
+end main
+
+function foo(a Int, b Int) as Foo
+    return default
+end function
+
+class Foo
+    constructor()
+    end constructor
+end class 
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static Foo foo(int a, int b) {
+
+    return Foo.DefaultInstance;
+  }
+  public record class Foo {
+    public static Foo DefaultInstance { get; } = new Foo._DefaultFoo();
+
+    public Foo() {
+
+    }
+
+
+    private record class _DefaultFoo : Foo {
+      public _DefaultFoo() { }
+
+
+      public string asString() { return ""default Foo"";  }
+    }
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.foo(3, 4)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "default Foo\r\n");
+    }
+
+    [TestMethod]
+    public void Pass_ReturnCollectionDefault() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+main
+    print foo(3,4)
+end main
+
+function foo(a Int, b Int) as Array<of Int>
+    return default
+end function
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static StandardLibrary.ElanArray<int> foo(int a, int b) {
+
+    return StandardLibrary.ElanArray<int>.DefaultInstance;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    System.Console.WriteLine(StandardLibrary.Functions.asString(Globals.foo(3, 4)));
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "empty array\r\n");
     }
 
     [TestMethod]
