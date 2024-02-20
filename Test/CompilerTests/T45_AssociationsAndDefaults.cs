@@ -777,6 +777,7 @@ public static partial class Globals {
     private record class _DefaultPlayer : Player {
       public _DefaultPlayer() { }
       public string name => """";
+
       public string ucName() => """";
       public string asString() { return ""default Player"";  }
     }

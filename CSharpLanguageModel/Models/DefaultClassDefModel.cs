@@ -16,7 +16,8 @@ public record DefaultClassDefModel(ICodeModel Type, ICodeModel[] Properties, ICo
 {Indent(indent)}}}";
 
     private static string DefaultFunctions(ICodeModel[] mm, int indent = 0) {
-        return string.Join("\r\n", mm.Select(cm => $"{Indent(indent)}public {cm}{Init(cm)}"));
+        var prefix = mm.Any() ? "\r\n" : "";
+        return $"{prefix}{string.Join("\r\n", mm.Select(cm => $"{Indent(indent)}public {cm}{Init(cm)}"))}";
     }
 
     private static string Init(ICodeModel cm) =>

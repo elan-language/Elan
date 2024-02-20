@@ -120,6 +120,7 @@ public static partial class Globals {
     private record class _DefaultBar : Bar {
       public _DefaultBar() { }
       public int p1 => default;
+
       public int square() => default;
       public string asString() { return ""default Bar"";  }
     }

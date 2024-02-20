@@ -71,7 +71,8 @@ public static partial class Globals {
       public _DefaultFoo() { }
       public int p1 => default;
       public int p2 => default;
-      public void setP1(int v) { }      public int product() => default;
+      public void setP1(int v) { }
+      public int product() => default;
       public string asString() { return ""default Foo"";  }
     }
   }
@@ -200,7 +201,8 @@ public static partial class Globals {
     private record class _DefaultYon : Yon {
       public _DefaultYon() { }
 
-      public void setP1(int v) { }      public int product() => default;
+      public void setP1(int v) { }
+      public int product() => default;
       public string asString() { return ""default Yon"";  }
     }
   }
@@ -330,7 +332,8 @@ public static partial class Globals {
     private record class _DefaultYon : Yon {
       public _DefaultYon() { }
       public int p1 => default;
-      public void setP1(int v) { }      public int product() => default;
+      public void setP1(int v) { }
+      public int product() => default;
       public string asString() { return ""default Yon"";  }
     }
   }
