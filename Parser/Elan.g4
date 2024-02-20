@@ -217,7 +217,6 @@ expression:
 	| expression withClause
 	| input
 	| systemCall
-	| NL expression // so that any expression may be broken over multiple lines at its 'natural joints' i.e. before any sub-expression
 	;
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET ; //made into rule so that compiler can add the brackets explicitly

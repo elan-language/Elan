@@ -178,10 +178,6 @@ public static class AstFactory {
             return visitor.Visit(ni);
         }
 
-        if (context.NL() is not null) {
-            return visitor.Visit(context.expression().Single());
-        }
-
         if (context.withClause() is { } wc) {
             var expr = visitor.Visit(context.expression().Single());
             var with = wc.inlineAsignment().Select(visitor.Visit);
