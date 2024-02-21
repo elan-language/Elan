@@ -85,6 +85,9 @@ public static class AstFactory {
             TupleDefinitionContext c => visitor.Build(c),
             ElseExpressionContext c => visitor.Build(c),
             IfExpressionContext c => visitor.Build(c),
+            TestContext c => visitor.Build(c),
+            TestStatementsContext c => visitor.Build(c),
+            AssertContext c => visitor.Build(c),
 
             _ => throw new NotImplementedException(context.GetType().FullName ?? null)
         };
@@ -98,9 +101,10 @@ public static class AstFactory {
         var enums = context.enumDef().Select(visitor.Visit);
         var classes = context.classDef().Select(visitor.Visit);
         var globals = constants.Concat(procedures).Concat(functions).Concat(enums).Concat(classes).ToImmutableArray();
+        var tests = context.test().Select(visitor.Visit).ToImmutableArray();
         var mainNode = context.main().Select(visitor.Visit<MainNode>).SingleOrDefault();
 
-        return new FileNode(globals, mainNode, 0, 0);
+        return new FileNode(globals, mainNode, tests, 0, 0);
     }
 
     private static StatementBlockNode Build(this ElanBaseVisitor<IAstNode> visitor, StatementBlockContext context) {
@@ -918,5 +922,24 @@ public static class AstFactory {
         var expression = visitor.Visit(context.expression());
 
         return expression;
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TestContext context) {
+        var id = visitor.Visit(context.IDENTIFIER());
+        var statements = visitor.Visit(context.testStatements());
+
+        return new TestDefNode(id, statements, 0, 0);
+    }
+
+    
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, TestStatementsContext context) {
+        var statements = context.children is { } c ? c.Select(visitor.Visit) : Array.Empty<IAstNode>();
+        return new StatementBlockNode(statements.ToImmutableArray(), 0, 0);
+    }
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, AssertContext context) {
+        var expression = visitor.Visit(context.expression());
+        var value = visitor.Visit(context.value());
+        return new AssertNode(expression, value, 0, 0);
     }
 }

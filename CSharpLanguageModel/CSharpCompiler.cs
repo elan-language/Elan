@@ -16,7 +16,14 @@ public static class CSharpCompiler {
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<AssemblyName>{baseName}</AssemblyName>
+        <StartupObject>Program</StartupObject>
 	</PropertyGroup>
+
+    <ItemGroup>
+	    <PackageReference Include=""Microsoft.NET.Test.Sdk"" Version=""17.5.0"" />
+        <PackageReference Include=""MSTest.TestAdapter"" Version=""2.2.10"" />
+        <PackageReference Include=""MSTest.TestFramework"" Version=""2.2.10"" />
+    </ItemGroup>
 
     <ItemGroup>
 	   <CSFile Include=""{baseName}.cs""/>

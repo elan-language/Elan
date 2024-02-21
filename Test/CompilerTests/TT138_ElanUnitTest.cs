@@ -42,6 +42,14 @@ public static class Program {
     var a = Globals.square(3);
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
+}
+
+[Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
+public class _Tests {
+  [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+  public void squareHappyCase1() {
+    Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(9, Globals.square(3));
+  }
 }";
 
         var parseTree = @"*";

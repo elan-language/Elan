@@ -1,4 +1,5 @@
-﻿using AbstractSyntaxTree;
+﻿using System.Runtime.InteropServices;
+using AbstractSyntaxTree;
 using AbstractSyntaxTree.Nodes;
 using AbstractSyntaxTree.Roles;
 using CSharpLanguageModel.Models;
@@ -27,7 +28,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     private FileCodeModel BuildFileModel(FileNode fileNode) {
         var main = fileNode.MainNode is { } mn ? Visit(mn) : null;
         var globals = fileNode.GlobalNodes.Select(Visit);
-        return new FileCodeModel(globals.ToArray(), main);
+        var tests = fileNode.TestNodes.Select(Visit);
+        return new FileCodeModel(globals.ToArray(), main, tests.ToArray());
     }
 
     private MainCodeModel BuildMainModel(MainNode mainNode) => new(Visit(mainNode.StatementBlock));
@@ -103,6 +105,8 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
             TupleDefNode n => HandleScope(BuildTupleDefModel, n),
             AbstractFunctionDefNode n => HandleScope(BuildAbstractFunctionDefModel, n),
             AbstractProcedureDefNode n => HandleScope(BuildAbstractProcedureDefModel, n),
+            TestDefNode n => HandleScope(BuildTestModel, n),
+            AssertNode n => HandleScope(BuildAssertModel, n),
             null => throw new NotImplementedException("null"),
             _ => throw new NotImplementedException(astNode.GetType().ToString() ?? "null")
         };
@@ -516,4 +520,17 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
     }
 
     private ParameterCallModel BuildParameterCallModel(ParameterCallNode defaultNode) => new(Visit(defaultNode.Expression), defaultNode.IsRef);
+
+    private TestModel BuildTestModel(TestDefNode testDefNode) {
+        var statements = Visit(testDefNode.TestStatements);
+        var id = Visit(testDefNode.Id);
+
+        return new TestModel(id, statements);
+    }
+
+    private AssertModel BuildAssertModel(AssertNode assertNode) {
+        var actual = Visit(assertNode.Actual);
+        var expected = Visit(assertNode.Expected);
+        return new AssertModel(actual, expected);
+    }
 }
