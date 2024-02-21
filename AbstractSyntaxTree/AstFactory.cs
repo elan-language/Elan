@@ -48,7 +48,7 @@ public static class AstFactory {
             ImmutableClassContext c => visitor.Build(c),
             IndexContext c => visitor.Build(c),
             InlineAsignmentContext c => visitor.Build(c),
-            InputContext c => visitor.Build(c), 
+            InputContext c => visitor.Build(c),
             LambdaContext c => visitor.Build(c),
             ListDecompContext c => visitor.Build(c),
             ListDefinitionContext c => visitor.Build(c),
@@ -79,7 +79,7 @@ public static class AstFactory {
             SystemCallContext c => visitor.Build(c),
             TestContext c => visitor.Build(c),
             TestStatementsContext c => visitor.Build(c),
-            ThrowExceptionContext c => visitor.Build(c), 
+            ThrowExceptionContext c => visitor.Build(c),
             TupleDefinitionContext c => visitor.Build(c),
             TupleTypeContext c => visitor.Build(c),
             TryContext c => visitor.Build(c),
@@ -193,7 +193,7 @@ public static class AstFactory {
             var expr = visitor.Visit(context.expression().Single());
             var ifExpr = visitor.Visit(context.ifExpression());
             var elseExpr = visitor.Visit(tre);
-            return new IfExpressionNode(new[] {expr, ifExpr, elseExpr}.ToImmutableArray(), expr.Line, expr.Column);
+            return new IfExpressionNode(new[] { expr, ifExpr, elseExpr }.ToImmutableArray(), expr.Line, expr.Column);
         }
 
         if (context.systemCall() is { } sc) {
@@ -250,7 +250,7 @@ public static class AstFactory {
         }
 
         if (context.THIS() is not null) {
-            return new ThisInstanceNode(0,0);
+            return new ThisInstanceNode(0, 0);
         }
 
         if (context.DEFAULT() is not null) {
@@ -333,7 +333,7 @@ public static class AstFactory {
         }
 
         if (context.BOOL_VALUE() is { } b) {
-            return new ValueNode(b.Symbol.Text, new ValueTypeNode(ValueType.Bool,b.Symbol.Line, b.Symbol.Column), b.Symbol.Line, b.Symbol.Column);
+            return new ValueNode(b.Symbol.Text, new ValueTypeNode(ValueType.Bool, b.Symbol.Line, b.Symbol.Column), b.Symbol.Line, b.Symbol.Column);
         }
 
         if (context.enumValue() is { } ev) {
@@ -352,7 +352,7 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, LiteralDataStructureContext context) {
         if (context.LITERAL_STRING() is { } ls) {
-            return new ValueNode(ls.Symbol.Text, new ValueTypeNode(ValueType.String,ls.Symbol.Line, ls.Symbol.Column), ls.Symbol.Line, ls.Symbol.Column);
+            return new ValueNode(ls.Symbol.Text, new ValueTypeNode(ValueType.String, ls.Symbol.Line, ls.Symbol.Column), ls.Symbol.Line, ls.Symbol.Column);
         }
 
         if (context.literalList() is { } ll) {
@@ -600,19 +600,19 @@ public static class AstFactory {
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, DataStructureTypeContext context) {
         var genericTypes = context.genericSpecifier().type().Select(visitor.Visit);
 
-        if (context.ITERABLE() is {} iter) {
+        if (context.ITERABLE() is { } iter) {
             return new DataStructureTypeNode(DataStructure.Iter, genericTypes.ToImmutableArray(), iter.Symbol.Line, iter.Symbol.Column);
         }
 
-        if (context.LIST() is {} lst) {
+        if (context.LIST() is { } lst) {
             return new DataStructureTypeNode(DataStructure.List, genericTypes.ToImmutableArray(), lst.Symbol.Line, lst.Symbol.Column);
         }
 
-        if (context.ARRAY() is {} arr) {
+        if (context.ARRAY() is { } arr) {
             return new DataStructureTypeNode(DataStructure.Array, genericTypes.ToImmutableArray(), arr.Symbol.Line, arr.Symbol.Column);
         }
 
-        if (context.DICTIONARY() is {} dict) {
+        if (context.DICTIONARY() is { } dict) {
             return new DataStructureTypeNode(DataStructure.Dictionary, genericTypes.ToImmutableArray(), dict.Symbol.Line, dict.Symbol.Column);
         }
 
@@ -669,7 +669,7 @@ public static class AstFactory {
         var statementBlock = visitor.Visit(context.statementBlock());
         var symbol = context.RETURN().Symbol;
         var ret = context.expression() is { } expr
-            ? (IAstNode) new ReturnExpressionNode(visitor.Visit(expr), symbol.Line, symbol.Column)
+            ? (IAstNode)new ReturnExpressionNode(visitor.Visit(expr), symbol.Line, symbol.Column)
             : signature is MethodSignatureNode { ReturnType: { } rt }
                 ? new DefaultNode(rt, symbol.Line, symbol.Column)
                 : throw new NotImplementedException(context.children.First().GetText());
@@ -751,7 +751,7 @@ public static class AstFactory {
         return new EnumValueNode(id.GetText(), type, 0, 0);
     }
 
-    private static TypeNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumTypeContext context) => new TypeNode(visitor.Visit(context.TYPENAME()), 0, 0);
+    private static TypeNode Build(this ElanBaseVisitor<IAstNode> visitor, EnumTypeContext context) => new(visitor.Visit(context.TYPENAME()), 0, 0);
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, GenericSpecifierContext context) => visitor.Visit(context.type().Single());
 
@@ -832,11 +832,11 @@ public static class AstFactory {
 
     private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ScopeQualifierContext context) {
         if (context.GLOBAL() is not null) {
-            return new GlobalPrefixNode(0,0);
+            return new GlobalPrefixNode(0, 0);
         }
 
         if (context.PROPERTY() is not null) {
-            return new PropertyPrefixNode(0,0);
+            return new PropertyPrefixNode(0, 0);
         }
 
         throw new NotImplementedException(context.children.First().GetText());
@@ -912,13 +912,10 @@ public static class AstFactory {
 
         return new TupleDefNode(expression.ToImmutableArray(), 0, 0);
     }
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElseExpressionContext context) {
-        return visitor.Visit(context.expression());
-    }
 
-    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, IfExpressionContext context) {
-        return visitor.Visit(context.expression());
-    }
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, ElseExpressionContext context) => visitor.Visit(context.expression());
+
+    private static IAstNode Build(this ElanBaseVisitor<IAstNode> visitor, IfExpressionContext context) => visitor.Visit(context.expression());
 
     private static TestDefNode Build(this ElanBaseVisitor<IAstNode> visitor, TestContext context) {
         var id = visitor.Visit(context.IDENTIFIER());
@@ -927,7 +924,6 @@ public static class AstFactory {
         return new TestDefNode(id, statements, 0, 0);
     }
 
-    
     private static StatementBlockNode Build(this ElanBaseVisitor<IAstNode> visitor, TestStatementsContext context) {
         var statements = context.children is { } c ? c.Select(visitor.Visit) : Array.Empty<IAstNode>();
         return new StatementBlockNode(statements.ToImmutableArray(), 0, 0);
