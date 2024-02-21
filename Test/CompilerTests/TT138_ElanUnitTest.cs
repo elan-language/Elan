@@ -1,4 +1,5 @@
-﻿using Compiler;
+﻿using Antlr4.Runtime.Tree;
+using Compiler;
 
 namespace Test.CompilerTests;
 
@@ -274,7 +275,7 @@ namespace ElanTestCode {
 
     #region Fails
 
-       [TestMethod]
+    [TestMethod]
     public void Fail_InvalidCode() {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 test invalidCode
@@ -304,6 +305,55 @@ end main
 
         var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
+    }
+
+    [TestMethod]
+    public void Fail_CallTestDirectly() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+test aTest
+    var a set to 3
+    assert a is 3
+end test
+
+main
+    call aTest()
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    aTest();
+  }
+}
+namespace ElanTestCode {
+  [Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
+  public class _Tests {
+    [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+    public void aTest() {
+      var a = 3;
+      Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(3, a);
+    }
+  }
+}";
+
+        var parseTree = @"*";
+
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeDoesNotCompile(compileData);
     }
 
     #endregion
