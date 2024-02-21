@@ -7,7 +7,6 @@ public record CompileOptions {
     public bool CompileToCSharp { get; init; } = true;
 }
 
-
 public record CompileData {
     public string FileName { get; init; } = "";
 
@@ -35,5 +34,5 @@ public record CompileData {
 
     public string ObjectCodeCompileStdErr { get; init; } = "";
 
-    public CompileOptions CompileOptions { get; init; } = new CompileOptions();
+    public CompileOptions CompileOptions { get; init; } = new();
 }

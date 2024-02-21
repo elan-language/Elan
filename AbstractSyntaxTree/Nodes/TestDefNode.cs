@@ -1,8 +1,7 @@
-﻿using AbstractSyntaxTree.Roles;
-
-namespace AbstractSyntaxTree.Nodes;
+﻿namespace AbstractSyntaxTree.Nodes;
 
 public record TestDefNode(IAstNode Id, IAstNode TestStatements, int Line, int Column) : IAstNode {
+    public string Name => ((IdentifierNode)Id).Id;
     public IEnumerable<IAstNode> Children => new[] { Id, TestStatements };
 
     public IAstNode Replace(IAstNode from, IAstNode to) {
@@ -12,6 +11,4 @@ public record TestDefNode(IAstNode Id, IAstNode TestStatements, int Line, int Co
             _ => throw new NotImplementedException()
         };
     }
-
-    public string Name => ((IdentifierNode)Id).Id;
 }

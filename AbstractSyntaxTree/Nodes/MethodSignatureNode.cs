@@ -3,7 +3,7 @@ using AbstractSyntaxTree.Roles;
 
 namespace AbstractSyntaxTree.Nodes;
 
-public record MethodSignatureNode(IAstNode Id, ImmutableArray<IAstNode> Parameters, IAstNode? ReturnType/*null*/, int Line, int Column) : INamedAstNode {
+public record MethodSignatureNode(IAstNode Id, ImmutableArray<IAstNode> Parameters, IAstNode? ReturnType, int Line, int Column) : INamedAstNode {
     public IEnumerable<IAstNode> Children => Parameters.Prepend(Id).SafeAppend(ReturnType);
 
     public IAstNode Replace(IAstNode from, IAstNode to) {

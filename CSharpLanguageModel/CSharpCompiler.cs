@@ -84,7 +84,7 @@ public static class CSharpCompiler {
         }
 
         var baseName = Path.GetFileNameWithoutExtension(fileName);
-        var dir =  string.IsNullOrEmpty(workingDir) ? Directory.GetCurrentDirectory() : workingDir;
+        var dir = string.IsNullOrEmpty(workingDir) ? Directory.GetCurrentDirectory() : workingDir;
 
         var objectDir = $@"{dir}\obj\";
 

@@ -124,8 +124,6 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
     private AssignmentModel Build(AssignmentNode assignmentNode) => new(Visit(assignmentNode.Id), Visit(assignmentNode.Rhs), assignmentNode.Inline);
 
-   
-
     private FunctionOrSystemCallModel Build(SystemAccessorCallNode systemAccessorCallNode) {
         var symbol = CurrentScope.Resolve(systemAccessorCallNode.Name) as SystemAccessorSymbol;
         var qNode = NameSpaceToNode(symbol?.NameSpace) ?? systemAccessorCallNode.Qualifier;
@@ -173,7 +171,6 @@ public class CodeModelAstVisitor : AbstractAstVisitor<ICodeModel> {
 
         return (qualifierModel, parameters.ToArray());
     }
-
 
     private ProcedureCallModel Build(ProcedureCallNode procedureCallNode) {
         var (qModel, parameters) = GetQualifierAndParameters(procedureCallNode);

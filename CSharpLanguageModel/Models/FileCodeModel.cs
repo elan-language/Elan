@@ -1,6 +1,15 @@
 ﻿namespace CSharpLanguageModel.Models;
 
 public record FileCodeModel(ICodeModel[] Globals, ICodeModel? Main, ICodeModel[] Tests) : ICodeModel {
+    private string TestCode => Tests.Any()
+        ? $@"
+
+[Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
+public class _Tests {{
+{Tests.AsLineSeparatedString(1)}
+}}"
+        : "";
+
     public string ToString(int indent) =>
         $@"using System.Collections.Generic;
 using StandardLibrary;
@@ -14,13 +23,4 @@ public static partial class Globals {{
 {Main}{TestCode}";
 
     public override string ToString() => ToString(0);
-
-    private string TestCode => Tests.Any()
-        ? $@"
-
-[Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
-public class _Tests {{
-{Tests.AsLineSeparatedString(1)}
-}}"
-        : "";
 }

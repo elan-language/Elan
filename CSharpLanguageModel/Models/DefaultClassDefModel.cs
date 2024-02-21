@@ -2,7 +2,7 @@
 
 using static CodeHelpers;
 
-public record DefaultClassDefModel(ICodeModel Type, ICodeModel[] Properties, ICodeModel[] Procedures, ICodeModel[] Functions, bool HasAsString,  bool IsAbstract) : ICodeModel {
+public record DefaultClassDefModel(ICodeModel Type, ICodeModel[] Properties, ICodeModel[] Procedures, ICodeModel[] Functions, bool HasAsString, bool IsAbstract) : ICodeModel {
     private string Override => IsAbstract ? "" : " override";
 
     private string OverrideAsString => HasAsString ? " override" : "";
