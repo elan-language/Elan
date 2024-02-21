@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c://Elan//Repository//Parser//Elan.g4 by ANTLR 4.13.1
+// Generated from c:/GitHub/Elan/Parser/Elan.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -91,15 +91,15 @@ public interface IElanListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitStatementBlock([NotNull] ElanParser.StatementBlockContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.testStatement"/>.
+	/// Enter a parse tree produced by <see cref="ElanParser.testStatements"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterTestStatement([NotNull] ElanParser.TestStatementContext context);
+	void EnterTestStatements([NotNull] ElanParser.TestStatementsContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.testStatement"/>.
+	/// Exit a parse tree produced by <see cref="ElanParser.testStatements"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitTestStatement([NotNull] ElanParser.TestStatementContext context);
+	void ExitTestStatements([NotNull] ElanParser.TestStatementsContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.assert"/>.
 	/// </summary>

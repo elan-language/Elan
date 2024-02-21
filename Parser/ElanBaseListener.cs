@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c://Elan//Repository//Parser//Elan.g4 by ANTLR 4.13.1
+// Generated from c:/GitHub/Elan/Parser/Elan.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -108,17 +108,17 @@ public partial class ElanBaseListener : IElanListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitStatementBlock([NotNull] ElanParser.StatementBlockContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="ElanParser.testStatement"/>.
+	/// Enter a parse tree produced by <see cref="ElanParser.testStatements"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterTestStatement([NotNull] ElanParser.TestStatementContext context) { }
+	public virtual void EnterTestStatements([NotNull] ElanParser.TestStatementsContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="ElanParser.testStatement"/>.
+	/// Exit a parse tree produced by <see cref="ElanParser.testStatements"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitTestStatement([NotNull] ElanParser.TestStatementContext context) { }
+	public virtual void ExitTestStatements([NotNull] ElanParser.TestStatementsContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="ElanParser.assert"/>.
 	/// <para>The default implementation does nothing.</para>

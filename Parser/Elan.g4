@@ -15,16 +15,16 @@ main:
 
 test: 
 	NL TEST IDENTIFIER
-    testStatement*
+    testStatements
     NL END TEST 
     ;
 
 // STATEMENTS
 statementBlock:  (varDef | assignment | proceduralControlFlow | callStatement | throwException | printStatement)*;
 
-testStatement: assert | varDef | callStatement;
+testStatements: (assert | varDef | callStatement)*;
 
-assert: ASSERT expression IS value;
+assert: NL ASSERT expression IS value;
 
 callStatement: NL CALL (procedureCall | (assignableValue DOT procedureCall));
 
