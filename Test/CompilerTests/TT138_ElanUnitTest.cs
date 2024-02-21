@@ -9,7 +9,7 @@ public class TT138_ElanUnitTest {
     #region Passes
 
     [TestMethod]
-    public void Pass_Assert() {
+    public void Pass_AssertOK() {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 test squareHappyCase1
     assert square(3) is 9
@@ -43,12 +43,13 @@ public static class Program {
     System.Console.WriteLine(StandardLibrary.Functions.asString(a));
   }
 }
-
-[Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
-public class _Tests {
-  [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
-  public void squareHappyCase1() {
-    Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(9, Globals.square(3));
+namespace ElanTestCode {
+  [Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
+  public class _Tests {
+    [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+    public void squareHappyCase1() {
+      Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(9, Globals.square(3));
+    }
   }
 }";
 
@@ -61,6 +62,64 @@ public class _Tests {
         AssertObjectCodeIs(compileData, objectCode);
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "9\r\n");
+        AssertObjectCodeExecutesTests(compileData, "Passed!");
+    }
+
+    [TestMethod]
+    public void Pass_AssertNOK() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+test squareHappyCase1
+    assert square(3) is 10
+end test
+
+function square(x Int) as Int
+    return x * x
+end function
+
+main
+    var a set to square(3)
+    print a
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static int square(int x) {
+
+    return x * x;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = Globals.square(3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+  }
+}
+namespace ElanTestCode {
+  [Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
+  public class _Tests {
+    [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+    public void squareHappyCase1() {
+      Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(10, Globals.square(3));
+    }
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "9\r\n");
+        AssertObjectCodeExecutesTests(compileData, "Failed!");
     }
 
     [TestMethod]
@@ -120,15 +179,16 @@ public static class Program {
     System.Console.WriteLine(StandardLibrary.Functions.asString(@$""done""));
   }
 }
-
-[Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
-public class _Tests {
-  [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
-  public void validCode() {
-    var a = 3;
-    var f = new Foo(a);
-    f.square();
-    Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(9, f.p1);
+namespace ElanTestCode {
+  [Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
+  public class _Tests {
+    [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+    public void validCode() {
+      var a = 3;
+      var f = new Foo(a);
+      f.square();
+      Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(9, f.p1);
+    }
   }
 }";
 
@@ -142,6 +202,73 @@ public class _Tests {
         AssertObjectCodeCompiles(compileData);
         AssertObjectCodeExecutes(compileData, "done\r\n");
     }
+
+    [TestMethod]
+    public void Pass_MultipleTests() {
+        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+test squareHappyCase1
+    assert square(3) is 9
+end test
+
+test squareHappyCase2
+    assert square(4) is 16
+end test
+
+function square(x Int) as Int
+    return x * x
+end function
+
+main
+    var a set to square(3)
+    print a
+end main
+";
+
+        var objectCode = @"using System.Collections.Generic;
+using StandardLibrary;
+using static Globals;
+using static StandardLibrary.Constants;
+
+public static partial class Globals {
+  public static int square(int x) {
+
+    return x * x;
+  }
+}
+
+public static class Program {
+  private static void Main(string[] args) {
+    var a = Globals.square(3);
+    System.Console.WriteLine(StandardLibrary.Functions.asString(a));
+  }
+}
+namespace ElanTestCode {
+  [Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
+  public class _Tests {
+    [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+    public void squareHappyCase1() {
+      Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(9, Globals.square(3));
+    }
+    [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethod]
+    public void squareHappyCase2() {
+      Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(16, Globals.square(4));
+    }
+  }
+}";
+
+        var parseTree = @"*";
+
+        var compileData = Pipeline.Compile(CompileData(code));
+        AssertParses(compileData);
+        AssertParseTreeIs(compileData, parseTree);
+        AssertCompiles(compileData);
+        AssertObjectCodeIs(compileData, objectCode);
+        AssertObjectCodeCompiles(compileData);
+        AssertObjectCodeExecutes(compileData, "9\r\n");
+        AssertObjectCodeExecutesTests(compileData, "Passed!");
+    }
+
+
 
     #endregion
 

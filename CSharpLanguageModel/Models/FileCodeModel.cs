@@ -1,12 +1,16 @@
 ﻿namespace CSharpLanguageModel.Models;
 
+using static CodeHelpers;
+
 public record FileCodeModel(ICodeModel[] Globals, ICodeModel? Main, ICodeModel[] Tests) : ICodeModel {
     private string TestCode => Tests.Any()
+        // must be in namespace or test not found by MsTest
         ? $@"
-
-[Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
-public class _Tests {{
-{Tests.AsLineSeparatedString(1)}
+namespace ElanTestCode {{
+{Indent(1)}[Microsoft.VisualStudio.TestTools.UnitTesting.TestClass]
+{Indent(1)}public class _Tests {{
+{Tests.AsLineSeparatedString(2)}
+{Indent(1)}}}
 }}"
         : "";
 

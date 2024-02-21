@@ -17,10 +17,10 @@ public static partial class Helpers {
 
     private static string NormalizeNewLines(string inp) => inp.Replace("\r", "");
 
-    private static Process CreateProcess(string exe, string workingDir) {
+    private static Process CreateProcess(string exe, string workingDir, string args) {
         var start = new ProcessStartInfo {
             FileName = exe,
-            Arguments = "",
+            Arguments = args,
             UseShellExecute = false,
             RedirectStandardInput = true,
             RedirectStandardOutput = true,
@@ -35,8 +35,8 @@ public static partial class Helpers {
         return Process.Start(start) ?? throw new NullReferenceException("Process failed to start");
     }
 
-    private static (string, string) Execute(string exe, string workingDir, string? input = null) {
-        using var process = CreateProcess(exe, workingDir);
+    private static (string, string) Execute(string exe, string workingDir, string args, string? input = null) {
+        using var process = CreateProcess(exe, workingDir, args);
 
         if (input is not null) {
             using var stdIn = process.StandardInput;
@@ -85,9 +85,21 @@ public static partial class Helpers {
             var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
             var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
 
-            var (stdOut, stdErr) = Execute(exe, wd, optionalInput);
+            var (stdOut, stdErr) = Execute(exe, wd, "", optionalInput);
 
             Assert.AreEqual(NormalizeNewLines(expectedOutput), NormalizeNewLines(stdOut));
+        }
+    }
+
+    public static void AssertObjectCodeExecutesTests(CompileData compileData, string expectedOutput, string? optionalInput = null) {
+        if (!LightweightTest) {
+            var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
+            var exe = $@"dotnet";
+            var args = $@"test {wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
+
+            var (stdOut, stdErr) = Execute(exe, wd, args, optionalInput);
+
+            Assert.IsTrue(stdOut.Contains(expectedOutput), stdOut);
         }
     }
 
@@ -96,7 +108,7 @@ public static partial class Helpers {
             var wd = $@"{Directory.GetCurrentDirectory()}\obj\bin\Debug\net7.0";
             var exe = $@"{wd}\{Path.GetFileNameWithoutExtension(compileData.FileName)}.exe";
 
-            var (stdOut, stdErr) = Execute(exe, wd, optionalInput);
+            var (stdOut, stdErr) = Execute(exe, wd, "",  optionalInput);
 
             Assert.IsTrue(stdErr.Contains(expectedError));
         }
