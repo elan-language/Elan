@@ -497,7 +497,7 @@ main
 end main
 
 procedure foo(a Int)
-    if a > 0 then
+    if a > 0
         print a
         call foo(a-1)
     end if

@@ -57,7 +57,6 @@ STEP:		   'step';
 SWITCH:        'switch';
 SYSTEM:		   'system';
 TEST:		   'test';
-THEN:		   'then';
 THIS: 		   'this';
 THROW:		   'throw';
 TO:			   'to';

@@ -12,7 +12,7 @@ public class T_7_IfStatement {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to true
-  if a then
+  if a
     print ""yes""
   else
     print ""no""
@@ -57,7 +57,7 @@ public static class Program {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to false
-  if a then
+  if a
     print ""yes""
   else
     print ""no""
@@ -102,9 +102,9 @@ public static class Program {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 2
-  if a is 1 then
+  if a is 1
     print ""one""
-  else if a is 2 then
+  else if a is 2
     print ""two""
   else
     print ""neither""
@@ -152,9 +152,9 @@ public static class Program {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3
-  if a is 1 then
+  if a is 1
     print ""one""
-  else if a is 2 then
+  else if a is 2
     print ""two""
   else
     print ""neither""
@@ -202,7 +202,7 @@ public static class Program {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to true
-  if a then
+  if a
     print ""yes""
   end if
 end main
@@ -242,11 +242,11 @@ public static class Program {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a set to 3
-  if a is 1 then
+  if a is 1
     print ""one""
-  else if a is 2 then
+  else if a is 2
     print ""two""
-  else if a is 3 then
+  else if a is 3
     print ""three""
   else
     print ""neither""
@@ -297,7 +297,7 @@ public static class Program {
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a = 3
-  if a is 1 then
+  if a is 1
     print ""one""
 end main
 ";
@@ -326,11 +326,11 @@ end
         var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
 main
   var a = 3
-  if a is 1 then
+  if a is 1
     print ""one""
   else
     print ""not one""
-  else if a is 2 then
+  else if a is 2
     print ""two""
   end if
 end main

@@ -201,7 +201,7 @@ end main
 
 function factorial(a Int) as Int
     var result set to 0;
-    if a > 2 then
+    if a > 2
         set result to a * factorial(a-1)
     else 
         set result to a
@@ -423,7 +423,7 @@ main
 end main
 
 function foo(a Int, b Int) as Bool
-    if 2 > 1 then
+    if 2 > 1
         return true
     else
         return false

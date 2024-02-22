@@ -18,7 +18,7 @@ class GridGraph
         for x from p1.x  to p2.x
             for y from p1.y to p2.y
                 var p set to new Point(x, y)
-                if add then
+                if add
                   set nodes to nodes + p
                 else
                   throw "not implemented"
@@ -61,7 +61,7 @@ class GridGraph
             set visited to visited.setItem(currentNode,true)
             call updateCostAndViaOfEachNeighbourIfApplicable(costFromSource, via, currentNode, destination)
             set currentNode to nextNodeToVisit(currentNode, visited, costFromSource, destination, alg)
-            if costFromSource[currentNode] is infinity then
+            if costFromSource[currentNode] is infinity
                 throw "Cannot reach destination -  graph is 'disconnected'"
             else
             end if
@@ -96,7 +96,7 @@ class GridGraph
     procedure updateCostAndViaOfEachNeighbourIfApplicable(out costFromSource Dictionary<of Point, Float>, out via Dictionary<of Point, Point>,  currentNode Point,  destination Point)
         each neighbour in neighbours(currentNode)
             var newCost set to costFromSource[currentNode] + findEdge(currentNode, neighbour)
-            if newCost < costFromSource[neighbour] then
+            if newCost < costFromSource[neighbour]
                 set costFromSource to costFromSource.setItem(neighbour, newCost) # Wrong -  don't update cost to estimate -  update to actual. Use estimate to choose the lowest cost unvisited node only. 
                 set via to via.setItem(neighbour,currentNode)
             end if
@@ -122,7 +122,7 @@ class GridGraph
                     set cost to costFromSource[p] + estimatedCostToDestination(p, destination)
                 default
             end switch
-            if cost < lowestCostSoFar then
+            if cost < lowestCostSoFar
                 set lowestCostSoFar to cost
                 set lowestCostNode to p
             end if

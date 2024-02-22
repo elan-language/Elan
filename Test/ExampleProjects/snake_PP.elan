@@ -10,7 +10,7 @@ main
         repeat
             set answer to system.readKey()
         end repeat when answer is 'y' or answer is 'n'
-        if answer is 'n' then
+        if answer is 'n'
             set newGame to false
         end if
     end while
@@ -46,12 +46,12 @@ procedure playGame()
         var priorTail set to snakeTail(body)
         call pause(200)
         var pressed set to system.keyHasBeenPressed()
-        if pressed then
+        if pressed
             var k set to system.readKey()
             set currentDirection to directionByKey[k]
         end if
         call clockTick(body, head, apple, currentDirection, boardWidth, boardHeight, gameOn)
-        if snakeTail(body) is not priorTail then
+        if snakeTail(body) is not priorTail
             call draw(charMap, priorTail, charMap.backgroundColour)
         end if
     end while
@@ -74,7 +74,7 @@ end procedure
 procedure clockTick(out body List<of (Int, Int)>, out head (Int, Int),out apple (Int, Int), d Direction, boardWidth Int, boardHeight Int, out continue Bool)
     set body to body + head
     set head to head.getAdjacentSquare(d)
-    if head is apple then
+    if head is apple
         call setNewApplePosition(body, apple, boardWidth, boardHeight)
     else
         set body to body[1..]
@@ -85,7 +85,7 @@ end procedure
 function bodyCovers(body List<of (Int, Int)>, sq (Int, Int)) as Bool
     var result set to false
     each seg in body
-        if (seg is sq) then
+        if (seg is sq)
             set result to true
         end if
     end each

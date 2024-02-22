@@ -7,8 +7,8 @@ end main
 function roman(d Int, valueSymbols List<of(Int, String)>) as String
     var result set to ""
     var (value, symbol) set to valueSymbols[0]
-    if d > 0 then
-        if (d >= value) then
+    if d > 0
+        if (d >= value)
            set result to result + symbol + roman(d - value, valueSymbols)
         else
            set result to roman(d, valueSymbols[1..])

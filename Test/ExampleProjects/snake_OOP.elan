@@ -10,7 +10,7 @@ main
         repeat
             set answer to system.readKey()
         end repeat when answer is 'y' or answer is 'n'
-        if answer is 'n' then
+        if answer is 'n'
             set newGame to false
         end if
     end while
@@ -38,12 +38,12 @@ procedure playGame()
         var priorTail set to snake.tail()
         call pause(200)
         var pressed set to system.keyHasBeenPressed()
-        if pressed then
+        if pressed
             var k set to system.readKey()
             set currentDirection to directionByKey[k]
         end if
         call snake.clockTick(currentDirection, gameOn)
-        if snake.tail() is not priorTail then
+        if snake.tail() is not priorTail
             call draw(charMap, priorTail, charMap.backgroundColour)
         end if
     end while
@@ -85,7 +85,7 @@ class Snake
     function bodyCovers(sq Square) as Bool
       var result set to false
       each seg in body
-        if (seg is sq) then
+        if (seg is sq)
           set result to true
         end if
       end each
@@ -95,7 +95,7 @@ class Snake
     procedure clockTick(d Direction, out continue Bool)
         set body to body + head;
         set head to head.getAdjacentSquare(d);
-        if head is apple then
+        if head is apple
             call setNewApplePosition()
         else
             set body to body[1..]

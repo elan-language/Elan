@@ -143,9 +143,9 @@ withClause: WITH OPEN_BRACE inlineAsignment (COMMA inlineAsignment)* CLOSE_BRACE
 proceduralControlFlow: if | for | each | while | repeat | try | switch;
 
 if:
-	NL IF expression THEN
+	NL IF expression
     statementBlock
-    (NL ELSE IF expression THEN
+    (NL ELSE IF expression
     statementBlock)*
     (NL ELSE
     statementBlock)?

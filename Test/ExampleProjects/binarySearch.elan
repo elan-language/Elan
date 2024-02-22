@@ -18,12 +18,12 @@ end main
 
 function binarySearch(li List<of String>, item String) as  Bool 
   var result set to false
-  if li.length() > 0 then  
+  if li.length() > 0  
     var mid set to li.length() div 2
     var value set to li[mid]
-    if item is value then
+    if item is value
         set result to true
-    else if item.isBefore(value) then
+    else if item.isBefore(value)
         set result to binarySearch(li[..mid], item) 
     else 
         set result to binarySearch(li[mid+1..], item)
