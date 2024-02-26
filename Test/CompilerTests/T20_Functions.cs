@@ -10,7 +10,7 @@ public class T20_Functions {
 
     [TestMethod]
     public void Pass_SimpleCase() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print foo(3,4)
 end main
@@ -51,7 +51,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ReturnSimpleDefault() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print foo(3,4)
 end main
@@ -92,7 +92,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ReturnClassDefault() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print foo(3,4)
 end main
@@ -153,7 +153,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ReturnCollectionDefault() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print foo(3,4)
 end main
@@ -194,7 +194,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Recursive() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print factorial(5)
 end main
@@ -247,7 +247,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_GlobalFunctionOnClass() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var b set to new Bar()
     print b.foo()
@@ -321,7 +321,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_noEnd() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     call foo(3,4)
 end main
@@ -336,7 +336,7 @@ function foo(a Int, b Int) as Int
 
     [TestMethod]
     public void Fail_noReturnType() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -351,7 +351,7 @@ end function
 
     [TestMethod]
     public void Fail_noAs() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -366,7 +366,7 @@ end function
 
     [TestMethod]
     public void Fail_noReturn() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -381,7 +381,7 @@ end function
 
     [TestMethod]
     public void Fail_returnTypeIncompatible() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    var a set to """"
    set a to foo(3,4)
@@ -403,7 +403,7 @@ end function
 
     [TestMethod]
     public void Fail_noReturn2() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -418,7 +418,7 @@ end function
 
     [TestMethod]
     public void Fail_embeddedReturns() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -436,7 +436,7 @@ end function
 
     [TestMethod]
     public void Fail_nonMatchingReturn2() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -455,7 +455,7 @@ end function
 
     [TestMethod]
     public void Fail_statementAfterReturn() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -471,7 +471,7 @@ end function
 
     [TestMethod]
     public void Fail_CanNotContainPrint() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -490,7 +490,7 @@ end function
 
     [TestMethod]
     public void Fail_CanNotContainInput() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -509,7 +509,7 @@ end function
 
     [TestMethod]
     public void Fail_CanNotContainSystemAccessors() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -528,7 +528,7 @@ end function
 
     [TestMethod]
     public void Fail_CanNotContainProcedureCall() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var result set to foo(3,4)
     print result
@@ -553,7 +553,7 @@ end procedure
 
     [TestMethod]
     public void Fail_CannotModifyParam() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var result set to foo(3,4)
     print result
@@ -574,7 +574,7 @@ end function
 
     [TestMethod]
     public void Fail_CannotPassInArray() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 function foo(a Array<of Int>) as Int
     return a[0]
 end function
@@ -589,7 +589,7 @@ end function
 
     [TestMethod]
     public void Fail_CannotPassInArrayMultipleParameters() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 function foo(b Int, a Array<of Int>) as Int
     return a[0]
 end function
@@ -604,7 +604,7 @@ end function
 
     [TestMethod]
     public void Fail_TooManyParams() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var result set to foo(3,4,5)
     print result
@@ -625,7 +625,7 @@ end function
 
     [TestMethod]
     public void Fail_NotEnoughParams() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var result set to foo(3)
     print result
@@ -646,7 +646,7 @@ end function
 
     [TestMethod]
     public void Fail_WrongParamType() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var result set to foo(3, ""b"")
     print result
@@ -667,7 +667,7 @@ end function
 
     [TestMethod]
     public void Fail_CannotSpecifyParamByRef() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 

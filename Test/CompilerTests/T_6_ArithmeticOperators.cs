@@ -11,7 +11,7 @@ public class T_6_ArithmeticOperators {
     [TestMethod]
     public void Pass_IntAddition() {
             
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   print 3 + 4
 end main
@@ -45,7 +45,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntSubtraction() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   print 3 - 4
 end main
@@ -79,7 +79,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntMultiplication() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   print 3 * 4
 end main
@@ -113,7 +113,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IncludeVariable() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to 3
   print a + 4
@@ -149,7 +149,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DivideIntegersToFloat() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   print 3/2
 end main
@@ -183,7 +183,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntegerDivision() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   print 7 div 2
 end main
@@ -217,7 +217,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Mod() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   print 11 mod 3
 end main
@@ -251,7 +251,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Power() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   print 3 ^ 3
 end main
@@ -285,7 +285,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_UseVariableBothSides() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to 3
   set a to a + 1
@@ -327,7 +327,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_InvalidExpression() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
     main
       var a = 3 4
     end main
@@ -339,7 +339,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_PlusEquals() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
     main
       var a = 3
       set a +to 1
@@ -352,7 +352,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_PlusPlus() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
     main
       var a = 3
       a ++

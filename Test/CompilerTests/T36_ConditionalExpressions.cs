@@ -10,7 +10,7 @@ public class T36_ConditionalExpressions {
 
     [TestMethod]
     public void Pass_InFunction() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
  print grade(90)
  print grade(70)
@@ -57,7 +57,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_InVariableDeclaration() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var score set to 70
   var grade set to ""Distinction"" if score > 80 else ""Merit"" if score > 60  else ""Pass"" if score > 40 else ""Fail""
@@ -100,7 +100,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_EndIf() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
  print grade(90)
  print grade(70)

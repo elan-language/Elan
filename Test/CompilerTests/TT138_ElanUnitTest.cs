@@ -11,7 +11,7 @@ public class TT138_ElanUnitTest {
 
     [TestMethod]
     public void Pass_AssertOK() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 test squareHappyCase1
     assert square(3) is 9
 end test
@@ -68,7 +68,7 @@ namespace ElanTestCode {
 
     [TestMethod]
     public void Pass_AssertNOK() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 test squareHappyCase1
     assert square(3) is 10
 end test
@@ -125,7 +125,7 @@ namespace ElanTestCode {
 
     [TestMethod]
     public void Pass_ValidCode() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 test validCode
     var a set to 3
     var f set to new Foo(a)
@@ -206,7 +206,7 @@ namespace ElanTestCode {
 
     [TestMethod]
     public void Pass_MultipleTests() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 test squareHappyCase1
     assert square(3) is 9
 end test
@@ -277,7 +277,7 @@ namespace ElanTestCode {
 
     [TestMethod]
     public void Fail_InvalidCode() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 test invalidCode
     var a set to 3
     var f set to new Foo(a)
@@ -309,7 +309,7 @@ end main
 
     [TestMethod]
     public void Fail_CallTestDirectly() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 test aTest
     var a set to 3
     assert a is 3

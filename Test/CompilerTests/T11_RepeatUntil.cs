@@ -8,7 +8,7 @@ using static Helpers;
 public class T11_RepeatUntil {
     [TestMethod]
     public void Pass_minimal() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    var x set to 0
    repeat
@@ -50,7 +50,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_innerLoop() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    var t set to 0
    var x set to 0
@@ -104,7 +104,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_variableRedeclaredInTest() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to 0
     repeat
@@ -118,7 +118,7 @@ end main
 
     [TestMethod]
     public void Fail_variableDefinedInLoop() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    repeat
      var x set to x + 1
@@ -133,7 +133,7 @@ end main
 
     [TestMethod]
     public void Fail_testPutOnRepeat() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to 0
     repeat x >= 10
@@ -148,7 +148,7 @@ end main
 
     [TestMethod]
     public void Fail_noCondition() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to 0
     repeat
@@ -162,7 +162,7 @@ end main
 
     [TestMethod]
     public void Fail_invalidCondition() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to 0
     repeat

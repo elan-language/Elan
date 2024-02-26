@@ -10,7 +10,7 @@ public class T26_Iter {
 
     [TestMethod]
     public void Pass_List() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var it set to { 1,5,6}
   call printEach(it)
@@ -56,7 +56,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Array() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var it set to { 1,3,6}.asArray()
   call printEach(it)
@@ -102,7 +102,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_String() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var s set to ""Foo""
   call printEach(s)
@@ -148,7 +148,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Printing() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var it set to { 1,2,3,4,5,6,7}
   call printAsIter(it)
@@ -201,7 +201,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Default() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var f set to new Foo()
   print f.it
@@ -268,7 +268,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_NoGenericTypeSpecified() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
 end main
 
@@ -285,7 +285,7 @@ end procedure
 
     [TestMethod]
     public void Fail_PassArgumentWithWrongGenericType() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var it set to {1,2,3,4,5,6,7}
   call printEach(it)
@@ -309,7 +309,7 @@ end procedure
 
     [TestMethod]
     public void Fail_Indexing() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var it set to { 1,2,3,4,5,6,7}
   call printEach(it[2..4])

@@ -10,7 +10,7 @@ public class T78_identifiersMustBeUniqueIgnoringCase {
 
     [TestMethod]
     public void Pass_SameVariableNameInDifferentScope() {
-       var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+       var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant id set to 1
 
 main
@@ -47,7 +47,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CanUseCSharpKeywordWithDifferentCase() {
-       var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+       var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var bReak set to 1
     print bReak
@@ -83,7 +83,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CanHaveIdentiferSameAsTypeExceptCase() {
-       var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+       var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var foo set to new Foo()
     print foo
@@ -147,7 +147,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_DeclareSameVarNameWithDifferentCase() {
-       var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+       var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var fOO set to 1
     var foo set to 1
@@ -163,7 +163,7 @@ end main
 
     [TestMethod]
     public void Fail_ElanKeywordWithChangedCase() {
-       var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+       var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var pRocedure set to 1
 end main
@@ -178,7 +178,7 @@ end main
 
     [TestMethod]
     public void Fail_ElanKeywordTypeEvenWithChangedCase() {
-       var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+       var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 class Main 
     constructor()
     end constructor
@@ -198,7 +198,7 @@ end class
 
     [TestMethod]
     public void Fail_CSharpKeywordWithCorrectCaseIfAlteredCaseAlreadyUsed() {
-       var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+       var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var bReak set to 1
     var break set to 1
@@ -214,7 +214,7 @@ end main
 
     [TestMethod]
     public void Fail_SameVariableNameInScope() {
-       var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+       var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var id set to 1
     var id set to 1

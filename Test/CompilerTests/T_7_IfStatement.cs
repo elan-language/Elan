@@ -9,7 +9,7 @@ using static Helpers;
 public class T_7_IfStatement {
     [TestMethod]
     public void Pass1() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to true
   if a
@@ -54,7 +54,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass2() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to false
   if a
@@ -99,7 +99,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass3() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to 2
   if a is 1
@@ -149,7 +149,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass4() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to 3
   if a is 1
@@ -199,7 +199,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass5() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to true
   if a
@@ -239,7 +239,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass6() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to 3
   if a is 1
@@ -294,7 +294,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_NoEndIf() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a = 3
   if a is 1
@@ -308,7 +308,7 @@ end main
 
     [TestMethod]
     public void Fail_NoThen() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a = true
   if a 
@@ -323,7 +323,7 @@ end
 
     [TestMethod]
     public void Fail_ElseIfAfterElse() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a = 3
   if a is 1

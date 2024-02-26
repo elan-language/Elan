@@ -9,7 +9,7 @@ namespace Test.LanguageServerTest;
 public class GetSymbols {
     [TestMethod]
     public async Task SimpleGlobalsAsync() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   print ""Hello World!""
 end main
@@ -29,7 +29,7 @@ end main
 
     [TestMethod, Ignore]
     public async Task GoToDeclationAsync() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant a set to true
 main
   print a

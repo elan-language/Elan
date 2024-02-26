@@ -13,7 +13,7 @@ public class T43_Inheritance {
 
     [TestMethod]
     public void Pass_DefineAbstractClassAndInheritFromIt() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -131,7 +131,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_InheritFromMoreThanOneAbstractClass() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -261,7 +261,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_SuperclassesCanDefineSameMember() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -396,7 +396,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_CannotInheritFromConcreteClass() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -444,7 +444,7 @@ end class
 
     [TestMethod]
     public void Fail_AbstractClassCannotInheritFromConcreteClass() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -476,7 +476,7 @@ end class
 
     [TestMethod]
     public void Fail_MustImplementAllInheritedMethods() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -520,7 +520,7 @@ end class
 
     [TestMethod]
     public void Fail_ImplementedMethodMustHaveSameSignature() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -568,7 +568,7 @@ end class
 
     [TestMethod]
     public void Fail_AbstractClassDefinesMethodBody() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -592,7 +592,7 @@ end class
 
     [TestMethod]
     public void Fail_MissingAbstractProperty() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -609,7 +609,7 @@ end class
 
     [TestMethod]
     public void Fail_MissingAbstractFunction() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x
@@ -626,7 +626,7 @@ end class
 
     [TestMethod]
     public void Fail_MissingAbstractProcedure() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Bar()
     var l set to new List<of Foo>() + x

@@ -10,7 +10,7 @@ public class T67_ListDeconstruction {
 
     [TestMethod]
     public void Pass_IntoNewVarsList() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
   var {x:xs} set to source
@@ -49,7 +49,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntoNewVarsArray() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
   var {x:xs} set to source.asArray()
@@ -88,7 +88,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntoNewVarsIter() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
   call p(source)
@@ -134,7 +134,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IntoExistingVars() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant source set to {2,3,5,7,11,13,17,19,23,27,31,37}
 main
   var x set to 0

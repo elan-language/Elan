@@ -10,7 +10,7 @@ public class T59_Global {
 
     [TestMethod]
     public void Pass_DisambiguateConstantFromLocalVariable() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant a set to 4
 main
   var a set to 3
@@ -46,7 +46,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DisambiguateConstantFromInstanceProperty() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant a set to 4
 
 main
@@ -132,7 +132,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DisambiguateGlobalFunctionFromInstanceFunction() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     print f.loc()
@@ -232,7 +232,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_NoSuchGlobal() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant b set to 4
 main
   var a set to 3
@@ -251,7 +251,7 @@ end main
 
     [TestMethod]
     public void Fail_NoSuchGlobalConstant() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     print f.prop()
@@ -289,7 +289,7 @@ end class
 
     [TestMethod]
     public void Fail_NoSuchGlobalSubroutine() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     print f.loc()

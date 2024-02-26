@@ -1,4 +1,4 @@
-# Elan v0.1 valid FFFFFFFFFFFFFFFF
+# FFFFFFFFFFFFFFFF Elan v0.1 valid
 constant allPossibleAnswers set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABHOR","ABIDE","ABLED","ABODE","ABORT","ABOUT","ABOVE"}
 constant validWords set to {"ABACK","ABASE","ABATE","ABBEY","ABBOT","ABHOR","ABIDE","ABLED","ABODE","ABORT","ABOUT","ABOVE"}
 

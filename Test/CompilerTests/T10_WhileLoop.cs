@@ -8,7 +8,7 @@ using static Helpers;
 public class T10_WhileLoop {
     [TestMethod]
     public void Pass_minimal() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    var x set to 0
    while x < 10
@@ -50,7 +50,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_innerLoop() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var t set to 0
     var x set to 0
@@ -104,7 +104,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_noEnd() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    var x = 0
    while x < 10
@@ -117,7 +117,7 @@ end main
 
     [TestMethod]
     public void Fail_variableNotPredefined() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    while x < 10
      set x to x + 1
@@ -135,7 +135,7 @@ end main
 
     [TestMethod]
     public void Fail_variableDefinedInWhile() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    while var x < 10
      set x to x + 1
@@ -149,7 +149,7 @@ end main
 
     [TestMethod]
     public void Fail_noCondition() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    var x = 0
    while
@@ -163,7 +163,7 @@ end main
 
     [TestMethod]
     public void Fail_while_do() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
    var x = 0
    while x < 10

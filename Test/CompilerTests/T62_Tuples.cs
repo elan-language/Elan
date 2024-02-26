@@ -10,7 +10,7 @@ public class T62_Tuples {
 
     [TestMethod]
     public void Pass_CreatingTuplesAndReadingContents() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     print x
@@ -50,7 +50,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FunctionReturnsTuple() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to f()
     print x
@@ -96,7 +96,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IndexFunctionReturnsTuple() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print f().first()
 end main
@@ -136,7 +136,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_IndexGenericFunctionReturnsTuple() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print a.reduce((1,1), lambda i, j -> j).first()
 end main
@@ -171,7 +171,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_FunctionTupleParameter() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to ""one""
     var y set to ""two""
@@ -215,7 +215,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DeconstructIntoExistingVariables() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     var y set to 0
@@ -259,7 +259,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DeconstructIntoNewVariables() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     var (y, z) set to x
@@ -298,7 +298,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AssignANewTupleOfSameType() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     set x to (4,""Pear"")
@@ -340,7 +340,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_OutOfRangeError() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     print x.third()
@@ -375,7 +375,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_AssignItemToWrongType() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     var y set to 4
@@ -393,7 +393,7 @@ end main
 
     [TestMethod]
     public void Fail_ImmutableSoCannotAssignAnItem() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     set x.first() to 4
@@ -406,7 +406,7 @@ end main
 
     [TestMethod]
     public void Fail_DeconstructIntoWrongType() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     var y set to 0
@@ -427,7 +427,7 @@ end main
 
     [TestMethod]
     public void Fail_DeconstructIntoMixed1() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     var z set to """"
@@ -447,7 +447,7 @@ end main
 
     [TestMethod]
     public void Fail_DeconstructIntoMixed2() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     var z set to """"
@@ -466,7 +466,7 @@ end main
 
     [TestMethod]
     public void Pass_AssignANewTupleOfWrongType() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to (3,""Apple"")
     set x to (""4"",""Pear"")

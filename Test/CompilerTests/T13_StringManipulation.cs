@@ -10,7 +10,7 @@ public class T13_StringManipulation {
 
     [TestMethod]
     public void Pass_AppendStrings() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var a set to ""Hello""
     var b set to ""World!""
@@ -48,7 +48,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AppendOrPrependChar() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print '_'+""Hello""+'!'
 end main
@@ -82,7 +82,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AppendNumber() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print ""Hello""+3.1
 end main
@@ -116,7 +116,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Indexing() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var a set to ""abcde""
     print a[2]
@@ -152,7 +152,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Ranges() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var a set to ""abcde""
     print a[1..3]
@@ -192,7 +192,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_EqualityTesting() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print ""abc"" is ""abc""
     print ""abc"" is ""abcd""
@@ -238,7 +238,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ComparisonMethods() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print ""abc"".isBefore(""abC"")
     print ""abcd"".isAfter(""abc"")
@@ -282,7 +282,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_UseAsStringExplicitly() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var a set to ""abcde""
     set a to (2.1 + 3.4).asString()
@@ -320,7 +320,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Interpolation() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var a set to 3
     var b set to 4
@@ -360,7 +360,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_UseBracesInString() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var a set to 3
     var b set to 4
@@ -400,7 +400,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_literalNewline() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var c set to ""Hello
  World!""
@@ -438,7 +438,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_newLineConstant() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var c set to ""Hello ""+ newline + ""World!""
     print c
@@ -474,7 +474,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AppendStringToNumber() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var a set to 3.1 + ""Hello""
     print a
@@ -514,7 +514,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_IndexOutOfRange() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var a set to ""abcde""
     print a[5]
@@ -548,7 +548,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_ComparisonOperators() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     print ""abc"" < ""abC""
     print ""abcd"" > ""abc""
@@ -591,7 +591,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_CoerceNumberToString() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var a set to ""abcde""
     set a to 2.1 + 3.4

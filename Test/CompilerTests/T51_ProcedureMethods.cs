@@ -13,7 +13,7 @@ public class T51_ProcedureMethods {
 
     [TestMethod]
     public void Pass_HappyCase() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     print f.p1
@@ -86,7 +86,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_ProcedureCanContainSystemCall() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     call f.display()
@@ -159,7 +159,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_CallGlobalProcedure() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     call f.setP1(7)
@@ -241,7 +241,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_ProcedureMethodCannotBeCalledDirectly() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     call display(f)
@@ -275,7 +275,7 @@ end class
 
     [TestMethod]
     public void Fail_CallUnknownMethodOnInstance() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var x set to new Foo()
     call x.calculate()

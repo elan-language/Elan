@@ -10,7 +10,7 @@ public class T_3_Header {
 
     [TestMethod]
     public void Pass_header() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   print ""Hello World!""
 end main
@@ -44,7 +44,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_hash() {
-        var code = @"# Elan v0.1 valid eb3dc7628a465e14
+        var code = @"# eb3dc7628a465e1405e80ea4a9a217a22f05234a9fa95484313cd353128c81aa Elan v0.1 valid
 
 main
   # My first program
@@ -109,7 +109,7 @@ end main
 
     [TestMethod]
     public void Fail_BadVersion() {
-        var code = @"# Elan v0.2 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.2 valid
 main
   print ""Hello World!""
 end main
@@ -122,7 +122,7 @@ end main
 
     [TestMethod]
     public void Fail_BadLanguage() {
-        var code = @"# Python v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Python v0.1 valid
 main
   print ""Hello World!""
 end main
@@ -136,7 +136,7 @@ end main
 
     [TestMethod]
     public void Fail_BadStatus() {
-        var code = @"# Elan v0.1 Incomplete FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 Incomplete
 main
   print ""Hello World!""
 end main
@@ -149,7 +149,7 @@ end main
 
     [TestMethod]
     public void Fail_BadHash() {
-        var code = @"# Elan v0.1 valid eb3dc7628a465e15
+        var code = @"# eb3dc7628a465e15 Elan v0.1 valid
 
 main
   # My first program

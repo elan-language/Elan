@@ -64,20 +64,20 @@ public static class Pipeline {
                 headerErrors.Add("Header is not comment");
             }
 
-            if (headerTokens[1].Trim() != "Elan") {
+            if (!ValidateHash(headerTokens[1].Trim(), codeBody)) {
+                headerErrors.Add("Hash check failed");
+            }
+
+            if (headerTokens[2].Trim() != "Elan") {
                 headerErrors.Add("Incorrect language expect: 'Elan'");
             }
 
-            if (headerTokens[2].Trim() != "v0.1") {
+            if (headerTokens[3].Trim() != "v0.1") {
                 headerErrors.Add("Incorrect Elan version expect: 'v0.1'");
             }
 
-            if (headerTokens[3].Trim() != "valid") {
+            if (headerTokens[4].Trim() != "valid") {
                 headerErrors.Add("Status must be 'valid'");
-            }
-
-            if (!ValidateHash(headerTokens[4].Trim(), codeBody)) {
-                headerErrors.Add("Hash check failed");
             }
         }
 
@@ -97,9 +97,8 @@ public static class Pipeline {
 
         var hash = sha256.ComputeHash(bs);
         var hex = BitConverter.ToString(hash).Replace("-", "").ToLower();
-        var truncatedHex = hex[..16];
-
-        return truncatedHex == headerToken;
+        
+        return hex == headerToken;
     }
 
     private static CompileData CompileCode(CompileData compileData) {

@@ -16,7 +16,7 @@ public class T55_asString {
 
     [TestMethod]
     public void Pass_ClassHasNoAsString() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     var s set to f.asString()
@@ -81,7 +81,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DefaultClassAsString() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     var s set to f.p1.asString()
@@ -139,7 +139,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_DefaultClassReplacesAsString() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     var s1 set to f.asString()
@@ -208,7 +208,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AsStringMayBeCalled() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     var s set to f.asString()
@@ -281,7 +281,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AsStringCalledWhenObjectPrinted() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     print f
@@ -352,7 +352,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AsStringUsingDefaultHelper() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var f set to new Foo()
     print f
@@ -424,7 +424,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_AsStringOnVariousDataTypes() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
     var l set to {1,2,3}
     var sl set to l.asString()

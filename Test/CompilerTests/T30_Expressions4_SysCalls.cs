@@ -8,7 +8,7 @@ using static Helpers;
 public class T30_Expressions4_SystemCalls {
     [TestMethod]
     public void Pass_Input1() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to input
   print a
@@ -44,7 +44,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Input2() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to input ""Your name""
   print a
@@ -80,7 +80,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_InputInExpression() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to ""Hello "" + input 
   print a
@@ -116,7 +116,7 @@ public static class Program {
 
     [TestMethod]
     public void Pass_Me() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to system.me()
   print a
@@ -153,7 +153,7 @@ public static class Program {
 
     [TestMethod]
     public void Fail_NoQualifier1() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to input()
   print a
@@ -166,7 +166,7 @@ end main
 
     [TestMethod]
     public void Fail_NoQualifier2() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to input(""Your name"")
   print a
@@ -179,7 +179,7 @@ end main
 
     [TestMethod]
     public void Fail_UnconsumedResultFromSystemCall() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   call system.input(""Your name"")
 end main
@@ -191,7 +191,7 @@ end main
 
     [TestMethod]
     public void Fail_SystemCallWithinExpression() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var a set to system.input(""Your name"").length()
 end main
@@ -203,7 +203,7 @@ end main
 
     [TestMethod]
     public void Fail_SystemCallUsingDotSyntax() {
-        var code = @"# Elan v0.1 valid FFFFFFFFFFFFFFFF
+        var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
   var prompt set to ""Your name""
   var a = prompt.system.input()
