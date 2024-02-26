@@ -51,7 +51,6 @@ public static class Pipeline {
     private static CompileData ValidateHeader(CompileData compileData) {
         var code = compileData.ElanCode;
         var firstLine = code.Split("\n").FirstOrDefault() ?? string.Empty;
-        var codeBody = code[(code.IndexOf("\n") + 1)..];
         var headerTokens = firstLine.Split(" ");
 
         var headerErrors = new List<string>();
@@ -64,11 +63,13 @@ public static class Pipeline {
                 headerErrors.Add("Header is not comment");
             }
 
-            if (!ValidateHash(headerTokens[1].Trim(), codeBody)) {
-                headerErrors.Add("Hash check failed");
+            if (headerTokens[2].Trim() == "Elan") {
+                var codeBody = code[(code.IndexOf("Elan"))..];
+                if (!ValidateHash(headerTokens[1].Trim(), codeBody)) {
+                    headerErrors.Add("Hash check failed");
+                }
             }
-
-            if (headerTokens[2].Trim() != "Elan") {
+            else {
                 headerErrors.Add("Incorrect language expect: 'Elan'");
             }
 
@@ -96,9 +97,9 @@ public static class Pipeline {
         var bs = Encoding.UTF8.GetBytes(normalizedCode);
 
         var hash = sha256.ComputeHash(bs);
-        var hex = BitConverter.ToString(hash).Replace("-", "").ToLower();
-        
-        return hex == headerToken;
+        var hexHash = BitConverter.ToString(hash).Replace("-", "").ToLower();
+
+        return hexHash == headerToken;
     }
 
     private static CompileData CompileCode(CompileData compileData) {

@@ -1,4 +1,6 @@
-﻿using Compiler;
+﻿using System.Security.Cryptography;
+using Compiler;
+using System.Text;
 
 namespace Test.CompilerTests;
 
@@ -44,11 +46,11 @@ public static class Program {
 
     [TestMethod]
     public void Pass_hash() {
-        var code = @"# eb3dc7628a465e1405e80ea4a9a217a22f05234a9fa95484313cd353128c81aa Elan v0.1 valid
+        var code = @"# fe7d4129310ebd088b815518559c4ac512b0e67da256e912bed669756817e4f4 Elan v0.1 valid
 
 main
   # My first program
-  print ""Hello World!"" 
+  print ""Hello World!""
 end main
 ";
 
