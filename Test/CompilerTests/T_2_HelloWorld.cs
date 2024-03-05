@@ -424,7 +424,7 @@ public static class Program {
     [TestMethod]
     public void Fail_noMain() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
-print ""Hello World`
+print ""Hello World""
 ";
         var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
@@ -444,9 +444,9 @@ main
     [TestMethod]
     public void Fail_WrongCasing() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
-main
+MAIN
   print ""Hello World!""
-
+end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
         AssertDoesNotParse(compileData);
