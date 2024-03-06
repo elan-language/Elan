@@ -308,7 +308,7 @@ public static class Program {
     public void fail_wrongKeyword() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
-  variable a = 3
+  variable a set to 3
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
@@ -331,7 +331,7 @@ end main
     [TestMethod]
     public void fail_GlobalVariable() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
-var a = 4
+var a set to 4
 main
 end main
 ";
@@ -369,7 +369,7 @@ end main
     public void fail_invalidVariableName1() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
-  var A = 4.1
+  var A set to 4.1
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
@@ -380,7 +380,7 @@ end main
     public void fail_invalidVariableName2() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
-  var a@b = 4.1
+  var a@b set to 4.1
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
@@ -391,7 +391,7 @@ end main
     public void fail_useOfKeywordAsName() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
 main
-  var if = 4.1
+  var if set to 4.1
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));

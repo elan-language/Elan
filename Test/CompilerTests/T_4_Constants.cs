@@ -304,8 +304,9 @@ public static class Program {
     [TestMethod]
     public void Fail_useInsideMain() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
 main
-  constant a = 3
+  constant a set to 3
   print a
 end main
 ";
@@ -316,8 +317,11 @@ end main
     [TestMethod]
     public void Fail_incorrectKeyword() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+const a set to 3
+
 main
-  const a = 3
+  print a
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
@@ -327,8 +331,11 @@ end main
     [TestMethod]
     public void Fail_invalidLiteralString() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to 'hello'
+
 main
-  constant a = 'hello'
+  print a  
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
@@ -338,8 +345,11 @@ end main
     [TestMethod]
     public void Fail_invalidLiteralString2() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
+constant a set to hello
+
 main
-  constant a set to hello
+  print a  
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
@@ -349,9 +359,12 @@ end main
     [TestMethod]
     public void Fail_reassignment() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
+
 constant a set to 3
+
 main
   set a to 4
+  print a
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
@@ -367,6 +380,7 @@ end main
 constant a set to 3 + 4
 
 main
+  print a
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
@@ -381,6 +395,7 @@ constant a set to 3
 constant b set to a
 
 main
+  print a
 end main
 ";
         var compileData = Pipeline.Compile(CompileData(code));
