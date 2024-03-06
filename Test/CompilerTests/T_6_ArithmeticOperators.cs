@@ -341,8 +341,8 @@ public static class Program {
     public void Fail_PlusEquals() {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
     main
-      var a = 3
-      set a +to 1
+      var a set to 3
+      a += 1
     end main
     ";
 
@@ -355,7 +355,7 @@ public static class Program {
         var code = @"# FFFFFFFFFFFFFFFF Elan v0.1 valid
     main
       var a = 3
-      a ++
+      a++
     end main
     ";
 
